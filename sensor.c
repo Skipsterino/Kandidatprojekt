@@ -42,6 +42,8 @@ int byte_to_send = 0;		// Vilken byte i bufferten som skall skickas härnäst
 
 double counter = 0;		// XXXXX Endast för sensor-kalibrering
 double sum = 0;		// XXXXX Endast för sensor-kalibrering
+int initial_counter = 0;		// XXXXX Endast för sensor-kalibrering
+double result;		// XXXXX Endast för sensor-kalibrering
 
 typedef struct
 {
@@ -85,22 +87,23 @@ table IR1_table[] =		// XXXXX Ska fyllas i med uppmätta värden!
 	{2.5, 20}
 };
 
-table IR2_table[] =		// XXXXX Ska fyllas i med uppmätta värden!
+table IR2_table[] =
 {
-	{0.4, 150},
-	{0.45, 140},
-	{0.5, 130},
-	{0.55, 120},
-	{0.6, 110},
-	{0.65, 100},
-	{0.7, 90},
-	{0.8, 80},
-	{0.9, 70},
-	{1.05, 60},
-	{1.25, 50},
-	{1.55, 40},
-	{2, 30},
-	{2.5, 20}
+	{100.9, 130},
+	{108.8, 120},
+	{118.5, 110},
+	{126.7, 100},
+	{142.9, 90},
+	{160.7, 80},
+	{179.2, 70},
+	{216.4, 60},
+	{264.5, 50},
+	{295.7, 45},
+	{326.9, 40},
+	{372.8, 35},
+	{430.5, 30},
+	{484.2, 25},
+	{542, 20}
 };
 
 table IR3_table[] =		// XXXXX Ska fyllas i med uppmätta värden!
@@ -139,22 +142,23 @@ table IR4_table[] =		// XXXXX Ska fyllas i med uppmätta värden!
 	{2.5, 20}
 };
 
-table IR5_table[] =		// XXXXX Ska fyllas i med uppmätta värden!
+table IR5_table[] =	
 {
-	{0.4, 150},
-	{0.45, 140},
-	{0.5, 130},
-	{0.55, 120},
-	{0.6, 110},
-	{0.65, 100},
-	{0.7, 90},
-	{0.8, 80},
-	{0.9, 70},
-	{1.05, 60},
-	{1.25, 50},
-	{1.55, 40},
-	{2, 30},
-	{2.5, 20}
+	{104.1, 130},
+	{112.1, 120},
+	{120, 110},
+	{129.2, 100},
+	{145.8, 90},
+	{162.2, 80},
+	{181.7, 70},
+	{213.4, 60},
+	{260.5, 50},
+	{289.2, 45},
+	{327.3, 40},
+	{373.1, 35},	
+	{431.4, 30},
+	{492.6, 25},
+	{545.6, 20}
 };
 
 table IR6_table[] =		// XXXXX Ska fyllas i med uppmätta värden!
@@ -373,10 +377,10 @@ void voltage_to_distance()
 {
 	IR_distance[0] = lookup_voltage(IR0_table, IR_voltage[0], 14);
 	IR_distance[1] = lookup_voltage(IR1_table, IR_voltage[1], 14);
-	IR_distance[2] = lookup_voltage(IR2_table, IR_voltage[2], 14);
+	IR_distance[2] = lookup_voltage(IR2_table, IR_ADC[2], 15);
 	IR_distance[3] = lookup_voltage(IR3_table, IR_voltage[3], 14);
 	IR_distance[4] = lookup_voltage(IR4_table, IR_voltage[4], 14);
-	IR_distance[5] = lookup_voltage(IR5_table, IR_voltage[5], 14);
+	IR_distance[5] = lookup_voltage(IR5_table, IR_ADC[5], 15);
 	IR_distance[6] = lookup_voltage(IR6_table, IR_voltage[6], 14);
 }
 
@@ -463,6 +467,14 @@ void save_to_buffer()
 
 void kalibrering()		// XXXXX Endast för att kunna kalibrera sensorer!
 {
-	sum = sum + IR_ADC[0];
-	++counter;
+	if(initial_counter < 10)
+	{
+		++initial_counter;
+	}
+	else
+	{
+		sum = sum + IR_ADC[2];
+		++counter;
+		result = sum/counter;	
+	}
 }
