@@ -24,17 +24,9 @@
 double Vref = 5;
 const int delay_time = 50; // tid i millisekunder (50 ger alltså ungefär 20Hz, lagom för US-sensorn)
 
-double IR0_reading1, IR0_reading2, IR0_reading3, IR0_reading4, IR0_reading5;
-double IR1_reading1, IR1_reading2, IR1_reading3, IR1_reading4, IR1_reading5;
-double IR2_reading1, IR2_reading2, IR2_reading3, IR2_reading4, IR2_reading5;
-double IR3_reading1, IR3_reading2, IR3_reading3, IR3_reading4, IR3_reading5;
-double IR4_reading1, IR4_reading2, IR4_reading3, IR4_reading4, IR4_reading5;
-double IR5_reading1, IR5_reading2, IR5_reading3, IR5_reading4, IR5_reading5;
-double IR6_reading1, IR6_reading2, IR6_reading3, IR6_reading4, IR6_reading5;
+double IR_reading[5][7];
 
-double IR0_ADC, IR1_ADC, IR2_ADC, IR3_ADC, IR4_ADC, IR5_ADC, IR6_ADC;
-double IR0_voltage, IR1_voltage, IR2_voltage, IR3_voltage, IR4_voltage, IR5_voltage, IR6_voltage;	// XXXXX Kommer förmodligen tas bort
-double IR0_distance, IR1_distance, IR2_distance, IR3_distance, IR4_distance, IR5_distance, IR6_distance;
+double IR_ADC[7], IR_voltage[7], IR_distance[7];
 
 double US_reading;	// (US = Ultra Sound)
 double US_distance;
@@ -243,71 +235,39 @@ ISR(TIMER1_CAPT_vect)		// Input Capture (US-sensorn)
 
 ISR(ADC_vect)	// ADC Conversion Complete
 {
-	if(ADMUX == 0x60)
+	int sensor_ID = 0;
+	switch (ADMUX)
 	{
-		IR0_reading5 = IR0_reading4;
-		IR0_reading4 = IR0_reading3;
-		IR0_reading3 = IR0_reading2;
-		IR0_reading2 = IR0_reading1;
-		IR0_reading1 = ADCH << 2;				// Läs in ADC:ns 8 högsta (av 10) bitar, skiftade två steg uppåt
-		IR0_ADC = (IR0_reading1 + IR0_reading2 + IR0_reading3 + IR0_reading4 + IR0_reading5)/5;
+	case 0x60:
+			sensor_ID = 0;
+			break;
+	case 0x61:
+			sensor_ID = 1;
+			break;
+	case 0x62:
+			sensor_ID = 2;
+			break;
+	case 0x63:
+			sensor_ID = 3;
+			break;
+	case 0x64:
+			sensor_ID = 4;
+			break;
+	case 0x65:
+			sensor_ID = 5;
+			break;
+	case 0x66:
+			sensor_ID = 6;
+			break;	
 	}
 	
-	if(ADMUX == 0x61)
+	for (int i = 5; i>=2; --i)
 	{
-		IR1_reading5 = IR1_reading4;
-		IR1_reading4 = IR1_reading3;
-		IR1_reading3 = IR1_reading2;
-		IR1_reading2 = IR1_reading1;
-		IR1_reading1 = ADCH << 2;
-		IR1_ADC = (IR1_reading1 + IR1_reading2 + IR1_reading3 + IR1_reading4 + IR1_reading5)/5;
+		IR_reading[i][sensor_ID]=IR_reading[i-1][sensor_ID];
 	}
-	if(ADMUX == 0x62)
-	{
-		IR2_reading5 = IR2_reading4;
-		IR2_reading4 = IR2_reading3;
-		IR2_reading3 = IR2_reading2;
-		IR2_reading2 = IR2_reading1;
-		IR2_reading1 = ADCH << 2;
-		IR2_ADC = (IR2_reading1 + IR2_reading2 + IR2_reading3 + IR2_reading4 + IR2_reading5)/5;
-	}
-	if(ADMUX == 0x63)
-	{
-		IR3_reading5 = IR3_reading4;
-		IR3_reading4 = IR3_reading3;
-		IR3_reading3 = IR3_reading2;
-		IR3_reading2 = IR3_reading1;
-		IR3_reading1 = ADCH << 2;
-		IR3_ADC = (IR3_reading1 + IR3_reading2 + IR3_reading3 + IR3_reading4 + IR3_reading5)/5;
-	}
-	if(ADMUX == 0x64)
-	{
-		IR4_reading5 = IR4_reading4;
-		IR4_reading4 = IR4_reading3;
-		IR4_reading3 = IR4_reading2;
-		IR4_reading2 = IR4_reading1;
-		IR4_reading1 = ADCH << 2;
-		IR4_ADC = (IR4_reading1 + IR4_reading2 + IR4_reading3 + IR4_reading4 + IR4_reading5)/5;
-	}
-	if(ADMUX == 0x65)
-	{
-		IR5_reading5 = IR5_reading4;
-		IR5_reading4 = IR5_reading3;
-		IR5_reading3 = IR5_reading2;
-		IR5_reading2 = IR5_reading1;
-		IR5_reading1 = ADCH << 2;
-		IR5_ADC = (IR5_reading1 + IR5_reading2 + IR5_reading3 + IR5_reading4 + IR5_reading5)/5;
-	}
-	if(ADMUX == 0x66)
-	{
-		IR6_reading5 = IR6_reading4;
-		IR6_reading4 = IR6_reading3;
-		IR6_reading3 = IR6_reading2;
-		IR6_reading2 = IR6_reading1;
-		IR6_reading1 = ADCH << 2;
-		IR6_ADC = (IR6_reading1 + IR6_reading2 + IR6_reading3 + IR6_reading4 + IR6_reading5)/5;
-	}
-	
+	IR_reading[1][sensor_ID] = ADCH << 2;				// Läs in ADC:ns 8 högsta (av 10) bitar, skiftade två steg uppåt
+	IR_ADC[sensor_ID] = (IR_reading[1][sensor_ID] + IR_reading[2][sensor_ID] + IR_reading[3][sensor_ID] + IR_reading[4][sensor_ID] + IR_reading[5][sensor_ID])/5;
+
 	++ADMUX;
 }
 
@@ -377,24 +337,24 @@ void ADC_IR()
 
 void ADC_to_voltage()				// XXXXX Kommer förmodligen tas bort
 {
-	IR0_voltage = (Vref*IR0_ADC)/1024;
-	IR1_voltage = (Vref*IR1_ADC)/1024;
-	IR2_voltage = (Vref*IR2_ADC)/1024;
-	IR3_voltage = (Vref*IR3_ADC)/1024;
-	IR4_voltage = (Vref*IR4_ADC)/1024;
-	IR5_voltage = (Vref*IR5_ADC)/1024;
-	IR6_voltage = (Vref*IR6_ADC)/1024;
+	IR_voltage[0] = (Vref*IR_ADC[0])/1024;
+	IR_voltage[1] = (Vref*IR_ADC[1])/1024;
+	IR_voltage[2] = (Vref*IR_ADC[2])/1024;
+	IR_voltage[3] = (Vref*IR_ADC[3])/1024;
+	IR_voltage[4] = (Vref*IR_ADC[4])/1024;
+	IR_voltage[5] = (Vref*IR_ADC[5])/1024;
+	IR_voltage[6] = (Vref*IR_ADC[6])/1024;
 } 
 
 void voltage_to_distance()
 {
-	IR0_distance = lookup_voltage(IR0_table, IR0_ADC, 14);
-	IR1_distance = lookup_voltage(IR1_table, IR1_voltage, 14);
-	IR2_distance = lookup_voltage(IR2_table, IR2_voltage, 14);
-	IR3_distance = lookup_voltage(IR3_table, IR3_voltage, 14);
-	IR4_distance = lookup_voltage(IR4_table, IR4_voltage, 14);
-	IR5_distance = lookup_voltage(IR5_table, IR5_voltage, 14);
-	IR6_distance = lookup_voltage(IR6_table, IR6_voltage, 14);
+	IR_distance[0] = lookup_voltage(IR0_table, IR_ADC[0], 14);
+	IR_distance[1] = lookup_voltage(IR1_table, IR_voltage[1], 14);
+	IR_distance[2] = lookup_voltage(IR2_table, IR_voltage[2], 14);
+	IR_distance[3] = lookup_voltage(IR3_table, IR_voltage[3], 14);
+	IR_distance[4] = lookup_voltage(IR4_table, IR_voltage[4], 14);
+	IR_distance[5] = lookup_voltage(IR5_table, IR_voltage[5], 14);
+	IR_distance[6] = lookup_voltage(IR6_table, IR_voltage[6], 14);
 }
 
 double lookup_voltage(table* volt_dist_table, double voltage, int table_size)
@@ -441,12 +401,15 @@ void time_to_distance()
 	US_distance =  US_reading*0.0642857143;		// Gör om till tid i millisekunder
 	US_distance = US_distance - 0.75;			// Subrtrahera offset mellan triggerpuls och ekopuls
 	US_distance = 34.33*US_distance/2;			// Gör om till cm
+	
+	if(US_distance > 250)
+		US_distance = 250;						// Sätt max-avstånd (så att ej får överslag då det görs om till 8 bitar)
 }
 
 void calculate_Yaw()	// XXXXX Endast grundfunktionalitet, kommer behöva utökas för att upptäcka t.ex. när bara ena sidan är tillförlitlig.
 {
-	double l_delta_right = IR2_distance - IR3_distance;
-	double l_delta_left = IR5_distance - IR6_distance;
+	double l_delta_right = IR_distance[2] - IR_distance[3];
+	double l_delta_left = IR_distance[5] - IR_distance[6];
 	
 	Yaw_right = (atan(l_delta_right/IR_sensor_distance_right)/3.14)*180;	// Yaw-beräkning med de högra sidosensorerna
 	Yaw_left = (atan(l_delta_left/IR_sensor_distance_left)/3.14)*180;		// Yaw-beräkning med de vänstra sidosensorerna
@@ -458,13 +421,13 @@ void save_to_buffer()
 {
 	//cli();					// XXXXX Behövs väl inte maska bort avbrott? Vad kan hända?
 	
-	buffer0_IR0 = IR0_distance;
-	buffer1_IR1 = IR1_distance;
-	buffer2_IR2 = IR2_distance;
-	buffer3_IR3 = IR3_distance;
-	buffer4_IR4 = IR4_distance;
-	buffer5_IR5 = IR5_distance;
-	buffer6_IR6 = IR6_distance;
+	buffer0_IR0 = IR_distance[0];
+	buffer1_IR1 = IR_distance[1];
+	buffer2_IR2 = IR_distance[2];
+	buffer3_IR3 = IR_distance[3];
+	buffer4_IR4 = IR_distance[4];
+	buffer5_IR5 = IR_distance[5];
+	buffer6_IR6 = IR_distance[6];
 	
 	buffer7_US = US_distance;
 	
@@ -477,6 +440,6 @@ void save_to_buffer()
 
 void kalibrering()		// XXXXX Endast för att kunna kalibrera sensorer!
 {
-	sum = sum + IR0_ADC;	
+	sum = sum + IR_ADC[0];	
 	++counter;				
 }
