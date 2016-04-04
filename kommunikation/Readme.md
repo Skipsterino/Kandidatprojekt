@@ -1,0 +1,3 @@
+# Kommunikationsmodul
+
+Här finns kod som hör till kommunikationsmodulen.
