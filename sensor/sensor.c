@@ -25,7 +25,7 @@ double Vref = 5;		// XXXXX Kommer förmdligen tas bort
 const int delay_time = 50;		// tid i millisekunder (50 ger alltså ungefär 20Hz, lagom för US-sensorn)
 
 double IR_reading[7][5];		// 2D-array med de 5 senaste avläsningarna för de 7 sensorerna		
-double IR_ADC[7], IR_voltage[7], IR_distance[7];
+double IR_ADC[7], IR_distance[7];
 
 double US_reading;		// (US = Ultra Sound)
 double US_distance;
@@ -47,7 +47,7 @@ double result;		// XXXXX Endast för sensor-kalibrering
 
 typedef struct
 {
-	double voltage;		// XXXXX Ska bytas mot ADC så småningom
+	double ADC_data;	
 	double distance;
 } table;
 
@@ -107,22 +107,25 @@ table IR2_table[] =
 	{557.3, 15}
 };
 
-table IR3_table[] =		// XXXXX Ska fyllas i med uppmätta värden!
+table IR3_table[] =
 {
-	{0.4, 150},
-	{0.45, 140},
-	{0.5, 130},
-	{0.55, 120},
-	{0.6, 110},
-	{0.65, 100},
-	{0.7, 90},
-	{0.8, 80},
-	{0.9, 70},
-	{1.05, 60},
-	{1.25, 50},
-	{1.55, 40},
-	{2, 30},
-	{2.5, 20}
+	{16, 140},
+	{33.9, 130},
+	{65.7, 120},
+	{99.6, 110},
+	{122.4, 100},
+	{145.2, 90},
+	{166.8, 80},
+	{193.6, 70},
+	{225.2, 60},
+	{275.9, 50},
+	{309.5, 45},
+	{351.9, 40},
+	{403.8, 35},
+	{466.5, 30},
+	{533.6, 25},
+	{588.6, 20},
+	{615.7, 15}
 };
 
 table IR4_table[] =
@@ -181,9 +184,8 @@ table IR6_table[] =
 };
 
 void ADC_IR();
-void ADC_to_voltage();		// XXXXX Kommer förmodligen tas bort (onödig)
-double lookup_voltage(table* volt_dist_table, double voltage, int table_size);		// XXXXX (lookup_ADC)
-void voltage_to_distance();		// XXXXX (ADC_to_distance)
+double lookup_distance(table* ADC_dist_table, double ADC_value, int table_size);
+void ADC_to_distance();
 void read_IMU();
 void time_to_distance();
 void calculate_Yaw();
@@ -212,7 +214,7 @@ int main(void)
 		
 		send_ping();					// (X) Starta en US-mätning 
 		
-		voltage_to_distance();			// (X) Konvertera spänning till avstånd (IR-sensorerna)
+		ADC_to_distance();			// (X) Konvertera spänning till avstånd (IR-sensorerna)
 		time_to_distance();				// (X) Konvertera tid till spänning (US-sensorn)
 		calculate_Yaw();				// (\) Räkna ut Yaw-vinkeln (XXXXX Endast grundfunktionalitet)
 		
@@ -360,49 +362,35 @@ void ADC_IR()
 	}
 	
 	ADMUX = 0x60;				// Återställ ADC:n till ADC0 som inkanal
-	ADC_to_voltage();			// XXXXX Skall tas bort så småningom	
 }
 
-void ADC_to_voltage()
+void ADC_to_distance()
 {
-	IR_voltage[0] = (Vref*IR_ADC[0])/1024;
-	IR_voltage[1] = (Vref*IR_ADC[1])/1024;
-	IR_voltage[2] = (Vref*IR_ADC[2])/1024;
-	IR_voltage[3] = (Vref*IR_ADC[3])/1024;
-	IR_voltage[4] = (Vref*IR_ADC[4])/1024;
-	IR_voltage[5] = (Vref*IR_ADC[5])/1024;
-	IR_voltage[6] = (Vref*IR_ADC[6])/1024;
-} 
-
-void voltage_to_distance()
-{
-	IR_distance[0] = lookup_voltage(IR0_table, IR_ADC[0], 17);
-	IR_distance[1] = lookup_voltage(IR1_table, IR_ADC[1], 11);
-	IR_distance[2] = lookup_voltage(IR2_table, IR_ADC[2], 16);
-	IR_distance[3] = lookup_voltage(IR3_table, IR_voltage[3], 14);
-	IR_distance[4] = lookup_voltage(IR4_table, IR_ADC[4], 11);
-	IR_distance[5] = lookup_voltage(IR5_table, IR_ADC[5], 16);
-	IR_distance[6] = lookup_voltage(IR6_table, IR_ADC[6], 16);
+	IR_distance[0] = lookup_distance(IR0_table, IR_ADC[0], 17);
+	IR_distance[1] = lookup_distance(IR1_table, IR_ADC[1], 11);
+	IR_distance[2] = lookup_distance(IR2_table, IR_ADC[2], 16);
+	IR_distance[3] = lookup_distance(IR3_table, IR_ADC[3], 17);
+	IR_distance[4] = lookup_distance(IR4_table, IR_ADC[4], 11);
+	IR_distance[5] = lookup_distance(IR5_table, IR_ADC[5], 16);
+	IR_distance[6] = lookup_distance(IR6_table, IR_ADC[6], 16);
 }
 
-double lookup_voltage(table* volt_dist_table, double voltage, int table_size)
+double lookup_distance(table* ADC_dist_table, double ADC_value, int table_size)
 {
-	if(voltage <= volt_dist_table[0].voltage)
-		return volt_dist_table[0].distance;
+	if(ADC_value <= ADC_dist_table[0].ADC_data)
+		return ADC_dist_table[0].distance;
 	
-	if(voltage >= volt_dist_table[table_size-1].voltage)
-		return volt_dist_table[table_size-1].distance;
-	
-	int i;
+	if(ADC_value >= ADC_dist_table[table_size-1].ADC_data)
+		return ADC_dist_table[table_size-1].distance;
 
-	for(i = 0; i < table_size-1; i++)
+	for(int i = 0; i < table_size-1; i++)
 	{
-		if (volt_dist_table[i].voltage <= voltage && volt_dist_table[i+1].voltage >= voltage )
+		if (ADC_dist_table[i].ADC_data <= ADC_value && ADC_dist_table[i+1].ADC_data >= ADC_value )
 		{
-			double diff_volt = voltage - volt_dist_table[i].voltage;
-			double step_length = volt_dist_table[i+1].voltage - volt_dist_table[i].voltage;
+			double diff_ADC = ADC_value - ADC_dist_table[i].ADC_data;
+			double step_length = ADC_dist_table[i+1].ADC_data - ADC_dist_table[i].ADC_data;
 
-			return volt_dist_table[i].distance + (volt_dist_table[i+1].distance - volt_dist_table[i].distance)*(diff_volt/step_length);
+			return ADC_dist_table[i].distance + (ADC_dist_table[i+1].distance - ADC_dist_table[i].distance)*(diff_ADC/step_length);
 		}
 	}
 }
@@ -474,7 +462,7 @@ void kalibrering()		// XXXXX Endast för att kunna kalibrera sensorer!
 	}
 	else
 	{
-		sum = sum + IR_ADC[1];
+		sum = sum + IR_ADC[3];
 		++counter;
 		result = sum/counter;	
 	}
