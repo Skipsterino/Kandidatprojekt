@@ -205,6 +205,7 @@ int main(void)
 	DDRD = 0x02;						// Skicka in 0000 0010 på DDRD för att sätta PD1 till utgång, PD6 till ingång
 	TIMSK1 |= 1<<ICIE1;					// Enable:a "Input Capture Interrupt" (För US)
 	TCCR1B &= 0<<ICES1;					// Input Capture tiggar på negativ (fallande) flank
+	SPSR |= 1<<SPIE;					// Enable avbrott SPI
 	sei();								// Enable avbrott öht (bit 7 på SREG sätts till 1)
 	
 	while (1)
@@ -223,7 +224,7 @@ int main(void)
 		_delay_ms(delay_time);			// (X) Vila
 		
 		
-		kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
+		//kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
 	}
 }
 
@@ -279,78 +280,78 @@ ISR(ADC_vect)		// ADC Conversion Complete
 	++ADMUX;
 }
 
-//ISR(SPI_STC_vect)		// Avbrottsvektor för data-sändning
-//{
-	//switch(byte_to_send)
-	//{
-		//case 0:
-		//{
-			//SPI_REGISTER_XXXXX = buffer0_IR0;
-			//++byte_to_send;
-			//break;
-		//}
-		//case 1:
-		//{
-			//SPI_REGISTER_XXXXX = buffer1_IR1;
-			//++byte_to_send;
-			//break;
-		//}
-		//case 2:
-		//{
-			//SPI_REGISTER_XXXXX = buffer2_IR2;
-			//++byte_to_send;
-			//break;
-		//}
-		//case 3:
-		//{
-			//SPI_REGISTER_XXXXX = buffer3_IR3;
-			//++byte_to_send;
-			//break;
-		//}
-		//case 4:
-		//{
-			//SPI_REGISTER_XXXXX = buffer4_IR4;
-			//++byte_to_send;
-			//break;
-		//}
-		//case 5:
-		//{
-			//SPI_REGISTER_XXXXX = buffer5_IR5;
-			//++byte_to_send;
-			//break;
-		//}
-		//case 6:
-		//{
-			//SPI_REGISTER_XXXXX = buffer6_IR6;
-			//++byte_to_send;
-			//break;
-		//}
-		//case 7:
-		//{
-			//SPI_REGISTER_XXXXX = buffer7_US;
-			//++byte_to_send;
-			//break;
-		//}
-		//case 8:
-		//{
-			//SPI_REGISTER_XXXXX = buffer8_Yaw;
-			//++byte_to_send;
-			//break;
-		//}
-		//case 9:
-		//{
-			//SPI_REGISTER_XXXXX = buffer9_Pitch;
-			//++byte_to_send;
-			//break;
-		//}
-		//case 10:
-		//{
-			//SPI_REGISTER_XXXXX = buffer10_Roll;
-			//byte_to_send = 0;
-			//break;
-		//}
-	//}
-//}
+ISR(SPI_STC_vect)		// Avbrottsvektor för data-sändning (kan behöva utökas)
+{
+	switch(byte_to_send)
+	{
+		case 0:
+		{
+			SPDR = buffer0_IR0;
+			++byte_to_send;
+			break;
+		}
+		case 1:
+		{
+			SPDR = buffer1_IR1;
+			++byte_to_send;
+			break;
+		}
+		case 2:
+		{
+			SPDR = buffer2_IR2;
+			++byte_to_send;
+			break;
+		}
+		case 3:
+		{
+			SPDR = buffer3_IR3;
+			++byte_to_send;
+			break;
+		}
+		case 4:
+		{
+			SPDR = buffer4_IR4;
+			++byte_to_send;
+			break;
+		}
+		case 5:
+		{
+			SPDR = buffer5_IR5;
+			++byte_to_send;
+			break;
+		}
+		case 6:
+		{
+			SPDR = buffer6_IR6;
+			++byte_to_send;
+			break;
+		}
+		case 7:
+		{
+			SPDR = buffer7_US;
+			++byte_to_send;
+			break;
+		}
+		case 8:
+		{
+			SPDR = buffer8_Yaw;
+			++byte_to_send;
+			break;
+		}
+		case 9:
+		{
+			SPDR = buffer9_Pitch;
+			++byte_to_send;
+			break;
+		}
+		case 10:
+		{
+			SPDR = buffer10_Roll;
+			byte_to_send = 0;
+			break;
+		}
+	}
+}
 
 void ADC_IR()
 {
@@ -454,7 +455,7 @@ void save_to_buffer()
 	//sei();					// XXXXX Behövs väl inte maska bort avbrott? Vad kan hända?
 }
 
-void kalibrering()		// XXXXX Endast för att kunna kalibrera sensorer!
+void kalibrering()				// XXXXX Endast för att kunna kalibrera sensorer!
 {
 	if(initial_counter < 10)
 	{
