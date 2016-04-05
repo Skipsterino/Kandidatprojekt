@@ -14,6 +14,7 @@
 
 unsigned char USART_Recieve();
 void USART_Transmit(unsigned char data);
+void USART_Transmit_Array(unsigned char array[], uint8_t size);
 void USART_Flush(void);
 
 //Avbrottsrutin som körs då enheten har skickat data.
@@ -43,6 +44,7 @@ void initSPI()
 //Sätter upp alla nödvändiga register för BT
 void initBluetooth()
 {
+	//Enl. datablad 14.7456MHz och 115200BPS
 	uint16_t ubrr_val = 7;
 	
 	//Sätt baud rate prescaler
@@ -58,6 +60,7 @@ void initBluetooth()
 	//8 char size
 	UCSR0C = 0b00000110;
 	
+	//Töm bufferten
 	USART_Flush();
 }
 
@@ -79,6 +82,16 @@ unsigned char USART_Recieve(void)
 	
 }
 
+//Skickar en lista med tecken
+void USART_Transmit_Array(unsigned char array[], uint8_t size)
+{
+	int i;
+	for(i; i < size; ++i)
+	{
+		USART_Transmit(array[i]);
+	}
+}
+
 //töm databufferten
 void USART_Flush(void)
 {
@@ -86,6 +99,7 @@ void USART_Flush(void)
 	while(UCSR0A & (1<<RXC0)) dummy = UDR0;
 }
 
+//Mainfunktion för komm-cpu
 int main(void)
 {
 	cli();
@@ -99,11 +113,11 @@ int main(void)
 	initBluetooth();
 	
 	sei();
-	//Sleep
 	
-    /* Replace with your application code */
-    while (1) 
-    {
-    }
+	unsigned char packet[16] = { 66,111,111,116,105,110,103,46,46,46,32,32,32,32,32,32};
+	
+	USART_Transmit_Array(packet, 16);
+  
+   while(1);
 }
 
