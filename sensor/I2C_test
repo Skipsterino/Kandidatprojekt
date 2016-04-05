@@ -27,7 +27,7 @@
 #define I2Cstatus_MR_DATA_ACK 0x50
 #define I2Cstatus_MR_DATA_NACK 0x58
 
-#define SLA_W 0xD0
+#define SLA_W 0xD2
 #define SLA_R 0xD1
 
 #define WHO_AM_I 0x75;
@@ -38,6 +38,7 @@
 #include <avr/sleep.h>
 #include <math.h>
 #include <util/delay.h>
+#include <compat/twi.h>
 
 double Vref = 5;		// XXXXX Kommer förmdligen tas bort
 const int delay_time = 50;		// tid i millisekunder (50 ger alltså ungefär 20Hz, lagom för US-sensorn)
@@ -223,23 +224,26 @@ int main(void)
 {
 	ADMUX = 0x60;						//Skicka in 0110 0000 på ADMUX för att välja ADC0 som inkanal till A/D (bit 4-0), sätta ADLAR (bit 5) (=> de 8 mest sig. bitarna av resultatet ges i ADCH) och välja "AVCC with external capacitor at AREF pin" som Voltage reference select. (bit 7-6) 
 	ADCSRA = 0x8F;						//Skicka in 1000 1111 på ADCSRA för att enable:a ADC (bit 7), ADC Complete-avbrott (bit 3) samt dela klockfrekvensen med 128 (=> A/D klockas 125 kHz)
-	SMCR |= 0<<SM2 | 0<<SM1 | 1<<SM0;	// Sleep Mode Select till "ADC Noise Reduction" (Så att "sleep_cpu()" ger just detta viloläge)
+	//SMCR |= 0<<SM2 | 0<<SM1 | 1<<SM0;	// Sleep Mode Select till "ADC Noise Reduction" (Så att "sleep_cpu()" ger just detta viloläge)
 	DDRD = 0x02;						// Skicka in 0000 0010 på DDRD för att sätta PD1 till utgång, PD6 till ingång
 	TIMSK1 |= 1<<ICIE1;					// Enable:a "Input Capture Interrupt" (För US)
-	TCCR1B &= 0<<ICES1;					// Input Capture tiggar på negativ (fallande) flank
+	TCCR1B &= ~(1<<ICES1);					// Input Capture tiggar på negativ (fallande) flank
 	SPSR |= 1<<SPIE;					// Enable avbrott SPI
 	DDRB = 0x40;						// Skicka in 0100 0000 på DDRB för att sätta MISO till utgång, resten ingång. (SPI)
 	SPCR = (1<<SPE);					// Enable:a SPI
 	
+	PORTC = 1<<PC0 | 1<<PC1;
+
+	TWSR &= ~( (1<<TWPS1) | (1<<TWPS0) );
 	TWBR = 0x14;						// Skicka in 20 (dec) på TWBR för att tillsammans med Prescalerbitarna TWPS1-TWPS0 defaultade till 00 (=> prescaler = 1 (dec)) sätta I2C-frekvensen till 90.909 kHz (ungefär 100 kHz)
 	//TWCR |= 1<<TWEN;					// Enable:a I2C
-	TWCR |= 1<<TWIE;					// Enable:a I2C-avbrottet
+	//TWCR |= 1<<TWIE;					// Enable:a I2C-avbrottet
+	
+	sei();								//Tillåt avbrott öht
 	
 	///////////////////////////////////////////////////////////////////
 	
-	
-	
-	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);		// Start
+	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);	// Start
 	
 	while (!(TWCR & (1<<TWINT)))				// Vänta på att det har skickats
 	{
@@ -253,8 +257,7 @@ int main(void)
 	TWCR = (1<<TWINT) | (1<<TWEN);				// Skicka
 	
 	while (!(TWCR & (1<<TWINT)))				// Vänta på att det har skickats
-	{
-		
+	{	
 	}
 	
 	if ((TWSR & 0xF8) !=I2Cstatus_MT_SLA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
@@ -295,9 +298,10 @@ int main(void)
 	
 	TWCR = (1<<TWINT) | (1<<TWEN);				// Ta emot data och skicka NACK (mottagningen klar)
 	
-	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);			// STOP
-	
 	I2C_reading = TWDR;
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);			// STOP
+
 	
 	
 	
