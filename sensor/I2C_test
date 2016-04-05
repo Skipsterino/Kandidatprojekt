@@ -1,4 +1,4 @@
-/*
+*
  * Projekt_test.c
  *
  * Created: 3/30/2016 8:38:40 AM
@@ -298,9 +298,14 @@ int main(void)
 	
 	TWCR = (1<<TWINT) | (1<<TWEN);				// Ta emot data och skicka NACK (mottagningen klar)
 	
+	while (!(TWCR & (1<<TWINT)))				// Vänta på att det har skickats
+	{
+		
+	}
+	
 	I2C_reading = TWDR;
 	
-	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);			// STOP
+	TWCR = 1<<TWINT|1<<TWEN| 1<<TWSTO;			// STOP
 
 	
 	
@@ -391,9 +396,15 @@ void I2C_test()
 		
 	TWCR = (1<<TWINT) | (1<<TWEN);				// Ta emot data och skicka NACK (mottagningen klar)
 	
-	TWCR = 1<<TWINT|1<<TWEN| 1<<TWSTO;			// STOP
+	while (!(TWCR & (1<<TWINT)))				// Vänta på att det har skickats
+	{
+		
+	}
 	
 	I2C_reading = TWDR;
+	
+	TWCR = 1<<TWINT|1<<TWEN| 1<<TWSTO;			// STOP
+	
 }
 
 void error()
