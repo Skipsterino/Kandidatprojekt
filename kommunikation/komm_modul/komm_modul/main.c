@@ -16,11 +16,13 @@ unsigned char USART_Recieve();
 void USART_Transmit(unsigned char data);
 void USART_Flush(void);
 
+//Avbrottsrutin som körs då enheten har skickat data.
 ISR(USART0_TX_vect)
 {
 	
 }
 
+//Avbrottsrutin som körs då det finns inkommande data.
 ISR(USART0_RX_vect)  
 {
 	unsigned char data = 0;
@@ -38,6 +40,7 @@ void initSPI()
 	
 }
 
+//Sätter upp alla nödvändiga register för BT
 void initBluetooth()
 {
 	uint16_t ubrr_val = 7;
@@ -58,6 +61,7 @@ void initBluetooth()
 	USART_Flush();
 }
 
+//Skicka ett tecken
 void USART_Transmit(unsigned char data)
 {
 	while(!(UCSR0A & (1<<UDRE0)));
@@ -66,6 +70,7 @@ void USART_Transmit(unsigned char data)
 	
 }
 
+//Ta emot ett tecken
 unsigned char USART_Recieve(void)
 {
 	while(!(UCSR0A & (1<<RXC0)));
@@ -74,6 +79,7 @@ unsigned char USART_Recieve(void)
 	
 }
 
+//töm databufferten
 void USART_Flush(void)
 {
 	unsigned char dummy;
@@ -94,11 +100,6 @@ int main(void)
 	
 	sei();
 	//Sleep
-	
-	//unsigned char data = USART_Recieve();
-	
-	//USART_Transmit(4);
-	
 	
     /* Replace with your application code */
     while (1) 
