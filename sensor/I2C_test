@@ -28,7 +28,7 @@
 #define I2Cstatus_MR_DATA_NACK 0x58
 
 #define SLA_W 0xD2
-#define SLA_R 0xD1
+#define SLA_R 0xD3
 
 #define WHO_AM_I 0x75;
 
