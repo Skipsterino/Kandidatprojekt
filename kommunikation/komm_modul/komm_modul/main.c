@@ -37,10 +37,9 @@ int main(void)
 	
 	sei();
 	
-	unsigned char packet[16] = { 66,111,111,116,105,110,103,46,46,46,32,32,32,32,32,32};
+	//unsigned char packet[16] = { 66,111,111,116,105,110,103,46,46,46,32,32,32,32,32,32};
 	
-	USART_Transmit_Array(packet, 16);
+	//USART_Transmit_Array(packet, 16);
   
    while(1);
 }
-
