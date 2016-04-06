@@ -64,7 +64,7 @@ double sum = 0;		// XXXXX Endast för sensor-kalibrering
 int initial_counter = 0;		// XXXXX Endast för sensor-kalibrering
 double result;		// XXXXX Endast för sensor-kalibrering
 
-uint8_t I2C_reading = 1;
+uint8_t I2C_reading;
 
 typedef struct
 {
@@ -261,10 +261,11 @@ int main(void)
 
 	}
 	
+	I2C_reading = TWDR;
+	
 	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_NACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
 	error();
 	
-	I2C_reading = TWDR;
 
 	TWI_stop();
 	
