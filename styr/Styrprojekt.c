@@ -6,7 +6,7 @@
  */ 
 
 #define F_CPU 16000000UL		// 16 MHz
-#define BAUD_RATE 1000000UL		
+#define BAUD_PRESCALER 0		
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
@@ -17,6 +17,7 @@ void USART_Init(unsigned long);
 void USART_Transmit(unsigned char);
 unsigned char USART_Receive( void );
 void USART_Flush(void); 
+unsigned char checksum_calc(unsigned char param[], int N);
 
 int main(void)
 {
@@ -25,32 +26,49 @@ int main(void)
 	DDRC = 0; //JTAG, alla väljs till ingångar
 	DDRB = (1<<DDB3) | (1<<DDB4) | (1<<DDB5) | (0<<DDB6) | (1<<DDB7); //SPI, allt ut förutom PB6
 	
-	USART_Init(BAUD_RATE);
+	USART_Init(BAUD_PRESCALER);
 	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG)
 	
-	int r1; //I dessa lagras statuspaketets bytes
-	int r2;
-	int r3;
-	int r4;
-	int r5;
-	int r6;
+	//int r1; //I dessa lagras statuspaketets bytes
+	//int r2;
+	//int r3;
+	//int r4;
+	//int r5;
+	//int r6;
 	
-    while(1)
-    {
+    
 		PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
+		
+		unsigned char ID = 0x05;
+		unsigned char length = 0x07;
+		unsigned char instr = 0x03;
+		unsigned char addr = 0x1E;
+		unsigned char param1 = 0x00;
+		unsigned char param2 = 0x02;
+		unsigned char param3 = 0x00;
+		unsigned char param4 = 0x02;
 		
 		USART_Transmit(0xFF); //2 st Startbytes
 		USART_Transmit(0xFF);
-		USART_Transmit(0x05); //Väljer random servo
-		USART_Transmit(0x05); //Length = #parametrar + 2
-		USART_Transmit(0x03); //Instruktion 3, dvs WRITE DATA
-		USART_Transmit(0x1E); //Skriv på Goal Position 
-		USART_Transmit(0xFF); // GoalP LS
-		USART_Transmit(0x01); // GoalP MS
-		USART_Transmit(~(0x2D)); //Check sum
+		USART_Transmit(ID); //Väljer random servo-ID
+		USART_Transmit(length); //Length = #parametrar + 2
+		USART_Transmit(instr); //Instruktion 3, dvs WRITE DATA
+		USART_Transmit(addr); //Skriv på Goal Position 
+		USART_Transmit(param1); // GoalP LS byte
+		USART_Transmit(param2); // GoalP MS byte
+		USART_Transmit(param3);
+		USART_Transmit(param4);
+		cli(); //Disable interrupts för att inte överföringen ska ta för lång tid
+		//Nedan beräknas checksum mha checksum_calc
+		unsigned char param[8] = {ID, length, instr, addr, param1, param2, param3, param4}; 
+		unsigned char checksum = checksum_calc(param, 8);	
+		USART_Transmit(checksum); //Checksum
 		
-		//PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
+		while(!( UCSR0A & (1<<TXC0))) //Vänta på att överföringen klar
+		;
+		PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
+		sei(); //Aktivera avbrott igen
 		
 		//r1 = USART_Receive();
 		//r2 = USART_Receive();
@@ -58,20 +76,22 @@ int main(void)
 		//r4 = USART_Receive();
 		//r5 = USART_Receive();
 		//r6 = USART_Receive();
+	while(1)
+	{
     }
 }
 
-void USART_Init( unsigned long baud )
+void USART_Init( unsigned long prescaler )
 {
-	/* Set baud rate */
-	UBRR0H = (unsigned char)(baud>>8);
-	UBRR0L = (unsigned char)baud;
+	/* Set baud rate prescaler*/
+	UBRR0H = (prescaler>>8);
+	UBRR0L = prescaler;
 	/* Enable receiver and transmitter */
 	UCSR0B = (1<<RXEN0)|(1<<TXEN0); //(X) Motsvarar den bortkommenterade raden lägst upp
 	/* Set frame format: 8data, 1stop bit */
 	UCSR0C = (0<<USBS0)|(3<<UCSZ00);
 	//Töm bufferten
-	USART_Flush();
+	//USART_Flush();
 }
 
 void USART_Transmit( unsigned char data )
@@ -134,4 +154,15 @@ void USART_Flush(void)
 {
 	unsigned char dummy;
 	while(UCSR0A & (1<<RXC0)) dummy = UDR0;
+}
+
+unsigned char checksum_calc(unsigned char param[], int N)
+{
+	int sum = 0;
+	for (int i = 0; i< N; i++)
+	{
+		sum += param[i];
+	}
+	int checksum = ~sum;
+	return (unsigned char)checksum;
 }
