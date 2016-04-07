@@ -11,6 +11,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+#include "Buffers.h"
+
 void initUSART();
 
 unsigned char USART_Recieve();

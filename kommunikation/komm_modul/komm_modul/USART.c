@@ -7,6 +7,8 @@
 
 #include "USART.h"
 
+uint8_t BTcounter;
+
 //Sätter upp alla nödvändiga register för BT
 void initUSART()
 {
@@ -28,6 +30,8 @@ void initUSART()
 	
 	//Töm bufferten
 	USART_Flush();
+	
+	BTcounter = 0;
 }
 
 //Ta emot ett tecken
@@ -74,7 +78,16 @@ ISR(USART0_TX_vect)
 //Avbrottsrutin som körs då det finns inkommande data.
 ISR(USART0_RX_vect)
 {
-	unsigned char data = 0;
+	toSPI[BTcounter] = USART_Recieve();
+	
+	if(BTcounter < 15){
+		++BTcounter;
+	}
+	else{
+		BTcounter = 0;
+		SPDR = toSPI[0];
+	}
+	/*unsigned char data = 0;
 	data = USART_Recieve();
-	USART_Transmit(data);
+	USART_Transmit(data);*/
 }

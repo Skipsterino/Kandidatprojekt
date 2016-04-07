@@ -12,8 +12,9 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+#include "Buffers.h"
+
 void SPI_init_master();
 void SPI_init_slave();
-
 
 #endif /* SPI_H_ */
