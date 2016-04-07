@@ -229,3 +229,17 @@ void Send_Servo_Delaytime(void)
 		_delay_ms(500);
 	}
 }
+
+//Räknar ut koordinater mha positioner
+//unsigned int Pos_to_Korr(unsigned int pos[])
+//{
+//	float Pos_To_Ang_Scale 0.005113269
+//	unsigned int 1_Offset = 0x01
+//	
+//	
+//	unsigned int p1 = pos[1]; 
+//	unsigned int p2 = pos[2];
+//	unsigned int p3 = pos[3];
+//	
+//	float v1= Pos_To_Ang_Scale * ((unsigned int) (p1 + 0x1FF + 1_Offset)); 
+	
