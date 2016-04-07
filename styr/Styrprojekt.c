@@ -19,32 +19,50 @@ unsigned char USART_Receive( void );
 void USART_Flush(void); 
 unsigned char checksum_calc(unsigned char param[], uint8_t num_of_par);
 void Send_Servo_Message(unsigned char message[], uint8_t num_of_par);
+void Send_Servo_Delaytime(void);
 
+//Dessa ska INTE vara globala sen! Är globala endast vid testning så komp. inte slänger dem pga oanvända
+unsigned char r1; //I dessa lagras statuspaketets bytes
+unsigned char r2;
+unsigned char r3;
+unsigned char r4;
+unsigned char r5;
+unsigned char r6;
+	
 int main(void)
 {
 	//init
 	DDRD = 1<<DDD2;
 	DDRC = 0; //JTAG, alla väljs till ingångar
 	DDRB = (1<<DDB3) | (1<<DDB4) | (1<<DDB5) | (0<<DDB6) | (1<<DDB7); //SPI, allt ut förutom PB6
-	
 	USART_Init(BAUD_PRESCALER);
-	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG)
 	
-	unsigned char r1; //I dessa lagras statuspaketets bytes
-	unsigned char r2;
-	unsigned char r3;
-	unsigned char r4;
-	unsigned char r5;
-	unsigned char r6;
-	
+	//Send_Servo_Delaytime();
 	
 	unsigned char servos[3] = {12,10,8};
+		
+	////TEST TEST
+	//PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
+	//_delay_ms(0.1);
+	//PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
+	////SLUT TEST TEST
 	
-	for (int i = 0; i < 3; i++)
-	{
-		unsigned char message1[] = {servos[i], 0x04, 0x03, 0x05,0x00};
-		Send_Servo_Message(message1, 2);
+	//for (int i = 0; i < 4; i++)
+	//unsigned char return_delay_time[] = {servos[0], 0x04, 0x03, 0x05, 0x2D};
+	//Send_Servo_Message(return_delay_time, 2);
+	//
+	
+	
+	
+	while(1)
+	{	
+		unsigned char return_delay_time[] = {servos[0], 0x04, 0x03, 0x05, 0x1E};  	
+		unsigned char send_position_and_velocity[] = {servos[0], 0x07, 0x03, 0x1E, 0x00, 0x02, 0x00, 0x00};
+
+		unsigned char get_temperature[] = {servos[1], 0x04, 0x02, 0x2B, 0x01};
+		Send_Servo_Message(send_position_and_velocity, 5);
+		
 		
 		//PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
 		//
@@ -78,6 +96,7 @@ int main(void)
 		//PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
 		//sei(); //Aktivera avbrott igen
 		//
+		//
 		r1 = USART_Receive();
 		r2 = USART_Receive();
 		r3 = USART_Receive();
@@ -85,9 +104,9 @@ int main(void)
 		r5 = USART_Receive();
 		r6 = USART_Receive();
 		
-		//_delay_ms(1);
-	}
-		
+		//Vänta så skicka OCH ta emot hinner genomföras innan nästa sändning påbörjas
+		_delay_ms(1);
+		}
 	while(1)
 	{
     }
@@ -108,24 +127,25 @@ void USART_Init( unsigned long prescaler )
 
 void USART_Transmit( unsigned char data )
 {
-	/* Wait for empty transmit buffer */
+	// Wait for empty transmit buffer
 	while ( !( UCSR0A & (1<<UDRE0)) )
 	;
-	/* Put data into buffer, sends the data */
+	// Put data into buffer, sends the data
 	UDR0 = data;
 }
 
 unsigned char USART_Receive( void )
 {
-	/* Wait for data to be received */
+	// Wait for data to be received
 	while ( !(UCSR0A & (1<<RXC0)) )
-	;
-	/* Get and return received data from buffer */
+	{
+	};
+	// Get and return received data from buffer
 	return UDR0;
 }
 
 
-// id,instruktion,startpostition, och parametrar i en array och ta med antalet parametrar som en unit8 
+// id,instruktion,startposition, och parametrar i en array och ta med antalet parametrar som en uint8 
  void Send_Servo_Message(unsigned char message[], uint8_t num_of_par)
 {
 	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
@@ -143,28 +163,69 @@ unsigned char USART_Receive( void )
 	cli(); //Deaktivera avbrott så överföringen avslutas korrekt
 	USART_Transmit(checksum); //Checksum
 	while(!( UCSR0A & (1<<TXC0))); //Vänta på att överföringen klar
+	_delay_ms(0.06); //Lite extra tidsmarginal så överföringen verkligen hinner bli klar innan riktning ändras
 	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
 	sei(); //Aktivera avbrott igen
 }
 
-//unsigned char Receive_Servo_Statuspackage(void)
-//{
-	//PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
-	//int i; 
-	//while(???)
-	//{
-		//message[i] = USART_Receive();
-		//i++;
-	//}
-//}
 
+// Tar emot ett meddelande från ett servon. Retunerar(ID, Length, Error, Parametrar). 
+unsigned char[] Receive_Servo_Statuspackage(uint8_t size)
+{
+	unsigned char message[];
+	unsigned char checksum;
+	unsigned char Start1 = USART_Receive();
+	unsigned char Start2 = USART_Receive();
+	unsigned char ID = USART_Receive();
+	unsigned char length = USART_Receive();
+	
+	for(int i=2; i < length + 1; i++)
+	{
+	message[i] = USART_Receive();
+	}
+	checksum = USART_Receive();
+	
+	message[0] = ID;
+	message[1] = length;
+	
+	// Följande rader är en kontroll av checksum. Använd vid behov 
+	//checksum = checksum + ID + length; 
+	//for(i=1; i < length; i++)
+	//{
+		//checksum = checksum + message[i];
+	//}
+	//if(checksum != 0x0F)
+	//{
+		//KASTA SKIT ELLER VAD MAN NU KAN GORA I C 
+	//}
+	
+	message[0] = ID; 
+	message[1] = length;
+	
+	return message;
+}
+
+
+//Beräknar checksum 
 unsigned char checksum_calc(unsigned char message[], uint8_t num_of_par)
 {
 	uint8_t sum = 0;
-	for (int i = 0; i< num_of_par+3; i++)
+	for (int i = 0; i< num_of_par+3; i++) //Ta med parametrarna + ID + instruktion + längd
 	{
 		sum += message[i];
 	}
 	uint8_t checksum = ~sum;
 	return (unsigned char)checksum;
+}
+
+//Konfigurerar alla servon med rätt return delay time
+void Send_Servo_Delaytime(void)
+{
+	for (unsigned char i = 1; i < 19; i++)
+	{
+		unsigned char return_delay_time[] = {i, 0x04, 0x03, 0x05, 0x2D};
+		Send_Servo_Message(return_delay_time, 2);
+		
+		_delay_ms(500);
+	}
 }
