@@ -13,6 +13,24 @@
 #include <math.h>
 #include <util/delay.h>
 
+typedef struct{
+	float a;
+	float b;
+	float c;
+} triple_float;
+
+typedef struct{
+	unsigned char a;
+	unsigned char b;
+	unsigned char c;
+} triple_uchar;
+
+typedef struct{
+	unsigned char a;
+	unsigned char b;
+} double_uchar;
+
+void Init(void);
 void USART_Init(unsigned long);
 void USART_Transmit(unsigned char);
 unsigned char USART_Receive( void );
@@ -22,6 +40,17 @@ void Send_Servo_Message(unsigned char message[], uint8_t num_of_par);
 void Send_Servo_Delaytime(void);
 void Send_Servo_Position(unsigned char ID_and_pos[]);
 void Send_Servo_LED(void);
+triple_uchar Kar_To_Pos(float kar[]);
+triple_float Pos_To_Kar(unsigned char pos[]);
+triple_float create_triple_float(float a, float b, float c);
+triple_uchar create_triple_uchar(unsigned char a, unsigned char b, unsigned char c);
+double_uchar create_double_float(unsigned char a, unsigned char b);
+void Send_Servo_Velocity(unsigned char ID_and_vel[]);
+double_uchar Get_Servo_Position(unsigned char ID); 
+
+
+	
+
 //unsigned char message[]* Receive_Servo_Statuspackage(uint8_t size);
 
 //Dessa ska INTE vara globala sen (om de används senare)! Är globala endast vid testning så komp. inte slänger dem pga oanvända
@@ -109,7 +138,7 @@ unsigned char USART_Receive( void )
 	sei(); //Aktivera avbrott igen
 }
 
-// Skickar önskad position och hastighet till servo. Inargument = (ID, position) OBS! LS Byte först...
+// Skickar önskad position till servo. Inargument = (ID, position) OBS! LS Byte först...
 void Send_Servo_Position(unsigned char ID_and_pos[])
 {
 	unsigned char message[6];
@@ -198,7 +227,7 @@ void Send_Servo_LED(void)
 }
 
 //Räknar ut kartesiska koordinater (kar) mha servoposition (pos)
-float* Pos_To_Kar(unsigned char pos[])
+triple_float Pos_To_Kar(unsigned char pos[])
 {
 	float pos_to_ang_scale = 0.0051182676011; //Skalfaktor mellan pos och vinkel i RADIANER
 	unsigned char first_servo_offset = 0x01; //Lika med 0?
@@ -219,41 +248,138 @@ float* Pos_To_Kar(unsigned char pos[])
 	float v1= pos_to_ang_scale * (float)(p1 - 0x1FF + first_servo_offset);
 	float v2= pos_to_ang_scale * (float)(p2 - 0x1FF + second_servo_offset);
 	float v3= pos_to_ang_scale * (float)(p3 - 0x1FF + third_servo_offset);
-	
-	float kar[3]; 
-	kar[0] = L1*sin(v1) + L2*sin(v1)*cos(v2) + L3*cos(v1)*cos(v2 + v3) + leg_offset_x;
-	kar[1] = L1*cos(v1) + L2*cos(v1)*cos(v2) + L3*cos(v1)*cos(v2 + v3) + leg_offset_y;
-	kar[2]= -L2*sin(v2) - L3*sin(v2 + v3) + leg_offset_z;
-	
-	return &kar;
+	 
+	float x = L1*sin(v1) + L2*sin(v1)*cos(v2) + L3*cos(v1)*cos(v2 + v3) + leg_offset_x;
+	float y = L1*cos(v1) + L2*cos(v1)*cos(v2) + L3*cos(v1)*cos(v2 + v3) + leg_offset_y;
+	float z = -L2*sin(v2) - L3*sin(v2 + v3) + leg_offset_z;
+	triple_float kar = create_triple_float(x,y,z); 
+	return kar;
 }
 
-unsigned char* Kar_To_Pos(float kar[])
+triple_uchar Kar_To_Pos(float kar[])
 {
+	float ang_to_pos_scale = 195.37860814;
+	float pi = 3.1415926536;
+	
+	unsigned char first_servo_offset = 0x01; //Lika med 0?
+	unsigned char second_servo_offset = 0x01; //Lika med 0?
+	unsigned char third_servo_offset = 0x01; //Skild från 0
+	
 	float L1 = 5; //Benlängder i cm
 	float L2 = 7;
+	float L2_power_of_2 = 49;
 	float L3 = 12;
+	float L3_power_of_2 = 144;
 	
 	float leg_offset_x = 15;
 	float leg_offset_y = 10;
-	float leg_offset_z = 0;
+
 	
 	float x = kar[0];
 	float y = kar[1];
 	float z = kar[2];
 	
 	//hjälpvariabler
-	float r_leg = sqrt((x-leg_offset_x)^2+(y-leg_offset_y)^2);
+	float r_leg = sqrt(pow((x-leg_offset_x),2)+pow((y-leg_offset_y),2));
 	float r_outer_leg = r_leg - L1;
+	float r_outer_leg_power_of_2 = pow(r_outer_leg,2); 
+	float z_power_of_2= pow(z,2);
+	float big_ass_thing = asin((L3_power_of_2-r_outer_leg_power_of_2-z_power_of_2-L2_power_of_2)/(-2*L2)/sqrt(r_outer_leg_power_of_2+z_power_of_2));
 
 	//inverskinematik
-	v1 = asin((y-leg_offset_y)/r_leg);
+	float v1 = asin((y-leg_offset_y)/r_leg);
+	float v2 = big_ass_thing + atan(r_outer_leg/z);
+	float v3 = pi -big_ass_thing + asin((L2_power_of_2-r_outer_leg_power_of_2-z_power_of_2-L3_power_of_2)/(-2*L3)/sqrt(r_outer_leg_power_of_2+z_power_of_2));
 
-	v2 = asin((L3^2-r_outer_leg^2-z^2-L2^2)/(-2*L2)/sqrt(r_outer_leg^2+z^2)) + atan(r_outer_leg/z);
-
-	v3 - (asin((L3^2-r_outer_leg^2-z^2-L2^2)/(-2*L2)/sqrt(r_outer_leg^2+z^2)) + asin((L2^2-r_outer_leg^2-z^2-L3^2)/(-2*L3)/sqrt(r_outer_leg^2+z^2)));
-
+	 
+	unsigned char pos1 =(unsigned char)(ang_to_pos_scale*v1) + 0x1FF + first_servo_offset;
+	unsigned char pos2 =(unsigned char)(ang_to_pos_scale*v2) + 0x1FF + second_servo_offset;
+	unsigned char pos3 =(unsigned char)(ang_to_pos_scale*v3) + 0x1FF + third_servo_offset; 
+	triple_uchar pos = create_triple_uchar(pos1, pos2, pos3);
+	return pos; 
 	
+}
+
+triple_float create_triple_float(float a, float b, float c)
+{
+	triple_float this; 
+	this.a = a;
+	this.b = b;
+	this.c = c;
+	return this; 
+}
+
+triple_uchar create_triple_uchar(unsigned char a, unsigned char b, unsigned char c)
+{
+	triple_uchar this;
+	this.a = a;
+	this.b = b;
+	this.c = c;
+	return this;
+}
+
+
+double_uchar create_double_uchar(unsigned char a, unsigned char b)
+{
+	double_uchar this;
+	this.a = a;
+	this.b = b;
+	return this;
+}
+
+//Konfigurerar portar, initierar UART och aktiverar avbrott öht
+void Init(void)
+{
+	DDRD = 1<<DDD2;
+	DDRC = 0; //JTAG, alla väljs till ingångar
+	DDRB = (1<<DDB3) | (1<<DDB4) | (1<<DDB5) | (0<<DDB6) | (1<<DDB7); //SPI, allt ut förutom PB6
+	
+	USART_Init(BAUD_PRESCALER);
+	
+	sei(); //Aktivera avbrott öht (MSB=1 i SREG)
+}
+
+//Skickar önskad hastighet till servo. Inargument = (ID, hastighet) OBS! LS Byte först...
+void Send_Servo_Velocity(unsigned char ID_and_vel[])
+{
+	unsigned char message[6];
+	message[0] = ID_and_vel[0];
+	message[1] = 0x05;
+	message[2] = 0x03;
+	message[3] = 0x20;
+	message[4] = ID_and_vel[1];
+	message[5] = ID_and_vel[2];
+	
+	Send_Servo_Message(message, 3);
+}
+
+// Hämtar positionen hos servo med angivet ID, returnerar som en double_uchar.
+double_uchar Get_Servo_Position(unsigned char ID) //FUNKAR ATT RETURNERA SÅHÄR?
+{
+	unsigned char message[6];
+	unsigned char position_LSByte;
+	unsigned char position_MSByte;
+	
+	message[0] = ID;
+	message[1] = 0x04;
+	message[2] = 0x02;
+	message[3] = 0x24; //Läser ut Present Position (önskas istället Goal Position får man ändra här till 0x1E)
+	message[4] = 0x02;
+	
+	Send_Servo_Message(message, 2);
+	
+	USART_Receive(); //Första startbyten
+	USART_Receive(); //Andra startbyten
+	USART_Receive(); //ID
+	USART_Receive(); //Längd
+	USART_Receive(); //Error
+	position_LSByte = USART_Receive(); //LS Byte av positionen
+	position_MSByte = USART_Receive(); //MS Byte av positionen
+	USART_Receive(); //Checksum
+	
+
+	double_uchar position = create_double_uchar(position_LSByte, position_MSByte);
+	return position;
 }
 
 
