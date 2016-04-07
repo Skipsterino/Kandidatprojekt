@@ -30,8 +30,9 @@
 #define SLA_W 0xD0
 #define SLA_R 0xD1
 
-#define IMU_reg_adr 0x6B;
-
+#define x 0
+#define y 1
+#define z 2
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -41,10 +42,14 @@
 #include <compat/twi.h>
 
 double Vref = 5;		// XXXXX Kommer förmdligen tas bort
-const int delay_time = 500;		// tid i millisekunder (50 ger alltså ungefär 20Hz, lagom för US-sensorn)
+const int delay_time = 50;		// tid i millisekunder (50 ger alltså ungefär 20Hz, lagom för US-sensorn)
 
 double IR_reading[7][5];		// 2D-array med de 5 senaste avläsningarna för de 7 sensorerna
 double IR_ADC[7], IR_distance[7];
+
+uint16_t acc_reading[3], gyro_reading[3];
+int16_t temp_reading;
+double IMU_temperature;
 
 double US_reading;		// (US = Ultra Sound)
 double US_distance;
@@ -208,11 +213,11 @@ void send_ping();
 void kalibrering();		// XXXXX Endast för att kunna kalibrera sensorer!
 void I2C_test();
 void error();
-void init_TWI();
-void TWI_start();
-void TWI_stop();
-void TWI_IMU_read();
-void TWI_IMU_write();
+void init_I2C();
+void I2C_start();
+void I2C_stop();
+void I2C_IMU_write(uint8_t reg_address, uint8_t data);
+void I2C_IMU_read();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -231,94 +236,28 @@ int main(void)
 	DDRB = 0x40;						// Skicka in 0100 0000 på DDRB för att sätta MISO till utgång, resten ingång. (SPI)
 	SPCR = (1<<SPE);					// Enable:a SPI
 
-	init_TWI();
+	init_I2C();
 	
 	sei();								// Enable avbrott öht (bit 7 på SREG sätts till 1)
 	
-	
-	///////////////////////////////////////////////////////////////////
-	
-	TWI_start();
-
-	TWI_IMU_write();
-
-	TWDR = IMU_reg_adr;							// Ladda in adressen för IMU-registret vi ska läsa ifrån
-	TWCR = (1<<TWINT) | (1<<TWEN);				// Skicka
-
-	while (!(TWCR & (1<<TWINT)))				// Vänta på att det har skickats
-	{
-	}
-
-	if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)	// Kolla så att status är rätt
-	error();
-	
-	TWDR = 0x00;								// Ta IMU ur vila och välj intern 8 MHz som klocka
-	TWCR = (1<<TWINT) | (1<<TWEN);				// Skicka
-
-	while (!(TWCR & (1<<TWINT)))				// Vänta på att det har skickats
-	{
-	}
-
-	if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)	// Kolla så att status är rätt
-	error();
-
-	
-	TWI_stop();
-	
-	TWI_start();
-
-	TWI_IMU_write();
-
-	TWDR = 0x3C;							// Ladda in adressen för IMU-registret vi ska läsa ifrån
-	TWCR = (1<<TWINT) | (1<<TWEN);				// Skicka
-
-	while (!(TWCR & (1<<TWINT)))				// Vänta på att det har skickats
-	{
-	}
-
-	if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)	// Kolla så att status är rätt
-	error();
-
-	////////////////////////////////////////////////////////////////////////////
-
-	TWI_start();
-
-	TWI_IMU_read();
-
-	TWCR = (1<<TWINT) | (1<<TWEN);				// Ta emot data och skicka NACK (mottagningen klar)
-
-	while (!(TWCR & (1<<TWINT)))				// Vänta på att det har skickats
-	{
-
-	}
-	
-	I2C_reading = TWDR;
-	
-	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_NACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
-	error();
-	
-
-	TWI_stop();
 
 	/////////////////////////////////////////////////////
 
 	while (1)
 	{
 		
-		//TWI_start();
-						
-		//ADC_IR();						// (X) Sampla IR-sensorerna
-		//read_IMU();						// Hämta data från IMU
+		ADC_IR();						// (X) Sampla IR-sensorerna
+		read_IMU();						// Hämta data från IMU
 
-		//send_ping();					// (X) Starta en US-mätning
+		send_ping();					// (X) Starta en US-mätning
 
-		//ADC_to_distance();			// (X) Konvertera spänning till avstånd (IR-sensorerna)
-		//time_to_distance();				// (X) Konvertera tid till spänning (US-sensorn)
-		//calculate_Yaw();				// (\) Räkna ut Yaw-vinkeln (XXXXX Endast grundfunktionalitet)
+		ADC_to_distance();			// (X) Konvertera spänning till avstånd (IR-sensorerna)
+		time_to_distance();				// (X) Konvertera tid till spänning (US-sensorn)
+		calculate_Yaw();				// (\) Räkna ut Yaw-vinkeln (XXXXX Endast grundfunktionalitet)
 
-		//save_to_buffer();				// (\) Spara undan i buffert (XXXXX Endast preliminärt. Vilka datatyper? Hur casta till dessa optimalt? Maska bort avbrott?)
+		save_to_buffer();				// (\) Spara undan i buffert (XXXXX Endast preliminärt. Vilka datatyper? Hur casta till dessa optimalt? Maska bort avbrott?)
 
-		//_delay_ms(delay_time);			// (X) Vila
+		_delay_ms(delay_time);			// (X) Vila
 
 
 		//kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
@@ -328,16 +267,16 @@ int main(void)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void init_TWI()
+void init_I2C()
 {
-	PORTC = 1<<PC0 | 1<<PC1;
+	PORTC = (1<<PC0) | (1<<PC1);		// Gör I2C-portarna till utgångar
 
-	TWSR &= ~((1<<TWPS1) | (1<<TWPS0));
-	TWBR = 0x46;						// Skicka in 0x45 (dec) på TWBR för att tillsammans med Prescalerbitarna TWPS1-TWPS0 sätta I2C-frekvensen till ungefär 100 kHz
-	TWCR |= (1<<TWIE);					// Enable:a I2C-avbrottet
+	TWSR &= ~((1<<TWPS1) | (1<<TWPS0));	// Sätt presecalerbitarna till 0 (ger prescalervärde = 1)
+	TWBR = 0x20;						// Skicka in 0x20 på TWBR för att tillsammans med Prescalerbitarna TWPS1-TWPS0 sätta I2C-frekvensen till ungefär 100 kHz
+	I2C_IMU_write(0x6B,0x00);			// Väcker IMU ur viloläge
 }
 
-void TWI_start()
+void I2C_start()
 {
 	TWCR = 0;
 	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);// | (1<<TWIE);	// Start
@@ -348,52 +287,204 @@ void TWI_start()
 	error();
 }
 
-void TWI_stop()
+void I2C_stop()
 {
-		TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);			// STOP
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);			// STOP
 }
 
-void TWI_IMU_write()
+void I2C_IMU_write(uint8_t reg_adr, uint8_t data)
 {
-		TWDR = SLA_W;								// Ladda in IMU:ns adress + indikera att skrivning ska ske
-		TWCR = (1<<TWINT) | (1<<TWEN);// | (1<<TWIE);				// Skicka
+	I2C_start();
+	
+	TWDR = SLA_W;								// Ladda in IMU:ns adress + indikera att skrivning ska ske
+	TWCR = (1<<TWINT) | (1<<TWEN);// | (1<<TWIE);				// Skicka
 
-		while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
+	while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
 
-		if ((TWSR & 0xF8) !=I2Cstatus_MT_SLA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
-		error();
+	if ((TWSR & 0xF8) !=I2Cstatus_MT_SLA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWDR = reg_adr;								// Ladda in adressen för IMU-registret vi ska läsa ifrån
+	TWCR = (1<<TWINT) | (1<<TWEN);				// Skicka
+
+	while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
+
+	if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)	// Kolla så att status är rätt
+	error();
+		
+	TWDR = data;								// Ta IMU ur vila och välj intern 8 MHz som klocka
+	TWCR = (1<<TWINT) | (1<<TWEN);				// Skicka
+
+	while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
+
+	if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)	// Kolla så att status är rätt
+	error();
+
+	I2C_stop();
 }
 
-void TWI_IMU_read()
+void I2C_IMU_read()
 {
-		TWDR = SLA_R;								// Ladda in IMU:ns adress + indikera att läsning ska ske
-		TWCR = (1<<TWINT) | (1<<TWEN);// | (1<<TWIE);				// Skicka
+	I2C_start();
 
-		while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
+	TWDR = SLA_W;								// Ladda in IMU:ns adress + indikera att skrivning ska ske
+	TWCR = (1<<TWINT) | (1<<TWEN);// | (1<<TWIE);				// Skicka
 
-		if ((TWSR & 0xF8) !=I2Cstatus_MR_SLA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
-		error();
+	while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
+
+	if ((TWSR & 0xF8) !=I2Cstatus_MT_SLA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+
+	TWDR = 0x3B;								// Ladda in adressen för IMU-registret vi ska läsa ifrån
+	TWCR = (1<<TWINT) | (1<<TWEN);				// Skicka
+
+	while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
+
+	if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)	// Kolla så att status är rätt
+	error();
+
+	I2C_start();
+
+	TWDR = SLA_R;								// Ladda in IMU:ns adress + indikera att läsning ska ske
+	TWCR = (1<<TWINT) | (1<<TWEN);// | (1<<TWIE);				// Skicka
+
+	while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
+
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_SLA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);				// Ta emot data och skicka ACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	acc_reading[x] = (TWDR<<8);
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);				// Ta emot data och skicka ACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	acc_reading[x] += TWDR;
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);				// Ta emot data och skicka ACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	acc_reading[y] = (TWDR<<8);
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);				// Ta emot data och skicka ACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	acc_reading[y] += TWDR;
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);				// Ta emot data och skicka ACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	acc_reading[z] = (TWDR<<8);
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);				// Ta emot data och skicka ACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	acc_reading[z] += TWDR;
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);				// Ta emot data och skicka ACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	temp_reading = (TWDR<<8);
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);				// Ta emot data och skicka ACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	temp_reading += TWDR;
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);				// Ta emot data och skicka ACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	gyro_reading[x] = (TWDR<<8);
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);				// Ta emot data och skicka ACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	gyro_reading[x] += TWDR;
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);				// Ta emot data och skicka ACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	gyro_reading[y] = (TWDR<<8);
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);				// Ta emot data och skicka ACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	gyro_reading[y] += TWDR;
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);				// Ta emot data och skicka ACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	gyro_reading[z] = (TWDR<<8);
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	TWCR = (1<<TWINT) | (1<<TWEN);				// Ta emot data och skicka NACK (mottagningen klar)
+
+	while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
+	
+	gyro_reading[z] += TWDR;
+	
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_NACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
+	error();
+	
+	I2C_stop();
 }
 
 void error()
 {
 	I2C_reading = 111;
-}
-
-ISR(TWI_vect)
-{
-	
-	switch(TWSR & 0xF8)
-	{
-		
-	case I2Cstatus_START:
-		{
-			TWI_IMU_write();
-		}
-			
-	}
-
-		
 }
 
 ISR(TIMER1_CAPT_vect)		// Input Capture (US-sensorn)
@@ -574,7 +665,8 @@ void send_ping()
 
 void read_IMU()
 {
-
+	I2C_IMU_read();
+	IMU_temperature = ((double)temp_reading)/340.0f + 36.53f;
 }
 
 void time_to_distance()
