@@ -16,6 +16,22 @@ void LCD_clear()
 	LCD_send_command(0x01);
 }
 
+void LCD_put_num_u(unsigned int num)
+{
+	char digits[16];
+	sprintf(digits,"%d", num);
+	
+	
+	for(int i = 0; i < 16; ++i)
+	{
+		if(digits[i] == '\0')
+		{
+			break;
+		}
+		LCD_putc(digits[i]);
+	}
+}
+
 void LCD_putc(char c)
 {
 	while(LCD_busy())

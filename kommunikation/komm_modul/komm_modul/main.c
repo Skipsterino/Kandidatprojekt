@@ -14,6 +14,7 @@
 #include "USART.h"
 #include "SPI.h"
 #include "LCD.h"
+#include "LCD_controller.h"
 
 void initSPI()
 {
@@ -27,6 +28,8 @@ int main(void)
 	//Initiera LCD
 	LCD_init();
 	
+	LCD_controller_init();
+	
 	//Initiera buss	
 	initSPI();
 	
@@ -35,19 +38,22 @@ int main(void)
 	
 	sei();
 	
-	const char* s1 = "Booting...";
-	const char* s2 = "Hello World!";
+	LCD_controller_put_line(0, "Hejsan");
+	LCD_controller_put_line(1, "Hell0 World");
+	LCD_controller_put_line(2, "HerpDerp");
+	LCD_controller_put_line(3, "DerpHerp");
+	LCD_controller_put_line(4, "Hopp");
+	LCD_controller_put_line(5, "1234");
+	LCD_controller_put_line(6, "6721");
+	LCD_controller_put_line(7, "Hejsan");
+	LCD_controller_put_line(8, "Hell0 World");
+	LCD_controller_put_line(9, "HerpDerp");
+	LCD_controller_put_line(10, "Hejsan");
+	LCD_controller_put_line(11, "Hell0 World");
+	LCD_controller_put_line(12, "HerpDerp");
+	LCD_controller_put_line(13, "Hejsan");
+	LCD_controller_put_line(14, "Hell0 World");
+	LCD_controller_put_line(15, "HerpDerp");
 	
-	char packet1[16] = "HEJ123";
-		
-	char packet2[16];
-	
-	//strcpy(packet1, s1);
-	strcpy(packet2, s2);
-	
-	LCD_print_string(packet1, "Kalle");
-	
-	//USART_Transmit_Array(packet, 16);
-  
    while(1);
 }
