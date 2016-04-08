@@ -16,11 +16,6 @@
 #include "LCD.h"
 #include "LCD_controller.h"
 
-void initSPI()
-{
-	
-}
-
 //Mainfunktion för komm-cpu
 int main(void)
 {
@@ -31,29 +26,29 @@ int main(void)
 	LCD_controller_init();
 	
 	//Initiera buss	
-	initSPI();
+	SPI_init_slave();
 	
 	//Initiera BT
 	initUSART();
 	
 	sei();
 	
-	LCD_controller_put_line(0, "Hejsan");
-	LCD_controller_put_line(1, "Hell0 World");
-	LCD_controller_put_line(2, "HerpDerp");
-	LCD_controller_put_line(3, "DerpHerp");
-	LCD_controller_put_line(4, "Hopp");
-	LCD_controller_put_line(5, "1234");
-	LCD_controller_put_line(6, "6721");
-	LCD_controller_put_line(7, "Hejsan");
-	LCD_controller_put_line(8, "Hell0 World");
-	LCD_controller_put_line(9, "HerpDerp");
-	LCD_controller_put_line(10, "Hejsan");
-	LCD_controller_put_line(11, "Hell0 World");
-	LCD_controller_put_line(12, "HerpDerp");
-	LCD_controller_put_line(13, "Hejsan");
-	LCD_controller_put_line(14, "Hell0 World");
-	LCD_controller_put_line(15, "HerpDerp");
+	LCD_controller_put_line(0, "BT status");
+	LCD_controller_put_line(1, "Disconnected");
+	LCD_controller_put_line(2, "Control Mode");
+	LCD_controller_put_line(3, "Manual");
+	LCD_controller_put_line(4, "Sensor1");
+	LCD_controller_put_line(5, "14cm");
+	LCD_controller_put_line(6, "Sensor2");
+	LCD_controller_put_line(7, "12cm");
+	LCD_controller_put_line(8, "Angle error");
+	LCD_controller_put_line(9, "4 deg");
+	LCD_controller_put_line(10, "Mood");
+	LCD_controller_put_line(11, "Happy");
+	LCD_controller_put_line(12, "Decision");
+	LCD_controller_put_line(13, "Go forward");
+	LCD_controller_put_line(14, "Bytes sent");
+	LCD_controller_put_line(15, "812");
 	
    while(1);
 }
