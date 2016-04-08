@@ -115,7 +115,7 @@ unsigned char USART_Receive( void )
 }
 
 
-// id,instruktion,startposition, och parametrar i en array och ta med antalet parametrar som en uint8 
+// id, length, instruktion,startposition, och parametrar i en array och ta med antalet parametrar som en uint8 
  void Send_Servo_Message(unsigned char message[], uint8_t num_of_par)
 {
 	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
@@ -382,7 +382,18 @@ double_uchar Get_Servo_Position(unsigned char ID) //FUNKAR ATT RETURNERA SÅHÄR
 	return position;
 }
 
-
+//Konfigurerar alla servon med vinkelbegränsningar
+void Send_Servo_Angle_Limit(void)
+{
+	for (uint8_t i = 1; i < 19; i++)
+	{
+		unsigned char return_delay_time[] = {i, 0x06, 0x03, 0x06, 0x2D, mpohfgl,dgkmr};
+		}
+		Send_Servo_Message(return_delay_time, 2);
+		
+		_delay_ms(500);
+	}
+}
 
 
 		
