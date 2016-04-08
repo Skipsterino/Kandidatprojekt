@@ -385,14 +385,27 @@ double_uchar Get_Servo_Position(unsigned char ID) //FUNKAR ATT RETURNERA SÅHÄR
 //Konfigurerar alla servon med vinkelbegränsningar
 void Send_Servo_Angle_Limit(void)
 {
-	for (uint8_t i = 1; i < 19; i++)
+	uint8_t inners_left[] = {2,8,14};
+	uint8_t inners_right[] = {1,7,13};
+	uint8_t middle[] = {3,4,9,10,15,16};
+	uint8_t outer_left[] = {6,12,18};
+	uint8_t outer_right[] = {5,11,17};
+	
+	for (uint8_t i = 0; i < 6; i++)
 	{
-		unsigned char return_delay_time[] = {i, 0x06, 0x03, 0x06, 0x2D, mpohfgl,dgkmr};
-		}
-		Send_Servo_Message(return_delay_time, 2);
-		
+		unsigned char return_delay_time[] = {middle[i], 0x07, 0x03, 0x06, 0xCD, 0x00, 0X31, 0x03}; // pos 1FF -+ 1024/300pos/vinkl*90grader= 0x00CD,0x0331
+		Send_Servo_Message(return_delay_time, 5);
 		_delay_ms(500);
 	}
+	for (uint8_t i = 0; i < 3; i++) 
+		unsigned char return_delay_time[] = {outer_left[i], 0x07, 0x03, 0x06, 0x55 0x01, 0x31 0x03}; // pos 1FF + (1024/300pos/vinkl*(-50grader eller + 90 grader)= 0x0155,0x0331
+		Send_Servo_Message(return_delay_time, 2);
+		_delay_ms(500);
+		unsigned char return_delay_time[] = {outer_right[i], 0x07, 0x03, 0x06, 0xCD, 0x00, 0xA9, 0x02}; // pos 1FF + (1024/300pos/vinkl*(+50grader eller - 90 grader)= 0x00CD,0x02A9
+		Send_Servo_Message(return_delay_time, 2);
+		_delay_ms(500);
+	}
+	// in med inner här !!!!!!!
 }
 
 
