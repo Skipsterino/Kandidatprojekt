@@ -80,17 +80,18 @@ int main(void)
 	//Send_Servo_Delaytime();
 	Send_Servo_LED();
 	//Send_Servo_Angle_Limit();
+	sei(); //Aktivera avbrott öht (MSB=1 i SREG)
+	
 	////Send_Servo_Position({0x07,0x66,0x01});
 	//_delay_ms(1000);
 	////Send_Servo_Position({0x07,0xFF,0x01});
 	//_delay_ms(1000);
-	////Send_Servo_Position({0x07,0x66,0x01});
+	////Send_Servo_Position({0x07,0x67,0x01});
 	//_delay_ms(1000);
 	////Send_Servo_Position({0x07,0xFF,0x01});
 	//_delay_ms(1000);
 	//Send_Servo_Position({0x07,0x65,0x01});
 
-	sei(); //Aktivera avbrott öht (MSB=1 i SREG)
 	
 
 	//unsigned char servos[9] = {12,10,8,18,16,14, 6,4,2};
