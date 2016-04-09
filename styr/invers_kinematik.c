@@ -1,4 +1,4 @@
-﻿/*
+/*
  * invers_kinematik.c
  *
  * Created: 4/8/2016 3:13:10 PM
@@ -11,16 +11,16 @@
 triple_float Pos_To_Kar(six_uchar pos)
 {
 	float pos_to_ang_scale = 0.0051182676011; //Skalfaktor mellan pos och vinkel (som mäts i RADIANER)
-	unsigned int first_servo_offset = 0x01; //Lika med 0?
-	unsigned int second_servo_offset = 0x01; //Lika med 0?
-	unsigned int third_servo_offset = 0x01; //Skild från 0
-	float leg_offset_x = 15;
-	float leg_offset_y = 10;
+	unsigned int first_servo_offset = 0x00; //Lika med 0?
+	unsigned int second_servo_offset = 0x2F; //Lika med 0?
+	unsigned int third_servo_offset = 0xAA; //Skild från 0
+	float leg_offset_x = 0;
+	float leg_offset_y = 0;
 	float leg_offset_z = 0;
 	
-	float L1 = 5; //Benlängder i cm
-	float L2 = 7;
-	float L3 = 12;
+	float L1 = 5.5; //Benlängder i cm
+	float L2 = 6.7;
+	float L3 = 13.5;
 	
 	//Plocka fram LS resp. MS Byte av servopositionerna
 	unsigned char p1LS = pos.a;
@@ -41,9 +41,9 @@ triple_float Pos_To_Kar(six_uchar pos)
 	p3 = (p3<<8);
 	p3 |= (unsigned int)p3LS;
 	
-	float v1= pos_to_ang_scale * (float)(p1 - 0x1FF + first_servo_offset);
-	float v2= pos_to_ang_scale * (float)(p2 - 0x1FF + second_servo_offset);
-	float v3= pos_to_ang_scale * (float)(p3 - 0x1FF + third_servo_offset);
+	float v1= pos_to_ang_scale * (float)(p1 - 0x1FF - first_servo_offset);
+	float v2= pos_to_ang_scale * (float)(p2 - 0x1FF - second_servo_offset);
+	float v3= pos_to_ang_scale * (float)(p3 - 0x1FF - third_servo_offset);
 	
 	float x = L1*sin(v1) + L2*sin(v1)*cos(v2) + L3*cos(v1)*cos(v2 + v3) + leg_offset_x;
 	float y = L1*cos(v1) + L2*cos(v1)*cos(v2) + L3*cos(v1)*cos(v2 + v3) + leg_offset_y;
@@ -58,18 +58,18 @@ six_uchar Kar_To_Pos(triple_float kar)
 	float ang_to_pos_scale = 195.37860814;
 	float pi = 3.1415926536;
 	
-	unsigned int first_servo_offset = 0x01; //Lika med 0?
-	unsigned int second_servo_offset = 0x01; //Lika med 0?
-	unsigned int third_servo_offset = 0x01; //Skild från 0
+	unsigned int first_servo_offset = 0x00; //Lika med 0?
+	unsigned int second_servo_offset = 0x2F; //Lika med 0?
+	unsigned int third_servo_offset = 0xAA; //Skild från 0
 	
-	float L1 = 5; //Benlängder i cm
-	float L2 = 7;
-	float L2_sq = 49;
-	float L3 = 12;
-	float L3_sq = 144;
+	float L1 = 5.5; //Benlängder i cm
+	float L2 = 6.7;
+	float L2_sq = 44.89;
+	float L3 = 13.5;
+	float L3_sq = 182.25;
 	
-	float leg_offset_x = 15;
-	float leg_offset_y = 10;
+	float leg_offset_x = 0;
+	float leg_offset_y = 0;
 	
 	float x = kar.a;
 	float y = kar.b;
@@ -84,13 +84,13 @@ six_uchar Kar_To_Pos(triple_float kar)
 
 	//Invers kinematik
 	float v1 = asin((y-leg_offset_y)/r_leg);
-	float v2 = big_ass_thing + atan(r_outer_leg/z);
+	float v2 = pi - big_ass_thing - atan(r_outer_leg/z);
 	float v3 = pi -big_ass_thing + asin((L2_sq-r_outer_leg_sq-z_sq-L3_sq)/(-2*L3)/sqrt(r_outer_leg_sq+z_sq));
 
 	//Spara först positionerna som unsigned int (beräkningarna passar bättre med att hantera både LS och MS byte samtidigt som en unsigned int)
-	unsigned int pos1 =(unsigned int)(ang_to_pos_scale*v1) + 0x1FF + first_servo_offset;
-	unsigned int pos2 =(unsigned int)(ang_to_pos_scale*v2) + 0x1FF + second_servo_offset;
-	unsigned int pos3 =(unsigned int)(ang_to_pos_scale*v3) + 0x1FF + third_servo_offset;
+	unsigned int pos1 =(unsigned int)(ang_to_pos_scale*v1) + 0x1FF - first_servo_offset;
+	unsigned int pos2 =(unsigned int)(ang_to_pos_scale*v2) + 0x1FF - second_servo_offset;
+	unsigned int pos3 =(unsigned int)(ang_to_pos_scale*v3) + 0x1FF - third_servo_offset;
 	
 	//Dela upp positionen i LS respektive MS Byte, spara i unsigned chars (unsigned chars passar bättre vid kontakt med servona)
 	unsigned char pos1LS = pos1; //Plockar ut LS Byte av positionen för det första servot (översta servot)
