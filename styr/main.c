@@ -1,19 +1,3 @@
-/*
- * Styr.c
- *
- * Created: 4/5/2016 8:44:50 AM
- *  Author: erilj291
- */ 
-#ifndef F_CPU
-#define F_CPU 16000000UL		// 16 MHz
-#endif
-		
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <avr/sleep.h>
-#include <math.h>
-#include <util/delay.h>
-
 #include "init.h"
 #include "structs.h"
 #include "SPI.h"
@@ -25,29 +9,35 @@ int main(void)
 	Init();
 	USART_Init(BAUD_PRESCALER);
 	SPI_init_master();
-	//KÖR FÖLJANDE FUNKTIONER NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
+	//KÃ–R FÃ–LJANDE FUNKTIONER NÃ„R SERVONA BEHÃ–VER KALIBRERAS PÃ… NÃ…GOT SÃ„TT
 	//Send_Servo_Delaytime();
-	Send_Servo_LED();
+	//Send_Servo_LED();
 	//Send_Servo_Angle_Limit();
-	sei(); //Aktivera avbrott öht (MSB=1 i SREG)
+	sei(); //Aktivera avbrott Ã¶ht (MSB=1 i SREG)
 	
-	////Send_Servo_Position({0x07,0x66,0x01});
-	//_delay_ms(1000);
-	////Send_Servo_Position({0x07,0xFF,0x01});
-	//_delay_ms(1000);
-	////Send_Servo_Position({0x07,0x67,0x01});
-	//_delay_ms(1000);
-	////Send_Servo_Position({0x07,0xFF,0x01});
-	//_delay_ms(1000);
-	//Send_Servo_Position({0x07,0x65,0x01});
-
-	//unsigned char servos[9] = {12,10,8,18,16,14, 6,4,2};
-	//for (uint8_t i = 0; i < 9; i++)
-	//{		
-		//unsigned char ID_and_position[3] = {servos[i], 0x90, 0x01};
-		//Send_Servo_Position(ID_and_position);
-		//_delay_ms(1000);
-	//}
+	triple_float kartesiska = create_triple_float(23, 2, 2);
+	six_uchar positioner = Kar_To_Pos(kartesiska);
+	unsigned char message7[]= {0x11, positioner.a, positioner.b};
+	Send_Servo_Position(message7);
+	_delay_ms(1);
+	//unsigned char message6[] = {0x09, positioner.c, positioner.d};
+	//Send_Servo_Position(message6);
+	//_delay_ms(1);
+	//unsigned char message11[] = {0x0B, positioner.e, positioner.f};
+	//Send_Servo_Position(message11);
+	//_delay_ms(1);
+			//
+		 
+	
+	
+	//unsigned char message1[] = {0x0D, 0xFF, 0x01};
+	//Send_Servo_Position(message1);
+	//unsigned char message2[] = {0x0F, 0xD0, 0x01};
+	//Send_Servo_Position(message2);
+	//unsigned char message3[] = {0x12, 0x55, 0x01};
+	//Send_Servo_Position(message3);
+	
+	
 	
 	while(1)
 	{
