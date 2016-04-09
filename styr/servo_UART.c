@@ -1,4 +1,4 @@
-﻿/*
+/*
  * servo_UART.c
  *
  * Created: 4/8/2016 3:04:25 PM
@@ -70,29 +70,29 @@ void Send_Servo_Angle_Limit(void)
 
 	for (uint8_t i = 0; i < 6; i++)
 	{
-		unsigned char limits[] = {middle[i], 0x07, 0x03, 0x06, 0xCD, 0x00, 0X31, 0x03}; // pos 1FF -+ 1024/300pos/vinkl*90grader= 0x00CD,0x0331
+		unsigned char limits[] = {middle[i], 0x07, 0x03, 0x06, 0xCD, 0x00, 0X31, 0x03}; // pos 1FF -+ 1023/300pos/vinkl*90grader= 0x00CD,0x0331
 		Send_Servo_Message(limits, 5);
 		_delay_ms(500);
 	}
 	for (uint8_t i = 0; i < 3; i++)
 	{
-		unsigned char limits[] = {outer_left[i], 0x07, 0x03, 0x06, 0x55, 0x01, 0x31, 0x03}; // pos 1FF + (1024/300pos/vinkl*(-50grader eller + 90 grader)= 0x0155,0x0331
-		Send_Servo_Message(limits, 2);
+		unsigned char limits[] = {outer_left[i], 0x07, 0x03, 0x06, 0x55, 0x01, 0x31, 0x03}; // pos 1FF + (1023/300pos/vinkl*(-50grader eller + 90 grader)= 0x0155,0x0331
+		Send_Servo_Message(limits, 5);
 		_delay_ms(500);
-		unsigned char limits2 [] = {outer_right[i], 0x07, 0x03, 0x06, 0xCD, 0x00, 0xA9, 0x02}; // pos 1FF + (1024/300pos/vinkl*(+50grader eller - 90 grader)= 0x00CD,0x02A9
-		Send_Servo_Message(limits2, 2);
+		unsigned char limits2 [] = {outer_right[i], 0x07, 0x03, 0x06, 0xCD, 0x00, 0xA9, 0x02}; // pos 1FF + (1023/300pos/vinkl*(+50grader eller - 90 grader)= 0x00CD,0x02A9
+		Send_Servo_Message(limits2, 5);
 		_delay_ms(500);
 	}
 	for (uint8_t i = 0; i < 2; i++)
 	{
-		unsigned char limits[] = {inner_lf_rb[i], 0x07, 0x03, 0x06, 0x55, 0x01, 0x31, 0x03}; // pos 1FF + (1024/300pos/vinkl*(-60grader eller + 45 grader)= 0x01EE,0x0298
-		Send_Servo_Message(limits, 2);
+		unsigned char limits[] = {inner_lf_rb[i], 0x07, 0x03, 0x06, 0xEE, 0x01, 0x98, 0x02}; // pos 1FF + (1023/300pos/vinkl*(-55grader eller + 45 grader)= 0x0133,0x0298
+		Send_Servo_Message(limits, 5);
 		_delay_ms(500);
-		unsigned char limits2 [] = {inner_middle[i], 0x07, 0x03, 0x06, 0x55, 0x01, 0x31, 0x03}; // pos 1FF + (1024/300pos/vinkl*(-15grader eller + 15 grader)= 0x01CC,0x0232
-		Send_Servo_Message(limits2, 2);
+		unsigned char limits2 [] = {inner_middle[i], 0x07, 0x03, 0x06, 0xCC, 0x01, 0x32, 0x02}; // pos 1FF + (1023/300pos/vinkl*(-10grader eller + 10 grader)= 0x01DD,0x0221
+		Send_Servo_Message(limits2, 5);
 		_delay_ms(500);
-		unsigned char limits3 [] = {inner_rf_lb[i], 0x07, 0x03, 0x06, 0x55, 0x01, 0x31, 0x03}; // pos 1FF + (1024/300pos/vinkl*(-45grader eller + 60 grader)= 0x0166,0x02CB
-		Send_Servo_Message(limits3, 2);
+		unsigned char limits3 [] = {inner_rf_lb[i], 0x07, 0x03, 0x06, 0xDD, 0x01, 0x10, 0x02}; // pos 1FF + (1023/300pos/vinkl*(-45grader eller + 55 grader)= 0x0166,0x02BA
+		Send_Servo_Message(limits3, 5);
 		_delay_ms(500);
 	}
 }
@@ -212,11 +212,3 @@ double_uchar Get_Servo_Position(unsigned char ID) //FUNKAR ATT RETURNERA SÅHÄR
 //
 //return message;
 //}
-
-
-
-
-
-
-
-
