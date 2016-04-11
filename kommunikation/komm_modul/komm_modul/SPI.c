@@ -7,6 +7,7 @@
 
 #include "SPI.h"
 #include "USART.h"
+#include "LCD_controller.h"
 
 uint8_t SPIcounter;
 
@@ -138,6 +139,10 @@ ISR(SPI_STC_vect)
 	}
 	else{
 		SPIcounter = 0;
-		USART_Transmit_Array(toBluetooth, 16);
+		char digits[16];
+		sprintf(digits,"%d", toBluetooth[0]);
+		LCD_controller_put_line(1,digits);
+		//USART_Transmit_Array(toBluetooth, 16);
+		
 	}
 }

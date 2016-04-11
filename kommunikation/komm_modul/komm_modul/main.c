@@ -50,5 +50,18 @@ int main(void)
 	LCD_controller_put_line(14, "Bytes sent");
 	LCD_controller_put_line(15, "812");
 	
-   while(1);
+	char array[16] = {111,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+		
+	BTtimeout = 4;
+	while(1)
+    {
+	   if(BTtimeout > 3)
+	   {
+		   LCD_controller_put_line(1,"Disconnected");
+	   }
+	    LCD_print_string(lines[currentLine], lines[currentLine+1]);
+	    _delay_ms(500);
+	    USART_Transmit_Array(array, 16);
+		BTtimeout++;
+	}
 }
