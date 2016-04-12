@@ -711,7 +711,7 @@ int mpu_read_reg(unsigned char reg, unsigned char *data)
  *  @param[in]  int_param   Platform-specific parameters to interrupt API.
  *  @return     0 if successful.
  */
-int mpu_init(struct int_param_s *int_param)
+int mpu_init()//struct int_param_s *int_param)
 {
     unsigned char data[6];
 
