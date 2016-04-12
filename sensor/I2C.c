@@ -9,21 +9,19 @@
 #define _I2C_H_
 
 #include "I2C.h"
-#include <util/atomic.h>
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
-
-double testtest;
 
 void I2C_start()
 {
 	TWCR = 0;
-	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);// | (1<<TWIE);	// Start
+	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);	// Start
 
-	while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
+	while (!(TWCR & (1<<TWINT)));				// VÃ¤nta pÃ¥ att det har skickats
 
-	if ((TWSR & 0xF8) != I2Cstatus_START)		// Kolla så status = Start
-	error();
+	if ((TWSR & 0xF8) != I2Cstatus_START)		// Kolla sÃ¥ status = Start
+		error();
 }
 
 void I2C_stop()
@@ -35,24 +33,24 @@ int i2c_write(unsigned char slave_addr, unsigned char reg_addr, unsigned char le
 {
 	I2C_start();
 	
-	TWDR = SLA_W;							// Ladda in IMU:ns adress + indikera att skrivning ska ske
-	TWCR = (1<<TWINT) | (1<<TWEN);// |(1<<TWIE);// Skicka
-	while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
-	if ((TWSR & 0xF8) !=I2Cstatus_MT_SLA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
-	error();
+	TWDR = SLA_W;									// Ladda in IMU:ns adress + indikera att skrivning ska ske
+	TWCR = (1<<TWINT) | (1<<TWEN);					// Skicka
+	while (!(TWCR & (1<<TWINT)));					// VÃ¤nta pÃ¥ att det har skickats
+	if ((TWSR & 0xF8) !=I2Cstatus_MT_SLA_ACK)		// Kolla sÃ¥ att status Ã¤r rÃ¤tt (att de som vi ville skulle hÃ¤nda faktiskt hÃ¤nde)
+		error();
 	
-	TWDR = reg_addr;							// Ladda in adressen för IMU-registret vi ska skriva till
-	TWCR = (1<<TWINT) | (1<<TWEN);				// Skicka
-	while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
-	if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)	// Kolla så att status är rätt
-	error();
+	TWDR = reg_addr;								// Ladda in adressen fÃ¶r IMU-registret vi ska skriva till
+	TWCR = (1<<TWINT) | (1<<TWEN);					// Skicka
+	while (!(TWCR & (1<<TWINT)));					// VÃ¤nta pÃ¥ att det har skickats
+	if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)		// Kolla sÃ¥ att status Ã¤r rÃ¤tt
+		error();
 	
 	for (uint8_t for_counter = 0; for_counter < length; for_counter++)
 	{
-		TWDR = data[for_counter];					// Ta IMU ur vila och välj intern 8 MHz som klocka
+		TWDR = data[for_counter];					// Ta IMU ur vila och vÃ¤lj intern 8 MHz som klocka
 		TWCR = (1<<TWINT) | (1<<TWEN);				// Skicka
-		while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
-		if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)	// Kolla så att status är rätt
+		while (!(TWCR & (1<<TWINT)));				// VÃ¤nta pÃ¥ att det har skickats
+		if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)	// Kolla sÃ¥ att status Ã¤r rÃ¤tt
 		error();
 	}
 	
@@ -66,42 +64,42 @@ int i2c_read(unsigned char slave_addr, unsigned char reg_addr, unsigned char len
 	I2C_start();
 	
 	TWDR = SLA_W;								// Ladda in IMU:ns adress + indikera att skrivning ska ske
-	TWCR = (1<<TWINT) | (1<<TWEN);// |(1<<TWIE);// Skicka
-	while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
-	if ((TWSR & 0xF8) !=I2Cstatus_MT_SLA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
-	error();
-		
-	TWDR = reg_addr;							// Ladda in adressen för IMU-registret vi ska läsa ifrån
 	TWCR = (1<<TWINT) | (1<<TWEN);				// Skicka
-	while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
-	if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)	// Kolla så att status är rätt
-	error();
+	while (!(TWCR & (1<<TWINT)));				// VÃ¤nta pÃ¥ att det har skickats
+	if ((TWSR & 0xF8) !=I2Cstatus_MT_SLA_ACK)	// Kolla sÃ¥ att status Ã¤r rÃ¤tt (att de som vi ville skulle hÃ¤nda faktiskt hÃ¤nde)
+		error();
+		
+	TWDR = reg_addr;							// Ladda in adressen fÃ¶r IMU-registret vi ska lÃ¤sa ifrÃ¥n
+	TWCR = (1<<TWINT) | (1<<TWEN);				// Skicka
+	while (!(TWCR & (1<<TWINT)));				// VÃ¤nta pÃ¥ att det har skickats
+	if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)	// Kolla sÃ¥ att status Ã¤r rÃ¤tt
+		error();
 		
 	I2C_start();
 	
-	TWDR = SLA_R;								// Ladda in IMU:ns adress + indikera att läsning ska ske
-	TWCR = (1<<TWINT) | (1<<TWEN);// |(1<<TWIE);// Skicka
-	while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
-	if ((TWSR & 0xF8) !=I2Cstatus_MR_SLA_ACK)	// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
-	error();
+	TWDR = SLA_R;								// Ladda in IMU:ns adress + indikera att lÃ¤sning ska ske
+	TWCR = (1<<TWINT) | (1<<TWEN);				// Skicka
+	while (!(TWCR & (1<<TWINT)));				// VÃ¤nta pÃ¥ att det har skickats
+	if ((TWSR & 0xF8) !=I2Cstatus_MR_SLA_ACK)	// Kolla sÃ¥ att status Ã¤r rÃ¤tt (att de som vi ville skulle hÃ¤nda faktiskt hÃ¤nde)
+		error();
 	
 	for (uint8_t for_counter = 0; for_counter < length; for_counter++)
 	{
 		if(for_counter == length -1)
 		{
-			TWCR = (1<<TWINT) | (1<<TWEN);// | (1<<TWEA);		// Ta emot data och skicka ACK (mottagningen klar)
-			while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+			TWCR = (1<<TWINT) | (1<<TWEN);					// Ta emot data och skicka ACK (mottagningen klar)
+			while (!(TWCR & (1<<TWINT)));					// VÃ¤nta pÃ¥ att det har skickats
 			data[for_counter] = (TWDR);
-			if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_NACK)		// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
-			error();
+			if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_NACK)		// Kolla sÃ¥ att status Ã¤r rÃ¤tt (att de som vi ville skulle hÃ¤nda faktiskt hÃ¤nde)
+				error();
 		}
 		else
 		{
 			TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);		// Ta emot data och skicka ACK (mottagningen klar)
-			while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+			while (!(TWCR & (1<<TWINT)));					// VÃ¤nta pÃ¥ att det har skickats
 			data[for_counter] = (TWDR);
-			if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)		// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
-			error();
+			if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)		// Kolla sÃ¥ att status Ã¤r rÃ¤tt (att de som vi ville skulle hÃ¤nda faktiskt hÃ¤nde)
+				error();
 		}
 	}
 	
@@ -110,39 +108,9 @@ int i2c_read(unsigned char slave_addr, unsigned char reg_addr, unsigned char len
 	return 0;
 }
 
-int error()			// XXXXX SKA ÄNDRAS!
+int error()			// XXXXX SKA Ã„NDRAS!
 {  
-	testtest = 0;
-	testtest = 0;
-}
-
-
-unsigned long millis()
-{
-	unsigned long m;
-	ATOMIC_BLOCK(ATOMIC_FORCEON)
-	{
-		m = timer0_millis;
-	}
-	return m;
-}
-
-SIGNAL(TIMER0_OVF_vect)
-{
-	unsigned long m = timer0_millis;
-	unsigned char f = timer0_fract;
-	
-	m += MILLIS_INC;
-	f += FRACT_INC;
-	if (f >= FRACT_MAX)
-	{
-		f -= FRACT_MAX;
-		m += 1;
-	}
-	
-	timer0_fract = f;
-	timer0_millis = m;
-	timer0_overflow_count++;
+	return -1;
 }
 
 #endif  // _I2C_H_
