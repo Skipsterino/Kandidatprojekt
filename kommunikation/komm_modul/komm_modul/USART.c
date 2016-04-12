@@ -86,6 +86,10 @@ ISR(USART0_RX_vect)
 	else{
 		BTcounter = 0;
 		SPDR = toSPI[0];
+		char digits[16];
+		sprintf(digits,"%d", toSPI[0]);
+		LCD_controller_put_line(1,digits);
+		BTtimeout = 0;
 	}
 	/*unsigned char data = 0;
 	data = USART_Recieve();

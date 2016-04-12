@@ -13,6 +13,8 @@
 
 #include "Buffers.h"
 
+int BTtimeout;
+
 void initUSART();
 
 unsigned char USART_Recieve();

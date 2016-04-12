@@ -24,7 +24,7 @@ void LCD_controller_init()
 	
 	TCNT0 = 0;
 	
-	TIMSK0 |= (1 << TOIE0);
+	//TIMSK0 |= (1 << TOIE0);
 }
 
 void LCD_controller_put_line(uint8_t line, char string[16])
@@ -37,20 +37,10 @@ void LCD_controller_put_line(uint8_t line, char string[16])
 
 ISR(TIMER0_OVF_vect)
 {
-	if(overflow_counter > 100)
+	if(++overflow_counter > 100)
 	{
 		TCNT0 = 0;
-		if(currentLine == 14)
-		{
-			LCD_print_string(lines[14], lines[15]);
-			currentLine = 0;
-		}
-		else
-		{
-			LCD_print_string(lines[currentLine], lines[currentLine+1]);
-			currentLine += 2;
-		}
+		currentLine = (currentLine + 2) % 16;
 		overflow_counter = 0;
 	}
-	overflow_counter++;
 }
