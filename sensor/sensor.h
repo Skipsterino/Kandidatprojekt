@@ -1,4 +1,4 @@
-﻿/*
+/*
  * sensor.h
  *
  * Created: 4/12/2016 8:59:49 AM
@@ -22,63 +22,62 @@
 #define y 1
 #define z 2
 
-const int delay_time = 50;		// tid i millisekunder (50 ger alltså ungefär 20Hz, lagom för US-sensorn)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-double IR_reading[7][5];		// 2D-array med de 5 senaste avläsningarna för de 7 sensorerna
+const int delay_time = 50;							// tid i millisekunder (50 ger alltså ungefär 20Hz, lagom för US-sensorn)
+
+const double IR_sensor_distance_right = 14.5;		// Avståndet mellan högra sidosensorerna (cm)
+const double IR_sensor_distance_left = 14.5;		// Avståndet mellan vänstra sidosensorerna (cm)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+double IR_reading[7][5];							// 2D-array med de 5 senaste avläsningarna för de 7 sensorerna
 double IR_ADC[7], IR_distance[7];
+double IR_Yaw, Yaw_right, Yaw_left;					// XXXXX Yaw_right och Yaw_left skall göras lokala så småningom
+typedef struct
+{
+	double ADC_data;
+	double distance;
+} ADC_distance_pair;
 
-int16_t temp_reading;
-double IMU_temperature;
-
-double US_reading;		// (US = Ultra Sound)
+double US_reading;									// (US = Ultra Sound)
 double US_distance;
 
-double IR_Yaw, Yaw_right, Yaw_left;		// XXXXX Yaw_right och Yaw_left skall göras lokala så småningom
-double Yaw, Pitch, Roll;
-
-double IR_sensor_distance_right = 14.5;		// Avståndet mellan högra sidosensorerna (cm)
-double IR_sensor_distance_left = 14.5;		// Avståndet mellan vänstra sidosensorerna (cm)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 uint8_t buffer0_IR0, buffer1_IR1, buffer2_IR2, buffer3_IR3, buffer4_IR4, buffer5_IR5, buffer6_IR6, buffer7_US;		// Unsigned 8-bitars int, 0 - 255
 int8_t buffer8_IR_Yaw, buffer9_IMU_Yaw, buffer10_Pitch, buffer11_Roll;		// Signed 8-bitars int
 
 int byte_to_send = 0;			// Vilken byte i bufferten som skall skickas härnäst
 
-double counter = 0;				// XXXXX Endast för sensor-kalibrering
-double sum = 0;					// XXXXX Endast för sensor-kalibrering
-int initial_counter = 0;		// XXXXX Endast för sensor-kalibrering
-double result;					// XXXXX Endast för sensor-kalibrering
-
-float gravity[3];
-
-float IMU_Yaw, IMU_Pitch, IMU_Roll;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define QUAT_W 0
 #define QUAT_X 1
 #define QUAT_Y 2
 #define QUAT_Z 3
 
-#define VEC_X 0
-#define VEC_Y 1
-#define VEC_Z 2
-
 #define MPU_HZ 15		//frekvensen som IMU:n genererar avbrott med (internt kör DMP:n alltid med 200 Hz)
 #define USE_DMP 1
 
-float quaternion[4];
-
 volatile unsigned char _dataReady = 0;
 
-char _orientation[9] =
-{1, 0, 0,
-	0, 1, 0,
-0, 0, 1};
+char _orientation[9] = {1, 0, 0,  0, 1, 0,  0, 0, 1};
 
-typedef struct
-{
-	double ADC_data;
-	double distance;
-} ADC_distance_pair;
+float quaternion[4];
+int16_t temp_reading;
+double IMU_temperature;
+float gravity[3];
+float IMU_Yaw, IMU_Pitch, IMU_Roll;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+double counter = 0;				// XXXXX Endast för sensor-kalibrering
+double sum = 0;					// XXXXX Endast för sensor-kalibrering
+int initial_counter = 0;		// XXXXX Endast för sensor-kalibrering
+double result;					// XXXXX Endast för sensor-kalibrering
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ADC_distance_pair IR0_table[] =
 {
