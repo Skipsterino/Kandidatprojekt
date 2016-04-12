@@ -25,13 +25,14 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include "I2C.h"
+#include "millis.h"
 
 #ifndef _INV_MPU_H_
 #define _INV_MPU_H_
 
 #define MPU6050
 
-
+#define min(a,b) ((a<b)?a:b)
 
 inline void get_ms(long unsigned int *timestamp)
 {
@@ -83,7 +84,7 @@ struct int_param_s {
 #define MPU_INT_STATUS_DMP_5            (0x2000)
 
 /* Set up APIs */
-int mpu_init(struct int_param_s *int_param);
+int mpu_init();//struct int_param_s *int_param);
 int mpu_init_slave(void);
 int mpu_set_bypass(unsigned char bypass_on);
 
