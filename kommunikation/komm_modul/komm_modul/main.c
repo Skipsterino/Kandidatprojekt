@@ -1,9 +1,9 @@
 /*
- * komm_modul.c
- *
- * Created: 2016-04-04 15:31:53
- * Author : Joakim
- */ 
+* komm_modul.c
+*
+* Created: 2016-04-04 15:31:53
+* Author : Joakim
+*/
 #ifndef F_CPU
 #define F_CPU 14745600UL
 #endif
@@ -25,7 +25,7 @@ int main(void)
 	
 	LCD_controller_init();
 	
-	//Initiera buss	
+	//Initiera buss
 	SPI_init_slave();
 	
 	//Initiera BT
@@ -51,17 +51,21 @@ int main(void)
 	LCD_controller_put_line(15, "812");
 	
 	char array[16] = {111,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-		
+	
 	BTtimeout = 4;
 	while(1)
-    {
-	   if(BTtimeout > 3)
-	   {
-		   LCD_controller_put_line(1,"Disconnected");
-	   }
-	    LCD_print_string(lines[currentLine], lines[currentLine+1]);
-	    _delay_ms(500);
-	    USART_Transmit_Array(array, 16);
+	{
+		if(BTtimeout > 3)
+		{
+			LCD_controller_put_line(1,"Disconnected");
+		}
+		else
+		{
+			LCD_controller_put_line(1,"Connected");	
+		}
+		LCD_print_string(lines[currentLine], lines[currentLine+1]);
+		_delay_ms(500);
+		//USART_Transmit_Array(array, 16);
 		BTtimeout++;
 	}
 }

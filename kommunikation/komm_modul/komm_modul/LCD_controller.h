@@ -1,9 +1,9 @@
 /*
- * LCD_controller.h
- *
- * Created: 2016-04-08 08:47:43
- *  Author: Joakim
- */ 
+* LCD_controller.h
+*
+* Created: 2016-04-08 08:47:43
+*  Author: Joakim
+*/
 
 
 #ifndef LCD_CONTROLLER_H_
@@ -17,6 +17,7 @@
 char lines[16][16];
 uint8_t currentLine;
 uint8_t overflow_counter;
+uint8_t spiOverflow;
 
 void LCD_controller_init();
 

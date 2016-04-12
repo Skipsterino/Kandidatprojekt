@@ -1,9 +1,9 @@
 /*
- * USART.h
- *
- * Created: 2016-04-06 09:06:16
- *  Author: Joakim
- */ 
+* USART.h
+*
+* Created: 2016-04-06 09:06:16
+*  Author: Joakim
+*/
 
 #ifndef USART_H_
 #define USART_H_

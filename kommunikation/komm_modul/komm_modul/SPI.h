@@ -1,9 +1,9 @@
 /*
- * SPI.h
- *
- * Created: 2016-04-06 16:32:24
- *  Author: Joakim
- */ 
+* SPI.h
+*
+* Created: 2016-04-06 16:32:24
+*  Author: Joakim
+*/
 
 
 #ifndef SPI_H_

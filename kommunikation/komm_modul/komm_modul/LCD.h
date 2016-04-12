@@ -1,9 +1,9 @@
 /*
- * LCD.h
- *
- * Created: 2016-04-07 10:40:57
- *  Author: Joakim
- */ 
+* LCD.h
+*
+* Created: 2016-04-07 10:40:57
+*  Author: Joakim
+*/
 
 
 

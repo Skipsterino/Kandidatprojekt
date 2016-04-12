@@ -1,9 +1,9 @@
 /*
- * LCD.c
- *
- * Created: 2016-04-07 10:43:31
- *  Author: Joakim
- */ 
+* LCD.c
+*
+* Created: 2016-04-07 10:43:31
+*  Author: Joakim
+*/
 
 #include "LCD.h"
 

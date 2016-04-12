@@ -1,13 +1,13 @@
 /*
- * USART.c
- *
- * Created: 2016-04-06 09:08:09
- *  Author: Joakim
- */ 
+* USART.c
+*
+* Created: 2016-04-06 09:08:09
+*  Author: Joakim
+*/
 
 #include "USART.h"
 
-uint8_t BTcounter;
+uint8_t BTcounter; 
 
 //Sätter upp alla nödvändiga register för BT
 void initUSART()
@@ -86,9 +86,9 @@ ISR(USART0_RX_vect)
 	else{
 		BTcounter = 0;
 		SPDR = toSPI[0];
-		char digits[16];
-		sprintf(digits,"%d", toSPI[0]);
-		LCD_controller_put_line(1,digits);
+		//char digits[16];
+		//sprintf(digits,"%d", toSPI[0]);
+		//LCD_controller_put_line(1,digits);
 		BTtimeout = 0;
 	}
 	/*unsigned char data = 0;
