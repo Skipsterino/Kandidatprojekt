@@ -18,34 +18,35 @@ ISR(TIMER0_OVF_vect)
 {
 	++overflow;
 	
-	if(overflow >= 2000){
+	if(overflow >= 5){
 		SPI_sen_transmit_master();
-	overflow = 0;
+		overflow = 0;
 	}
 }
 void SPI_sen_transmit_master()
 {
 	SPIcounter = 0;
 	//Sätter SS för styr->sen
-	toSen = 0;
-	toKom = 1;
+	toSen = 1;
+	toKom = 0;
 	Set_SS_sen_kom(toSen, toKom);
 	// skickar noll till Sen
-	SPDR = fromSen[0];
+	SPDR = 0;
 }
 ISR(SPI_STC_vect)
 {
-	fromSen[0] = 14;
-	fromSen[1] = 15;
-	fromSen[2] = 36;
-	fromSen[3] = 47;
-
-	/*
+	
 	if(toSen == 1){
 		fromSen[SPIcounter] = SPDR;
 		
 		if(SPIcounter < 15){
 			++SPIcounter;
+			toSen = 0;
+			toKom = 0;
+			Set_SS_sen_kom(toSen, toKom);
+			toSen = 1;
+			toKom = 0;
+			Set_SS_sen_kom(toSen, toKom);
 			SPDR = 0;
 		}
 		else{
@@ -62,6 +63,33 @@ ISR(SPI_STC_vect)
 		fromKom[SPIcounter] = SPDR;
 		
 		if(SPIcounter < 15){
+			toSen = 0;
+			toKom = 0;
+			Set_SS_sen_kom(toSen, toKom);
+			toSen = 0;
+			toKom = 1;
+			Set_SS_sen_kom(toSen, toKom);
+			SPDR = fromSen[SPIcounter + 1];
+			++SPIcounter;
+		}
+		else{
+			SPIcounter = 0;
+			toSen = 0;
+			toKom = 0;
+			Set_SS_sen_kom(toSen, toKom);
+		}
+	}
+	/*
+	if(1){
+		fromKom[SPIcounter] = SPDR;
+		
+		if(SPIcounter < 15){
+			toSen = 0;
+			toKom = 0;
+			Set_SS_sen_kom(toSen, toKom);
+			toSen = 1;
+			toKom = 0;
+			Set_SS_sen_kom(toSen, toKom);
 			SPDR = fromSen[SPIcounter + 1];
 			++SPIcounter;
 		}
@@ -73,29 +101,14 @@ ISR(SPI_STC_vect)
 		}
 	}
 	*/
-	if(toKom == 1){
-		fromKom[SPIcounter] = SPDR;
-		
-		if(SPIcounter < 15){
-			_delay_ms(1);
-			SPDR = fromSen[SPIcounter + 1];
-			++SPIcounter;
-		}
-		else{
-			SPIcounter = 0;
-			toSen = 0;
-			toKom = 0;
-			Set_SS_sen_kom(toSen, toKom);
-		}
-	}
 }
 void Set_SS_sen_kom(uint8_t toSen, uint8_t toKom)
 {
-	if(toSen == 1){
+	if(toKom == 1){
 		PORTB &= ~(1 << SS_sen);
 		PORTB |= (1 << SS_kom);
 	}
-	else if(toKom == 1){
+	else if(toSen == 1){
 		PORTB |= (1 << SS_sen);
 		PORTB &= ~(1 << SS_kom);
 	}
@@ -106,6 +119,23 @@ void Set_SS_sen_kom(uint8_t toSen, uint8_t toKom)
 }
 void SPI_init_master()
 {
+	fromSen[0] = 1;
+	fromSen[1] = 2;
+	fromSen[2] = 3;
+	fromSen[3] = 4;
+	fromSen[4] = 5;
+	fromSen[5] = 6;
+	fromSen[6] = 7;
+	fromSen[7] = 8;
+	fromSen[8] = 9;
+	fromSen[9] = 10;
+	fromSen[10] = 11;
+	fromSen[11] = 12;
+	fromSen[12] = 13;
+	fromSen[13] = 14;
+	fromSen[14] = 15;
+	fromSen[15] = 16;
+	
 	//MOSI, SCK , SS0 och SS1 är utgångar
 	DDRB |= 0b10111000;	
 	overflow = 0;
