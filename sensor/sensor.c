@@ -60,10 +60,10 @@ ISR(INT0_vect)
 
 ISR(TIMER1_CAPT_vect)		// Input Capture (US-sensorn)
 {
-	TCCR1B &= 0<<CS12 | 0<<CS10;		// Stanna timer
+	TCCR1B &= 0<<CS12 | 0<<CS10;			// Stanna timer
 
-	US_reading = ICR1L;							// Läs in timer-värdets låga byte...
-	US_reading = US_reading + (ICR1H<<8);		// ...och addera timer-värdets höga byte.
+	US_reading = ICR1L;						// Läs in timer-värdets låga byte...
+	US_reading = US_reading + (ICR1H<<8);	// ...och addera timer-värdets höga byte.
 }
 
 ISR(ADC_vect)		// ADC Conversion Complete
@@ -357,15 +357,15 @@ void ADC_to_distance()
 
 double lookup_distance(ADC_distance_pair* ADC_dist_table, double ADC_value, int table_size)
 {
-	if(ADC_value <= ADC_dist_table[0].ADC_data)
+	if(ADC_value <= ADC_dist_table[0].ADC_data)					// Ge min-avståndet om ADC-värdet är mindre än minsta tabell-värdet
 	return ADC_dist_table[0].distance;
 
-	if(ADC_value >= ADC_dist_table[table_size-1].ADC_data)
+	if(ADC_value >= ADC_dist_table[table_size-1].ADC_data)		// Ge max-avståndet om ADC-värdet är större än största tabell-värdet
 	return ADC_dist_table[table_size-1].distance;
 
-	for(int i = 0; i < table_size-1; i++)
+	for(int i = 0; i < table_size-1; i++)						// Linjärinterpolation
 	{
-		if (ADC_dist_table[i].ADC_data <= ADC_value && ADC_dist_table[i+1].ADC_data >= ADC_value )
+		if (ADC_dist_table[i].ADC_data <= ADC_value && ADC_value <= ADC_dist_table[i+1].ADC_data )
 		{
 			double diff_ADC = ADC_value - ADC_dist_table[i].ADC_data;
 			double step_length = ADC_dist_table[i+1].ADC_data - ADC_dist_table[i].ADC_data;
@@ -388,19 +388,17 @@ void time_to_distance()
 
 void calculate_Yaw() // XXXXX Endast grundfunktionalitet, kommer behöva utökas för att upptäcka t.ex. när bara ena sidan är tillförlitlig.
 {
-	double l_delta_right = IR_distance[2] - IR_distance[3];
+	double l_delta_right = IR_distance[2] - IR_distance[3];						// Notation enligt Förstudie: Sensorer
 	double l_delta_left = IR_distance[5] - IR_distance[6];
 
 	Yaw_right = (atan(l_delta_right/IR_sensor_distance_right)/3.14)*180;		// Yaw-beräkning med de högra sidosensorerna
 	Yaw_left = (atan(l_delta_left/IR_sensor_distance_left)/3.14)*180;			// Yaw-beräkning med de vänstra sidosensorerna
 
-	IR_Yaw = (Yaw_right + Yaw_left)/2;
+	IR_Yaw = (Yaw_right + Yaw_left)/2;											// Medelvärdesbilda
 }
 
 void save_to_buffer()
 {
-	//cli();					// XXXXX Behövs väl inte maska bort avbrott? Vad kan hända?
-
 	buffer0_IR0 = IR_distance[0];
 	buffer1_IR1 = IR_distance[1];
 	buffer2_IR2 = IR_distance[2];
@@ -415,8 +413,6 @@ void save_to_buffer()
 	buffer9_IMU_Yaw = IMU_Yaw;
 	buffer10_Pitch = IMU_Pitch;
 	buffer11_Roll = IMU_Roll;
-
-	//sei();					// XXXXX Behövs väl inte maska bort avbrott? Vad kan hända?
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
