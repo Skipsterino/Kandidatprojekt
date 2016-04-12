@@ -30,7 +30,6 @@
 #define SLA_W 0xD0
 #define SLA_R 0xD1
 
-
 void I2C_start();
 void I2C_stop();
 
@@ -38,7 +37,5 @@ int error();
 
 int i2c_write(unsigned char slave_addr, unsigned char reg_addr, unsigned char length, unsigned char const *data);
 int i2c_read(unsigned char slave_addr, unsigned char reg_addr, unsigned char length, unsigned char *data);
-
-
 
 #endif /* I2C_H_ */
