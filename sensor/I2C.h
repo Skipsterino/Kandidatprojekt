@@ -30,19 +30,6 @@
 #define SLA_W 0xD0
 #define SLA_R 0xD1
 
-unsigned long timer0_millis;
-unsigned char timer0_fract;
-unsigned long timer0_overflow_count;
-//#define clockCyclesPerMicrosecond() ( F_CPU / 1000000L )
-//#define clockCyclesToMicroseconds ( ((64 * 256) * 1000L) / (F_CPU / 1000L) )
-//#define MICROSECONDS_PER_TIMER0_OVERFLOW (clockCyclesToMicroseconds(64 * 256))
-// the whole number of milliseconds per timer0 overflow
-#define MILLIS_INC (1024 / 1000)
-// the fractional number of milliseconds per timer0 overflow. we shift right
-// by three to fit these numbers into a byte. (for the clock speeds we care
-// about - 8 and 16 MHz - this doesn't lose precision.)
-#define FRACT_INC ((1024 % 1000) >> 3)
-#define FRACT_MAX (1000 >> 3)
 
 void I2C_start();
 void I2C_stop();
@@ -52,7 +39,6 @@ int error();
 int i2c_write(unsigned char slave_addr, unsigned char reg_addr, unsigned char length, unsigned char const *data);
 int i2c_read(unsigned char slave_addr, unsigned char reg_addr, unsigned char length, unsigned char *data);
 
-unsigned long millis();
-#define min(a,b) ((a<b)?a:b)
+
 
 #endif /* I2C_H_ */
