@@ -27,16 +27,13 @@ int main(void)
 	init_timer();
 	init_I2C();
 	init_IMU();
-	
-	_delay_ms(200);						// Ge IMU tid att starta
 
 	sei();								// Enable avbrott öht (bit 7 på SREG sätts till 1)
 
 	while (1)
 	{
-		if (SPI_start)
-		{
-		//
+		//if (SPI_start)
+		//{
 
 		ADC_IR();						// (X) Sampla IR-sensorerna
 		read_IMU();						// (X) Hämta data från IMU
@@ -53,9 +50,9 @@ int main(void)
 
 		//kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
 		
-		}
-	
-	_delay_ms(delay_time);			// (X) Vila för att få lagom frekvens
+		//}
+		
+		_delay_ms(delay_time);			// (X) Vila för att få lagom frekvens
 	}
 	
 }
@@ -90,7 +87,10 @@ ISR(TIMER2_OVF_vect)
 ISR(SPI_STC_vect)		// Avbrottsvektor för data-sändning (kan behöva utökas)
 {
 	if(SPI_overflow >= 2)
+	{
 		byte_to_send = 1;
+	}
+	
 	SPI_overflow = 0;
 	
 	switch(byte_to_send)
@@ -99,67 +99,67 @@ ISR(SPI_STC_vect)		// Avbrottsvektor för data-sändning (kan behöva utökas)
 		{
 			SPDR = buffer0_IR0;
 			++byte_to_send;
-			break;	
+			break;
 		}
 		case 1:
 		{
 			SPDR = buffer1_IR1;
 			++byte_to_send;
-			break;						
+			break;
 		}
 		case 2:
 		{
 			SPDR = buffer2_IR2;
 			++byte_to_send;
-			break;					
+			break;
 		}
 		case 3:
 		{
 			SPDR = buffer3_IR3;
 			++byte_to_send;
-			break;		
+			break;
 		}
 		case 4:
 		{
 			SPDR = buffer4_IR4;
 			++byte_to_send;
-			break;		
+			break;
 		}
 		case 5:
 		{
 			SPDR = buffer5_IR5;
 			++byte_to_send;
-			break;				
+			break;
 		}
 		case 6:
 		{
 			SPDR = buffer6_IR6;
 			++byte_to_send;
-			break;				
+			break;
 		}
 		case 7:
 		{
 			SPDR = buffer7_US;
 			++byte_to_send;
-			break;			
+			break;
 		}
 		case 8:
 		{
 			SPDR = buffer8_IR_Yaw;
 			++byte_to_send;
-			break;		
+			break;
 		}
 		case 9:
 		{
 			SPDR = buffer9_IMU_Yaw;
 			++byte_to_send;
-			break;		
+			break;
 		}
 		case 10:
 		{
 			SPDR = buffer10_Pitch;
 			++byte_to_send;
-			break;			
+			break;
 		}
 		case 11:
 		{
@@ -190,7 +190,7 @@ ISR(SPI_STC_vect)		// Avbrottsvektor för data-sändning (kan behöva utökas)
 			SPDR = 0xff;
 			byte_to_send = 0;
 			SPI_start = 1;
-			break;	
+			break;
 		}
 	}
 	
@@ -254,6 +254,11 @@ void init_IMU()
 	dmp_enable_feature(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO | DMP_FEATURE_GYRO_CAL | DMP_FEATURE_TAP);
 	dmp_set_fifo_rate(MPU_HZ);
 	mpu_set_dmp_state(USE_DMP);
+	
+	_delay_ms(200);						// Ge IMU tid att starta
+	
+	run_self_test();
+	
 	_dataReady = 0;
 }
 
@@ -466,4 +471,21 @@ void kalibrering()				// XXXXX Endast för att kunna kalibrera sensorer!
 		++counter;
 		result = sum/counter;
 	}
+}
+
+void run_self_test()
+{
+	long gyro_cal[3], accel_cal[3];
+	
+	mpu_run_self_test(gyro_cal, accel_cal);
+
+	for(uint8_t i = 0; i<3; i++)
+	{
+		gyro_cal[i] = (long)(gyro_cal[i] * 32.8f); //konvertera to +-1000dps
+		accel_cal[i] *= 2048.f; //konvertera to +-16G
+		accel_cal[i] = accel_cal[i] >> 16;
+		gyro_cal[i] = (long)(gyro_cal[i] >> 16);
+	}
+		mpu_set_gyro_bias_reg(gyro_cal);
+		mpu_set_accel_bias_6050_reg(accel_cal);
 }
