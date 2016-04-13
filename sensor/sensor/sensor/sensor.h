@@ -230,6 +230,7 @@ void init_SPI();
 void init_timer();
 void init_I2C();
 void init_IMU();
+void run_self_test();
 void init_IMU_interrupt();
 
 void ADC_IR();
