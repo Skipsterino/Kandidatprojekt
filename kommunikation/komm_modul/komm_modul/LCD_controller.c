@@ -42,7 +42,7 @@ ISR(TIMER0_OVF_vect)
 	if(++overflow_counter > 100)
 	{
 		TCNT0 = 0;
-		currentLine = (currentLine + 2) % 2;
+		currentLine = (currentLine + 4) % 8;
 		overflow_counter = 0;
 	}
 }
