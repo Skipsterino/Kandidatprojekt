@@ -36,7 +36,7 @@ const double IR_sensor_distance_left = 14.5;		// Avståndet mellan vänstra sido
 double IR_latest_reading[7];
 double IR_reading[7][5];							// 2D-array med de 5 senaste avläsningarna för de 7 sensorerna
 double IR_ADC[7], IR_distance[7];
-double IR_Yaw, Yaw_right, Yaw_left;					// XXXXX Yaw_right och Yaw_left skall göras lokala så småningom
+float IR_Yaw, Yaw_right, Yaw_left;					// XXXXX Yaw_right och Yaw_left skall göras lokala så småningom
 typedef struct
 {
 	double ADC_data;
@@ -240,8 +240,9 @@ void time_to_distance();
 void calculate_Yaw();
 void save_to_buffer();
 
-//Matte för IMU
+//Hjälpfunktioner
 void NormalizeQuaternion(float *quat);
+void restrict_angle(float angle);
 
 void kalibrering();		// XXXXX Endast för att kunna kalibrera sensorer!
 
