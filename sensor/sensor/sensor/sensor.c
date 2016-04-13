@@ -34,8 +34,8 @@ int main(void)
 
 	while (1)
 	{
-		//if (SPI_start)
-		//{
+		if (SPI_start)
+		{
 		//
 
 		ADC_IR();						// (X) Sampla IR-sensorerna
@@ -53,7 +53,7 @@ int main(void)
 
 		//kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
 		
-	//}
+		}
 	
 	_delay_ms(delay_time);			// (X) Vila för att få lagom frekvens
 	}
@@ -82,76 +82,84 @@ ISR(ADC_vect)		// ADC Conversion Complete
 	++ADMUX;
 }
 
+ISR(TIMER2_OVF_vect)
+{
+	++SPI_overflow;
+}
+
 ISR(SPI_STC_vect)		// Avbrottsvektor för data-sändning (kan behöva utökas)
 {
+	if(SPI_overflow >= 2)
+		byte_to_send = 1;
+	SPI_overflow = 0;
+	
 	switch(byte_to_send)
 	{
 		case 0:
 		{
 			SPDR = buffer0_IR0;
 			++byte_to_send;
-			SPI_start = 1;
-			break;
+			break;	
 		}
 		case 1:
 		{
 			SPDR = buffer1_IR1;
 			++byte_to_send;
-			break;
+			break;						
 		}
 		case 2:
 		{
 			SPDR = buffer2_IR2;
 			++byte_to_send;
-			break;
+			break;					
 		}
 		case 3:
 		{
 			SPDR = buffer3_IR3;
 			++byte_to_send;
-			break;
+			break;		
 		}
 		case 4:
 		{
 			SPDR = buffer4_IR4;
 			++byte_to_send;
-			break;
+			break;		
 		}
 		case 5:
 		{
 			SPDR = buffer5_IR5;
 			++byte_to_send;
-			break;
+			break;				
 		}
 		case 6:
 		{
 			SPDR = buffer6_IR6;
 			++byte_to_send;
-			break;
+			break;				
 		}
 		case 7:
 		{
 			SPDR = buffer7_US;
 			++byte_to_send;
-			break;
+			break;			
 		}
 		case 8:
 		{
 			SPDR = buffer8_IR_Yaw;
 			++byte_to_send;
-			break;
+			break;		
 		}
 		case 9:
 		{
 			SPDR = buffer9_IMU_Yaw;
 			++byte_to_send;
-			break;
+			break;		
 		}
 		case 10:
 		{
 			SPDR = buffer10_Pitch;
 			++byte_to_send;
-			break;
+			break;			
 		}
 		case 11:
 		{
@@ -181,7 +189,8 @@ ISR(SPI_STC_vect)		// Avbrottsvektor för data-sändning (kan behöva utökas)
 		{
 			SPDR = 0xff;
 			byte_to_send = 0;
-			break;
+			SPI_start = 1;
+			break;	
 		}
 	}
 	
@@ -208,10 +217,15 @@ void init_US()
 
 void init_SPI()
 {
-	SPCR = 1<<SPIE;					// Enable avbrott SPI
+	SPCR = 1<<SPIE;						// Enable avbrott SPI
 	DDRB = 0x40;						// Skicka in 0100 0000 på DDRB för att sätta MISO till utgång, resten ingång. (SPI)
 	SPCR |= (1<<SPE);					// Enable:a SPI
 	SPDR = 0xff;
+	
+	//Starta en timer för att hålla bussen i sync
+	TCCR2B |= 1<<CS22 | 1<< CS21| 1<<CS20;	//Prescaler 1024
+	TCNT2 = 0;
+	TIMSK2 |= 1<<TOIE2;						//Tillåt overflow-avbrott
 }
 
 void init_timer()
