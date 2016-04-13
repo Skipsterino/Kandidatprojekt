@@ -23,6 +23,7 @@
 #define z 2
 
 uint8_t SPI_start = 0;
+uint8_t SPI_overflow = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -229,6 +230,7 @@ void init_SPI();
 void init_timer();
 void init_I2C();
 void init_IMU();
+void run_self_test();
 void init_IMU_interrupt();
 
 void ADC_IR();

@@ -27,8 +27,6 @@ int main(void)
 	init_timer();
 	init_I2C();
 	init_IMU();
-	
-	_delay_ms(200);						// Ge IMU tid att starta
 
 	sei();								// Enable avbrott öht (bit 7 på SREG sätts till 1)
 
@@ -36,7 +34,6 @@ int main(void)
 	{
 		//if (SPI_start)
 		//{
-		//
 
 		ADC_IR();						// (X) Sampla IR-sensorerna
 		read_IMU();						// (X) Hämta data från IMU
@@ -53,9 +50,9 @@ int main(void)
 
 		//kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
 		
-	//}
-	
-	_delay_ms(delay_time);			// (X) Vila för att få lagom frekvens
+		//}
+		
+		_delay_ms(delay_time);			// (X) Vila för att få lagom frekvens
 	}
 	
 }
@@ -82,15 +79,26 @@ ISR(ADC_vect)		// ADC Conversion Complete
 	++ADMUX;
 }
 
+ISR(TIMER2_OVF_vect)
+{
+	++SPI_overflow;
+}
+
 ISR(SPI_STC_vect)		// Avbrottsvektor för data-sändning (kan behöva utökas)
 {
+	if(SPI_overflow >= 2)
+	{
+		byte_to_send = 1;
+	}
+	
+	SPI_overflow = 0;
+	
 	switch(byte_to_send)
 	{
 		case 0:
 		{
 			SPDR = buffer0_IR0;
 			++byte_to_send;
-			SPI_start = 1;
 			break;
 		}
 		case 1:
@@ -181,6 +189,7 @@ ISR(SPI_STC_vect)		// Avbrottsvektor för data-sändning (kan behöva utökas)
 		{
 			SPDR = 0xff;
 			byte_to_send = 0;
+			SPI_start = 1;
 			break;
 		}
 	}
@@ -208,10 +217,15 @@ void init_US()
 
 void init_SPI()
 {
-	SPCR = 1<<SPIE;					// Enable avbrott SPI
+	SPCR = 1<<SPIE;						// Enable avbrott SPI
 	DDRB = 0x40;						// Skicka in 0100 0000 på DDRB för att sätta MISO till utgång, resten ingång. (SPI)
 	SPCR |= (1<<SPE);					// Enable:a SPI
 	SPDR = 0xff;
+	
+	//Starta en timer för att hålla bussen i sync
+	TCCR2B |= 1<<CS22 | 1<< CS21| 1<<CS20;	//Prescaler 1024
+	TCNT2 = 0;
+	TIMSK2 |= 1<<TOIE2;						//Tillåt overflow-avbrott
 }
 
 void init_timer()
@@ -240,6 +254,11 @@ void init_IMU()
 	dmp_enable_feature(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO | DMP_FEATURE_GYRO_CAL | DMP_FEATURE_TAP);
 	dmp_set_fifo_rate(MPU_HZ);
 	mpu_set_dmp_state(USE_DMP);
+	
+	_delay_ms(200);						// Ge IMU tid att starta
+	
+	run_self_test();
+	
 	_dataReady = 0;
 }
 
@@ -452,4 +471,21 @@ void kalibrering()				// XXXXX Endast för att kunna kalibrera sensorer!
 		++counter;
 		result = sum/counter;
 	}
+}
+
+void run_self_test()
+{
+	long gyro_cal[3], accel_cal[3];
+	
+	mpu_run_self_test(gyro_cal, accel_cal);
+
+	for(uint8_t i = 0; i<3; i++)
+	{
+		gyro_cal[i] = (long)(gyro_cal[i] * 32.8f); //konvertera to +-1000dps
+		accel_cal[i] *= 2048.f; //konvertera to +-16G
+		accel_cal[i] = accel_cal[i] >> 16;
+		gyro_cal[i] = (long)(gyro_cal[i] >> 16);
+	}
+		mpu_set_gyro_bias_reg(gyro_cal);
+		mpu_set_accel_bias_6050_reg(accel_cal);
 }
