@@ -53,10 +53,10 @@ int main(void)
 
 		//kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
 		
-	}
+	//}
 	
 	_delay_ms(delay_time);			// (X) Vila för att få lagom frekvens
-	//}
+	}
 	
 }
 
@@ -78,46 +78,8 @@ ISR(TIMER1_CAPT_vect)		// Input Capture (US-sensorn)
 
 ISR(ADC_vect)		// ADC Conversion Complete
 {
-
-	//switch (ADMUX)
-	//{
-	//case 0x60:
-	//sensor_ID = 0;
-	//break;
-	//case 0x61:
-	//sensor_ID = 1;
-	//break;
-	//case 0x62:
-	//sensor_ID = 2;
-	//break;
-	//case 0x63:
-	//sensor_ID = 3;
-	//break;
-	//case 0x64:
-	//sensor_ID = 4;
-	//break;
-	//case 0x65:
-	//sensor_ID = 5;
-	//break;
-	//case 0x66:
-	//sensor_ID = 6;
-	//break;
-	//}
-	
 	IR_latest_reading[ADMUX - 0x60] = ADCH<<2;		// Läs in ADC:ns 8 högsta (av 10) bitar, skiftade två steg uppåt
 	++ADMUX;
-	
-	
-
-	//for (int i = 5; i>=2; --i)		// Skifta ut den äldsta avläsningen
-	//{
-	//IR_reading[sensor_ID][i] = IR_reading[sensor_ID][i-1];
-	//}
-	//
-	//IR_reading[sensor_ID][1] = ADCH<<2;		// Läs in ADC:ns 8 högsta (av 10) bitar, skiftade två steg uppåt
-	//IR_ADC[sensor_ID] = (IR_reading[sensor_ID][1] + IR_reading[sensor_ID][2] + IR_reading[sensor_ID][3] + IR_reading[sensor_ID][4] + IR_reading[sensor_ID][5])/5;
-
-	//++ADMUX;
 }
 
 ISR(SPI_STC_vect)		// Avbrottsvektor för data-sändning (kan behöva utökas)
@@ -354,6 +316,10 @@ void read_IMU()
 			IMU_Pitch = (atan(gravity[x] / sqrt(gravity[y]*gravity[y] + gravity[z]*gravity[z]))/3.14)*180;
 			IMU_Roll = (atan(gravity[y] / sqrt(gravity[x]*gravity[x] + gravity[z]*gravity[z]))/3.14)*180;
 			
+			restrict_angle(IMU_Yaw);
+			restrict_angle(IMU_Pitch);
+			restrict_angle(IMU_Roll);
+			
 		}
 		else
 		{
@@ -425,6 +391,8 @@ void calculate_Yaw() // XXXXX Endast grundfunktionalitet, kommer behöva utökas
 	Yaw_left = (atan(l_delta_left/IR_sensor_distance_left)/3.14)*180;			// Yaw-beräkning med de vänstra sidosensorerna
 
 	IR_Yaw = (Yaw_right + Yaw_left)/2;											// Medelvärdesbilda
+	
+	restrict_angle(IR_Yaw);
 }
 
 void save_to_buffer()
@@ -443,6 +411,15 @@ void save_to_buffer()
 	buffer9_IMU_Yaw = IMU_Yaw;
 	buffer10_Pitch = IMU_Pitch;
 	buffer11_Roll = IMU_Roll;
+}
+
+void restrict_angle(float angle)
+{
+	if(angle > 127)
+	angle = 127;							// Sätt max-vinkel (så att ej får överslag då det görs om till 8 bitar (signed))
+	
+	if(angle < -128)
+	angle = -128;							// Sätt min-vinkel (så att ej får överslag då det görs om till 8 bitar (signed))
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
