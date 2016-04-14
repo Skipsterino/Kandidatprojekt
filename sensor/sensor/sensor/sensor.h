@@ -60,9 +60,10 @@ uint8_t buffer6_IR6 = 0xf6;
 uint8_t buffer7_US = 0xf7;		// Unsigned 8-bitars int, 0 - 255
 int8_t buffer8_IR_Yaw_left = 0xf8;
 int8_t buffer9_IR_Yaw_right = 0xf9;
-int8_t buffer10_IMU_Yaw = 0xfa;
-int8_t buffer11_Pitch = 0xfb;
-int8_t buffer12_Roll =0xfc;		// Signed 8-bitars int
+int8_t buffer10_IMU_Yaw_Low = 0xfa;
+int8_t buffer11_IMU_Yaw_High = 0xfb;
+int8_t buffer12_Pitch = 0xfc;
+int8_t buffer13_Roll =0xfd;		// Signed 8-bitars int
 
 int byte_to_send = 0;			// Vilken byte i bufferten som skall skickas härnäst
 
@@ -110,7 +111,7 @@ ADC_distance_pair IR0_table[] =
 	{385.8, 35},
 	{440.7, 30},
 	{502.1, 25},
-	{554,5, 20},
+	{554.5, 20},
 	{568.0, 15}
 };
 ADC_distance_pair IR1_table[] =
@@ -148,7 +149,7 @@ ADC_distance_pair IR2_table[] =
 ADC_distance_pair IR3_table[] =
 {
 	{114.2, 120},
-	{120.2 110},
+	{120.2, 110},
 	{128.7, 100},
 	{140.9, 90},
 	{158.5, 80},
