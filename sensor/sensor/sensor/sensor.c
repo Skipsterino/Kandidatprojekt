@@ -963,13 +963,13 @@ void run_self_test()
 
 	for(uint8_t i = 0; i<3; i++)
 	{
-		gyro_cal[i] = (long)(gyro_cal[i] * 32.8f); //konvertera to +-1000dps
-		accel_cal[i] *= 2048.f; //konvertera to +-16G
+		gyro_cal[i] = (long)(gyro_cal[i] * 32.8f);			// Konvertera till +-1000dps
+		accel_cal[i] *= 2048.f;								// Konvertera till +-16G
 		accel_cal[i] = accel_cal[i] >> 16;
 		gyro_cal[i] = (long)(gyro_cal[i] >> 16);
 	}
-	mpu_set_gyro_bias_reg(gyro_cal);
-	mpu_set_accel_bias_6050_reg(accel_cal);
+	mpu_set_gyro_bias_reg(gyro_cal);						// Kalibrera gyrons
+	mpu_set_accel_bias_6050_reg(accel_cal);					// Kalibrera accelerometrar
 }
 
 /*
