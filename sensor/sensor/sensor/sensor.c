@@ -704,13 +704,13 @@ void send_ping()
 
 void ADC_to_distance()
 {
-	IR_distance[0] = lookup_distance(IR0_table, IR_ADC[0], 17);
+	IR_distance[0] = lookup_distance(IR0_table, IR_ADC[0], 15);
 	IR_distance[1] = lookup_distance(IR1_table, IR_ADC[1], 11);
-	IR_distance[2] = lookup_distance(IR2_table, IR_ADC[2], 16);
-	IR_distance[3] = lookup_distance(IR3_table, IR_ADC[3], 17);
+	IR_distance[2] = lookup_distance(IR2_table, IR_ADC[2], 15);
+	IR_distance[3] = lookup_distance(IR3_table, IR_ADC[3], 15);
 	IR_distance[4] = lookup_distance(IR4_table, IR_ADC[4], 11);
-	IR_distance[5] = lookup_distance(IR5_table, IR_ADC[5], 16);
-	IR_distance[6] = lookup_distance(IR6_table, IR_ADC[6], 16);
+	IR_distance[5] = lookup_distance(IR5_table, IR_ADC[5], 15);
+	IR_distance[6] = lookup_distance(IR6_table, IR_ADC[6], 15);
 }
 
 /*
