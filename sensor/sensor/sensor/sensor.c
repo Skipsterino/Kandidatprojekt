@@ -843,7 +843,7 @@ void calculate_Yaw()
 
 void save_to_buffer()
 {
-	IMU_Yaw_16 = IMU_Yaw;						// Konvertera IMU_Yaw till int16_t
+	int16_t IMU_Yaw_16 = IMU_Yaw;						// Konvertera IMU_Yaw till int16_t
 	
 	buffer0_IR0 = IR_distance[0];
 	buffer1_IR1 = IR_distance[1];
