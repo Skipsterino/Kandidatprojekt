@@ -22,7 +22,7 @@
 #define y 1
 #define z 2
 
-uint8_t SPI_start = 0;
+uint8_t SPI_done = 0;
 uint8_t SPI_overflow = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,7 +37,8 @@ const double IR_sensor_distance_left = 14.5;		// Avståndet mellan vänstra sido
 double IR_latest_reading[7];
 double IR_reading[7][5];							// 2D-array med de 5 senaste avläsningarna för de 7 sensorerna
 double IR_ADC[7], IR_distance[7];
-float IR_Yaw, Yaw_right, Yaw_left;					// XXXXX Yaw_right och Yaw_left skall göras lokala så småningom
+float IR_Yaw_right, IR_Yaw_left;					
+
 typedef struct
 {
 	double ADC_data;
@@ -57,10 +58,11 @@ uint8_t buffer4_IR4 = 0xf4;
 uint8_t buffer5_IR5 = 0xf5;
 uint8_t buffer6_IR6 = 0xf6;
 uint8_t buffer7_US = 0xf7;		// Unsigned 8-bitars int, 0 - 255
-int8_t buffer8_IR_Yaw = 0xf8;
-int8_t buffer9_IMU_Yaw = 0xf9;
-int8_t buffer10_Pitch = 0xfa;
-int8_t buffer11_Roll = 0xfb;		// Signed 8-bitars int
+int8_t buffer8_IR_Yaw_left = 0xf8;
+int8_t buffer9_IR_Yaw_right = 0xf9;
+int8_t buffer10_IMU_Yaw = 0xfa;
+int8_t buffer11_Pitch = 0xfb;
+int8_t buffer12_Roll =0xfc;		// Signed 8-bitars int
 
 int byte_to_send = 0;			// Vilken byte i bufferten som skall skickas härnäst
 
@@ -74,7 +76,7 @@ int byte_to_send = 0;			// Vilken byte i bufferten som skall skickas härnäst
 #define MPU_HZ 15		//frekvensen som IMU:n genererar avbrott med (internt kör DMP:n alltid med 200 Hz)
 #define USE_DMP 1
 
-volatile unsigned char _dataReady = 0;
+volatile unsigned char IMU_data_ready = 0;
 
 const signed char _orientation[9] = {1, 0, 0,  0, 1, 0,  0, 0, 1};
 
@@ -244,7 +246,7 @@ void save_to_buffer();
 
 //Hjälpfunktioner
 void NormalizeQuaternion(float *quat);
-void restrict_angle(float angle);
+float restrict_angle(float angle);
 
 void kalibrering();		// XXXXX Endast för att kunna kalibrera sensorer!
 
