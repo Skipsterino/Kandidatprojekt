@@ -19,18 +19,12 @@
 #include "inv_mpu_dmp_motion_driver.h"
 #include "motion_driver_test.c"
 
+int16_t testvariabel;
+
 int main(void)
 {
-	IMU_Yaw = 253;
-	IMU_Yaw_16 = IMU_Yaw;
-	buffer10_IMU_Yaw_Low = IMU_Yaw_16;
-	buffer11_IMU_Yaw_High = (8>>IMU_Yaw_16);
-	
-	int16_t testvariabel = buffer10_IMU_Yaw_Low;
-	testvariabel += (buffer11_IMU_Yaw_High<<8);
-	
-	init_ADC();		
-	init_US();		
+	init_ADC();
+	init_US();
 	init_SPI();
 	init_timer();						// Initiera en timer för att hålla koll på förfluten tid.
 	init_I2C();
@@ -43,20 +37,20 @@ int main(void)
 		if (SPI_done)
 		{
 
-		ADC_IR();						// Sampla IR-sensorerna
-		read_IMU();						// Hämta data från IMU
-		
-		send_ping();					// Starta en US-mätning
-		
-		ADC_to_distance();				// Konvertera ADC-värde till avstånd (IR-sensorerna)
-		time_to_distance();				// Konvertera tid till avstånd (US-sensorn)
-		calculate_Yaw();				// Räkna ut Yaw-vinkeln 
-		save_to_buffer();				// Spara undan i buffert
-		
-		SPI_done = 0;
+			ADC_IR();						// Sampla IR-sensorerna
+			read_IMU();						// Hämta data från IMU
+			
+			send_ping();					// Starta en US-mätning
+			
+			ADC_to_distance();				// Konvertera ADC-värde till avstånd (IR-sensorerna)
+			time_to_distance();				// Konvertera tid till avstånd (US-sensorn)
+			calculate_Yaw();				// Räkna ut Yaw-vinkeln
+			save_to_buffer();				// Spara undan i buffert
+			
+			SPI_done = 0;
 
-		//kalibrering();				// XXXXX Endast för att kunna kalibrera sensorer!
-		
+			//kalibrering();				// XXXXX Endast för att kunna kalibrera sensorer!
+			
 		}
 		
 		_delay_ms(delay_time);			// Vila för att få lagom frekvens
@@ -86,7 +80,7 @@ int main(void)
 *
 */
 
-ISR(INT0_vect)				
+ISR(INT0_vect)
 {
 	IMU_data_ready = 1;
 }
@@ -155,7 +149,7 @@ ISR(ADC_vect)		// ADC Conversion Complete
 * BESKRIVNING
 *
 * Räknar antalet overflows som vi får på timern som rullar sedan senaste SPI-händelse.
-* När SPI_overflow är stor vet vi att nästa byte som vi ska skicka är byte noll. 
+* När SPI_overflow är stor vet vi att nästa byte som vi ska skicka är byte noll.
 * Används för att återställa sync på bussen om vi skulle råka hamna ur sync.
 *
 * INDATA
@@ -304,7 +298,7 @@ ISR(SPI_STC_vect)
 		{
 			SPDR = 0xff;
 			byte_to_send = 0;
-			SPI_done = 1;		//Klart! Nu kan vi göra annat som genererar avbrott 
+			SPI_done = 1;		//Klart! Nu kan vi göra annat som genererar avbrott
 			break;
 		}
 	}
@@ -335,11 +329,11 @@ ISR(SPI_STC_vect)
 
 void init_ADC()
 {
-	ADMUX = 0x60;						// Skicka in 0110 0000 på ADMUX för att välja ADC0 som inkanal till A/D (bit 4-0), 
-										// sätta ADLAR (bit 5) (=> de 8 mest sig. bitarna av resultatet ges i ADCH) och välja 
-										// "AVCC with external capacitor at AREF pin" som Voltage reference select. (bit 7-6)
-	ADCSRA = 0x8F;						// Skicka in 1000 1111 på ADCSRA för att enable:a ADC (bit 7), ADC Complete-avbrott 
-										// (bit 3) samt dela klockfrekvensen med 128 (=> A/D klockas 125 kHz)
+	ADMUX = 0x60;						// Skicka in 0110 0000 på ADMUX för att välja ADC0 som inkanal till A/D (bit 4-0),
+	// sätta ADLAR (bit 5) (=> de 8 mest sig. bitarna av resultatet ges i ADCH) och välja
+	// "AVCC with external capacitor at AREF pin" som Voltage reference select. (bit 7-6)
+	ADCSRA = 0x8F;						// Skicka in 1000 1111 på ADCSRA för att enable:a ADC (bit 7), ADC Complete-avbrott
+	// (bit 3) samt dela klockfrekvensen med 128 (=> A/D klockas 125 kHz)
 	SMCR |= 0<<SM2 | 0<<SM1 | 1<<SM0;	// Sleep Mode Select till "ADC Noise Reduction" (Så att "sleep_cpu()" ger just detta viloläge)
 }
 
@@ -481,7 +475,7 @@ void init_I2C()
 
 void init_IMU()
 {
-	init_IMU_interrupt();													// TIllåter avbrott från IMU:n					
+	init_IMU_interrupt();													// TIllåter avbrott från IMU:n
 	mpu_init();																// Initierar IMU, väcker IMU:n från viloläge
 	mpu_set_sensors(INV_XYZ_GYRO | INV_XYZ_ACCEL);							// Sätter vilka sensorer vi ska använda
 	mpu_configure_fifo(INV_XYZ_GYRO | INV_XYZ_ACCEL);						// Väljer vilka sensordata som skickas till FIFO
@@ -489,7 +483,7 @@ void init_IMU()
 	dmp_load_motion_driver_firmware();										// Programmerar DMP (IMU:ns interna processor)
 	dmp_set_orientation(inv_orientation_matrix_to_scalar(_orientation));	// Sätt i vilket läge som IMU:n är monterad.
 	dmp_enable_feature(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO | DMP_FEATURE_GYRO_CAL | DMP_FEATURE_TAP); // Välj funktioner som vi vill ha
-	dmp_set_fifo_rate(MPU_HZ);												// Väljer med vilken frekvens som data ska läggas ut i FIFO 
+	dmp_set_fifo_rate(MPU_HZ);												// Väljer med vilken frekvens som data ska läggas ut i FIFO
 	mpu_set_dmp_state(USE_DMP);												// Slår på DMP
 	
 	_delay_ms(200);															// Ge IMU tid att starta
@@ -849,6 +843,8 @@ void calculate_Yaw()
 
 void save_to_buffer()
 {
+	IMU_Yaw_16 = IMU_Yaw;						// Konvertera IMU_Yaw till int16_t
+	
 	buffer0_IR0 = IR_distance[0];
 	buffer1_IR1 = IR_distance[1];
 	buffer2_IR2 = IR_distance[2];
@@ -861,9 +857,10 @@ void save_to_buffer()
 
 	buffer8_IR_Yaw_left = IR_Yaw_left;
 	buffer9_IR_Yaw_right = IR_Yaw_right;
-	IMU_Yaw_16 = IMU_Yaw;
-	buffer10_IMU_Yaw_Low = IMU_Yaw_16;
-	buffer11_IMU_Yaw_High = (8>>IMU_Yaw_16);
+	
+	buffer10_IMU_Yaw_Low = IMU_Yaw_16;			// Skicka låga byten av IMU_Yaw_16
+	buffer11_IMU_Yaw_High = (IMU_Yaw_16>>8);	// Skicka höga byten av IMU_Yaw_16
+	
 	buffer12_Pitch = IMU_Pitch;
 	buffer13_Roll = IMU_Roll;
 }
@@ -873,7 +870,7 @@ void save_to_buffer()
 *
 * BESKRIVNING
 *
-* Begränsar vinkeln angle så att overflow ej fås då den konverteras till int8_t 
+* Begränsar vinkeln angle så att overflow ej fås då den konverteras till int8_t
 *
 * INDATA
 *
@@ -971,8 +968,8 @@ void run_self_test()
 		accel_cal[i] = accel_cal[i] >> 16;
 		gyro_cal[i] = (long)(gyro_cal[i] >> 16);
 	}
-		mpu_set_gyro_bias_reg(gyro_cal);
-		mpu_set_accel_bias_6050_reg(accel_cal);
+	mpu_set_gyro_bias_reg(gyro_cal);
+	mpu_set_accel_bias_6050_reg(accel_cal);
 }
 
 /*
