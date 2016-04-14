@@ -21,6 +21,14 @@
 
 int main(void)
 {
+	IMU_Yaw = 253;
+	IMU_Yaw_16 = IMU_Yaw;
+	buffer10_IMU_Yaw_Low = IMU_Yaw_16;
+	buffer11_IMU_Yaw_High = (8>>IMU_Yaw_16);
+	
+	int16_t testvariabel = buffer10_IMU_Yaw_Low;
+	testvariabel += (buffer11_IMU_Yaw_High<<8);
+	
 	init_ADC();		
 	init_US();		
 	init_SPI();
@@ -264,25 +272,25 @@ ISR(SPI_STC_vect)
 		}
 		case 10:
 		{
-			SPDR = buffer10_IMU_Yaw;
+			SPDR = buffer10_IMU_Yaw_Low;
 			++byte_to_send;
 			break;
 		}
 		case 11:
 		{
-			SPDR = buffer11_Pitch;
+			SPDR = buffer11_IMU_Yaw_High;
 			++byte_to_send;
 			break;
 		}
 		case 12:
 		{
-			SPDR = buffer12_Roll;
+			SPDR = buffer12_Pitch;
 			++byte_to_send;
 			break;
 		}
 		case 13:
 		{
-			SPDR = 0xff;
+			SPDR = buffer13_Roll;
 			++byte_to_send;
 			break;
 		}
@@ -853,9 +861,11 @@ void save_to_buffer()
 
 	buffer8_IR_Yaw_left = IR_Yaw_left;
 	buffer9_IR_Yaw_right = IR_Yaw_right;
-	buffer10_IMU_Yaw = IMU_Yaw;
-	buffer11_Pitch = IMU_Pitch;
-	buffer12_Roll = IMU_Roll;
+	IMU_Yaw_16 = IMU_Yaw;
+	buffer10_IMU_Yaw_Low = IMU_Yaw_16;
+	buffer11_IMU_Yaw_High = (8>>IMU_Yaw_16);
+	buffer12_Pitch = IMU_Pitch;
+	buffer13_Roll = IMU_Roll;
 }
 
 /*
