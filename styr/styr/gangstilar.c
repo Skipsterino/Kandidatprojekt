@@ -62,7 +62,7 @@ double_float Adjust_L_And_th(float thin)
 }
 triple_float Tripod(float x, float s, float h,uint8_t speed, uint8_t m, uint8_t n)
 {
-	int lift = 2; //höjd som ben lyfts i sving
+	float lift = 3; //höjd som ben lyfts i sving
 	float y = 0;
 	float z = - h;
 	
@@ -106,7 +106,8 @@ void Walk_Cycle(float l, float s,float h, uint8_t speed, float th, uint8_t m)
 	{
 		speed = 6;
 	}
-	m=16;
+	
+	m=24;
 	float corner_pitch = 8;
 	
 	triple_float kar_p1;
@@ -118,9 +119,9 @@ void Walk_Cycle(float l, float s,float h, uint8_t speed, float th, uint8_t m)
 	triple_float cyl4;
 	triple_float cyl5;
 	triple_float cyl6;
-	unsigned int speed_theta = 0x0010 + 0x0010 * speed;
-	unsigned int speed_lift = 0x0030 + 0x0030 * speed;
-	s=2*speed;
+	unsigned int speed_theta = 0x0160 ;//+ 0x0010 * speed; //0x0020 lagom för speed 1
+	unsigned int speed_lift = 0x0150 ;//+ 0x0030 * speed; // 0x0060 lagom för speed 1
+	s = 1 + 2 * speed;
 	
 	Send_Inner_P1_Velocity(speed_theta);
 	Send_Middle_P1_Velocity(speed_lift);
@@ -131,6 +132,7 @@ void Walk_Cycle(float l, float s,float h, uint8_t speed, float th, uint8_t m)
 	
 	for (uint8_t n=1; n <= 2*m; n++)
 	{
+		
 		
 		kar_p1 = Tripod(l,s,h,speed, m,n); //kart koord för par 1
 		kar_p2 = Tripod(l,s,h,speed, m,n + m); //kart koord för par 2
@@ -197,7 +199,7 @@ void Walk_Cycle(float l, float s,float h, uint8_t speed, float th, uint8_t m)
 			
 	
 		}
-		_delay_ms(50); //dumpa?
+		_delay_ms(5); //dumpa?
 	}
 }
 
