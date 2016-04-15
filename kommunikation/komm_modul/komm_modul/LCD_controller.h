@@ -14,14 +14,16 @@
 
 #include "LCD.h"
 
-char lines[16][16];
+#define CONTROLLER_NUMBER_OF_PAGES 4
+
+char lines[CONTROLLER_NUMBER_OF_PAGES*LCD_NUMBER_OF_LINES][LCD_LINE_WIDTH];
 uint8_t currentLine;
 uint8_t overflow_counter;
 uint8_t spiOverflow;
 
 void LCD_controller_init();
 
-void LCD_controller_put_line(uint8_t line, char string[16]);
+void LCD_controller_put_line(uint8_t line, char string[LCD_LINE_WIDTH]);
 
 
 #endif /* LCD_CONTROLLER_H_ */

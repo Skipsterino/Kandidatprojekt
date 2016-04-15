@@ -17,13 +17,16 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+#define LCD_NUMBER_OF_LINES 4
+#define LCD_LINE_WIDTH 16
+
 void LCD_clear();
 
 void LCD_put_num_u(unsigned int num);
 
 void LCD_putc(char c);
 
-void LCD_print_string(char line1[16], char line2[16], char line3[], char line4[]);
+void LCD_print_string(char line1[LCD_LINE_WIDTH], char line2[LCD_LINE_WIDTH], char line3[LCD_LINE_WIDTH], char line4[LCD_LINE_WIDTH]);
 
 int LCD_busy();
 

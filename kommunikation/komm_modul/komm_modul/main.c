@@ -63,7 +63,7 @@ int main(void)
 		}
 		LCD_print_string(lines[currentLine], lines[currentLine+1], lines[currentLine + 2], lines[currentLine + 3]);
 		
-		_delay_ms(500);
+		_delay_ms(100);
 		
 		BTtimeout++;
 	}

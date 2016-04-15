@@ -7,31 +7,30 @@
 
 #include "LCD.h"
 
-
 //Definitioner av pinnars position i PORTB-registret
 #define RS 0
 #define RW 1
 #define E  2
 
 //Definitioner av datariktningar
-#define DATA_OUT 0xFF
-#define DATA_IN 0x00
-#define COMMAND_PINS 0x07
+#define DATA_OUT		0xFF
+#define DATA_IN			0x00
+#define COMMAND_PINS	0x07
 
 //Definitioner av adressen för första tecknet på varje rad
 //i LCD:ns interna minne 
-#define DDRAM_LINE_1 0x80
-#define DDRAM_LINE_2 0xC0
-#define DDRAM_LINE_3 0x90
-#define DDRAM_LINE_4 0xD0
+#define DDRAM_LINE_1	0x80
+#define DDRAM_LINE_2	0xC0
+#define DDRAM_LINE_3	0x90
+#define DDRAM_LINE_4	0xD0
 
 //Definitioner av möjliga kommandon 
-#define COMMAND_CLEAR 0b00000001
-#define COMMAND_8BIT_2LINE_8DOTS 0b00110000
-#define COMMAND_8BIT_2LINE_11DOTS 0b00111000
-#define COMMAND_DISPLAY_OFF 0b00001000
-#define COMMAND_CURSOR_INC_NO_SHIFT 0b00000110 
-#define COMMAND_DISPLAY_ON_CURSOR_MOVE 0b00001100
+#define COMMAND_CLEAR					0b00000001
+#define COMMAND_8BIT_2LINE_8DOTS		0b00110000
+#define COMMAND_8BIT_2LINE_11DOTS		0b00111000
+#define COMMAND_DISPLAY_OFF				0b00001000
+#define COMMAND_CURSOR_INC_NO_SHIFT		0b00000110 
+#define COMMAND_DISPLAY_ON_CURSOR_MOVE	0b00001100
 
 void LCD_clear()
 {
@@ -40,10 +39,10 @@ void LCD_clear()
 
 void LCD_put_num_u(unsigned int num)
 {
-	char digits[16];
+	char digits[LCD_LINE_WIDTH];
 	sprintf(digits,"%d", num);
 	
-	for(int i = 0; i < 16; ++i)
+	for(int i = 0; i < LCD_LINE_WIDTH; ++i)
 	{
 		if(digits[i] == '\0')
 		{
@@ -66,52 +65,43 @@ void LCD_putc(char c)
 	PORTB &= ~(1<<E);
 }
 
-void LCD_print_string(char line1[16], char line2[16], char line3[], char line4[])
+void LCD_print_line(char line[LCD_LINE_WIDTH])
 {
-	//Clear display
-	LCD_clear();
-	
-	for(int i = 0; i < 16; ++i)
+	int i = 0;
+	//Loopa igenom alla tecken
+	for(i; i < LCD_LINE_WIDTH; ++i)
 	{
-		if(line1[i] == '\0')
+		//Om vi hittar radslut, avbryt
+		if(line[i] == '\0')
 		{
 			break;
 		}
-		LCD_putc(line1[i]);
+		LCD_putc(line[i]);
 	}
+	//Fyll i resten med tomma tecken
+	for(i; i < LCD_LINE_WIDTH; ++i)
+	{
+		LCD_putc(' ');
+	}
+}
+
+void LCD_print_string(char line1[LCD_LINE_WIDTH], char line2[LCD_LINE_WIDTH], char line3[LCD_LINE_WIDTH], char line4[LCD_LINE_WIDTH])
+{	
+	LCD_send_command(DDRAM_LINE_1);
+	
+	LCD_print_line(line1);
 	
 	LCD_send_command(DDRAM_LINE_2);
 	
-	for(int i = 0; i < 16; ++i)
-	{
-		if(line2[i] == '\0')
-		{
-			break;
-		}
-		LCD_putc(line2[i]);
-	}
+	LCD_print_line(line2);
 	
 	LCD_send_command(DDRAM_LINE_3);
 	
-	for(int i = 0; i < 16; ++i)
-	{
-		if(line3[i] == '\0')
-		{
-			break;
-		}
-		LCD_putc(line3[i]);
-	}
+	LCD_print_line(line3);
 	
 	LCD_send_command(DDRAM_LINE_4);
 	
-	for(int i = 0; i < 16; ++i)
-	{
-		if(line4[i] == '\0')
-		{
-			break;
-		}
-		LCD_putc(line4[i]);
-	}
+	LCD_print_line(line4);
 }
 
 int LCD_busy()
@@ -130,6 +120,7 @@ int LCD_busy()
 	
 	PORTB &= ~(1<<E);
 	PORTB &= ~(1<<RW);
+	
 	//Återställ riktning
 	DDRA = DATA_OUT;
 	
@@ -150,6 +141,7 @@ void LCD_send_command(unsigned char command)
 	
 	//Clear och return home tar 1.53 ms
 	//Alla andra tar 39 µs
+	//Vi väntar med lite extra marginal
 	if(command == 0x01 || command == 0x02)
 	{
 		_delay_us(1600);
@@ -169,25 +161,22 @@ void LCD_init()
 	
 	//Sätt E, R/W, RS till utgångar
 	DDRB |= COMMAND_PINS;
-	
-	//Vänta ett tag
-	_delay_ms(40);
-	
-	LCD_send_command(COMMAND_8BIT_2LINE_11DOTS);
-	
+
 	_delay_us(40);
+	
+	//8 bit dataportar
+	//2 raders display (faktiskt 4 st)
+	//11 dot karaktärer
+	LCD_send_command(COMMAND_8BIT_2LINE_11DOTS);
 	
 	LCD_send_command(COMMAND_DISPLAY_OFF);
 	
-	_delay_us(40);
-	
 	LCD_clear();
 	
-	_delay_us(1600);
-	
+	//Cursor stegas uppåt
+	//Ingen inskiftning
 	LCD_send_command(COMMAND_CURSOR_INC_NO_SHIFT);
 	
-	_delay_us(40);
-	
+	//Automatisk förflyttning av cursor vid skrivning
 	LCD_send_command(COMMAND_DISPLAY_ON_CURSOR_MOVE);
 }
