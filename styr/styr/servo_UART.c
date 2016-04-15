@@ -216,7 +216,7 @@ void Send_Outer_P2_Velocity(unsigned int vel)
 //Id,instruktion,startposition, och parametrar i en array och ta med antalet parametrar som en uint8
 void Send_Servo_Message(unsigned char message[], uint8_t num_of_par)
 {
-	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
+	//PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
 	unsigned char checksum = checksum_calc(message, num_of_par);
 
 	USART_Transmit(0xFF); //2 st Startbytes
@@ -228,12 +228,12 @@ void Send_Servo_Message(unsigned char message[], uint8_t num_of_par)
 		USART_Transmit(message[i]);
 	}
 	
-	cli(); //Deaktivera avbrott så överföringen avslutas korrekt
+	cli(); //Deaktivera avbrott så överföringen avslutas korrekt. BEHÖVS EJ???
 	USART_Transmit(checksum); //Checksum
-	while(!( UCSR0A & (1<<TXC0))); //Vänta på att överföringen klar
-	_delay_ms(0.06); //Lite extra tidsmarginal så överföringen verkligen hinner bli klar innan riktning ändras!!!
-	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
-	sei(); //Aktivera avbrott igen
+	while(!( UCSR0A & (1<<TXC0))); //Vänta på att överföringen klar (redo att skicka ny data)
+	//_delay_ms(0.06); //Lite extra tidsmarginal så överföringen verkligen hinner bli klar innan riktning ändras!!!
+	//PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
+	sei(); //Aktivera avbrott igen. BEHÖVS EJ???
 }
 
 //Skickar önskad position till servo. Inargument = (ID, position) OBS! LS Byte först...
@@ -267,6 +267,9 @@ double_uchar Get_Servo_Position(unsigned char ID) //FUNKAR ATT RETURNERA SÅHÄR
 	message[4] = 0x02;
 	
 	Send_Servo_Message(message, 2);
+	
+	_delay_ms(0.06); //Lite extra tidsmarginal så bussen hinner bli ledig ändras!!!
+	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
 	
 	USART_Receive(); //Första startbyten
 	USART_Receive(); //Andra startbyten
@@ -331,6 +334,9 @@ double_uchar Get_Servo_Position(unsigned char ID) //FUNKAR ATT RETURNERA SÅHÄR
 //message[4] = 0x01;
 //
 //Send_Servo_Message(message, 2);
+//
+//_delay_ms(0.06); //Lite extra tidsmarginal så överföringen verkligen hinner bli klar innan riktning ändras!!!
+//PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
 //
 //USART_Receive(); //Första startbyten
 //USART_Receive(); //Andra startbyten
