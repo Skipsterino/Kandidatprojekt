@@ -7,8 +7,6 @@
 
 #include "SPI.h"
 
-unsigned char fromSen[16];
-unsigned char fromKom[16];
 uint8_t SPIcounter;
 uint8_t toSen;
 uint8_t toKom;

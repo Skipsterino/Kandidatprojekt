@@ -15,7 +15,7 @@ float pi=3.14159265359;
 
 //Räknar ut kartesiska koordinater (kar) mha servoposition (pos). Returnerar kar som en triple_float.
 //DENNA TAR EJ HÄNSYN TILL OFFSETS!!! EV INTE RELEVANT FUNKTION?
-triple_float Pos_To_Kar(triple_uint pos)
+triple_float Pos_To_Kar(float p1, float p2, float p3)
 {
 	//Skalfaktor mellan pos och vinkel (som mäts i RADIANER)
 	float pos_to_ang_scale = 0.0051182676011; 
@@ -61,7 +61,7 @@ triple_uint Kar_To_Pos(float x, float y, float z)
 	float p_outer_sq =  r_outer_leg_sq + z_sq;
 	
 	//Invers kinematik
-	v1 = asin((y-leg_offset_y)/r_leg);
+	v1 = asin((y)/r_leg);
 	v2 = atan(-z/r_outer_leg)-acos((L3_sq-L2_sq-p_outer_sq)/(-2*L2*sqrt(p_outer_sq)));
 	v3 = acos((p_outer_sq - L3_sq - L2_sq)/L3_L2_2);
 

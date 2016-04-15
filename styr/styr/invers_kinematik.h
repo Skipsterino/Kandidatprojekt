@@ -13,7 +13,7 @@
 #include "structs.h"
 
 triple_uint Kar_To_Pos(float x, float y, float z);
-triple_float Pos_To_Kar(six_uchar pos);
+triple_float Pos_To_Kar(float p1, float p2, float p3);
 
 triple_float Kar_To_Cyl_Leg1(float x, float y, float z);
 triple_float Kar_To_Cyl_Leg2(float x, float y, float z);

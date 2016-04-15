@@ -47,7 +47,8 @@ int main(void)
 	
 while(1)
 {
-Walk_Cycle(13, 2, 11,2, 0, 16);// max speed =6 , stroke och m är "döda variabler"
+Walk_Cycle(13, 2, 11,6, 0, 16);// max speed =6 , stroke och m är "döda variabler"
+
 }
 
 }
