@@ -27,4 +27,5 @@ void update_alpha(void)
 	uint8_t x_hf = fromSen[2];
 	
 	alpha = Kp*(x_hb-x_vf) + Kd*(x_hf-x_hb); //Uppdatera vridvinkeln alpha
+	
 }

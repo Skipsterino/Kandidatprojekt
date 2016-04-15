@@ -21,7 +21,7 @@
 #include "structs.h"
 #include "servo_UART.h"
 
-triple_float Tripod(float l, float s,float h,float speed, int m, int n);
-void Walk_Cycle(float l, float s,float h, int speed, float th, int m);
+triple_float Tripod(float l, float s,float h,uint8_t speed, uint8_t m, uint8_t n);
+void Walk_Cycle(float l, float s,float h, uint8_t speed, float th, uint8_t m);
 
 #endif /* GANGSTILAR_H_ */

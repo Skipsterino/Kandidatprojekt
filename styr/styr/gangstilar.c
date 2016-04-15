@@ -60,7 +60,7 @@ double_float Adjust_L_And_th(float thin)
 	
 	return create_double_float(lout,thout);
 }
-triple_float Tripod(float x, float s, float h,float speed, int m, int n)
+triple_float Tripod(float x, float s, float h,uint8_t speed, uint8_t m, uint8_t n)
 {
 	int lift = 2; //höjd som ben lyfts i sving
 	float y = 0;
@@ -100,7 +100,7 @@ triple_float Tripod(float x, float s, float h,float speed, int m, int n)
 	return create_triple_float(x,y,z);
 }
 
-void Walk_Cycle(float l, float s,float h, int speed, float th, int m)
+void Walk_Cycle(float l, float s,float h, uint8_t speed, float th, uint8_t m)
 {
 	if(speed > 6 )
 	{
