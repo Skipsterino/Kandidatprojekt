@@ -37,20 +37,20 @@ int main(void)
 		if (SPI_done)
 		{
 
-		ADC_IR();						// Sampla IR-sensorerna
-		read_IMU();						// Hämta data från IMU
-		
-		send_ping();					// Starta en US-mätning
-		
-		ADC_to_distance();				// Konvertera ADC-värde till avstånd (IR-sensorerna)
-		time_to_distance();				// Konvertera tid till avstånd (US-sensorn)
-		calculate_Yaw();				// Räkna ut Yaw-vinkeln
-		save_to_buffer();				// Spara undan i buffert
-		
-		SPI_done = 0;
+			ADC_IR();						// Sampla IR-sensorerna
+			read_IMU();						// Hämta data från IMU
+			
+			send_ping();					// Starta en US-mätning
+			
+			ADC_to_distance();				// Konvertera ADC-värde till avstånd (IR-sensorerna)
+			time_to_distance();				// Konvertera tid till avstånd (US-sensorn)
+			calculate_Yaw();				// Räkna ut Yaw-vinkeln
+			save_to_buffer();				// Spara undan i buffert
+			
+			SPI_done = 0;
 
-		kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
-		
+			kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
+			
 		}
 		
 		_delay_ms(delay_time);			// Vila för att få lagom frekvens		// XXXX Endast vid testning utan bussen!
@@ -704,13 +704,13 @@ void send_ping()
 
 void ADC_to_distance()
 {
-	IR_distance[0] = lookup_distance(IR0_table, IR_ADC[0], 15);
-	IR_distance[1] = lookup_distance(IR1_table, IR_ADC[1], 11);
-	IR_distance[2] = lookup_distance(IR2_table, IR_ADC[2], 15);
-	IR_distance[3] = lookup_distance(IR3_table, IR_ADC[3], 15);
-	IR_distance[4] = lookup_distance(IR4_table, IR_ADC[4], 11);
-	IR_distance[5] = lookup_distance(IR5_table, IR_ADC[5], 15);
-	IR_distance[6] = lookup_distance(IR6_table, IR_ADC[6], 15);
+	IR_distance[0] = lookup_distance(IR0_table, IR_ADC[0], 19);
+	IR_distance[1] = lookup_distance(IR1_table, IR_ADC[1], 13);
+	IR_distance[2] = lookup_distance(IR2_table, IR_ADC[2], 19);
+	IR_distance[3] = lookup_distance(IR3_table, IR_ADC[3], 19);
+	IR_distance[4] = lookup_distance(IR4_table, IR_ADC[4], 13);
+	IR_distance[5] = lookup_distance(IR5_table, IR_ADC[5], 19);
+	IR_distance[6] = lookup_distance(IR6_table, IR_ADC[6], 19);
 }
 
 /*
@@ -986,7 +986,7 @@ void kalibrering()				// XXXXX Endast för att kunna kalibrera sensorer!
 	}
 	else
 	{
-		sum = sum + IR_ADC[3];
+		sum = sum + IR_ADC[6];
 		++counter;
 		result = sum/counter;
 	}
