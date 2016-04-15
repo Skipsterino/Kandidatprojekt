@@ -20,6 +20,9 @@
 #define SS_sen 3
 #define SS_kom 4
 
+unsigned char fromSen[16];
+unsigned char fromKom[16];
+
 void SPI_init_master();
 void SPI_sen_transmit_master();
 void Set_SS_sen_kom(uint8_t toSen, uint8_t toKom);
