@@ -33,20 +33,20 @@ int main(void)
 	Configure_Servos_Angle_Limit(); 
 	//
 	
-	Send_Inner_P1_Velocity(0x00F0); //DESSA SEX ANROP MÅSTE ALLTID KÖRAS EFTERSOM HASTIGHETEN LIGGER I RAM!!!
-	Send_Middle_P1_Velocity(0x0100);//
-	Send_Outer_P1_Velocity(0x0100);//
-	Send_Inner_P2_Velocity(0x00F0);//
-	Send_Middle_P2_Velocity(0x0100);//
-	Send_Outer_P2_Velocity(0x0100);//
+	Send_Inner_P1_Velocity(0x0010); //DESSA SEX ANROP MÅSTE ALLTID KÖRAS EFTERSOM HASTIGHETEN LIGGER I RAM!!!
+	Send_Middle_P1_Velocity(0x0010);//
+	Send_Outer_P1_Velocity(0x0010);//
+	Send_Inner_P2_Velocity(0x0010);//
+	Send_Middle_P2_Velocity(0x0010);//
+	Send_Outer_P2_Velocity(0x0010);//
 	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
 	
-	triple_uint positioner = Kar_To_Pos(24.5, -0.5, 0);
+	triple_uint positioner = Kar_To_Pos(24.5, 0.5, 0);
 	
 while(1)
 {
-Walk_Cycle(13, 2, 11,6, 0, 16);// max speed =6 , stroke och m är "döda variabler"
+Walk_Cycle(13, 2, 11,5, -0.11, 16);// max speed =6 , stroke och m är "döda variabler"
 
 }
 
