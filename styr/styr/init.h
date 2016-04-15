@@ -6,4 +6,6 @@
 void Init(void);
 void USART_Init(void);
 
+#include "SPI.h"
+
 #endif /* INIT_H_ */

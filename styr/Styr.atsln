@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Atmel Studio Solution File, Format Version 11.00
-Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Styr", "Styr.cproj", "{60B919F3-E852-47A7-ABE0-54C1BE6FF403}"
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Styr", "styr\Styr.cproj", "{60B919F3-E852-47A7-ABE0-54C1BE6FF403}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

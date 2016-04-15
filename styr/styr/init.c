@@ -1,13 +1,16 @@
 #include "init.h"
 
-//Konfigurerar portar, initierar UART och aktiverar avbrott öht
+//Konfigurerar portar, initierar UART och initierar SPI
 void Init(void)
 {
 	DDRD = 1<<DDD2;
 	DDRC = 0; //JTAG, alla väljs till ingångar
 	DDRB = (1<<DDB3) | (1<<DDB4) | (1<<DDB5) | (0<<DDB6) | (1<<DDB7); //SPI, allt ut förutom PB6
 	
+	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
+	
 	USART_Init();
+	SPI_init_master();
 }
 
 void USART_Init(void)

@@ -25,8 +25,7 @@
 int main(void)
 {
 	Init();
-	USART_Init();
-	SPI_init_master();
+	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
 	//Configure_Servos_Delaytime();
 	//Configure_Servos_LED();
@@ -41,7 +40,7 @@ int main(void)
 	Send_Middle_P2_Velocity(0x0100);//
 	Send_Outer_P2_Velocity(0x0100);//
 	
-	sei(); //Aktivera avbrott öht (MSB=1 i SREG)
+	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
 	
 	triple_uint positioner = Kar_To_Pos(24.5, -0.5, 0);
 	
