@@ -37,23 +37,23 @@ int main(void)
 		if (SPI_done)
 		{
 
-			ADC_IR();						// Sampla IR-sensorerna
-			read_IMU();						// Hämta data från IMU
-			
-			send_ping();					// Starta en US-mätning
-			
-			ADC_to_distance();				// Konvertera ADC-värde till avstånd (IR-sensorerna)
-			time_to_distance();				// Konvertera tid till avstånd (US-sensorn)
-			calculate_Yaw();				// Räkna ut Yaw-vinkeln
-			save_to_buffer();				// Spara undan i buffert
-			
-			SPI_done = 0;
+		ADC_IR();						// Sampla IR-sensorerna
+		read_IMU();						// Hämta data från IMU
+		
+		send_ping();					// Starta en US-mätning
+		
+		ADC_to_distance();				// Konvertera ADC-värde till avstånd (IR-sensorerna)
+		time_to_distance();				// Konvertera tid till avstånd (US-sensorn)
+		calculate_Yaw();				// Räkna ut Yaw-vinkeln
+		save_to_buffer();				// Spara undan i buffert
+		
+		SPI_done = 0;
 
-			//kalibrering();				// XXXXX Endast för att kunna kalibrera sensorer!
-			
+		kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
+		
 		}
 		
-		_delay_ms(delay_time);			// Vila för att få lagom frekvens
+		_delay_ms(delay_time);			// Vila för att få lagom frekvens		// XXXX Endast vid testning utan bussen!
 	}
 }
 
