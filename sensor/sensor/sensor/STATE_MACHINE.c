@@ -7,6 +7,12 @@ enum STATES {
 	END_OF_COURSE
 };
 
+#define 90_ROTATION_ANGLE 85
+#define 180_ROTATION_ANGLE 185
+
+
+
+
 int8_t IMU_Yaw_start;
 int start_Yaw_set;		// 0 = har ej satt ett startvärde
 
@@ -57,7 +63,7 @@ void update_state()
 		//
 		case CORRIDOR:
 		{
-			if (IR_0 < 20 && IR_2 < 60 && IR_3 < 60 && IR_5 < 60 && IR_6 < 60)
+			if (IR_0 < 40 && IR_2 < 70 && IR_3 < 70 && IR_5 < 70 && IR_6 < 70)
 			{
 				ROBOT_STATE = DEAD_END;
 				break;
@@ -85,7 +91,7 @@ void update_state()
 		//
 		case DEAD_END:
 		{
-			if (IMU_Yaw - start_Yaw_value <= -175)
+			if (IMU_Yaw - start_Yaw_value >= 180_ROTATION_ANGLE)
 			{
 				ROBOT_STATE = CORRIDOR;
 				start_Yaw_set = 0;
@@ -155,7 +161,7 @@ void update_state()
 		//
 		case TURN_RIGHT:
 		{
-			if (IMU_Yaw - start_Yaw_value >= 85)
+			if (IMU_Yaw - start_Yaw_value >= 90_ROTATION_ANGLE)
 			{
 				ROBOT_STATE = OUT_OF_TURN_RIGHT;
 				start_Yaw_set = 0;
@@ -167,7 +173,7 @@ void update_state()
 		//
 		case TURN_LEFT:
 		{
-			if (IMU_Yaw - start_Yaw_value <= -85)
+			if (IMU_Yaw - start_Yaw_value <= -90_ROTATION_ANGLE)
 			{
 				ROBOT_STATE = OUT_OF_TURN_LEFT;
 				start_Yaw_set = 0;
@@ -201,7 +207,7 @@ void update_state()
 		//
 		case JUNCTION_A_RIGHT:
 		{
-			if (IMU_Yaw - start_Yaw_value >= 85)
+			if (IMU_Yaw - start_Yaw_value >= 90_ROTATION_ANGLE)
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_A_RIGHT;
 				start_Yaw_set = 0;
@@ -213,7 +219,7 @@ void update_state()
 		//
 		case JUNCTION_A_LEFT:
 		{
-			if (IMU_Yaw - start_Yaw_value <= -85)
+			if (IMU_Yaw - start_Yaw_value <= -90_ROTATION_ANGLE)
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_A_RIGHT;
 				start_Yaw_set = 0;
@@ -271,7 +277,7 @@ void update_state()
 		//
 		case JUNCTION_C_RIGHT:
 		{
-			if (IMU_Yaw - start_Yaw_value >= 85)
+			if (IMU_Yaw - start_Yaw_value >= 90_ROTATION_ANGLE)
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_C_RIGHT;
 				start_Yaw_set = 0;
@@ -283,7 +289,7 @@ void update_state()
 		//
 		case JUNCTION_C_LEFT:
 		{
-			if (IMU_Yaw - start_Yaw_value <= -85)
+			if (IMU_Yaw - start_Yaw_value <= -90_ROTATION_ANGLE)
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_C_LEFT;
 				start_Yaw_set = 0;
@@ -302,12 +308,6 @@ void update_state()
 			}
 			break;
 		}
-		
-		//
-		case END_OF_COURSE:
-		{
-			break;
-		}
 
 		//
 		case OUT_OF_JUNCTION_C_LEFT:
@@ -319,6 +319,12 @@ void update_state()
 			}
 			break;
 		}
+		
+		//
+		case END_OF_COURSE:
+		{
+			break;
+		}
 
 		//
 		case INTO_HIGH_OBSTACLE:
@@ -327,9 +333,7 @@ void update_state()
 			{
 				ROBOT_STATE = CRAWLING_UNDER_HIGH_OBSTACLE;
 				break;
-			}
 			break;
-		}
 		
 		//
 		case CRAWLING_UNDER_HIGH_OBSTACLE:
