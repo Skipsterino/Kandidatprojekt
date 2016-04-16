@@ -46,8 +46,31 @@ int main(void)
 	
 while(1)
 {
-Walk_Cycle(13, 2, 11,5, -0.11, 16);// max speed =6 , stroke och m är "döda variabler"
-
+	Walk_Half_Cycle(-4);// max speed =6 
+	_delay_ms(1000);
+	Walk_Half_Cycle(-3);// max speed =6 
+	_delay_ms(1000);
+	Walk_Half_Cycle(-2);// max speed =6 
+	_delay_ms(1000);
+	Walk_Half_Cycle(-1);// max speed =6 
+	_delay_ms(1000);
+	Walk_Half_Cycle(1);// max speed =6 
+	_delay_ms(1000);
+	Walk_Half_Cycle(2);// max speed =6 
+	_delay_ms(1000);
+	Walk_Half_Cycle(3);// max speed =6 
+	_delay_ms(1000);
+	Walk_Half_Cycle(4);// max speed =6 
+	_delay_ms(1000);
+		Walk_Half_Cycle(0,-0.5);// max speed =6 
+	_delay_ms(1000);
+	Walk_Half_Cycle(0, 0.5);// max speed =6 
+	_delay_ms(1000);
+	
+	Walk_Half_Crab_Cycle(2);// max speed =6 
+	_delay_ms(1000);
+	Walk_Half_Crab_Cycle(-2);// max speed =6 
+	_delay_ms(1000);
 }
 
 }

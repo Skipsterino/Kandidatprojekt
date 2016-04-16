@@ -21,7 +21,10 @@
 #include "structs.h"
 #include "servo_UART.h"
 
-triple_float Tripod(float l, float s,float h,uint8_t speed, uint8_t m, uint8_t n);
-void Walk_Cycle(float l, float s,float h, uint8_t speed, float th, uint8_t m);
+uint8_t max_speed(float theta);
+triple_float Tripod(uint8_t speed, float x, float s, float h, uint8_t m, uint8_t n);
+void Walk__Half_Cycle(uint8_t speed, float th = 0, float h = 11, float l = 13);
+void Walk__Half__crab_Cycle(uint8_t speed, float th = 0, float h = 11, float l = 13);
 
 #endif /* GANGSTILAR_H_ */
+
