@@ -13,6 +13,7 @@
 #include <avr/sleep.h>
 #include <math.h>
 #include <util/delay.h>
+#include <stdbool.h>
 
 #include "init.h"
 #include "structs.h"
@@ -31,7 +32,6 @@ int main(void)
 	//Configure_Servos_LED();
 	Configure_Servos_No_Response();
 	Configure_Servos_Angle_Limit(); 
-	//
 	
 	Send_Inner_P1_Velocity(0x0010); //DESSA SEX ANROP MÅSTE ALLTID KÖRAS EFTERSOM HASTIGHETEN LIGGER I RAM!!!
 	Send_Middle_P1_Velocity(0x0010);//
@@ -43,34 +43,11 @@ int main(void)
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
 	
 	triple_uint positioner = Kar_To_Pos(24.5, 0.5, 0);
-	
+
 while(1)
-{
-	Walk_Half_Cycle(-4);// max speed =6 
-	_delay_ms(1000);
-	Walk_Half_Cycle(-3);// max speed =6 
-	_delay_ms(1000);
-	Walk_Half_Cycle(-2);// max speed =6 
-	_delay_ms(1000);
-	Walk_Half_Cycle(-1);// max speed =6 
-	_delay_ms(1000);
-	Walk_Half_Cycle(1);// max speed =6 
-	_delay_ms(1000);
-	Walk_Half_Cycle(2);// max speed =6 
-	_delay_ms(1000);
-	Walk_Half_Cycle(3);// max speed =6 
-	_delay_ms(1000);
-	Walk_Half_Cycle(4);// max speed =6 
-	_delay_ms(1000);
-		Walk_Half_Cycle(0,-0.5);// max speed =6 
-	_delay_ms(1000);
-	Walk_Half_Cycle(0, 0.5);// max speed =6 
-	_delay_ms(1000);
-	
-	Walk_Half_Crab_Cycle(2);// max speed =6 
-	_delay_ms(1000);
-	Walk_Half_Crab_Cycle(-2);// max speed =6 
-	_delay_ms(1000);
+{	
+	Walk_Half_Cycle(6, 0,11,13);// max speed =+-6 , max theta +-0.57, ganska otestad för andra värden på l och h.
+	//Walk_Half_Crab_Cycle(4,0,15,10);//bara testad med dessa värden
 }
 
 }

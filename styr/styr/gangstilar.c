@@ -64,19 +64,21 @@ double_float Adjust_L_And_th(float thin)
 }
 
 //ger max möjlig speed för inmatat theta.
-uint8_t max_speed(float theta)
+int max_speed(float theta,int sgn_theta, int speed)
 {
-	uint8_t speed = 0
-	float thlimits[7] = {7,6,5,4,3,2,0};//thetamax för olika speeds 0->5
-	for(uint8_t i = 0, abs(theta) <= thlimits[i] && i <= 6, i++)
+	int sgn_speed = (speed > 0) - (speed < 0);
+	speed=0;
+	float thlimits[7] = {0.57,0.48,0.38,0.3,0.2,0.11,0};//thetamax för olika speeds 0->5
+	
+	for(uint8_t i = 0; theta * sgn_theta <= thlimits[i] && i <= 6; i++)
 	{
 		speed = i;
 	}
-	return speed;
+	return speed * sgn_speed;
 }
 	
 //Generar tripod gång
-triple_float Tripod(uint8_t speed, float x, float s, float h, uint8_t m, uint8_t n)
+triple_float Tripod(float x, float s, float h, uint8_t m, uint8_t n)
 {
 	float lift = 3; //höjd som ben lyfts i sving
 	float y = 0;
@@ -116,22 +118,18 @@ triple_float Tripod(uint8_t speed, float x, float s, float h, uint8_t m, uint8_t
 	return create_triple_float(x,y,z);
 }
 
+
 // speed = hastighet fram/bak [-6,6], th = sväng, l = bens avstånd till kropp i x-led (13), h = höjd från mark(11), 
-void Walk__Half_Cycle(uint8_t speed, float th, float h, float l)
+void Walk_Half_Cycle(int speed, float th, float h, float l) //(uint8_t speed, float th = 0, float h = 11, float l = 13);
 {
-	uint8_t m_speed = max_speed(th);
-	
-	if(speed > m_speed ) //hastighetsbegränsing
-	{
-		speed = m_speed;
-	}
-	
-	uint8_t m = 24; //delsekvenser per halv cykel, minska vid "overdrive"
+	int sgn_theta = (th > 0) - (th< 0);
+	int m_speed = max_speed(th, sgn_theta, speed);
+	uint8_t m = 24; //delsekvenser per halv cykel
+	uint8_t walk_break = 1;
 	float corner_pitch = 8;
 	
 	triple_float kar_p1;
 	triple_float kar_p2;
-	
 	triple_float cyl1;
 	triple_float cyl2;
 	triple_float cyl3;
@@ -139,12 +137,22 @@ void Walk__Half_Cycle(uint8_t speed, float th, float h, float l)
 	triple_float cyl5;
 	triple_float cyl6;
 	
-	//justerar servospeed 
-	unsigned int speed_theta = 0x0160 ;//+ 0x0010 * speed; //0x0020 lagom för speed 1
-	unsigned int speed_lift = 0x0150 ;//+ 0x0030 * speed; // 0x0060 lagom för speed 1
+	if(th * sgn_theta > 0.57) // minskar theta om för stor
+	{
+		th=0.57 * sgn_theta;
+	}
+	  
+	if(speed > m_speed ) //hastighetsbegränsing ):
+	{
+		speed = m_speed;
+	}
+	
+	//justerar servospeed INTE KLART
+	unsigned int speed_theta =0x0100;//= max -Y*(speed- m_speed), alt tabell ;  //= 0x0160 
+	unsigned int speed_lift  =0x0100;//= 0x0150 
 	
 	//justerar steglängd
-	float s =  2.2 * speed; //var 1 + 2* speed innnan steg inom gräns nu för speed = 6?
+	float s =  2.2 * speed; 
 	
 	Send_Inner_P1_Velocity(speed_theta);
 	Send_Middle_P1_Velocity(speed_lift);
@@ -153,12 +161,11 @@ void Walk__Half_Cycle(uint8_t speed, float th, float h, float l)
 	Send_Middle_P2_Velocity(speed_lift);
 	Send_Outer_P2_Velocity(speed_theta);
 	
-	//bool break =#t;
-	for (uint8_t i = 1; i <= m; i++) // bätttre vilkor: break || (n!=m/2 && n!=3*n/2), testa med while, funkar det så flytta upp stegning av n här.
+	 while( walk_break || ( n != m/2 && n != 3 * m/2 ))
 	{
-		// break=#f;
-		kar_p1 = Tripod(speed, l, s, h, m, n); //kart koord för par 1
-		kar_p2 = Tripod(speed, l, s, h, m, n + m); //kart koord för par 2
+		walk_break = 0;
+		kar_p1 = Tripod(l, s, h, m, n); //kart koord för par 1
+		kar_p2 = Tripod(l, s, h, m, n + m); //kart koord för par 2
 		
 		if(th == 0) //behöver ej gå via cyl koord vid rak gång.
 		{
@@ -172,7 +179,7 @@ void Walk__Half_Cycle(uint8_t speed, float th, float h, float l)
 			Send_Leg2_Kar(kar_p2.a, kar_p2.b + corner_pitch, kar_p2.c);
 			Send_Leg6_Kar(kar_p2.a, kar_p2.b - corner_pitch, kar_p2.c);
 		}
-		else //om sväng /IN MED HASTIGHETSJUSTERING HÄR UNGEFÄR
+		else //om sväng
 		{
 			//koord för par 1 omvandlas till cyl
 			triple_float cyl1 = Kar_To_Cyl_Leg1(kar_p1.a, kar_p1.b + corner_pitch, kar_p1.c);
@@ -188,9 +195,9 @@ void Walk__Half_Cycle(uint8_t speed, float th, float h, float l)
 			if(n <= m) //stödfas par 1, svingfas par 2
 			{
 				//Stegvis rotation på p1
-				cyl1.b = cyl1.b -th/2 + th/m*n;
-				cyl4.b = cyl4.b -th/2 + th/m*n;
-				cyl5.b = cyl5.b -th/2 + th/m*n;
+				cyl1.b = cyl1.b - th/2 + n * th/m;
+				cyl4.b = cyl4.b - th/2 + n * th/m;
+				cyl5.b = cyl5.b - th/2 + n * th/m;
 				
 				//startläge för P2
 				cyl3.b = cyl3.b - th/2;
@@ -233,7 +240,8 @@ void Walk__Half_Cycle(uint8_t speed, float th, float h, float l)
 
 
 //test, endast rak gång
-void Walk__Half__crab_Cycle(uint8_t speed, float th, float h, float l)
+//Crab people, Crab people, tastes like crab, talks like people.
+void Walk_Half_Crab_Cycle(int speed, float th, float h, float l)
 {
 	th=0;
 	if(speed > 6 ) //hastighetsbegränsing
@@ -270,20 +278,20 @@ void Walk__Half__crab_Cycle(uint8_t speed, float th, float h, float l)
 	
 	for (uint8_t i = 1; i <= m; i++)
 	{
-		kar_p1 = Tripod(speed, l, s, h, m, n); //kart koord för par 1
-		kar_p2 = Tripod(speed, l, s, h, m, n + m); //kart koord för par 2
+		kar_p1 = Tripod(l, s, h, m, n); //kart koord för par 1
+		kar_p2 = Tripod(l, s, h, m, n + m); //kart koord för par 2
 		
 		if(th == 0) //behöver ej gå via cyl koord vid rak gång.
 		{
 			//par 1 får pos
-			Send_Leg4_Kar(kar_p1.a + kar_p1.b, 0, kar_p1.c); 
+			Send_Leg4_Kar(kar_p1.a - kar_p1.b, 0, kar_p1.c); 
 			Send_Leg1_Kar(kar_p1.a + kar_p1.b, corner_pitch, kar_p1.c);
 			Send_Leg5_Kar(kar_p1.a + kar_p1.b, - corner_pitch, kar_p1.c);
 			
 			//par 2 får pos
 			Send_Leg3_Kar(kar_p2.a + kar_p2.b, 0, kar_p2.c); 
-			Send_Leg2_Kar(kar_p2.a + kar_p2.b, corner_pitch, kar_p2.c);
-			Send_Leg6_Kar(kar_p2.a + kar_p2.b,- corner_pitch, kar_p2.c);
+			Send_Leg2_Kar(kar_p2.a - kar_p2.b, corner_pitch, kar_p2.c);
+			Send_Leg6_Kar(kar_p2.a - kar_p2.b,- corner_pitch, kar_p2.c);
 		}
 		else //om sväng
 		{
