@@ -64,17 +64,16 @@ double_float Adjust_L_And_th(float thin)
 }
 
 //ger max möjlig speed för inmatat theta.
-int max_speed(float theta,int sgn_theta, int speed)
+int max_speed(float theta,int sgn_theta)
 {
-	int sgn_speed = (speed > 0) - (speed < 0);
-	speed=0;
+	int speed=0;
 	float thlimits[7] = {0.57,0.48,0.38,0.3,0.2,0.11,0};//thetamax för olika speeds 0->5
 	
 	for(uint8_t i = 0; theta * sgn_theta <= thlimits[i] && i <= 6; i++)
 	{
 		speed = i;
 	}
-	return speed * sgn_speed;
+	return speed;
 }
 	
 //Generar tripod gång
@@ -119,14 +118,17 @@ triple_float Tripod(float x, float s, float h, uint8_t m, uint8_t n)
 }
 
 
-// speed = hastighet fram/bak [-6,6], th = sväng, l = bens avstånd till kropp i x-led (13), h = höjd från mark(11), 
-void Walk_Half_Cycle(int speed, float th, float h, float l) //(uint8_t speed, float th = 0, float h = 11, float l = 13);
+// speed = hastighet fram/bak [-6,6], th = sväng, l = bens avstånd till kropp i x-led (13), h = höjd från mark(11)
+//Undvik att ändra värde för h och l när robot står på marken (ska fixas)
+//fixa mjuk övergång för h och l (gör globala) 
+void Walk_Half_Cycle(int speed, float th, float h, float l) 
 {
+	int sgn_speed = (speed > 0) - (speed < 0);
 	int sgn_theta = (th > 0) - (th< 0);
-	int m_speed = max_speed(th, sgn_theta, speed);
+	int m_speed = max_speed(th, sgn_theta); //m_speed alltid possitiv
 	uint8_t m = 24; //delsekvenser per halv cykel
 	uint8_t walk_break = 1;
-	float corner_pitch = 8;
+	float corner_pitch = 8; //förskjutning av arbetsområde i y-led för hörnben
 	
 	triple_float kar_p1;
 	triple_float kar_p2;
@@ -142,9 +144,9 @@ void Walk_Half_Cycle(int speed, float th, float h, float l) //(uint8_t speed, fl
 		th=0.57 * sgn_theta;
 	}
 	  
-	if(speed > m_speed ) //hastighetsbegränsing ):
+	if(sgn_speed * speed > m_speed ) //hastighetsbegränsing ): sänker speed om för hög, kan ändras så att speed 6 alltid = högsta realiserbara.
 	{
-		speed = m_speed;
+		speed = m_speed * sgn_speed;
 	}
 	
 	//justerar servospeed INTE KLART
@@ -154,6 +156,7 @@ void Walk_Half_Cycle(int speed, float th, float h, float l) //(uint8_t speed, fl
 	//justerar steglängd
 	float s =  2.2 * speed; 
 	
+	//skickar hastighetsbegränsningar till servon.
 	Send_Inner_P1_Velocity(speed_theta);
 	Send_Middle_P1_Velocity(speed_lift);
 	Send_Outer_P1_Velocity(speed_lift);
@@ -161,6 +164,7 @@ void Walk_Half_Cycle(int speed, float th, float h, float l) //(uint8_t speed, fl
 	Send_Middle_P2_Velocity(speed_lift);
 	Send_Outer_P2_Velocity(speed_theta);
 	
+	//gångloop, utför en halv gångfas och stannar när stödjande ben är i mitten av arbetsområde
 	 while( walk_break || ( n != m/2 && n != 3 * m/2 ))
 	{
 		walk_break = 0;
@@ -234,13 +238,14 @@ void Walk_Half_Cycle(int speed, float th, float h, float l) //(uint8_t speed, fl
 			n = 1; //nollar index
 		}
 		
-		_delay_ms(5); //dumpa? vore logiskt med olika delay för kart o cyl.
+		_delay_ms(5); //vore logiskt med olika delay för kart o cyl.
 	}
 }
 
 
 //test, endast rak gång
 //Crab people, Crab people, tastes like crab, talks like people.
+//gör ny copy från walk_half_cycle.
 void Walk_Half_Crab_Cycle(int speed, float th, float h, float l)
 {
 	th=0;
