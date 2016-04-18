@@ -186,7 +186,7 @@ if(h < 11)
 		walk_break = 0;
 		
 		//stegvis höjdjustering
-		last_h += h_diff;
+		last_h += h_step;
 		
 		kar_p1 = Tripod(l, s, last_h, m, n); //kart koord för par 1
 		kar_p2 = Tripod(l, s, last_h, m, n + m); //kart koord för par 2
@@ -219,9 +219,9 @@ if(h < 11)
 			if(n <= m) //stödfas par 1, svingfas par 2
 			{
 				//Stegvis rotation på p1
-				cyl1.b = cyl1.b sgn_speed*(- th/2 + n * th/m);
-				cyl4.b = cyl4.b sgn_speed*(- th/2 + n * th/m);
-				cyl5.b = cyl5.b sgn_speed*(- th/2 + n * th/m);
+				cyl1.b = cyl1.b +sgn_speed*(- th/2 + n * th/m);
+				cyl4.b = cyl4.b +sgn_speed*(- th/2 + n * th/m);
+				cyl5.b = cyl5.b +sgn_speed*(- th/2 + n * th/m);
 				
 				//startläge för P2
 				cyl3.b = cyl3.b - sgn_speed*th/2;
@@ -257,7 +257,7 @@ if(h < 11)
 		{
 			n = 1; //nollar index
 		}
-		i++;
+		
 		_delay_ms(5); //vore logiskt med olika delay för kart o cyl.
 	}
 	last_h = h; //nya h blir gamla

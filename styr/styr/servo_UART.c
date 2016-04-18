@@ -108,6 +108,43 @@ void Configure_Servos_No_Response(void)
 		_delay_ms(1);
 	}
 }
+
+
+unsigned int Get_Servo_Load(unsigned char ID)
+{	
+	unsigned char message[6];
+	unsigned char load_LSByte;
+	unsigned char load_MSByte;
+	
+	message[0] = ID;
+	message[1] = 0x04;
+	message[2] = 0x02;
+	message[3] = 0x28; //Läser ut Present Position (önskas istället Goal Position får man ändra här till 0x1E)
+	message[4] = 0x02;
+	
+	Send_Servo_Message(message, 2);
+	
+	_delay_ms(0.06); //Lite extra tidsmarginal så bussen hinner bli ledig ändras!!!
+	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
+	
+	USART_Receive(); //Första startbyten
+	USART_Receive(); //Andra startbyten
+	USART_Receive(); //ID
+	USART_Receive(); //Längd
+	USART_Receive(); //Error
+	load_LSByte = USART_Receive(); //LS Byte av positionen
+	load_MSByte = USART_Receive(); //MS Byte av positionen
+	USART_Receive(); //Checksum
+
+	unsigned int load = (((unsigned int)load_MSByte) << 8) | load_LSByte;
+	
+	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
+	
+	return load;
+}
+
+
+
 	
 // Självförklarande.... Kom ihåg hastigheten ligger i RAM och måste sättas om...
 void Send_Servo_Velocity(unsigned char ID, unsigned int vel)
@@ -140,6 +177,7 @@ void Send_Servo_Angle_Limit(unsigned char ID, unsigned int lower, unsigned int h
 	unsigned char limits[] = {ID, 0x07, 0x03, 0x06, lowerLS, lowerMS, higherLS, higherMS};
 	Send_Servo_Message(limits, 5);
 }
+
 
 //Skickar önskad hastighet till servona. OBS! Denna måste köras VARJE gång ty hastighet ligger i RAM!
 void Send_Inner_P1_Velocity(unsigned int vel)
@@ -281,6 +319,7 @@ double_uchar Get_Servo_Position(unsigned char ID) //FUNKAR ATT RETURNERA SÅHÄR
 	USART_Receive(); //Checksum
 
 	double_uchar position = create_double_uchar(position_LSByte, position_MSByte);
+	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
 	return position;
 }
 
