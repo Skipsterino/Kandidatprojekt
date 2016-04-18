@@ -111,6 +111,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="over_hinder.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="over_hinder.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Gangstilar.c">
       <SubType>compile</SubType>
     </Compile>
