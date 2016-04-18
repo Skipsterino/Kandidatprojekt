@@ -10,8 +10,8 @@
 #define BUFFERS_H_
 
 
-unsigned char toBluetooth[16];
-unsigned char toSPI[16];
+volatile unsigned char toBluetooth[16];
+volatile unsigned char toSPI[16];
 
 
 #endif /* BUFFERS_H_ */
