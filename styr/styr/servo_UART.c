@@ -269,7 +269,7 @@ void Send_Servo_Message(unsigned char message[], uint8_t num_of_par)
 	cli(); //Deaktivera avbrott så överföringen avslutas korrekt. BEHÖVS EJ???
 	USART_Transmit(checksum); //Checksum
 	while(!( UCSR0A & (1<<TXC0))); //Vänta på att överföringen klar (redo att skicka ny data)
-	//_delay_ms(0.06); //Lite extra tidsmarginal så överföringen verkligen hinner bli klar innan riktning ändras!!!
+	_delay_ms(0.06); //Lite extra tidsmarginal så överföringen verkligen hinner bli klar innan riktning ändras!!!
 	//PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
 	sei(); //Aktivera avbrott igen. BEHÖVS EJ???
 }
