@@ -20,8 +20,8 @@
 #define SS_sen 3
 #define SS_kom 4
 
-unsigned char fromSen[16];
-unsigned char fromKom[16];
+volatile unsigned char fromSen[16];
+volatile unsigned char fromKom[16];
 
 void SPI_init_master();
 void SPI_sen_transmit_master();

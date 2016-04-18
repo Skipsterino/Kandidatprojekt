@@ -28,6 +28,7 @@ void Configure_Servos_LED(void);
 void Configure_Servos_Angle_Limit(void);
 void Configure_Servos_No_Response(void);
 
+unsigned int Get_Servo_Load(void);
 double_uchar Get_Servo_Position(unsigned char ID);
 //unsigned char[] Receive_Servo_Statuspackage(uint8_t size); FUNKAR EJ TY KAN EJ RETURNERA STRUCT
 //void Check_Servo_Temp(unsigned char ID)

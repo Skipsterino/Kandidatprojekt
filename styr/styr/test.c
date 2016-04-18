@@ -30,10 +30,17 @@ typedef enum  {
 	
 } CONTROL_MODE;
 
+float angle;
+int intensity;
+int8_t intensity_byte;
+	
 //TESTVERSION av ny main
 int main(void)
 {
 	CONTROL_MODE cm = MANUAL; //Representerar aktuellt läge hos roboten
+	angle = 0;
+	intensity = 0;
+	intensity_byte = 100;
 	Init();
 	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
@@ -55,18 +62,30 @@ int main(void)
 	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
 	
+	volatile unsigned char first_kom_byte;
+	
 	while(1)
 	{
 		switch(cm)
 		{
 			case MANUAL:
-				unsigned char first_kom_byte = fromKom[0];
+				//first_kom_byte = ;
+				intensity_byte = 100;
 			
-				if (first_kom_byte & 0b00000011) //Skickas vinkel & intensitet?
+				if (fromKom[0] & 0b00000011 != 0 ) //Skickas vinkel & intensitet?
 				{
-					unsigned char intensity = fromKom[2]*6/100; //100 på kontroll -> 6 i speed
-					char angle = fromKom[1]*0.57/128; //128 på kontroll -> 0.57 i vinkel
+					
+					intensity_byte = fromKom[2] - 100;
+					intensity = (float)(intensity_byte)*((float)6)/((float)100); //100 på kontroll -> 6 i speed
+					int8_t angle_byte = 0;
+					//memcpy(angle_byte, fromKom[1], sizeof(angle_byte));
+					angle_byte = fromKom[1] - 100;
+					
+					angle = (float)(angle_byte)*((float)0.57)/((float)100); //128 på kontroll -> 0.57 i vinkel
+					
+					
 					Walk_Half_Cycle(intensity, angle,11,13);
+					
 				} 
 				break;
 			case AUTO:
