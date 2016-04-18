@@ -22,7 +22,7 @@
 #include "gangstilar.h"
 
 
-int main(void)
+int main_OLD(void)
 {
 	Init();
 	
