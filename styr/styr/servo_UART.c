@@ -140,7 +140,7 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	
 	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
 	
-	return position;
+	return load;
 }
 
 

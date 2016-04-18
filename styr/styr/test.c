@@ -85,13 +85,13 @@ int main(void)
 					
 					angle = (float)(angle_byte)*((float)0.57)/((float)100); //128 på kontroll -> 0.57 i vinkel	
 					
-					Walk_Half_Cycle(intensity, angle,height,13);
+					Walk_Half_Cycle(intensity, angle,height);
 				}
 				//if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
 				//{
 					//delta_h = 
 					//height += (float)fromKom[3];
-				//}
+				//} 
 				break;
 			case AUTO:
 				//Autonomt läge

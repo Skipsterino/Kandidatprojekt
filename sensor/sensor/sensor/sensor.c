@@ -858,8 +858,8 @@ void save_to_buffer()
 	buffer8_IR_Yaw_left = IR_Yaw_left;
 	buffer9_IR_Yaw_right = IR_Yaw_right;
 	
-	buffer10_IMU_Yaw_Low = IMU_Yaw_16;			// Skicka låga byten av IMU_Yaw_16
-	buffer11_IMU_Yaw_High = (IMU_Yaw_16>>8);	// Skicka höga byten av IMU_Yaw_16
+	buffer10_IMU_Yaw_Low = (0x00FF & IMU_Yaw_16);			// Skicka låga byten av IMU_Yaw_16
+	buffer11_IMU_Yaw_High = (0xFF00 & IMU_Yaw_16) / 256;	// Skicka höga byten av IMU_Yaw_16
 	
 	buffer12_Pitch = IMU_Pitch;
 	buffer13_Roll = IMU_Roll;
