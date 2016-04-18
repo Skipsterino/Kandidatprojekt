@@ -33,6 +33,7 @@ typedef enum  {
 float angle;
 int intensity;
 int8_t intensity_byte;
+float height;
 	
 //TESTVERSION av ny main
 int main(void)
@@ -41,6 +42,7 @@ int main(void)
 	angle = 0;
 	intensity = 0;
 	intensity_byte = 100;
+	height = 11;
 	Init();
 	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
@@ -62,17 +64,17 @@ int main(void)
 	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
 	
-	volatile unsigned char first_kom_byte;
+	unsigned char first_kom_byte;
 	
 	while(1)
 	{
 		switch(cm)
 		{
 			case MANUAL:
-				//first_kom_byte = ;
+				first_kom_byte = fromKom[0];
 				intensity_byte = 100;
 			
-				if (fromKom[0] & 0b00000011 != 0 ) //Skickas vinkel & intensitet?
+				if (first_kom_byte & 0b00000011) //Skickas vinkel & intensitet?
 				{
 					
 					intensity_byte = fromKom[2] - 100;
@@ -81,12 +83,15 @@ int main(void)
 					//memcpy(angle_byte, fromKom[1], sizeof(angle_byte));
 					angle_byte = fromKom[1] - 100;
 					
-					angle = (float)(angle_byte)*((float)0.57)/((float)100); //128 på kontroll -> 0.57 i vinkel
+					angle = (float)(angle_byte)*((float)0.57)/((float)100); //128 på kontroll -> 0.57 i vinkel	
 					
-					
-					Walk_Half_Cycle(intensity, angle,11,13);
-					
-				} 
+					Walk_Half_Cycle(intensity, angle,height,13);
+				}
+				//if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
+				//{
+					//delta_h = 
+					//height += (float)fromKom[3];
+				//}
 				break;
 			case AUTO:
 				//Autonomt läge
