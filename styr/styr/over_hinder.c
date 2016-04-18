@@ -27,15 +27,15 @@ void Walk_Up(void)
 	{
 	z= z - probe_step;
 	Send_Leg1_Kar_And_Velocity(18, 18, z, 0x0010, 0x0010, 0x0010);
-	load = Get_Servo_Load(1);
-	_delay_ms(5);	
+	load = Get_Servo_Load(3); // ID 3 är mittenservot på ben 1 
+	_delay_ms(2000);	
 	if( z < -5) // Test om man missar ytan
 	{
 		Probe_Walk();
 	}
 	}
 	
-	Send_Leg2_Kar_And_Velocity(20, 0, 3, 0x0100, 0x0100, 0x0100);
+	Send_Leg2_Kar_And_Velocity(20, 0, 3, 0x0100, 0x0100, 0x0100); //För att se att vi lyckats med load-test
 	
 	
 }
