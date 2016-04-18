@@ -45,7 +45,11 @@ int main(void)
 
 while(1)
 {	
-	Walk_Half_Cycle(1, 0,11);// max speed =+-6 , max theta +-0.57, ändra inte l och h när den står på marken.
+	Walk_Half_Cycle(3, 0,6);
+	Walk_Half_Cycle(3, 0,8);
+	Walk_Half_Cycle(3, 0,10);
+	Walk_Half_Cycle(3, 0,12);
+	Walk_Half_Cycle(3, 0,16);// max speed =+-6 , max theta +-0.57, ändra inte h när den står på marken.
 	//Walk_Half_Crab_Cycle(4,0,15,10);//bara testad med dessa värden, ska ha mycket mindre h
 }
 

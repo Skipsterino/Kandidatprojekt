@@ -33,14 +33,16 @@ typedef enum  {
 float angle;
 int intensity;
 int8_t intensity_byte;
+int8_t angle_byte;
 	
 //TESTVERSION av ny main
-int main(void)
+int main_poop(void)
 {
 	CONTROL_MODE cm = MANUAL; //Representerar aktuellt läge hos roboten
 	angle = 0;
 	intensity = 0;
 	intensity_byte = 100;
+	angle_byte = 100;
 	Init();
 	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
@@ -71,13 +73,14 @@ int main(void)
 			case MANUAL:
 				//first_kom_byte = ;
 				intensity_byte = 100;
+				angle_byte = 100;
 			
 				if (fromKom[0] & 0b00000011 != 0 ) //Skickas vinkel & intensitet?
 				{
 					
 					intensity_byte = fromKom[2] - 100;
 					intensity = (float)(intensity_byte)*((float)6)/((float)100); //100 på kontroll -> 6 i speed
-					int8_t angle_byte = 0;
+					angle_byte = 0;
 					//memcpy(angle_byte, fromKom[1], sizeof(angle_byte));
 					angle_byte = fromKom[1] - 100;
 					

@@ -70,7 +70,7 @@ int max_speed(float theta, int sgn_theta)
 	int speed=0;
 	float thlimits[7] = {0.57,0.48,0.38,0.3,0.2,0.11,0};//thetamax för olika speeds 0->5
 	
-	for(uint8_t i = 0; theta * sgn_theta <= thlimits[i] && i <= 6; i++)
+	for(int i = 0; theta * sgn_theta <= thlimits[i] & i <= 6; i++)
 	{
 		speed = i;
 	}
@@ -119,6 +119,7 @@ triple_float Tripod(float x, float s, float h, uint8_t m, uint8_t n)
 }
 
 
+int sgn = 0;
 // speed = hastighet fram/bak [-6,6], th = sväng[-0.57, 0.57], h = höjd från mark(11)
 //Undvik att ändra värde för h när robot står på marken (ska fixas)
 //fixa mjuk övergång för h och l(gör globala) 
@@ -128,17 +129,17 @@ void Walk_Half_Cycle(int speed, float th, float h)
 	
 	//lägg in begr av max/min h, justera l efter h.
 	
-if(h > 15)
+if(h > 16)
 {
-	h=15;
+	h=16;
 }
-if(h < 11)
+if(h < 6)
 {
-	h=11;
+	h=6;
 }
 	float l = 13;
-	int sgn_speed = (speed > 0) - (speed < 0);
-	int sgn_theta = (th > 0) - (th < 0);
+	int sgn_speed = (speed >= 0) - (speed < 0) ;
+	int sgn_theta = (th >= 0) - (th < 0) ;
 	int m_speed = max_speed(th, sgn_theta); //m_speed alltid possitiv
 	uint8_t m = 24; //delsekvenser per halv cykel
 	uint8_t walk_break = 1;
@@ -163,9 +164,10 @@ if(h < 11)
 		speed = m_speed * sgn_speed;
 	}
 	
+
 	//justerar servospeed INTE KLART
-	unsigned int speed_theta = 352 - 64 * (m_speed - speed);//= max -Y*(speed- m_speed), alt tabell ;  //fast värde 0x0100 
-	unsigned int speed_lift  = 336 - 48 * (m_speed - speed);//fast värde 0x010 
+	unsigned int speed_theta = 352 - 53 * (m_speed - sgn_speed*speed);//= max -Y*(speed- m_speed), alt tabell ;  //fast värde 0x0100 
+	unsigned int speed_lift  = 336 - 10 * (m_speed - sgn_speed*speed);//fast värde 0x010 
 	
 	//justerar steglängd
 	float s =  2.2 * speed; 
@@ -176,9 +178,9 @@ if(h < 11)
 	Send_Outer_P1_Velocity(speed_lift);
 	Send_Inner_P2_Velocity(speed_theta);
 	Send_Middle_P2_Velocity(speed_lift);
-	Send_Outer_P2_Velocity(speed_theta);
+	Send_Outer_P2_Velocity(speed_lift);
 	
-	float h_step = (h - last_h)/m; //för stegning fixa bort eller lägg in i nedanstående lopp (gör till for)
+		float h_step = (h - last_h)/m; //för stegning fixa bort eller lägg in i nedanstående lopp (gör till for)
 	
 	//gångloop, utför en halv gångfas och stannar när stödjande ben är i mitten av arbetsområde
 	 while( walk_break || ( n != m/2 && n != 3 * m/2 ))
@@ -236,9 +238,9 @@ if(h < 11)
 				cyl5.b = cyl5.b - sgn_speed*th/2 ;
 				
 				//Stegvis rotation på p2
-				cyl3.b = cyl3.b - sgn_speed * 3 * th/2 + n * th/m;  
-				cyl2.b = cyl2.b - sgn_speed * 3 * th/2 + n * th/m;
-				cyl6.b = cyl6.b - sgn_speed * 3 * th/2 + n * th/m;
+				cyl3.b = cyl3.b + sgn_speed * (- 3 * th/2 + n * th/m);  
+				cyl2.b = cyl2.b + sgn_speed * (- 3 * th/2 + n * th/m);
+				cyl6.b = cyl6.b + sgn_speed * (- 3 * th/2 + n * th/m);
 			}
 			//skicka ut cyl koord
 			Send_Leg4_Cyl(cyl4.a, cyl4.b, cyl4.c);
@@ -258,7 +260,7 @@ if(h < 11)
 			n = 1; //nollar index
 		}
 		
-		_delay_ms(5); //vore logiskt med olika delay för kart o cyl.
+		_delay_ms(5); // =5 vore logiskt med olika delay för kart o cyl.
 	}
 	last_h = h; //nya h blir gamla
 }
