@@ -1,9 +1,9 @@
 ﻿/*
- * testloop.c
- *
- * Created: 4/15/2016 4:17:57 PM
- *  Author: erilj291
- */ 
+* testloop.c
+*
+* Created: 4/15/2016 4:17:57 PM
+*  Author: erilj291
+*/
 
 #ifndef F_CPU
 #define F_CPU 16000000UL		// 16 MHz
@@ -22,9 +22,18 @@
 #include "invers_kinematik.h"
 #include "gangstilar.h"
 
+typedef enum  {
+	
+	AUTO,
+	MANUAL,
+	RACE
+	
+} CONTROL_MODE;
+
 //TESTVERSION av ny main
-int test_main(void)
+int main(void)
 {
+	CONTROL_MODE cm = MANUAL; //Representerar aktuellt läge hos roboten
 	Init();
 	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
@@ -41,18 +50,34 @@ int test_main(void)
 	Send_Middle_P2_Velocity(0x0100);//
 	Send_Outer_P2_Velocity(0x0100);//
 	
+	memset(fromKom, 0, sizeof(fromKom)); //Nollställer fromKom & fromSen (tar bort ev skräp på minnesplatserna) så koden inte ballar ur innan första avbrottet kommit. Lägg ev in i Init!
+	memset(fromSen, 0, sizeof(fromSen));
+	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
 	
 	while(1)
 	{
-		unsigned char first_kom_byte = fromKom[0];
-		
-		if (first_kom_byte & 0b00000011) //Skickas vinkel & intensitet?
+		switch(cm)
 		{
-			unsigned char angle = fromKom[1];
-			unsigned char intensity = fromKom[2];
-			Walk_Cycle(13, 2, 11, intensity, angle, 16);
+			case MANUAL:
+				unsigned char first_kom_byte = fromKom[0];
+			
+				if (first_kom_byte & 0b00000011) //Skickas vinkel & intensitet?
+				{
+					unsigned char intensity = fromKom[2]*6/100; //100 på kontroll -> 6 i speed
+					char angle = fromKom[1]*0.57/128; //128 på kontroll -> 0.57 i vinkel
+					Walk_Half_Cycle(intensity, angle,11,13);
+				} 
+				break;
+			case AUTO:
+				//Autonomt läge
+				break;
+			case RACE:
+				//Vänta på knapptryck -> cm blir AUTO
+				break;
+			default:
+				break;	
 		}
-	
+		
 	}
 }
