@@ -19,9 +19,9 @@ void update_alpha(void)
 		Kd = fromKom[6];
 	}
 	
-	float x_hb = fromSen[4];
-	float x_vf = fromSen[7];
-	float x_hf = fromSen[3];
+	float x_hb = fromSen[3];
+	float x_vf = fromSen[6];
+	float x_hf = fromSen[2];
 	
 	alpha = Kp*(x_hb-x_vf) + Kd*(x_hf-x_hb); //Uppdatera vridvinkeln alpha
 	alpha_d = Kd*(x_hf-x_hb); //D-delen

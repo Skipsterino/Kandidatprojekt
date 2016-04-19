@@ -91,7 +91,7 @@ int main(void)
 			{
 				cm = AUTO;
 			}
-			else //Annars byt till RACE
+			else if (change_mode == 2) //Byt till RACE?
 			{
 				cm = RACE;
 			}
@@ -124,7 +124,7 @@ int main(void)
 					{
 						height -= delta_h;
 					}
-					else //Annars måste change_height == 2, dvs höj roboten (ty vet här att höjning/sänkning skickats)
+					else if (change_height == 2) //Höj?
 					{
 						height += delta_h;
 					}
