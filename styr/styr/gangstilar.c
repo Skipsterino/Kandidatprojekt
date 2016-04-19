@@ -69,7 +69,7 @@ int max_speed(float theta, int sgn_theta)
 {
 	int speed=0;
 	//Gamla värden på thlimits = {0.57,0.48,0.38,0.3,0.2,0.11,0}
-	float thlimits[7] = {0.53,0.44,0.34,0.26,0.16,0.07,0};//thetamax för olika speeds 0->5
+	float thlimits[7] = {0.47,0.38,0.26,0.20,0.12,0.01,0};//thetamax för olika speeds 0->5
 	
 	for(int i = 0; theta * sgn_theta <= thlimits[i] & i <= 6; i++)
 	{

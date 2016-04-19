@@ -48,8 +48,8 @@ int main(void)
 	angle_byte = 100;
 	height = 11;
 	delta_h = 0.01;
-	Kp = 0.01;
-	Kd = 0.01;
+	Kp = 0.001;
+	Kd = 0.001;
 	
 	Init();
 	
