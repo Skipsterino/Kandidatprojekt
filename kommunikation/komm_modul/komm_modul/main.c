@@ -61,6 +61,10 @@ int main(void)
 		{
 			LCD_controller_put_line(1,"Connected");	
 		}
+		char digits[16];
+		sprintf(digits, "%i", (int)toSPI[0]);
+		LCD_controller_put_line(3, digits);
+		
 		LCD_print_string(lines[currentLine], lines[currentLine+1], lines[currentLine + 2], lines[currentLine + 3]);
 		
 		_delay_ms(100);

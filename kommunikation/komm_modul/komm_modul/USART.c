@@ -53,6 +53,7 @@ void USART_Transmit(unsigned char data)
 //Skickar en lista med tecken
 void USART_Transmit_Array(unsigned char array[], uint8_t size)
 {
+	BTcounter = 0;
 	int i = 0;
 	for(i; i < size; ++i)
 	{
