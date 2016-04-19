@@ -124,7 +124,7 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	
 	Send_Servo_Message(message, 2);
 	
-	_delay_ms(0.06); //Lite extra tidsmarginal så bussen hinner bli ledig ändras!!!
+	_delay_ms(0.02); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
 	
 	USART_Receive(); //Första startbyten

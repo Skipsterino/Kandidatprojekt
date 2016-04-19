@@ -33,11 +33,9 @@ typedef enum  {
 float angle;
 int intensity;
 int8_t intensity_byte;
-<<<<<<< HEAD
-float height;
-=======
 int8_t angle_byte;
->>>>>>> b6d3ed06e4ee09c4c658ffd75c5ea3defb17fbd9
+float height;
+float delta_h;
 	
 //TESTVERSION av ny main
 int main_poop(void)
@@ -46,8 +44,9 @@ int main_poop(void)
 	angle = 0;
 	intensity = 0;
 	intensity_byte = 100;
-	height = 11;
 	angle_byte = 100;
+	height = 11;
+	delta_h = 0.01;
 	
 	Init();
 	
@@ -94,11 +93,19 @@ int main_poop(void)
 					
 					Walk_Half_Cycle(intensity, angle,height);
 				}
-				//if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
-				//{
-					//delta_h = 
-					//height += (float)fromKom[3];
-				//} 
+				if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
+				{
+					unsigned char change_height = fromKom[3];
+					
+					if (change_height == 1) //Sänk?
+					{
+						height -= delta_h;
+					}
+					else //Annars måste change_height == 2, dvs höj roboten (ty vet här att höjning/sänkning skickats)
+					{
+						height += delta_h;
+					}
+				} 
 				break;
 			case AUTO:
 				//Autonomt läge
