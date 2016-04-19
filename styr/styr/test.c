@@ -48,8 +48,8 @@ int main(void)
 	angle_byte = 100;
 	height = 11;
 	delta_h = 0.01;
-	Kp = 0.01;
-	Kd = 0.01;
+	Kp = 0.001;
+	Kd = 0.001;
 	
 	Init();
 	
@@ -91,7 +91,7 @@ int main(void)
 			{
 				cm = AUTO;
 			}
-			else //Annars byt till RACE
+			else if (change_mode == 2) //Byt till RACE?
 			{
 				cm = RACE;
 			}
@@ -124,7 +124,7 @@ int main(void)
 					{
 						height -= delta_h;
 					}
-					else //Annars måste change_height == 2, dvs höj roboten (ty vet här att höjning/sänkning skickats)
+					else if (change_height == 2) //Höj?
 					{
 						height += delta_h;
 					}
