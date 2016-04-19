@@ -13,7 +13,7 @@
 
 #include "Buffers.h"
 
-int BTtimeout;
+volatile int BTtimeout;
 
 void initUSART();
 

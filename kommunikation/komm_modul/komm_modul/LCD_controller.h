@@ -16,10 +16,10 @@
 
 #define CONTROLLER_NUMBER_OF_PAGES 4
 
-char lines[CONTROLLER_NUMBER_OF_PAGES*LCD_NUMBER_OF_LINES][LCD_LINE_WIDTH];
-uint8_t currentLine;
-uint8_t overflow_counter;
-uint8_t spiOverflow;
+volatile char lines[CONTROLLER_NUMBER_OF_PAGES*LCD_NUMBER_OF_LINES][LCD_LINE_WIDTH];
+volatile uint8_t currentLine;
+volatile uint8_t overflow_counter;
+volatile uint8_t spiOverflow;
 
 void LCD_controller_init();
 

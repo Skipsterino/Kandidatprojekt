@@ -9,7 +9,7 @@
 #include "USART.h"
 #include "LCD_controller.h"
 
-uint8_t SPIcounter;
+volatile uint8_t SPIcounter;
 
 void SPI_init_slave()
 {
