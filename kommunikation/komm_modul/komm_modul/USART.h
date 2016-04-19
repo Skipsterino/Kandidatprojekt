@@ -14,6 +14,7 @@
 #include "Buffers.h"
 
 volatile int BTtimeout;
+volatile uint8_t BTcounter; 
 
 void initUSART();
 

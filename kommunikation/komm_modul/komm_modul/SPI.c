@@ -41,6 +41,7 @@ ISR(SPI_STC_vect)
 	else{
 		SPIcounter = 0;
 		SPDR = toSPI[0];
+		BTCounter = 0;
 		USART_Transmit_Array(toBluetooth, 16);
 		
 	}

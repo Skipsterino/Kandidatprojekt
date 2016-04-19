@@ -7,8 +7,6 @@
 
 #include "USART.h"
 
-volatile uint8_t BTcounter; 
-
 //Sätter upp alla nödvändiga register för BT
 void initUSART()
 {
