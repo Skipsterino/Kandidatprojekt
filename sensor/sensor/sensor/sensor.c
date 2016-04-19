@@ -180,7 +180,7 @@ ISR(TIMER2_OVF_vect)
 *
 * INDATA
 *
-* -
+* 
 *
 * UTDATA
 *
@@ -197,7 +197,7 @@ ISR(SPI_STC_vect)
 {
 	if(SPI_overflow >= 2)		// Är det länge sedan vi fick ett avbrott ska vi börja om på byte noll (ny sändning)
 	{
-		byte_to_send = 0;
+		byte_to_send = 1;
 	}
 	
 	SPI_overflow = 0;
@@ -208,6 +208,7 @@ ISR(SPI_STC_vect)
 		{
 			SPDR = buffer0_IR0;
 			++byte_to_send;
+			SPI_done = 1;		//Klart! Nu kan vi göra annat som genererar avbrott
 			break;
 		}
 		case 1:
@@ -298,7 +299,7 @@ ISR(SPI_STC_vect)
 		{
 			SPDR = 0xff;
 			byte_to_send = 0;
-			SPI_done = 1;		//Klart! Nu kan vi göra annat som genererar avbrott
+			
 			break;
 		}
 	}

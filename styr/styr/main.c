@@ -21,6 +21,7 @@
 #include "invers_kinematik.h"
 #include "gangstilar.h"
 
+unsigned int load;
 
 int main_OLD(void)
 {
@@ -29,6 +30,7 @@ int main_OLD(void)
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
 	//Configure_Servos_Delaytime();
 	//Configure_Servos_LED();
+	
 	Configure_Servos_No_Response();
 	Configure_Servos_Angle_Limit(); 
 	

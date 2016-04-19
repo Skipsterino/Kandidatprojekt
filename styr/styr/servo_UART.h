@@ -29,7 +29,7 @@ void Configure_Servos_Angle_Limit(void);
 void Configure_Servos_No_Response(void);
 
 unsigned int Get_Servo_Load(unsigned char ID);
-double_uchar Get_Servo_Position(unsigned char ID);
+unsigned int Get_Servo_Position(unsigned char ID);
 //unsigned char[] Receive_Servo_Statuspackage(uint8_t size); FUNKAR EJ TY KAN EJ RETURNERA STRUCT
 //void Check_Servo_Temp(unsigned char ID)
 
@@ -74,4 +74,6 @@ void Send_Leg4_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, 
 void Send_Leg5_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer);
 void Send_Leg6_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer);
 
+
+void Rise_Robot_Height(float height);
 #endif /* SERVO_UART_H_ */

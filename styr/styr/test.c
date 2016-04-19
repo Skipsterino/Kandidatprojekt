@@ -21,33 +21,35 @@
 #include "servo_UART.h"
 #include "invers_kinematik.h"
 #include "gangstilar.h"
+#include "reglering.h"
 
 typedef enum  {
-	
 	AUTO,
 	MANUAL,
 	RACE
-	
 } CONTROL_MODE;
 
 float angle;
 int intensity;
 int8_t intensity_byte;
-<<<<<<< HEAD
-float height;
-=======
 int8_t angle_byte;
->>>>>>> b6d3ed06e4ee09c4c658ffd75c5ea3defb17fbd9
+float height;
+float delta_h;
 	
 //TESTVERSION av ny main
-int main_poop(void)
+int main(void)
 {
 	CONTROL_MODE cm = MANUAL; //Representerar aktuellt läge hos roboten
+	
+	//Defaultvärden
 	angle = 0;
 	intensity = 0;
 	intensity_byte = 100;
-	height = 11;
 	angle_byte = 100;
+	height = 11;
+	delta_h = 0.1;
+	Kp = 0.001;
+	Kd = 0.001;
 	
 	Init();
 	
@@ -71,13 +73,33 @@ int main_poop(void)
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
 	
 	unsigned char first_kom_byte;
-	
+	Walk_Half_Cycle(intensity, angle,height);
 	while(1)
 	{
+		first_kom_byte = fromKom[0];
+		//
+		//if (first_kom_byte & 0b00001000) //Växla läge?
+		//{
+			//unsigned char change_mode = fromKom[4];
+			//
+			//if (change_mode == 0) //Byt till MANUAL?
+			//{
+				//cm = MANUAL;
+			//} 
+			//
+			//else if (change_mode == 1) //Byt till AUTO?
+			//{
+				//cm = AUTO;
+			//}
+			//else if (change_mode == 2) //Byt till RACE?
+			//{
+				//cm = RACE;
+			//}
+		//}
+		
 		switch(cm)
 		{
-			case MANUAL:
-				first_kom_byte = fromKom[0];
+			case MANUAL: //Manuellt läge
 				intensity_byte = 100;
 				angle_byte = 100;
 			
@@ -94,21 +116,41 @@ int main_poop(void)
 					
 					Walk_Half_Cycle(intensity, angle,height);
 				}
-				//if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
+				if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
+				{
+					unsigned char change_height = fromKom[3];
+					
+					if (change_height == 1) //Sänk?
+					{
+						height -= delta_h;
+					}
+					else if (change_height == 2) //Höj?
+					{
+						height += delta_h;
+					}
+					Walk_Half_Cycle(0, 0,height);
+				}
+				if (first_kom_byte & 0b00010000) //Nytt Kp?
+				{
+					Kp = ((float)fromKom[5])/10; //Kp skickas som 10 ggr det önskade värdet!!!
+				}
+				if (first_kom_byte & 0b00100000) //Nytt Kd?
+				{
+					Kd = ((float)fromKom[6])/10; //Kd skickas som 10 ggr det önskade värdet!!!
+				}
+				break;
+			case AUTO: //Autonomt läge
+				update_alpha();
+				Walk_Half_Cycle(1, alpha_d, height);
+				break;
+			case RACE: 
+				//if (PIND3 == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
 				//{
-					//delta_h = 
-					//height += (float)fromKom[3];
-				//} 
-				break;
-			case AUTO:
-				//Autonomt läge
-				break;
-			case RACE:
-				//Vänta på knapptryck -> cm blir AUTO
+					//cm = AUTO; 
+				//}
 				break;
 			default:
 				break;	
-		}
-		
+		}		
 	}
 }

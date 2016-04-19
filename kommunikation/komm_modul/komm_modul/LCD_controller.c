@@ -50,7 +50,7 @@ ISR(TIMER0_OVF_vect)
 	++spiOverflow;	
 	if(++overflow_counter > 150)
 	{
-		currentLine = (currentLine + LCD_NUMBER_OF_LINES) % (LCD_NUMBER_OF_LINES*CONTROLLER_NUMBER_OF_PAGES);
+		currentLine = (currentLine + LCD_NUMBER_OF_LINES) % 4/*(LCD_NUMBER_OF_LINES*CONTROLLER_NUMBER_OF_PAGES)*/;
 		overflow_counter = 0;
 	}
 }
