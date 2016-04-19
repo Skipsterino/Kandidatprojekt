@@ -70,7 +70,7 @@ int max_speed(float theta, int sgn_theta)
 	int speed=0;
 	float thlimits[7] = {0.57,0.48,0.38,0.3,0.2,0.11,0};//thetamax för olika speeds 0->5
 	
-	for(speed = 0; (theta * sgn_theta <= thlimits[i]) && (speed <= 6); speed++) // rpova parantes och &&
+	for(speed = 0; (theta * sgn_theta <= thlimits[speed]) && (speed <= 6); speed++) // rpova parantes och &&
 	{
 	}
 	return speed;
@@ -95,7 +95,7 @@ triple_float Tripod(float x, float stroke, float height, uint8_t m, uint8_t n)
 	}
 	else if( n <= m + 2)//benlyft i slut av stödfas, körs 2 cykler för garantera liftoff
 	{
-		y = - sroke/2; 
+		y = - stroke/2; 
 		z = lift - height;
 	}
 	else if( n <=  2 * m - 4)//för ben framåt mot startpos
@@ -131,6 +131,7 @@ if(height < 6)
 	height = 6;
 }
 
+	height = 11;
 	float l = 13;
 	int sgn_speed = (speed >= 0) - (speed < 0) ;
 	int sgn_theta = (th >= 0) - (th < 0) ;
@@ -150,8 +151,9 @@ if(height < 6)
 	triple_float cyl6;
 	
 	//test, begränsar maxvinkel efter speed ist för omvänt
-	float thlimits[7] = {0.57,0.48,0.38,0.3,0.2,0.11,0}
-	if( th * sgn_theta > float th_max = thlimits[speed * sgn_speed])
+	float thlimits[7] = {0.57,0.48,0.38,0.3,0.2,0.11,0};
+	float th_max = 0;	
+	if( th * sgn_theta > (th_max =thlimits[speed * sgn_speed]))
 	{
 		th = sgn_theta * th_max;
 	}
@@ -169,7 +171,7 @@ if(height < 6)
 	*/
 
 	//justerar servospeed efter theta/speed INTE KLART
-	unsigned int speed_drive = 352 - 53 * (m_speed - sgn_speed * speed);//fast värde 0x0100 
+	unsigned int speed_drive = 352- 53 * (m_speed - sgn_speed * speed);//fast värde 0x0100 
 	unsigned int speed_lift  = 336 - 10 * (m_speed - sgn_speed * speed);//fast värde 0x0100 
 	
 	//justerar steglängd
@@ -205,6 +207,7 @@ if(height < 6)
 			Send_Leg3_Kar(kar_p2.a, kar_p2.b, kar_p2.c); 
 			Send_Leg2_Kar(kar_p2.a, kar_p2.b + corner_pitch, kar_p2.c);
 			Send_Leg6_Kar(kar_p2.a, kar_p2.b - corner_pitch, kar_p2.c);
+			_delay_ms(5); // =5 vore logiskt med olika delay för kart o cyl.
 		}
 		else //om sväng
 		{
@@ -250,6 +253,7 @@ if(height < 6)
 			Send_Leg3_Cyl(cyl3.a, cyl3.b, cyl3.c);
 			Send_Leg2_Cyl(cyl2.a, cyl2.b, cyl2.c);
 			Send_Leg6_Cyl(cyl6.a, cyl6.b, cyl6.c);
+			_delay_ms(3); // =5 vore logiskt med olika delay för kart o cyl.
 		}
 		
 		if(n < 2 * m)
@@ -259,9 +263,7 @@ if(height < 6)
 		else
 		{
 			n = 1; //nollar index
-		}
-		
-		_delay_ms(5); // =5 vore logiskt med olika delay för kart o cyl.
+		}	
 	}
 	last_height = height; //ny höjd blir gamal
 }
@@ -283,7 +285,6 @@ if(height < 6)
 }
 	float l = 13;
 	int sgn_speed = (speed >= 0) - (speed < 0) ;
-	int sgn_theta = (th >= 0) - (th < 0) ;
 	int m_speed = 6;
 	uint8_t m = 24; //delsekvenser per halv cykel
 	uint8_t walk_break = 1;
