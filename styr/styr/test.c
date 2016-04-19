@@ -24,11 +24,9 @@
 #include "reglering.h"
 
 typedef enum  {
-	
 	AUTO,
 	MANUAL,
 	RACE
-	
 } CONTROL_MODE;
 
 float angle;
@@ -42,14 +40,16 @@ float delta_h;
 int main(void)
 {
 	CONTROL_MODE cm = AUTO; //Representerar aktuellt läge hos roboten
+	
+	//Defaultvärden
 	angle = 0;
 	intensity = 0;
 	intensity_byte = 100;
 	angle_byte = 100;
 	height = 11;
 	delta_h = 0.01;
-	Kp = 0.1;
-	Kd = 0.1;
+	Kp = 0.01;
+	Kd = 0.01;
 	
 	Init();
 	
@@ -131,19 +131,22 @@ int main(void)
 				}
 				if (first_kom_byte & 0b00010000) //Nytt Kp?
 				{
-					Kp = fromKom[5];
+					Kp = ((float)fromKom[5])/10; //Kp skickas som 10 ggr det önskade värdet!!!
 				}
 				if (first_kom_byte & 0b00100000) //Nytt Kd?
 				{
-					Kd = fromKom[6];
+					Kd = ((float)fromKom[6])/10; //Kd skickas som 10 ggr det önskade värdet!!!
 				}
 				break;
 			case AUTO: //Autonomt läge
 				update_alpha();
-				Walk_Half_Cycle(3, alpha, height);
+				Walk_Half_Cycle(1, alpha_d, height+5);
 				break;
-			case RACE: //Vänta på knapptryck -> cm blir AUTO
-				
+			case RACE: 
+				//if (PIND3 == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
+				//{
+					//cm = AUTO; 
+				//}
 				break;
 			default:
 				break;	

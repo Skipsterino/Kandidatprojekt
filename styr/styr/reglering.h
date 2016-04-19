@@ -10,9 +10,10 @@
 
 #include "SPI.h"
 
-uint8_t Kp;
-uint8_t Kd;
-float alpha; //Vinkel som roboten ska vrida med (ev mult med skalfaktor)
+float Kp;
+float Kd;
+float alpha; //Vinkel som roboten ska vrida med
+float alpha_d;
 
 void update_alpha(void);
 

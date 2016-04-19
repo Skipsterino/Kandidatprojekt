@@ -68,7 +68,8 @@ double_float Adjust_L_And_th(float thin)
 int max_speed(float theta, int sgn_theta)
 {
 	int speed=0;
-	float thlimits[7] = {0.57,0.48,0.38,0.3,0.2,0.11,0};//thetamax för olika speeds 0->5
+	//Gamla värden på thlimits = {0.57,0.48,0.38,0.3,0.2,0.11,0}
+	float thlimits[7] = {0.53,0.44,0.34,0.26,0.16,0.07,0};//thetamax för olika speeds 0->5
 	
 	for(int i = 0; theta * sgn_theta <= thlimits[i] & i <= 6; i++)
 	{
@@ -125,7 +126,10 @@ int sgn = 0;
 //fixa mjuk övergång för h och l(gör globala) 
 void Walk_Half_Cycle(int speed, float th, float h) 
 {
-	
+if (speed > 4)
+{
+	speed = 4;
+}
 	
 	//lägg in begr av max/min h, justera l efter h.
 	
