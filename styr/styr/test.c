@@ -21,6 +21,7 @@
 #include "servo_UART.h"
 #include "invers_kinematik.h"
 #include "gangstilar.h"
+#include "reglering.h"
 
 typedef enum  {
 	
@@ -38,15 +39,17 @@ float height;
 float delta_h;
 	
 //TESTVERSION av ny main
-int main_poop(void)
+int main(void)
 {
-	CONTROL_MODE cm = MANUAL; //Representerar aktuellt läge hos roboten
+	CONTROL_MODE cm = AUTO; //Representerar aktuellt läge hos roboten
 	angle = 0;
 	intensity = 0;
 	intensity_byte = 100;
 	angle_byte = 100;
 	height = 11;
 	delta_h = 0.01;
+	Kp = 0.1;
+	Kd = 0.1;
 	
 	Init();
 	
@@ -73,10 +76,30 @@ int main_poop(void)
 	
 	while(1)
 	{
+		first_kom_byte = fromKom[0];
+		
+		if (first_kom_byte & 0b00001000) //Växla läge?
+		{
+			unsigned char change_mode = fromKom[4];
+			
+			if (change_mode == 0) //Byt till MANUAL?
+			{
+				cm = MANUAL;
+			} 
+			
+			else if (change_mode == 1) //Byt till AUTO?
+			{
+				cm = AUTO;
+			}
+			else //Annars byt till RACE
+			{
+				cm = RACE;
+			}
+		}
+		
 		switch(cm)
 		{
-			case MANUAL:
-				first_kom_byte = fromKom[0];
+			case MANUAL: //Manuellt läge
 				intensity_byte = 100;
 				angle_byte = 100;
 			
@@ -105,17 +128,25 @@ int main_poop(void)
 					{
 						height += delta_h;
 					}
-				} 
+				}
+				if (first_kom_byte & 0b00010000) //Nytt Kp?
+				{
+					Kp = fromKom[5];
+				}
+				if (first_kom_byte & 0b00100000) //Nytt Kd?
+				{
+					Kd = fromKom[6];
+				}
 				break;
-			case AUTO:
-				//Autonomt läge
+			case AUTO: //Autonomt läge
+				update_alpha();
+				Walk_Half_Cycle(3, alpha, height);
 				break;
-			case RACE:
-				//Vänta på knapptryck -> cm blir AUTO
+			case RACE: //Vänta på knapptryck -> cm blir AUTO
+				
 				break;
 			default:
 				break;	
-		}
-		
+		}		
 	}
 }

@@ -23,17 +23,13 @@
 
 unsigned int load;
 
-int main(void)
+int main_OLD(void)
 {
 	Init();
 	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
 	//Configure_Servos_Delaytime();
 	//Configure_Servos_LED();
-	//while(1)
-	//{
-		//load = Get_Servo_Load(10);
-	//}
 	
 	Configure_Servos_No_Response();
 	Configure_Servos_Angle_Limit(); 

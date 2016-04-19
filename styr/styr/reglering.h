@@ -10,6 +10,8 @@
 
 #include "SPI.h"
 
+uint8_t Kp;
+uint8_t Kd;
 float alpha; //Vinkel som roboten ska vrida med (ev mult med skalfaktor)
 
 void update_alpha(void);

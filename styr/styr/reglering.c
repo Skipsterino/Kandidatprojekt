@@ -7,9 +7,6 @@
 
 #include "reglering.h"
 
-uint8_t Kp;
-uint8_t Kd;
-
 void update_alpha(void)
 {
 	if(fromKom[0] & (1 << 4)) //Har nytt Kp skickats?
