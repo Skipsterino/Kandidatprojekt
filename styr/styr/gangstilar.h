@@ -26,5 +26,6 @@ triple_float Tripod(float x, float s, float h, uint8_t m, uint8_t n);
 void Walk_Half_Cycle(int speed, float th, float h);
 void Walk_Half_Crab_Cycle(int speed, float th, float h, float l );
 
+
 #endif /* GANGSTILAR_H_ */
 

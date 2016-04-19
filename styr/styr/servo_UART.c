@@ -143,6 +143,37 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	return load;
 }
 
+// Hämtar positionen hos servo med angivet ID, returnerar som en double_uchar.
+unsigned int Get_Servo_Position(unsigned char ID) //FUNKAR ATT RETURNERA SÅHÄR?
+{
+	unsigned char message[6];
+	unsigned char position_LSByte;
+	unsigned char position_MSByte;
+	
+	message[0] = ID;
+	message[1] = 0x04;
+	message[2] = 0x02;
+	message[3] = 0x24; //Läser ut Present Position (önskas istället Goal Position får man ändra här till 0x1E)
+	message[4] = 0x02;
+	
+	Send_Servo_Message(message, 2);
+	
+	_delay_ms(0.02); //Lite extra tidsmarginal så bussen hinner bli ledig ändras!!!
+	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
+	
+	USART_Receive(); //Första startbyten
+	USART_Receive(); //Andra startbyten
+	USART_Receive(); //ID
+	USART_Receive(); //Längd
+	USART_Receive(); //Error
+	position_LSByte = USART_Receive(); //LS Byte av positionen
+	position_MSByte = USART_Receive(); //MS Byte av positionen
+	USART_Receive(); //Checksum
+
+	unsigned int position = (((unsigned int)position_MSByte) << 8) | position_LSByte;
+	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
+	return position;
+}
 
 
 	
@@ -291,37 +322,7 @@ void Send_Servo_Position(unsigned char ID, unsigned int pos)
 	Send_Servo_Message(message, 3);
 }
 
-// Hämtar positionen hos servo med angivet ID, returnerar som en double_uchar.
-double_uchar Get_Servo_Position(unsigned char ID) //FUNKAR ATT RETURNERA SÅHÄR?
-{
-	unsigned char message[6];
-	unsigned char position_LSByte;
-	unsigned char position_MSByte;
-	
-	message[0] = ID;
-	message[1] = 0x04;
-	message[2] = 0x02;
-	message[3] = 0x24; //Läser ut Present Position (önskas istället Goal Position får man ändra här till 0x1E)
-	message[4] = 0x02;
-	
-	Send_Servo_Message(message, 2);
-	
-	_delay_ms(0.06); //Lite extra tidsmarginal så bussen hinner bli ledig ändras!!!
-	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
-	
-	USART_Receive(); //Första startbyten
-	USART_Receive(); //Andra startbyten
-	USART_Receive(); //ID
-	USART_Receive(); //Längd
-	USART_Receive(); //Error
-	position_LSByte = USART_Receive(); //LS Byte av positionen
-	position_MSByte = USART_Receive(); //MS Byte av positionen
-	USART_Receive(); //Checksum
 
-	double_uchar position = create_double_uchar(position_LSByte, position_MSByte);
-	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
-	return position;
-}
 
 //FUNKAR EJ PGA KAN EJ RETURNERA STRUC
 //// Tar emot ett meddelande från ett servon. Retunerar(ID, Length, Error, Parametrar).
@@ -856,4 +857,21 @@ void Send_Leg6_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, 
 	//_delay_ms(1);
 	Send_Servo_Position_And_Velocity(5, pos3, outer);
 	//_delay_ms(1);
+}
+
+void Rise_Robot_Height(float height)
+{
+	triple_float leg1 = Pos_To_Kar(Get_Servo_Position(8), Get_Servo_Position(10), Get_Servo_Position(12));
+	triple_float leg2 = Pos_To_Kar(Get_Servo_Position(7), Get_Servo_Position(9), Get_Servo_Position(11));
+	triple_float leg3 = Pos_To_Kar(Get_Servo_Position(14), Get_Servo_Position(16), Get_Servo_Position(18));
+	triple_float leg4 = Pos_To_Kar(Get_Servo_Position(13), Get_Servo_Position(15), Get_Servo_Position(17));
+	triple_float leg5 = Pos_To_Kar(Get_Servo_Position(2), Get_Servo_Position(4), Get_Servo_Position(6));
+	triple_float leg6 = Pos_To_Kar(Get_Servo_Position(1), Get_Servo_Position(3), Get_Servo_Position(5));
+	
+	Send_Leg1_Kar(leg1.a, height, leg1.c);
+	Send_Leg2_Kar(leg2.a, height, leg2.c);
+	Send_Leg3_Kar(leg3.a, height, leg3.c);
+	Send_Leg4_Kar(leg4.a, height, leg4.c);
+	Send_Leg5_Kar(leg5.a, height, leg5.c);
+	Send_Leg6_Kar(leg6.a, height, leg6.c);
 }

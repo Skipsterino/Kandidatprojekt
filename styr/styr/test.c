@@ -39,7 +39,7 @@ float delta_h;
 //TESTVERSION av ny main
 int main(void)
 {
-	CONTROL_MODE cm = AUTO; //Representerar aktuellt läge hos roboten
+	CONTROL_MODE cm = MANUAL; //Representerar aktuellt läge hos roboten
 	
 	//Defaultvärden
 	angle = 0;
@@ -47,7 +47,7 @@ int main(void)
 	intensity_byte = 100;
 	angle_byte = 100;
 	height = 11;
-	delta_h = 0.01;
+	delta_h = 0.1;
 	Kp = 0.001;
 	Kd = 0.001;
 	
@@ -73,29 +73,29 @@ int main(void)
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
 	
 	unsigned char first_kom_byte;
-	
+	Walk_Half_Cycle(intensity, angle,height);
 	while(1)
 	{
 		first_kom_byte = fromKom[0];
-		
-		if (first_kom_byte & 0b00001000) //Växla läge?
-		{
-			unsigned char change_mode = fromKom[4];
-			
-			if (change_mode == 0) //Byt till MANUAL?
-			{
-				cm = MANUAL;
-			} 
-			
-			else if (change_mode == 1) //Byt till AUTO?
-			{
-				cm = AUTO;
-			}
-			else if (change_mode == 2) //Byt till RACE?
-			{
-				cm = RACE;
-			}
-		}
+		//
+		//if (first_kom_byte & 0b00001000) //Växla läge?
+		//{
+			//unsigned char change_mode = fromKom[4];
+			//
+			//if (change_mode == 0) //Byt till MANUAL?
+			//{
+				//cm = MANUAL;
+			//} 
+			//
+			//else if (change_mode == 1) //Byt till AUTO?
+			//{
+				//cm = AUTO;
+			//}
+			//else if (change_mode == 2) //Byt till RACE?
+			//{
+				//cm = RACE;
+			//}
+		//}
 		
 		switch(cm)
 		{
@@ -128,6 +128,7 @@ int main(void)
 					{
 						height += delta_h;
 					}
+					Walk_Half_Cycle(0, 0,height);
 				}
 				if (first_kom_byte & 0b00010000) //Nytt Kp?
 				{
@@ -140,7 +141,7 @@ int main(void)
 				break;
 			case AUTO: //Autonomt läge
 				update_alpha();
-				Walk_Half_Cycle(1, alpha_d, height+5);
+				Walk_Half_Cycle(1, alpha_d, height);
 				break;
 			case RACE: 
 				//if (PIND3 == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
