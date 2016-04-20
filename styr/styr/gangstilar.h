@@ -25,6 +25,7 @@ int max_speed(float theta,int sgn_theta);
 triple_float Tripod(float x, float stroke, float height, uint8_t m, uint8_t n);
 void Walk_Half_Cycle(int speed, float th, float height);
 void Walk_Half_Crab_Cycle(int speed, float height);
+void Walk_Half_Safe_Cycle(int speed, float th, float height) ;
 
 
 #endif /* GANGSTILAR_H_ */
