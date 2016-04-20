@@ -29,8 +29,8 @@ volatile uint8_t SPI_overflow = 0;
 
 const int delay_time = 50;							// tid i millisekunder (50 ger alltså ungefär 20Hz, lagom för US-sensorn)
 
-const double IR_sensor_distance_right = 14.5;		// Avståndet mellan högra sidosensorerna (cm)
-const double IR_sensor_distance_left = 14.5;		// Avståndet mellan vänstra sidosensorerna (cm)
+const double IR_sensor_distance_right = 16.5;		// Avståndet mellan högra sidosensorerna (cm)
+const double IR_sensor_distance_left = 16.5;		// Avståndet mellan vänstra sidosensorerna (cm)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
