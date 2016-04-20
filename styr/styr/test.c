@@ -39,7 +39,7 @@ float height;
 float delta_h;
 	
 //TESTVERSION av ny main
-int main(void)
+int main_dsaf(void)
 {
 	CONTROL_MODE cm = MANUAL; //Representerar aktuellt läge hos roboten
 	ROBOT_STATE = CORRIDOR;

@@ -9,6 +9,11 @@
 #ifndef OVER_HINDER_H_
 #define OVER_HINDER_H_
 
+#include "servo_UART.h"
+#include <util/delay.h>
+
+unsigned int load;
+
 void Probe_Walk(void);
 void Probe_Height_Up(void); 
 void Walk_Up(void); 
