@@ -1,3 +1,5 @@
+#include "state_machine".h"
+
 void calculate_Yaw()
 {
 	switch (ROBOT_STATE)
