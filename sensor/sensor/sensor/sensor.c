@@ -708,7 +708,7 @@ void ADC_to_distance()
 	IR_distance[0] = lookup_distance(IR0_table, IR_ADC[0], 19);
 	IR_distance[1] = lookup_distance(IR1_table, IR_ADC[1], 13);
 	IR_distance[2] = lookup_distance(IR2_table, IR_ADC[2], 19);
-	IR_distance[3] = lookup_distance(IR3_table, IR_ADC[3], 19);
+	IR_distance[3] = lookup_distance(IR3_table, IR_ADC[3], 19) - 0.8;
 	IR_distance[4] = lookup_distance(IR4_table, IR_ADC[4], 13);
 	IR_distance[5] = lookup_distance(IR5_table, IR_ADC[5], 19);
 	IR_distance[6] = lookup_distance(IR6_table, IR_ADC[6], 19);
