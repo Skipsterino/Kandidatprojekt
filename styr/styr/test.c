@@ -77,25 +77,25 @@ int main(void)
 	while(1)
 	{
 		first_kom_byte = fromKom[0];
-		//
-		//if (first_kom_byte & 0b00001000) //Växla läge?
-		//{
-			//unsigned char change_mode = fromKom[4];
-			//
-			//if (change_mode == 0) //Byt till MANUAL?
-			//{
-				//cm = MANUAL;
-			//} 
-			//
-			//else if (change_mode == 1) //Byt till AUTO?
-			//{
-				//cm = AUTO;
-			//}
-			//else if (change_mode == 2) //Byt till RACE?
-			//{
-				//cm = RACE;
-			//}
-		//}
+		
+		if (first_kom_byte & 0b00001000) //Växla läge?
+		{
+			unsigned char change_mode = fromKom[4];
+			
+			if (change_mode == 0) //Byt till MANUAL?
+			{
+				cm = MANUAL;
+			} 
+			
+			else if (change_mode == 1) //Byt till AUTO?
+			{
+				cm = AUTO;
+			}
+			else if (change_mode == 2) //Byt till RACE?
+			{
+				cm = RACE;
+			}
+		}
 		
 		switch(cm)
 		{
@@ -132,11 +132,11 @@ int main(void)
 				}
 				if (first_kom_byte & 0b00010000) //Nytt Kp?
 				{
-					Kp = ((float)fromKom[5])/10; //Kp skickas som 10 ggr det önskade värdet!!!
+					Kp = ((float)fromKom[5])/1000; //Kp skickas som 1000 ggr det önskade värdet!!!
 				}
 				if (first_kom_byte & 0b00100000) //Nytt Kd?
 				{
-					Kd = ((float)fromKom[6])/10; //Kd skickas som 10 ggr det önskade värdet!!!
+					Kd = ((float)fromKom[6])/1000; //Kd skickas som 1000 ggr det önskade värdet!!!
 				}
 				break;
 			case AUTO: //Autonomt läge
