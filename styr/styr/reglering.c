@@ -7,7 +7,7 @@
 
 #include "reglering.h"
 
-void update_alpha(void)
+float update_alpha(float Yaw_value, float x_hb, float x_vf)
 {
 	if(fromKom[0] & (1 << 4)) //Har nytt Kp skickats?
 	{
@@ -19,11 +19,9 @@ void update_alpha(void)
 		Kd = fromKom[6];
 	}
 	
-	float x_hb = fromSen[3];
-	float x_vf = fromSen[6];
-	float x_hf = fromSen[2];
+	//alpha = Kp*(x_hb-x_vf) + Kd*Yaw_value; //Uppdatera vridvinkeln alpha. RETURNERA ISTÄLLET DIREKT
+	alpha = Kd*Yaw_value; //Uppdatera vridvinkeln alpha. RETURNERA ISTÄLLET DIREKT
+	//alpha_d = Kd*Yaw_value; //D-delen
 	
-	alpha = Kp*(x_hb-x_vf) + Kd*(x_hf-x_hb); //Uppdatera vridvinkeln alpha
-	alpha_d = Kd*(x_hf-x_hb); //D-delen
-	
+	return alpha;
 }

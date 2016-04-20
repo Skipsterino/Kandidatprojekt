@@ -12,9 +12,9 @@
 
 float Kp;
 float Kd;
-float alpha; //Vinkel som roboten ska vrida med
+float alpha; //Vinkel som roboten ska vrida med KAN NOG TAS BORT SEN
 float alpha_d;
 
-void update_alpha(void);
+float update_alpha(float Yaw_value, float x_hb, float x_vf);
 
 #endif /* REGLERING_H_ */
