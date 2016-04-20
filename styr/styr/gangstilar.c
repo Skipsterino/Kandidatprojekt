@@ -158,7 +158,7 @@ if(height < 6)
 	triple_float cyl6;
 	
 	//test, begränsar maxvinkel efter speed ist för omvänt
-	float thlimits[7] = {0.57,0.48,0.38,0.3,0.2,0.11,0};
+	float thlimits[7] = {0.56,0.47,0.37,0.3,0.2,0.11,0};
 	float th_max = 0;	
 	if( th * sgn_theta > (th_max =thlimits[speed * sgn_speed]))
 	{
