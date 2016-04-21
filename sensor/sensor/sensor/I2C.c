@@ -85,7 +85,7 @@ int i2c_read(unsigned char slave_addr, unsigned char reg_addr, unsigned char len
 	{
 		if(for_counter == length -1)
 		{
-			TWCR = (1<<TWINT) | (1<<TWEN);					// Ta emot data och skicka ACK (ACK = mottagningen klar och vi ska fortsätta ta emot data)
+			TWCR = (1<<TWINT) | (1<<TWEN);					// Ta emot data och skicka NACK (NACK = mottagningen klar och vi ska ej ta emot mer)
 			while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
 			data[for_counter] = (TWDR);						// Spara undan den mottagna datan
 			if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_NACK)		// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
@@ -93,7 +93,7 @@ int i2c_read(unsigned char slave_addr, unsigned char reg_addr, unsigned char len
 		}
 		else
 		{
-			TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);		// Ta emot data och skicka NACK (NACK = mottagningen klar och vi ska ej ta emot mer)
+			TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);		// Ta emot data och skicka ACK (ACK = mottagningen klar och vi ska fortsätta ta emot data)
 			while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
 			data[for_counter] = (TWDR);						// Spara undan den mottagna datan
 			if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)		// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
