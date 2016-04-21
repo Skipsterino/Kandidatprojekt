@@ -26,7 +26,7 @@ int main(void)
 	init_ADC();
 	init_US();
 	init_SPI();
-	init_timer();						// Initiera en timer för att hålla koll på förfluten tid.
+	//init_timer();						// Initiera en timer för att hålla koll på förfluten tid.
 	init_I2C();
 	init_IMU();
 
@@ -49,11 +49,11 @@ int main(void)
 			
 			SPI_done = 0;
 
-			kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
+			//kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
 			
 		}
 		
-		_delay_ms(delay_time);			// Vila för att få lagom frekvens		// XXXX Endast vid testning utan bussen!
+		//_delay_ms(delay_time);			// Vila för att få lagom frekvens		// XXXX Endast vid testning utan bussen!
 	}
 }
 

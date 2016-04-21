@@ -25,7 +25,7 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include "I2C.h"
-#include "millis.h"
+//#include "millis.h"
 
 #ifndef _INV_MPU_H_
 #define _INV_MPU_H_
@@ -34,10 +34,10 @@
 
 #define min(a,b) ((a<b)?a:b)
 
-inline void get_ms(long unsigned int *timestamp)
-{
-	*timestamp = millis();
-}
+//inline void get_ms(long unsigned int *timestamp)
+//{
+	//*timestamp = millis();
+//}
 
 inline static void __no_operation()
 {
