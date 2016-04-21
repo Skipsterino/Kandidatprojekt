@@ -126,3 +126,4 @@ triple_float Kar_To_Cyl_Leg6(float x, float y, float z)
 	triple_float triple = create_triple_float(r,th,z);
 	return triple;
 }
+

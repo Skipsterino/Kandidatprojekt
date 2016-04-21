@@ -21,8 +21,13 @@ void USART_Transmit( unsigned char data )
 
 unsigned char USART_Receive( void )
 {
+	float i=0;
 	// Wait for data to be received
-	while ( !(UCSR0A & (1<<RXC0)) );
+	while ( (!(UCSR0A & (1<<RXC0))) && (i<200000))
+	{
+		_delay_ms(0.00001);
+		i = i + 1; 
+	}
 	// Get and return received data from buffer
 	return UDR0;
 }
@@ -119,7 +124,7 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	message[0] = ID;
 	message[1] = 0x04;
 	message[2] = 0x02;
-	message[3] = 0x28; //Läser ut Present Position (önskas istället Goal Position får man ändra här till 0x1E)
+	message[3] = 0x28; //Läser ut Present load 
 	message[4] = 0x02;
 	
 	Send_Servo_Message(message, 2);
@@ -132,12 +137,13 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	USART_Receive(); //ID
 	USART_Receive(); //Längd
 	USART_Receive(); //Error
-	load_LSByte = USART_Receive(); //LS Byte av positionen
-	load_MSByte = USART_Receive(); //MS Byte av positionen
+	load_LSByte = USART_Receive(); //LS Byte av load
+	load_MSByte = USART_Receive(); //MS Byte av load
 	USART_Receive(); //Checksum
-
-	unsigned int load = (((unsigned int)load_MSByte) << 8) | load_LSByte;
 	
+	_delay_ms(0.05); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
+	
+	unsigned int load = (((unsigned int)load_MSByte) << 8) | load_LSByte;
 	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
 	
 	return load;

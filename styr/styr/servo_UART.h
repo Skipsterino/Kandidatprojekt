@@ -74,6 +74,4 @@ void Send_Leg4_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, 
 void Send_Leg5_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer);
 void Send_Leg6_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer);
 
-
-void Rise_Robot_Height(float height);
 #endif /* SERVO_UART_H_ */

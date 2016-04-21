@@ -147,6 +147,12 @@
     <Compile Include="SPI.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="state_machine.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="state_machine.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="structs.c">
       <SubType>compile</SubType>
     </Compile>

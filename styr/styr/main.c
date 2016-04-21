@@ -20,12 +20,19 @@
 #include "servo_UART.h"
 #include "invers_kinematik.h"
 #include "gangstilar.h"
-
+#include "over_hinder.h"
 unsigned int load;
 
-int main_OLD(void)
+int main_old(void)
 {
 	Init();
+	
+	
+	Send_Leg2_Kar(25,0,0);
+	while(1)
+	{
+	Walk_Up();
+	}
 	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
 	//Configure_Servos_Delaytime();
