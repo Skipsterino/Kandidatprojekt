@@ -23,9 +23,9 @@ int main(void)
 	init_ADC();
 	init_US();
 	init_SPI();
-	init_timer();
-	init_I2C();
-	init_IMU();
+	//init_timer();
+	//init_I2C();
+	//init_IMU();
 	
 	_delay_ms(200);						// Ge IMU tid att starta
 
@@ -34,7 +34,7 @@ int main(void)
 	while (1)
 	{
 		ADC_IR();						// (X) Sampla IR-sensorerna
-		read_IMU();						// (X) Hämta data från IMU
+	//	read_IMU();						// (X) Hämta data från IMU
 		
 		send_ping();					// (X) Starta en US-mätning
 		
@@ -44,7 +44,7 @@ int main(void)
 		
 		save_to_buffer();				// (X) Spara undan i buffert
 		
-		_delay_ms(delay_time);			// (X) Vila för att få lagom frekvens
+	//	_delay_ms(delay_time);			// (X) Vila för att få lagom frekvens
 
 		//kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
 	}
