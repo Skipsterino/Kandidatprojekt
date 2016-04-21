@@ -21,8 +21,8 @@
 #include "servo_UART.h"
 #include "invers_kinematik.h"
 #include "gangstilar.h"
-#include "reglering.h"
 #include "state_machine.h"
+
 
 
 typedef enum  {
@@ -30,6 +30,8 @@ typedef enum  {
 	MANUAL,
 	RACE
 } CONTROL_MODE;
+
+volatile unsigned char lastPacket[16];
 
 float angle;
 int intensity;
@@ -40,14 +42,18 @@ float delta_h;
 
 int main_old(void)
 {
+	memset(lastPacket, 0, sizeof(lastPacket));
+	
 	CONTROL_MODE cm = MANUAL; //Representerar aktuellt läge hos roboten
 	ROBOT_STATE = CORRIDOR;
+	
+	
 	
 	//Defaultvärden
 	angle = 0;
 	intensity = 0;
-	intensity_byte = 100;
-	angle_byte = 100;
+	intensity_byte = 120;
+	angle_byte = 120;
 	height = 11;
 	delta_h = 0.1;
 	Kp = 0.001;
@@ -69,9 +75,6 @@ int main_old(void)
 	Send_Middle_P2_Velocity(0x0100);//
 	Send_Outer_P2_Velocity(0x0100);//
 	
-	memset(fromKom, 0, sizeof(fromKom)); //Nollställer fromKom & fromSen (tar bort ev skräp på minnesplatserna) så koden inte ballar ur innan första avbrottet kommit. Lägg ev in i Init!
-	memset(fromSen, 0, sizeof(fromSen));
-	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
 	
 	unsigned char first_kom_byte;
@@ -79,23 +82,25 @@ int main_old(void)
 	
 	while(1)
 	{
-		first_kom_byte = fromKom[0];
+		memcpy(lastPacket, lastValidPacket, sizeof(lastPacket));
+		
+		first_kom_byte = lastPacket[0];
 		
 		if (first_kom_byte & 0b00001000) //Växla läge?
 		{
-			unsigned char change_mode = fromKom[4];
+			unsigned char change_mode = lastPacket[4];
 			
-			if (change_mode == 0) //Byt till MANUAL?
+			if (change_mode == 0b00001111) //Byt till MANUAL?
 			{
 				cm = MANUAL;
 			}
 			
-			else if (change_mode == 1) //Byt till AUTO?
+			else if (change_mode == 0b00111100) //Byt till AUTO?
 			{
 				cm = AUTO;
 				ROBOT_STATE = CORRIDOR;
 			}
-			else if (change_mode == 2) //Byt till RACE?
+			else if (change_mode == 0b11110000) //Byt till RACE?
 			{
 				cm = RACE;
 			}
@@ -104,23 +109,23 @@ int main_old(void)
 		switch(cm)
 		{
 			case MANUAL: //Manuellt läge
-			intensity_byte = 100;
-			angle_byte = 100;
+			intensity_byte = 120;
+			angle_byte = 120;
 			
 			if (first_kom_byte & 0b00000011) //Skickas vinkel & intensitet?
 			{
-				if((fromKom[1] < 20) || (fromKom[1] > 220)){
+				if((lastPacket[1] < 20) || (lastPacket[1] > 220)){
 					angle_byte = 0;
 				}
 				else{
-					angle_byte = fromKom[1] - 120;
+					angle_byte = lastPacket[1] - 120;
 				}
 				
-				if((fromKom[2] < 20) || (fromKom[2] > 220)){
+				if((lastPacket[2] < 20) || (lastPacket[2] > 220)){
 					intensity_byte = 0;
 				}
 				else{
-					intensity_byte = fromKom[2] - 120;
+					intensity_byte = lastPacket[2] - 120;
 				}
 				
 				intensity = (float)(intensity_byte)*((float)6)/((float)100); //100 på kontroll -> 6 i speed
@@ -130,7 +135,7 @@ int main_old(void)
 			}
 			if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
 			{
-				unsigned char change_height = fromKom[3];
+				unsigned char change_height = lastPacket[3];
 				
 				if (change_height == 1) //Sänk?
 				{
@@ -144,22 +149,24 @@ int main_old(void)
 			}
 			if (first_kom_byte & 0b00010000) //Nytt Kp?
 			{
-				Kp = ((float)fromKom[5])/100; //Kp skickas som 1000 ggr det önskade värdet!!!
+				Kp = ((float)lastPacket[5])/1000.f; //Kp skickas som 1000 ggr det önskade värdet!!!
 			}
 			if (first_kom_byte & 0b00100000) //Nytt Kd?
 			{
-				Kd = ((float)fromKom[6])/100; //Kd skickas som 1000 ggr det önskade värdet!!!
+				Kd = ((float)lastPacket[6])/1000.f; //Kd skickas som 1000 ggr det önskade värdet!!!
 			}
 			break;
+			
 			case AUTO: //Autonomt läge
 			update_state();
 			run_state(height);
 			break;
+			
 			case RACE:
-			//if (PIND3 == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
-			//{
-			//cm = AUTO;
-			//}
+			if ((PIND & (1 << 3)) == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
+			{
+				cm = AUTO;
+			}
 			break;
 			default:
 			break;
