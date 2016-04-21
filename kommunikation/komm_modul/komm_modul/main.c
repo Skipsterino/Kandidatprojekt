@@ -64,11 +64,11 @@ int main(void)
 		}
 		*/
 		char digits[16];
-		sprintf(digits, "%i", (int8_t)toBluetooth[8]);
+		sprintf(digits, "%i", toSPI[0]);
 		LCD_controller_put_line(1, digits);
-		sprintf(digits, "%i", (int8_t)toBluetooth[9]);
+		sprintf(digits, "%i", toSPI[5]);
 		LCD_controller_put_line(2, digits);
-		sprintf(digits, "%i", (int8_t)toBluetooth[8] + (int8_t)toBluetooth[9]);
+		sprintf(digits, "%i", toSPI[6]);
 		LCD_controller_put_line(3, digits);
 		
 		
