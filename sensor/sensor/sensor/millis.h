@@ -10,9 +10,9 @@
 
 #include <util/atomic.h>
 
-unsigned long timer0_millis;
-unsigned char timer0_fract;
-unsigned long timer0_overflow_count;
+volatile unsigned long timer0_millis;
+volatile unsigned char timer0_fract;
+volatile unsigned long timer0_overflow_count;
 #define MILLIS_INC (1024 / 1000)
 #define FRACT_INC ((1024 % 1000) >> 3)
 #define FRACT_MAX (1000 >> 3)

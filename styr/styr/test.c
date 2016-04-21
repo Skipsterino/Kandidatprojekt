@@ -51,7 +51,7 @@ int main(void)
 	height = 11;
 	delta_h = 0.1;
 	Kp = 0.001;
-	Kd = 0.20;
+	Kd = 0.25;
 	
 	Init();
 	

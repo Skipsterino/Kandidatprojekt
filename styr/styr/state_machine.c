@@ -184,7 +184,7 @@ void update_state()
 			//}
 			//break;
 			
-			if (rotation_count > 9)
+			if (rotation_count > 8)
 			{
 				ROBOT_STATE = OUT_OF_TURN_RIGHT;
 				start_Yaw_set = 0;
@@ -204,7 +204,7 @@ void update_state()
 			//}
 			//break;
 			
-			if (rotation_count > 9)
+			if (rotation_count > 8)
 			{
 				ROBOT_STATE = OUT_OF_TURN_LEFT;
 				start_Yaw_set = 0;
