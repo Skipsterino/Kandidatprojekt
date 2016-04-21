@@ -14,7 +14,6 @@
 #endif
 
 #include "SPI.h"
-#include "reglering.h"
 #include "gangstilar.h"
 
 typedef enum {
@@ -77,12 +76,14 @@ typedef enum {
 #define NO_WALL_DISTANCE 50
 #define DEAD_END_DISTANCE 40				// Avståndet vid vilket vi vänder om vi skulle komma in i en återvändsgränd (vilket ej ska hända)
 
+#define CENTER_OFFSET 8
+#define CORRIDOR_WIDTH 80
 
 float IMU_Yaw_start;
 int start_Yaw_set;		// 0 = har ej satt ett startvärde
 int rotation_count;
 
-float Yaw;
+float Yaw, Yaw_rad, p_part, Kd, Kp, alpha; 
 float IR_0, IR_1, IR_2, IR_3, IR_4, IR_5, IR_6, US, IR_Yaw_left, IR_Yaw_right, IMU_Yaw, Yaw, Pitch, Roll;
 
 STATES ROBOT_STATE;
@@ -91,5 +92,6 @@ void update_state();
 void run_state(float height_value);
 void load_sensor_values();
 void calculate_Yaw();
+void calculate_p_part();
 
 #endif /* STATE_MACHINE_H_ */

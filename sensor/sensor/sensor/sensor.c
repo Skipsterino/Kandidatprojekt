@@ -26,7 +26,7 @@ int main(void)
 	init_ADC();
 	init_US();
 	init_SPI();
-	init_timer();						// Initiera en timer för att hålla koll på förfluten tid.
+	//init_timer();						// Initiera en timer för att hålla koll på förfluten tid.
 	//init_I2C();
 	//init_IMU();
 
@@ -38,7 +38,7 @@ int main(void)
 		{
 
 			ADC_IR();						// Sampla IR-sensorerna
-			//read_IMU();						// Hämta data från IMU
+		//	read_IMU();						// Hämta data från IMU
 			
 			send_ping();					// Starta en US-mätning
 			

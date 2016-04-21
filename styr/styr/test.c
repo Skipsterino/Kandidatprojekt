@@ -21,7 +21,6 @@
 #include "servo_UART.h"
 #include "invers_kinematik.h"
 #include "gangstilar.h"
-#include "reglering.h"
 #include "state_machine.h"
 
 
@@ -46,8 +45,8 @@ int main(void)
 	//Defaultvärden
 	angle = 0;
 	intensity = 0;
-	intensity_byte = 100;
-	angle_byte = 100;
+	intensity_byte = 120;
+	angle_byte = 120;
 	height = 11;
 	delta_h = 0.1;
 	Kp = 0.001;
@@ -104,8 +103,8 @@ int main(void)
 		switch(cm)
 		{
 			case MANUAL: //Manuellt läge
-			intensity_byte = 100;
-			angle_byte = 100;
+			intensity_byte = 120;
+			angle_byte = 120;
 			
 			if (first_kom_byte & 0b00000011) //Skickas vinkel & intensitet?
 			{
@@ -142,24 +141,26 @@ int main(void)
 				}
 				Walk_Half_Cycle(0, 0,height); //Genomför höjdändringen
 			}
-			if (first_kom_byte & 0b00010000) //Nytt Kp?
-			{
-				Kp = ((float)fromKom[5])/100; //Kp skickas som 1000 ggr det önskade värdet!!!
-			}
-			if (first_kom_byte & 0b00100000) //Nytt Kd?
-			{
-				Kd = ((float)fromKom[6])/100; //Kd skickas som 1000 ggr det önskade värdet!!!
-			}
+			//if (first_kom_byte & 0b00010000) //Nytt Kp?
+			//{
+				//Kp = ((float)fromKom[5])/1000.f; //Kp skickas som 1000 ggr det önskade värdet!!!
+			//}
+			//if (first_kom_byte & 0b00100000) //Nytt Kd?
+			//{
+				//Kd = ((float)fromKom[6])/1000.f; //Kd skickas som 1000 ggr det önskade värdet!!!
+			//}
 			break;
+			
 			case AUTO: //Autonomt läge
 			update_state();
 			run_state(height);
 			break;
+			
 			case RACE:
-			//if (PIND3 == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
-			//{
-			//cm = AUTO;
-			//}
+			if (PIND3 == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
+			{
+			cm = AUTO;
+			}
 			break;
 			default:
 			break;

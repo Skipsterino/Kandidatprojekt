@@ -129,12 +129,6 @@
     <Compile Include="invers_kinematik.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="reglering.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="reglering.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="servo_UART.c">
       <SubType>compile</SubType>
     </Compile>
