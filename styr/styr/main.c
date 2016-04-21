@@ -21,17 +21,61 @@
 #include "invers_kinematik.h"
 #include "gangstilar.h"
 #include "over_hinder.h"
-unsigned int load;
+unsigned int load[100];
+unsigned int message[100][8];
 
 int main(void)
 {
 	Init();
+	//Configure_Servos_No_Response();
+	_delay_ms(1000);
 	
+	Send_Servo_Position(12, 0x1FF);
 	
-	Send_Leg2_Kar(25,0,0);
+	for(int i=0; i<100; i++)
+	{
+		
+	unsigned char message1[6];
+	unsigned char load_LSByte;
+	unsigned char load_MSByte;
+	
+	message1[0] = 12;
+	message1[1] = 0x04;
+	message1[2] = 0x02;
+	message1[3] = 0x24; //Läser ut Present load 
+	message1[4] = 0x02;
+	
+	Send_Servo_Message(message1, 2);
+	
+	_delay_ms(0.02); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
+	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
+
+	
+	message[i][0]=USART_Receive(); //mp är "triggerhappy"
+	message[i][1]=USART_Receive(); //Första startbyten
+	message[i][2]=USART_Receive(); //Andra startbyten
+	message[i][3]=USART_Receive(); //ID
+	message[i][4]=USART_Receive(); //Längd
+	message[i][5]=USART_Receive(); //Error
+	message[i][6]= USART_Receive(); //LS Byte av load
+	message[i][7]= USART_Receive(); //MS Byte av load
+	//message[i][8]=USART_Receive(); //Checksum
+	_delay_ms(0.05); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
+	
+	unsigned int load = (((unsigned int)load_MSByte) << 8) | load_LSByte;
+	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
+	}
+	
+	Send_Leg1_Kar(20,0,-5);
+	
+	for(int i=0; i<100; i++)
+	{
+		Get_Servo_Load(12);
+	}
+	
 	while(1)
 	{
-	Walk_Up();
+	//Walk_Up();
 	}
 	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT

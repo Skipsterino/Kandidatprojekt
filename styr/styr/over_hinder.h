@@ -12,7 +12,7 @@
 #include "servo_UART.h"
 #include <util/delay.h>
 
-unsigned int load;
+//unsigned int load;
 
 void Probe_Walk(void);
 void Probe_Height_Up(void); 
