@@ -39,7 +39,7 @@ void calculate_Yaw()
 		case OUT_OF_JUNCTION_A_RIGHT:
 		case OUT_OF_JUNCTION_A_LEFT:
 		{
-			Yaw = IMU_Yaw - IMU_Yaw_start;				// XXX SKA GÖRAS!
+			Yaw = IMU_Yaw - IMU_Yaw_start;				// XXX SKA GÃ–RAS!
 			break;
 		}
 		
@@ -63,7 +63,7 @@ void calculate_p_part()
 		case OUT_OF_JUNCTION_C_LEFT:
 		case JUNCTION_B_LEFT:
 		{
-			p_part = ((IR_2 + IR_3)/2 + CENTER_OFFSET)*cos(Yaw) - CORRIDOR_WIDTH/2;
+			p_part = ((IR_2 + IR_3)/2 + CENTER_OFFSET)*cos(Yaw_rad) - CORRIDOR_WIDTH/2;
 			break;
 		}
 		
@@ -72,14 +72,14 @@ void calculate_p_part()
 		case OUT_OF_JUNCTION_C_RIGHT:
 		case JUNCTION_B_RIGHT:
 		{
-			p_part = CORRIDOR_WIDTH/2 - ((IR_5 + IR_6)/2 + CENTER_OFFSET)*cos(Yaw);
+			p_part = CORRIDOR_WIDTH/2 - ((IR_5 + IR_6)/2 + CENTER_OFFSET)*cos(Yaw_rad);
 			break;
 		}
 		
 		case OUT_OF_JUNCTION_A_RIGHT:
 		case OUT_OF_JUNCTION_A_LEFT:
 		{
-			p_part = 0;						// XXX SKA GÖRAS!
+			p_part = 0;						// XXX SKA GÃ–RAS!
 			break;
 		}
 	}
@@ -542,7 +542,7 @@ void run_state(float height_value)
 	
 	alpha = Kp*p_part + Kd*Yaw_rad;
 	
-	fromSen[14] = ROBOT_STATE; // Tillstånd till bussen
+	fromSen[14] = ROBOT_STATE; // TillstÃ¥nd till bussen
 	
 	switch (ROBOT_STATE)
 	{
