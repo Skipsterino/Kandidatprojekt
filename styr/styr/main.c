@@ -23,7 +23,7 @@
 #include "over_hinder.h"
 unsigned int load;
 
-int main(void)
+int main_old(void)
 {
 	Init();
 	

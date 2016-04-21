@@ -53,7 +53,7 @@ int main(void)
 			
 		}
 		
-		_delay_ms(delay_time);			// Vila för att få lagom frekvens		// XXXX Endast vid testning utan bussen!
+		//_delay_ms(delay_time);			// Vila för att få lagom frekvens		// XXXX Endast vid testning utan bussen!
 	}
 }
 
