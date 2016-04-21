@@ -23,10 +23,13 @@ unsigned char USART_Receive( void )
 {
 	float i=0;
 	// Wait for data to be received
-	while ( (!(UCSR0A & (1<<RXC0))) && (i<200000))
+	while ((!(UCSR0A & (1<<RXC0))))
 	{
-		_delay_ms(0.00001);
 		i = i + 1; 
+		if(i>2000000000)
+		{
+			return 0xBB;
+		}
 	}
 	// Get and return received data from buffer
 	return UDR0;
@@ -124,7 +127,7 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	message[0] = ID;
 	message[1] = 0x04;
 	message[2] = 0x02;
-	message[3] = 0x28; //Läser ut Present load 
+	message[3] = 0x24; //Läser ut Present load 
 	message[4] = 0x02;
 	
 	Send_Servo_Message(message, 2);

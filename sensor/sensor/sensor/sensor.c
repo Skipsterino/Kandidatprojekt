@@ -1,4 +1,4 @@
-/*
+﻿/*
 * sensor.c
 *
 * Created: 3/30/2016 8:38:40 AM
@@ -29,6 +29,7 @@ int main(void)
 	//init_timer();						// Initiera en timer för att hålla koll på förfluten tid.
 	//init_I2C();
 	//init_IMU();
+
 
 	sei();								// Tillåt avbrott (bit 7 på SREG sätts till 1)
 
