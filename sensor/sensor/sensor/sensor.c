@@ -291,13 +291,13 @@ ISR(SPI_STC_vect)
 		}
 		case 14:
 		{
-			SPDR = 0xff;
+			SPDR = 0x00;
 			++byte_to_send;
 			break;
 		}
 		case 15:
 		{
-			SPDR = 0xff;
+			SPDR = 0x00;
 			byte_to_send = 0;
 			
 			break;

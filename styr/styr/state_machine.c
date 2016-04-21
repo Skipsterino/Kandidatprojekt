@@ -447,12 +447,14 @@ void update_state()
 
 	}
 	
-	fromSen[14] = ROBOT_STATE; 
+	
 }
 
 void run_state(float height_value)
 {
 	calculate_Yaw();
+	
+	fromSen[14] = ROBOT_STATE; 
 	
 	switch (ROBOT_STATE)
 	{
