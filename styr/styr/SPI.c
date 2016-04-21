@@ -7,10 +7,10 @@
 
 #include "SPI.h"
 
-uint8_t SPIcounter;
-uint8_t toSen;
-uint8_t toKom;
-uint8_t overflow;
+volatile uint8_t SPIcounter;
+volatile uint8_t toSen;
+volatile uint8_t toKom;
+volatile uint8_t overflow;
 // timer0 interruppt funktion
 ISR(TIMER0_OVF_vect)
 {
@@ -35,7 +35,18 @@ ISR(SPI_STC_vect)
 {
 	
 	if(toSen == 1){
-		fromSen[SPIcounter] = SPDR;
+		
+		//Rensa bort nollor på plats 14 från sensor
+		//så tillståndsdatan inte skrivs över.
+		if(SPIcounter != 14)
+		{
+			fromSen[SPIcounter] = SPDR;
+		}
+		else
+		{
+			unsigned char dummy = SPDR;
+		}
+		
 		
 		if(SPIcounter < 15){
 			++SPIcounter;

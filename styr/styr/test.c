@@ -93,6 +93,7 @@ int main(void)
 			else if (change_mode == 1) //Byt till AUTO?
 			{
 				cm = AUTO;
+				ROBOT_STATE = CORRIDOR;
 			}
 			else if (change_mode == 2) //Byt till RACE?
 			{

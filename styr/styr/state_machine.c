@@ -14,8 +14,8 @@ void calculate_Yaw()
 
 		case CORRIDOR:
 		{
-			//Yaw = (IR_Yaw_right + IR_Yaw_left)/2;
-			Yaw = IR_Yaw_left;
+			Yaw = (IR_Yaw_right + IR_Yaw_left)/2;
+			//Yaw = IR_Yaw_left;
 			break;
 		}
 		
@@ -69,15 +69,15 @@ void update_state()
 			//}
 			
 			//
-			else if (IR_2 > CORRIDOR_SIDE_DISTANCE && IR_3 < CORRIDOR_SIDE_DISTANCE && IR_5 < CORRIDOR_SIDE_DISTANCE && IR_6 < CORRIDOR_SIDE_DISTANCE
-			|| IR_2 > CORRIDOR_SIDE_DISTANCE && IR_3 > CORRIDOR_SIDE_DISTANCE && IR_5 < CORRIDOR_SIDE_DISTANCE && IR_6 < CORRIDOR_SIDE_DISTANCE)
+			else if (IR_2 > CORRIDOR_SIDE_DISTANCE && IR_3 > CORRIDOR_SIDE_DISTANCE && IR_5 < CORRIDOR_SIDE_DISTANCE && IR_6 < CORRIDOR_SIDE_DISTANCE
+					|| IR_2 > CORRIDOR_SIDE_DISTANCE && IR_3 < CORRIDOR_SIDE_DISTANCE && IR_5 < CORRIDOR_SIDE_DISTANCE && IR_6 < CORRIDOR_SIDE_DISTANCE)
 			{
 				ROBOT_STATE = OUT_OF_CORRIDOR_LEFT_WALL;
 				break;
 			}
 			
-			else if (IR_2 < CORRIDOR_SIDE_DISTANCE && IR_3 < CORRIDOR_SIDE_DISTANCE && IR_5 < CORRIDOR_SIDE_DISTANCE && IR_6 > CORRIDOR_SIDE_DISTANCE
-			|| IR_2 < CORRIDOR_SIDE_DISTANCE && IR_3 < CORRIDOR_SIDE_DISTANCE && IR_5 > CORRIDOR_SIDE_DISTANCE && IR_6 > CORRIDOR_SIDE_DISTANCE)
+			else if (IR_2 < CORRIDOR_SIDE_DISTANCE && IR_3 < CORRIDOR_SIDE_DISTANCE && IR_5 > CORRIDOR_SIDE_DISTANCE && IR_6 > CORRIDOR_SIDE_DISTANCE
+					|| IR_2 < CORRIDOR_SIDE_DISTANCE && IR_3 < CORRIDOR_SIDE_DISTANCE && IR_5 < CORRIDOR_SIDE_DISTANCE && IR_6 > CORRIDOR_SIDE_DISTANCE )
 			{
 				ROBOT_STATE = OUT_OF_CORRIDOR_RIGHT_WALL;
 				break;
@@ -94,6 +94,22 @@ void update_state()
 			//ROBOT_STATE = INTO_LOW_OBSTACLE;
 			//break;
 			//}
+		}
+		
+		case OUT_OF_CORRIDOR:
+		{
+			if (IR_2 > CORRIDOR_SIDE_DISTANCE && IR_3 > CORRIDOR_SIDE_DISTANCE && IR_5 < CORRIDOR_SIDE_DISTANCE && IR_6 < CORRIDOR_SIDE_DISTANCE)
+			{
+				ROBOT_STATE = OUT_OF_CORRIDOR_LEFT_WALL;
+				break;
+			}
+			
+			else if (IR_2 < CORRIDOR_SIDE_DISTANCE && IR_3 < CORRIDOR_SIDE_DISTANCE && IR_5 > CORRIDOR_SIDE_DISTANCE && IR_6 > CORRIDOR_SIDE_DISTANCE)
+			{
+				ROBOT_STATE = OUT_OF_CORRIDOR_RIGHT_WALL;
+				break;
+			}	
+			break;
 		}
 		
 		case STOP:
@@ -116,7 +132,6 @@ void update_state()
 		//
 		case OUT_OF_CORRIDOR_LEFT_WALL:
 		case OUT_OF_CORRIDOR_RIGHT_WALL:
-		case OUT_OF_CORRIDOR:
 		{
 			if (IR_2 > CORRIDOR_SIDE_DISTANCE && IR_3 > CORRIDOR_SIDE_DISTANCE && IR_5 < CORRIDOR_SIDE_DISTANCE && IR_6 < CORRIDOR_SIDE_DISTANCE && IR_0 < SHORT_TURN_DISTANCE)
 			{
@@ -188,6 +203,7 @@ void update_state()
 			{
 				ROBOT_STATE = OUT_OF_TURN_RIGHT;
 				start_Yaw_set = 0;
+				rotation_count = 0;
 				break;
 			}
 			break;
@@ -208,6 +224,7 @@ void update_state()
 			{
 				ROBOT_STATE = OUT_OF_TURN_LEFT;
 				start_Yaw_set = 0;
+				rotation_count = 0;
 				break;
 			}
 			break;
@@ -454,7 +471,7 @@ void run_state(float height_value)
 {
 	calculate_Yaw();
 	
-	fromSen[14] = ROBOT_STATE; 
+	fromSen[14] = ROBOT_STATE; // Tillstånd till bussen
 	
 	switch (ROBOT_STATE)
 	{
@@ -463,7 +480,7 @@ void run_state(float height_value)
 		{
 			float Yaw_rad = (Yaw/180)*3.1415926;
 			float alpha_value = update_alpha(Yaw_rad, IR_3, IR_6);
-			Walk_Half_Cycle(2, alpha_value, height_value);
+			Walk_Half_Cycle(4, alpha_value, height_value);
 			break;
 		}
 		
@@ -472,12 +489,18 @@ void run_state(float height_value)
 		{
 			float Yaw_rad = (Yaw/180)*3.1415926;
 			float alpha_value = update_alpha(Yaw_rad, IR_3, IR_6);
-			Walk_Half_Cycle(1, alpha_value, height_value);
+			Walk_Half_Cycle(2, alpha_value, height_value);
 			break;
 		}
 		
 		case STOP:
 		{
+			break;
+		}
+		
+		case OUT_OF_CORRIDOR:
+		{
+			Walk_Half_Cycle(2, 0, height_value);
 			break;
 		}
 
@@ -502,7 +525,7 @@ void run_state(float height_value)
 		{
 			float Yaw_rad = (Yaw/180)*3.1415926;
 			float alpha_value = update_alpha(Yaw_rad, IR_3, IR_6);
-			Walk_Half_Cycle(2, alpha_value, height_value);
+			Walk_Half_Cycle(4, alpha_value, height_value);
 			break;
 		}
 		
