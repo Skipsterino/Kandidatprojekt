@@ -34,13 +34,13 @@ typedef enum  {
 volatile unsigned char lastPacket[16];
 
 float angle;
-int intensity;
+float speed;
 int8_t intensity_byte;
 int8_t angle_byte;
 float height;
 float delta_h;
 
-int main_old(void)
+int main(void)
 {
 	memset(lastPacket, 0, sizeof(lastPacket));
 	
@@ -51,7 +51,7 @@ int main_old(void)
 	
 	//Defaultvärden
 	angle = 0;
-	intensity = 0;
+	speed = 0;
 	intensity_byte = 120;
 	angle_byte = 120;
 	height = 11;
@@ -68,15 +68,15 @@ int main_old(void)
 	Configure_Servos_Angle_Limit();
 	//
 	
-	Send_Inner_P1_Velocity(0x00F0); //DESSA SEX ANROP MÅSTE ALLTID KÖRAS EFTERSOM HASTIGHETEN LIGGER I RAM!!!
-	Send_Middle_P1_Velocity(0x0100);//
-	Send_Outer_P1_Velocity(0x0100);//
-	Send_Inner_P2_Velocity(0x00F0);//
-	Send_Middle_P2_Velocity(0x0100);//
-	Send_Outer_P2_Velocity(0x0100);//
+	Send_Inner_P1_Velocity(0x0010); //DESSA SEX ANROP MÅSTE ALLTID KÖRAS EFTERSOM HASTIGHETEN LIGGER I RAM!!!
+	Send_Middle_P1_Velocity(0x0010);//
+	Send_Outer_P1_Velocity(0x0010);//
+	Send_Inner_P2_Velocity(0x0010);//
+	Send_Middle_P2_Velocity(0x0010);//
+	Send_Outer_P2_Velocity(0x0010);//
 	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
-	
+
 	unsigned char first_kom_byte;
 	Walk_Half_Cycle(0, 0,height);
 	
@@ -128,10 +128,10 @@ int main_old(void)
 					intensity_byte = lastPacket[2] - 120;
 				}
 				
-				intensity = (float)(intensity_byte)*((float)6)/((float)100); //100 på kontroll -> 6 i speed
+				speed = (float)(intensity_byte)*((float)6)/((float)100); //100 på kontroll -> 6 i speed
 				angle = (float)(angle_byte)*((float)0.57)/((float)100); //128 på kontroll -> 0.57 i vinkel
 				
-				Walk_Half_Cycle(intensity, angle,height);
+				Walk_Half_Cycle(speed, angle,height);
 			}
 			if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
 			{
