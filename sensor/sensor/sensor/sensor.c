@@ -1,4 +1,4 @@
-/*
+﻿/*
 * sensor.c
 *
 * Created: 3/30/2016 8:38:40 AM
@@ -30,6 +30,7 @@ int main(void)
 	init_I2C();
 	init_IMU();
 
+
 	sei();								// Tillåt avbrott (bit 7 på SREG sätts till 1)
 
 	while (1)
@@ -38,7 +39,7 @@ int main(void)
 		{
 
 			ADC_IR();						// Sampla IR-sensorerna
-			read_IMU();						// Hämta data från IMU
+			//read_IMU();						// Hämta data från IMU
 			
 			send_ping();					// Starta en US-mätning
 			
@@ -291,13 +292,13 @@ ISR(SPI_STC_vect)
 		}
 		case 14:
 		{
-			SPDR = 0xff;
+			SPDR = 0x00;
 			++byte_to_send;
 			break;
 		}
 		case 15:
 		{
-			SPDR = 0xff;
+			SPDR = 0x00;
 			byte_to_send = 0;
 			
 			break;

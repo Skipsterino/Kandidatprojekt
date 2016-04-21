@@ -34,7 +34,7 @@ const double IR_sensor_distance_left = 16.5;		// Avståndet mellan vänstra sido
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-double IR_latest_reading[7];
+volatile double IR_latest_reading[7];
 double IR_reading[7][5];							// 2D-array med de 5 senaste avläsningarna för de 7 sensorerna
 double IR_ADC[7], IR_distance[7];
 float IR_Yaw_right, IR_Yaw_left;					
@@ -45,7 +45,7 @@ typedef struct
 	double distance;
 } ADC_distance_pair;
 
-double US_reading;									// (US = Ultra Sound)
+volatile double US_reading;									// (US = Ultra Sound)
 double US_distance;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -65,7 +65,7 @@ int8_t buffer11_IMU_Yaw_High = 0xfb;
 int8_t buffer12_Pitch = 0xfc;
 int8_t buffer13_Roll =0xfd;		// Signed 8-bitars int
 
-int byte_to_send = 0;			// Vilken byte i bufferten som skall skickas härnäst
+volatile int byte_to_send = 0;			// Vilken byte i bufferten som skall skickas härnäst
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

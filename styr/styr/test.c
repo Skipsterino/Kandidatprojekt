@@ -37,9 +37,8 @@ int8_t intensity_byte;
 int8_t angle_byte;
 float height;
 float delta_h;
-	
-//TESTVERSION av ny main
-int main_dsaf(void)
+
+int main(void)
 {
 	CONTROL_MODE cm = MANUAL; //Representerar aktuellt läge hos roboten
 	ROBOT_STATE = CORRIDOR;
@@ -52,7 +51,7 @@ int main_dsaf(void)
 	height = 11;
 	delta_h = 0.1;
 	Kp = 0.001;
-	Kd = 0.15;
+	Kd = 0.25;
 	
 	Init();
 	
@@ -77,6 +76,7 @@ int main_dsaf(void)
 	
 	unsigned char first_kom_byte;
 	Walk_Half_Cycle(0, 0,height);
+	
 	while(1)
 	{
 		first_kom_byte = fromKom[0];
@@ -88,11 +88,12 @@ int main_dsaf(void)
 			if (change_mode == 0) //Byt till MANUAL?
 			{
 				cm = MANUAL;
-			} 
+			}
 			
 			else if (change_mode == 1) //Byt till AUTO?
 			{
 				cm = AUTO;
+				ROBOT_STATE = CORRIDOR;
 			}
 			else if (change_mode == 2) //Byt till RACE?
 			{
@@ -103,67 +104,65 @@ int main_dsaf(void)
 		switch(cm)
 		{
 			case MANUAL: //Manuellt läge
-				intensity_byte = 100;
-				angle_byte = 100;
+			intensity_byte = 100;
+			angle_byte = 100;
 			
-				if (first_kom_byte & 0b00000011) //Skickas vinkel & intensitet?
-				{
-					if((fromKom[1] < 20) || (fromKom[1] > 220)){
-						angle_byte = 0;
-					}
-					else{
-						angle_byte = fromKom[1] - 120;
-					}
-					
-					if((fromKom[2] < 20) || (fromKom[2] > 220)){
-						intensity_byte = 0;
-					}
-					else{
-						intensity_byte = fromKom[2] - 120;
-					}
-					
-					intensity = (float)(intensity_byte)*((float)6)/((float)100); //100 på kontroll -> 6 i speed
-					angle = (float)(angle_byte)*((float)0.57)/((float)100); //128 på kontroll -> 0.57 i vinkel	
-					
-					Walk_Half_Cycle(intensity, angle,height);
+			if (first_kom_byte & 0b00000011) //Skickas vinkel & intensitet?
+			{
+				if((fromKom[1] < 20) || (fromKom[1] > 220)){
+					angle_byte = 0;
 				}
-				if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
-				{
-					unsigned char change_height = fromKom[3];
-					
-					if (change_height == 1) //Sänk?
-					{
-						height -= delta_h;
-					}
-					else if (change_height == 2) //Höj?
-					{
-						height += delta_h;
-					}
-					Walk_Half_Cycle(0, 0,height); //Genomför höjdändringen
+				else{
+					angle_byte = fromKom[1] - 120;
 				}
-				if (first_kom_byte & 0b00010000) //Nytt Kp?
-				{
-					Kp = ((float)fromKom[5])/100; //Kp skickas som 1000 ggr det önskade värdet!!!
+				
+				if((fromKom[2] < 20) || (fromKom[2] > 220)){
+					intensity_byte = 0;
 				}
-				if (first_kom_byte & 0b00100000) //Nytt Kd?
-				{
-					Kd = ((float)fromKom[6])/100; //Kd skickas som 1000 ggr det önskade värdet!!!
+				else{
+					intensity_byte = fromKom[2] - 120;
 				}
-				break;
+				
+				intensity = (float)(intensity_byte)*((float)6)/((float)100); //100 på kontroll -> 6 i speed
+				angle = (float)(angle_byte)*((float)0.57)/((float)100); //128 på kontroll -> 0.57 i vinkel
+				
+				Walk_Half_Cycle(intensity, angle,height);
+			}
+			if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
+			{
+				unsigned char change_height = fromKom[3];
+				
+				if (change_height == 1) //Sänk?
+				{
+					height -= delta_h;
+				}
+				else if (change_height == 2) //Höj?
+				{
+					height += delta_h;
+				}
+				Walk_Half_Cycle(0, 0,height); //Genomför höjdändringen
+			}
+			if (first_kom_byte & 0b00010000) //Nytt Kp?
+			{
+				Kp = ((float)fromKom[5])/100; //Kp skickas som 1000 ggr det önskade värdet!!!
+			}
+			if (first_kom_byte & 0b00100000) //Nytt Kd?
+			{
+				Kd = ((float)fromKom[6])/100; //Kd skickas som 1000 ggr det önskade värdet!!!
+			}
+			break;
 			case AUTO: //Autonomt läge
-				update_state();
-				run_state(height);
-				//update_alpha();
-				//Walk_Half_Cycle(1, alpha, height);
-				break;
-			case RACE: 
-				//if (PIND3 == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
-				//{
-					//cm = AUTO; 
-				//}
-				break;
+			update_state();
+			run_state(height);
+			break;
+			case RACE:
+			//if (PIND3 == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
+			//{
+			//cm = AUTO;
+			//}
+			break;
 			default:
-				break;	
-		}		
+			break;
+		}
 	}
 }
