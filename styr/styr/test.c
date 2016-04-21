@@ -38,7 +38,7 @@ int8_t angle_byte;
 float height;
 float delta_h;
 
-int main(void)
+int main_old(void)
 {
 	CONTROL_MODE cm = MANUAL; //Representerar aktuellt läge hos roboten
 	ROBOT_STATE = CORRIDOR;

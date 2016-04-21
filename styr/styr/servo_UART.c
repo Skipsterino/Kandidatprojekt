@@ -127,7 +127,7 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	message[0] = ID;
 	message[1] = 0x04;
 	message[2] = 0x02;
-	message[3] = 0x24; //Läser ut Present load 
+	message[3] = 0x28; //Läser ut Present load 
 	message[4] = 0x02;
 	
 	Send_Servo_Message(message, 2);
@@ -135,6 +135,7 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	_delay_ms(0.02); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
 	
+	USART_Receive(); //Fan om jag visste varför den triggar tidigt
 	USART_Receive(); //Första startbyten
 	USART_Receive(); //Andra startbyten
 	USART_Receive(); //ID
@@ -142,7 +143,7 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	USART_Receive(); //Error
 	load_LSByte = USART_Receive(); //LS Byte av load
 	load_MSByte = USART_Receive(); //MS Byte av load
-	USART_Receive(); //Checksum
+	//USART_Receive(); //Checksum
 	
 	_delay_ms(0.05); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 	
