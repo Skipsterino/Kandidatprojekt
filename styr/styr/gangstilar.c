@@ -157,6 +157,10 @@ if(height < 6)
 	triple_float cyl5;
 	triple_float cyl6;
 	
+	if(speed * sgn_speed > 6)
+	{
+		speed = 6 * sgn_speed;
+	}
 	//test, begränsar maxvinkel efter speed ist för omvänt
 	float thlimits[7] = {0.56,0.47,0.37,0.3,0.2,0.11,0};
 	float th_max = 0;	
@@ -421,6 +425,11 @@ if(height < 8)
 	uint8_t walk_break = 1;
 	float corner_pitch = 8; //förskjutning av arbetsområde i y-led för hörnben
 	float height_step = (height - last_height)/m; //delar upp höjdändring i steg.
+	
+		if(speed * sgn_speed  > 6)
+	{
+		speed = 6 * sgn_speed;
+	}
 	
 	triple_float kar_p1;
 	triple_float kar_p2;
