@@ -55,7 +55,7 @@ int main(void)
 	intensity_byte = 120;
 	angle_byte = 120;
 	height = 11;
-	delta_h = 0.1;
+	delta_h = 0.4;
 	Kp = 0.001;
 	Kd = 0.25;
 	
@@ -112,6 +112,9 @@ int main(void)
 			intensity_byte = 120;
 			angle_byte = 120;
 			
+			speed = 0;
+			angle = 0;
+			
 			if (first_kom_byte & 0b00000011) //Skickas vinkel & intensitet?
 			{
 				if((lastPacket[1] < 20) || (lastPacket[1] > 220)){
@@ -131,8 +134,9 @@ int main(void)
 				speed = (float)(intensity_byte)*((float)6)/((float)100); //100 på kontroll -> 6 i speed
 				angle = (float)(angle_byte)*((float)0.57)/((float)100); //128 på kontroll -> 0.57 i vinkel
 				
-				Walk_Half_Cycle(speed, angle,height);
+				
 			}
+			Walk_Half_Cycle(speed, angle,height);
 			if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
 			{
 				unsigned char change_height = lastPacket[3];

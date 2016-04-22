@@ -21,13 +21,15 @@
 #include "structs.h"
 #include "servo_UART.h"
 
+float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn_theta, float height);
 int max_speed(float theta,int sgn_theta);
-void Adjust_Servo_Speed(float theta, int sgn_theta, float th_max);
+void Adjust_Servo_Speed(float theta, int sgn_theta);
 void Adjust_Height(float l,float height, float height_step, float corner_pitch);
 void Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch);
 void Rotate_And_Send_Legs(triple_float kar_p1, triple_float kar_p2, float corner_pitch, int sgn_speed,float theta);
-double_float Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta );//refernes inte ok, fixa
-float Limit_Speed(float speed, int sgn_speed);//refernes inte ok, fixa
+double_float Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta );
+float Limit_Speed(float speed, int sgn_speed);
+float Limit_Height(float height);
 
 
 triple_float Tripod(float x, float stroke, float height, uint8_t n);
