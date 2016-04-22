@@ -566,6 +566,8 @@ void run_state(float height_value)
 	
 	switch (ROBOT_STATE)
 	{
+		//case OUT_OF_JUNCTION_C_RIGHT:
+		//case OUT_OF_JUNCTION_C_LEFT:
 		//case JUNCTION_B_LEFT:
 		//case JUNCTION_B_RIGHT:
 		case OUT_OF_TURN_LEFT:
@@ -588,7 +590,7 @@ void run_state(float height_value)
 			break;
 		}
 		
-		case OUT_OF_CORRIDOR:
+		case OUT_OF_CORRIDOR_NO_WALL:
 		{
 			Walk_Half_Cycle(1, 0, height_value);
 			break;
