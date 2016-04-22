@@ -61,10 +61,12 @@ int main(void)
 	intensity_byte = 120;
 	angle_byte = 120;
 	height = 11;
-	delta_h = 0.1;
+
+	delta_h = 0.4;
 	Kp = 0.001;
 	Kd = 0.001;
-	
+
+
 	Init();
 	
 
@@ -102,17 +104,17 @@ int main(void)
 		switch(cm)
 		{
 			case MANUAL: //Manuellt läge
-			
+				speed = 0;
+				angle = 0;
 				if (first_kom_byte & 0b00000011) //Skickas vinkel & intensitet?
 				{
 					update_speed_and_angle();
-					Walk_Half_Cycle(speed, angle,height);
 				}
 				if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
 				{
 					update_height();
-					Walk_Half_Cycle(0, 0,height); //Genomför höjdändringen
 				}
+				
 				if (first_kom_byte & 0b00010000) //Nytt Kp?
 				{
 					Kp = ((float)lastPacket[5])/1000.f; //Kp skickas som 1000 ggr det önskade värdet!!!
@@ -121,6 +123,8 @@ int main(void)
 				{
 					Kd = ((float)lastPacket[6])/1000.f; //Kd skickas som 1000 ggr det önskade värdet!!!
 				}
+				
+				Walk_Half_Cycle(speed, angle,height);
 				break;
 			
 			case AUTO: //Autonomt läge
