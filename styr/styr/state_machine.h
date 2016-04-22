@@ -58,6 +58,8 @@ typedef enum {
 	
 	END_OF_COURSE = 34, 
 	STOP = 35
+	INT0_JUNCTION_C_RIGHT = 36;
+	INT0_JUNCTION_C_LEFT = 37;
 } STATES;
 
 #define HALF_ROTATION_ANGLE 85			// Vinkeln vi ska rotera till vid en 90-graders rotation
