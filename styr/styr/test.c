@@ -134,7 +134,7 @@ int main(void)
 				
 				
 			}
-			Walk_Half_Cycle(speed, angle,height);
+
 			if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
 			{
 				unsigned char change_height = lastPacket[3];
@@ -147,7 +147,7 @@ int main(void)
 				{
 					height += delta_h;
 				}
-				Walk_Half_Cycle(0, 0,height); //Genomför höjdändringen
+				
 			}
 			if (first_kom_byte & 0b00010000) //Nytt Kp?
 			{
@@ -157,6 +157,7 @@ int main(void)
 			{
 				Kd = ((float)lastPacket[6])/1000.f; //Kd skickas som 1000 ggr det önskade värdet!!!
 			}
+			Walk_Half_Cycle(speed, angle,height);
 			break;
 			
 			case AUTO: //Autonomt läge
