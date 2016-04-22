@@ -123,27 +123,41 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	unsigned char message[6];
 	unsigned char load_LSByte;
 	unsigned char load_MSByte;
+	unsigned char start_byte1= 0;
+	unsigned char start_byte2= 0; 
+	unsigned char length; 
+	unsigned char error; 
+	unsigned char checksum;
+	float timer = 0; 
 	
 	message[0] = ID;
 	message[1] = 0x04;
 	message[2] = 0x02;
-	message[3] = 0x28; //Läser ut Present load 
+	message[3] = 0x24; //Läser ut Present load 
 	message[4] = 0x02;
 	
 	Send_Servo_Message(message, 2);
 	
+	
 	_delay_ms(0.02); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
 	
-	USART_Receive(); //Fan om jag visste varför den triggar tidigt
-	USART_Receive(); //Första startbyten
-	USART_Receive(); //Andra startbyten
-	USART_Receive(); //ID
-	USART_Receive(); //Längd
-	USART_Receive(); //Error
+	while((start_byte1 != 0xFF) && (start_byte2 != 0xFF))
+	{
+		start_byte2 = start_byte1; 
+		start_byte1 = USART_Receive();
+		timer = timer + 1; 
+		if(timer>20000)
+		{
+			return 0xBB;
+		}
+	}
+	ID = USART_Receive(); //ID
+	length = USART_Receive(); //Längd
+	error = USART_Receive(); //Error
 	load_LSByte = USART_Receive(); //LS Byte av load
 	load_MSByte = USART_Receive(); //MS Byte av load
-	//USART_Receive(); //Checksum
+	USART_Receive(); //Checksum
 	
 	_delay_ms(0.05); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 	
@@ -292,7 +306,7 @@ void Send_Outer_P2_Velocity(unsigned int vel)
 	}
 }
 
-//Id,instruktion,startposition, och parametrar i en array och ta med antalet parametrar som en uint8
+//Id, length, instruktion,startposition,  och parametrar i en array och ta med antalet parametrar som en uint8
 void Send_Servo_Message(unsigned char message[], uint8_t num_of_par)
 {
 	//PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state

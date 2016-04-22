@@ -21,7 +21,7 @@
 #include "invers_kinematik.h"
 #include "gangstilar.h"
 #include "over_hinder.h"
-//unsigned int load[100];
+unsigned int loadd[100];
 unsigned int message[100][8];
 
 int main_old(void)
@@ -30,8 +30,8 @@ int main_old(void)
 	//Configure_Servos_No_Response();
 	_delay_ms(1000);
 	
-	//Send_Servo_Position(12, 0x250);
-	//
+	Send_Servo_Position(5, 0x200);
+	_delay_ms(2000);
 	//for(int i=0; i<100; i++)
 	//{
 		//
@@ -39,7 +39,7 @@ int main_old(void)
 		//unsigned char load_LSByte;
 		//unsigned char load_MSByte;
 		//
-		//message1[0] = 12;
+		//message1[0] = 5;
 		//message1[1] = 0x04;
 		//message1[2] = 0x02;
 		//message1[3] = 0x24; //Läser ut Present load
@@ -65,14 +65,17 @@ int main_old(void)
 		//unsigned int load = (((unsigned int)load_MSByte) << 8) | load_LSByte;
 		//PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
 	//}
-	//
-	//Send_Leg1_Kar(20,0,-5);
-	//
-	Walk_Up();
-	//for(int i; i<100; i++)
-	//{
-		//load[i]=Get_Servo_Load(12);
-	//}
+	
+
+	for(int i; i<100; ++i)
+	{
+		loadd[i]=Get_Servo_Load(5);
+	}
+	
+	Send_Leg5_Kar(20,0,-5);
+	
+	//Walk_Up();
+
 	while(1)
 	{
 		//Walk_Up();
