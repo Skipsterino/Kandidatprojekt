@@ -15,10 +15,22 @@
 
 void I2C_start()
 {
+	int8_t timer = 0;
+	
 	TWCR = 0;
 	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);	// Start
 
-	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	while (!(TWCR & (1<<TWINT)))	
+	{
+		_delay_ms(1);
+		++timer;
+		if (timer >= 20)
+		{
+			return -1;
+		}
+	}					// Vänta på att det har skickats
+	timer = 0;
+	
 	if ((TWSR & 0xF8) != I2Cstatus_START)			// Kolla så status = Start
 	error();
 }
@@ -31,16 +43,38 @@ void I2C_stop()
 int i2c_write(unsigned char slave_addr, unsigned char reg_addr, unsigned char length, unsigned char const *data)
 {
 	I2C_start();
-	
+	int8_t timer = 0;
 	TWDR = SLA_W;									// Ladda in IMU:ns adress + indikera att skrivning ska ske
 	TWCR = (1<<TWINT) | (1<<TWEN);					// Skicka
-	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	while (!(TWCR & (1<<TWINT)))
+	{
+		_delay_ms(1);
+		++timer;
+		if (timer >= 20)
+		{
+			return -1;
+		}
+	}					// Vänta på att det har skickats
+	timer = 0;
+	
 	if ((TWSR & 0xF8) !=I2Cstatus_MT_SLA_ACK)		// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
 	error();
 	
 	TWDR = reg_addr;								// Ladda in adressen för IMU-registret vi ska skriva till
 	TWCR = (1<<TWINT) | (1<<TWEN);					// Skicka
-	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	while (!(TWCR & (1<<TWINT)))
+	{
+		_delay_ms(1);
+		++timer;
+		if (timer >= 20)
+		{
+			return -1;
+		}
+	}					// Vänta på att det har skickats
+	timer = 0;
+	
 	if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)		// Kolla så att status är rätt
 	error();
 	
@@ -48,7 +82,17 @@ int i2c_write(unsigned char slave_addr, unsigned char reg_addr, unsigned char le
 	{
 		TWDR = data[for_counter];					// Lägg in den byte som ska skickas
 		TWCR = (1<<TWINT) | (1<<TWEN);				// Skicka byte:n
-		while (!(TWCR & (1<<TWINT)));				// Vänta på att det har skickats
+		while (!(TWCR & (1<<TWINT)))	
+		{
+			_delay_ms(1);
+			++timer;
+			if (timer >= 20)
+			{
+				return -1;
+			}
+		}					// Vänta på att det har skickats
+		timer = 0;
+		
 		if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)	// Kolla så att status är rätt
 		error();
 	}
@@ -59,17 +103,41 @@ int i2c_write(unsigned char slave_addr, unsigned char reg_addr, unsigned char le
 
 int i2c_read(unsigned char slave_addr, unsigned char reg_addr, unsigned char length, unsigned char *data)
 {
+	int8_t timer = 0;
+	
 	I2C_start();
 	
 	TWDR = SLA_W;									// Ladda in IMU:ns adress + indikera att skrivning ska ske
 	TWCR = (1<<TWINT) | (1<<TWEN);					// Skicka
-	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	while (!(TWCR & (1<<TWINT)))	
+	{
+		_delay_ms(1);
+		++timer;
+		if (timer >= 20)
+		{
+			return -1;
+		}
+	}					// Vänta på att det har skickats
+	timer = 0;
+	
 	if ((TWSR & 0xF8) !=I2Cstatus_MT_SLA_ACK)		// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
 	error();
 	
 	TWDR = reg_addr;								// Ladda in adressen för IMU-registret vi ska läsa ifrån
 	TWCR = (1<<TWINT) | (1<<TWEN);					// Skicka
-	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	while (!(TWCR & (1<<TWINT)))	
+	{
+		_delay_ms(1);
+		++timer;
+		if (timer >= 20)
+		{
+			return -1;
+		}
+	}					// Vänta på att det har skickats
+	timer = 0;
+	
 	if ((TWSR & 0xF8) !=I2Cstatus_MT_DATA_ACK)		// Kolla så att status är rätt
 	error();
 	
@@ -77,7 +145,18 @@ int i2c_read(unsigned char slave_addr, unsigned char reg_addr, unsigned char len
 	
 	TWDR = SLA_R;									// Ladda in IMU:ns adress + indikera att läsning ska ske
 	TWCR = (1<<TWINT) | (1<<TWEN);					// Skicka
-	while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+	
+	while (!(TWCR & (1<<TWINT)))	
+	{
+		_delay_ms(1);
+		++timer;
+		if (timer >= 20)
+		{
+			return -1;
+		}
+	}					// Vänta på att det har skickats
+	timer = 0;
+	
 	if ((TWSR & 0xF8) !=I2Cstatus_MR_SLA_ACK)		// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
 	error();
 	
@@ -86,7 +165,18 @@ int i2c_read(unsigned char slave_addr, unsigned char reg_addr, unsigned char len
 		if(for_counter == length -1)
 		{
 			TWCR = (1<<TWINT) | (1<<TWEN);					// Ta emot data och skicka NACK (NACK = mottagningen klar och vi ska ej ta emot mer)
-			while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+			
+			while (!(TWCR & (1<<TWINT)))	
+			{
+				_delay_ms(1);
+				++timer;
+				if (timer >= 20)
+				{
+					return -1;
+				}
+			}					// Vänta på att det har skickats
+			timer = 0;
+			
 			data[for_counter] = (TWDR);						// Spara undan den mottagna datan
 			if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_NACK)		// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
 			error();
@@ -94,7 +184,18 @@ int i2c_read(unsigned char slave_addr, unsigned char reg_addr, unsigned char len
 		else
 		{
 			TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);		// Ta emot data och skicka ACK (ACK = mottagningen klar och vi ska fortsätta ta emot data)
-			while (!(TWCR & (1<<TWINT)));					// Vänta på att det har skickats
+			
+			while (!(TWCR & (1<<TWINT)))	
+			{
+				_delay_ms(1);
+				++timer;
+				if (timer >= 20)
+				{
+					return -1;
+				}
+			}					// Vänta på att det har skickats
+			timer = 0;
+			
 			data[for_counter] = (TWDR);						// Spara undan den mottagna datan
 			if ((TWSR & 0xF8) !=I2Cstatus_MR_DATA_ACK)		// Kolla så att status är rätt (att de som vi ville skulle hända faktiskt hände)
 			error();
