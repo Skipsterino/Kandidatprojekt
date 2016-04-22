@@ -12,6 +12,7 @@
 #include <util/atomic.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <util/delay.h>
 
 #define F_CPU 16000000UL
 

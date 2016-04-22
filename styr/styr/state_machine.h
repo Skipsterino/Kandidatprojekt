@@ -83,7 +83,8 @@ float IMU_Yaw_start;
 int start_Yaw_set;		// 0 = har ej satt ett startvärde
 int rotation_count;
 
-float Yaw, Yaw_rad, p_part, Kd, Kp, alpha; 
+float Yaw, Yaw_rad, p_part, alpha;
+float Kp, Kd; 
 float IR_0, IR_1, IR_2, IR_3, IR_4, IR_5, IR_6, US, IR_Yaw_left, IR_Yaw_right, IMU_Yaw, Yaw, Pitch, Roll;
 
 STATES ROBOT_STATE;

@@ -39,7 +39,7 @@ int main(void)
 		{
 
 			ADC_IR();						// Sampla IR-sensorerna
-		//	read_IMU();						// Hämta data från IMU
+			//read_IMU();						// Hämta data från IMU
 			
 			send_ping();					// Starta en US-mätning
 			

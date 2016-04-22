@@ -47,8 +47,6 @@ int main(void)
 	CONTROL_MODE cm = MANUAL; //Representerar aktuellt läge hos roboten
 	ROBOT_STATE = CORRIDOR;
 	
-	
-	
 	//Defaultvärden
 	angle = 0;
 	speed = 0;
@@ -56,8 +54,8 @@ int main(void)
 	angle_byte = 120;
 	height = 11;
 	delta_h = 0.1;
-	Kp = 0.001;
-	Kd = 0.25;
+	Kp = 1;
+	Kd = 1;
 	
 	Init();
 	
@@ -163,7 +161,7 @@ int main(void)
 			break;
 			
 			case RACE:
-			if ((PIND & (1 << 3)) == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
+			if ((PIND & (1 << PIND3)) == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
 			{
 				cm = AUTO;
 			}

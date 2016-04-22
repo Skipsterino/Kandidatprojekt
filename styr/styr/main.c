@@ -24,7 +24,7 @@
 //unsigned int load[100];
 unsigned int message[100][8];
 
-int main(void)
+int main_old(void)
 {
 	Init();
 	//Configure_Servos_No_Response();
