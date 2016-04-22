@@ -67,7 +67,7 @@ typedef enum {
 #define CORRIDOR_SIDE_DISTANCE 60		// Gränsavstånd för om vi är i korridor eller inte (om sidosensorerna visar mindre än detta avstånd är vi korridor, annars inte)
 #define SIDE_DEAD_END_DISTANCE 150		// Gränsavstånd för en återvändsgränd till höger eller vänster i en korsning (fri väg till höger/vänster eller inte)
 #define END_OF_COURSE_DISTANCE 100		// Avståndet som IR_0, 2, 3, 5, 6 ska vara större än vid banslutet
-#define SHORT_TURN_DISTANCE 30			// Avståndet vid vilket vi ska rotera vid svängar och korsning C.
+#define SHORT_TURN_DISTANCE 40			// Avståndet vid vilket vi ska rotera vid svängar och korsning C.
 #define LONG_TURN_DISTANCE 110			// Avståndet vid vilket vi ska rotera vid korsning A
 #define FORWARD_DEAD_END_DISTANCE 180		// Gränsavstånd för en återvändsgränd frammåt i en korsning (fri väg framåt eller inte)
 #define LOW_OBSTACLE_DISTANCE 40		// Avståndet på IR_1 vid vilken lågt hinder har upptäckts och vi ska börja gå försiktigt

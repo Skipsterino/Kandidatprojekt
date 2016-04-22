@@ -69,8 +69,6 @@ int main(void)
 
 	Init();
 	
-
-
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
 	Configure_Servos_Delaytime();
 	Configure_Servos_LED();
@@ -104,6 +102,7 @@ int main(void)
 		switch(cm)
 		{
 			case MANUAL: //Manuellt läge
+				ROBOT_STATE = CORRIDOR; //Ha CORRIDOR som default state
 				speed = 0;
 				angle = 0;
 				if (first_kom_byte & 0b00000011) //Skickas vinkel & intensitet?
@@ -135,6 +134,7 @@ int main(void)
 			case RACE:
 				if ((PIND & (1 << PIND3)) == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
 				{
+					_delay_ms(2000);
 					cm = AUTO;
 				}
 				break;
