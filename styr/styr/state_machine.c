@@ -36,7 +36,6 @@ void calculate_Yaw()
 			break;
 		}
 		
-		case OUT_OF_CORRIDOR_NO_WALL:
 		case OUT_OF_JUNCTION_A_RIGHT:
 		case OUT_OF_JUNCTION_A_LEFT:
 		{
@@ -549,17 +548,6 @@ void run_state(float height_value)
 {
 	calculate_Yaw();
 	calculate_p_part();
-	
-	//if(fromKom[0] & (1 << 4)) //Har nytt Kp skickats?
-	//{
-		//Kp = (float)fromKom[5]/1000;
-	//}
-	//
-	//if(fromKom[0] & (1 << 5)) //Har nytt Kd skickats?
-	//{
-		//Kd = (float)fromKom[6]/1000;
-	//}
-	
 	alpha = Kp*p_part + Kd*Yaw_rad;
 	
 	fromSen[14] = ROBOT_STATE; // Tillstånd till bussen
@@ -585,17 +573,19 @@ void run_state(float height_value)
 			break;
 		}
 		
-		case STOP:
-		{
-			break;
-		}
-		
 		case OUT_OF_CORRIDOR_NO_WALL:
 		{
 			Walk_Half_Cycle(1, 0, height_value);
 			break;
 		}
-
+		
+		//case END_OF_COURSE:
+		case STOP:
+		{
+			break;
+		}
+			
+		//case JUNCTION_C_RIGHT:
 		//case JUNCTION_A_RIGHT:
 		case TURN_RIGHT:
 		{
@@ -613,7 +603,8 @@ void run_state(float height_value)
 			break;
 		}
 		
-		//
+		//case DEAD_END:
+		//case JUNCTION_C_LEFT:
 		//case JUNCTION_A_LEFT:
 		case TURN_LEFT:
 		{
@@ -630,102 +621,13 @@ void run_state(float height_value)
 			}
 			break;
 		}
-		
-		
-		
-		
-		//case OUT_OF_JUNCTION_A_RIGHT:
-		//case OUT_OF_JUNCTION_A_LEFT:
-		//{
-			//Walk_Half_Cycle(2, 0, height_value);
-			//break;
-		//}
-		
-		
-		
-		
-		
-		//
-		////
-		//case JUNCTION_C_RIGHT:
-		//{
-		//if(!start_Yaw_set)
-		//{
-		//IMU_Yaw_start = IMU_Yaw;
-		//start_Yaw_set = 1;
-		//}
-		//
-		//else
-		//{
-		//
-		//}
-		//break;
-		//}
-		//
-		////
-		//case JUNCTION_C_LEFT:
-		//{
-		//if(!start_Yaw_set)
-		//{
-		//IMU_Yaw_start = IMU_Yaw;
-		//start_Yaw_set = 1;
-		//}
-		//
-		//else
-		//{
-		//
-		//}
-		//break;
-		//}
-		//
-		////
-		//case DEAD_END:
-		//{
-		//if(!start_Yaw_set)
-		//{
-		//IMU_Yaw_start = IMU_Yaw;
-		//start_Yaw_set = 1;
-		//}
-		//
-		//else
-		//{
-		//
-		//}
-		//break;
-		//}
-		//
-		////
-		//case OUT_OF_JUNCTION_A_RIGHT:
-		//{
-		//if(!start_Yaw_set)
-		//{
-		//IMU_Yaw_start = IMU_Yaw;
-		//start_Yaw_set = 1;
-		//}
-		//
-		//else
-		//{
-		//
-		//}
-		//break;
-		//}
-		//
-		////
-		//case OUT_OF_JUNCTION_A_LEFT:
-		//{
-		//if(!start_Yaw_set)
-		//{
-		//IMU_Yaw_start = IMU_Yaw;
-		//start_Yaw_set = 1;
-		//}
-		//
-		//else
-		//{
-		//
-		//}
-		//break;
-		//}
-		//
+	
+		case OUT_OF_JUNCTION_A_RIGHT:
+		case OUT_OF_JUNCTION_A_LEFT:
+		{
+			Walk_Half_Cycle(2, 0, height_value);
+			break;
+		}	
 	}
 }
 
