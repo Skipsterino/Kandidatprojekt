@@ -60,21 +60,21 @@ typedef enum {
 	STOP = 35
 } STATES;
 
-#define HALF_ROTATION_ANGLE 85
-#define FULL_ROTATION_ANGLE 175
-#define CORRIDOR_SIDE_DISTANCE 60
-#define SIDE_DEAD_END_DISTANCE 150
-#define END_OF_COURSE_DISTANCE 80
-#define SHORT_TURN_DISTANCE 30
-#define LONG_TURN_DISTANCE 110
-#define FORWARD_DEAD_END_DISTANCE 180
-#define LOW_OBSTACLE_DISTANCE 40
-#define START_CLIMBING_UP_DISTANCE 20
-#define START_CLIMBING_DOWN_DISTANCE 50
-#define US_HIGH_OBSTACLE_DISTANCE 40
-#define IR_HIGH_OBSTACLE_DISTANCE 50
-#define NO_WALL_DISTANCE 50
-#define DEAD_END_DISTANCE 40				// Avståndet vid vilket vi vänder om vi skulle komma in i en återvändsgränd (vilket ej ska hända)
+#define HALF_ROTATION_ANGLE 85			// Vinkeln vi ska rotera till vid en 90-graders rotation
+#define FULL_ROTATION_ANGLE 175			// Vinkeln vi ska rotera till vid en 180-graders rotation
+#define CORRIDOR_SIDE_DISTANCE 60		// Gränsavstånd för om vi är i korridor eller inte (om sidosensorerna visar mindre än detta avstånd är vi korridor, annars inte)
+#define SIDE_DEAD_END_DISTANCE 150		// Gränsavstånd för en återvändsgränd till höger eller vänster i en korsning (fri väg till höger/vänster eller inte)
+#define END_OF_COURSE_DISTANCE 80		// Avståndet som IR_0, 2, 3, 5, 6 ska vara större än vid banslutet
+#define SHORT_TURN_DISTANCE 30			// Avståndet vid vilket vi ska rotera vid svängar och korsning C.
+#define LONG_TURN_DISTANCE 110			// Avståndet vid vilket vi ska rotera vid korsning A
+#define FORWARD_DEAD_END_DISTANCE 180		// Gränsavstånd för en återvändsgränd frammåt i en korsning (fri väg framåt eller inte)
+#define LOW_OBSTACLE_DISTANCE 40		// Avståndet på IR_1 vid vilken lågt hinder har upptäckts och vi ska börja gå försiktigt
+#define START_CLIMBING_UP_DISTANCE 20		// Avståndet på IR_1 vid vilken vi ska börja klättra upp på ett lågt hinder
+#define START_CLIMBING_DOWN_DISTANCE 50		// Avståndet på IR_1 vid vilken vi ska börja gå ner ifrån ett lågt hinder
+#define US_HIGH_OBSTACLE_DISTANCE 40		// Gränsavståndet för ultraljudssensorn (högt hinder eller inte)
+#define IR_HIGH_OBSTACLE_DISTANCE 50		// Gränsavståndet för sensorn riktad uppåt (högt hinder i vägen eller inte)	
+#define NO_WALL_DISTANCE 50			// Avståndet som IR_0 ska vara större än vid ett hinder för att säkerställa att det inte bara är en vägg
+#define DEAD_END_DISTANCE 40			// Avståndet vid vilket vi vänder om vi skulle komma in i en återvändsgränd (vilket ej ska hända)
 
 #define CENTER_OFFSET 8
 #define CORRIDOR_WIDTH 80
@@ -83,8 +83,7 @@ float IMU_Yaw_start;
 int start_Yaw_set;		// 0 = har ej satt ett startvärde
 int rotation_count;
 
-float Yaw, Yaw_rad, p_part, alpha;
-float Kp, Kd; 
+float Yaw, Yaw_rad, p_part, Kp, Kd, alpha;
 float IR_0, IR_1, IR_2, IR_3, IR_4, IR_5, IR_6, US, IR_Yaw_left, IR_Yaw_right, IMU_Yaw, Yaw, Pitch, Roll;
 
 STATES ROBOT_STATE;
