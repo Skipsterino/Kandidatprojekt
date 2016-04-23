@@ -2,7 +2,7 @@
 * state_machine.c
 *
 * Created: 4/8/2016 2:53:09 PM
-*  Author: chrma018
+*  Author: fregu856
 */
 
 #include "state_machine.h"
