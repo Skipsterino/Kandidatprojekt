@@ -123,7 +123,7 @@ int main(void)
 					Kd = ((float)lastPacket[6])/1000.f; //Kd skickas som 1000 ggr det önskade värdet!!!
 				}
 				
-				Walk_Half_Cycle(speed, angle,height);
+				Walk_Half_Safe_Cycle(speed,angle,height);
 				break;
 			
 			case AUTO: //Autonomt läge
@@ -185,7 +185,9 @@ void update_speed_and_angle()
 	}
 	
 	speed = (float)(intensity_byte)*((float)6)/((float)100); //100 på kontroll -> 6 i speed
-	angle = (float)(angle_byte)*((float)0.57)/((float)100); //128 på kontroll -> 0.57 i vinkel
+	//angle = (float)(angle_byte)*((float)0.57)/((float)100); //128 på kontroll -> 0.57 i vinkel
+	int8_t sgn_angle = (angle_byte >= 0) - (angle_byte < 0);
+	angle = sgn_angle * 0.57 * angle_byte * angle_byte/10000;
 }
 
 void update_height()
