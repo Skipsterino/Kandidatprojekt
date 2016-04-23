@@ -53,6 +53,7 @@ int main(void)
 	BTtimeout = 4;
 	while(1)
 	{
+		/*
 		if(BTtimeout > 3)
 		{
 			LCD_controller_put_line(1,"Disconnected");
@@ -61,9 +62,15 @@ int main(void)
 		{
 			LCD_controller_put_line(1,"Connected");	
 		}
+		*/
 		char digits[16];
-		sprintf(digits, "%i", (int)toSPI[0]);
+		sprintf(digits, "%i", toSPI[0]);
+		LCD_controller_put_line(1, digits);
+		sprintf(digits, "%i", toSPI[5]);
+		LCD_controller_put_line(2, digits);
+		sprintf(digits, "%i", toSPI[6]);
 		LCD_controller_put_line(3, digits);
+		
 		
 		LCD_print_string(lines[currentLine], lines[currentLine+1], lines[currentLine + 2], lines[currentLine + 3]);
 		
