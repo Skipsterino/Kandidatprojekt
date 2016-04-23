@@ -67,11 +67,10 @@ typedef enum {
 #define FULL_ROTATION_ANGLE 175			// Vinkeln vi ska rotera till vid en 180-graders rotation
 #define CORRIDOR_SIDE_DISTANCE 60		// Gränsavstånd för om vi är i korridor eller inte (om sidosensorerna visar mindre än detta avstånd är vi korridor, annars inte)
 #define SIDE_DEAD_END_DISTANCE 150		// Gränsavstånd för en återvändsgränd till höger eller vänster i en korsning (fri väg till höger/vänster eller inte)
-#define END_OF_COURSE_DISTANCE 80		// Avståndet som IR_0, 2, 3, 5, 6 ska vara större än vid banslutet
-#define SHORT_TURN_DISTANCE 38			// Avståndet vid vilket vi ska rotera vid svängar och korsning C.
-#define LONG_TURN_DISTANCE 100			// Avståndet vid vilket vi ska rotera vid korsning A
+#define END_OF_COURSE_DISTANCE 100		// Avståndet som IR_0, 2, 3, 5, 6 ska vara större än vid banslutet
+#define SHORT_TURN_DISTANCE 40			// Avståndet vid vilket vi ska rotera vid svängar och korsning C.
+#define LONG_TURN_DISTANCE 110			// Avståndet vid vilket vi ska rotera vid korsning A
 #define FORWARD_DEAD_END_DISTANCE 180		// Gränsavstånd för en återvändsgränd frammåt i en korsning (fri väg framåt eller inte)
-#define JUNCTION_A_FORWARD_DISTANCE 80		// Gränsavstånd för korsning A (är det korsning A eller vanlig sväng?)
 #define LOW_OBSTACLE_DISTANCE 40		// Avståndet på IR_1 vid vilken lågt hinder har upptäckts och vi ska börja gå försiktigt
 #define START_CLIMBING_UP_DISTANCE 20		// Avståndet på IR_1 vid vilken vi ska börja klättra upp på ett lågt hinder
 #define START_CLIMBING_DOWN_DISTANCE 50		// Avståndet på IR_1 vid vilken vi ska börja gå ner ifrån ett lågt hinder
@@ -85,7 +84,6 @@ typedef enum {
 
 float IMU_Yaw_start;
 int start_Yaw_set;		// 0 = har ej satt ett startvärde
-int first_state_cycle;		// 1 = första gången vi kör run_state för ett visst state
 int rotation_count;
 
 float Yaw, Yaw_rad, p_part, Kp, Kd, alpha;

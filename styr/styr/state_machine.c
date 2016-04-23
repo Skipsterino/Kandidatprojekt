@@ -18,6 +18,7 @@ void calculate_Yaw()
 			break;
 		}
 		
+		case JUNCTION_A_LEFT
 		case OUT_OF_CORRIDOR_RIGHT_WALL:
 		case OUT_OF_TURN_LEFT:
 		case OUT_OF_JUNCTION_C_LEFT:
@@ -27,20 +28,13 @@ void calculate_Yaw()
 			break;
 		}
 		
+		case JUNCTION_A_RIGHT
 		case OUT_OF_CORRIDOR_LEFT_WALL:
 		case OUT_OF_TURN_RIGHT:
 		case OUT_OF_JUNCTION_C_RIGHT:
 		case JUNCTION_B_RIGHT:
 		{
 			Yaw = IR_Yaw_left;
-			break;
-		}
-		
-		case OUT_OF_CORRIDOR_NO_WALL:
-		case OUT_OF_JUNCTION_A_RIGHT:
-		case OUT_OF_JUNCTION_A_LEFT:
-		{
-			Yaw = 0;
 			break;
 		}
 		
@@ -81,7 +75,7 @@ void calculate_p_part()
 		case OUT_OF_JUNCTION_A_RIGHT:
 		case OUT_OF_JUNCTION_A_LEFT:
 		{
-			p_part = 0;
+			p_part = 0;						// XXX SKA GÖRAS!
 			break;
 		}
 	}
@@ -91,7 +85,7 @@ void update_state()
 {
 	load_sensor_values();
 	
-	if(IR_0 < 10)
+	if(IR_0 < 25)
 	{
 		ROBOT_STATE = STOP;
 	}
@@ -101,20 +95,17 @@ void update_state()
 		//
 		case CORRIDOR:
 		{
-			
-			//
-			if ((IR_0 < DEAD_END_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = DEAD_END;
-				break;
-			}
+			//if ((IR_0 < DEAD_END_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
+			//{
+			//ROBOT_STATE = DEAD_END;
+			//break;
+			//}
 			
 			//
 			if (((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			|| ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE)))
 			{
 				ROBOT_STATE = OUT_OF_CORRIDOR_LEFT_WALL;
-				first_state_cycle = 1;
 				break;
 			}
 			
@@ -122,7 +113,6 @@ void update_state()
 			|| ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE)))
 			{
 				ROBOT_STATE = OUT_OF_CORRIDOR_RIGHT_WALL;
-				first_state_cycle = 1;
 				break;
 			}
 			
@@ -132,7 +122,6 @@ void update_state()
 			|| ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE)))
 			{
 				ROBOT_STATE = OUT_OF_CORRIDOR_NO_WALL;
-				first_state_cycle = 1;
 				break;
 			}
 			
@@ -147,16 +136,25 @@ void update_state()
 			//ROBOT_STATE = INTO_LOW_OBSTACLE;
 			//break;
 			//}
-			
-			break;
 		}
 		
-		//
 		case STOP:
 		{
 			break;
 		}
 		
+		//
+		//case DEAD_END:
+		//{
+		//if ((IMU_Yaw - IMU_Yaw_start) >= FULL_ROTATION_ANGLE)
+		//{
+		//ROBOT_STATE = CORRIDOR;
+		//start_Yaw_set = 0;
+		//break;
+		//}
+		//break;
+		//}
+		//
 		//
 		case OUT_OF_CORRIDOR_LEFT_WALL:
 		case OUT_OF_CORRIDOR_RIGHT_WALL:
@@ -173,24 +171,20 @@ void update_state()
 				break;
 			}
 			
-			else if (((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
-			|| ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
-			|| ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
-			|| ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE)))
+			else if (((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE)))
 			{
 				ROBOT_STATE = OUT_OF_CORRIDOR_NO_WALL;
-				first_state_cycle = 1;
 				break;
 			}
 			
 			
-			else if ((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 < LONG_TURN_DISTANCE) && (IR_0 > JUNCTION_A_FORWARD_DISTANCE))
+			else if ((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 < LONG_TURN_DISTANCE))
 			{
 				ROBOT_STATE = JUNCTION_A_RIGHT;
 				break;
 			}
 			
-			else if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_0 < LONG_TURN_DISTANCE) && (IR_0 > JUNCTION_A_FORWARD_DISTANCE))
+			else if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_0 < LONG_TURN_DISTANCE))
 			{
 				ROBOT_STATE = JUNCTION_A_LEFT;
 				break;
@@ -209,31 +203,42 @@ void update_state()
 				break;
 			}
 			
-			break;
+			
+			/////////////////////////////////
+			
 		}
 		
-		//
 		case OUT_OF_CORRIDOR_NO_WALL:
 		{
-			if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < SIDE_DEAD_END_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_0 < SHORT_TURN_DISTANCE))
+			if (IR_2 > CORRIDOR_SIDE_DISTANCE && IR_2 < SIDE_DEAD_END_DISTANCE && IR_3 > CORRIDOR_SIDE_DISTANCE && IR_3 < SIDE_DEAD_END_DISTANCE && IR_5 > SIDE_DEAD_END_DISTANCE && IR_6 > SIDE_DEAD_END_DISTANCE && IR_0 < SHORT_TURN_DISTANCE)
 			{
 				ROBOT_STATE = JUNCTION_C_LEFT;
 				break;
 			}
 			
-			else if ((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < SIDE_DEAD_END_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < SIDE_DEAD_END_DISTANCE) && (IR_0 < SHORT_TURN_DISTANCE))
+			else if (IR_2 > SIDE_DEAD_END_DISTANCE && IR_3 > SIDE_DEAD_END_DISTANCE && IR_5 > CORRIDOR_SIDE_DISTANCE && IR_5 < SIDE_DEAD_END_DISTANCE && IR_6 > CORRIDOR_SIDE_DISTANCE && IR_6 < SIDE_DEAD_END_DISTANCE && IR_0 < SHORT_TURN_DISTANCE)
 			{
 				ROBOT_STATE = JUNCTION_C_RIGHT;
 				break;
 			}
 			
-			else if ((IR_0 > END_OF_COURSE_DISTANCE) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
+			else if (IR_0 > END_OF_COURSE_DISTANCE && IR_2 > END_OF_COURSE_DISTANCE && IR_3 > END_OF_COURSE_DISTANCE && IR_5 > END_OF_COURSE_DISTANCE && IR_6 > END_OF_COURSE_DISTANCE)
 			{
 				ROBOT_STATE = END_OF_COURSE;
 				break;
 			}
 			
-			break;
+			else if (IR_2 > SIDE_DEAD_END_DISTANCE && IR_3 > SIDE_DEAD_END_DISTANCE && IR_5 > CORRIDOR_SIDE_DISTANCE && IR_5 < SIDE_DEAD_END_DISTANCE && IR_6 > CORRIDOR_SIDE_DISTANCE && IR_6 < SIDE_DEAD_END_DISTANCE)
+			{
+				ROBOT_STATE = INTO_JUNCTION_C_RIGHT;
+				break;
+			}
+			
+			else if (IR_5 > SIDE_DEAD_END_DISTANCE && IR_5 > SIDE_DEAD_END_DISTANCE && IR_2 > CORRIDOR_SIDE_DISTANCE && IR_2 < SIDE_DEAD_END_DISTANCE && IR_3 > CORRIDOR_SIDE_DISTANCE && IR_3 < SIDE_DEAD_END_DISTANCE)
+			{
+				ROBOT_STATE = INTO_JUNCTION_C_LEFT;
+				break;
+			}
 		}
 		
 		//
@@ -247,14 +252,13 @@ void update_state()
 			//}
 			//break;
 			
-			if (rotation_count > 9)
+			if (rotation_count > 8)
 			{
 				ROBOT_STATE = OUT_OF_TURN_RIGHT;
 				start_Yaw_set = 0;
 				rotation_count = 0;
 				break;
 			}
-			
 			break;
 		}
 		
@@ -269,16 +273,31 @@ void update_state()
 			//}
 			//break;
 			
-			if (rotation_count > 9)
+			if (rotation_count > 8)
 			{
 				ROBOT_STATE = OUT_OF_TURN_LEFT;
 				start_Yaw_set = 0;
 				rotation_count = 0;
 				break;
 			}
-			
 			break;
 		}
+		//
+		//
+		case OUT_OF_TURN_LEFT:
+		case OUT_OF_TURN_RIGHT:
+		{
+			if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
+			{
+				ROBOT_STATE = CORRIDOR;
+				break;
+			}
+			break;
+		}
+		
+		
+		////////////////////////////
+		
 		
 		//
 		case JUNCTION_A_RIGHT:
@@ -290,12 +309,11 @@ void update_state()
 			//break;
 			//}
 			
-			if (rotation_count > 9)
+			if ((rotation_count > 8) && (Yaw < 5))
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_A_RIGHT;
 				start_Yaw_set = 0;
 				rotation_count = 0;
-				first_state_cycle = 1;
 				break;
 			}
 			
@@ -312,106 +330,128 @@ void update_state()
 			//break;
 			//}
 			
-			if (rotation_count > 9)
+			if ((rotation_count > 8) && (Yaw > -5))
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_A_LEFT;
 				start_Yaw_set = 0;
 				rotation_count = 0;
-				first_state_cycle = 1;
 				break;
 			}
 			
 			break;
 		}
 		
-		//
-		case JUNCTION_C_RIGHT:
-		{
-			//if (IMU_Yaw - IMU_Yaw_start >= HALF_ROTATION_ANGLE)
-			//{
-			//ROBOT_STATE = OUT_OF_JUNCTION_A_RIGHT;
-			//start_Yaw_set = 0;
-			//break;
-			//}
-			
-			if (rotation_count > 9)
-			{
-				ROBOT_STATE = OUT_OF_JUNCTION_C_RIGHT;
-				start_Yaw_set = 0;
-				rotation_count = 0;
-				break;
-			}
-			
-			break;
-		}
+		
+		//////////////////////////////////
+		
 		
 		//
-		case JUNCTION_C_LEFT:
+		case OUT_OF_JUNCTION_A_LEFT:
+		case OUT_OF_JUNCTION_A_RIGHT:
 		{
-			//if (IMU_Yaw - IMU_Yaw_start >= HALF_ROTATION_ANGLE)
-			//{
-			//ROBOT_STATE = OUT_OF_JUNCTION_A_RIGHT;
-			//start_Yaw_set = 0;
-			//break;
-			//}
-			
-			if (rotation_count > 9)
-			{
-				ROBOT_STATE = OUT_OF_JUNCTION_C_LEFT;
-				start_Yaw_set = 0;
-				rotation_count = 0;
-				break;
-			}
-			
-			break;
-		}
-		
-		//
-		case DEAD_END:
-		{
-			//if (IMU_Yaw - IMU_Yaw_start >= HALF_ROTATION_ANGLE)
-			//{
-			//ROBOT_STATE = OUT_OF_JUNCTION_A_RIGHT;
-			//start_Yaw_set = 0;
-			//break;
-			//}
-			
-			if (rotation_count > 17)
+			if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			{
 				ROBOT_STATE = CORRIDOR;
 				start_Yaw_set = 0;
-				rotation_count = 0;
 				break;
 			}
-			
 			break;
 		}
 		
+		////
+		//case INTO_CORRIDOR_NO_WALL:
+		//{
+		//if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
+		//{
+		//ROBOT_STATE = CORRIDOR;
+		//start_Yaw_set = 0;
+		//break;
+		//}
+		//break;
+		//}
+		
+		////////////////////////////////
+		
+		
 		//
-		case JUNCTION_B_LEFT:
 		case JUNCTION_B_RIGHT:
-		case OUT_OF_JUNCTION_C_LEFT:
-		case OUT_OF_JUNCTION_C_RIGHT:
-		case OUT_OF_JUNCTION_A_LEFT:
-		case OUT_OF_JUNCTION_A_RIGHT:
-		case OUT_OF_TURN_LEFT:
-		case OUT_OF_TURN_RIGHT:
 		{
 			if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			{
 				ROBOT_STATE = CORRIDOR;
 				break;
 			}
-			
 			break;
 		}
 		
 		//
-		case END_OF_COURSE:
+		case JUNCTION_B_LEFT:
 		{
+			if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
+			{
+				ROBOT_STATE = CORRIDOR;
+				break;
+			}
 			break;
 		}
 		
+		
+		/////////////////////
+		
+		
+		
+		////
+		//case JUNCTION_C_RIGHT:
+		//{
+		//if (IMU_Yaw - IMU_Yaw_start >= HALF_ROTATION_ANGLE)
+		//{
+		//ROBOT_STATE = OUT_OF_JUNCTION_C_RIGHT;
+		//start_Yaw_set = 0;
+		//break;
+		//}
+		//break;
+		//}
+		//
+		////
+		//case JUNCTION_C_LEFT:
+		//{
+		//if (IMU_Yaw - IMU_Yaw_start <= -HALF_ROTATION_ANGLE)
+		//{
+		//ROBOT_STATE = OUT_OF_JUNCTION_C_LEFT;
+		//start_Yaw_set = 0;
+		//break;
+		//}
+		//break;
+		//}
+		//
+		////
+		//case OUT_OF_JUNCTION_C_RIGHT:
+		//{
+		//if (IR_2 < CORRIDOR_SIDE_DISTANCE && IR_3 < CORRIDOR_SIDE_DISTANCE && IR_5 < CORRIDOR_SIDE_DISTANCE && IR_6 < CORRIDOR_SIDE_DISTANCE)
+		//{
+		//ROBOT_STATE = CORRIDOR;
+		//break;
+		//}
+		//break;
+		//}
+		//
+		////
+		//case OUT_OF_JUNCTION_C_LEFT:
+		//{
+		//if (IR_2 < CORRIDOR_SIDE_DISTANCE && IR_3 < CORRIDOR_SIDE_DISTANCE && IR_5 < CORRIDOR_SIDE_DISTANCE && IR_6 < CORRIDOR_SIDE_DISTANCE)
+		//{
+		//ROBOT_STATE = CORRIDOR;
+		//break;
+		//}
+		//break;
+		//}
+		//
+		////
+		//case END_OF_COURSE:
+		//{
+		//break;
+		//}
+		//
 		////
 		////case INTO_HIGH_OBSTACLE:
 		////{
@@ -515,49 +555,42 @@ void run_state(float height_value)
 	
 	switch (ROBOT_STATE)
 	{
-		
-		//
-		case OUT_OF_JUNCTION_C_RIGHT:
-		case OUT_OF_JUNCTION_C_LEFT:
+		//case OUT_OF_JUNCTION_C_RIGHT:
+		//case OUT_OF_JUNCTION_C_LEFT:
 		case JUNCTION_B_LEFT:
 		case JUNCTION_B_RIGHT:
 		case OUT_OF_TURN_LEFT:
 		case OUT_OF_TURN_RIGHT:
 		case CORRIDOR:
 		{
-			Walk_Half_Cycle(4, alpha, height_value);
+			Walk_Half_Cycle(2, alpha, height_value);
 			break;
 		}
 		
-		//
-		case OUT_OF_JUNCTION_A_RIGHT:
-		case OUT_OF_JUNCTION_A_LEFT:
-		case OUT_OF_CORRIDOR_NO_WALL:
+		
 		case OUT_OF_CORRIDOR_RIGHT_WALL:
 		case OUT_OF_CORRIDOR_LEFT_WALL:
 		{
-			if (first_state_cycle)
-			{
-				Walk_Half_Cycle(2, 0, height_value);
-				first_state_cycle = 0;
-				break;
-			}
-			else
-			{
-				Walk_Half_Cycle(2, alpha, height_value);
-				break;
-			}
+			Walk_Half_Cycle(1, alpha, height_value);
+			break;
 		}
 		
-		//
+		case OUT_OF_JUNCTION_A_RIGHT:
+		case OUT_OF_JUNCTION_A_LEFT:
+		case INTO_CORRIDOR_NO_WALL:
+		case OUT_OF_CORRIDOR_NO_WALL:
+		{
+			Walk_Half_Cycle(1, 0, height_value);
+			break;
+		}
+		
 		case END_OF_COURSE:
 		case STOP:
 		{
 			break;
 		}
 		
-		//
-		case JUNCTION_C_RIGHT:
+		//case JUNCTION_C_RIGHT:
 		case JUNCTION_A_RIGHT:
 		case TURN_RIGHT:
 		{
@@ -575,9 +608,8 @@ void run_state(float height_value)
 			break;
 		}
 		
-		//
-		case DEAD_END:
-		case JUNCTION_C_LEFT:
+		//case DEAD_END:
+		//case JUNCTION_C_LEFT:
 		case JUNCTION_A_LEFT:
 		case TURN_LEFT:
 		{
