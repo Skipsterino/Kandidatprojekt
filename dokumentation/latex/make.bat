@@ -28,4 +28,3 @@ makeindex refman.idx
 pdflatex refman
 cd /D %Dir_Old%
 set Dir_Old=
-pause

@@ -7,8 +7,6 @@
 * Defines commands for interfacing with the LCD
 */
 
-
-
 #ifndef LCD_H_
 #define LCD_H_
 
@@ -19,8 +17,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define LCD_NUMBER_OF_LINES 4
-#define LCD_LINE_WIDTH 16
+#define LCD_NUMBER_OF_LINES 4 /**< The number of lines the LCD can show. */
+#define LCD_LINE_WIDTH 16 /**< The number of columns the LCD can show. */
 
 /**
 * @brief Clears the screen
