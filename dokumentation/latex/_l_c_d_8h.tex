@@ -1,0 +1,161 @@
+\hypertarget{_l_c_d_8h}{}\section{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+CD.h File Reference}
+\label{_l_c_d_8h}\index{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+C\+D.\+h@{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+C\+D.\+h}}
+
+
+L\+CD driver.  
+
+
+{\ttfamily \#include $<$avr/io.\+h$>$}\\*
+{\ttfamily \#include $<$util/delay.\+h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries F\+\_\+\+C\+PU}~14745600\+UL\hypertarget{_l_c_d_8h_a43bafb28b29491ec7f871319b5a3b2f8}{}\label{_l_c_d_8h_a43bafb28b29491ec7f871319b5a3b2f8}
+
+\item 
+\#define {\bfseries L\+C\+D\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+I\+N\+ES}~4\hypertarget{_l_c_d_8h_a5bb24c05980471cbc9086fef965deacc}{}\label{_l_c_d_8h_a5bb24c05980471cbc9086fef965deacc}
+
+\item 
+\#define {\bfseries L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH}~16\hypertarget{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{}\label{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_l_c_d_8h_abe38d05e225c701bebf5a61201331a85}{L\+C\+D\+\_\+clear} ()
+\begin{DoxyCompactList}\small\item\em Clears the screen. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_8h_ab7c7379b10d76669edf03099f799b357}{L\+C\+D\+\_\+put\+\_\+num\+\_\+u} (unsigned int num)
+\begin{DoxyCompactList}\small\item\em Prints a number on the screen. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_8h_a7a19aaec7f9deb1589a7efddf3da8d3f}{L\+C\+D\+\_\+putc} (char c)
+\begin{DoxyCompactList}\small\item\em Prints a character on the screen. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_8h_afbc155e4e9d279ccd12c2695fe78a0e3}{L\+C\+D\+\_\+print\+\_\+string} (char line1\mbox{[}L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH\mbox{]}, char line2\mbox{[}L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH\mbox{]}, char line3\mbox{[}L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH\mbox{]}, char line4\mbox{[}L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH\mbox{]})
+\begin{DoxyCompactList}\small\item\em Prints 4 strings to the L\+CD. \end{DoxyCompactList}\item 
+int \hyperlink{_l_c_d_8h_a6679ea6f481524d1b6a30c4d99b8aad5}{L\+C\+D\+\_\+busy} ()
+\begin{DoxyCompactList}\small\item\em Check if the L\+CD is busy. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_8h_aa6d8c104e37eef62ba3a6046d1333ca6}{L\+C\+D\+\_\+send\+\_\+command} (unsigned char command)
+\begin{DoxyCompactList}\small\item\em Sends a command to the L\+CD. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d_8h_a0742e25c23ca1096ceba081b98fd58ba}{L\+C\+D\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initiates the L\+CD. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+L\+CD driver. 
+
+\begin{DoxyAuthor}{Author}
+Joakim 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+25 apr 2016 Defines commands for interfacing with the L\+CD 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+busy@{L\+C\+D\+\_\+busy}}
+\index{L\+C\+D\+\_\+busy@{L\+C\+D\+\_\+busy}!L\+C\+D.\+h@{L\+C\+D.\+h}}
+\subsubsection[{\texorpdfstring{L\+C\+D\+\_\+busy()}{LCD_busy()}}]{\setlength{\rightskip}{0pt plus 5cm}int L\+C\+D\+\_\+busy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_l_c_d_8h_a6679ea6f481524d1b6a30c4d99b8aad5}{}\label{_l_c_d_8h_a6679ea6f481524d1b6a30c4d99b8aad5}
+
+
+Check if the L\+CD is busy. 
+
+Checks the L\+CD busy flag. \begin{DoxyReturn}{Returns}
+1 if L\+CD is busy, otherwise 0 
+\end{DoxyReturn}
+\index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+clear@{L\+C\+D\+\_\+clear}}
+\index{L\+C\+D\+\_\+clear@{L\+C\+D\+\_\+clear}!L\+C\+D.\+h@{L\+C\+D.\+h}}
+\subsubsection[{\texorpdfstring{L\+C\+D\+\_\+clear()}{LCD_clear()}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_l_c_d_8h_abe38d05e225c701bebf5a61201331a85}{}\label{_l_c_d_8h_abe38d05e225c701bebf5a61201331a85}
+
+
+Clears the screen. 
+
+Clears the screen by using the built-\/in command and set the cursor to the start position. \index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+init@{L\+C\+D\+\_\+init}}
+\index{L\+C\+D\+\_\+init@{L\+C\+D\+\_\+init}!L\+C\+D.\+h@{L\+C\+D.\+h}}
+\subsubsection[{\texorpdfstring{L\+C\+D\+\_\+init()}{LCD_init()}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_l_c_d_8h_a0742e25c23ca1096ceba081b98fd58ba}{}\label{_l_c_d_8h_a0742e25c23ca1096ceba081b98fd58ba}
+
+
+Initiates the L\+CD. 
+
+Setup the processor in 4 line mode, etc \index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+print\+\_\+string@{L\+C\+D\+\_\+print\+\_\+string}}
+\index{L\+C\+D\+\_\+print\+\_\+string@{L\+C\+D\+\_\+print\+\_\+string}!L\+C\+D.\+h@{L\+C\+D.\+h}}
+\subsubsection[{\texorpdfstring{L\+C\+D\+\_\+print\+\_\+string(char line1[L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH], char line2[L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH], char line3[L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH], char line4[L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH])}{LCD_print_string(char line1[LCD_LINE_WIDTH], char line2[LCD_LINE_WIDTH], char line3[LCD_LINE_WIDTH], char line4[LCD_LINE_WIDTH])}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+print\+\_\+string (
+\begin{DoxyParamCaption}
+\item[{char}]{line1\mbox{[}\+L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+T\+H\mbox{]}, }
+\item[{char}]{line2\mbox{[}\+L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+T\+H\mbox{]}, }
+\item[{char}]{line3\mbox{[}\+L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+T\+H\mbox{]}, }
+\item[{char}]{line4\mbox{[}\+L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+T\+H\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{_l_c_d_8h_afbc155e4e9d279ccd12c2695fe78a0e3}{}\label{_l_c_d_8h_afbc155e4e9d279ccd12c2695fe78a0e3}
+
+
+Prints 4 strings to the L\+CD. 
+
+Prints four strings to 4 lines of the L\+CD. 
+\begin{DoxyParams}{Parameters}
+{\em line1} & The string to be printed at line1 \\
+\hline
+{\em line2} & The string to be printed at line2 \\
+\hline
+{\em line3} & The string to be printed at line3 \\
+\hline
+{\em line4} & The string to be printed at line4 \\
+\hline
+\end{DoxyParams}
+\index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+put\+\_\+num\+\_\+u@{L\+C\+D\+\_\+put\+\_\+num\+\_\+u}}
+\index{L\+C\+D\+\_\+put\+\_\+num\+\_\+u@{L\+C\+D\+\_\+put\+\_\+num\+\_\+u}!L\+C\+D.\+h@{L\+C\+D.\+h}}
+\subsubsection[{\texorpdfstring{L\+C\+D\+\_\+put\+\_\+num\+\_\+u(unsigned int num)}{LCD_put_num_u(unsigned int num)}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+put\+\_\+num\+\_\+u (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{num}
+\end{DoxyParamCaption}
+)}\hypertarget{_l_c_d_8h_ab7c7379b10d76669edf03099f799b357}{}\label{_l_c_d_8h_ab7c7379b10d76669edf03099f799b357}
+
+
+Prints a number on the screen. 
+
+Prints an unsigned number at the current cursor position 
+\begin{DoxyParams}{Parameters}
+{\em num} & The number to be printed \\
+\hline
+\end{DoxyParams}
+\index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+putc@{L\+C\+D\+\_\+putc}}
+\index{L\+C\+D\+\_\+putc@{L\+C\+D\+\_\+putc}!L\+C\+D.\+h@{L\+C\+D.\+h}}
+\subsubsection[{\texorpdfstring{L\+C\+D\+\_\+putc(char c)}{LCD_putc(char c)}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+putc (
+\begin{DoxyParamCaption}
+\item[{char}]{c}
+\end{DoxyParamCaption}
+)}\hypertarget{_l_c_d_8h_a7a19aaec7f9deb1589a7efddf3da8d3f}{}\label{_l_c_d_8h_a7a19aaec7f9deb1589a7efddf3da8d3f}
+
+
+Prints a character on the screen. 
+
+Prints an ascii character at the current cursor position 
+\begin{DoxyParams}{Parameters}
+{\em c} & The character to be printed \\
+\hline
+\end{DoxyParams}
+\index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+send\+\_\+command@{L\+C\+D\+\_\+send\+\_\+command}}
+\index{L\+C\+D\+\_\+send\+\_\+command@{L\+C\+D\+\_\+send\+\_\+command}!L\+C\+D.\+h@{L\+C\+D.\+h}}
+\subsubsection[{\texorpdfstring{L\+C\+D\+\_\+send\+\_\+command(unsigned char command)}{LCD_send_command(unsigned char command)}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+send\+\_\+command (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{command}
+\end{DoxyParamCaption}
+)}\hypertarget{_l_c_d_8h_aa6d8c104e37eef62ba3a6046d1333ca6}{}\label{_l_c_d_8h_aa6d8c104e37eef62ba3a6046d1333ca6}
+
+
+Sends a command to the L\+CD. 
+
+Sends a command to the L\+CD processing unit 
+\begin{DoxyParams}{Parameters}
+{\em command} & The command to be sent \\
+\hline
+\end{DoxyParams}
