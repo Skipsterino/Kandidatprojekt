@@ -98,18 +98,15 @@ void update_state()
 	
 	switch (ROBOT_STATE)
 	{
-		//
 		case CORRIDOR:
 		{
 			
-			//
 			if ((IR_0 < DEAD_END_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			{
 				ROBOT_STATE = DEAD_END;
 				break;
 			}
 			
-			//
 			if (((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			|| ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE)))
 			{
@@ -151,13 +148,11 @@ void update_state()
 			break;
 		}
 		
-		//
 		case STOP:
 		{
 			break;
 		}
 		
-		//
 		case OUT_OF_CORRIDOR_LEFT_WALL:
 		case OUT_OF_CORRIDOR_RIGHT_WALL:
 		{
@@ -183,7 +178,6 @@ void update_state()
 				break;
 			}
 			
-			
 			else if ((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 < LONG_TURN_DISTANCE) && (IR_0 > JUNCTION_A_FORWARD_DISTANCE))
 			{
 				ROBOT_STATE = JUNCTION_A_RIGHT;
@@ -195,8 +189,7 @@ void update_state()
 				ROBOT_STATE = JUNCTION_A_LEFT;
 				break;
 			}
-			
-			
+				
 			else if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < SIDE_DEAD_END_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < SIDE_DEAD_END_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > FORWARD_DEAD_END_DISTANCE))
 			{
 				ROBOT_STATE = JUNCTION_B_RIGHT;
@@ -212,7 +205,6 @@ void update_state()
 			break;
 		}
 		
-		//
 		case OUT_OF_CORRIDOR_NO_WALL:
 		{
 			if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < SIDE_DEAD_END_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_0 < SHORT_TURN_DISTANCE))
@@ -236,7 +228,6 @@ void update_state()
 			break;
 		}
 		
-		//
 		case TURN_RIGHT:
 		{
 			//if (IMU_Yaw - IMU_Yaw_start >= HALF_ROTATION_ANGLE)
@@ -258,7 +249,6 @@ void update_state()
 			break;
 		}
 		
-		//
 		case TURN_LEFT:
 		{
 			//if (IMU_Yaw - IMU_Yaw_start <= -HALF_ROTATION_ANGLE)
@@ -279,8 +269,7 @@ void update_state()
 			
 			break;
 		}
-		
-		//
+
 		case JUNCTION_A_RIGHT:
 		{
 			//if (IMU_Yaw - IMU_Yaw_start >= HALF_ROTATION_ANGLE)
@@ -302,7 +291,6 @@ void update_state()
 			break;
 		}
 		
-		//
 		case JUNCTION_A_LEFT:
 		{
 			//if (IMU_Yaw - IMU_Yaw_start <= -HALF_ROTATION_ANGLE)
@@ -324,7 +312,6 @@ void update_state()
 			break;
 		}
 		
-		//
 		case JUNCTION_C_RIGHT:
 		{
 			//if (IMU_Yaw - IMU_Yaw_start >= HALF_ROTATION_ANGLE)
@@ -345,7 +332,6 @@ void update_state()
 			break;
 		}
 		
-		//
 		case JUNCTION_C_LEFT:
 		{
 			//if (IMU_Yaw - IMU_Yaw_start >= HALF_ROTATION_ANGLE)
@@ -366,7 +352,6 @@ void update_state()
 			break;
 		}
 		
-		//
 		case DEAD_END:
 		{
 			//if (IMU_Yaw - IMU_Yaw_start >= HALF_ROTATION_ANGLE)
@@ -387,7 +372,6 @@ void update_state()
 			break;
 		}
 		
-		//
 		case JUNCTION_B_LEFT:
 		case JUNCTION_B_RIGHT:
 		case OUT_OF_JUNCTION_C_LEFT:
@@ -406,7 +390,6 @@ void update_state()
 			break;
 		}
 		
-		//
 		case END_OF_COURSE:
 		{
 			break;
@@ -499,10 +482,7 @@ void update_state()
 		////}
 		////break;
 		////}
-
 	}
-	
-	
 }
 
 void run_state(float height_value)
@@ -515,8 +495,6 @@ void run_state(float height_value)
 	
 	switch (ROBOT_STATE)
 	{
-		
-		//
 		case OUT_OF_JUNCTION_C_RIGHT:
 		case OUT_OF_JUNCTION_C_LEFT:
 		case JUNCTION_B_LEFT:
@@ -529,7 +507,6 @@ void run_state(float height_value)
 			break;
 		}
 		
-		//
 		case OUT_OF_JUNCTION_A_RIGHT:
 		case OUT_OF_JUNCTION_A_LEFT:
 		case OUT_OF_CORRIDOR_NO_WALL:
@@ -549,14 +526,12 @@ void run_state(float height_value)
 			}
 		}
 		
-		//
 		case END_OF_COURSE:
 		case STOP:
 		{
 			break;
 		}
 		
-		//
 		case JUNCTION_C_RIGHT:
 		case JUNCTION_A_RIGHT:
 		case TURN_RIGHT:
@@ -575,7 +550,6 @@ void run_state(float height_value)
 			break;
 		}
 		
-		//
 		case DEAD_END:
 		case JUNCTION_C_LEFT:
 		case JUNCTION_A_LEFT:

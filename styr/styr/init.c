@@ -15,7 +15,7 @@ void Init(void)
 	
 	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
 	
-	USART_Init();
+	UART_Init();
 	SPI_init_master();
 }
 
