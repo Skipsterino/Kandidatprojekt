@@ -24,7 +24,7 @@
 #define DDRAM_LINE_3	0x90
 #define DDRAM_LINE_4	0xD0
 
-//Definitioner av möjliga kommandon 
+//Definitioner av några möjliga kommandon 
 #define COMMAND_CLEAR					0b00000001
 #define COMMAND_8BIT_2LINE_8DOTS		0b00110000
 #define COMMAND_8BIT_2LINE_11DOTS		0b00111000

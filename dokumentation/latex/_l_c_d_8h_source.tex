@@ -1,0 +1,34 @@
+\hypertarget{_l_c_d_8h_source}{}\section{L\+C\+D.\+h}
+\label{_l_c_d_8h_source}\index{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+C\+D.\+h@{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+C\+D.\+h}}
+
+\begin{DoxyCode}
+00001 
+00010 \textcolor{preprocessor}{#ifndef LCD\_H\_}
+00011 \textcolor{preprocessor}{#define LCD\_H\_}
+00012 
+00013 \textcolor{preprocessor}{#ifndef F\_CPU}
+00014 \textcolor{preprocessor}{#define F\_CPU 14745600UL}
+00015 \textcolor{preprocessor}{#endif}
+00016 
+00017 \textcolor{preprocessor}{#include <avr/io.h>}
+00018 \textcolor{preprocessor}{#include <util/delay.h>}
+00019 
+\hypertarget{_l_c_d_8h_source.tex_l00020}{}\hyperlink{_l_c_d_8h_a5bb24c05980471cbc9086fef965deacc}{00020} \textcolor{preprocessor}{#define LCD\_NUMBER\_OF\_LINES 4 }
+\hypertarget{_l_c_d_8h_source.tex_l00021}{}\hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{00021} \textcolor{preprocessor}{#define LCD\_LINE\_WIDTH 16 }
+00029 \textcolor{preprocessor}{void LCD\_clear();}
+00030 
+00037 \textcolor{keywordtype}{void} \hyperlink{_l_c_d_8h_ab7c7379b10d76669edf03099f799b357}{LCD\_put\_num\_u}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} num);
+00038 
+00045 \textcolor{keywordtype}{void} \hyperlink{_l_c_d_8h_a7a19aaec7f9deb1589a7efddf3da8d3f}{LCD\_putc}(\textcolor{keywordtype}{char} c);
+00046 
+00056 \textcolor{keywordtype}{void} \hyperlink{_l_c_d_8h_afbc155e4e9d279ccd12c2695fe78a0e3}{LCD\_print\_string}(\textcolor{keywordtype}{char} line1[\hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{LCD\_LINE\_WIDTH}], \textcolor{keywordtype}{char} line2[LCD\_LINE\_WIDTH],
+       \textcolor{keywordtype}{char} line3[LCD\_LINE\_WIDTH], \textcolor{keywordtype}{char} line4[LCD\_LINE\_WIDTH]);
+00057 
+00064 \textcolor{keywordtype}{int} \hyperlink{_l_c_d_8h_a6679ea6f481524d1b6a30c4d99b8aad5}{LCD\_busy}();
+00065 
+00072 \textcolor{keywordtype}{void} \hyperlink{_l_c_d_8h_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} command);
+00073 
+00079 \textcolor{keywordtype}{void} \hyperlink{_l_c_d_8h_a0742e25c23ca1096ceba081b98fd58ba}{LCD\_init}();
+00080 
+00081 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* LCD\_H\_ */}\textcolor{preprocessor}{}
+\end{DoxyCode}

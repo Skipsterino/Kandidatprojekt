@@ -1,0 +1,99 @@
+\hypertarget{_l_c_d__controller_8h}{}\section{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+C\+D\+\_\+controller.h File Reference}
+\label{_l_c_d__controller_8h}\index{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+C\+D\+\_\+controller.\+h@{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+C\+D\+\_\+controller.\+h}}
+
+
+L\+CD controller.  
+
+
+{\ttfamily \#include $<$avr/interrupt.\+h$>$}\\*
+{\ttfamily \#include $<$avr/io.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}L\+C\+D.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_l_c_d__controller_8h_aa7bbd66352e5612adc00e2b7aa77b1c9}{C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES}~4
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_l_c_d__controller_8h_acdf924af672d862f021f6b4ace2bcebd}{L\+C\+D\+\_\+controller\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initiates the L\+CD controller. \end{DoxyCompactList}\item 
+void \hyperlink{_l_c_d__controller_8h_af46260996769cfaea7bb98af9ab708d1}{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line} (uint8\+\_\+t line, char string\mbox{[}\hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH}\mbox{]})
+\begin{DoxyCompactList}\small\item\em Put a string in the line buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+volatile char \hyperlink{_l_c_d__controller_8h_a075b70e7692af8221284f00c90d70fb2}{lines} \mbox{[}\hyperlink{_l_c_d__controller_8h_aa7bbd66352e5612adc00e2b7aa77b1c9}{C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES} $\ast$\hyperlink{_l_c_d_8h_a5bb24c05980471cbc9086fef965deacc}{L\+C\+D\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+I\+N\+ES}\mbox{]}\mbox{[}\hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH}\mbox{]}
+\item 
+volatile uint8\+\_\+t \hyperlink{_l_c_d__controller_8h_a4f799993f40fea97658f543f15842f4a}{current\+Line}
+\item 
+volatile uint8\+\_\+t \hyperlink{_l_c_d__controller_8h_a9d160c265ce9aa4c9aa782cf7c5ecb41}{overflow\+\_\+counter}
+\item 
+volatile uint8\+\_\+t \hyperlink{_l_c_d__controller_8h_a5462652fe95683f50bcbd6d5fbbc3ae1}{spi\+Overflow}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+L\+CD controller. 
+
+\begin{DoxyAuthor}{Author}
+Joakim 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+25 apr 2016 Defines a L\+CD layer that presents information on a number of pages on the L\+CD. The pages switches based on a timer. 
+\end{DoxyDate}
+
+
+\subsection{Macro Definition Documentation}
+\index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES@{C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES}}
+\index{C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES@{C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES}!L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}}
+\subsubsection[{\texorpdfstring{C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES}{CONTROLLER_NUMBER_OF_PAGES}}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES~4}\hypertarget{_l_c_d__controller_8h_aa7bbd66352e5612adc00e2b7aa77b1c9}{}\label{_l_c_d__controller_8h_aa7bbd66352e5612adc00e2b7aa77b1c9}
+The number of pages the controller handles. 
+
+\subsection{Function Documentation}
+\index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!L\+C\+D\+\_\+controller\+\_\+init@{L\+C\+D\+\_\+controller\+\_\+init}}
+\index{L\+C\+D\+\_\+controller\+\_\+init@{L\+C\+D\+\_\+controller\+\_\+init}!L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}}
+\subsubsection[{\texorpdfstring{L\+C\+D\+\_\+controller\+\_\+init()}{LCD_controller_init()}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+controller\+\_\+init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_l_c_d__controller_8h_acdf924af672d862f021f6b4ace2bcebd}{}\label{_l_c_d__controller_8h_acdf924af672d862f021f6b4ace2bcebd}
+
+
+Initiates the L\+CD controller. 
+
+Initiates the L\+CD controller with the specified number of pages. \index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!L\+C\+D\+\_\+controller\+\_\+put\+\_\+line@{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line}}
+\index{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line@{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line}!L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}}
+\subsubsection[{\texorpdfstring{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line(uint8\+\_\+t line, char string[L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH])}{LCD_controller_put_line(uint8_t line, char string[LCD_LINE_WIDTH])}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+controller\+\_\+put\+\_\+line (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{line, }
+\item[{char}]{string\mbox{[}\+L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+T\+H\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{_l_c_d__controller_8h_af46260996769cfaea7bb98af9ab708d1}{}\label{_l_c_d__controller_8h_af46260996769cfaea7bb98af9ab708d1}
+
+
+Put a string in the line buffer. 
+
+Put a string in the L\+CD controller\textquotesingle{}s buffer at a given place. Line 0 is the top of the first page. 
+\begin{DoxyParams}{Parameters}
+{\em line} & The index of the line to be placed in. \\
+\hline
+{\em string} & The string to put in the buffer. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Variable Documentation}
+\index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!current\+Line@{current\+Line}}
+\index{current\+Line@{current\+Line}!L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}}
+\subsubsection[{\texorpdfstring{current\+Line}{currentLine}}]{\setlength{\rightskip}{0pt plus 5cm}volatile uint8\+\_\+t current\+Line}\hypertarget{_l_c_d__controller_8h_a4f799993f40fea97658f543f15842f4a}{}\label{_l_c_d__controller_8h_a4f799993f40fea97658f543f15842f4a}
+Index of the line on the top of the current page. \index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!lines@{lines}}
+\index{lines@{lines}!L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}}
+\subsubsection[{\texorpdfstring{lines}{lines}}]{\setlength{\rightskip}{0pt plus 5cm}volatile char lines\mbox{[}{\bf C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES} $\ast${\bf L\+C\+D\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+I\+N\+ES}\mbox{]}\mbox{[}{\bf L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH}\mbox{]}}\hypertarget{_l_c_d__controller_8h_a075b70e7692af8221284f00c90d70fb2}{}\label{_l_c_d__controller_8h_a075b70e7692af8221284f00c90d70fb2}
+The buffer containing the strings to be displayed. \index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!overflow\+\_\+counter@{overflow\+\_\+counter}}
+\index{overflow\+\_\+counter@{overflow\+\_\+counter}!L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}}
+\subsubsection[{\texorpdfstring{overflow\+\_\+counter}{overflow_counter}}]{\setlength{\rightskip}{0pt plus 5cm}volatile uint8\+\_\+t overflow\+\_\+counter}\hypertarget{_l_c_d__controller_8h_a9d160c265ce9aa4c9aa782cf7c5ecb41}{}\label{_l_c_d__controller_8h_a9d160c265ce9aa4c9aa782cf7c5ecb41}
+Counter keeping track of the current number of times the timer has overflowed. \index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!spi\+Overflow@{spi\+Overflow}}
+\index{spi\+Overflow@{spi\+Overflow}!L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}}
+\subsubsection[{\texorpdfstring{spi\+Overflow}{spiOverflow}}]{\setlength{\rightskip}{0pt plus 5cm}volatile uint8\+\_\+t spi\+Overflow}\hypertarget{_l_c_d__controller_8h_a5462652fe95683f50bcbd6d5fbbc3ae1}{}\label{_l_c_d__controller_8h_a5462652fe95683f50bcbd6d5fbbc3ae1}
+Counter keeping track of the current number of times the timer has overflowed. 

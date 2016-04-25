@@ -1,0 +1,27 @@
+\hypertarget{_u_s_a_r_t_8h_source}{}\section{U\+S\+A\+R\+T.\+h}
+\label{_u_s_a_r_t_8h_source}\index{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+U\+S\+A\+R\+T.\+h@{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+U\+S\+A\+R\+T.\+h}}
+
+\begin{DoxyCode}
+00001 
+00012 \textcolor{preprocessor}{#ifndef USART\_H\_}
+00013 \textcolor{preprocessor}{#define USART\_H\_}
+00014 
+00015 \textcolor{preprocessor}{#include <avr/io.h>}
+00016 \textcolor{preprocessor}{#include <avr/interrupt.h>}
+00017 
+00018 \textcolor{preprocessor}{#include "\hyperlink{_buffers_8h}{Buffers.h}"}
+00019 
+\hypertarget{_u_s_a_r_t_8h_source.tex_l00020}{}\hyperlink{_u_s_a_r_t_8h_ac73ad3c207657516f4f319adaf861a1b}{00020} \textcolor{keyword}{volatile} \textcolor{keywordtype}{int} \hyperlink{_u_s_a_r_t_8h_ac73ad3c207657516f4f319adaf861a1b}{BTtimeout}; 
+\hypertarget{_u_s_a_r_t_8h_source.tex_l00021}{}\hyperlink{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}{00021} \textcolor{keyword}{volatile} uint8\_t \hyperlink{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}{BTcounter}; 
+00030 \textcolor{keywordtype}{void} \hyperlink{_u_s_a_r_t_8h_a4b46e2e6b871d0b0f138e61760b10fa2}{initUSART}();
+00031 
+00038 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{_u_s_a_r_t_8h_aec32185dd8feec99d38acc7f8ab69197}{USART\_Recieve}();
+00039 
+00046 \textcolor{keywordtype}{void} \hyperlink{_u_s_a_r_t_8h_ab8c416106cf1aff4ccdb3da4860fc179}{USART\_Transmit}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} data);
+00047 
+00056 \textcolor{keywordtype}{void} \hyperlink{_u_s_a_r_t_8h_a03b0ffa896b87d880101195bf1377df9}{USART\_Transmit\_Array}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} array[], uint8\_t size);
+00057 
+00064 \textcolor{keywordtype}{void} \hyperlink{_u_s_a_r_t_8h_a0f33ec0995bf5f267e847d9e22fb596a}{USART\_Flush}(\textcolor{keywordtype}{void});
+00065 
+00066 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* USART\_H\_ */}\textcolor{preprocessor}{}
+\end{DoxyCode}

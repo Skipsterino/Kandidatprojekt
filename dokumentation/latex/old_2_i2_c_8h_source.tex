@@ -1,0 +1,64 @@
+\hypertarget{old_2_i2_c_8h_source}{}\section{I2\+C.\+h}
+\label{old_2_i2_c_8h_source}\index{sensor/old/\+I2\+C.\+h@{sensor/old/\+I2\+C.\+h}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ * I2C.h}
+00003 \textcolor{comment}{ *}
+00004 \textcolor{comment}{ * Created: 4/8/2016 9:46:05 AM}
+00005 \textcolor{comment}{ *  Author: joneh084}
+00006 \textcolor{comment}{ */} 
+00007 
+00008 
+00009 \textcolor{preprocessor}{#ifndef I2C\_H\_}
+00010 \textcolor{preprocessor}{#define I2C\_H\_}
+00011 
+00012 \textcolor{preprocessor}{#include <util/atomic.h>}
+00013 \textcolor{preprocessor}{#include <avr/io.h>}
+00014 \textcolor{preprocessor}{#include <avr/interrupt.h>}
+00015 
+00016 \textcolor{preprocessor}{#define F\_CPU 16000000UL}
+00017 
+00018 \textcolor{preprocessor}{#define I2Cstatus\_START 0x08}
+00019 
+00020 \textcolor{preprocessor}{#define I2Cstatus\_MT\_SLA\_ACK 0x18       // Master Transmitter Mode}
+00021 \textcolor{preprocessor}{#define I2Cstatus\_MT\_SLA\_NACK 0x20}
+00022 \textcolor{preprocessor}{#define I2Cstatus\_MT\_DATA\_ACK 0x28}
+00023 \textcolor{preprocessor}{#define I2Cstatus\_MT\_DATA\_NACK 0x30}
+00024 
+00025 \textcolor{preprocessor}{#define I2Cstatus\_MR\_SLA\_ACK 0x40       // Master Receiver Mode}
+00026 \textcolor{preprocessor}{#define I2Cstatus\_MR\_SLA\_NACK 0x48}
+00027 \textcolor{preprocessor}{#define I2Cstatus\_MR\_DATA\_ACK 0x50}
+00028 \textcolor{preprocessor}{#define I2Cstatus\_MR\_DATA\_NACK 0x58}
+00029 
+00030 \textcolor{preprocessor}{#define SLA\_W 0xD0}
+00031 \textcolor{preprocessor}{#define SLA\_R 0xD1}
+00032 
+00033 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} timer0\_millis;
+00034 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} timer0\_fract;
+00035 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} timer0\_overflow\_count;
+00036 \textcolor{comment}{//#define clockCyclesPerMicrosecond() ( F\_CPU / 1000000L )}
+00037 \textcolor{comment}{//#define clockCyclesToMicroseconds ( ((64 * 256) * 1000L) / (F\_CPU / 1000L) )}
+00038 \textcolor{comment}{//#define MICROSECONDS\_PER\_TIMER0\_OVERFLOW (clockCyclesToMicroseconds(64 * 256))}
+00039 \textcolor{comment}{// the whole number of milliseconds per timer0 overflow}
+00040 \textcolor{preprocessor}{#define MILLIS\_INC (1024 / 1000)}
+00041 \textcolor{comment}{// the fractional number of milliseconds per timer0 overflow. we shift right}
+00042 \textcolor{comment}{// by three to fit these numbers into a byte. (for the clock speeds we care}
+00043 \textcolor{comment}{// about - 8 and 16 MHz - this doesn't lose precision.)}
+00044 \textcolor{preprocessor}{#define FRACT\_INC ((1024 % 1000) >> 3)}
+00045 \textcolor{preprocessor}{#define FRACT\_MAX (1000 >> 3)}
+00046 
+00047 \textcolor{keywordtype}{void} I2C\_start();
+00048 \textcolor{keywordtype}{void} I2C\_stop();
+00049 
+00050 \textcolor{keywordtype}{int} error();
+00051 
+00052 \textcolor{keywordtype}{int} i2c\_write(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} slave\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} reg\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} length, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \textcolor{keyword}{const} *
+      data);
+00053 \textcolor{keywordtype}{int} i2c\_read(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} slave\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} reg\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} length, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *data);
+00054 
+00055 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} millis();
+00056 \textcolor{preprocessor}{#define min(a,b) ((a<b)?a:b)}
+00057 
+00058 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* I2C\_H\_ */}\textcolor{preprocessor}{}
+\end{DoxyCode}

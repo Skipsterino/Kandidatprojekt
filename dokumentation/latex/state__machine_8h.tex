@@ -1,0 +1,387 @@
+\hypertarget{state__machine_8h}{}\section{styr/styr/state\+\_\+machine.h File Reference}
+\label{state__machine_8h}\index{styr/styr/state\+\_\+machine.\+h@{styr/styr/state\+\_\+machine.\+h}}
+
+
+State machine for the robot\textquotesingle{}s autonomous mode.  
+
+
+{\ttfamily \#include \char`\"{}S\+P\+I.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}gangstilar.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries F\+\_\+\+C\+PU}~16000000\+UL\hypertarget{state__machine_8h_a43bafb28b29491ec7f871319b5a3b2f8}{}\label{state__machine_8h_a43bafb28b29491ec7f871319b5a3b2f8}
+
+\item 
+\#define \hyperlink{state__machine_8h_a5776a711f0156180fe5efb79c9ffc24f}{H\+A\+L\+F\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE}~85
+\item 
+\#define \hyperlink{state__machine_8h_a40718a26b2b107afdc38533db41cc0a3}{F\+U\+L\+L\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE}~175
+\item 
+\#define \hyperlink{state__machine_8h_a201d56046ddf552d57b4862e0ec07a10}{C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+S\+I\+D\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~60
+\item 
+\#define \hyperlink{state__machine_8h_a31ba7e3e0116f665d5825f669052ed09}{S\+I\+D\+E\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~150
+\item 
+\#define \hyperlink{state__machine_8h_a9a1286b84f437e1c90d21ffc833a8b79}{E\+N\+D\+\_\+\+O\+F\+\_\+\+C\+O\+U\+R\+S\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~80
+\item 
+\#define \hyperlink{state__machine_8h_adf843098ef425aa129f5ff16d879f7f2}{S\+H\+O\+R\+T\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~38
+\item 
+\#define \hyperlink{state__machine_8h_a365e437f4fdaddff7b28fa56e61a0060}{L\+O\+N\+G\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~100
+\item 
+\#define \hyperlink{state__machine_8h_a8118fdbf1a36265000f2d42844e10747}{F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~180
+\item 
+\#define \hyperlink{state__machine_8h_ada224a95ca04ac21b410ef6e23814eea}{J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~80
+\item 
+\#define \hyperlink{state__machine_8h_a29b3e85ce789185a96d28f139e003d4c}{L\+O\+W\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~40
+\item 
+\#define \hyperlink{state__machine_8h_a7dc7e4111003eb72dfc6cfede130fb5f}{S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+U\+P\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~20
+\item 
+\#define \hyperlink{state__machine_8h_a9df2253e22c049d64aab5f0cbfd7dae3}{S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+D\+O\+W\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~50
+\item 
+\#define \hyperlink{state__machine_8h_a647ce7a809da5ed12ea5319ed1c2b73f}{U\+S\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~40
+\item 
+\#define \hyperlink{state__machine_8h_a83b61a7a575cb23097805af83236bcf0}{I\+R\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~50
+\item 
+\#define \hyperlink{state__machine_8h_a9d981c215ebe94b6be6a0d49ccd2dce8}{N\+O\+\_\+\+W\+A\+L\+L\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~50
+\item 
+\#define \hyperlink{state__machine_8h_aa31835133338361e7bffbaf776c9c7a1}{D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}~40
+\item 
+\#define \hyperlink{state__machine_8h_a5490b49530b86e69dba553166cd9d71b}{C\+E\+N\+T\+R\+E\+\_\+\+O\+F\+F\+S\+ET}~8
+\item 
+\#define \hyperlink{state__machine_8h_ac8d21b48b36c2d8b9192522087aab758}{C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+W\+I\+D\+TH}~80
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9}{S\+T\+A\+T\+ES} \{ \\*
+{\bfseries C\+O\+R\+R\+I\+D\+OR}, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+C\+O\+R\+R\+I\+D\+OR}, 
+{\bfseries I\+N\+T\+O\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+LE}, 
+{\bfseries I\+N\+T\+O\+\_\+\+L\+O\+W\+\_\+\+O\+B\+S\+T\+A\+C\+LE}, 
+\\*
+{\bfseries I\+N\+T\+O\+\_\+\+T\+U\+R\+N\+\_\+\+R\+I\+G\+HT}, 
+{\bfseries I\+N\+T\+O\+\_\+\+T\+U\+R\+N\+\_\+\+L\+E\+FT}, 
+{\bfseries I\+N\+T\+O\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+R\+I\+G\+HT}, 
+{\bfseries I\+N\+T\+O\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+L\+E\+FT}, 
+\\*
+{\bfseries T\+U\+R\+N\+\_\+\+R\+I\+G\+HT}, 
+{\bfseries T\+U\+R\+N\+\_\+\+L\+E\+FT}, 
+{\bfseries J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+L\+E\+FT}, 
+{\bfseries J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+R\+I\+G\+HT}, 
+\\*
+{\bfseries J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+B\+\_\+\+R\+I\+G\+HT}, 
+{\bfseries J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+B\+\_\+\+L\+E\+FT}, 
+{\bfseries J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+C\+\_\+\+R\+I\+G\+HT}, 
+{\bfseries J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+C\+\_\+\+L\+E\+FT}, 
+\\*
+{\bfseries D\+E\+A\+D\+\_\+\+E\+ND}, 
+{\bfseries M\+I\+D\+\_\+\+D\+E\+A\+D\+\_\+\+E\+ND}, 
+{\bfseries H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+LE}, 
+{\bfseries L\+O\+W\+\_\+\+O\+B\+S\+T\+A\+C\+LE}, 
+\\*
+{\bfseries C\+R\+A\+W\+L\+I\+N\+G\+\_\+\+O\+U\+T\+\_\+\+O\+F\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+LE}, 
+{\bfseries C\+R\+A\+W\+L\+I\+N\+G\+\_\+\+U\+N\+D\+E\+R\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+LE}, 
+{\bfseries C\+L\+I\+M\+B\+\_\+\+UP}, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+T\+U\+R\+N\+\_\+\+R\+I\+G\+HT}, 
+\\*
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+T\+U\+R\+N\+\_\+\+L\+E\+FT}, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+R\+I\+G\+HT}, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+L\+E\+FT}, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+C\+\_\+\+R\+I\+G\+HT}, 
+\\*
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+C\+\_\+\+L\+E\+FT}, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+LE}, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+L\+O\+W\+\_\+\+O\+B\+S\+T\+A\+C\+LE}, 
+{\bfseries E\+N\+D\+\_\+\+O\+F\+\_\+\+C\+O\+U\+R\+SE}, 
+\\*
+{\bfseries C\+O\+R\+R\+I\+D\+OR} = 1, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+N\+O\+\_\+\+W\+A\+LL} = 2, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+L\+E\+F\+T\+\_\+\+W\+A\+LL} = 3, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+R\+I\+G\+H\+T\+\_\+\+W\+A\+LL} = 4, 
+\\*
+{\bfseries I\+N\+T\+O\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+LE} = 5, 
+{\bfseries I\+N\+T\+O\+\_\+\+L\+O\+W\+\_\+\+O\+B\+S\+T\+A\+C\+LE} = 6, 
+{\bfseries I\+N\+T\+O\+\_\+\+T\+U\+R\+N\+\_\+\+R\+I\+G\+HT} = 7, 
+{\bfseries I\+N\+T\+O\+\_\+\+T\+U\+R\+N\+\_\+\+L\+E\+FT} = 8, 
+\\*
+{\bfseries I\+N\+T\+O\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+R\+I\+G\+HT} = 9, 
+{\bfseries I\+N\+T\+O\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+L\+E\+FT} = 10, 
+{\bfseries T\+U\+R\+N\+\_\+\+R\+I\+G\+HT} = 11, 
+{\bfseries T\+U\+R\+N\+\_\+\+L\+E\+FT} = 12, 
+\\*
+{\bfseries J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+L\+E\+FT} = 13, 
+{\bfseries J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+R\+I\+G\+HT} = 14, 
+{\bfseries J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+B\+\_\+\+R\+I\+G\+HT} = 15, 
+{\bfseries J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+B\+\_\+\+L\+E\+FT} = 16, 
+\\*
+{\bfseries J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+C\+\_\+\+R\+I\+G\+HT} = 17, 
+{\bfseries J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+C\+\_\+\+L\+E\+FT} = 18, 
+{\bfseries D\+E\+A\+D\+\_\+\+E\+ND} = 19, 
+{\bfseries M\+I\+D\+\_\+\+D\+E\+A\+D\+\_\+\+E\+ND} = 20, 
+\\*
+{\bfseries H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+LE} = 21, 
+{\bfseries L\+O\+W\+\_\+\+O\+B\+S\+T\+A\+C\+LE} = 22, 
+{\bfseries C\+R\+A\+W\+L\+I\+N\+G\+\_\+\+O\+U\+T\+\_\+\+O\+F\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+LE} = 23, 
+{\bfseries C\+R\+A\+W\+L\+I\+N\+G\+\_\+\+U\+N\+D\+E\+R\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+LE} = 24, 
+\\*
+{\bfseries C\+L\+I\+M\+B\+\_\+\+UP} = 25, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+T\+U\+R\+N\+\_\+\+R\+I\+G\+HT} = 26, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+T\+U\+R\+N\+\_\+\+L\+E\+FT} = 27, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+R\+I\+G\+HT} = 28, 
+\\*
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+L\+E\+FT} = 29, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+C\+\_\+\+R\+I\+G\+HT} = 30, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+C\+\_\+\+L\+E\+FT} = 31, 
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+LE} = 32, 
+\\*
+{\bfseries O\+U\+T\+\_\+\+O\+F\+\_\+\+L\+O\+W\+\_\+\+O\+B\+S\+T\+A\+C\+LE} = 33, 
+{\bfseries E\+N\+D\+\_\+\+O\+F\+\_\+\+C\+O\+U\+R\+SE} = 34, 
+{\bfseries S\+T\+OP} = 35, 
+{\bfseries I\+N\+T\+O\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+C\+\_\+\+R\+I\+G\+HT} = 36, 
+\\*
+{\bfseries I\+N\+T\+O\+\_\+\+J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+C\+\_\+\+L\+E\+FT} = 37, 
+{\bfseries I\+N\+T\+O\+\_\+\+C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+N\+O\+\_\+\+W\+A\+LL} = 38
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{state__machine_8h_af7c798149db27b6d271bf5845a489513}{update\+\_\+state} ()
+\begin{DoxyCompactList}\small\item\em Updates the robot\textquotesingle{}s current state. \end{DoxyCompactList}\item 
+void \hyperlink{state__machine_8h_aba55a309968f3014c9c40ea01400e733}{run\+\_\+state} (float height\+\_\+value)
+\begin{DoxyCompactList}\small\item\em Executes the robot\textquotesingle{}s current state. \end{DoxyCompactList}\item 
+void \hyperlink{state__machine_8h_aefb7e87df9971d6e6c5641db5185ca6c}{load\+\_\+sensor\+\_\+values} ()
+\begin{DoxyCompactList}\small\item\em Loads sensor values. \end{DoxyCompactList}\item 
+void \hyperlink{state__machine_8h_a5611f3fef1c7ebe6f76d952adf576e86}{calculate\+\_\+\+Yaw} ()
+\begin{DoxyCompactList}\small\item\em Calculates current Yaw angle. \end{DoxyCompactList}\item 
+void \hyperlink{state__machine_8h_a1207bf6b642796032a59633adcb689f2}{calculate\+\_\+p\+\_\+part} ()
+\begin{DoxyCompactList}\small\item\em Calculates current P part. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{state__machine_8h_a74134a484bf5067e7afa67b9a5911d24}{I\+M\+U\+\_\+\+Yaw\+\_\+start}
+\item 
+uint8\+\_\+t \hyperlink{state__machine_8h_a51f98684c825046dd85a9256f18bbce9}{start\+\_\+\+Yaw\+\_\+set}
+\item 
+uint8\+\_\+t \hyperlink{state__machine_8h_a1397b4e16ab884b8328c03fd65fe9d52}{first\+\_\+state\+\_\+cycle}
+\item 
+uint8\+\_\+t \hyperlink{state__machine_8h_ad03c0546202eb3154602cb8a0993c51f}{rotation\+\_\+count}
+\item 
+float {\bfseries Yaw}\hypertarget{state__machine_8h_a86cd3708ed18a9bdfec5c43fc837f206}{}\label{state__machine_8h_a86cd3708ed18a9bdfec5c43fc837f206}
+
+\item 
+float {\bfseries Yaw\+\_\+rad}\hypertarget{state__machine_8h_a58652d73ca5e1528e36798054ac1ad9e}{}\label{state__machine_8h_a58652d73ca5e1528e36798054ac1ad9e}
+
+\item 
+float {\bfseries p\+\_\+part}\hypertarget{state__machine_8h_a2aa77bd4c4683bf248fba3a031c8816e}{}\label{state__machine_8h_a2aa77bd4c4683bf248fba3a031c8816e}
+
+\item 
+float {\bfseries Kp}\hypertarget{state__machine_8h_a09cfc766a233ad617270562cc4146d07}{}\label{state__machine_8h_a09cfc766a233ad617270562cc4146d07}
+
+\item 
+float {\bfseries Kd}\hypertarget{state__machine_8h_a98268d71502ba080d88a9b1f50fdbe80}{}\label{state__machine_8h_a98268d71502ba080d88a9b1f50fdbe80}
+
+\item 
+float \hyperlink{state__machine_8h_ab1551d8043c2aa4410fb7dbb1fe3be7b}{alpha}
+\item 
+float {\bfseries I\+R\+\_\+0}\hypertarget{state__machine_8h_a7afcf874a71b2cde367dc9c28f5f01f1}{}\label{state__machine_8h_a7afcf874a71b2cde367dc9c28f5f01f1}
+
+\item 
+float {\bfseries I\+R\+\_\+1}\hypertarget{state__machine_8h_adee1bbc4817ed82271bd0d5904bda5d1}{}\label{state__machine_8h_adee1bbc4817ed82271bd0d5904bda5d1}
+
+\item 
+float {\bfseries I\+R\+\_\+2}\hypertarget{state__machine_8h_a07cfb2e201909d017a88a2a86c32cd4b}{}\label{state__machine_8h_a07cfb2e201909d017a88a2a86c32cd4b}
+
+\item 
+float {\bfseries I\+R\+\_\+3}\hypertarget{state__machine_8h_a7831b71dc250258ecefe0e23f9920688}{}\label{state__machine_8h_a7831b71dc250258ecefe0e23f9920688}
+
+\item 
+float {\bfseries I\+R\+\_\+4}\hypertarget{state__machine_8h_a45751d0c905b4d8c58c0461640594e97}{}\label{state__machine_8h_a45751d0c905b4d8c58c0461640594e97}
+
+\item 
+float {\bfseries I\+R\+\_\+5}\hypertarget{state__machine_8h_ad00ba6cc1cf461bda7059f5aafc06142}{}\label{state__machine_8h_ad00ba6cc1cf461bda7059f5aafc06142}
+
+\item 
+float {\bfseries I\+R\+\_\+6}\hypertarget{state__machine_8h_a8c51bcd8b555e8c78fea79b88d28b55e}{}\label{state__machine_8h_a8c51bcd8b555e8c78fea79b88d28b55e}
+
+\item 
+float {\bfseries US}\hypertarget{state__machine_8h_a6f9b7bcc44d43aac6b387f2aaacc3a18}{}\label{state__machine_8h_a6f9b7bcc44d43aac6b387f2aaacc3a18}
+
+\item 
+float {\bfseries I\+R\+\_\+\+Yaw\+\_\+left}\hypertarget{state__machine_8h_a6a78596948fb325d4e213e9c371b35e5}{}\label{state__machine_8h_a6a78596948fb325d4e213e9c371b35e5}
+
+\item 
+float {\bfseries I\+R\+\_\+\+Yaw\+\_\+right}\hypertarget{state__machine_8h_ab11513fa2fd2a21b39f60ac1e5bbb064}{}\label{state__machine_8h_ab11513fa2fd2a21b39f60ac1e5bbb064}
+
+\item 
+float {\bfseries I\+M\+U\+\_\+\+Yaw}\hypertarget{state__machine_8h_a03d9ec4915ff658ec4a465315895106d}{}\label{state__machine_8h_a03d9ec4915ff658ec4a465315895106d}
+
+\item 
+float {\bfseries Pitch}\hypertarget{state__machine_8h_aa412fb786d18d393b80ce4d2a00ba51c}{}\label{state__machine_8h_aa412fb786d18d393b80ce4d2a00ba51c}
+
+\item 
+float \hyperlink{state__machine_8h_ade9e1f9555516012861be1695fe4a9a0}{Roll}
+\item 
+\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9}{S\+T\+A\+T\+ES} \hyperlink{state__machine_8h_a5e5321a4a9085b83c8161454bf7a145c}{R\+O\+B\+O\+T\+\_\+\+S\+T\+A\+TE}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+State machine for the robot\textquotesingle{}s autonomous mode. 
+
+\begin{DoxyAuthor}{Author}
+Fredrik, Erik 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+25 apr 2016 Contains the robot\textquotesingle{}s state machine, which handles updating and execution of the robot\textquotesingle{}s state in its autonomous mode. 
+\end{DoxyDate}
+
+
+\subsection{Macro Definition Documentation}
+\index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!C\+E\+N\+T\+R\+E\+\_\+\+O\+F\+F\+S\+ET@{C\+E\+N\+T\+R\+E\+\_\+\+O\+F\+F\+S\+ET}}
+\index{C\+E\+N\+T\+R\+E\+\_\+\+O\+F\+F\+S\+ET@{C\+E\+N\+T\+R\+E\+\_\+\+O\+F\+F\+S\+ET}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{C\+E\+N\+T\+R\+E\+\_\+\+O\+F\+F\+S\+ET}{CENTRE_OFFSET}}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+E\+N\+T\+R\+E\+\_\+\+O\+F\+F\+S\+ET~8}\hypertarget{state__machine_8h_a5490b49530b86e69dba553166cd9d71b}{}\label{state__machine_8h_a5490b49530b86e69dba553166cd9d71b}
+Horizontal distance from centre of robot to its legs. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+S\+I\+D\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+S\+I\+D\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+S\+I\+D\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+S\+I\+D\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+S\+I\+D\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{CORRIDOR_SIDE_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+S\+I\+D\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE~60}\hypertarget{state__machine_8h_a201d56046ddf552d57b4862e0ec07a10}{}\label{state__machine_8h_a201d56046ddf552d57b4862e0ec07a10}
+Distance for determining whether corridor or not. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+W\+I\+D\+TH@{C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+W\+I\+D\+TH}}
+\index{C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+W\+I\+D\+TH@{C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+W\+I\+D\+TH}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+W\+I\+D\+TH}{CORRIDOR_WIDTH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+O\+R\+R\+I\+D\+O\+R\+\_\+\+W\+I\+D\+TH~80}\hypertarget{state__machine_8h_ac8d21b48b36c2d8b9192522087aab758}{}\label{state__machine_8h_ac8d21b48b36c2d8b9192522087aab758}
+Width of the labyrinth\textquotesingle{}s corridors. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{DEAD_END_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE~40}\hypertarget{state__machine_8h_aa31835133338361e7bffbaf776c9c7a1}{}\label{state__machine_8h_aa31835133338361e7bffbaf776c9c7a1}
+Distance to wall for turning in a dead end (which we shouln\textquotesingle{}t even enter). \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!E\+N\+D\+\_\+\+O\+F\+\_\+\+C\+O\+U\+R\+S\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{E\+N\+D\+\_\+\+O\+F\+\_\+\+C\+O\+U\+R\+S\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{E\+N\+D\+\_\+\+O\+F\+\_\+\+C\+O\+U\+R\+S\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{E\+N\+D\+\_\+\+O\+F\+\_\+\+C\+O\+U\+R\+S\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{E\+N\+D\+\_\+\+O\+F\+\_\+\+C\+O\+U\+R\+S\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{END_OF_COURSE_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+N\+D\+\_\+\+O\+F\+\_\+\+C\+O\+U\+R\+S\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE~80}\hypertarget{state__machine_8h_a9a1286b84f437e1c90d21ffc833a8b79}{}\label{state__machine_8h_a9a1286b84f437e1c90d21ffc833a8b79}
+Distance that I\+R\+\_\+0, 2, 3, 5, 6 should be larger than at the end of the course. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{FORWARD_DEAD_END_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE~180}\hypertarget{state__machine_8h_a8118fdbf1a36265000f2d42844e10747}{}\label{state__machine_8h_a8118fdbf1a36265000f2d42844e10747}
+Distance for determining whether dead end straight ahead in junction or not. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!F\+U\+L\+L\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE@{F\+U\+L\+L\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE}}
+\index{F\+U\+L\+L\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE@{F\+U\+L\+L\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{F\+U\+L\+L\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE}{FULL_ROTATION_ANGLE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+U\+L\+L\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE~175}\hypertarget{state__machine_8h_a40718a26b2b107afdc38533db41cc0a3}{}\label{state__machine_8h_a40718a26b2b107afdc38533db41cc0a3}
+Rotation angle for a 180 degree turn. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!H\+A\+L\+F\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE@{H\+A\+L\+F\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE}}
+\index{H\+A\+L\+F\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE@{H\+A\+L\+F\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{H\+A\+L\+F\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE}{HALF_ROTATION_ANGLE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define H\+A\+L\+F\+\_\+\+R\+O\+T\+A\+T\+I\+O\+N\+\_\+\+A\+N\+G\+LE~85}\hypertarget{state__machine_8h_a5776a711f0156180fe5efb79c9ffc24f}{}\label{state__machine_8h_a5776a711f0156180fe5efb79c9ffc24f}
+Rotation angle for a 90 degree turn. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!I\+R\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{I\+R\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{I\+R\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{I\+R\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{I\+R\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{IR_HIGH_OBSTACLE_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\+R\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE~50}\hypertarget{state__machine_8h_a83b61a7a575cb23097805af83236bcf0}{}\label{state__machine_8h_a83b61a7a575cb23097805af83236bcf0}
+Distance for determining whether high obstacle or not (IR sensor). \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{JUNCTION_A_FORWARD_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+U\+N\+C\+T\+I\+O\+N\+\_\+\+A\+\_\+\+F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE~80}\hypertarget{state__machine_8h_ada224a95ca04ac21b410ef6e23814eea}{}\label{state__machine_8h_ada224a95ca04ac21b410ef6e23814eea}
+Distance for determining whether A junction or not (junction or turn?). \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!L\+O\+N\+G\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{L\+O\+N\+G\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{L\+O\+N\+G\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{L\+O\+N\+G\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{L\+O\+N\+G\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{LONG_TURN_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+O\+N\+G\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE~100}\hypertarget{state__machine_8h_a365e437f4fdaddff7b28fa56e61a0060}{}\label{state__machine_8h_a365e437f4fdaddff7b28fa56e61a0060}
+Distance to wall for rotating in A junctions. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!L\+O\+W\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{L\+O\+W\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{L\+O\+W\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{L\+O\+W\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{L\+O\+W\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{LOW_OBSTACLE_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+O\+W\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE~40}\hypertarget{state__machine_8h_a29b3e85ce789185a96d28f139e003d4c}{}\label{state__machine_8h_a29b3e85ce789185a96d28f139e003d4c}
+Distance for determining whether low obstacle or not. If I\+R\+\_\+1 is less than this, slow down. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!N\+O\+\_\+\+W\+A\+L\+L\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{N\+O\+\_\+\+W\+A\+L\+L\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{N\+O\+\_\+\+W\+A\+L\+L\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{N\+O\+\_\+\+W\+A\+L\+L\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{N\+O\+\_\+\+W\+A\+L\+L\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{NO_WALL_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\+O\+\_\+\+W\+A\+L\+L\+\_\+\+D\+I\+S\+T\+A\+N\+CE~50}\hypertarget{state__machine_8h_a9d981c215ebe94b6be6a0d49ccd2dce8}{}\label{state__machine_8h_a9d981c215ebe94b6be6a0d49ccd2dce8}
+Distance that I\+R\+\_\+0 should be larger than near an obstacle (to tell obstacles and walls apart). \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!S\+H\+O\+R\+T\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{S\+H\+O\+R\+T\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{S\+H\+O\+R\+T\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{S\+H\+O\+R\+T\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{S\+H\+O\+R\+T\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{SHORT_TURN_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+H\+O\+R\+T\+\_\+\+T\+U\+R\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE~38}\hypertarget{state__machine_8h_adf843098ef425aa129f5ff16d879f7f2}{}\label{state__machine_8h_adf843098ef425aa129f5ff16d879f7f2}
+Distance to wall for rotating in turns and C junctions. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!S\+I\+D\+E\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{S\+I\+D\+E\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{S\+I\+D\+E\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{S\+I\+D\+E\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{S\+I\+D\+E\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{SIDE_DEAD_END_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+I\+D\+E\+\_\+\+D\+E\+A\+D\+\_\+\+E\+N\+D\+\_\+\+D\+I\+S\+T\+A\+N\+CE~150}\hypertarget{state__machine_8h_a31ba7e3e0116f665d5825f669052ed09}{}\label{state__machine_8h_a31ba7e3e0116f665d5825f669052ed09}
+Distance for determining whether dead end to right or left in junction. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+D\+O\+W\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+D\+O\+W\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+D\+O\+W\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+D\+O\+W\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+D\+O\+W\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{START_CLIMBING_DOWN_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+D\+O\+W\+N\+\_\+\+D\+I\+S\+T\+A\+N\+CE~50}\hypertarget{state__machine_8h_a9df2253e22c049d64aab5f0cbfd7dae3}{}\label{state__machine_8h_a9df2253e22c049d64aab5f0cbfd7dae3}
+Distance for beginning climbing down from low obstacle (if I\+R\+\_\+1 is less than this). \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+U\+P\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+U\+P\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+U\+P\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+U\+P\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+U\+P\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{START_CLIMBING_UP_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+T\+A\+R\+T\+\_\+\+C\+L\+I\+M\+B\+I\+N\+G\+\_\+\+U\+P\+\_\+\+D\+I\+S\+T\+A\+N\+CE~20}\hypertarget{state__machine_8h_a7dc7e4111003eb72dfc6cfede130fb5f}{}\label{state__machine_8h_a7dc7e4111003eb72dfc6cfede130fb5f}
+Distance for beginning climbing onto low obstacle (if I\+R\+\_\+1 is less than this). \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!U\+S\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{U\+S\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}}
+\index{U\+S\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE@{U\+S\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{U\+S\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE}{US_HIGH_OBSTACLE_DISTANCE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+S\+\_\+\+H\+I\+G\+H\+\_\+\+O\+B\+S\+T\+A\+C\+L\+E\+\_\+\+D\+I\+S\+T\+A\+N\+CE~40}\hypertarget{state__machine_8h_a647ce7a809da5ed12ea5319ed1c2b73f}{}\label{state__machine_8h_a647ce7a809da5ed12ea5319ed1c2b73f}
+Distance for determining whether high obstacle or not (ultrasound sensor). 
+
+\subsection{Enumeration Type Documentation}
+\index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!S\+T\+A\+T\+ES@{S\+T\+A\+T\+ES}}
+\index{S\+T\+A\+T\+ES@{S\+T\+A\+T\+ES}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{S\+T\+A\+T\+ES}{STATES}}]{\setlength{\rightskip}{0pt plus 5cm}enum S\+T\+A\+T\+ES}\hypertarget{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9}{}\label{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9}
+Enum that contains the different possible states that the robot can be in. 
+
+\subsection{Function Documentation}
+\index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!calculate\+\_\+p\+\_\+part@{calculate\+\_\+p\+\_\+part}}
+\index{calculate\+\_\+p\+\_\+part@{calculate\+\_\+p\+\_\+part}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{calculate\+\_\+p\+\_\+part()}{calculate_p_part()}}]{\setlength{\rightskip}{0pt plus 5cm}void calculate\+\_\+p\+\_\+part (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{state__machine_8h_a1207bf6b642796032a59633adcb689f2}{}\label{state__machine_8h_a1207bf6b642796032a59633adcb689f2}
+
+
+Calculates current P part. 
+
+Calculates current P part (for control) in different ways depending on current state. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!calculate\+\_\+\+Yaw@{calculate\+\_\+\+Yaw}}
+\index{calculate\+\_\+\+Yaw@{calculate\+\_\+\+Yaw}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{calculate\+\_\+\+Yaw()}{calculate_Yaw()}}]{\setlength{\rightskip}{0pt plus 5cm}void calculate\+\_\+\+Yaw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{state__machine_8h_a5611f3fef1c7ebe6f76d952adf576e86}{}\label{state__machine_8h_a5611f3fef1c7ebe6f76d952adf576e86}
+
+
+Calculates current Yaw angle. 
+
+Calculates current Yaw angle (for control) in different ways depending on current state. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!load\+\_\+sensor\+\_\+values@{load\+\_\+sensor\+\_\+values}}
+\index{load\+\_\+sensor\+\_\+values@{load\+\_\+sensor\+\_\+values}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{load\+\_\+sensor\+\_\+values()}{load_sensor_values()}}]{\setlength{\rightskip}{0pt plus 5cm}void load\+\_\+sensor\+\_\+values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{state__machine_8h_aefb7e87df9971d6e6c5641db5185ca6c}{}\label{state__machine_8h_aefb7e87df9971d6e6c5641db5185ca6c}
+
+
+Loads sensor values. 
+
+Loads sensor values into corresponding variables. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!run\+\_\+state@{run\+\_\+state}}
+\index{run\+\_\+state@{run\+\_\+state}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{run\+\_\+state(float height\+\_\+value)}{run_state(float height_value)}}]{\setlength{\rightskip}{0pt plus 5cm}void run\+\_\+state (
+\begin{DoxyParamCaption}
+\item[{float}]{height\+\_\+value}
+\end{DoxyParamCaption}
+)}\hypertarget{state__machine_8h_aba55a309968f3014c9c40ea01400e733}{}\label{state__machine_8h_aba55a309968f3014c9c40ea01400e733}
+
+
+Executes the robot\textquotesingle{}s current state. 
+
+Executes robot state based on current state and sensor values. 
+\begin{DoxyParams}{Parameters}
+{\em height\+\_\+value} & Indicates the robot\textquotesingle{}s distance to ground. \\
+\hline
+\end{DoxyParams}
+\index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!update\+\_\+state@{update\+\_\+state}}
+\index{update\+\_\+state@{update\+\_\+state}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{update\+\_\+state()}{update_state()}}]{\setlength{\rightskip}{0pt plus 5cm}void update\+\_\+state (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{state__machine_8h_af7c798149db27b6d271bf5845a489513}{}\label{state__machine_8h_af7c798149db27b6d271bf5845a489513}
+
+
+Updates the robot\textquotesingle{}s current state. 
+
+Updates robot state based on current state and sensor values. 
+
+\subsection{Variable Documentation}
+\index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!alpha@{alpha}}
+\index{alpha@{alpha}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{alpha}{alpha}}]{\setlength{\rightskip}{0pt plus 5cm}float alpha}\hypertarget{state__machine_8h_ab1551d8043c2aa4410fb7dbb1fe3be7b}{}\label{state__machine_8h_ab1551d8043c2aa4410fb7dbb1fe3be7b}
+Angles and parameters for motion control. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!first\+\_\+state\+\_\+cycle@{first\+\_\+state\+\_\+cycle}}
+\index{first\+\_\+state\+\_\+cycle@{first\+\_\+state\+\_\+cycle}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{first\+\_\+state\+\_\+cycle}{first_state_cycle}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t first\+\_\+state\+\_\+cycle}\hypertarget{state__machine_8h_a1397b4e16ab884b8328c03fd65fe9d52}{}\label{state__machine_8h_a1397b4e16ab884b8328c03fd65fe9d52}
+1 = first time that run\+\_\+state is executed in a certain state. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!I\+M\+U\+\_\+\+Yaw\+\_\+start@{I\+M\+U\+\_\+\+Yaw\+\_\+start}}
+\index{I\+M\+U\+\_\+\+Yaw\+\_\+start@{I\+M\+U\+\_\+\+Yaw\+\_\+start}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{I\+M\+U\+\_\+\+Yaw\+\_\+start}{IMU_Yaw_start}}]{\setlength{\rightskip}{0pt plus 5cm}float I\+M\+U\+\_\+\+Yaw\+\_\+start}\hypertarget{state__machine_8h_a74134a484bf5067e7afa67b9a5911d24}{}\label{state__machine_8h_a74134a484bf5067e7afa67b9a5911d24}
+The I\+MU\textquotesingle{}s start Yaw angle when entering turns and junctions. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!R\+O\+B\+O\+T\+\_\+\+S\+T\+A\+TE@{R\+O\+B\+O\+T\+\_\+\+S\+T\+A\+TE}}
+\index{R\+O\+B\+O\+T\+\_\+\+S\+T\+A\+TE@{R\+O\+B\+O\+T\+\_\+\+S\+T\+A\+TE}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{R\+O\+B\+O\+T\+\_\+\+S\+T\+A\+TE}{ROBOT_STATE}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+T\+A\+T\+ES} R\+O\+B\+O\+T\+\_\+\+S\+T\+A\+TE}\hypertarget{state__machine_8h_a5e5321a4a9085b83c8161454bf7a145c}{}\label{state__machine_8h_a5e5321a4a9085b83c8161454bf7a145c}
+Represents the robot\textquotesingle{}s current state. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!Roll@{Roll}}
+\index{Roll@{Roll}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{Roll}{Roll}}]{\setlength{\rightskip}{0pt plus 5cm}float Roll}\hypertarget{state__machine_8h_ade9e1f9555516012861be1695fe4a9a0}{}\label{state__machine_8h_ade9e1f9555516012861be1695fe4a9a0}
+Sensor values. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!rotation\+\_\+count@{rotation\+\_\+count}}
+\index{rotation\+\_\+count@{rotation\+\_\+count}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{rotation\+\_\+count}{rotation_count}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t rotation\+\_\+count}\hypertarget{state__machine_8h_ad03c0546202eb3154602cb8a0993c51f}{}\label{state__machine_8h_ad03c0546202eb3154602cb8a0993c51f}
+Counter that keeps track of rotation in a turn or junction. \index{state\+\_\+machine.\+h@{state\+\_\+machine.\+h}!start\+\_\+\+Yaw\+\_\+set@{start\+\_\+\+Yaw\+\_\+set}}
+\index{start\+\_\+\+Yaw\+\_\+set@{start\+\_\+\+Yaw\+\_\+set}!state\+\_\+machine.\+h@{state\+\_\+machine.\+h}}
+\subsubsection[{\texorpdfstring{start\+\_\+\+Yaw\+\_\+set}{start_Yaw_set}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t start\+\_\+\+Yaw\+\_\+set}\hypertarget{state__machine_8h_a51f98684c825046dd85a9256f18bbce9}{}\label{state__machine_8h_a51f98684c825046dd85a9256f18bbce9}
+Used to determine whether to set start Yaw value or not. 0 = hasn\textquotesingle{}t set start value. 

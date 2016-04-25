@@ -1,0 +1,238 @@
+\hypertarget{sensor_8h_source}{}\section{sensor.\+h}
+\label{sensor_8h_source}\index{sensor/sensor.\+h@{sensor/sensor.\+h}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ * sensor.h}
+00003 \textcolor{comment}{ *}
+00004 \textcolor{comment}{ * Created: 4/12/2016 8:59:49 AM}
+00005 \textcolor{comment}{ *  Author: joneh084}
+00006 \textcolor{comment}{ */} 
+00007 
+00008 
+00009 \textcolor{preprocessor}{#ifndef SENSOR\_H\_}
+00010 \textcolor{preprocessor}{#define SENSOR\_H\_}
+00011 
+00012 \textcolor{preprocessor}{#define F\_CPU 16000000UL        // 16 MHz}
+00013 
+00014 \textcolor{preprocessor}{#include <avr/io.h>}
+00015 \textcolor{preprocessor}{#include <avr/interrupt.h>}
+00016 \textcolor{preprocessor}{#include <avr/sleep.h>}
+00017 \textcolor{preprocessor}{#include <math.h>}
+00018 \textcolor{preprocessor}{#include <util/delay.h>}
+00019 \textcolor{preprocessor}{#include <compat/twi.h>}
+00020 
+00021 \textcolor{preprocessor}{#define x 0}
+00022 \textcolor{preprocessor}{#define y 1}
+00023 \textcolor{preprocessor}{#define z 2}
+00024 
+00026 
+00027 \textcolor{keyword}{const} \textcolor{keywordtype}{int} delay\_time = 50;                          \textcolor{comment}{// tid i millisekunder (50 ger alltså ungefär 20Hz,
+       lagom för US-sensorn)}
+00028 
+00029 \textcolor{keyword}{const} \textcolor{keywordtype}{double} IR\_sensor\_distance\_right = 14.5;       \textcolor{comment}{// Avståndet mellan högra sidosensorerna (cm)}
+00030 \textcolor{keyword}{const} \textcolor{keywordtype}{double} IR\_sensor\_distance\_left = 14.5;        \textcolor{comment}{// Avståndet mellan vänstra sidosensorerna (cm)}
+00031 
+00033 
+00034 \textcolor{keywordtype}{double} IR\_reading[7][5];                            \textcolor{comment}{// 2D-array med de 5 senaste avläsningarna för de 7
+       sensorerna}
+00035 \textcolor{keywordtype}{double} IR\_ADC[7], IR\_distance[7];
+00036 \textcolor{keywordtype}{double} IR\_Yaw, Yaw\_right, Yaw\_left;                 \textcolor{comment}{// XXXXX Yaw\_right och Yaw\_left skall göras lokala så
+       småningom}
+00037 \textcolor{keyword}{typedef} \textcolor{keyword}{struct}
+00038 \{
+00039     \textcolor{keywordtype}{double} ADC\_data;
+00040     \textcolor{keywordtype}{double} distance;
+00041 \} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair};
+00042 
+00043 \textcolor{keywordtype}{double} US\_reading;                                  \textcolor{comment}{// (US = Ultra Sound)}
+00044 \textcolor{keywordtype}{double} US\_distance;
+00045 
+00047 
+00048 uint8\_t buffer0\_IR0, buffer1\_IR1, buffer2\_IR2, buffer3\_IR3, buffer4\_IR4, buffer5\_IR5, buffer6\_IR6, 
+      buffer7\_US;      \textcolor{comment}{// Unsigned 8-bitars int, 0 - 255}
+00049 int8\_t buffer8\_IR\_Yaw, buffer9\_IMU\_Yaw, buffer10\_Pitch, buffer11\_Roll;      \textcolor{comment}{// Signed 8-bitars int}
+00050 
+00051 \textcolor{keywordtype}{int} byte\_to\_send = 0;           \textcolor{comment}{// Vilken byte i bufferten som skall skickas härnäst}
+00052 
+00054 
+00055 \textcolor{preprocessor}{#define QUAT\_W 0}
+00056 \textcolor{preprocessor}{#define QUAT\_X 1}
+00057 \textcolor{preprocessor}{#define QUAT\_Y 2}
+00058 \textcolor{preprocessor}{#define QUAT\_Z 3}
+00059 
+00060 \textcolor{preprocessor}{#define MPU\_HZ 15       //frekvensen som IMU:n genererar avbrott med (internt kör DMP:n alltid med 200 Hz)}
+00061 \textcolor{preprocessor}{#define USE\_DMP 1}
+00062 
+00063 \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \_dataReady = 0;
+00064 
+00065 \textcolor{keywordtype}{char} \_orientation[9] = \{1, 0, 0,  0, 1, 0,  0, 0, 1\};
+00066 
+00067 \textcolor{keywordtype}{float} quaternion[4];
+00068 int16\_t temp\_reading;
+00069 \textcolor{keywordtype}{double} IMU\_temperature;
+00070 \textcolor{keywordtype}{float} gravity[3];
+00071 \textcolor{keywordtype}{float} IMU\_Yaw, IMU\_Pitch, IMU\_Roll;
+00072 
+00074 
+00075 \textcolor{keywordtype}{double} counter = 0;             \textcolor{comment}{// XXXXX Endast för sensor-kalibrering}
+00076 \textcolor{keywordtype}{double} sum = 0;                 \textcolor{comment}{// XXXXX Endast för sensor-kalibrering}
+00077 \textcolor{keywordtype}{int} initial\_counter = 0;        \textcolor{comment}{// XXXXX Endast för sensor-kalibrering}
+00078 \textcolor{keywordtype}{double} result;                  \textcolor{comment}{// XXXXX Endast för sensor-kalibrering}
+00079 
+00081 
+00082 \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} IR0\_table[] =
+00083 \{
+00084     \{99.6, 140\},
+00085     \{102.2, 130\},
+00086     \{107.7, 120\},
+00087     \{117.7, 110\},
+00088     \{130.2, 100\},
+00089     \{142.9, 90\},
+00090     \{162.7, 80\},
+00091     \{184.6, 70\},
+00092     \{217.2, 60\},
+00093     \{260.0, 50\},
+00094     \{291.9, 45\},
+00095     \{328.2, 40\},
+00096     \{374.0, 35\},
+00097     \{430.6, 30\},
+00098     \{493.6, 25\},
+00099     \{548.2, 20\},
+00100     \{570.1, 15\}
+00101 \};
+00102 \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} IR1\_table[] =
+00103 \{
+00104     \{137.9, 55\},
+00105     \{142.9, 50\},
+00106     \{150.7, 45\},
+00107     \{163.6, 40\},
+00108     \{179.8, 35\},
+00109     \{204.3, 30\},
+00110     \{237.7, 25\},
+00111     \{289.5, 20\},
+00112     \{378.6, 15\},
+00113     \{554.5, 10\},
+00114     \{598.5, 5\}
+00115 \};
+00116 \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} IR2\_table[] =
+00117 \{
+00118     \{97.0, 130\},
+00119     \{106.2, 120\},
+00120     \{115.7, 110\},
+00121     \{124.8, 100\},
+00122     \{137.2, 90\},
+00123     \{154.2, 80\},
+00124     \{173.3, 70\},
+00125     \{204.2, 60\},
+00126     \{248.0, 50\},
+00127     \{276.3, 45\},
+00128     \{316.0, 40\},
+00129     \{359.7, 35\},
+00130     \{416.5, 30\},
+00131     \{468.6, 25\},
+00132     \{524.1, 20\},
+00133     \{557.3, 15\}
+00134 \};
+00135 \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} IR3\_table[] =
+00136 \{
+00137     \{16, 140\},
+00138     \{33.9, 130\},
+00139     \{65.7, 120\},
+00140     \{99.6, 110\},
+00141     \{122.4, 100\},
+00142     \{145.2, 90\},
+00143     \{166.8, 80\},
+00144     \{193.6, 70\},
+00145     \{225.2, 60\},
+00146     \{275.9, 50\},
+00147     \{309.5, 45\},
+00148     \{351.9, 40\},
+00149     \{403.8, 35\},
+00150     \{466.5, 30\},
+00151     \{533.6, 25\},
+00152     \{588.6, 20\},
+00153     \{615.7, 15\}
+00154 \};
+00155 \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} IR4\_table[] =
+00156 \{
+00157     \{139.2, 55\},
+00158     \{141.4, 50\},
+00159     \{149.3, 45\},
+00160     \{161.6, 40\},
+00161     \{175.9, 35\},
+00162     \{199.2, 30\},
+00163     \{231.8, 25\},
+00164     \{284.4, 20\},
+00165     \{368.9, 15\},
+00166     \{548.4, 10\},
+00167     \{621.4, 5\}
+00168 \};
+00169 \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} IR5\_table[] =
+00170 \{
+00171     \{101.2, 130\},
+00172     \{108.5, 120\},
+00173     \{118.9, 110\},
+00174     \{127.5, 100\},
+00175     \{142.5, 90\},
+00176     \{159.4, 80\},
+00177     \{179.0, 70\},
+00178     \{208.5, 60\},
+00179     \{252.5, 50\},
+00180     \{283.5, 45\},
+00181     \{318.8, 40\},
+00182     \{368.5, 35\},
+00183     \{420.5, 30\},
+00184     \{484.9, 25\},
+00185     \{538.8, 20\},
+00186     \{562.2, 15\}
+00187 \};
+00188 \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} IR6\_table[] =
+00189 \{
+00190     \{96.6, 130\},
+00191     \{100.6, 120\},
+00192     \{108.7, 110\},
+00193     \{120.2, 100\},
+00194     \{133.0, 90\},
+00195     \{150.5, 80\},
+00196     \{171.2, 70\},
+00197     \{202.8, 60\},
+00198     \{249.4, 50\},
+00199     \{278.2, 45\},
+00200     \{317.9, 40\},
+00201     \{364.4, 35\},
+00202     \{420.9, 30\},
+00203     \{482.0, 25\},
+00204     \{536.3, 20\},
+00205     \{571.7, 15\}
+00206 \};
+00207 
+00211 
+00212 \textcolor{comment}{//initiering}
+00213 \textcolor{keywordtype}{void} init\_ADC();
+00214 \textcolor{keywordtype}{void} init\_US();
+00215 \textcolor{keywordtype}{void} init\_SPI();
+00216 \textcolor{keywordtype}{void} init\_timer();
+00217 \textcolor{keywordtype}{void} init\_I2C();
+00218 \textcolor{keywordtype}{void} init\_IMU();
+00219 \textcolor{keywordtype}{void} init\_IMU\_interrupt();
+00220 
+00221 \textcolor{keywordtype}{void} ADC\_IR();
+00222 \textcolor{keywordtype}{void} read\_IMU();
+00223 \textcolor{keywordtype}{void} send\_ping();
+00224 \textcolor{keywordtype}{void} ADC\_to\_distance();
+00225 \textcolor{keywordtype}{double} lookup\_distance(\hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair}* ADC\_dist\_table, \textcolor{keywordtype}{double} ADC\_value, \textcolor{keywordtype}{int} table\_size
+      );
+00226 \textcolor{keywordtype}{void} time\_to\_distance();
+00227 \textcolor{keywordtype}{void} \hyperlink{state__machine_8h_a5611f3fef1c7ebe6f76d952adf576e86}{calculate\_Yaw}();
+00228 \textcolor{keywordtype}{void} save\_to\_buffer();
+00229 
+00230 \textcolor{comment}{//Matte för IMU}
+00231 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} Row2Scale(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *row);
+00232 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} Matrix2Scalar(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *mtx);
+00233 \textcolor{keywordtype}{void} NormalizeQuaternion(\textcolor{keywordtype}{float} *quat);
+00234 
+00235 \textcolor{keywordtype}{void} kalibrering();     \textcolor{comment}{// XXXXX Endast för att kunna kalibrera sensorer!}
+00236 
+00237 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* SENSOR\_H\_ */}\textcolor{preprocessor}{}
+\end{DoxyCode}
