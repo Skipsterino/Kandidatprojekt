@@ -1,0 +1,499 @@
+\hypertarget{sensor_2sensor_2dmp_key_8h_source}{}\section{dmp\+Key.\+h}
+\label{sensor_2sensor_2dmp_key_8h_source}\index{sensor/sensor/sensor/dmp\+Key.\+h@{sensor/sensor/sensor/dmp\+Key.\+h}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ $License:}
+00003 \textcolor{comment}{    Copyright (C) 2011 InvenSense Corporation, All Rights Reserved.}
+00004 \textcolor{comment}{ $}
+00005 \textcolor{comment}{ */}
+00006 \textcolor{preprocessor}{#ifndef DMPKEY\_H\_\_}
+00007 \textcolor{preprocessor}{#define DMPKEY\_H\_\_}
+00008 
+00009 \textcolor{preprocessor}{#define KEY\_CFG\_25                  (0)}
+00010 \textcolor{preprocessor}{#define KEY\_CFG\_24                  (KEY\_CFG\_25 + 1)}
+00011 \textcolor{preprocessor}{#define KEY\_CFG\_26                  (KEY\_CFG\_24 + 1)}
+00012 \textcolor{preprocessor}{#define KEY\_CFG\_27                  (KEY\_CFG\_26 + 1)}
+00013 \textcolor{preprocessor}{#define KEY\_CFG\_21                  (KEY\_CFG\_27 + 1)}
+00014 \textcolor{preprocessor}{#define KEY\_CFG\_20                  (KEY\_CFG\_21 + 1)}
+00015 \textcolor{preprocessor}{#define KEY\_CFG\_TAP4                (KEY\_CFG\_20 + 1)}
+00016 \textcolor{preprocessor}{#define KEY\_CFG\_TAP5                (KEY\_CFG\_TAP4 + 1)}
+00017 \textcolor{preprocessor}{#define KEY\_CFG\_TAP6                (KEY\_CFG\_TAP5 + 1)}
+00018 \textcolor{preprocessor}{#define KEY\_CFG\_TAP7                (KEY\_CFG\_TAP6 + 1)}
+00019 \textcolor{preprocessor}{#define KEY\_CFG\_TAP0                (KEY\_CFG\_TAP7 + 1)}
+00020 \textcolor{preprocessor}{#define KEY\_CFG\_TAP1                (KEY\_CFG\_TAP0 + 1)}
+00021 \textcolor{preprocessor}{#define KEY\_CFG\_TAP2                (KEY\_CFG\_TAP1 + 1)}
+00022 \textcolor{preprocessor}{#define KEY\_CFG\_TAP3                (KEY\_CFG\_TAP2 + 1)}
+00023 \textcolor{preprocessor}{#define KEY\_CFG\_TAP\_QUANTIZE        (KEY\_CFG\_TAP3 + 1)}
+00024 \textcolor{preprocessor}{#define KEY\_CFG\_TAP\_JERK            (KEY\_CFG\_TAP\_QUANTIZE + 1)}
+00025 \textcolor{preprocessor}{#define KEY\_CFG\_DR\_INT              (KEY\_CFG\_TAP\_JERK + 1)}
+00026 \textcolor{preprocessor}{#define KEY\_CFG\_AUTH                (KEY\_CFG\_DR\_INT + 1)}
+00027 \textcolor{preprocessor}{#define KEY\_CFG\_TAP\_SAVE\_ACCB       (KEY\_CFG\_AUTH + 1)}
+00028 \textcolor{preprocessor}{#define KEY\_CFG\_TAP\_CLEAR\_STICKY    (KEY\_CFG\_TAP\_SAVE\_ACCB + 1)}
+00029 \textcolor{preprocessor}{#define KEY\_CFG\_FIFO\_ON\_EVENT       (KEY\_CFG\_TAP\_CLEAR\_STICKY + 1)}
+00030 \textcolor{preprocessor}{#define KEY\_FCFG\_ACCEL\_INPUT        (KEY\_CFG\_FIFO\_ON\_EVENT + 1)}
+00031 \textcolor{preprocessor}{#define KEY\_FCFG\_ACCEL\_INIT         (KEY\_FCFG\_ACCEL\_INPUT + 1)}
+00032 \textcolor{preprocessor}{#define KEY\_CFG\_23                  (KEY\_FCFG\_ACCEL\_INIT + 1)}
+00033 \textcolor{preprocessor}{#define KEY\_FCFG\_1                  (KEY\_CFG\_23 + 1)}
+00034 \textcolor{preprocessor}{#define KEY\_FCFG\_3                  (KEY\_FCFG\_1 + 1)}
+00035 \textcolor{preprocessor}{#define KEY\_FCFG\_2                  (KEY\_FCFG\_3 + 1)}
+00036 \textcolor{preprocessor}{#define KEY\_CFG\_3D                  (KEY\_FCFG\_2 + 1)}
+00037 \textcolor{preprocessor}{#define KEY\_CFG\_3B                  (KEY\_CFG\_3D + 1)}
+00038 \textcolor{preprocessor}{#define KEY\_CFG\_3C                  (KEY\_CFG\_3B + 1)}
+00039 \textcolor{preprocessor}{#define KEY\_FCFG\_5                  (KEY\_CFG\_3C + 1)}
+00040 \textcolor{preprocessor}{#define KEY\_FCFG\_4                  (KEY\_FCFG\_5 + 1)}
+00041 \textcolor{preprocessor}{#define KEY\_FCFG\_7                  (KEY\_FCFG\_4 + 1)}
+00042 \textcolor{preprocessor}{#define KEY\_FCFG\_FSCALE             (KEY\_FCFG\_7 + 1)}
+00043 \textcolor{preprocessor}{#define KEY\_FCFG\_AZ                 (KEY\_FCFG\_FSCALE + 1)}
+00044 \textcolor{preprocessor}{#define KEY\_FCFG\_6                  (KEY\_FCFG\_AZ + 1)}
+00045 \textcolor{preprocessor}{#define KEY\_FCFG\_LSB4               (KEY\_FCFG\_6 + 1)}
+00046 \textcolor{preprocessor}{#define KEY\_CFG\_12                  (KEY\_FCFG\_LSB4 + 1)}
+00047 \textcolor{preprocessor}{#define KEY\_CFG\_14                  (KEY\_CFG\_12 + 1)}
+00048 \textcolor{preprocessor}{#define KEY\_CFG\_15                  (KEY\_CFG\_14 + 1)}
+00049 \textcolor{preprocessor}{#define KEY\_CFG\_16                  (KEY\_CFG\_15 + 1)}
+00050 \textcolor{preprocessor}{#define KEY\_CFG\_18                  (KEY\_CFG\_16 + 1)}
+00051 \textcolor{preprocessor}{#define KEY\_CFG\_6                   (KEY\_CFG\_18 + 1)}
+00052 \textcolor{preprocessor}{#define KEY\_CFG\_7                   (KEY\_CFG\_6 + 1)}
+00053 \textcolor{preprocessor}{#define KEY\_CFG\_4                   (KEY\_CFG\_7 + 1)}
+00054 \textcolor{preprocessor}{#define KEY\_CFG\_5                   (KEY\_CFG\_4 + 1)}
+00055 \textcolor{preprocessor}{#define KEY\_CFG\_2                   (KEY\_CFG\_5 + 1)}
+00056 \textcolor{preprocessor}{#define KEY\_CFG\_3                   (KEY\_CFG\_2 + 1)}
+00057 \textcolor{preprocessor}{#define KEY\_CFG\_1                   (KEY\_CFG\_3 + 1)}
+00058 \textcolor{preprocessor}{#define KEY\_CFG\_EXTERNAL            (KEY\_CFG\_1 + 1)}
+00059 \textcolor{preprocessor}{#define KEY\_CFG\_8                   (KEY\_CFG\_EXTERNAL + 1)}
+00060 \textcolor{preprocessor}{#define KEY\_CFG\_9                   (KEY\_CFG\_8 + 1)}
+00061 \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_3            (KEY\_CFG\_9 + 1)}
+00062 \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_2            (KEY\_CFG\_ORIENT\_3 + 1)}
+00063 \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_1            (KEY\_CFG\_ORIENT\_2 + 1)}
+00064 \textcolor{preprocessor}{#define KEY\_CFG\_GYRO\_SOURCE         (KEY\_CFG\_ORIENT\_1 + 1)}
+00065 \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_IRQ\_1        (KEY\_CFG\_GYRO\_SOURCE + 1)}
+00066 \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_IRQ\_2        (KEY\_CFG\_ORIENT\_IRQ\_1 + 1)}
+00067 \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_IRQ\_3        (KEY\_CFG\_ORIENT\_IRQ\_2 + 1)}
+00068 \textcolor{preprocessor}{#define KEY\_FCFG\_MAG\_VAL            (KEY\_CFG\_ORIENT\_IRQ\_3 + 1)}
+00069 \textcolor{preprocessor}{#define KEY\_FCFG\_MAG\_MOV            (KEY\_FCFG\_MAG\_VAL + 1)}
+00070 \textcolor{preprocessor}{#define KEY\_CFG\_LP\_QUAT             (KEY\_FCFG\_MAG\_MOV + 1)}
+00071 
+00072 \textcolor{comment}{/* MPU6050 keys */}
+00073 \textcolor{preprocessor}{#define KEY\_CFG\_ACCEL\_FILTER        (KEY\_CFG\_LP\_QUAT + 1)}
+00074 \textcolor{preprocessor}{#define KEY\_CFG\_MOTION\_BIAS         (KEY\_CFG\_ACCEL\_FILTER + 1)}
+00075 \textcolor{preprocessor}{#define KEY\_TEMPLABEL               (KEY\_CFG\_MOTION\_BIAS + 1)}
+00076 
+00077 \textcolor{preprocessor}{#define KEY\_D\_0\_22                  (KEY\_TEMPLABEL + 1)}
+00078 \textcolor{preprocessor}{#define KEY\_D\_0\_24                  (KEY\_D\_0\_22 + 1)}
+00079 \textcolor{preprocessor}{#define KEY\_D\_0\_36                  (KEY\_D\_0\_24 + 1)}
+00080 \textcolor{preprocessor}{#define KEY\_D\_0\_52                  (KEY\_D\_0\_36 + 1)}
+00081 \textcolor{preprocessor}{#define KEY\_D\_0\_96                  (KEY\_D\_0\_52 + 1)}
+00082 \textcolor{preprocessor}{#define KEY\_D\_0\_104                 (KEY\_D\_0\_96 + 1)}
+00083 \textcolor{preprocessor}{#define KEY\_D\_0\_108                 (KEY\_D\_0\_104 + 1)}
+00084 \textcolor{preprocessor}{#define KEY\_D\_0\_163                 (KEY\_D\_0\_108 + 1)}
+00085 \textcolor{preprocessor}{#define KEY\_D\_0\_188                 (KEY\_D\_0\_163 + 1)}
+00086 \textcolor{preprocessor}{#define KEY\_D\_0\_192                 (KEY\_D\_0\_188 + 1)}
+00087 \textcolor{preprocessor}{#define KEY\_D\_0\_224                 (KEY\_D\_0\_192 + 1)}
+00088 \textcolor{preprocessor}{#define KEY\_D\_0\_228                 (KEY\_D\_0\_224 + 1)}
+00089 \textcolor{preprocessor}{#define KEY\_D\_0\_232                 (KEY\_D\_0\_228 + 1)}
+00090 \textcolor{preprocessor}{#define KEY\_D\_0\_236                 (KEY\_D\_0\_232 + 1)}
+00091 
+00092 \textcolor{preprocessor}{#define KEY\_DMP\_PREVPTAT            (KEY\_D\_0\_236 + 1)}
+00093 \textcolor{preprocessor}{#define KEY\_D\_1\_2                   (KEY\_DMP\_PREVPTAT + 1)}
+00094 \textcolor{preprocessor}{#define KEY\_D\_1\_4                   (KEY\_D\_1\_2 + 1)}
+00095 \textcolor{preprocessor}{#define KEY\_D\_1\_8                   (KEY\_D\_1\_4 + 1)}
+00096 \textcolor{preprocessor}{#define KEY\_D\_1\_10                  (KEY\_D\_1\_8 + 1)}
+00097 \textcolor{preprocessor}{#define KEY\_D\_1\_24                  (KEY\_D\_1\_10 + 1)}
+00098 \textcolor{preprocessor}{#define KEY\_D\_1\_28                  (KEY\_D\_1\_24 + 1)}
+00099 \textcolor{preprocessor}{#define KEY\_D\_1\_36                  (KEY\_D\_1\_28 + 1)}
+00100 \textcolor{preprocessor}{#define KEY\_D\_1\_40                  (KEY\_D\_1\_36 + 1)}
+00101 \textcolor{preprocessor}{#define KEY\_D\_1\_44                  (KEY\_D\_1\_40 + 1)}
+00102 \textcolor{preprocessor}{#define KEY\_D\_1\_72                  (KEY\_D\_1\_44 + 1)}
+00103 \textcolor{preprocessor}{#define KEY\_D\_1\_74                  (KEY\_D\_1\_72 + 1)}
+00104 \textcolor{preprocessor}{#define KEY\_D\_1\_79                  (KEY\_D\_1\_74 + 1)}
+00105 \textcolor{preprocessor}{#define KEY\_D\_1\_88                  (KEY\_D\_1\_79 + 1)}
+00106 \textcolor{preprocessor}{#define KEY\_D\_1\_90                  (KEY\_D\_1\_88 + 1)}
+00107 \textcolor{preprocessor}{#define KEY\_D\_1\_92                  (KEY\_D\_1\_90 + 1)}
+00108 \textcolor{preprocessor}{#define KEY\_D\_1\_96                  (KEY\_D\_1\_92 + 1)}
+00109 \textcolor{preprocessor}{#define KEY\_D\_1\_98                  (KEY\_D\_1\_96 + 1)}
+00110 \textcolor{preprocessor}{#define KEY\_D\_1\_100                 (KEY\_D\_1\_98 + 1)}
+00111 \textcolor{preprocessor}{#define KEY\_D\_1\_106                 (KEY\_D\_1\_100 + 1)}
+00112 \textcolor{preprocessor}{#define KEY\_D\_1\_108                 (KEY\_D\_1\_106 + 1)}
+00113 \textcolor{preprocessor}{#define KEY\_D\_1\_112                 (KEY\_D\_1\_108 + 1)}
+00114 \textcolor{preprocessor}{#define KEY\_D\_1\_128                 (KEY\_D\_1\_112 + 1)}
+00115 \textcolor{preprocessor}{#define KEY\_D\_1\_152                 (KEY\_D\_1\_128 + 1)}
+00116 \textcolor{preprocessor}{#define KEY\_D\_1\_160                 (KEY\_D\_1\_152 + 1)}
+00117 \textcolor{preprocessor}{#define KEY\_D\_1\_168                 (KEY\_D\_1\_160 + 1)}
+00118 \textcolor{preprocessor}{#define KEY\_D\_1\_175                 (KEY\_D\_1\_168 + 1)}
+00119 \textcolor{preprocessor}{#define KEY\_D\_1\_176                 (KEY\_D\_1\_175 + 1)}
+00120 \textcolor{preprocessor}{#define KEY\_D\_1\_178                 (KEY\_D\_1\_176 + 1)}
+00121 \textcolor{preprocessor}{#define KEY\_D\_1\_179                 (KEY\_D\_1\_178 + 1)}
+00122 \textcolor{preprocessor}{#define KEY\_D\_1\_218                 (KEY\_D\_1\_179 + 1)}
+00123 \textcolor{preprocessor}{#define KEY\_D\_1\_232                 (KEY\_D\_1\_218 + 1)}
+00124 \textcolor{preprocessor}{#define KEY\_D\_1\_236                 (KEY\_D\_1\_232 + 1)}
+00125 \textcolor{preprocessor}{#define KEY\_D\_1\_240                 (KEY\_D\_1\_236 + 1)}
+00126 \textcolor{preprocessor}{#define KEY\_D\_1\_244                 (KEY\_D\_1\_240 + 1)}
+00127 \textcolor{preprocessor}{#define KEY\_D\_1\_250                 (KEY\_D\_1\_244 + 1)}
+00128 \textcolor{preprocessor}{#define KEY\_D\_1\_252                 (KEY\_D\_1\_250 + 1)}
+00129 \textcolor{preprocessor}{#define KEY\_D\_2\_12                  (KEY\_D\_1\_252 + 1)}
+00130 \textcolor{preprocessor}{#define KEY\_D\_2\_96                  (KEY\_D\_2\_12 + 1)}
+00131 \textcolor{preprocessor}{#define KEY\_D\_2\_108                 (KEY\_D\_2\_96 + 1)}
+00132 \textcolor{preprocessor}{#define KEY\_D\_2\_208                 (KEY\_D\_2\_108 + 1)}
+00133 \textcolor{preprocessor}{#define KEY\_FLICK\_MSG               (KEY\_D\_2\_208 + 1)}
+00134 \textcolor{preprocessor}{#define KEY\_FLICK\_COUNTER           (KEY\_FLICK\_MSG + 1)}
+00135 \textcolor{preprocessor}{#define KEY\_FLICK\_LOWER             (KEY\_FLICK\_COUNTER + 1)}
+00136 \textcolor{preprocessor}{#define KEY\_CFG\_FLICK\_IN            (KEY\_FLICK\_LOWER + 1)}
+00137 \textcolor{preprocessor}{#define KEY\_FLICK\_UPPER             (KEY\_CFG\_FLICK\_IN + 1)}
+00138 \textcolor{preprocessor}{#define KEY\_CGNOTICE\_INTR           (KEY\_FLICK\_UPPER + 1)}
+00139 \textcolor{preprocessor}{#define KEY\_D\_2\_224                 (KEY\_CGNOTICE\_INTR + 1)}
+00140 \textcolor{preprocessor}{#define KEY\_D\_2\_244                 (KEY\_D\_2\_224 + 1)}
+00141 \textcolor{preprocessor}{#define KEY\_D\_2\_248                 (KEY\_D\_2\_244 + 1)}
+00142 \textcolor{preprocessor}{#define KEY\_D\_2\_252                 (KEY\_D\_2\_248 + 1)}
+00143 
+00144 \textcolor{preprocessor}{#define KEY\_D\_GYRO\_BIAS\_X               (KEY\_D\_2\_252 + 1)}
+00145 \textcolor{preprocessor}{#define KEY\_D\_GYRO\_BIAS\_Y               (KEY\_D\_GYRO\_BIAS\_X + 1)}
+00146 \textcolor{preprocessor}{#define KEY\_D\_GYRO\_BIAS\_Z               (KEY\_D\_GYRO\_BIAS\_Y + 1)}
+00147 \textcolor{preprocessor}{#define KEY\_D\_ACC\_BIAS\_X                (KEY\_D\_GYRO\_BIAS\_Z + 1)}
+00148 \textcolor{preprocessor}{#define KEY\_D\_ACC\_BIAS\_Y                (KEY\_D\_ACC\_BIAS\_X + 1)}
+00149 \textcolor{preprocessor}{#define KEY\_D\_ACC\_BIAS\_Z                (KEY\_D\_ACC\_BIAS\_Y + 1)}
+00150 \textcolor{preprocessor}{#define KEY\_D\_GYRO\_ENABLE               (KEY\_D\_ACC\_BIAS\_Z + 1)}
+00151 \textcolor{preprocessor}{#define KEY\_D\_ACCEL\_ENABLE              (KEY\_D\_GYRO\_ENABLE + 1)}
+00152 \textcolor{preprocessor}{#define KEY\_D\_QUAT\_ENABLE               (KEY\_D\_ACCEL\_ENABLE +1)}
+00153 \textcolor{preprocessor}{#define KEY\_D\_OUTPUT\_ENABLE             (KEY\_D\_QUAT\_ENABLE + 1)}
+00154 \textcolor{preprocessor}{#define KEY\_D\_CR\_TIME\_G                 (KEY\_D\_OUTPUT\_ENABLE + 1)}
+00155 \textcolor{preprocessor}{#define KEY\_D\_CR\_TIME\_A                 (KEY\_D\_CR\_TIME\_G + 1)}
+00156 \textcolor{preprocessor}{#define KEY\_D\_CR\_TIME\_Q                 (KEY\_D\_CR\_TIME\_A + 1)}
+00157 \textcolor{preprocessor}{#define KEY\_D\_CS\_TAX                    (KEY\_D\_CR\_TIME\_Q + 1)}
+00158 \textcolor{preprocessor}{#define KEY\_D\_CS\_TAY                    (KEY\_D\_CS\_TAX + 1)}
+00159 \textcolor{preprocessor}{#define KEY\_D\_CS\_TAZ                    (KEY\_D\_CS\_TAY + 1)}
+00160 \textcolor{preprocessor}{#define KEY\_D\_CS\_TGX                    (KEY\_D\_CS\_TAZ + 1)}
+00161 \textcolor{preprocessor}{#define KEY\_D\_CS\_TGY                    (KEY\_D\_CS\_TGX + 1)}
+00162 \textcolor{preprocessor}{#define KEY\_D\_CS\_TGZ                    (KEY\_D\_CS\_TGY + 1)}
+00163 \textcolor{preprocessor}{#define KEY\_D\_CS\_TQ0                    (KEY\_D\_CS\_TGZ + 1)}
+00164 \textcolor{preprocessor}{#define KEY\_D\_CS\_TQ1                    (KEY\_D\_CS\_TQ0 + 1)}
+00165 \textcolor{preprocessor}{#define KEY\_D\_CS\_TQ2                    (KEY\_D\_CS\_TQ1 + 1)}
+00166 \textcolor{preprocessor}{#define KEY\_D\_CS\_TQ3                    (KEY\_D\_CS\_TQ2 + 1)}
+00167 
+00168 \textcolor{comment}{/* Compass keys */}
+00169 \textcolor{preprocessor}{#define KEY\_CPASS\_BIAS\_X            (KEY\_D\_CS\_TQ3 + 1)}
+00170 \textcolor{preprocessor}{#define KEY\_CPASS\_BIAS\_Y            (KEY\_CPASS\_BIAS\_X + 1)}
+00171 \textcolor{preprocessor}{#define KEY\_CPASS\_BIAS\_Z            (KEY\_CPASS\_BIAS\_Y + 1)}
+00172 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_00            (KEY\_CPASS\_BIAS\_Z + 1)}
+00173 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_01            (KEY\_CPASS\_MTX\_00 + 1)}
+00174 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_02            (KEY\_CPASS\_MTX\_01 + 1)}
+00175 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_10            (KEY\_CPASS\_MTX\_02 + 1)}
+00176 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_11            (KEY\_CPASS\_MTX\_10 + 1)}
+00177 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_12            (KEY\_CPASS\_MTX\_11 + 1)}
+00178 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_20            (KEY\_CPASS\_MTX\_12 + 1)}
+00179 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_21            (KEY\_CPASS\_MTX\_20 + 1)}
+00180 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_22            (KEY\_CPASS\_MTX\_21 + 1)}
+00181 
+00182 \textcolor{comment}{/* Gesture Keys */}
+00183 \textcolor{preprocessor}{#define KEY\_DMP\_TAPW\_MIN            (KEY\_CPASS\_MTX\_22 + 1)}
+00184 \textcolor{preprocessor}{#define KEY\_DMP\_TAP\_THR\_X           (KEY\_DMP\_TAPW\_MIN + 1)}
+00185 \textcolor{preprocessor}{#define KEY\_DMP\_TAP\_THR\_Y           (KEY\_DMP\_TAP\_THR\_X + 1)}
+00186 \textcolor{preprocessor}{#define KEY\_DMP\_TAP\_THR\_Z           (KEY\_DMP\_TAP\_THR\_Y + 1)}
+00187 \textcolor{preprocessor}{#define KEY\_DMP\_SH\_TH\_Y             (KEY\_DMP\_TAP\_THR\_Z + 1)}
+00188 \textcolor{preprocessor}{#define KEY\_DMP\_SH\_TH\_X             (KEY\_DMP\_SH\_TH\_Y + 1)}
+00189 \textcolor{preprocessor}{#define KEY\_DMP\_SH\_TH\_Z             (KEY\_DMP\_SH\_TH\_X + 1)}
+00190 \textcolor{preprocessor}{#define KEY\_DMP\_ORIENT              (KEY\_DMP\_SH\_TH\_Z + 1)}
+00191 \textcolor{preprocessor}{#define KEY\_D\_ACT0                  (KEY\_DMP\_ORIENT + 1)}
+00192 \textcolor{preprocessor}{#define KEY\_D\_ACSX                  (KEY\_D\_ACT0 + 1)}
+00193 \textcolor{preprocessor}{#define KEY\_D\_ACSY                  (KEY\_D\_ACSX + 1)}
+00194 \textcolor{preprocessor}{#define KEY\_D\_ACSZ                  (KEY\_D\_ACSY + 1)}
+00195 
+00196 \textcolor{preprocessor}{#define KEY\_X\_GRT\_Y\_TMP             (KEY\_D\_ACSZ + 1)}
+00197 \textcolor{preprocessor}{#define KEY\_SKIP\_X\_GRT\_Y\_TMP        (KEY\_X\_GRT\_Y\_TMP + 1)}
+00198 \textcolor{preprocessor}{#define KEY\_SKIP\_END\_COMPARE        (KEY\_SKIP\_X\_GRT\_Y\_TMP + 1)}
+00199 \textcolor{preprocessor}{#define KEY\_END\_COMPARE\_Y\_X\_TMP2    (KEY\_SKIP\_END\_COMPARE + 1)       }
+00200 \textcolor{preprocessor}{#define KEY\_CFG\_ANDROID\_ORIENT\_INT  (KEY\_END\_COMPARE\_Y\_X\_TMP2 + 1)}
+00201 \textcolor{preprocessor}{#define KEY\_NO\_ORIENT\_INTERRUPT     (KEY\_CFG\_ANDROID\_ORIENT\_INT + 1)}
+00202 \textcolor{preprocessor}{#define KEY\_END\_COMPARE\_Y\_X\_TMP     (KEY\_NO\_ORIENT\_INTERRUPT + 1)}
+00203 \textcolor{preprocessor}{#define KEY\_END\_ORIENT\_1            (KEY\_END\_COMPARE\_Y\_X\_TMP + 1)}
+00204 \textcolor{preprocessor}{#define KEY\_END\_COMPARE\_Y\_X         (KEY\_END\_ORIENT\_1 + 1) }
+00205 \textcolor{preprocessor}{#define KEY\_END\_ORIENT              (KEY\_END\_COMPARE\_Y\_X + 1)}
+00206 \textcolor{preprocessor}{#define KEY\_X\_GRT\_Y                 (KEY\_END\_ORIENT + 1)}
+00207 \textcolor{preprocessor}{#define KEY\_NOT\_TIME\_MINUS\_1        (KEY\_X\_GRT\_Y + 1)       }
+00208 \textcolor{preprocessor}{#define KEY\_END\_COMPARE\_Y\_X\_TMP3    (KEY\_NOT\_TIME\_MINUS\_1 + 1) }
+00209 \textcolor{preprocessor}{#define KEY\_X\_GRT\_Y\_TMP2            (KEY\_END\_COMPARE\_Y\_X\_TMP3 + 1)}
+00210 
+00211 \textcolor{comment}{/* Authenticate Keys */}
+00212 \textcolor{preprocessor}{#define KEY\_D\_AUTH\_OUT              (KEY\_X\_GRT\_Y\_TMP2 + 1)}
+00213 \textcolor{preprocessor}{#define KEY\_D\_AUTH\_IN               (KEY\_D\_AUTH\_OUT + 1)}
+00214 \textcolor{preprocessor}{#define KEY\_D\_AUTH\_A                (KEY\_D\_AUTH\_IN + 1)}
+00215 \textcolor{preprocessor}{#define KEY\_D\_AUTH\_B                (KEY\_D\_AUTH\_A + 1)}
+00216 
+00217 \textcolor{comment}{/* Pedometer standalone only keys */}
+00218 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_B           (KEY\_D\_AUTH\_B + 1)}
+00219 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_HP\_A           (KEY\_D\_PEDSTD\_BP\_B + 1)}
+00220 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_HP\_B           (KEY\_D\_PEDSTD\_HP\_A + 1)}
+00221 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_A4          (KEY\_D\_PEDSTD\_HP\_B + 1)}
+00222 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_A3          (KEY\_D\_PEDSTD\_BP\_A4 + 1)}
+00223 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_A2          (KEY\_D\_PEDSTD\_BP\_A3 + 1)}
+00224 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_A1          (KEY\_D\_PEDSTD\_BP\_A2 + 1)}
+00225 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_INT\_THRSH      (KEY\_D\_PEDSTD\_BP\_A1 + 1)}
+00226 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_CLIP           (KEY\_D\_PEDSTD\_INT\_THRSH + 1)}
+00227 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_SB             (KEY\_D\_PEDSTD\_CLIP + 1)}
+00228 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_SB\_TIME        (KEY\_D\_PEDSTD\_SB + 1)}
+00229 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_PEAKTHRSH      (KEY\_D\_PEDSTD\_SB\_TIME + 1)}
+00230 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_TIML           (KEY\_D\_PEDSTD\_PEAKTHRSH + 1)}
+00231 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_TIMH           (KEY\_D\_PEDSTD\_TIML + 1)}
+00232 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_PEAK           (KEY\_D\_PEDSTD\_TIMH + 1)}
+00233 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_TIMECTR        (KEY\_D\_PEDSTD\_PEAK + 1)}
+00234 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_STEPCTR        (KEY\_D\_PEDSTD\_TIMECTR + 1)}
+00235 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_WALKTIME       (KEY\_D\_PEDSTD\_STEPCTR + 1)}
+00236 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_DECI           (KEY\_D\_PEDSTD\_WALKTIME + 1)}
+00237 
+00238 \textcolor{comment}{/*Host Based No Motion*/}
+00239 \textcolor{preprocessor}{#define KEY\_D\_HOST\_NO\_MOT           (KEY\_D\_PEDSTD\_DECI + 1)}
+00240 
+00241 \textcolor{comment}{/* EIS keys */}
+00242 \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_FOOTER       (KEY\_D\_HOST\_NO\_MOT + 1)}
+00243 \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_YSHIFT       (KEY\_P\_EIS\_FIFO\_FOOTER + 1)}
+00244 \textcolor{preprocessor}{#define KEY\_P\_EIS\_DATA\_RATE         (KEY\_P\_EIS\_FIFO\_YSHIFT + 1)}
+00245 \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_XSHIFT       (KEY\_P\_EIS\_DATA\_RATE + 1)}
+00246 \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_SYNC         (KEY\_P\_EIS\_FIFO\_XSHIFT + 1)}
+00247 \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_ZSHIFT       (KEY\_P\_EIS\_FIFO\_SYNC + 1)}
+00248 \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_READY        (KEY\_P\_EIS\_FIFO\_ZSHIFT + 1)}
+00249 \textcolor{preprocessor}{#define KEY\_DMP\_FOOTER              (KEY\_P\_EIS\_FIFO\_READY + 1)}
+00250 \textcolor{preprocessor}{#define KEY\_DMP\_INTX\_HC             (KEY\_DMP\_FOOTER + 1)}
+00251 \textcolor{preprocessor}{#define KEY\_DMP\_INTX\_PH             (KEY\_DMP\_INTX\_HC + 1)}
+00252 \textcolor{preprocessor}{#define KEY\_DMP\_INTX\_SH             (KEY\_DMP\_INTX\_PH + 1)}
+00253 \textcolor{preprocessor}{#define KEY\_DMP\_AINV\_SH             (KEY\_DMP\_INTX\_SH + 1)}
+00254 \textcolor{preprocessor}{#define KEY\_DMP\_A\_INV\_XH            (KEY\_DMP\_AINV\_SH + 1)}
+00255 \textcolor{preprocessor}{#define KEY\_DMP\_AINV\_PH             (KEY\_DMP\_A\_INV\_XH + 1)}
+00256 \textcolor{preprocessor}{#define KEY\_DMP\_CTHX\_H              (KEY\_DMP\_AINV\_PH + 1)}
+00257 \textcolor{preprocessor}{#define KEY\_DMP\_CTHY\_H              (KEY\_DMP\_CTHX\_H + 1)}
+00258 \textcolor{preprocessor}{#define KEY\_DMP\_CTHZ\_H              (KEY\_DMP\_CTHY\_H + 1)}
+00259 \textcolor{preprocessor}{#define KEY\_DMP\_NCTHX\_H             (KEY\_DMP\_CTHZ\_H + 1)}
+00260 \textcolor{preprocessor}{#define KEY\_DMP\_NCTHY\_H             (KEY\_DMP\_NCTHX\_H + 1)}
+00261 \textcolor{preprocessor}{#define KEY\_DMP\_NCTHZ\_H             (KEY\_DMP\_NCTHY\_H + 1)}
+00262 \textcolor{preprocessor}{#define KEY\_DMP\_CTSQ\_XH             (KEY\_DMP\_NCTHZ\_H + 1)}
+00263 \textcolor{preprocessor}{#define KEY\_DMP\_CTSQ\_YH             (KEY\_DMP\_CTSQ\_XH + 1)}
+00264 \textcolor{preprocessor}{#define KEY\_DMP\_CTSQ\_ZH             (KEY\_DMP\_CTSQ\_YH + 1)}
+00265 \textcolor{preprocessor}{#define KEY\_DMP\_INTX\_H              (KEY\_DMP\_CTSQ\_ZH + 1)}
+00266 \textcolor{preprocessor}{#define KEY\_DMP\_INTY\_H              (KEY\_DMP\_INTX\_H + 1)}
+00267 \textcolor{preprocessor}{#define KEY\_DMP\_INTZ\_H              (KEY\_DMP\_INTY\_H + 1)}
+00268 \textcolor{comment}{//#define KEY\_DMP\_HPX\_H               (KEY\_DMP\_INTZ\_H + 1)}
+00269 \textcolor{comment}{//#define KEY\_DMP\_HPY\_H               (KEY\_DMP\_HPX\_H + 1)}
+00270 \textcolor{comment}{//#define KEY\_DMP\_HPZ\_H               (KEY\_DMP\_HPY\_H + 1)}
+00271 
+00272 \textcolor{comment}{/* Stream keys */}
+00273 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_GYRO\_Z         (KEY\_DMP\_INTZ\_H + 1)}
+00274 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_GYRO\_Y         (KEY\_STREAM\_P\_GYRO\_Z + 1)}
+00275 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_GYRO\_X         (KEY\_STREAM\_P\_GYRO\_Y + 1)}
+00276 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_TEMP           (KEY\_STREAM\_P\_GYRO\_X + 1)}
+00277 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_AUX\_Y          (KEY\_STREAM\_P\_TEMP + 1)}
+00278 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_AUX\_X          (KEY\_STREAM\_P\_AUX\_Y + 1)}
+00279 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_AUX\_Z          (KEY\_STREAM\_P\_AUX\_X + 1)}
+00280 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_ACCEL\_Y        (KEY\_STREAM\_P\_AUX\_Z + 1)}
+00281 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_ACCEL\_X        (KEY\_STREAM\_P\_ACCEL\_Y + 1)}
+00282 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_FOOTER         (KEY\_STREAM\_P\_ACCEL\_X + 1)}
+00283 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_ACCEL\_Z        (KEY\_STREAM\_P\_FOOTER + 1)}
+00284 
+00285 \textcolor{preprocessor}{#define NUM\_KEYS                    (KEY\_STREAM\_P\_ACCEL\_Z + 1)}
+00286 
+00287 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{
+00288     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} key;
+00289     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} addr;
+00290 \} \hyperlink{structt_key_label}{tKeyLabel};
+00291 
+00292 \textcolor{preprocessor}{#define DINA0A 0x0a}
+00293 \textcolor{preprocessor}{#define DINA22 0x22}
+00294 \textcolor{preprocessor}{#define DINA42 0x42}
+00295 \textcolor{preprocessor}{#define DINA5A 0x5a}
+00296 
+00297 \textcolor{preprocessor}{#define DINA06 0x06}
+00298 \textcolor{preprocessor}{#define DINA0E 0x0e}
+00299 \textcolor{preprocessor}{#define DINA16 0x16}
+00300 \textcolor{preprocessor}{#define DINA1E 0x1e}
+00301 \textcolor{preprocessor}{#define DINA26 0x26}
+00302 \textcolor{preprocessor}{#define DINA2E 0x2e}
+00303 \textcolor{preprocessor}{#define DINA36 0x36}
+00304 \textcolor{preprocessor}{#define DINA3E 0x3e}
+00305 \textcolor{preprocessor}{#define DINA46 0x46}
+00306 \textcolor{preprocessor}{#define DINA4E 0x4e}
+00307 \textcolor{preprocessor}{#define DINA56 0x56}
+00308 \textcolor{preprocessor}{#define DINA5E 0x5e}
+00309 \textcolor{preprocessor}{#define DINA66 0x66}
+00310 \textcolor{preprocessor}{#define DINA6E 0x6e}
+00311 \textcolor{preprocessor}{#define DINA76 0x76}
+00312 \textcolor{preprocessor}{#define DINA7E 0x7e}
+00313 
+00314 \textcolor{preprocessor}{#define DINA00 0x00}
+00315 \textcolor{preprocessor}{#define DINA08 0x08}
+00316 \textcolor{preprocessor}{#define DINA10 0x10}
+00317 \textcolor{preprocessor}{#define DINA18 0x18}
+00318 \textcolor{preprocessor}{#define DINA20 0x20}
+00319 \textcolor{preprocessor}{#define DINA28 0x28}
+00320 \textcolor{preprocessor}{#define DINA30 0x30}
+00321 \textcolor{preprocessor}{#define DINA38 0x38}
+00322 \textcolor{preprocessor}{#define DINA40 0x40}
+00323 \textcolor{preprocessor}{#define DINA48 0x48}
+00324 \textcolor{preprocessor}{#define DINA50 0x50}
+00325 \textcolor{preprocessor}{#define DINA58 0x58}
+00326 \textcolor{preprocessor}{#define DINA60 0x60}
+00327 \textcolor{preprocessor}{#define DINA68 0x68}
+00328 \textcolor{preprocessor}{#define DINA70 0x70}
+00329 \textcolor{preprocessor}{#define DINA78 0x78}
+00330 
+00331 \textcolor{preprocessor}{#define DINA04 0x04}
+00332 \textcolor{preprocessor}{#define DINA0C 0x0c}
+00333 \textcolor{preprocessor}{#define DINA14 0x14}
+00334 \textcolor{preprocessor}{#define DINA1C 0x1C}
+00335 \textcolor{preprocessor}{#define DINA24 0x24}
+00336 \textcolor{preprocessor}{#define DINA2C 0x2c}
+00337 \textcolor{preprocessor}{#define DINA34 0x34}
+00338 \textcolor{preprocessor}{#define DINA3C 0x3c}
+00339 \textcolor{preprocessor}{#define DINA44 0x44}
+00340 \textcolor{preprocessor}{#define DINA4C 0x4c}
+00341 \textcolor{preprocessor}{#define DINA54 0x54}
+00342 \textcolor{preprocessor}{#define DINA5C 0x5c}
+00343 \textcolor{preprocessor}{#define DINA64 0x64}
+00344 \textcolor{preprocessor}{#define DINA6C 0x6c}
+00345 \textcolor{preprocessor}{#define DINA74 0x74}
+00346 \textcolor{preprocessor}{#define DINA7C 0x7c}
+00347 
+00348 \textcolor{preprocessor}{#define DINA01 0x01}
+00349 \textcolor{preprocessor}{#define DINA09 0x09}
+00350 \textcolor{preprocessor}{#define DINA11 0x11}
+00351 \textcolor{preprocessor}{#define DINA19 0x19}
+00352 \textcolor{preprocessor}{#define DINA21 0x21}
+00353 \textcolor{preprocessor}{#define DINA29 0x29}
+00354 \textcolor{preprocessor}{#define DINA31 0x31}
+00355 \textcolor{preprocessor}{#define DINA39 0x39}
+00356 \textcolor{preprocessor}{#define DINA41 0x41}
+00357 \textcolor{preprocessor}{#define DINA49 0x49}
+00358 \textcolor{preprocessor}{#define DINA51 0x51}
+00359 \textcolor{preprocessor}{#define DINA59 0x59}
+00360 \textcolor{preprocessor}{#define DINA61 0x61}
+00361 \textcolor{preprocessor}{#define DINA69 0x69}
+00362 \textcolor{preprocessor}{#define DINA71 0x71}
+00363 \textcolor{preprocessor}{#define DINA79 0x79}
+00364 
+00365 \textcolor{preprocessor}{#define DINA25 0x25}
+00366 \textcolor{preprocessor}{#define DINA2D 0x2d}
+00367 \textcolor{preprocessor}{#define DINA35 0x35}
+00368 \textcolor{preprocessor}{#define DINA3D 0x3d}
+00369 \textcolor{preprocessor}{#define DINA4D 0x4d}
+00370 \textcolor{preprocessor}{#define DINA55 0x55}
+00371 \textcolor{preprocessor}{#define DINA5D 0x5D}
+00372 \textcolor{preprocessor}{#define DINA6D 0x6d}
+00373 \textcolor{preprocessor}{#define DINA75 0x75}
+00374 \textcolor{preprocessor}{#define DINA7D 0x7d}
+00375 
+00376 \textcolor{preprocessor}{#define DINADC 0xdc}
+00377 \textcolor{preprocessor}{#define DINAF2 0xf2}
+00378 \textcolor{preprocessor}{#define DINAAB 0xab}
+00379 \textcolor{preprocessor}{#define DINAAA 0xaa}
+00380 \textcolor{preprocessor}{#define DINAF1 0xf1}
+00381 \textcolor{preprocessor}{#define DINADF 0xdf}
+00382 \textcolor{preprocessor}{#define DINADA 0xda}
+00383 \textcolor{preprocessor}{#define DINAB1 0xb1}
+00384 \textcolor{preprocessor}{#define DINAB9 0xb9}
+00385 \textcolor{preprocessor}{#define DINAF3 0xf3}
+00386 \textcolor{preprocessor}{#define DINA8B 0x8b}
+00387 \textcolor{preprocessor}{#define DINAA3 0xa3}
+00388 \textcolor{preprocessor}{#define DINA91 0x91}
+00389 \textcolor{preprocessor}{#define DINAB6 0xb6}
+00390 \textcolor{preprocessor}{#define DINAB4 0xb4}
+00391 
+00392 
+00393 \textcolor{preprocessor}{#define DINC00 0x00}
+00394 \textcolor{preprocessor}{#define DINC01 0x01}
+00395 \textcolor{preprocessor}{#define DINC02 0x02}
+00396 \textcolor{preprocessor}{#define DINC03 0x03}
+00397 \textcolor{preprocessor}{#define DINC08 0x08}
+00398 \textcolor{preprocessor}{#define DINC09 0x09}
+00399 \textcolor{preprocessor}{#define DINC0A 0x0a}
+00400 \textcolor{preprocessor}{#define DINC0B 0x0b}
+00401 \textcolor{preprocessor}{#define DINC10 0x10}
+00402 \textcolor{preprocessor}{#define DINC11 0x11}
+00403 \textcolor{preprocessor}{#define DINC12 0x12}
+00404 \textcolor{preprocessor}{#define DINC13 0x13}
+00405 \textcolor{preprocessor}{#define DINC18 0x18}
+00406 \textcolor{preprocessor}{#define DINC19 0x19}
+00407 \textcolor{preprocessor}{#define DINC1A 0x1a}
+00408 \textcolor{preprocessor}{#define DINC1B 0x1b}
+00409 
+00410 \textcolor{preprocessor}{#define DINC20 0x20}
+00411 \textcolor{preprocessor}{#define DINC21 0x21}
+00412 \textcolor{preprocessor}{#define DINC22 0x22}
+00413 \textcolor{preprocessor}{#define DINC23 0x23}
+00414 \textcolor{preprocessor}{#define DINC28 0x28}
+00415 \textcolor{preprocessor}{#define DINC29 0x29}
+00416 \textcolor{preprocessor}{#define DINC2A 0x2a}
+00417 \textcolor{preprocessor}{#define DINC2B 0x2b}
+00418 \textcolor{preprocessor}{#define DINC30 0x30}
+00419 \textcolor{preprocessor}{#define DINC31 0x31}
+00420 \textcolor{preprocessor}{#define DINC32 0x32}
+00421 \textcolor{preprocessor}{#define DINC33 0x33}
+00422 \textcolor{preprocessor}{#define DINC38 0x38}
+00423 \textcolor{preprocessor}{#define DINC39 0x39}
+00424 \textcolor{preprocessor}{#define DINC3A 0x3a}
+00425 \textcolor{preprocessor}{#define DINC3B 0x3b}
+00426 
+00427 \textcolor{preprocessor}{#define DINC40 0x40}
+00428 \textcolor{preprocessor}{#define DINC41 0x41}
+00429 \textcolor{preprocessor}{#define DINC42 0x42}
+00430 \textcolor{preprocessor}{#define DINC43 0x43}
+00431 \textcolor{preprocessor}{#define DINC48 0x48}
+00432 \textcolor{preprocessor}{#define DINC49 0x49}
+00433 \textcolor{preprocessor}{#define DINC4A 0x4a}
+00434 \textcolor{preprocessor}{#define DINC4B 0x4b}
+00435 \textcolor{preprocessor}{#define DINC50 0x50}
+00436 \textcolor{preprocessor}{#define DINC51 0x51}
+00437 \textcolor{preprocessor}{#define DINC52 0x52}
+00438 \textcolor{preprocessor}{#define DINC53 0x53}
+00439 \textcolor{preprocessor}{#define DINC58 0x58}
+00440 \textcolor{preprocessor}{#define DINC59 0x59}
+00441 \textcolor{preprocessor}{#define DINC5A 0x5a}
+00442 \textcolor{preprocessor}{#define DINC5B 0x5b}
+00443 
+00444 \textcolor{preprocessor}{#define DINC60 0x60}
+00445 \textcolor{preprocessor}{#define DINC61 0x61}
+00446 \textcolor{preprocessor}{#define DINC62 0x62}
+00447 \textcolor{preprocessor}{#define DINC63 0x63}
+00448 \textcolor{preprocessor}{#define DINC68 0x68}
+00449 \textcolor{preprocessor}{#define DINC69 0x69}
+00450 \textcolor{preprocessor}{#define DINC6A 0x6a}
+00451 \textcolor{preprocessor}{#define DINC6B 0x6b}
+00452 \textcolor{preprocessor}{#define DINC70 0x70}
+00453 \textcolor{preprocessor}{#define DINC71 0x71}
+00454 \textcolor{preprocessor}{#define DINC72 0x72}
+00455 \textcolor{preprocessor}{#define DINC73 0x73}
+00456 \textcolor{preprocessor}{#define DINC78 0x78}
+00457 \textcolor{preprocessor}{#define DINC79 0x79}
+00458 \textcolor{preprocessor}{#define DINC7A 0x7a}
+00459 \textcolor{preprocessor}{#define DINC7B 0x7b}
+00460 
+00461 \textcolor{preprocessor}{#define DIND40 0x40}
+00462 
+00463 
+00464 \textcolor{preprocessor}{#define DINA80 0x80}
+00465 \textcolor{preprocessor}{#define DINA90 0x90}
+00466 \textcolor{preprocessor}{#define DINAA0 0xa0}
+00467 \textcolor{preprocessor}{#define DINAC9 0xc9}
+00468 \textcolor{preprocessor}{#define DINACB 0xcb}
+00469 \textcolor{preprocessor}{#define DINACD 0xcd}
+00470 \textcolor{preprocessor}{#define DINACF 0xcf}
+00471 \textcolor{preprocessor}{#define DINAC8 0xc8}
+00472 \textcolor{preprocessor}{#define DINACA 0xca}
+00473 \textcolor{preprocessor}{#define DINACC 0xcc}
+00474 \textcolor{preprocessor}{#define DINACE 0xce}
+00475 \textcolor{preprocessor}{#define DINAD8 0xd8}
+00476 \textcolor{preprocessor}{#define DINADD 0xdd}
+00477 \textcolor{preprocessor}{#define DINAF8 0xf0}
+00478 \textcolor{preprocessor}{#define DINAFE 0xfe}
+00479 
+00480 \textcolor{preprocessor}{#define DINBF8 0xf8}
+00481 \textcolor{preprocessor}{#define DINAC0 0xb0}
+00482 \textcolor{preprocessor}{#define DINAC1 0xb1}
+00483 \textcolor{preprocessor}{#define DINAC2 0xb4}
+00484 \textcolor{preprocessor}{#define DINAC3 0xb5}
+00485 \textcolor{preprocessor}{#define DINAC4 0xb8}
+00486 \textcolor{preprocessor}{#define DINAC5 0xb9}
+00487 \textcolor{preprocessor}{#define DINBC0 0xc0}
+00488 \textcolor{preprocessor}{#define DINBC2 0xc2}
+00489 \textcolor{preprocessor}{#define DINBC4 0xc4}
+00490 \textcolor{preprocessor}{#define DINBC6 0xc6}
+00491 
+00492 
+00493 
+00494 \textcolor{preprocessor}{#endif // DMPKEY\_H\_\_}
+\end{DoxyCode}

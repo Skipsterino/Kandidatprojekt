@@ -106,11 +106,9 @@ Macros</h2></td></tr>
 <tr class="memitem:a43bafb28b29491ec7f871319b5a3b2f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43bafb28b29491ec7f871319b5a3b2f8"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>F_CPU</b>&#160;&#160;&#160;14745600UL</td></tr>
 <tr class="separator:a43bafb28b29491ec7f871319b5a3b2f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bb24c05980471cbc9086fef965deacc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5bb24c05980471cbc9086fef965deacc"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>LCD_NUMBER_OF_LINES</b>&#160;&#160;&#160;4</td></tr>
+<tr class="memitem:a5bb24c05980471cbc9086fef965deacc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l_c_d_8h.html#a5bb24c05980471cbc9086fef965deacc">LCD_NUMBER_OF_LINES</a>&#160;&#160;&#160;4</td></tr>
 <tr class="separator:a5bb24c05980471cbc9086fef965deacc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bdd8750b215c775f2227262a1934b54"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5bdd8750b215c775f2227262a1934b54"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>LCD_LINE_WIDTH</b>&#160;&#160;&#160;16</td></tr>
+<tr class="memitem:a5bdd8750b215c775f2227262a1934b54"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l_c_d_8h.html#a5bdd8750b215c775f2227262a1934b54">LCD_LINE_WIDTH</a>&#160;&#160;&#160;16</td></tr>
 <tr class="separator:a5bdd8750b215c775f2227262a1934b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -124,7 +122,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a7a19aaec7f9deb1589a7efddf3da8d3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l_c_d_8h.html#a7a19aaec7f9deb1589a7efddf3da8d3f">LCD_putc</a> (char c)</td></tr>
 <tr class="memdesc:a7a19aaec7f9deb1589a7efddf3da8d3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a character on the screen.  <a href="#a7a19aaec7f9deb1589a7efddf3da8d3f">More...</a><br /></td></tr>
 <tr class="separator:a7a19aaec7f9deb1589a7efddf3da8d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbc155e4e9d279ccd12c2695fe78a0e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l_c_d_8h.html#afbc155e4e9d279ccd12c2695fe78a0e3">LCD_print_string</a> (char line1[LCD_LINE_WIDTH], char line2[LCD_LINE_WIDTH], char line3[LCD_LINE_WIDTH], char line4[LCD_LINE_WIDTH])</td></tr>
+<tr class="memitem:afbc155e4e9d279ccd12c2695fe78a0e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l_c_d_8h.html#afbc155e4e9d279ccd12c2695fe78a0e3">LCD_print_string</a> (char line1[<a class="el" href="_l_c_d_8h.html#a5bdd8750b215c775f2227262a1934b54">LCD_LINE_WIDTH</a>], char line2[<a class="el" href="_l_c_d_8h.html#a5bdd8750b215c775f2227262a1934b54">LCD_LINE_WIDTH</a>], char line3[<a class="el" href="_l_c_d_8h.html#a5bdd8750b215c775f2227262a1934b54">LCD_LINE_WIDTH</a>], char line4[<a class="el" href="_l_c_d_8h.html#a5bdd8750b215c775f2227262a1934b54">LCD_LINE_WIDTH</a>])</td></tr>
 <tr class="memdesc:afbc155e4e9d279ccd12c2695fe78a0e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints 4 strings to the LCD.  <a href="#afbc155e4e9d279ccd12c2695fe78a0e3">More...</a><br /></td></tr>
 <tr class="separator:afbc155e4e9d279ccd12c2695fe78a0e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6679ea6f481524d1b6a30c4d99b8aad5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_l_c_d_8h.html#a6679ea6f481524d1b6a30c4d99b8aad5">LCD_busy</a> ()</td></tr>
@@ -141,7 +139,34 @@ Functions</h2></td></tr>
 <div class="textblock"><p>LCD driver. </p>
 <dl class="section author"><dt>Author</dt><dd>Joakim </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>25 apr 2016 Defines commands for interfacing with the LCD </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a5bdd8750b215c775f2227262a1934b54"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LCD_LINE_WIDTH&#160;&#160;&#160;16</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The number of columns the LCD can show. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5bb24c05980471cbc9086fef965deacc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LCD_NUMBER_OF_LINES&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The number of lines the LCD can show. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a6679ea6f481524d1b6a30c4d99b8aad5"></a>
 <div class="memitem">
 <div class="memproto">

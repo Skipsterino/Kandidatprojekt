@@ -1,0 +1,119 @@
+\hypertarget{state__machine_8h_source}{}\section{state\+\_\+machine.\+h}
+\label{state__machine_8h_source}\index{styr/styr/state\+\_\+machine.\+h@{styr/styr/state\+\_\+machine.\+h}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ * state\_machine.h}
+00003 \textcolor{comment}{ *}
+00004 \textcolor{comment}{ * Created: 4/8/2016 2:53:17 PM}
+00005 \textcolor{comment}{ *  Author: fregu856}
+00006 \textcolor{comment}{ */} 
+00007 
+00008 
+00009 \textcolor{preprocessor}{#ifndef STATE\_MACHINE\_H\_}
+00010 \textcolor{preprocessor}{#define STATE\_MACHINE\_H\_}
+00011 
+00012 \textcolor{preprocessor}{#ifndef F\_CPU}
+00013 \textcolor{preprocessor}{#define F\_CPU 16000000UL        // 16 MHz}
+00014 \textcolor{preprocessor}{#endif}
+00015 
+00016 \textcolor{preprocessor}{#include "SPI.h"}
+00017 \textcolor{preprocessor}{#include "gangstilar.h"}
+00018 
+00019 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{
+00020     CORRIDOR = 1, 
+00021     OUT\_OF\_CORRIDOR\_NO\_WALL = 2, 
+00022     OUT\_OF\_CORRIDOR\_LEFT\_WALL = 3, 
+00023     OUT\_OF\_CORRIDOR\_RIGHT\_WALL = 4,
+00024     
+00025     INTO\_HIGH\_OBSTACLE = 5, 
+00026     INTO\_LOW\_OBSTACLE = 6, 
+00027     INTO\_TURN\_RIGHT = 7, 
+00028     INTO\_TURN\_LEFT = 8, 
+00029     INTO\_JUNCTION\_A\_RIGHT = 9, 
+00030     INTO\_JUNCTION\_A\_LEFT = 10,
+00031     
+00032     TURN\_RIGHT = 11, 
+00033     TURN\_LEFT = 12, 
+00034     JUNCTION\_A\_LEFT = 13, 
+00035     JUNCTION\_A\_RIGHT = 14, 
+00036     JUNCTION\_B\_RIGHT = 15, 
+00037     JUNCTION\_B\_LEFT = 16, 
+00038     JUNCTION\_C\_RIGHT = 17, 
+00039     JUNCTION\_C\_LEFT = 18, 
+00040     
+00041     DEAD\_END = 19,
+00042     MID\_DEAD\_END = 20,
+00043     
+00044     HIGH\_OBSTACLE = 21, 
+00045     LOW\_OBSTACLE = 22, 
+00046     CRAWLING\_OUT\_OF\_HIGH\_OBSTACLE = 23, 
+00047     CRAWLING\_UNDER\_HIGH\_OBSTACLE = 24, 
+00048     CLIMB\_UP = 25,
+00049     
+00050     OUT\_OF\_TURN\_RIGHT = 26, 
+00051     OUT\_OF\_TURN\_LEFT = 27, 
+00052     OUT\_OF\_JUNCTION\_A\_RIGHT = 28, 
+00053     OUT\_OF\_JUNCTION\_A\_LEFT = 29, 
+00054     OUT\_OF\_JUNCTION\_C\_RIGHT = 30, 
+00055     OUT\_OF\_JUNCTION\_C\_LEFT = 31, 
+00056     OUT\_OF\_HIGH\_OBSTACLE = 32, 
+00057     OUT\_OF\_LOW\_OBSTACLE = 33,
+00058     
+00059     END\_OF\_COURSE = 34, 
+00060     STOP = 35,
+00061     INTO\_JUNCTION\_C\_RIGHT = 36,
+00062     INTO\_JUNCTION\_C\_LEFT = 37,
+00063     INTO\_CORRIDOR\_NO\_WALL = 38,
+00064 \} STATES;
+00065 
+00066 \textcolor{preprocessor}{#define HALF\_ROTATION\_ANGLE 85          // Vinkeln vi ska rotera till vid en 90-graders rotation}
+00067 \textcolor{preprocessor}{#define FULL\_ROTATION\_ANGLE 175         // Vinkeln vi ska rotera till vid en 180-graders rotation}
+00068 \textcolor{preprocessor}{#define CORRIDOR\_SIDE\_DISTANCE 60       // Gränsavstånd för om vi är i korridor eller inte (om
+       sidosensorerna visar mindre än detta avstånd är vi korridor, annars inte)}
+00069 \textcolor{preprocessor}{#define SIDE\_DEAD\_END\_DISTANCE 150      // Gränsavstånd för en återvändsgränd till höger eller vänster i en
+       korsning (fri väg till höger/vänster eller inte)}
+00070 \textcolor{preprocessor}{#define END\_OF\_COURSE\_DISTANCE 80       // Avståndet som IR\_0, 2, 3, 5, 6 ska vara större än vid banslutet}
+00071 \textcolor{preprocessor}{#define SHORT\_TURN\_DISTANCE 38          // Avståndet vid vilket vi ska rotera vid svängar och korsning C.}
+00072 \textcolor{preprocessor}{#define LONG\_TURN\_DISTANCE 100          // Avståndet vid vilket vi ska rotera vid korsning A}
+00073 \textcolor{preprocessor}{#define FORWARD\_DEAD\_END\_DISTANCE 180       // Gränsavstånd för en återvändsgränd frammåt i en korsning
+       (fri väg framåt eller inte)}
+00074 \textcolor{preprocessor}{#define JUNCTION\_A\_FORWARD\_DISTANCE 80      // Gränsavstånd för korsning A (är det korsning A eller vanlig
+       sväng?)}
+00075 \textcolor{preprocessor}{#define LOW\_OBSTACLE\_DISTANCE 40        // Avståndet på IR\_1 vid vilken lågt hinder har upptäckts och vi
+       ska börja gå försiktigt}
+00076 \textcolor{preprocessor}{#define START\_CLIMBING\_UP\_DISTANCE 20       // Avståndet på IR\_1 vid vilken vi ska börja klättra upp på ett
+       lågt hinder}
+00077 \textcolor{preprocessor}{#define START\_CLIMBING\_DOWN\_DISTANCE 50     // Avståndet på IR\_1 vid vilken vi ska börja gå ner ifrån ett
+       lågt hinder}
+00078 \textcolor{preprocessor}{#define US\_HIGH\_OBSTACLE\_DISTANCE 40        // Gränsavståndet för ultraljudssensorn (högt hinder eller
+       inte)}
+00079 \textcolor{preprocessor}{#define IR\_HIGH\_OBSTACLE\_DISTANCE 50        // Gränsavståndet för sensorn riktad uppåt (högt hinder i vägen
+       eller inte) }
+00080 \textcolor{preprocessor}{#define NO\_WALL\_DISTANCE 50         // Avståndet som IR\_0 ska vara större än vid ett hinder för att
+       säkerställa att det inte bara är en vägg}
+00081 \textcolor{preprocessor}{#define DEAD\_END\_DISTANCE 40            // Avståndet vid vilket vi vänder om vi skulle komma in i en
+       återvändsgränd (vilket ej ska hända)}
+00082 
+00083 \textcolor{preprocessor}{#define CENTER\_OFFSET 8}
+00084 \textcolor{preprocessor}{#define CORRIDOR\_WIDTH 80}
+00085 
+00086 \textcolor{keywordtype}{float} IMU\_Yaw\_start;
+00087 \textcolor{keywordtype}{int} start\_Yaw\_set;      \textcolor{comment}{// 0 = har ej satt ett startvärde}
+00088 \textcolor{keywordtype}{int} first\_state\_cycle;      \textcolor{comment}{// 1 = första gången vi kör run\_state för ett visst state}
+00089 \textcolor{keywordtype}{int} rotation\_count;
+00090 
+00091 \textcolor{keywordtype}{float} Yaw, Yaw\_rad, p\_part, Kp, Kd, alpha;
+00092 \textcolor{keywordtype}{float} IR\_0, IR\_1, IR\_2, IR\_3, IR\_4, IR\_5, IR\_6, US, IR\_Yaw\_left, IR\_Yaw\_right, IMU\_Yaw, Yaw, Pitch, Roll;
+00093 
+00094 STATES ROBOT\_STATE;
+00095 
+00096 \textcolor{keywordtype}{void} update\_state();
+00097 \textcolor{keywordtype}{void} run\_state(\textcolor{keywordtype}{float} height\_value);
+00098 \textcolor{keywordtype}{void} load\_sensor\_values();
+00099 \textcolor{keywordtype}{void} calculate\_Yaw();
+00100 \textcolor{keywordtype}{void} calculate\_p\_part();
+00101 
+00102 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* STATE\_MACHINE\_H\_ */}\textcolor{preprocessor}{}
+00103 
+\end{DoxyCode}

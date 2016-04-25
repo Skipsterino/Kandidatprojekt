@@ -1,0 +1,47 @@
+\hypertarget{_i2_c_8h_source}{}\section{I2\+C.\+h}
+\label{_i2_c_8h_source}\index{sensor/\+I2\+C.\+h@{sensor/\+I2\+C.\+h}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ * I2C.h}
+00003 \textcolor{comment}{ *}
+00004 \textcolor{comment}{ * Created: 4/8/2016 9:46:05 AM}
+00005 \textcolor{comment}{ *  Author: joneh084}
+00006 \textcolor{comment}{ */} 
+00007 
+00008 
+00009 \textcolor{preprocessor}{#ifndef I2C\_H\_}
+00010 \textcolor{preprocessor}{#define I2C\_H\_}
+00011 
+00012 \textcolor{preprocessor}{#include <util/atomic.h>}
+00013 \textcolor{preprocessor}{#include <avr/io.h>}
+00014 \textcolor{preprocessor}{#include <avr/interrupt.h>}
+00015 
+00016 \textcolor{preprocessor}{#define F\_CPU 16000000UL}
+00017 
+00018 \textcolor{preprocessor}{#define I2Cstatus\_START 0x08}
+00019 
+00020 \textcolor{preprocessor}{#define I2Cstatus\_MT\_SLA\_ACK 0x18       // Master Transmitter Mode}
+00021 \textcolor{preprocessor}{#define I2Cstatus\_MT\_SLA\_NACK 0x20}
+00022 \textcolor{preprocessor}{#define I2Cstatus\_MT\_DATA\_ACK 0x28}
+00023 \textcolor{preprocessor}{#define I2Cstatus\_MT\_DATA\_NACK 0x30}
+00024 
+00025 \textcolor{preprocessor}{#define I2Cstatus\_MR\_SLA\_ACK 0x40       // Master Receiver Mode}
+00026 \textcolor{preprocessor}{#define I2Cstatus\_MR\_SLA\_NACK 0x48}
+00027 \textcolor{preprocessor}{#define I2Cstatus\_MR\_DATA\_ACK 0x50}
+00028 \textcolor{preprocessor}{#define I2Cstatus\_MR\_DATA\_NACK 0x58}
+00029 
+00030 \textcolor{preprocessor}{#define SLA\_W 0xD0}
+00031 \textcolor{preprocessor}{#define SLA\_R 0xD1}
+00032 
+00033 \textcolor{keywordtype}{void} I2C\_start();
+00034 \textcolor{keywordtype}{void} I2C\_stop();
+00035 
+00036 \textcolor{keywordtype}{int} error();
+00037 
+00038 \textcolor{keywordtype}{int} i2c\_write(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} slave\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} reg\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} length, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \textcolor{keyword}{const} *
+      data);
+00039 \textcolor{keywordtype}{int} i2c\_read(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} slave\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} reg\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} length, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *data);
+00040 
+00041 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* I2C\_H\_ */}\textcolor{preprocessor}{}
+\end{DoxyCode}

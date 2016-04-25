@@ -1,0 +1,131 @@
+\hypertarget{_u_s_a_r_t_8h}{}\section{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+U\+S\+A\+RT.h File Reference}
+\label{_u_s_a_r_t_8h}\index{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+U\+S\+A\+R\+T.\+h@{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+U\+S\+A\+R\+T.\+h}}
+
+
+U\+S\+A\+RT driver.  
+
+
+{\ttfamily \#include $<$avr/io.\+h$>$}\\*
+{\ttfamily \#include $<$avr/interrupt.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Buffers.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_u_s_a_r_t_8h_a4b46e2e6b871d0b0f138e61760b10fa2}{init\+U\+S\+A\+RT} ()
+\begin{DoxyCompactList}\small\item\em Initiates U\+S\+A\+RT. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{_u_s_a_r_t_8h_aec32185dd8feec99d38acc7f8ab69197}{U\+S\+A\+R\+T\+\_\+\+Recieve} ()
+\begin{DoxyCompactList}\small\item\em Recieves one byte over U\+S\+A\+RT. \end{DoxyCompactList}\item 
+void \hyperlink{_u_s_a_r_t_8h_ab8c416106cf1aff4ccdb3da4860fc179}{U\+S\+A\+R\+T\+\_\+\+Transmit} (unsigned char data)
+\begin{DoxyCompactList}\small\item\em Transmits one byte over U\+S\+A\+RT. \end{DoxyCompactList}\item 
+void \hyperlink{_u_s_a_r_t_8h_a03b0ffa896b87d880101195bf1377df9}{U\+S\+A\+R\+T\+\_\+\+Transmit\+\_\+\+Array} (unsigned char array\mbox{[}$\,$\mbox{]}, uint8\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Transmits multiple bytes over U\+S\+A\+RT. \end{DoxyCompactList}\item 
+void \hyperlink{_u_s_a_r_t_8h_a0f33ec0995bf5f267e847d9e22fb596a}{U\+S\+A\+R\+T\+\_\+\+Flush} (void)
+\begin{DoxyCompactList}\small\item\em Flushes the U\+S\+A\+RT buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+volatile int \hyperlink{_u_s_a_r_t_8h_ac73ad3c207657516f4f319adaf861a1b}{B\+Ttimeout}
+\item 
+volatile uint8\+\_\+t \hyperlink{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}{B\+Tcounter}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+U\+S\+A\+RT driver. 
+
+\begin{DoxyAuthor}{Author}
+Joakim 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+25 apr 2016 Defines commands for interfacing over U\+S\+A\+RT protocol. Used in the project to communicate over bluetooth. 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!init\+U\+S\+A\+RT@{init\+U\+S\+A\+RT}}
+\index{init\+U\+S\+A\+RT@{init\+U\+S\+A\+RT}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
+\subsubsection[{\texorpdfstring{init\+U\+S\+A\+R\+T()}{initUSART()}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+U\+S\+A\+RT (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_u_s_a_r_t_8h_a4b46e2e6b871d0b0f138e61760b10fa2}{}\label{_u_s_a_r_t_8h_a4b46e2e6b871d0b0f138e61760b10fa2}
+
+
+Initiates U\+S\+A\+RT. 
+
+Initiates U\+S\+A\+RT to be used on U\+S\+A\+R\+T0 on the A\+Tmega1284P microprocessor. Configures the protocol to follow 115200, 8, N, 1 for use with the Fire\+Fly bluetooth circuit. \index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!U\+S\+A\+R\+T\+\_\+\+Flush@{U\+S\+A\+R\+T\+\_\+\+Flush}}
+\index{U\+S\+A\+R\+T\+\_\+\+Flush@{U\+S\+A\+R\+T\+\_\+\+Flush}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
+\subsubsection[{\texorpdfstring{U\+S\+A\+R\+T\+\_\+\+Flush(void)}{USART_Flush(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void U\+S\+A\+R\+T\+\_\+\+Flush (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_u_s_a_r_t_8h_a0f33ec0995bf5f267e847d9e22fb596a}{}\label{_u_s_a_r_t_8h_a0f33ec0995bf5f267e847d9e22fb596a}
+
+
+Flushes the U\+S\+A\+RT buffer. 
+
+Repeatedly reads from the buffer as long as there is data in the buffer. \begin{DoxyWarning}{Warning}
+Erases data. 
+\end{DoxyWarning}
+\index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!U\+S\+A\+R\+T\+\_\+\+Recieve@{U\+S\+A\+R\+T\+\_\+\+Recieve}}
+\index{U\+S\+A\+R\+T\+\_\+\+Recieve@{U\+S\+A\+R\+T\+\_\+\+Recieve}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
+\subsubsection[{\texorpdfstring{U\+S\+A\+R\+T\+\_\+\+Recieve()}{USART_Recieve()}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char U\+S\+A\+R\+T\+\_\+\+Recieve (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_u_s_a_r_t_8h_aec32185dd8feec99d38acc7f8ab69197}{}\label{_u_s_a_r_t_8h_aec32185dd8feec99d38acc7f8ab69197}
+
+
+Recieves one byte over U\+S\+A\+RT. 
+
+Waits until one byte has been recieved and returns it. \begin{DoxyReturn}{Returns}
+The recieved byte. 
+\end{DoxyReturn}
+\index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!U\+S\+A\+R\+T\+\_\+\+Transmit@{U\+S\+A\+R\+T\+\_\+\+Transmit}}
+\index{U\+S\+A\+R\+T\+\_\+\+Transmit@{U\+S\+A\+R\+T\+\_\+\+Transmit}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
+\subsubsection[{\texorpdfstring{U\+S\+A\+R\+T\+\_\+\+Transmit(unsigned char data)}{USART_Transmit(unsigned char data)}}]{\setlength{\rightskip}{0pt plus 5cm}void U\+S\+A\+R\+T\+\_\+\+Transmit (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{_u_s_a_r_t_8h_ab8c416106cf1aff4ccdb3da4860fc179}{}\label{_u_s_a_r_t_8h_ab8c416106cf1aff4ccdb3da4860fc179}
+
+
+Transmits one byte over U\+S\+A\+RT. 
+
+Waits until the other unit is ready to recieve, and then sends one byte. 
+\begin{DoxyParams}{Parameters}
+{\em data} & The byte to be sent. \\
+\hline
+\end{DoxyParams}
+\index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!U\+S\+A\+R\+T\+\_\+\+Transmit\+\_\+\+Array@{U\+S\+A\+R\+T\+\_\+\+Transmit\+\_\+\+Array}}
+\index{U\+S\+A\+R\+T\+\_\+\+Transmit\+\_\+\+Array@{U\+S\+A\+R\+T\+\_\+\+Transmit\+\_\+\+Array}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
+\subsubsection[{\texorpdfstring{U\+S\+A\+R\+T\+\_\+\+Transmit\+\_\+\+Array(unsigned char array[], uint8\+\_\+t size)}{USART_Transmit_Array(unsigned char array[], uint8_t size)}}]{\setlength{\rightskip}{0pt plus 5cm}void U\+S\+A\+R\+T\+\_\+\+Transmit\+\_\+\+Array (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{array\mbox{[}$\,$\mbox{]}, }
+\item[{uint8\+\_\+t}]{size}
+\end{DoxyParamCaption}
+)}\hypertarget{_u_s_a_r_t_8h_a03b0ffa896b87d880101195bf1377df9}{}\label{_u_s_a_r_t_8h_a03b0ffa896b87d880101195bf1377df9}
+
+
+Transmits multiple bytes over U\+S\+A\+RT. 
+
+Sends an array of a given size over U\+S\+A\+RT. \begin{DoxySeeAlso}{See also}
+\hyperlink{_u_s_a_r_t_8h_ab8c416106cf1aff4ccdb3da4860fc179}{U\+S\+A\+R\+T\+\_\+\+Transmit} 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em array} & The array to be sent. \\
+\hline
+{\em size} & Size of the array. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Variable Documentation}
+\index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!B\+Tcounter@{B\+Tcounter}}
+\index{B\+Tcounter@{B\+Tcounter}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
+\subsubsection[{\texorpdfstring{B\+Tcounter}{BTcounter}}]{\setlength{\rightskip}{0pt plus 5cm}volatile uint8\+\_\+t B\+Tcounter}\hypertarget{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}{}\label{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}
+Counter for keeping track of the current byte sent over bluetooth. \index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!B\+Ttimeout@{B\+Ttimeout}}
+\index{B\+Ttimeout@{B\+Ttimeout}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
+\subsubsection[{\texorpdfstring{B\+Ttimeout}{BTtimeout}}]{\setlength{\rightskip}{0pt plus 5cm}volatile int B\+Ttimeout}\hypertarget{_u_s_a_r_t_8h_ac73ad3c207657516f4f319adaf861a1b}{}\label{_u_s_a_r_t_8h_ac73ad3c207657516f4f319adaf861a1b}
+Timeout for the communication over bluetooth. 
