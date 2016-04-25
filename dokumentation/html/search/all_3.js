@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['dead_5fend_5fdistance',['DEAD_END_DISTANCE',['../state__machine_8h.html#aa31835133338361e7bffbaf776c9c7a1',1,'state_machine.h']]],
   ['delay_5fms',['delay_ms',['../group___d_r_i_v_e_r_s.html#gae36aca5baf9b6b7d74992aef00686d67',1,'delay_ms():&#160;inv_mpu_dmp_motion_driver.c'],['../group___d_r_i_v_e_r_s.html#gae36aca5baf9b6b7d74992aef00686d67',1,'delay_ms():&#160;inv_mpu_dmp_motion_driver.c'],['../group___d_r_i_v_e_r_s.html#gae36aca5baf9b6b7d74992aef00686d67',1,'delay_ms():&#160;inv_mpu_dmp_motion_driver.c']]],
   ['dmp_5fenable_5f6x_5flp_5fquat',['dmp_enable_6x_lp_quat',['../group___d_r_i_v_e_r_s.html#gaac712ef33727433f666b3861894873be',1,'inv_mpu_dmp_motion_driver.c']]],
   ['dmp_5fenable_5ffeature',['dmp_enable_feature',['../group___d_r_i_v_e_r_s.html#ga70c485bdfa30515e5b869b081192caa1',1,'inv_mpu_dmp_motion_driver.c']]],
