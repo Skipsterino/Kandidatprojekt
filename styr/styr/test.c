@@ -90,7 +90,11 @@ int main(void)
 	
 	while(1)
 	{
+		
+		//Hämta det senaste giltiga paketet
+		cli();
 		memcpy(lastPacket, lastValidPacket, sizeof(lastPacket));
+		sei();
 		
 		first_kom_byte = lastPacket[0];
 		
