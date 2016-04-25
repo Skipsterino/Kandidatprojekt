@@ -2,18 +2,10 @@
 \label{structs_8h_source}\index{styr/styr/structs.\+h@{styr/styr/structs.\+h}}
 
 \begin{DoxyCode}
-00001 \textcolor{comment}{/*}
-00002 \textcolor{comment}{ * structs.h}
-00003 \textcolor{comment}{ *}
-00004 \textcolor{comment}{ * Created: 4/8/2016 2:50:26 PM}
-00005 \textcolor{comment}{ *  Author: chrma018}
-00006 \textcolor{comment}{ */} 
-00007 
-00008 
-00009 \textcolor{preprocessor}{#ifndef STRUCTS\_H\_}
-00010 \textcolor{preprocessor}{#define STRUCTS\_H\_}
-00011 
-00012 \textcolor{comment}{//structs som används i koden}
+00001 
+00010 \textcolor{preprocessor}{#ifndef STRUCTS\_H\_}
+00011 \textcolor{preprocessor}{#define STRUCTS\_H\_}
+00012 
 \hypertarget{structs_8h_source.tex_l00013}{}\hyperlink{structtriple__float}{00013} \textcolor{keyword}{typedef} \textcolor{keyword}{struct}\{
 00014     \textcolor{keywordtype}{float} a;
 00015     \textcolor{keywordtype}{float} b;
@@ -31,31 +23,31 @@
 00027     \textcolor{keywordtype}{float} b;
 00028 \} \hyperlink{structdouble__float}{double\_float};
 00029 
-00030 
-\hypertarget{structs_8h_source.tex_l00031}{}\hyperlink{structsix__uchar}{00031} \textcolor{keyword}{typedef} \textcolor{keyword}{struct}\{
-00032     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} a;
-00033     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} b;
-00034     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} c;
-00035     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} d;
-00036     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} e;
-00037     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} f;
-00038 \} \hyperlink{structsix__uchar}{six\_uchar};
-00039 
-\hypertarget{structs_8h_source.tex_l00040}{}\hyperlink{structdouble__uchar}{00040} \textcolor{keyword}{typedef} \textcolor{keyword}{struct}\{
-00041     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} a;
-00042     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} b;
-00043 \} \hyperlink{structdouble__uchar}{double\_uchar};
-00044 
-00045 \hyperlink{structtriple__float}{triple\_float} create\_triple\_float(\textcolor{keywordtype}{float} a, \textcolor{keywordtype}{float} b, \textcolor{keywordtype}{float} c);
-00046 
-00047 \hyperlink{structtriple__uint}{triple\_uint} create\_triple\_uint(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} a, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} b, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} c);
-00048 
-00049 \hyperlink{structsix__uchar}{six\_uchar} create\_six\_uchar(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} a, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} b, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} c, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} d, \textcolor{keywordtype}{
-      unsigned} \textcolor{keywordtype}{char} e, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} f);
-00050 
-00051 \hyperlink{structdouble__uchar}{double\_uchar} create\_double\_uchar(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} a, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} b);
+\hypertarget{structs_8h_source.tex_l00030}{}\hyperlink{structsix__uchar}{00030} \textcolor{keyword}{typedef} \textcolor{keyword}{struct}\{
+00031     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} a;
+00032     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} b;
+00033     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} c;
+00034     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} d;
+00035     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} e;
+00036     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} f;
+00037 \} \hyperlink{structsix__uchar}{six\_uchar};
+00038 
+\hypertarget{structs_8h_source.tex_l00039}{}\hyperlink{structdouble__uchar}{00039} \textcolor{keyword}{typedef} \textcolor{keyword}{struct}\{
+00040     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} a;
+00041     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} b;
+00042 \} \hyperlink{structdouble__uchar}{double\_uchar};
+00043 
+00051 \hyperlink{structtriple__float}{triple\_float} \hyperlink{structs_8h_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(\textcolor{keywordtype}{float} a, \textcolor{keywordtype}{float} b, \textcolor{keywordtype}{float} c);
 00052 
-00053 \hyperlink{structdouble__float}{double\_float} create\_double\_float(\textcolor{keywordtype}{float} a, \textcolor{keywordtype}{float} b);
-00054 
-00055 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* STRUCTS\_H\_ */}\textcolor{preprocessor}{}
+00060 \hyperlink{structtriple__uint}{triple\_uint} \hyperlink{structs_8h_a0bd229363859ac7df4e837cba6ad7ae4}{create\_triple\_uint}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} a, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} b, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} c)
+      ;
+00061 
+00072 \hyperlink{structsix__uchar}{six\_uchar} \hyperlink{structs_8h_a745732bdf1500669605253e94c59c459}{create\_six\_uchar}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} a, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} b, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} c, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{char} d, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} e, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} f);
+00073 
+00080 \hyperlink{structdouble__uchar}{double\_uchar} \hyperlink{structs_8h_aecdd3a7cbfc61e4e2c33fc9215422d96}{create\_double\_uchar}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} a, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} b);
+00081 
+00088 \hyperlink{structdouble__float}{double\_float} \hyperlink{structs_8h_a85207aa5455eaa4d4cf9c71e9094ae46}{create\_double\_float}(\textcolor{keywordtype}{float} a, \textcolor{keywordtype}{float} b);
+00089 
+00090 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* STRUCTS\_H\_ */}\textcolor{preprocessor}{}
 \end{DoxyCode}
