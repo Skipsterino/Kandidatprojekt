@@ -1,3 +1,11 @@
 **/.vs
 **/Debug
 **.atsuo
+**.aux
+**.idx
+**.ilg
+**.ind
+**.log
+**.out
+**.toc
+**.pdf

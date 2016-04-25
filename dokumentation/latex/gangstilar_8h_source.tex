@@ -1,0 +1,48 @@
+\hypertarget{gangstilar_8h_source}{}\section{gangstilar.\+h}
+\label{gangstilar_8h_source}\index{styr/styr/gangstilar.\+h@{styr/styr/gangstilar.\+h}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ * gangstilar.h}
+00003 \textcolor{comment}{ *}
+00004 \textcolor{comment}{ * Created: 4/8/2016 3:03:52 PM}
+00005 \textcolor{comment}{ *  Author: chrma018}
+00006 \textcolor{comment}{ */} 
+00007 
+00008 
+00009 \textcolor{preprocessor}{#ifndef GANGSTILAR\_H\_}
+00010 \textcolor{preprocessor}{#define GANGSTILAR\_H\_}
+00011 
+00012 \textcolor{preprocessor}{#ifndef F\_CPU}
+00013 \textcolor{preprocessor}{#define F\_CPU 16000000UL        // 16 MHz}
+00014 \textcolor{preprocessor}{#endif}
+00015 
+00016 \textcolor{preprocessor}{#include <avr/io.h>}
+00017 \textcolor{preprocessor}{#include <avr/interrupt.h>}
+00018 \textcolor{preprocessor}{#include <util/delay.h>}
+00019 
+00020 \textcolor{preprocessor}{#include "invers\_kinematik.h"}
+00021 \textcolor{preprocessor}{#include "structs.h"}
+00022 \textcolor{preprocessor}{#include "servo\_UART.h"}
+00023 
+00024 \textcolor{keywordtype}{float} LP\_Filter\_And\_Limit\_Input(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{int} sgn\_speed, \textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} sgn\_theta, \textcolor{keywordtype}{float} height);
+00025 \textcolor{keywordtype}{int} max\_speed(\textcolor{keywordtype}{float} theta,\textcolor{keywordtype}{int} sgn\_theta);
+00026 \textcolor{keywordtype}{void} Adjust\_Servo\_Speed(\textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} sgn\_theta);
+00027 \textcolor{keywordtype}{void} Adjust\_Height(\textcolor{keywordtype}{float} l, \textcolor{keywordtype}{float} height\_step, \textcolor{keywordtype}{float} corner\_pitch);
+00028 \textcolor{keywordtype}{void} Send\_Legs\_Kar(\hyperlink{structtriple__float}{triple\_float} kar\_p1, \hyperlink{structtriple__float}{triple\_float} kar\_p2, \textcolor{keywordtype}{float} corner\_pitch);
+00029 \textcolor{keywordtype}{void} Rotate\_And\_Send\_Legs(\hyperlink{structtriple__float}{triple\_float} kar\_p1, \hyperlink{structtriple__float}{triple\_float} kar\_p2, \textcolor{keywordtype}{float} 
+      corner\_pitch, \textcolor{keywordtype}{int} sgn\_speed,\textcolor{keywordtype}{float} theta);
+00030 \hyperlink{structdouble__float}{double\_float} Limit\_Theta(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{int} sgn\_speed, \textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} sgn\_theta );
+00031 \textcolor{keywordtype}{float} Limit\_Speed(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{int} sgn\_speed);
+00032 \textcolor{keywordtype}{float} Limit\_Height(\textcolor{keywordtype}{float} height);
+00033 
+00034 
+00035 \hyperlink{structtriple__float}{triple\_float} Tripod(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} stroke, \textcolor{keywordtype}{float} height, uint8\_t n);
+00036 \textcolor{keywordtype}{void} Walk\_Half\_Cycle(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} height);
+00037 \textcolor{keywordtype}{void} Walk\_Half\_Crab\_Cycle(\textcolor{keywordtype}{float} speed);
+00038 \textcolor{keywordtype}{void} Walk\_Half\_Safe\_Cycle(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} height) ;
+00039 
+00040 
+00041 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* GANGSTILAR\_H\_ */}\textcolor{preprocessor}{}
+00042 
+\end{DoxyCode}
