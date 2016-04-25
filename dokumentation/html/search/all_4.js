@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['gyro_5freg_5fs',['gyro_reg_s',['../structgyro__reg__s.html',1,'']]],
-  ['gyro_5fstate_5fs',['gyro_state_s',['../structgyro__state__s.html',1,'']]],
-  ['gemensam_20kod',['Gemensam kod',['../md_gemensam_Readme.html',1,'']]]
+  ['empl',['EMPL',['../group__e_m_p_l.html',1,'']]],
+  ['end_5fof_5fcourse_5fdistance',['END_OF_COURSE_DISTANCE',['../state__machine_8h.html#a9a1286b84f437e1c90d21ffc833a8b79',1,'state_machine.h']]]
 ];

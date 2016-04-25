@@ -1,9 +1,4 @@
-﻿/*
- * servo_UART.c
- *
- * Created: 4/8/2016 3:04:25 PM
- *  Author: chrma018
- */ 
+﻿
 #include "servo_UART.h"
 #include "invers_kinematik.h"
 
@@ -11,7 +6,7 @@
 #define second_servo_offset 0x2F
 #define third_servo_offset 0x79
 
-void USART_Transmit( unsigned char data )
+void UART_Transmit( unsigned char data )
 {
 	// Wait for empty transmit buffer
 	while ( !( UCSR0A & (1<<UDRE0)) );
@@ -19,7 +14,7 @@ void USART_Transmit( unsigned char data )
 	UDR0 = data;
 }
 
-unsigned char USART_Receive( void )
+unsigned char UART_Receive( void )
 {
 	float i=0;
 	// Wait for data to be received
@@ -35,7 +30,6 @@ unsigned char USART_Receive( void )
 	return UDR0;
 }
 
-//Beräknar checksum
 unsigned char checksum_calc(unsigned char message[], uint8_t num_of_par)
 {
 	uint8_t sum = 0;
@@ -47,7 +41,6 @@ unsigned char checksum_calc(unsigned char message[], uint8_t num_of_par)
 	return (unsigned char)checksum;
 }
 
-//Konfigurerar alla servon med rätt return delay time
 void Configure_Servos_Delaytime(void)
 {
 	for (uint8_t i = 1; i < 19; i++)
@@ -59,7 +52,7 @@ void Configure_Servos_Delaytime(void)
 	}
 }
 
-//Konfigurerar alla servon så att deras LED-lampor blinkar så fort något slags fel har uppstått
+
 void Configure_Servos_LED(void)
 {
 	for (uint8_t i = 1; i < 19; i++)
@@ -71,7 +64,7 @@ void Configure_Servos_LED(void)
 	}
 }
 
-//Konfigurerar alla servon med vinkelbegränsningar.
+
 void Configure_Servos_Angle_Limit(void)
 {
 	uint8_t inner_middle[] = {13,14};
@@ -105,7 +98,7 @@ void Configure_Servos_Angle_Limit(void)
 		
 }
 
-//Konfigurerar alla servon så att de svarar BARA om instruktionen är READ_DATA.
+
 void Configure_Servos_No_Response(void)
 {
 	for (uint8_t i = 1; i < 19; i++)
@@ -145,19 +138,19 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	while((start_byte1 != 0xFF) && (start_byte2 != 0xFF))
 	{
 		start_byte2 = start_byte1; 
-		start_byte1 = USART_Receive();
+		start_byte1 = UART_Receive();
 		timer = timer + 1; 
 		if(timer>20000)
 		{
 			return 0xBB;
 		}
 	}
-	ID = USART_Receive(); //ID
-	length = USART_Receive(); //Längd
-	error = USART_Receive(); //Error
-	load_LSByte = USART_Receive(); //LS Byte av load
-	load_MSByte = USART_Receive(); //MS Byte av load
-	USART_Receive(); //Checksum
+	ID = UART_Receive(); //ID
+	length = UART_Receive(); //Längd
+	error = UART_Receive(); //Error
+	load_LSByte = UART_Receive(); //LS Byte av load
+	load_MSByte = UART_Receive(); //MS Byte av load
+	UART_Receive(); //Checksum
 	
 	_delay_ms(0.05); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 	
@@ -167,7 +160,7 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	return load;
 }
 
-// Hämtar positionen hos servo med angivet ID, returnerar som en double_uchar.
+
 unsigned int Get_Servo_Position(unsigned char ID) //FUNKAR ATT RETURNERA SÅHÄR?
 {
 	unsigned char message[6];
@@ -185,14 +178,14 @@ unsigned int Get_Servo_Position(unsigned char ID) //FUNKAR ATT RETURNERA SÅHÄR
 	_delay_ms(0.02); //Lite extra tidsmarginal så bussen hinner bli ledig ändras!!!
 	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
 	
-	USART_Receive(); //Första startbyten
-	USART_Receive(); //Andra startbyten
-	USART_Receive(); //ID
-	USART_Receive(); //Längd
-	USART_Receive(); //Error
-	position_LSByte = USART_Receive(); //LS Byte av positionen
-	position_MSByte = USART_Receive(); //MS Byte av positionen
-	USART_Receive(); //Checksum
+	UART_Receive(); //Första startbyten
+	UART_Receive(); //Andra startbyten
+	UART_Receive(); //ID
+	UART_Receive(); //Längd
+	UART_Receive(); //Error
+	position_LSByte = UART_Receive(); //LS Byte av positionen
+	position_MSByte = UART_Receive(); //MS Byte av positionen
+	UART_Receive(); //Checksum
 
 	unsigned int position = (((unsigned int)position_MSByte) << 8) | position_LSByte;
 	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
@@ -201,7 +194,7 @@ unsigned int Get_Servo_Position(unsigned char ID) //FUNKAR ATT RETURNERA SÅHÄR
 
 
 	
-// Självförklarande.... Kom ihåg hastigheten ligger i RAM och måste sättas om...
+
 void Send_Servo_Velocity(unsigned char ID, unsigned int vel)
 {
 	//Dela upp hastyigheter i LS respektive MS Byte, spara i unsigned chars (unsigned chars passar bättre vid kontakt med servona)
@@ -218,7 +211,6 @@ void Send_Servo_Velocity(unsigned char ID, unsigned int vel)
 	Send_Servo_Message(message, 3);
 }
 
-//Skickar vinkelbegränsningar till specifikt servo. Undre gräns = lower, övre gräns = higher.
 void Send_Servo_Angle_Limit(unsigned char ID, unsigned int lower, unsigned int higher)
 {
 	//Dela upp vinklar i LS respektive MS Byte, spara i unsigned chars (unsigned chars passar bättre vid kontakt med servona)
@@ -234,7 +226,7 @@ void Send_Servo_Angle_Limit(unsigned char ID, unsigned int lower, unsigned int h
 }
 
 
-//Skickar önskad hastighet till servona. OBS! Denna måste köras VARJE gång ty hastighet ligger i RAM!
+
 void Send_Inner_P1_Velocity(unsigned int vel)
 {	
 	unsigned char inner_servos[]={2,8,13};
@@ -246,7 +238,7 @@ void Send_Inner_P1_Velocity(unsigned int vel)
 	}
 }
 
-//Skickar önskad hastighet till servona. OBS! vel[] innehåller LS Byte först, sedan MS Byte! Denna måste köras VARJE gång ty hastighet ligger i RAM!
+
 void Send_Inner_P2_Velocity(unsigned int vel)
 {	
 	unsigned char inner_servos[]={1,7,14};
@@ -258,7 +250,7 @@ void Send_Inner_P2_Velocity(unsigned int vel)
 	}
 }
 
-//Skickar önskad hastighet till servona. OBS! vel[] innehåller LS Byte först, sedan MS Byte! Denna måste köras VARJE gång ty hastighet ligger i RAM!
+
 void Send_Middle_P1_Velocity(unsigned int vel)
 {	
 	unsigned char middle_servos[]={4,10,15};
@@ -270,7 +262,7 @@ void Send_Middle_P1_Velocity(unsigned int vel)
 	}
 }
 
-//Skickar önskad hastighet till servona. OBS! vel[] innehåller LS Byte först, sedan MS Byte! Denna måste köras VARJE gång ty hastighet ligger i RAM!
+
 void Send_Middle_P2_Velocity(unsigned int vel)
 {	
 	unsigned char middle_servos[]={9,16,3};
@@ -282,7 +274,7 @@ void Send_Middle_P2_Velocity(unsigned int vel)
 	}
 }
 
-//Skickar önskad hastighet till servona. OBS! vel[] innehåller LS Byte först, sedan MS Byte! Denna måste köras VARJE gång ty hastighet ligger i RAM!
+
 void Send_Outer_P1_Velocity(unsigned int vel)
 {	
 	unsigned char outer_servos[]={6,12,17};
@@ -294,7 +286,7 @@ void Send_Outer_P1_Velocity(unsigned int vel)
 	}
 }
 
-//Skickar önskad hastighet till servona. OBS! vel[] innehåller LS Byte först, sedan MS Byte! Denna måste köras VARJE gång ty hastighet ligger i RAM!
+
 void Send_Outer_P2_Velocity(unsigned int vel)
 {	
 	unsigned char outer_servos[]={5,11,18};
@@ -306,23 +298,23 @@ void Send_Outer_P2_Velocity(unsigned int vel)
 	}
 }
 
-//Id, length, instruktion,startposition,  och parametrar i en array och ta med antalet parametrar som en uint8
+
 void Send_Servo_Message(unsigned char message[], uint8_t num_of_par)
 {
 	//PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
 	unsigned char checksum = checksum_calc(message, num_of_par);
 
-	USART_Transmit(0xFF); //2 st Startbytes
-	USART_Transmit(0xFF);
+	UART_Transmit(0xFF); //2 st Startbytes
+	UART_Transmit(0xFF);
 
 	// här skickas meddelandet (exkl checksum)
 	for(uint8_t i=0; i < num_of_par+3; i++)
 	{
-		USART_Transmit(message[i]);
+		UART_Transmit(message[i]);
 	}
 	
 	cli(); //Deaktivera avbrott så överföringen avslutas korrekt. BEHÖVS EJ???
-	USART_Transmit(checksum); //Checksum
+	UART_Transmit(checksum); //Checksum
 	while(!( UCSR0A & (1<<TXC0))); //Vänta på att överföringen klar (redo att skicka ny data)
 	_delay_ms(0.06); //Lite extra tidsmarginal så överföringen verkligen hinner bli klar innan riktning ändras!!!
 	//PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state

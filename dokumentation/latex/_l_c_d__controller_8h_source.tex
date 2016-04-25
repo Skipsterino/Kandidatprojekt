@@ -1,0 +1,26 @@
+\hypertarget{_l_c_d__controller_8h_source}{}\section{L\+C\+D\+\_\+controller.\+h}
+\label{_l_c_d__controller_8h_source}\index{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+C\+D\+\_\+controller.\+h@{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+C\+D\+\_\+controller.\+h}}
+
+\begin{DoxyCode}
+00001 
+00011 \textcolor{preprocessor}{#ifndef LCD\_CONTROLLER\_H\_}
+00012 \textcolor{preprocessor}{#define LCD\_CONTROLLER\_H\_}
+00013 
+00014 \textcolor{preprocessor}{#include <avr/interrupt.h>}
+00015 \textcolor{preprocessor}{#include <avr/io.h>}
+00016 
+00017 \textcolor{preprocessor}{#include "\hyperlink{_l_c_d_8h}{LCD.h}"}
+00018 
+\hypertarget{_l_c_d__controller_8h_source.tex_l00019}{}\hyperlink{_l_c_d__controller_8h_aa7bbd66352e5612adc00e2b7aa77b1c9}{00019} \textcolor{preprocessor}{#define CONTROLLER\_NUMBER\_OF\_PAGES 4 }
+\hypertarget{_l_c_d__controller_8h_source.tex_l00021}{}\hyperlink{_l_c_d__controller_8h_a075b70e7692af8221284f00c90d70fb2}{00021} \textcolor{preprocessor}{volatile char lines[CONTROLLER\_NUMBER\_OF\_PAGES*LCD\_NUMBER\_OF\_LINES][LCD\_LINE\_WIDTH]; }
+\hypertarget{_l_c_d__controller_8h_source.tex_l00022}{}\hyperlink{_l_c_d__controller_8h_a4f799993f40fea97658f543f15842f4a}{00022} \textcolor{preprocessor}{volatile uint8\_t currentLine; }
+\hypertarget{_l_c_d__controller_8h_source.tex_l00023}{}\hyperlink{_l_c_d__controller_8h_a9d160c265ce9aa4c9aa782cf7c5ecb41}{00023} \textcolor{preprocessor}{volatile uint8\_t overflow\_counter; }
+\hypertarget{_l_c_d__controller_8h_source.tex_l00024}{}\hyperlink{_l_c_d__controller_8h_a5462652fe95683f50bcbd6d5fbbc3ae1}{00024} \textcolor{preprocessor}{volatile uint8\_t spiOverflow;  }
+00031 \textcolor{preprocessor}{void LCD\_controller\_init();}
+00032 
+00041 \textcolor{keywordtype}{void} \hyperlink{_l_c_d__controller_8h_af46260996769cfaea7bb98af9ab708d1}{LCD\_controller\_put\_line}(uint8\_t line, \textcolor{keywordtype}{char} \textcolor{keywordtype}{string}[
+      \hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{LCD\_LINE\_WIDTH}]);
+00042 
+00043 
+00044 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* LCD\_CONTROLLER\_H\_ */}\textcolor{preprocessor}{}
+\end{DoxyCode}

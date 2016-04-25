@@ -1,0 +1,92 @@
+\hypertarget{old_2inv__mpu__dmp__motion__driver_8h_source}{}\section{inv\+\_\+mpu\+\_\+dmp\+\_\+motion\+\_\+driver.\+h}
+\label{old_2inv__mpu__dmp__motion__driver_8h_source}\index{sensor/old/inv\+\_\+mpu\+\_\+dmp\+\_\+motion\+\_\+driver.\+h@{sensor/old/inv\+\_\+mpu\+\_\+dmp\+\_\+motion\+\_\+driver.\+h}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ $License:}
+00003 \textcolor{comment}{    Copyright (C) 2011-2012 InvenSense Corporation, All Rights Reserved.}
+00004 \textcolor{comment}{    See included License.txt for License information.}
+00005 \textcolor{comment}{ $}
+00006 \textcolor{comment}{ */}
+00017 \textcolor{preprocessor}{#ifndef \_INV\_MPU\_DMP\_MOTION\_DRIVER\_H\_}
+00018 \textcolor{preprocessor}{#define \_INV\_MPU\_DMP\_MOTION\_DRIVER\_H\_}
+00019 
+00020 \textcolor{preprocessor}{#define TAP\_X               (0x01)}
+00021 \textcolor{preprocessor}{#define TAP\_Y               (0x02)}
+00022 \textcolor{preprocessor}{#define TAP\_Z               (0x04)}
+00023 \textcolor{preprocessor}{#define TAP\_XYZ             (0x07)}
+00024 
+00025 \textcolor{preprocessor}{#define TAP\_X\_UP            (0x01)}
+00026 \textcolor{preprocessor}{#define TAP\_X\_DOWN          (0x02)}
+00027 \textcolor{preprocessor}{#define TAP\_Y\_UP            (0x03)}
+00028 \textcolor{preprocessor}{#define TAP\_Y\_DOWN          (0x04)}
+00029 \textcolor{preprocessor}{#define TAP\_Z\_UP            (0x05)}
+00030 \textcolor{preprocessor}{#define TAP\_Z\_DOWN          (0x06)}
+00031 
+00032 \textcolor{preprocessor}{#define ANDROID\_ORIENT\_PORTRAIT             (0x00)}
+00033 \textcolor{preprocessor}{#define ANDROID\_ORIENT\_LANDSCAPE            (0x01)}
+00034 \textcolor{preprocessor}{#define ANDROID\_ORIENT\_REVERSE\_PORTRAIT     (0x02)}
+00035 \textcolor{preprocessor}{#define ANDROID\_ORIENT\_REVERSE\_LANDSCAPE    (0x03)}
+00036 
+00037 \textcolor{preprocessor}{#define DMP\_INT\_GESTURE     (0x01)}
+00038 \textcolor{preprocessor}{#define DMP\_INT\_CONTINUOUS  (0x02)}
+00039 
+00040 \textcolor{preprocessor}{#define DMP\_FEATURE\_TAP             (0x001)}
+00041 \textcolor{preprocessor}{#define DMP\_FEATURE\_ANDROID\_ORIENT  (0x002)}
+00042 \textcolor{preprocessor}{#define DMP\_FEATURE\_LP\_QUAT         (0x004)}
+00043 \textcolor{preprocessor}{#define DMP\_FEATURE\_PEDOMETER       (0x008)}
+00044 \textcolor{preprocessor}{#define DMP\_FEATURE\_6X\_LP\_QUAT      (0x010)}
+00045 \textcolor{preprocessor}{#define DMP\_FEATURE\_GYRO\_CAL        (0x020)}
+00046 \textcolor{preprocessor}{#define DMP\_FEATURE\_SEND\_RAW\_ACCEL  (0x040)}
+00047 \textcolor{preprocessor}{#define DMP\_FEATURE\_SEND\_RAW\_GYRO   (0x080)}
+00048 \textcolor{preprocessor}{#define DMP\_FEATURE\_SEND\_CAL\_GYRO   (0x100)}
+00049 
+00050 \textcolor{preprocessor}{#define INV\_WXYZ\_QUAT       (0x100)}
+00051 
+00052 \textcolor{comment}{/* Set up functions. */}
+00053 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga66626a842452f444e9af29cb0d2c6150}{dmp\_load\_motion\_driver\_firmware}(\textcolor{keywordtype}{void});
+00054 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga5399728fd572a7694af20286cc9d4121}{dmp\_set\_fifo\_rate}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} rate);
+00055 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaf3f9953bc04af751b1101700daffa951}{dmp\_get\_fifo\_rate}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *rate);
+00056 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga70c485bdfa30515e5b869b081192caa1}{dmp\_enable\_feature}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} mask);
+00057 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga92b920b72f5146ea14d45ad2d529b64c}{dmp\_get\_enabled\_features}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *mask);
+00058 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaf10c08103d2aec9aa5555a5694bafced}{dmp\_set\_interrupt\_mode}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} mode);
+00059 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga6cb5ff144ce6e1546f00809de8bb24a4}{dmp\_set\_orientation}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} orient);
+00060 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga4766e37ef95cbf0044c8f9594ed811d1}{dmp\_set\_gyro\_bias}(\textcolor{keywordtype}{long} *bias);
+00061 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gafbd714aee6086836f70aaea847771669}{dmp\_set\_accel\_bias}(\textcolor{keywordtype}{long} *bias);
+00062 
+00063 \textcolor{comment}{/* Tap functions. */}
+00064 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga8a2df36126e34b78863e3acf1249d814}{dmp\_register\_tap\_cb}(\textcolor{keywordtype}{void} (*func)(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}));
+00065 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga15da67c0a6c94e0cdaceb8b165e13af9}{dmp\_set\_tap\_thresh}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} axis, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} thresh);
+00066 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga66bc5c8fc26fcb498df53fc62aa87e4f}{dmp\_set\_tap\_axes}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} axis);
+00067 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga819f947b2cb107ada7b9a94c41be0dad}{dmp\_set\_tap\_count}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} min\_taps);
+00068 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga97466067f4a23368f4d7e2547fe359d9}{dmp\_set\_tap\_time}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} time);
+00069 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaeca250a90eb816eb2609229849481337}{dmp\_set\_tap\_time\_multi}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} time);
+00070 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga62efdae1330d5bcaf4c75b069ded0ed0}{dmp\_set\_shake\_reject\_thresh}(\textcolor{keywordtype}{long} sf, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} thresh);
+00071 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga09d7a6d90e1bd2e907f1866d850c5608}{dmp\_set\_shake\_reject\_time}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} time);
+00072 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga5d44d1a32535000e6902cdc5224d1b54}{dmp\_set\_shake\_reject\_timeout}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} time);
+00073 
+00074 \textcolor{comment}{/* Android orientation functions. */}
+00075 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga2e66a02d29ec89466cf339587592943c}{dmp\_register\_android\_orient\_cb}(\textcolor{keywordtype}{void} (*func)(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}));
+00076 
+00077 \textcolor{comment}{/* LP quaternion functions. */}
+00078 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga4ee4339b79a58558d121ba8206056394}{dmp\_enable\_lp\_quat}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} enable);
+00079 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaac712ef33727433f666b3861894873be}{dmp\_enable\_6x\_lp\_quat}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} enable);
+00080 
+00081 \textcolor{comment}{/* Pedometer functions. */}
+00082 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gad8f4d1a93e0f03d950559501c5a7255b}{dmp\_get\_pedometer\_step\_count}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} *count);
+00083 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga568562c19998f585b1d2ba056cd209db}{dmp\_set\_pedometer\_step\_count}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} count);
+00084 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga62c8e5e99986b0e60ca0dc9a9b9c3fcc}{dmp\_get\_pedometer\_walk\_time}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} *time);
+00085 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga62f469269047f8cba16a2b7f5349acc0}{dmp\_set\_pedometer\_walk\_time}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} time);
+00086 
+00087 \textcolor{comment}{/* DMP gyro calibration functions. */}
+00088 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga653ebcec6758f006dd89939e8f3c6ebb}{dmp\_enable\_gyro\_cal}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} enable);
+00089 
+00090 \textcolor{comment}{/* Read function. This function should be called whenever the MPU interrupt is}
+00091 \textcolor{comment}{ * detected.}
+00092 \textcolor{comment}{ */}
+00093 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga02db5f25359abe84be002c543cdc3803}{dmp\_read\_fifo}(\textcolor{keywordtype}{short} *gyro, \textcolor{keywordtype}{short} *accel, \textcolor{keywordtype}{long} *quat,
+00094     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} *timestamp, \textcolor{keywordtype}{short} *sensors, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *more);
+00095 
+00096 \textcolor{preprocessor}{#endif  }\textcolor{comment}{/* #ifndef \_INV\_MPU\_DMP\_MOTION\_DRIVER\_H\_ */}\textcolor{preprocessor}{}
+00097 
+\end{DoxyCode}

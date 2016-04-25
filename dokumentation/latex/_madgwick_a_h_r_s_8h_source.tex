@@ -1,0 +1,37 @@
+\hypertarget{_madgwick_a_h_r_s_8h_source}{}\section{Madgwick\+A\+H\+R\+S.\+h}
+\label{_madgwick_a_h_r_s_8h_source}\index{sensor/old/\+Madgwick\+A\+H\+R\+S.\+h@{sensor/old/\+Madgwick\+A\+H\+R\+S.\+h}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{//=====================================================================================================}
+00002 \textcolor{comment}{// MadgwickAHRS.h}
+00003 \textcolor{comment}{//=====================================================================================================}
+00004 \textcolor{comment}{//}
+00005 \textcolor{comment}{// Implementation of Madgwick's IMU and AHRS algorithms.}
+00006 \textcolor{comment}{// See: http://www.x-io.co.uk/node/8#open\_source\_ahrs\_and\_imu\_algorithms}
+00007 \textcolor{comment}{//}
+00008 \textcolor{comment}{// Date         Author          Notes}
+00009 \textcolor{comment}{// 29/09/2011   SOH Madgwick    Initial release}
+00010 \textcolor{comment}{// 02/10/2011   SOH Madgwick    Optimised for reduced CPU load}
+00011 \textcolor{comment}{//}
+00012 \textcolor{comment}{//=====================================================================================================}
+00013 \textcolor{preprocessor}{#ifndef MadgwickAHRS\_h}
+00014 \textcolor{preprocessor}{#define MadgwickAHRS\_h}
+00015 
+00016 \textcolor{comment}{//----------------------------------------------------------------------------------------------------}
+00017 \textcolor{comment}{// Variable declaration}
+00018 
+00019 \textcolor{keyword}{extern} \textcolor{keyword}{volatile} \textcolor{keywordtype}{float} beta;             \textcolor{comment}{// algorithm gain}
+00020 \textcolor{keyword}{extern} \textcolor{keyword}{volatile} \textcolor{keywordtype}{float} q0, q1, q2, q3;   \textcolor{comment}{// quaternion of sensor frame relative to auxiliary frame}
+00021 
+00022 \textcolor{comment}{//---------------------------------------------------------------------------------------------------}
+00023 \textcolor{comment}{// Function declarations}
+00024 
+00025 \textcolor{keywordtype}{void} MadgwickAHRSupdate(\textcolor{keywordtype}{float} gx, \textcolor{keywordtype}{float} gy, \textcolor{keywordtype}{float} gz, \textcolor{keywordtype}{float} ax, \textcolor{keywordtype}{float} ay, \textcolor{keywordtype}{float} az, \textcolor{keywordtype}{float} mx, \textcolor{keywordtype}{float} my, \textcolor{keywordtype}{
+      float} mz);
+00026 \textcolor{keywordtype}{void} MadgwickAHRSupdateIMU(\textcolor{keywordtype}{float} gx, \textcolor{keywordtype}{float} gy, \textcolor{keywordtype}{float} gz, \textcolor{keywordtype}{float} ax, \textcolor{keywordtype}{float} ay, \textcolor{keywordtype}{float} az);
+00027 
+00028 \textcolor{preprocessor}{#endif}
+00029 \textcolor{comment}{//=====================================================================================================}
+00030 \textcolor{comment}{// End of file}
+00031 \textcolor{comment}{//====================================================================================================}
+\end{DoxyCode}
