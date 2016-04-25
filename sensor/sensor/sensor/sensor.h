@@ -27,7 +27,7 @@ volatile uint8_t SPI_overflow = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const int delay_time = 50;							// tid i millisekunder (50 ger alltså ungefär 20Hz, lagom för US-sensorn)
+const int delay_time = 50;					// tid i millisekunder (50 ger alltså ungefär 20Hz, lagom för US-sensorn)
 
 const double IR_sensor_distance_right = 16.5;		// Avståndet mellan högra sidosensorerna (cm)
 const double IR_sensor_distance_left = 16.5;		// Avståndet mellan vänstra sidosensorerna (cm)
@@ -74,7 +74,7 @@ volatile int byte_to_send = 0;			// Vilken byte i bufferten som skall skickas h�
 #define QUAT_Y 2
 #define QUAT_Z 3
 
-#define MPU_HZ 15		//frekvensen som IMU:n genererar avbrott med (internt kör DMP:n alltid med 200 Hz)
+#define MPU_HZ 12		//frekvensen som IMU:n genererar avbrott med (internt kör DMP:n alltid med 200 Hz)
 #define USE_DMP 1
 
 volatile unsigned char IMU_data_ready = 0;

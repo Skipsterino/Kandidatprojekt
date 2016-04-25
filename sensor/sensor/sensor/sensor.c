@@ -455,7 +455,7 @@ void init_I2C()
 	PORTC = (1<<PC0) | (1<<PC1);		// Gör I2C-portarna till utgångar
 
 	TWSR &= ~((1<<TWPS1) | (1<<TWPS0));	// Sätt presecalerbitarna till 0 (ger prescalervärde = 1)
-	TWBR = 0x20;						// Skicka in 0x20 på TWBR för att tillsammans med Prescalerbitarna TWPS1-TWPS0 sätta I2C-frekvensen till ungefär 200 kHz
+	TWBR = 0x0C;						// Skicka in 0x20 på TWBR för att tillsammans med Prescalerbitarna TWPS1-TWPS0 sätta I2C-frekvensen till 400 kHz
 }
 
 /*
@@ -610,10 +610,13 @@ void read_IMU()
 
 		if (0 == dmp_read_fifo(gyro, accel, quat, &timestamp, &sensors, &more)) // Läser från IMU
 		{
-			if (!more) // Kolla så att vi får med all data
-			{
+			
+			mpu_reset_fifo();
+			
+			//if (!more) // Kolla så att vi får med all data
+			//{
 				IMU_data_ready = 0;
-			}
+			//}
 
 			quaternion[QUAT_W] = (float)quat[QUAT_W];
 			quaternion[QUAT_X] = (float)quat[QUAT_X];
@@ -632,7 +635,7 @@ void read_IMU()
 			gravity[y] = 2*(q0*q1 + q2*q3);
 			gravity[z] = q0*q0 - q1*q1 - q2*q2 + q3*q3;
 			
-			IMU_Yaw = (atan2(2*q1*q2 - 2*q0*q3, 2*q0*q0 + 2*q1*q1 - 1)/3.14)*180 - 0.28/250 - 0.06/250;		// Beräkna yaw-vinkel i grader
+			IMU_Yaw = (atan2(2*q1*q2 - 2*q0*q3, 2*q0*q0 + 2*q1*q1 - 1)/3.14)*180;// - 0.28/250 - 0.06/250;		// Beräkna yaw-vinkel i grader
 			IMU_Pitch = (atan(gravity[x] / sqrt(gravity[y]*gravity[y] + gravity[z]*gravity[z]))/3.14)*180;	// Beräkna pitch-vinkel i grader
 			IMU_Roll = (atan(gravity[y] / sqrt(gravity[x]*gravity[x] + gravity[z]*gravity[z]))/3.14)*180;	// Beräkna roll-vinkel i grader
 			
@@ -709,7 +712,7 @@ void ADC_to_distance()
 	IR_distance[0] = lookup_distance(IR0_table, IR_ADC[0], 19);
 	IR_distance[1] = lookup_distance(IR1_table, IR_ADC[1], 13);
 	IR_distance[2] = lookup_distance(IR2_table, IR_ADC[2], 19);
-	IR_distance[3] = lookup_distance(IR3_table, IR_ADC[3], 19) - 0.8;
+	IR_distance[3] = lookup_distance(IR3_table, IR_ADC[3], 19);
 	IR_distance[4] = lookup_distance(IR4_table, IR_ADC[4], 13);
 	IR_distance[5] = lookup_distance(IR5_table, IR_ADC[5], 19);
 	IR_distance[6] = lookup_distance(IR6_table, IR_ADC[6], 19);
