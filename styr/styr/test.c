@@ -123,7 +123,7 @@ int main(void)
 					Kd = ((float)lastPacket[6])/1000.f; //Kd skickas som 1000 ggr det önskade värdet!!!
 				}
 				
-				Walk_Half_Safe_Cycle(speed,angle,height);
+				Walk_Half_Cycle(speed,angle,height);
 				break;
 			
 			case AUTO: //Autonomt läge
