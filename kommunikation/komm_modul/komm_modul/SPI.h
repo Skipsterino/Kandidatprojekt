@@ -1,10 +1,11 @@
-/*
-* SPI.h
+/**
+* @file SPI.h
+* @author Joakim
+* @date 25 apr 2016
+* @brief SPI bus interface
 *
-* Created: 2016-04-06 16:32:24
-*  Author: Joakim
+* Defines functions to communicate over SPI with the other modules.
 */
-
 
 #ifndef SPI_H_
 #define SPI_H_
@@ -14,7 +15,12 @@
 
 #include "Buffers.h"
 
-void SPI_init_master();
+/**
+* @brief Initiates the SPI interface.
+*
+* Initiates the SPI interface as a slave unit on the bus. Communication
+* is handled by using interupts.
+*/
 void SPI_init_slave();
 
 #endif /* SPI_H_ */

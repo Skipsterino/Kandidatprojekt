@@ -1,0 +1,37 @@
+\hypertarget{styr_2styr_2_s_p_i_8h_source}{}\section{S\+P\+I.\+h}
+\label{styr_2styr_2_s_p_i_8h_source}\index{styr/styr/\+S\+P\+I.\+h@{styr/styr/\+S\+P\+I.\+h}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ * SPI.h}
+00003 \textcolor{comment}{ *}
+00004 \textcolor{comment}{ * Created: 4/8/2016 2:53:17 PM}
+00005 \textcolor{comment}{ *  Author: chrma018}
+00006 \textcolor{comment}{ */} 
+00007 
+00008 
+00009 \textcolor{preprocessor}{#ifndef SPI\_H\_}
+00010 \textcolor{preprocessor}{#define SPI\_H\_}
+00011 
+00012 \textcolor{preprocessor}{#ifndef F\_CPU}
+00013 \textcolor{preprocessor}{#define F\_CPU 16000000UL        // 16 MHz}
+00014 \textcolor{preprocessor}{#endif}
+00015 
+00016 \textcolor{preprocessor}{#include <avr/io.h>}
+00017 \textcolor{preprocessor}{#include <avr/interrupt.h>}
+00018 \textcolor{preprocessor}{#include <util/delay.h>}
+00019 
+00020 \textcolor{preprocessor}{#define SS\_sen 3}
+00021 \textcolor{preprocessor}{#define SS\_kom 4}
+00022 
+00023 \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} fromSen[16];
+00024 \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} fromKom[16];
+00025 
+00026 \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} lastValidPacket[16];
+00027 
+00028 \textcolor{keywordtype}{void} SPI\_init\_master();
+00029 \textcolor{keywordtype}{void} SPI\_sen\_transmit\_master();
+00030 \textcolor{keywordtype}{void} Set\_SS\_sen\_kom(uint8\_t toSen, uint8\_t toKom);
+00031 
+00032 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* SPI\_H\_ */}\textcolor{preprocessor}{}
+\end{DoxyCode}

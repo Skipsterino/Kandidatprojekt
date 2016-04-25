@@ -1,10 +1,12 @@
-/*
- * state_machine.h
- *
- * Created: 4/8/2016 2:53:17 PM
- *  Author: fregu856
- */ 
-
+/**
+* @file state_machine.h
+* @author Fredrik, Erik
+* @date 25 apr 2016
+* @brief State machine for the robot's autonomous mode
+*
+* Contains the robot's state machine, which handles updating and execution of the robot's
+* state in its autonomous mode. 
+*/
 
 #ifndef STATE_MACHINE_H_
 #define STATE_MACHINE_H_
@@ -16,6 +18,9 @@
 #include "SPI.h"
 #include "gangstilar.h"
 
+/**
+* Enum that contains the different possible states that the robot can be in.
+*/
 typedef enum {
 	CORRIDOR = 1, 
 	OUT_OF_CORRIDOR_NO_WALL = 2, 
@@ -24,7 +29,7 @@ typedef enum {
 	
 	INTO_HIGH_OBSTACLE = 5, 
 	INTO_LOW_OBSTACLE = 6, 
-	INTO_TURN_RIGHT = 7, 
+	INTO_TURN_RIGHT = 7,  
 	INTO_TURN_LEFT = 8, 
 	INTO_JUNCTION_A_RIGHT = 9, 
 	INTO_JUNCTION_A_LEFT = 10,
@@ -63,40 +68,72 @@ typedef enum {
 	INTO_CORRIDOR_NO_WALL = 38,
 } STATES;
 
-#define HALF_ROTATION_ANGLE 85			// Vinkeln vi ska rotera till vid en 90-graders rotation
-#define FULL_ROTATION_ANGLE 175			// Vinkeln vi ska rotera till vid en 180-graders rotation
-#define CORRIDOR_SIDE_DISTANCE 60		// Gränsavstånd för om vi är i korridor eller inte (om sidosensorerna visar mindre än detta avstånd är vi korridor, annars inte)
-#define SIDE_DEAD_END_DISTANCE 150		// Gränsavstånd för en återvändsgränd till höger eller vänster i en korsning (fri väg till höger/vänster eller inte)
-#define END_OF_COURSE_DISTANCE 80		// Avståndet som IR_0, 2, 3, 5, 6 ska vara större än vid banslutet
-#define SHORT_TURN_DISTANCE 38			// Avståndet vid vilket vi ska rotera vid svängar och korsning C.
-#define LONG_TURN_DISTANCE 100			// Avståndet vid vilket vi ska rotera vid korsning A
-#define FORWARD_DEAD_END_DISTANCE 180		// Gränsavstånd för en återvändsgränd frammåt i en korsning (fri väg framåt eller inte)
-#define JUNCTION_A_FORWARD_DISTANCE 80		// Gränsavstånd för korsning A (är det korsning A eller vanlig sväng?)
-#define LOW_OBSTACLE_DISTANCE 40		// Avståndet på IR_1 vid vilken lågt hinder har upptäckts och vi ska börja gå försiktigt
-#define START_CLIMBING_UP_DISTANCE 20		// Avståndet på IR_1 vid vilken vi ska börja klättra upp på ett lågt hinder
-#define START_CLIMBING_DOWN_DISTANCE 50		// Avståndet på IR_1 vid vilken vi ska börja gå ner ifrån ett lågt hinder
-#define US_HIGH_OBSTACLE_DISTANCE 40		// Gränsavståndet för ultraljudssensorn (högt hinder eller inte)
-#define IR_HIGH_OBSTACLE_DISTANCE 50		// Gränsavståndet för sensorn riktad uppåt (högt hinder i vägen eller inte)	
-#define NO_WALL_DISTANCE 50			// Avståndet som IR_0 ska vara större än vid ett hinder för att säkerställa att det inte bara är en vägg
-#define DEAD_END_DISTANCE 40			// Avståndet vid vilket vi vänder om vi skulle komma in i en återvändsgränd (vilket ej ska hända)
+#define HALF_ROTATION_ANGLE 85			/**< Rotation angle for a 90 degree turn. */
+#define FULL_ROTATION_ANGLE 175			/**< Rotation angle for a 180 degree turn. */
+#define CORRIDOR_SIDE_DISTANCE 60		/**< Distance for determining whether corridor or not. */
+#define SIDE_DEAD_END_DISTANCE 150		/**< Distance for determining whether dead end to right or left in junction. */
+#define END_OF_COURSE_DISTANCE 80		/**< Distance that IR_0, 2, 3, 5, 6 should be larger than at the end of the course. */
+#define SHORT_TURN_DISTANCE 38			/**< Distance to wall for rotating in turns and C junctions. */
+#define LONG_TURN_DISTANCE 100			/**< Distance to wall for rotating in A junctions. */
+#define FORWARD_DEAD_END_DISTANCE 180	/**< Distance for determining whether dead end straight ahead in junction or not. */
+#define JUNCTION_A_FORWARD_DISTANCE 80	/**< Distance for determining whether A junction or not (junction or turn?). */
+#define LOW_OBSTACLE_DISTANCE 40		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
+#define START_CLIMBING_UP_DISTANCE 20	/**< Distance for beginning climbing onto low obstacle (if IR_1 is less than this). */
+#define START_CLIMBING_DOWN_DISTANCE 50	/**< Distance for beginning climbing down from low obstacle (if IR_1 is less than this). */
+#define US_HIGH_OBSTACLE_DISTANCE 40	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
+#define IR_HIGH_OBSTACLE_DISTANCE 50	/**< Distance for determining whether high obstacle or not (IR sensor). */	
+#define NO_WALL_DISTANCE 50				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
+#define DEAD_END_DISTANCE 40			/**< Distance to wall for turning in a dead end (which we shouln't even enter). */
 
-#define CENTER_OFFSET 8
-#define CORRIDOR_WIDTH 80
+#define CENTRE_OFFSET 8 /**< Horizontal distance from centre of robot to its legs. */
+#define CORRIDOR_WIDTH 80 /**< Width of the labyrinth's corridors. */
 
-float IMU_Yaw_start;
-int start_Yaw_set;		// 0 = har ej satt ett startvärde
-int first_state_cycle;		// 1 = första gången vi kör run_state för ett visst state
-int rotation_count;
+float IMU_Yaw_start; /**< The IMU's start Yaw angle when entering turns and junctions. */ 
+uint8_t start_Yaw_set; /**< Used to determine whether to set start Yaw value or not. 0 = hasn't set start value. */
+uint8_t first_state_cycle; /**< 1 = first time that run_state is executed in a certain state. */
+uint8_t rotation_count; /**< Counter that keeps track of rotation in a turn or junction. */
 
-float Yaw, Yaw_rad, p_part, Kp, Kd, alpha;
-float IR_0, IR_1, IR_2, IR_3, IR_4, IR_5, IR_6, US, IR_Yaw_left, IR_Yaw_right, IMU_Yaw, Yaw, Pitch, Roll;
+float Yaw, Yaw_rad, p_part, Kp, Kd, alpha; /**< Angles and parameters for motion control. */
+float IR_0, IR_1, IR_2, IR_3, IR_4, IR_5, IR_6, US, IR_Yaw_left, IR_Yaw_right, IMU_Yaw, Yaw, Pitch, Roll; /**< Sensor values. */
 
-STATES ROBOT_STATE;
+STATES ROBOT_STATE; /**< Represents the robot's current state. */
 
+/**
+* @brief Updates the robot's current state
+*
+* Updates robot state based on current state and sensor values.
+*/
 void update_state();
+
+/**
+* @brief Executes the robot's current state
+*
+* Executes robot state based on current state and sensor values.
+* @param height_value Indicates the robot's distance to ground.
+*/
 void run_state(float height_value);
+
+/**
+* @brief Loads sensor values
+*
+* Loads sensor values into corresponding variables.
+*/
 void load_sensor_values();
+
+/**
+* @brief Calculates current Yaw angle
+*
+* Calculates current Yaw angle (for control) in different ways 
+* depending on current state.
+*/
 void calculate_Yaw();
+
+/**
+* @brief Calculates current P part
+*
+* Calculates current P part (for control) in different ways 
+* depending on current state.
+*/
 void calculate_p_part();
 
 #endif /* STATE_MACHINE_H_ */
