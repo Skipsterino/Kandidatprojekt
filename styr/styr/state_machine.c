@@ -64,7 +64,7 @@ void calculate_p_part()
 		case OUT_OF_JUNCTION_C_LEFT:
 		case JUNCTION_B_LEFT:
 		{
-			p_part = ((IR_2 + IR_3)/2 + CENTER_OFFSET)*cos(Yaw_rad) - CORRIDOR_WIDTH/2;
+			p_part = ((IR_2 + IR_3)/2 + CENTRE_OFFSET)*cos(Yaw_rad) - CORRIDOR_WIDTH/2;
 			break;
 		}
 		
@@ -73,7 +73,7 @@ void calculate_p_part()
 		case OUT_OF_JUNCTION_C_RIGHT:
 		case JUNCTION_B_RIGHT:
 		{
-			p_part = CORRIDOR_WIDTH/2 - ((IR_5 + IR_6)/2 + CENTER_OFFSET)*cos(Yaw_rad);
+			p_part = CORRIDOR_WIDTH/2 - ((IR_5 + IR_6)/2 + CENTRE_OFFSET)*cos(Yaw_rad);
 			break;
 		}
 		
