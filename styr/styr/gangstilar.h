@@ -33,8 +33,10 @@ float Limit_Height(float height);
 
 
 triple_float Tripod(float x, float stroke, float height, uint8_t n);
+triple_float Tripod2(float x, float stroke, float height, uint8_t n);
 void Walk_Half_Cycle(float speed, float th, float height);
 void Walk_Half_Crab_Cycle(float speed);
+void Walk_Half_Crab_Cycle2(float speed);
 void Walk_Half_Safe_Cycle(float speed, float th, float height) ;
 
 
