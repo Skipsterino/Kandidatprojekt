@@ -21,9 +21,9 @@
 00017 \textcolor{preprocessor}{#include <avr/interrupt.h>}
 00018 \textcolor{preprocessor}{#include <util/delay.h>}
 00019 
-00020 \textcolor{preprocessor}{#include "invers\_kinematik.h"}
+00020 \textcolor{preprocessor}{#include "\hyperlink{invers__kinematik_8h}{invers\_kinematik.h}"}
 00021 \textcolor{preprocessor}{#include "\hyperlink{structs_8h}{structs.h}"}
-00022 \textcolor{preprocessor}{#include "servo\_UART.h"}
+00022 \textcolor{preprocessor}{#include "\hyperlink{servo___u_a_r_t_8h}{servo\_UART.h}"}
 00023 
 00024 \textcolor{keywordtype}{float} LP\_Filter\_And\_Limit\_Input(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{int} sgn\_speed, \textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} sgn\_theta, \textcolor{keywordtype}{float} height);
 00025 \textcolor{keywordtype}{int} max\_speed(\textcolor{keywordtype}{float} theta,\textcolor{keywordtype}{int} sgn\_theta);
@@ -38,11 +38,13 @@
 00033 
 00034 
 00035 \hyperlink{structtriple__float}{triple\_float} Tripod(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} stroke, \textcolor{keywordtype}{float} height, uint8\_t n);
-00036 \textcolor{keywordtype}{void} Walk\_Half\_Cycle(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} height);
-00037 \textcolor{keywordtype}{void} Walk\_Half\_Crab\_Cycle(\textcolor{keywordtype}{float} speed);
-00038 \textcolor{keywordtype}{void} Walk\_Half\_Safe\_Cycle(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} height) ;
-00039 
-00040 
-00041 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* GANGSTILAR\_H\_ */}\textcolor{preprocessor}{}
+00036 \hyperlink{structtriple__float}{triple\_float} Tripod2(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} stroke, \textcolor{keywordtype}{float} height, uint8\_t n);
+00037 \textcolor{keywordtype}{void} Walk\_Half\_Cycle(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} height);
+00038 \textcolor{keywordtype}{void} Walk\_Half\_Crab\_Cycle(\textcolor{keywordtype}{float} speed);
+00039 \textcolor{keywordtype}{void} Walk\_Half\_Crab\_Cycle2(\textcolor{keywordtype}{float} speed);
+00040 \textcolor{keywordtype}{void} Walk\_Half\_Safe\_Cycle(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} height) ;
+00041 
 00042 
+00043 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* GANGSTILAR\_H\_ */}\textcolor{preprocessor}{}
+00044 
 \end{DoxyCode}
