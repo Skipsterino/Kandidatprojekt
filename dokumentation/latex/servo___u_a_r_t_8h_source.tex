@@ -2,93 +2,119 @@
 \label{servo___u_a_r_t_8h_source}\index{styr/styr/servo\+\_\+\+U\+A\+R\+T.\+h@{styr/styr/servo\+\_\+\+U\+A\+R\+T.\+h}}
 
 \begin{DoxyCode}
-00001 \textcolor{comment}{/*}
-00002 \textcolor{comment}{ * servo\_UART.h}
-00003 \textcolor{comment}{ *}
-00004 \textcolor{comment}{ * Created: 4/8/2016 3:03:52 PM}
-00005 \textcolor{comment}{ *  Author: chrma018}
-00006 \textcolor{comment}{ */} 
-00007 
-00008 
-00009 \textcolor{preprocessor}{#ifndef SERVO\_UART\_H\_}
-00010 \textcolor{preprocessor}{#define SERVO\_UART\_H\_}
-00011 
-00012 \textcolor{preprocessor}{#ifndef F\_CPU}
-00013 \textcolor{preprocessor}{#define F\_CPU 16000000UL        // 16 MHz}
-00014 \textcolor{preprocessor}{#endif}
-00015 
-00016 \textcolor{preprocessor}{#include <avr/io.h>}
-00017 \textcolor{preprocessor}{#include <avr/interrupt.h>}
-00018 \textcolor{preprocessor}{#include <util/delay.h>}
-00019 
-00020 \textcolor{preprocessor}{#include "\hyperlink{structs_8h}{structs.h}"}
-00021 
-00022 \textcolor{keywordtype}{void} \hyperlink{_u_s_a_r_t_8h_ab8c416106cf1aff4ccdb3da4860fc179}{USART\_Transmit}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char});
-00023 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} USART\_Receive(\textcolor{keywordtype}{void});
-00024 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} checksum\_calc(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} param[], uint8\_t num\_of\_par);
+00001 
+00012 \textcolor{preprocessor}{#ifndef SERVO\_UART\_H\_}
+00013 \textcolor{preprocessor}{#define SERVO\_UART\_H\_}
+00014 
+00015 \textcolor{preprocessor}{#ifndef F\_CPU}
+00016 \textcolor{preprocessor}{#define F\_CPU 16000000UL    }
+00017 \textcolor{preprocessor}{#endif}
+00018 
+00019 \textcolor{preprocessor}{#include <avr/io.h>}
+00020 \textcolor{preprocessor}{#include <avr/interrupt.h>}
+00021 \textcolor{preprocessor}{#include <util/delay.h>}
+00022 
+00023 \textcolor{preprocessor}{#include "\hyperlink{structs_8h}{structs.h}"}
+00024 
 00025 
-00026 \textcolor{keywordtype}{void} Configure\_Servos\_Delaytime(\textcolor{keywordtype}{void});
-00027 \textcolor{keywordtype}{void} Configure\_Servos\_LED(\textcolor{keywordtype}{void});
-00028 \textcolor{keywordtype}{void} Configure\_Servos\_Angle\_Limit(\textcolor{keywordtype}{void});
-00029 \textcolor{keywordtype}{void} Configure\_Servos\_No\_Response(\textcolor{keywordtype}{void});
-00030 
-00031 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} Get\_Servo\_Load(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID);
-00032 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} Get\_Servo\_Position(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID);
-00033 \textcolor{comment}{//unsigned char[] Receive\_Servo\_Statuspackage(uint8\_t size); FUNKAR EJ TY KAN EJ RETURNERA STRUCT}
-00034 \textcolor{comment}{//void Check\_Servo\_Temp(unsigned char ID)}
+00026 \textcolor{keywordtype}{void} Configure\_Servos\_Max\_Torque(\textcolor{keywordtype}{void});
+00027 
+00034 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_af34dbb08e8f6cfc1a58d9b7f2b81f455}{UART\_Transmit}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} data);
 00035 
-00036 \textcolor{keywordtype}{void} Send\_Servo\_Message(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[], uint8\_t num\_of\_par);
-00037 \textcolor{keywordtype}{void} Send\_Servo\_Position(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos);
-00038 \textcolor{keywordtype}{void} Send\_Servo\_Velocity(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel);
-00039 \textcolor{keywordtype}{void} Send\_Servo\_Angle\_Limit(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} lower, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} higher);
-00040 
-00041 \textcolor{keywordtype}{void} Send\_Outer\_P1\_Velocity(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
-00042 \textcolor{keywordtype}{void} Send\_Outer\_P2\_Velocity(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
-00043 \textcolor{keywordtype}{void} Send\_Middle\_P1\_Velocity(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
-00044 \textcolor{keywordtype}{void} Send\_Middle\_P2\_Velocity(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
-00045 \textcolor{keywordtype}{void} Send\_Inner\_P1\_Velocity(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
-00046 \textcolor{keywordtype}{void} Send\_Inner\_P2\_Velocity(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
-00047 
-00048 \textcolor{keywordtype}{void} Send\_Leg1\_Kar(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00049 \textcolor{keywordtype}{void} Send\_Leg2\_Kar(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00050 \textcolor{keywordtype}{void} Send\_Leg3\_Kar(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00051 \textcolor{keywordtype}{void} Send\_Leg4\_Kar(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00052 \textcolor{keywordtype}{void} Send\_Leg5\_Kar(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00053 \textcolor{keywordtype}{void} Send\_Leg6\_Kar(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00054 
-00055 \textcolor{keywordtype}{void} Send\_Leg1\_Cyl(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00056 \textcolor{keywordtype}{void} Send\_Leg2\_Cyl(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00057 \textcolor{keywordtype}{void} Send\_Leg3\_Cyl(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00058 \textcolor{keywordtype}{void} Send\_Leg4\_Cyl(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00059 \textcolor{keywordtype}{void} Send\_Leg5\_Cyl(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00060 \textcolor{keywordtype}{void} Send\_Leg6\_Cyl(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00044 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{servo___u_a_r_t_8h_a45145cd104fed6e8dff8dd62ee52ebe7}{UART\_Receive}(\textcolor{keywordtype}{void});
+00045 
+00054 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{servo___u_a_r_t_8h_a45e02356d032e2069888899bf1a987bf}{checksum\_calc}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} param[], uint8\_t num\_of\_par);
+00055 
+00056 
+00060 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a7522eb3c86cfa713aade9cbe082bcbba}{Configure\_Servos\_Delaytime}(\textcolor{keywordtype}{void});
 00061 
-00062 \textcolor{keywordtype}{void} Send\_Servo\_Position\_And\_Velocity(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel);
-00063 \textcolor{keywordtype}{void} Send\_Leg1\_Kar\_And\_Velocity(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
-      unsigned} \textcolor{keywordtype}{int} outer);
-00064 \textcolor{keywordtype}{void} Send\_Leg2\_Kar\_And\_Velocity(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
-      unsigned} \textcolor{keywordtype}{int} outer);
-00065 \textcolor{keywordtype}{void} Send\_Leg3\_Kar\_And\_Velocity(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
-      unsigned} \textcolor{keywordtype}{int} outer);
-00066 \textcolor{keywordtype}{void} Send\_Leg4\_Kar\_And\_Velocity(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
-      unsigned} \textcolor{keywordtype}{int} outer);
-00067 \textcolor{keywordtype}{void} Send\_Leg5\_Kar\_And\_Velocity(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
-      unsigned} \textcolor{keywordtype}{int} outer);
-00068 \textcolor{keywordtype}{void} Send\_Leg6\_Kar\_And\_Velocity(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
-      unsigned} \textcolor{keywordtype}{int} outer);
-00069 
-00070 \textcolor{keywordtype}{void} Send\_Leg1\_Cyl\_And\_Velocity(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
-      unsigned} \textcolor{keywordtype}{int} outer);
-00071 \textcolor{keywordtype}{void} Send\_Leg2\_Cyl\_And\_Velocity(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
-      unsigned} \textcolor{keywordtype}{int} outer);
-00072 \textcolor{keywordtype}{void} Send\_Leg3\_Cyl\_And\_Velocity(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
-      unsigned} \textcolor{keywordtype}{int} outer);
-00073 \textcolor{keywordtype}{void} Send\_Leg4\_Cyl\_And\_Velocity(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
-      unsigned} \textcolor{keywordtype}{int} outer);
-00074 \textcolor{keywordtype}{void} Send\_Leg5\_Cyl\_And\_Velocity(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
-      unsigned} \textcolor{keywordtype}{int} outer);
-00075 \textcolor{keywordtype}{void} Send\_Leg6\_Cyl\_And\_Velocity(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
-      unsigned} \textcolor{keywordtype}{int} outer);
+00067 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ae7bfd5ff29686df194ec9f4e310cf2e4}{Configure\_Servos\_LED}(\textcolor{keywordtype}{void});
+00068 
+00075 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_aa6bb8d88629b6d2a6c18e2e0d8909574}{Configure\_Servos\_Angle\_Limit}(\textcolor{keywordtype}{void});
 00076 
-00077 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* SERVO\_UART\_H\_ */}\textcolor{preprocessor}{}
+00082 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a17e89f3d8b4abe3abe352ffba8b684f1}{Configure\_Servos\_No\_Response}(\textcolor{keywordtype}{void});
+00083 
+00089 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{servo___u_a_r_t_8h_a1aae94381111766cdccb93eae5b5c382}{Get\_Servo\_Load}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID);
+00090 
+00096 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{servo___u_a_r_t_8h_a70031bcf598a9d8568d8e344d9fc170b}{Get\_Servo\_Position}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID);
+00097 \textcolor{comment}{//unsigned char[] Receive\_Servo\_Statuspackage(uint8\_t size); FUNKAR EJ TY KAN EJ RETURNERA STRUCT}
+00098 \textcolor{comment}{//void Check\_Servo\_Temp(unsigned char ID)}
+00099 
+00100 
+00109 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[], uint8\_t num\_of\_par);
+00110 
+00117 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos);
+00118 
+00125 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel);
+00126 
+00136 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} lower, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} higher
+      );
+00137 
+00143 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a30fbb081db7418d454bfe8761ca59dd2}{Send\_Outer\_P1\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
+00144 
+00150 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a6c4f4c2915df647ac40c86c17e613e30}{Send\_Outer\_P2\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
+00151 
+00157 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a63e528b1a0c31e9912ebbceee58a5faa}{Send\_Middle\_P1\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
+00158 
+00164 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_aae94fcd8998679345fa7d70648bd2a1e}{Send\_Middle\_P2\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
+00165 
+00171 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ace1792c5f066181d607cb075a87f3178}{Send\_Inner\_P1\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
+00172 
+00178 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a9cb7e763d9a3501fc345a424d67975a7}{Send\_Inner\_P2\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
+00179 
+00187 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_adde8722cd4b494d02bce7a39b14aed52}{Send\_Leg1\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00188 
+00196 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a85bfa5d3057fbf4096d5fc8665d717b8}{Send\_Leg2\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00197 
+00205 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a855b410dfcceb0e5f25d57ee17f86932}{Send\_Leg3\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00206 
+00214 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_adc36f085a0d265c937fae59651a06703}{Send\_Leg4\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00215 
+00223 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a0945e0fa1be61238d314e7334bdc9990}{Send\_Leg5\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00224 
+00232 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a2178defeed6cf9781991514439dd799b}{Send\_Leg6\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00233 
+00241 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_af1a73e7eb43491c163ad5031a2506a00}{Send\_Leg1\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00242 
+00250 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a5bf2231681a97180dd8f31da17814b9e}{Send\_Leg2\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00251 
+00259 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ae482cf70fc4b70fe8f4201eeffc54f51}{Send\_Leg3\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00260 
+00268 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ab2b44997220df53e3737bfc35bc8b0aa}{Send\_Leg4\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00269 
+00277 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a520acee2912480717b1bbcbb904e23c4}{Send\_Leg5\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00278 
+00286 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a9b86b4483c82ad17b1eb4e97c30d3b7d}{Send\_Leg6\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00287 
+00295 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} vel);
+00296 
+00297 
+00298 \textcolor{keywordtype}{void} Send\_Leg1\_Kar\_And\_Velocity(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} outer);
+00299 \textcolor{keywordtype}{void} Send\_Leg2\_Kar\_And\_Velocity(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} outer);
+00300 \textcolor{keywordtype}{void} Send\_Leg3\_Kar\_And\_Velocity(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} outer);
+00301 \textcolor{keywordtype}{void} Send\_Leg4\_Kar\_And\_Velocity(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} outer);
+00302 \textcolor{keywordtype}{void} Send\_Leg5\_Kar\_And\_Velocity(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} outer);
+00303 \textcolor{keywordtype}{void} Send\_Leg6\_Kar\_And\_Velocity(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} outer);
+00304 
+00305 \textcolor{keywordtype}{void} Send\_Leg1\_Cyl\_And\_Velocity(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} outer);
+00306 \textcolor{keywordtype}{void} Send\_Leg2\_Cyl\_And\_Velocity(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} outer);
+00307 \textcolor{keywordtype}{void} Send\_Leg3\_Cyl\_And\_Velocity(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} outer);
+00308 \textcolor{keywordtype}{void} Send\_Leg4\_Cyl\_And\_Velocity(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} outer);
+00309 \textcolor{keywordtype}{void} Send\_Leg5\_Cyl\_And\_Velocity(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} outer);
+00310 \textcolor{keywordtype}{void} Send\_Leg6\_Cyl\_And\_Velocity(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} z, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} outer);
+00311 
+00312 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* SERVO\_UART\_H\_ */}\textcolor{preprocessor}{}
 \end{DoxyCode}
