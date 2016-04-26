@@ -19,8 +19,6 @@
 #include "inv_mpu_dmp_motion_driver.h"
 #include "motion_driver_test.c"
 
-int16_t testvariabel;
-
 int main(void)
 {
 	init_ADC();
