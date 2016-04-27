@@ -550,12 +550,12 @@ void run_state(float height)
 		
 		case INTO_HIGH_OBSTACLE:
 		{
-			Walk_Half_Cycle(1, alpha, height/2); //Testa fram lagom höjd som roboten ska sänkas till
+			Walk_Half_Cycle(2, alpha, height/2); //Testa fram lagom höjd som roboten ska sänkas till
 		}
 		
 		case CRAWLING_UNDER_HIGH_OBSTACLE:
 		{
-			Walk_Half_Cycle(2, alpha, height/2); //Samma höjd som i INTO_HIGH_OBSTACLE
+			Walk_Half_Cycle(4, alpha, height/2); //Samma höjd som i INTO_HIGH_OBSTACLE
 		}
 		
 		//case INTO_LOW_OBSTACLE:

@@ -81,9 +81,9 @@ typedef enum {
 #define LOW_OBSTACLE_DISTANCE 40		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
 #define START_CLIMBING_UP_DISTANCE 20	/**< Distance for beginning climbing onto low obstacle (if IR_1 is less than this). */
 #define START_CLIMBING_DOWN_DISTANCE 50	/**< Distance for beginning climbing down from low obstacle (if IR_1 is less than this). */
-#define US_HIGH_OBSTACLE_DISTANCE 40	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
-#define IR_HIGH_OBSTACLE_DISTANCE 50	/**< Distance for determining whether high obstacle or not (IR sensor). */	
-#define NO_WALL_DISTANCE 50				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
+#define US_HIGH_OBSTACLE_DISTANCE 60	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
+#define IR_HIGH_OBSTACLE_DISTANCE 60	/**< Distance for determining whether high obstacle or not (IR sensor). */	
+#define NO_WALL_DISTANCE 60				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
 #define DEAD_END_DISTANCE 40			/**< Distance to wall for turning in a dead end (which we shouln't even enter). */
 
 #define CENTRE_OFFSET 8 /**< Horizontal distance from centre of robot to its legs. */
