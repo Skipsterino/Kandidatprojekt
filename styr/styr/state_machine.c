@@ -149,12 +149,12 @@ void update_state()
 				first_state_cycle = true; //Behövs eftersom den används vid bestämning av Yaw i detta tillstånd.
 			}
 			
-			//else if ((US < US_HIGH_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))
-			//{
-			//ROBOT_STATE = INTO_HIGH_OBSTACLE;
-			//break;
-			//}
-			//
+			else if ((US < US_HIGH_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))
+			{
+				ROBOT_STATE = INTO_HIGH_OBSTACLE;
+				break;
+			}
+			
 			//else if ((IR_1 < LOW_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))
 			//{
 			//ROBOT_STATE = INTO_LOW_OBSTACLE;
@@ -243,7 +243,7 @@ void update_state()
 		
 		case TURN_RIGHT:
 		{
-			if (((IMU_Yaw - IMU_Yaw_start) >= HALF_ROTATION_ANGLE) && (rotation_count > 4)) //Kan ta bort rotation_count sen?
+			if (/*((IMU_Yaw - IMU_Yaw_start) >= HALF_ROTATION_ANGLE) && (*/rotation_count > 8)/*)*/ //Kan ta bort rotation_count sen?
 			{
 				ROBOT_STATE = OUT_OF_TURN_RIGHT;
 				start_Yaw_set = false;
@@ -262,7 +262,7 @@ void update_state()
 		
 		case TURN_LEFT:
 		{
-			if (((IMU_Yaw - IMU_Yaw_start) <= (-1)*HALF_ROTATION_ANGLE) && (rotation_count > 4)) //Kan ta bort rotation_count sen?
+			if (/*((IMU_Yaw - IMU_Yaw_start) <= (-1)*HALF_ROTATION_ANGLE) && (*/rotation_count > 8)/*)*/ //Kan ta bort rotation_count sen?
 			{
 				ROBOT_STATE = OUT_OF_TURN_LEFT;
 				start_Yaw_set = false;
@@ -287,7 +287,7 @@ void update_state()
 			//start_Yaw_set = false;
 			//}
 			
-			if (rotation_count > 9)
+			if (rotation_count > 8)
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_A_RIGHT;
 				first_state_cycle = true;
@@ -307,7 +307,7 @@ void update_state()
 			//break;
 			//}
 			
-			if (rotation_count > 9)
+			if (rotation_count > 8)
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_A_LEFT;
 				first_state_cycle = true;
@@ -327,7 +327,7 @@ void update_state()
 			//break;
 			//}
 			
-			if (rotation_count > 9)
+			if (rotation_count > 8)
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_C_RIGHT;
 				start_Yaw_set = false;
@@ -346,7 +346,7 @@ void update_state()
 			//break;
 			//}
 			
-			if (rotation_count > 9)
+			if (rotation_count > 8)
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_C_LEFT;
 				start_Yaw_set = false;
@@ -392,32 +392,31 @@ void update_state()
 			break;
 		}
 		
-		//case INTO_HIGH_OBSTACLE:
-		//{
-			//if (IR_4 < IR_HIGH_OBSTACLE_DISTANCE)
-			//{
-				//ROBOT_STATE = CRAWLING_UNDER_HIGH_OBSTACLE;
-			//}
-			//break;
-		//}
+		case INTO_HIGH_OBSTACLE:
+		{
+			if (IR_4 < IR_HIGH_OBSTACLE_DISTANCE)
+			{
+				ROBOT_STATE = CRAWLING_UNDER_HIGH_OBSTACLE;
+			}
+			break;
+		}
 		
 		
-		////
-		//case CRAWLING_UNDER_HIGH_OBSTACLE:
-		//{
-			//if (IR_4 > IR_HIGH_OBSTACLE_DISTANCE)
-			//{
-				//ROBOT_STATE = CORRIDOR; //BORDE VARA LUGNT ATT HÖJA HÄR! Görs ju av CORRIDOR, kan skippa tillståndet OUT_OF_HIGH_OBSTACLE?
-			//}
-			//break;
-		//}
+		//
+		case CRAWLING_UNDER_HIGH_OBSTACLE:
+		{
+			if (IR_4 > IR_HIGH_OBSTACLE_DISTANCE)
+			{
+				ROBOT_STATE = CORRIDOR; //BORDE VARA LUGNT ATT HÖJA HÄR! Görs ju av CORRIDOR, kan skippa tillståndet OUT_OF_HIGH_OBSTACLE?
+			}
+			break;
+		}
 	
 		////
 		//case OUT_OF_HIGH_OBSTACLE: //BORDE INTE BEHÖVAS ty CORRIDOR genomför höjningen!
 		//{	
 		//}
 		
-		////
 		//case INTO_LOW_OBSTACLE:
 		//{
 			//if (IR_1 < START_CLIMBING_UP_DISTANCE)
@@ -549,15 +548,15 @@ void run_state(float height)
 			break;
 		}
 		
-		//case INTO_HIGH_OBSTACLE:
-		//{
-			//Walk_Half_Cycle(1, alpha, height/2); //Testa fram lagom höjd som roboten ska sänkas till
-		//}
+		case INTO_HIGH_OBSTACLE:
+		{
+			Walk_Half_Cycle(1, alpha, height/2); //Testa fram lagom höjd som roboten ska sänkas till
+		}
 		
-		//case CRAWLING_UNDER_HIGH_OBSTACLE:
-		//{
-			//Walk_Half_Cycle(2, alpha, height/2); //Samma höjd som i INTO_HIGH_OBSTACLE
-		//}
+		case CRAWLING_UNDER_HIGH_OBSTACLE:
+		{
+			Walk_Half_Cycle(2, alpha, height/2); //Samma höjd som i INTO_HIGH_OBSTACLE
+		}
 		
 		//case INTO_LOW_OBSTACLE:
 		//{

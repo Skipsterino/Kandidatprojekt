@@ -69,8 +69,8 @@ typedef enum {
 	INTO_CORRIDOR_NO_WALL = 38,
 } STATES;
 
-#define HALF_ROTATION_ANGLE 50			/**< Rotation angle for a 90 degree turn. */
-#define FULL_ROTATION_ANGLE 175			/**< Rotation angle for a 180 degree turn. */
+#define HALF_ROTATION_ANGLE 45			/**< Rotation angle for a 90 degree turn. */
+#define FULL_ROTATION_ANGLE 90			/**< Rotation angle for a 180 degree turn. */
 #define CORRIDOR_SIDE_DISTANCE 60		/**< Distance for determining whether corridor or not. */
 #define SIDE_DEAD_END_DISTANCE 150		/**< Distance for determining whether dead end to right or left in junction. */
 #define END_OF_COURSE_DISTANCE 80		/**< Distance that IR_0, 2, 3, 5, 6 should be larger than at the end of the course. */

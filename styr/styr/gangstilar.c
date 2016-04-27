@@ -208,9 +208,9 @@ float Limit_Speed(float speed, int sgn_speed)
 
 float Limit_Height(float height)
 {
-	if(height > 14)
+	if(height > 11)
 	{
-		height = 14;
+		height = 11;
 	}
 	if(height < 8)
 	{
@@ -287,7 +287,7 @@ triple_float Tripod(float x, float stroke, float height, uint8_t n)
 //testar överlappande svingfas, strypt o ingen höj/sänk
 void Walk_Half_Cycle(float speed, float theta, float height)
 {
-	height = 11;
+	//height = 11;
 	//justeringar
 	//height = 11;//tilfällig steloperation
 	float l = 13; //fötters förskjuting från kropp i x-led

@@ -64,8 +64,8 @@ int main(void)
 	delta_h = 0.4;
 	
 	//Defaultvärden för state_machine
-	Kp = 0.001;
-	Kd = 0.001;
+	Kp = 0.003;
+	Kd = 0.250;
 	start_Yaw_set = false;
 	first_state_cycle = false;
 	climbed_up = false;
@@ -89,10 +89,8 @@ int main(void)
 	Send_Middle_P2_Velocity(0x0010);//
 	Send_Outer_P2_Velocity(0x0010);//
 	
-	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
-	
+	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!	
 
-	
 	//_delay_ms(100);
 	////Send_Leg3_Kar(22,0,0);
 	////_delay_ms(1);
@@ -172,7 +170,7 @@ int main(void)
 					Kd = ((float)lastPacket[6])/1000.f; //Kd skickas som 1000 ggr det önskade värdet!!!
 				}
 				
-				Walk_Half_Cycle2(speed,angle,height);
+				Walk_Half_Cycle(speed,angle,height);
 				break;
 			
 			case AUTO: //Autonomt läge
