@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['sensor_20driver_20layer',['Sensor Driver Layer',['../group___d_r_i_v_e_r_s.html',1,'']]],
-  ['sensormodul',['Sensormodul',['../md_sensor_old_Readme.html',1,'']]],
   ['send_5finner_5fp1_5fvelocity',['Send_Inner_P1_Velocity',['../servo___u_a_r_t_8h.html#ace1792c5f066181d607cb075a87f3178',1,'servo_UART.c']]],
   ['send_5finner_5fp2_5fvelocity',['Send_Inner_P2_Velocity',['../servo___u_a_r_t_8h.html#a9cb7e763d9a3501fc345a424d67975a7',1,'servo_UART.c']]],
   ['send_5fleg1_5fcyl',['Send_Leg1_Cyl',['../servo___u_a_r_t_8h.html#af1a73e7eb43491c163ad5031a2506a00',1,'servo_UART.c']]],
@@ -24,16 +22,5 @@ var searchData=
   ['send_5fservo_5fmessage',['Send_Servo_Message',['../servo___u_a_r_t_8h.html#a2ed3a2903977a774d1b174665d50661c',1,'servo_UART.c']]],
   ['send_5fservo_5fposition',['Send_Servo_Position',['../servo___u_a_r_t_8h.html#a5ed0e49737d1eaf80665c285396b4337',1,'servo_UART.c']]],
   ['send_5fservo_5fposition_5fand_5fvelocity',['Send_Servo_Position_And_Velocity',['../servo___u_a_r_t_8h.html#aef28545296037ecc0350638a407a680f',1,'servo_UART.c']]],
-  ['send_5fservo_5fvelocity',['Send_Servo_Velocity',['../servo___u_a_r_t_8h.html#ac325c1636bc0a1c5b6cbe967bca0a6d2',1,'servo_UART.c']]],
-  ['servo_5fuart_2eh',['servo_UART.h',['../servo___u_a_r_t_8h.html',1,'']]],
-  ['short_5fturn_5fdistance',['SHORT_TURN_DISTANCE',['../state__machine_8h.html#adf843098ef425aa129f5ff16d879f7f2',1,'state_machine.h']]],
-  ['side_5fdead_5fend_5fdistance',['SIDE_DEAD_END_DISTANCE',['../state__machine_8h.html#a31ba7e3e0116f665d5825f669052ed09',1,'state_machine.h']]],
-  ['six_5fuchar',['six_uchar',['../structsix__uchar.html',1,'']]],
-  ['spioverflow',['spiOverflow',['../_l_c_d__controller_8h.html#a5462652fe95683f50bcbd6d5fbbc3ae1',1,'LCD_controller.h']]],
-  ['start_5fclimbing_5fdown_5fdistance',['START_CLIMBING_DOWN_DISTANCE',['../state__machine_8h.html#a9df2253e22c049d64aab5f0cbfd7dae3',1,'state_machine.h']]],
-  ['start_5fclimbing_5fup_5fdistance',['START_CLIMBING_UP_DISTANCE',['../state__machine_8h.html#a7dc7e4111003eb72dfc6cfede130fb5f',1,'state_machine.h']]],
-  ['start_5fyaw_5fset',['start_Yaw_set',['../state__machine_8h.html#a51f98684c825046dd85a9256f18bbce9',1,'state_machine.h']]],
-  ['state_5fmachine_2eh',['state_machine.h',['../state__machine_8h.html',1,'']]],
-  ['states',['STATES',['../state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9',1,'state_machine.h']]],
-  ['structs_2eh',['structs.h',['../structs_8h.html',1,'']]]
+  ['send_5fservo_5fvelocity',['Send_Servo_Velocity',['../servo___u_a_r_t_8h.html#ac325c1636bc0a1c5b6cbe967bca0a6d2',1,'servo_UART.c']]]
 ];

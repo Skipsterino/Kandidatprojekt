@@ -30,14 +30,14 @@ typedef enum  {
 } CONTROL_MODE;
 
 CONTROL_MODE cm;
-volatile unsigned char lastPacket[16];
-
 float angle;
 float speed;
 int8_t intensity_byte;
 int8_t angle_byte;
 float height;
 float delta_h;
+
+volatile unsigned char lastPacket[16];
 
 //Funktionsdeklarationer
 void update_mode();
@@ -52,8 +52,8 @@ int main(void)
 {
 	memset(lastPacket, 0, sizeof(lastPacket));
 	
-	cm = MANUAL; //Representerar aktuellt läge hos roboten
-	ROBOT_STATE = CORRIDOR;
+	cm = MANUAL; //Aktuellt styrläge hos roboten
+	ROBOT_STATE = CORRIDOR; //Default-tillstånd hos roboten
 	
 	//Defaultvärden
 	angle = 0;
@@ -61,12 +61,16 @@ int main(void)
 	intensity_byte = 120;
 	angle_byte = 120;
 	height = 11;
-
 	delta_h = 0.4;
-	Kp = 0.001;
-	Kd = 0.001;
-
-
+	
+	//Defaultvärden för state_machine
+	Kp = 0.003;
+	Kd = 0.250;
+	start_Yaw_set = false;
+	first_state_cycle = false;
+	climbed_up = false;
+	climbed_down = false;
+	
 	Init();
 	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
@@ -74,6 +78,8 @@ int main(void)
 	Configure_Servos_LED();
 	Configure_Servos_No_Response();
 	Configure_Servos_Angle_Limit();
+	Configure_Servos_Max_Torque();
+	
 	//
 	
 	Send_Inner_P1_Velocity(0x0010); //DESSA SEX ANROP MÅSTE ALLTID KÖRAS EFTERSOM HASTIGHETEN LIGGER I RAM!!!
@@ -83,11 +89,48 @@ int main(void)
 	Send_Middle_P2_Velocity(0x0010);//
 	Send_Outer_P2_Velocity(0x0010);//
 	
-	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
+	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!	
 
+	//_delay_ms(100);
+	////Send_Leg3_Kar(22,0,0);
+	////_delay_ms(1);
+	////Send_Leg1_Kar(22,0,0);
+	////_delay_ms(1);
+	////Send_Leg2_Kar(22,0,0);
+	////_delay_ms(1);
+	////Send_Leg4_Kar(22,0,0);
+	////_delay_ms(1);
+	////Send_Leg5_Kar(22,0,0);
+	////_delay_ms(1);
+	////Send_Leg6_Kar(22,0,0);
+	////_delay_ms(1);
+	//Send_Servo_Position(1,0x01FF);
+	//Send_Servo_Position(2,0x01FF);	
+	//Send_Servo_Position(3,0x01FF-0xA0);
+	//Send_Servo_Position(4,0x01FF+0xA0);
+	//Send_Servo_Position(5,0x01FF+0xA0);
+	//Send_Servo_Position(6,0x01FF-0xA0);
+	//Send_Servo_Position(7,0x01FF);
+	//Send_Servo_Position(8,0x01FF);
+	//Send_Servo_Position(9,0x01FF-0xA0);
+	//Send_Servo_Position(10,0x01FF+0xA0);
+	//Send_Servo_Position(11,0x01FF+0xA0);
+	//Send_Servo_Position(12,0x01FF-0xA0);
+	//Send_Servo_Position(13,0x01FF);
+	//Send_Servo_Position(14,0x01FF);
+	//Send_Servo_Position(15,0x01FF-0xA0);
+	//Send_Servo_Position(16,0x01FF+0xA0);
+	//Send_Servo_Position(17,0x01FF+0xA0);
+	//Send_Servo_Position(18,0x01FF-0xA0);
+	//
+	//
+	//while(1)
+	//{
+	//}
 	unsigned char first_kom_byte;
-	Walk_Half_Cycle(0, 0,height);	//Ställ in default-höjd
 	
+	Walk_Half_Cycle(0, 0,height);	//Ställ in default-höjd
+
 	while(1)
 	{
 		
@@ -136,7 +179,7 @@ int main(void)
 				break;
 			
 			case RACE:
-				if ((PIND & (1 << PIND3)) == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
+				if ((PIND & (1 << PIND3)) == 0) //Har knapp tryckts ned?
 				{
 					_delay_ms(2000);
 					cm = AUTO;

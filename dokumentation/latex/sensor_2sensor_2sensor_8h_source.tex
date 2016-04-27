@@ -30,8 +30,8 @@
 00026 \textcolor{keyword}{volatile} uint8\_t SPI\_overflow = 0;
 00027 
 00029 
-00030 \textcolor{keyword}{const} \textcolor{keywordtype}{int} delay\_time = 50;                          \textcolor{comment}{// tid i millisekunder (50 ger alltså ungefär 20Hz,
-       lagom för US-sensorn)}
+00030 \textcolor{keyword}{const} \textcolor{keywordtype}{int} delay\_time = 50;                  \textcolor{comment}{// tid i millisekunder (50 ger alltså ungefär 20Hz, lagom för
+       US-sensorn)}
 00031 
 00032 \textcolor{keyword}{const} \textcolor{keywordtype}{double} IR\_sensor\_distance\_right = 16.5;       \textcolor{comment}{// Avståndet mellan högra sidosensorerna (cm)}
 00033 \textcolor{keyword}{const} \textcolor{keywordtype}{double} IR\_sensor\_distance\_left = 16.5;        \textcolor{comment}{// Avståndet mellan vänstra sidosensorerna (cm)}
@@ -76,7 +76,7 @@
 00074 \textcolor{preprocessor}{#define QUAT\_Y 2}
 00075 \textcolor{preprocessor}{#define QUAT\_Z 3}
 00076 
-00077 \textcolor{preprocessor}{#define MPU\_HZ 15       //frekvensen som IMU:n genererar avbrott med (internt kör DMP:n alltid med 200 Hz)}
+00077 \textcolor{preprocessor}{#define MPU\_HZ 12       //frekvensen som IMU:n genererar avbrott med (internt kör DMP:n alltid med 200 Hz)}
 00078 \textcolor{preprocessor}{#define USE\_DMP 1}
 00079 
 00080 \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} IMU\_data\_ready = 0;

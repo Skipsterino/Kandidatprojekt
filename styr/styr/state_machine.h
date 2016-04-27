@@ -17,6 +17,7 @@
 
 #include "SPI.h"
 #include "gangstilar.h"
+#include <stdbool.h>
 
 /**
 * Enum that contains the different possible states that the robot can be in.
@@ -68,8 +69,8 @@ typedef enum {
 	INTO_CORRIDOR_NO_WALL = 38,
 } STATES;
 
-#define HALF_ROTATION_ANGLE 85			/**< Rotation angle for a 90 degree turn. */
-#define FULL_ROTATION_ANGLE 175			/**< Rotation angle for a 180 degree turn. */
+#define HALF_ROTATION_ANGLE 45			/**< Rotation angle for a 90 degree turn. */
+#define FULL_ROTATION_ANGLE 90			/**< Rotation angle for a 180 degree turn. */
 #define CORRIDOR_SIDE_DISTANCE 60		/**< Distance for determining whether corridor or not. */
 #define SIDE_DEAD_END_DISTANCE 150		/**< Distance for determining whether dead end to right or left in junction. */
 #define END_OF_COURSE_DISTANCE 80		/**< Distance that IR_0, 2, 3, 5, 6 should be larger than at the end of the course. */
@@ -80,17 +81,19 @@ typedef enum {
 #define LOW_OBSTACLE_DISTANCE 40		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
 #define START_CLIMBING_UP_DISTANCE 20	/**< Distance for beginning climbing onto low obstacle (if IR_1 is less than this). */
 #define START_CLIMBING_DOWN_DISTANCE 50	/**< Distance for beginning climbing down from low obstacle (if IR_1 is less than this). */
-#define US_HIGH_OBSTACLE_DISTANCE 40	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
-#define IR_HIGH_OBSTACLE_DISTANCE 50	/**< Distance for determining whether high obstacle or not (IR sensor). */	
-#define NO_WALL_DISTANCE 50				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
+#define US_HIGH_OBSTACLE_DISTANCE 60	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
+#define IR_HIGH_OBSTACLE_DISTANCE 60	/**< Distance for determining whether high obstacle or not (IR sensor). */	
+#define NO_WALL_DISTANCE 60				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
 #define DEAD_END_DISTANCE 40			/**< Distance to wall for turning in a dead end (which we shouln't even enter). */
 
 #define CENTRE_OFFSET 8 /**< Horizontal distance from centre of robot to its legs. */
 #define CORRIDOR_WIDTH 80 /**< Width of the labyrinth's corridors. */
 
 float IMU_Yaw_start; /**< The IMU's start Yaw angle when entering turns and junctions. */ 
-uint8_t start_Yaw_set; /**< Used to determine whether to set start Yaw value or not. 0 = hasn't set start value. */
-uint8_t first_state_cycle; /**< 1 = first time that run_state is executed in a certain state. */
+bool start_Yaw_set; /**< Used to determine whether to set start Yaw value or not. false -> hasn't set start value. */
+bool first_state_cycle; /**< true -> first time that run_state is executed in a certain state. */
+bool climbed_up; /**< true -> the robot has climbed up on top of a low obstacle. */
+bool climbed_down; /**< true -> the robot has climbed down from a low obstacle. */
 uint8_t rotation_count; /**< Counter that keeps track of rotation in a turn or junction. */
 
 float Yaw, Yaw_rad, p_part, Kp, Kd, alpha; /**< Angles and parameters for motion control. */
@@ -109,9 +112,9 @@ void update_state();
 * @brief Executes the robot's current state
 *
 * Executes robot state based on current state and sensor values.
-* @param height_value Indicates the robot's distance to ground.
+* @param height Indicates the robot's distance to ground.
 */
-void run_state(float height_value);
+void run_state(float height);
 
 /**
 * @brief Loads sensor values
