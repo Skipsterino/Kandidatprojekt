@@ -26,11 +26,12 @@ int main(void)
 	init_SPI();
 	init_timer();						// Initiera en timer för att hålla koll på förfluten tid.
 	init_I2C();
+	
+	_delay_ms(2000);
 	init_IMU();
 
-
 	sei();								// Tillåt avbrott (bit 7 på SREG sätts till 1)
-
+	
 	while (1)
 	{
 		if (SPI_done)
