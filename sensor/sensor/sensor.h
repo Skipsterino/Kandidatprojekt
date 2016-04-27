@@ -11,7 +11,7 @@
 #ifndef SENSOR_H_
 #define SENSOR_H_
 
-#define F_CPU 16000000UL		// 16 MHz
+#define F_CPU 16000000UL	/**< Define the frequency for the CPU as 16 MHz */
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
