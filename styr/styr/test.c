@@ -30,14 +30,14 @@ typedef enum  {
 } CONTROL_MODE;
 
 CONTROL_MODE cm;
-volatile unsigned char lastPacket[16];
-
 float angle;
 float speed;
 int8_t intensity_byte;
 int8_t angle_byte;
 float height;
 float delta_h;
+
+volatile unsigned char lastPacket[16];
 
 //Funktionsdeklarationer
 void update_mode();
@@ -52,8 +52,8 @@ int main(void)
 {
 	memset(lastPacket, 0, sizeof(lastPacket));
 	
-	cm = MANUAL; //Representerar aktuellt läge hos roboten
-	ROBOT_STATE = CORRIDOR;
+	cm = MANUAL; //Aktuellt styrläge hos roboten
+	ROBOT_STATE = CORRIDOR; //Default-tillstånd hos roboten
 	
 	//Defaultvärden
 	angle = 0;
@@ -61,12 +61,16 @@ int main(void)
 	intensity_byte = 120;
 	angle_byte = 120;
 	height = 11;
-
 	delta_h = 0.4;
+	
+	//Defaultvärden för state_machine
 	Kp = 0.001;
 	Kd = 0.001;
-
-
+	start_Yaw_set = false;
+	first_state_cycle = false;
+	climbed_up = false;
+	climbed_down = false;
+	
 	Init();
 	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
@@ -86,6 +90,7 @@ int main(void)
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
 
 	unsigned char first_kom_byte;
+	
 	Walk_Half_Cycle(0, 0,height);	//Ställ in default-höjd
 	
 	while(1)
@@ -136,7 +141,7 @@ int main(void)
 				break;
 			
 			case RACE:
-				if ((PIND & (1 << PIND3)) == 0) //Har knapp tryckts ned? PIN ist. för PORT eftersom in-port ist. för ut-port???
+				if ((PIND & (1 << PIND3)) == 0) //Har knapp tryckts ned?
 				{
 					_delay_ms(2000);
 					cm = AUTO;
