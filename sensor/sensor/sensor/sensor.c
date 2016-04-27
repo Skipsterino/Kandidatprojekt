@@ -112,8 +112,8 @@ ISR(TIMER1_CAPT_vect)
 {
 	TCCR1B &= 0<<CS12 | 0<<CS10;			// Stanna timer
 
-	US_reading = ICR1L;						// Läs in timer-värdets låga byte...
-	US_reading = US_reading + (ICR1H<<8);	// ...och addera timer-värdets höga byte.
+	US_latest_reading = ICR1L;						// Läs in timer-värdets låga byte...
+	US_latest_reading = US_latest_reading + (ICR1H<<8);	// ...och addera timer-värdets höga byte.
 }
 
 /*
@@ -181,7 +181,7 @@ ISR(TIMER2_OVF_vect)
 *
 * INDATA
 *
-* 
+*
 *
 * UTDATA
 *
@@ -615,7 +615,7 @@ void read_IMU()
 			
 			//if (!more) // Kolla så att vi får med all data
 			//{
-				IMU_data_ready = 0;
+			IMU_data_ready = 0;
 			//}
 
 			quaternion[QUAT_W] = (float)quat[QUAT_W];
@@ -640,7 +640,6 @@ void read_IMU()
 			IMU_Roll = (atan(gravity[y] / sqrt(gravity[x]*gravity[x] + gravity[z]*gravity[z]))/3.14)*180;	// Beräkna roll-vinkel i grader
 			
 			/* Säkerställ att vi inte får overflow i datatyperna */
-			IMU_Yaw = restrict_angle(IMU_Yaw);
 			IMU_Pitch = restrict_angle(IMU_Pitch);
 			IMU_Roll = restrict_angle(IMU_Roll);
 			
@@ -787,7 +786,16 @@ double lookup_distance(ADC_distance_pair* ADC_dist_table, double ADC_value, int 
 
 void time_to_distance()
 {
-	US_distance =  US_reading*0.0642857143;		// Gör om till tid i millisekunder
+	for (int i = 5; i>=2; --i)		// Skifta ut den äldsta avläsningen
+	{
+		US_reading[i] = US_reading[i-1];
+	}
+	
+	US_reading[1] = US_latest_reading;	// Spara in den senaste.
+	
+	US_distance = (US_reading[1] + US_reading[2] + US_reading[3] + US_reading[4] + US_reading[5])/5;	// Medelvärdesbilda över de 5 senaste
+	
+	US_distance =  US_distance*0.0642857143;		// Gör om till tid i millisekunder
 	US_distance = US_distance - 0.75;			// Subrtrahera offset mellan triggerpuls och ekopuls
 	US_distance = 34.33*US_distance/2;			// Gör om till cm
 

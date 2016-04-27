@@ -29,8 +29,8 @@ volatile uint8_t SPI_overflow = 0;
 
 const int delay_time = 50;					// tid i millisekunder (50 ger alltså ungefär 20Hz, lagom för US-sensorn)
 
-const double IR_sensor_distance_right = 16.5;		// Avståndet mellan högra sidosensorerna (cm)
-const double IR_sensor_distance_left = 16.5;		// Avståndet mellan vänstra sidosensorerna (cm)
+const double IR_sensor_distance_right = 15.5;		// Avståndet mellan högra sidosensorerna (cm)
+const double IR_sensor_distance_left = 15.5;		// Avståndet mellan vänstra sidosensorerna (cm)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -45,7 +45,8 @@ typedef struct
 	double distance;
 } ADC_distance_pair;
 
-volatile double US_reading;									// (US = Ultra Sound)
+volatile double US_latest_reading;
+volatile double US_reading[5];									// (US = Ultra Sound)
 double US_distance;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,8 +83,6 @@ volatile unsigned char IMU_data_ready = 0;
 const signed char _orientation[9] = {1, 0, 0,  0, 1, 0,  0, 0, 1};
 
 float quaternion[4];
-int16_t temp_reading;
-double IMU_temperature;
 float gravity[3];
 float IMU_Yaw, IMU_Pitch, IMU_Roll;
 
