@@ -72,6 +72,7 @@ void calculate_p_part()
 {
 	switch (ROBOT_STATE)
 	{
+<<<<<<< HEAD
 		case INTO_HIGH_OBSTACLE:
 		case CRAWLING_UNDER_HIGH_OBSTACLE:
 		case INTO_LOW_OBSTACLE:
