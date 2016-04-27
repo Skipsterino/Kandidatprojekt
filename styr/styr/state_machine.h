@@ -74,26 +74,25 @@ typedef enum {
 #define CORRIDOR_SIDE_DISTANCE 60		/**< Distance for determining whether corridor or not. */
 #define SIDE_DEAD_END_DISTANCE 150		/**< Distance for determining whether dead end to right or left in junction. */
 #define END_OF_COURSE_DISTANCE 80		/**< Distance that IR_0, 2, 3, 5, 6 should be larger than at the end of the course. */
-#define SHORT_TURN_DISTANCE 38			/**< Distance to wall for rotating in turns and C junctions. */
-#define LONG_TURN_DISTANCE 100			/**< Distance to wall for rotating in A junctions. */
+#define SHORT_TURN_DISTANCE 40			/**< Distance to wall for rotating in turns and C junctions. */
+#define LONG_TURN_DISTANCE 105			/**< Distance to wall for rotating in A junctions. */
 #define FORWARD_DEAD_END_DISTANCE 180	/**< Distance for determining whether dead end straight ahead in junction or not. */
 #define JUNCTION_A_FORWARD_DISTANCE 80	/**< Distance for determining whether A junction or not (junction or turn?). */
 #define LOW_OBSTACLE_DISTANCE 40		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
 #define START_CLIMBING_UP_DISTANCE 20	/**< Distance for beginning climbing onto low obstacle (if IR_1 is less than this). */
-#define START_CLIMBING_DOWN_DISTANCE 50	/**< Distance for beginning climbing down from low obstacle (if IR_1 is less than this). */
+#define START_CLIMBING_DOWN_DISTANCE 50	/**< Distance for beginning climbing down from low obstacle (if IR_1 is greater than this). */
 #define US_HIGH_OBSTACLE_DISTANCE 60	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
 #define IR_HIGH_OBSTACLE_DISTANCE 60	/**< Distance for determining whether high obstacle or not (IR sensor). */	
 #define NO_WALL_DISTANCE 60				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
-#define DEAD_END_DISTANCE 40			/**< Distance to wall for turning in a dead end (which we shouln't even enter). */
+#define DEAD_END_DISTANCE 40			/**< Distance to wall for turning in a dead end (which we shouldn't even enter). */
 
 #define CENTRE_OFFSET 8 /**< Horizontal distance from centre of robot to its legs. */
 #define CORRIDOR_WIDTH 80 /**< Width of the labyrinth's corridors. */
 
 float IMU_Yaw_start; /**< The IMU's start Yaw angle when entering turns and junctions. */ 
-bool start_Yaw_set; /**< Used to determine whether to set start Yaw value or not. false -> hasn't set start value. */
-bool first_state_cycle; /**< true -> first time that run_state is executed in a certain state. */
 bool climbed_up; /**< true -> the robot has climbed up on top of a low obstacle. */
 bool climbed_down; /**< true -> the robot has climbed down from a low obstacle. */
+bool trust_sensors; /**< false -> for some reason, we don't trust the current sensor data. */
 uint8_t rotation_count; /**< Counter that keeps track of rotation in a turn or junction. */
 
 float Yaw, Yaw_rad, p_part, Kp, Kd, alpha; /**< Angles and parameters for motion control. */

@@ -66,10 +66,9 @@ int main(void)
 	//Defaultvärden för state_machine
 	Kp = 0.003;
 	Kd = 0.250;
-	start_Yaw_set = false;
-	first_state_cycle = false;
 	climbed_up = false;
 	climbed_down = false;
+	trust_sensors = true;
 	
 	Init();
 	
