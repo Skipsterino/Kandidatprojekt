@@ -11,10 +11,11 @@ void calculate_Yaw()
 {
 	switch (ROBOT_STATE)
 	{
-		//case INTO_HIGH_OBSTACLE:
-		//case CRAWLING_UNDER_HIGH_OBSTACLE:
+		
 		//case INTO_LOW_OBSTACLE:
 		//case LOW_OBSTACLE:
+		case INTO_HIGH_OBSTACLE:
+		case CRAWLING_UNDER_HIGH_OBSTACLE:
 		case CORRIDOR:
 		{
 			Yaw = (IR_Yaw_right + IR_Yaw_left)/2;
@@ -65,10 +66,11 @@ void calculate_p_part()
 {
 	switch (ROBOT_STATE)
 	{
-		//case INTO_HIGH_OBSTACLE:
-		//case CRAWLING_UNDER_HIGH_OBSTACLE:
+		
 		//case INTO_LOW_OBSTACLE:
 		//case LOW_OBSTACLE:
+		case INTO_HIGH_OBSTACLE:
+		case CRAWLING_UNDER_HIGH_OBSTACLE:
 		case CORRIDOR:
 		{
 			p_part = IR_3 - IR_6;
