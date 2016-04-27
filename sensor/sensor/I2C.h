@@ -75,7 +75,7 @@ int i2c_write(unsigned char slave_addr, unsigned char reg_addr, unsigned char le
 * @param slave_addr The address of the slave
 * @param reg_addr The register address of the register to be read from at the slave
 * @param length The length of the transmission
-* @param data The data recieved
+* @param data The data received
 */
 int i2c_read(unsigned char slave_addr, unsigned char reg_addr, unsigned char length, unsigned char *data);
 
