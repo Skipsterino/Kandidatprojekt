@@ -17,6 +17,9 @@ float theta_max = 0;
 triple_float servofuck_adjust_p1;
 triple_float servofuck_adjust_p2;
 float sideways_fuck;
+unsigned int speed_inner;;
+unsigned int speed_middle;
+unsigned int speed_outer;
 
 void init_fuck()
 {
@@ -89,9 +92,9 @@ int max_speed(float theta, int sgn_theta)
 void Adjust_Servo_Speed(float theta, int sgn_theta)
 {                                                                                    
 	//justerar servospeed ÄNDRA SKALFAKTOR !!
-	unsigned int speed_inner =  220 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
-	unsigned int speed_middle  = 320 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//220
-	unsigned int speed_outer  =  300 + 280 * (sgn_theta * theta - theta_max);//320 + 430 *//250
+	 speed_inner =  220 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	 speed_middle  = 320 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//220
+	 speed_outer  =  300 + 280 * (sgn_theta * theta - theta_max);//320 + 430 *//250
  
 	//skickar hastighetsbegränsningar till servon.
 	Send_Inner_P1_Velocity(speed_inner);
@@ -123,16 +126,45 @@ void Adjust_Height(float l, float height_step, float corner_pitch)
 void Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch)
 {
 	
-	
-	//par 1 får pos
+	//par1
+	if(n == m +swing_l - 3) //Sänker servospeed vid nedsänking av ben
+	{
+	Send_Leg4_Kar_And_Velocity(kar_p1.a, kar_p1.b, kar_p1.c + servofuck_adjust_p1.a, speed_drive, speed_middle - 80, speed_outer -80); 
+	Send_Leg1_Kar_And_Velocity(kar_p1.a, kar_p1.b + corner_pitch, kar_p1.c + servofuck_adjust_p1.b, speed_drive, speed_middle - 80, speed_outer -80); 
+	Send_Leg5_Kar_And_Velocity(kar_p1.a, kar_p1.b - corner_pitch, kar_p1.c + servofuck_adjust_p1.c, speed_drive, speed_middle - 80, speed_outer -80); 
+	}
+	else if(n == 5)//återställer servospeed när sänkning är klar
+	{
+	Send_Leg4_Kar_And_Velocity(kar_p1.a, kar_p1.b, kar_p1.c + servofuck_adjust_p1.a, speed_drive, speed_middle, speed_outer); 
+	Send_Leg1_Kar_And_Velocity(kar_p1.a, kar_p1.b + corner_pitch, kar_p1.c + servofuck_adjust_p1.b, speed_drive, speed_middle, speed_outer); 
+	Send_Leg5_Kar_And_Velocity(kar_p1.a, kar_p1.b - corner_pitch, kar_p1.c + servofuck_adjust_p1.c, speed_drive, speed_middle, speed_outer); 
+	}
+	else
+	{
 	Send_Leg4_Kar(kar_p1.a, kar_p1.b, kar_p1.c + servofuck_adjust_p1.a); 
 	Send_Leg1_Kar(kar_p1.a, kar_p1.b + corner_pitch, kar_p1.c + servofuck_adjust_p1.b);
 	Send_Leg5_Kar(kar_p1.a, kar_p1.b - corner_pitch, kar_p1.c + servofuck_adjust_p1.c);
-			
-	//par 2 får pos
+	}		
+	
+	//par2
+	if(n - (m + swing_l)/2  == swing_l-3)//Sänker servospeed vid nedsänking av ben
+	{
+	Send_Leg3_Kar_And_Velocity(kar_p2.a, kar_p2.b, kar_p2.c + servofuck_adjust_p2.a, speed_drive, speed_middle - 80, speed_outer -80); 
+	Send_Leg2_Kar_And_Velocity(kar_p2.a, kar_p2.b + corner_pitch, kar_p2.c + servofuck_adjust_p2.b, speed_drive, speed_middle - 80, speed_outer -80); 
+	Send_Leg6_Kar_And_Velocity(kar_p2.a, kar_p2.b - corner_pitch, kar_p2.c + servofuck_adjust_p2.c, speed_drive, speed_middle - 80, speed_outer -80); 
+	}
+	else if(n -(m + swing_l)/2 == 5)//återställer servospeed när sänkning är klar
+	{
+	Send_Leg3_Kar_And_Velocity(kar_p2.a, kar_p2.b, kar_p2.c + servofuck_adjust_p2.a, speed_drive, speed_middle, speed_outer); 
+	Send_Leg2_Kar_And_Velocity(kar_p2.a, kar_p2.b + corner_pitch, kar_p2.c + servofuck_adjust_p2.b, speed_drive, speed_middle , speed_outer); 
+	Send_Leg6_Kar_And_Velocity(kar_p2.a, kar_p2.b - corner_pitch, kar_p2.c + servofuck_adjust_p2.c, speed_drive, speed_middle, speed_outer); 
+	}
+	else
+	{
 	Send_Leg3_Kar(kar_p2.a, kar_p2.b, kar_p2.c + servofuck_adjust_p2.a); 
 	Send_Leg2_Kar(kar_p2.a, kar_p2.b + corner_pitch, kar_p2.c + servofuck_adjust_p2.b);
 	Send_Leg6_Kar(kar_p2.a, kar_p2.b - corner_pitch, kar_p2.c + servofuck_adjust_p2.c);
+	}
 }
 
 //Roterar och skickar ut koordinater till ben ev: fixa så den lyfter ett av (beror på rotationsriktning) hörnbenen extra
@@ -245,7 +277,6 @@ triple_float Tripod(float x, float stroke, float height, uint8_t n)
 	float lift = 3; //höjd som ben lyfts i sving
 	float y = 0;
 	float z = 0;
-	
 	
 	if(n > m + swing_l) //ser till att det blir cykliskt
 	{
