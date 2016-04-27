@@ -78,6 +78,8 @@ int main(void)
 	Configure_Servos_LED();
 	Configure_Servos_No_Response();
 	Configure_Servos_Angle_Limit();
+	Configure_Servos_Max_Torque();
+	
 	//
 	
 	Send_Inner_P1_Velocity(0x0010); //DESSA SEX ANROP MÅSTE ALLTID KÖRAS EFTERSOM HASTIGHETEN LIGGER I RAM!!!
@@ -88,11 +90,49 @@ int main(void)
 	Send_Outer_P2_Velocity(0x0010);//
 	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
+	
 
+	
+	//_delay_ms(100);
+	////Send_Leg3_Kar(22,0,0);
+	////_delay_ms(1);
+	////Send_Leg1_Kar(22,0,0);
+	////_delay_ms(1);
+	////Send_Leg2_Kar(22,0,0);
+	////_delay_ms(1);
+	////Send_Leg4_Kar(22,0,0);
+	////_delay_ms(1);
+	////Send_Leg5_Kar(22,0,0);
+	////_delay_ms(1);
+	////Send_Leg6_Kar(22,0,0);
+	////_delay_ms(1);
+	//Send_Servo_Position(1,0x01FF);
+	//Send_Servo_Position(2,0x01FF);	
+	//Send_Servo_Position(3,0x01FF-0xA0);
+	//Send_Servo_Position(4,0x01FF+0xA0);
+	//Send_Servo_Position(5,0x01FF+0xA0);
+	//Send_Servo_Position(6,0x01FF-0xA0);
+	//Send_Servo_Position(7,0x01FF);
+	//Send_Servo_Position(8,0x01FF);
+	//Send_Servo_Position(9,0x01FF-0xA0);
+	//Send_Servo_Position(10,0x01FF+0xA0);
+	//Send_Servo_Position(11,0x01FF+0xA0);
+	//Send_Servo_Position(12,0x01FF-0xA0);
+	//Send_Servo_Position(13,0x01FF);
+	//Send_Servo_Position(14,0x01FF);
+	//Send_Servo_Position(15,0x01FF-0xA0);
+	//Send_Servo_Position(16,0x01FF+0xA0);
+	//Send_Servo_Position(17,0x01FF+0xA0);
+	//Send_Servo_Position(18,0x01FF-0xA0);
+	//
+	//
+	//while(1)
+	//{
+	//}
 	unsigned char first_kom_byte;
 	
 	Walk_Half_Cycle(0, 0,height);	//Ställ in default-höjd
-	
+
 	while(1)
 	{
 		
@@ -132,7 +172,7 @@ int main(void)
 					Kd = ((float)lastPacket[6])/1000.f; //Kd skickas som 1000 ggr det önskade värdet!!!
 				}
 				
-				Walk_Half_Cycle(speed,angle,height);
+				Walk_Half_Cycle2(speed,angle,height);
 				break;
 			
 			case AUTO: //Autonomt läge

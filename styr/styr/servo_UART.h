@@ -23,6 +23,8 @@
 #include "structs.h"
 
 
+void Configure_Servos_Max_Torque(void);
+
 /**
 * @brief Transmits one byte on the USART
 *

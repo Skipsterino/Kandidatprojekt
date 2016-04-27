@@ -110,6 +110,16 @@ void Configure_Servos_No_Response(void)
 	}
 }
 
+void Configure_Servos_Max_Torque(void)
+{
+	for (uint8_t i = 1; i < 19; i++)
+	{
+		unsigned char response_settings[] = {i, 0x05, 0x03, 0x0E, 0xFF, 0x03};
+		Send_Servo_Message(response_settings, 3);
+		
+		_delay_ms(1);
+	}
+}
 
 unsigned int Get_Servo_Load(unsigned char ID)
 {	
@@ -303,7 +313,7 @@ void Send_Servo_Message(unsigned char message[], uint8_t num_of_par)
 {
 	//PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
 	unsigned char checksum = checksum_calc(message, num_of_par);
-
+	cli();
 	UART_Transmit(0xFF); //2 st Startbytes
 	UART_Transmit(0xFF);
 
@@ -313,7 +323,7 @@ void Send_Servo_Message(unsigned char message[], uint8_t num_of_par)
 		UART_Transmit(message[i]);
 	}
 	
-	cli(); //Deaktivera avbrott så överföringen avslutas korrekt. BEHÖVS EJ???
+	//cli(); //Deaktivera avbrott så överföringen avslutas korrekt. BEHÖVS EJ???
 	UART_Transmit(checksum); //Checksum
 	while(!( UCSR0A & (1<<TXC0))); //Vänta på att överföringen klar (redo att skicka ny data)
 	_delay_ms(0.06); //Lite extra tidsmarginal så överföringen verkligen hinner bli klar innan riktning ändras!!!
@@ -407,22 +417,40 @@ void Send_Servo_Position(unsigned char ID, unsigned int pos)
 ////Do Stuff
 //}
 //}
+unsigned int pos11;
+unsigned int pos12;
+unsigned int pos13;
+unsigned int pos31;
+unsigned int pos32;
+unsigned int pos33;
+unsigned int pos51;
+unsigned int pos52;
+unsigned int pos53;
 
+unsigned int pos21;
+unsigned int pos22;
+unsigned int pos23;
+unsigned int pos41;
+unsigned int pos42;
+unsigned int pos43;
+unsigned int pos61;
+unsigned int pos62;
+unsigned int pos63;
 //Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till servona.
 void Send_Leg1_Kar(float x, float y, float z)
 {
 	triple_uint pos = Kar_To_Pos(x, y, z);
 
-	unsigned int pos1 = -(pos.a - first_servo_offset) + 0x99 + 0x01FF;
-	unsigned int pos2 = -(pos.b - second_servo_offset) + 0x01FF;
-	unsigned int pos3 = -(pos.c - third_servo_offset) + 0x01FF;
+	 pos11 = -(pos.a - first_servo_offset) + 0x99 + 0x01FF;
+	 pos12 = -(pos.b - second_servo_offset) + 0x01FF;
+	 pos13 = -(pos.c - third_servo_offset) + 0x01FF;
 	
-	Send_Servo_Position(8,pos1);
-	//_delay_ms(1);
-	Send_Servo_Position(10, pos2);
-	//_delay_ms(1);
-	Send_Servo_Position(12, pos3);
-	//_delay_ms(1);
+	Send_Servo_Position(8, pos11);
+	_delay_ms(1);
+	Send_Servo_Position(10, pos12);
+	_delay_ms(1);
+	Send_Servo_Position(12, pos13);
+	_delay_ms(1);
 }
 
 //Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till servona.
@@ -430,38 +458,35 @@ void Send_Leg2_Kar(float x, float y, float z)
 {
 	triple_uint pos = Kar_To_Pos(x, y, z);
 	
-	unsigned int pos1 = pos.a - first_servo_offset - 0x99 + 0x01FF;
-	unsigned int pos2 = pos.b - second_servo_offset + 0x01FF;
-	unsigned int pos3 = pos.c - third_servo_offset + 0x01FF;
+	 pos21 = pos.a - first_servo_offset - 0x99 + 0x01FF;
+	pos22 = pos.b - second_servo_offset + 0x01FF;
+	 pos23 = pos.c - third_servo_offset + 0x01FF;
 	
-	Send_Servo_Position(7, pos1);
+	Send_Servo_Position(7, pos21);
 	//_delay_ms(1);
-	Send_Servo_Position(9, pos2);
+	Send_Servo_Position(9, pos22);
 	//_delay_ms(1);
-	Send_Servo_Position(11, pos3);
+	Send_Servo_Position(11, pos23);
 	//_delay_ms(1);
 }
 
-//GLOBALA VARIABLER
-unsigned int pos1fg3;
-unsigned int pos1fg3max;
-//
+
 
 //Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till servona.
 void Send_Leg3_Kar(float x, float y, float z)
 {
 	triple_uint pos = Kar_To_Pos(x, y, z);
 	
-	pos1fg3 = -(pos.a - first_servo_offset) + 0x01FF;
-	unsigned int pos2 = -(pos.b - second_servo_offset) + 0x01FF;
-	unsigned int pos3 = -(pos.c - third_servo_offset) + 0x01FF;
+	pos31 = -(pos.a - first_servo_offset) + 0x01FF;
+	pos32 = -(pos.b - second_servo_offset) + 0x01FF;
+	pos33 = -(pos.c - third_servo_offset) + 0x01FF;
 	
 
-	Send_Servo_Position(14, pos1fg3);
+	Send_Servo_Position(14, pos31);
 	//_delay_ms(1);
-	Send_Servo_Position(16, pos2);
+	Send_Servo_Position(16, pos32);
 	//_delay_ms(1);
-	Send_Servo_Position(18, pos3);
+	Send_Servo_Position(18, pos33);
 	//_delay_ms(1);
 }
 
@@ -470,15 +495,15 @@ void Send_Leg4_Kar(float x, float y, float z)
 {	
 	triple_uint pos = Kar_To_Pos(x, y, z);
 	
-	unsigned int pos1 = pos.a - first_servo_offset + 0x01FF;
-	unsigned int pos2 = pos.b - second_servo_offset + 0x01FF;
-	unsigned int pos3 = pos.c - third_servo_offset + 0x01FF;
+	pos41 = pos.a - first_servo_offset + 0x01FF;
+	pos42 = pos.b - second_servo_offset + 0x01FF;
+	pos43 = pos.c - third_servo_offset + 0x01FF;
 	
-	Send_Servo_Position(13, pos1);
+	Send_Servo_Position(13, pos41);
 	//_delay_ms(1);
-	Send_Servo_Position(15, pos2);
+	Send_Servo_Position(15, pos42);
 	//_delay_ms(1);
-	Send_Servo_Position(17, pos3);
+	Send_Servo_Position(17, pos43);
 	//_delay_ms(1);
 }
 
@@ -487,15 +512,15 @@ void Send_Leg5_Kar(float x, float y, float z)
 {
 	triple_uint pos = Kar_To_Pos(x, y, z);
 	
-	unsigned int pos1 = -(pos.a - first_servo_offset) - 0x99 + 0x01FF;
-	unsigned int pos2 = -(pos.b - second_servo_offset) + 0x01FF;
-	unsigned int pos3 = -(pos.c - third_servo_offset) + 0x01FF;
+	pos51 = -(pos.a - first_servo_offset) - 0x99 + 0x01FF;
+	pos52 = -(pos.b - second_servo_offset) + 0x01FF;
+	pos53 = -(pos.c - third_servo_offset) + 0x01FF;
 	
-	Send_Servo_Position(2, pos1);
+	Send_Servo_Position(2, pos51);
 	//_delay_ms(1);
-	Send_Servo_Position(4, pos2);
+	Send_Servo_Position(4, pos52);
 	//_delay_ms(1);
-	Send_Servo_Position(6, pos3);
+	Send_Servo_Position(6, pos53);
 	//_delay_ms(1);
 }
 
@@ -504,15 +529,15 @@ void Send_Leg6_Kar(float x, float y, float z)
 {
 	triple_uint pos = Kar_To_Pos(x, y, z);
 	
-	unsigned int pos1 = pos.a - first_servo_offset + 0x99 + 0x01FF;
-	unsigned int pos2 = pos.b - second_servo_offset + 0x01FF;
-	unsigned int pos3 = pos.c - third_servo_offset + 0x01FF;
+	pos61 = pos.a - first_servo_offset + 0x99 + 0x01FF;
+	 pos62 = pos.b - second_servo_offset + 0x01FF;
+	pos63 = pos.c - third_servo_offset + 0x01FF;
 	
-	Send_Servo_Position(1, pos1);
+	Send_Servo_Position(1, pos61);
 	//_delay_ms(1);
-	Send_Servo_Position(3, pos2);
+	Send_Servo_Position(3, pos62);
 	//_delay_ms(1);
-	Send_Servo_Position(5, pos3);
+	Send_Servo_Position(5, pos63);
 	//_delay_ms(1);
 }
 
