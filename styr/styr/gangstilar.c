@@ -256,10 +256,6 @@ triple_float Tripod(float x, float stroke, float height, uint8_t n)
 	float y = 0;
 	float z = 0;
 	
-	if(n > m + swing_l) //ser till att det blir cykliskt
-	{
-		n -= (m + swing_l);
-	}
 	
 	if(n <= 4 ) //delat upp bensänkingen i steg
 	{
@@ -345,6 +341,12 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 		//stegvis höjdjustering
 		last_height += height_step;
 		n2= n+(m + swing_l)/2;
+		
+		if(n2 > m + swing_l) //ser till att det blir cykliskt
+		{
+			n2 -= (m + swing_l);
+		}
+		
 		
 		if((n<= 4) || (n > m +swing_l - 4))
 		{
