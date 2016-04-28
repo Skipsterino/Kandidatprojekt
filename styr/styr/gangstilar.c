@@ -6,8 +6,8 @@
  */ 
 
 #include "gangstilar.h"
-uint8_t m = 48; //l'ng st;dfas 24
-uint8_t swing_l = 24; //längd på svingfas 12
+uint8_t m = 24; //l'ng st;dfas 24
+uint8_t swing_l = 12; //längd på svingfas 12
 int n = 12; //index gångcykel startvärde m/2 ska göras snyggare
 int n2 = 0;
 float last_height = 10;
@@ -96,18 +96,18 @@ triple_float Adjust_Servo_Speed(float theta, int sgn_theta, int8_t leg_down)
 	int speed_inner ;
 	int speed_middle;
 	int speed_outer;
-	if(leg_down)
+	if(leg_down == 1)
 			{
-	speed_inner =  220 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
-	speed_middle  = 130; 
-	speed_outer  =  130;
+	speed_inner =  150 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	speed_middle  = 80; 
+	speed_outer  =  80;
 			}     
 			else
 			{                                                                   
 	//justerar servospeed ÄNDRA SKALFAKTOR !!
-	 speed_inner =  220 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
-	 speed_middle  = 320 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//220
-	 speed_outer  =  300 + 280 * (sgn_theta * theta - theta_max);//320 + 430 *//250
+	 speed_inner =  150 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	 speed_middle  = 260 + 340 * (sgn_theta * theta - theta_max);//320 + 430 *//220
+	 speed_outer  =  260 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//250
 			}
  return create_triple_float(speed_inner, speed_middle, speed_outer);
 }	
@@ -120,8 +120,8 @@ void Adjust_Height(float l, float height_step, float corner_pitch)
 	{
 		last_height = last_height + 2 * height_step;
 		
-		triple_float kar_p1 = Tripod(l, 0, last_height, n); //kart koord för par 1
-		triple_float kar_p2 = Tripod(l, 0, last_height, n+(m + swing_l)/2); //kart koord för par 2
+		//triple_float kar_p1 = Tripod(l, 0, last_height, n); //kart koord för par 1
+		//triple_float kar_p2 = Tripod(l, 0, last_height, n+(m + swing_l)/2); //kart koord för par 2
 		
 		//Send_Legs_Kar(kar_p1, kar_p2, corner_pitch, s, p2_down);
 		_delay_ms(5); // =5 delay för kart provar mer speed
@@ -151,13 +151,13 @@ void Rotate_And_Send_Legs(triple_float kar_p1, triple_float kar_p2, float corner
 	//koord för par 1 omvandlas till cyl
 
 	triple_float cyl4 = Kar_To_Cyl_Leg4(kar_p1.a, kar_p1.b, kar_p1.c + servofuck_adjust_p1.a); 
-	triple_float cyl1 = Kar_To_Cyl_Leg1(kar_p1.a -2, kar_p1.b + corner_pitch, kar_p1.c + servofuck_adjust_p1.b); //testar att ha mindre x på hörnben
-	triple_float cyl5 = Kar_To_Cyl_Leg5(kar_p1.a -2, kar_p1.b - corner_pitch, kar_p1.c + servofuck_adjust_p1.c);
+	triple_float cyl1 = Kar_To_Cyl_Leg1(kar_p1.a , kar_p1.b + corner_pitch, kar_p1.c + servofuck_adjust_p1.b); //testar att ha mindre x på hörnben
+	triple_float cyl5 = Kar_To_Cyl_Leg5(kar_p1.a , kar_p1.b - corner_pitch, kar_p1.c + servofuck_adjust_p1.c);
 	
 	//koord för par 2 omvandlas till cyl
 	triple_float cyl3 = Kar_To_Cyl_Leg3(kar_p2.a, kar_p2.b, kar_p2.c + servofuck_adjust_p2.a); 
-	triple_float cyl2 = Kar_To_Cyl_Leg2(kar_p2.a -2 , kar_p2.b + corner_pitch, kar_p2.c + servofuck_adjust_p2.b);
-	triple_float cyl6 = Kar_To_Cyl_Leg6(kar_p2.a -2, kar_p2.b - corner_pitch, kar_p2.c + servofuck_adjust_p2.c);
+	triple_float cyl2 = Kar_To_Cyl_Leg2(kar_p2.a  , kar_p2.b + corner_pitch, kar_p2.c + servofuck_adjust_p2.b);
+	triple_float cyl6 = Kar_To_Cyl_Leg6(kar_p2.a , kar_p2.b - corner_pitch, kar_p2.c + servofuck_adjust_p2.c);
 	
 	if(n <= m) 
 	{
@@ -175,26 +175,21 @@ void Rotate_And_Send_Legs(triple_float kar_p1, triple_float kar_p2, float corner
 		  
 	}
 	
-	if(n > 12 && n <= 36)
-	{
-			//Stegvis rotation på p2 sving
-			cyl3.b = cyl3.b + sgn_speed * ( theta/2 - (n - 12) * theta/swing_l);
-			cyl2.b = cyl2.b + sgn_speed * ( theta/2 - (n - 12) * theta/swing_l);
-			cyl6.b = cyl6.b + sgn_speed * ( theta/2 - (n - 12) * theta/swing_l);
-	}
-	else if (n > 36)
+	if(n2 <= m) 
 	{
 			//Stegvis rotation på p2 stöd
-			cyl3.b = cyl3.b + sgn_speed * (- theta/2 + (n - 36) * theta/m);
-			cyl2.b = cyl2.b + sgn_speed * (- theta/2 + (n - 36) * theta/m);
-			cyl6.b = cyl6.b + sgn_speed * (- theta/2 + (n - 36) * theta/m);
+			cyl3.b = cyl3.b + sgn_speed * (- theta/2 + n2 * theta/m);
+			cyl2.b = cyl2.b + sgn_speed * (- theta/2 + n2 * theta/m);
+			cyl6.b = cyl6.b + sgn_speed * (- theta/2 + n2 * theta/m);
 	}
-	else if (n <= 12)
-	{ //Stegvis rotation på p2 stöd
-		cyl3.b = cyl3.b + sgn_speed * (- theta/2 + (n + 36) * theta/m);
-		cyl2.b = cyl2.b + sgn_speed * (- theta/2 + (n + 36) * theta/m);
-		cyl6.b = cyl6.b + sgn_speed * (- theta/2 + (n + 36) * theta/m);
-	}
+	else
+	{
+			//Stegvis rotation på p2 sving
+			cyl3.b = cyl3.b + sgn_speed * ( theta/2 - (n2 - m) * theta/swing_l);
+			cyl2.b = cyl2.b + sgn_speed * ( theta/2 - (n2 - m) * theta/swing_l);
+			cyl6.b = cyl6.b + sgn_speed * ( theta/2 - (n2 - m) * theta/swing_l);
+		}
+
 	//skicka ut cyl koord
 	Send_Leg4_Cyl_And_Velocity(cyl4.a, cyl4.b, cyl4.c, speed_p1.a, speed_p1.b, speed_p1.c);
 	Send_Leg1_Cyl_And_Velocity(cyl1.a, cyl1.b, cyl1.c, speed_p1.a, speed_p1.b, speed_p1.c);
@@ -235,8 +230,8 @@ double_float Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta 
 	speed = speed * sgn_speed;
 	int speed_int = speed;
 	float speed_dec = speed - speed_int;
-	float thlimits[7] = {0.40,0.30,0.30,0.3,0.2,0.11,0};//{0.56,0.46,0.36,0.3,0.2,0.11,0};
-	float thlin[7] =    {-0.09,  0,   0,-0.1,-0.09,-0.11,0};
+	float thlimits[7] = {0.4,0.33,0.30,0.3,0.2,0.11,0};//{0.56,0.46,0.36,0.3,0.2,0.11,0};
+	float thlin[7] =    {-0.07,0.03, 0,-0.1,-0.09,-0.11,0};
 	
 	//th_max beräknas med linjärsering mellan heltal av speed.
 	float th_max = thlimits[speed_int] + speed_dec * thlin[speed_int];
@@ -250,19 +245,19 @@ double_float Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta 
 
 
 //Generar tripod gång testar bwta >½ 16 steg svingfas
-triple_float Tripod(float x, float stroke, float height, uint8_t n)
+triple_float Tripod(float x, float stroke, float height,float lift, uint8_t n)
 {
-	float lift = 3; //höjd som ben lyfts i sving
+	
 	float y = 0;
 	float z = 0;
 	
 	
-	if(n <= 4 ) //delat upp bensänkingen i steg
+	if(n <= 2 ) //delat upp bensänkingen i steg
 	{
 		y = stroke/2 - stroke * n/m;
-		z= lift/2 - n * lift/8 - height;
+		z= - height;//lift/2 - n * lift/4 - height;
 	}
-	else if(n <= m-2)//stödfas
+	else if(n <= m-1)//stödfas
 	{
 		y = stroke/2 - stroke * n/m;
 		z= - height;
@@ -270,9 +265,9 @@ triple_float Tripod(float x, float stroke, float height, uint8_t n)
 	else if( n <= m)//börjar lyfta ben med fortsatt benrörelse bakåt
 	{
 		y = stroke/2 - stroke * n/m;
-		z = (n-m) * lift/2 + lift - height;
+		z =   lift - height;
 	}
-	else if( n <= m +swing_l - 4) // för ben frammmåt mot startpos
+	else if( n <= m +swing_l - 1) // för ben frammmåt mot startpos
 	{
 		y = -stroke/2 + (n-m) * stroke/swing_l;
 		z = lift - height;
@@ -280,7 +275,7 @@ triple_float Tripod(float x, float stroke, float height, uint8_t n)
 	else if( n <= m +swing_l) // för ben frammmåt mot startpos
 	{
 		y = -stroke/2 + (n-m) * stroke/swing_l;
-		z= lift/2 + ((m + swing_l) - n) * lift/8 - height;
+		z= 2 * lift/3 - height;  // + ((m + swing_l) - n) * lift/4 - height;
 	}
 	
 	return create_triple_float(x,y,z);
@@ -297,7 +292,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 	//justeringar
 	//height = 11;//tilfällig steloperation
 	float l = 13; //fötters förskjuting från kropp i x-led
-	float corner_pitch = 8; //förskjutning av arbetsområde i y-led för hörnben 8
+	float corner_pitch = 4; //förskjutning av arbetsområde i y-led för hörnben 8
 	
 	int sgn_speed = (speed >= 0) - (speed < 0) ;
 	int sgn_theta = (theta >= 0) - (theta < 0) ;
@@ -315,7 +310,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 		return;
 	}
 
-	float stroke =  2.1 * speed; //steglängd 2.2
+	float stroke =  1.8 * speed; //steglängd 2.2
 
 
 	if( speed == 0  && theta ==0 ) //justera höjd utan att gå
@@ -348,7 +343,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 		}
 		
 		
-		if((n<= 4) || (n > m +swing_l - 4))
+		if((n<= 4) )
 		{
 			p1_down =1;
 		}
@@ -357,7 +352,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 			p1_down = 0;
 		}
 				
-		if((n2<= 4) || (n2 > m +swing_l - 4))
+		if((n2<= 4))
 		{
 			p2_down =1;
 		}
@@ -366,75 +361,35 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 			p2_down = 0;
 		}
 		
-		triple_float kar_p1 = Tripod(l, stroke, last_height, n); //kart koord för par 1
-		triple_float kar_p2 = Tripod(l, stroke, last_height, n2); //kart koord för par 2
+		triple_float kar_p1;
+		triple_float kar_p2;
 		
 		triple_float speed_p1 = Adjust_Servo_Speed(theta, theta_max ,p1_down);
 		triple_float speed_p2 = Adjust_Servo_Speed(theta, theta_max ,p2_down);
 		
-		if(theta == 0) //behöver ej gå via cyl koord vid rak gång.
+		if(theta*sgn_theta < 0.01) //behöver ej gå via cyl koord vid rak gång.
 		{
+			kar_p1 = Tripod(l, stroke, last_height,2, n); //kart koord för par 1
+			kar_p2 = Tripod(l, stroke, last_height,2, n2); //kart koord för par 2
+			
 			Send_Legs_Kar(kar_p1, kar_p2, corner_pitch, speed_p1, speed_p2);
 			//if(walk_break || ( n+1 != m/2 && n+1 != 3 * m/2 ))
 			//{
-			_delay_ms(10); // =5 delay för kart skippar på sista loopen, pga tids som mainloop tar TEST
+			_delay_ms(22); // =5 delay för kart skippar på sista loopen, pga tids som mainloop tar TEST
 			//}
 		}
 		else //om sväng
 		{
+			kar_p1 = Tripod(l, stroke, last_height,2.5, n); //kart koord för par 1
+			kar_p2 = Tripod(l, stroke, last_height,2.5, n2); //kart koord för par 2
 			Rotate_And_Send_Legs(kar_p1, kar_p2, corner_pitch, sgn_speed, theta, speed_p1, speed_p2);
 		
-			_delay_ms(8); // =3 Delay för cyl skippar på sista loopen, pga tids som mainloop tar TEST		
+			_delay_ms(22); // =3 Delay för cyl skippar på sista loopen, pga tids som mainloop tar TEST		
 		}
 	}
 }
-////Generar tripod gång
-//triple_float Tripod(float x, float stroke, float height, uint8_t n)
-//{
-	//float lift = 3; //höjd som ben lyfts i sving
-	//float y = 0;
-	//float z = - height;
-	//
-	//if(n > 2 * m) //ser till att det blir cykliskt
-	//{
-		//n -= 2 * m;
-	//}
-//
-	//if(n <= m)//stödfas
-	//{
-		//y = stroke/2 - stroke * n/m;
-		//z= - height;
-	//}
-	//else if( n <= m + 2)//benlyft i slut av stödfas, körs 2 cykler för garantera liftoff
-	//{
-		//y = - stroke/2; 
-		//z = lift - height;
-	//}
-	//else if( n <= 2 * m - 2) // för ben frammmåt mot startpos
-	//{
-		//y = -stroke/2 + (n-m) * stroke/m;
-		//z = lift - height;
-	//}
-////	else if( n <=  2 * m - 2)//för ben framåt mot startpos
-////	{
-////		y = stroke/2;
-////		z = lift - height;
-////	}
-	//else if( n <= 2 * m - 1)//sänker ben nära mark 
-	//{
-		//y = stroke/2;
-		//z = 1 - height; 
-	//}
-	//else if(n == 2 * m )//sänk ner ben i marken
-	//{
-		//y = stroke/2; 
-		//z = - height;
-	//}
-	//return create_triple_float(x,y,z);
-//}
 
-//test, endast rak gång, ej testad med olika höjder.
-//Crab people, Crab people, tastes like crab, talks like people.
+
 void Walk_Half_Crab_Cycle(float speed) 
 {
 	return;
@@ -475,8 +430,8 @@ void Walk_Half_Crab_Cycle(float speed)
 	{
 		walk_break = 0;
 		
-		triple_float kar_p1 = Tripod(l, stroke, last_height, n); //kart koord för par 1
-		triple_float kar_p2 = Tripod(l, stroke, last_height, n + m); //kart koord för par 2
+		triple_float kar_p1 = Tripod(l, stroke, last_height,2, n); //kart koord för par 1
+		triple_float kar_p2 = Tripod(l, stroke, last_height,2, n + m); //kart koord för par 2
 		
 		//par 1 får pos
 		Send_Leg4_Kar(kar_p1.a - kar_p1.b, 0, kar_p1.c); 
@@ -504,77 +459,3 @@ void Walk_Half_Crab_Cycle(float speed)
 	}
 	
 }
-//// speed = hastighet fram/bak [-6,6], th = sväng[-0.57, 0.57], h = höjd från mark(11) HÖJDJUSTERING UR DRIFT
-////fixa mjuk övergång för h och l(gör globala) 
-//void Walk_Half_Cycle(float speed, float theta, float height) 
-//{
-	//
-	////justeringar
-	////height = 11;//tilfällig steloperation
-	//float l = 13; //fötters förskjuting från kropp i x-led
-	//float corner_pitch = 8; //förskjutning av arbetsområde i y-led för hörnben
-	//
-	//int sgn_speed = (speed >= 0) - (speed < 0) ;
-	//int sgn_theta = (theta >= 0) - (theta < 0) ;
-	//uint8_t walk_break = 1;	
-	//
-	////filtrerade o begränsade värden kommer som globala last_...sätter th_max och heigth step också.
-	//height = LP_Filter_And_Limit_Input(speed, sgn_speed, theta, sgn_theta, height); 
-	////sätter parametrar till LP-filtrerade
-	//speed = last_speed;
-	//theta = last_theta;
-	//float height_step = (height - last_height)/m;
-	//
-	//if( speed == 0  && theta ==0 && height_step == 0) // gör inget
-	//{
-		//return;
-	//}
-//
-	//float stroke =  2.1 * speed; //steglängd 2.2
-//
-	//Adjust_Servo_Speed(theta, sgn_theta);
-	//
-	//if( speed == 0  && theta ==0 ) //justera höjd utan att gå
-	//{
-		//Adjust_Height(l, height_step, corner_pitch);
-		//return;
-	//}
-	//
-	////gångloop, utför en halv gångfas och stannar när stödjande ben är i mitten av arbetsområde
-	 //while( walk_break || ( n != m/2 && n != 3 * m/2 ))
-	//{
-		//walk_break = 0;
-		//
-		////stegvis höjdjustering
-		//last_height += height_step;
-		//triple_float kar_p1 = Tripod(l, stroke, last_height, n); //kart koord för par 1
-		//triple_float kar_p2 = Tripod(l, stroke, last_height, n + m); //kart koord för par 2
-		//
-		//if(theta == 0) //behöver ej gå via cyl koord vid rak gång.
-		//{
-			//Send_Legs_Kar(kar_p1, kar_p2, corner_pitch);
-			//if(walk_break || ( n+1 != m/2 && n+1 != 3 * m/2 ))
-			//{
-				//_delay_ms(12); // =5 delay för kart skippar på sista loopen, pga tids som mainloop tar TEST
-			//}
-		//}
-		//else //om sväng
-		//{
-			//Rotate_And_Send_Legs(kar_p1, kar_p2, corner_pitch, sgn_speed, theta);
-				//if(walk_break || ( n+1 != m/2 && n+1 != 3 * m/2 ))
-			//{
-				//_delay_ms(10); // =3 Delay för cyl skippar på sista loopen, pga tids som mainloop tar TEST
-			//}
-		//}
-		//
-		//if(n < 2 * m)
-		//{
-		//n += 1; //stegar upp index
-		//}
-		//else
-		//{
-			//n = 1; //nollar index
-		//}	
-	//}
-//}
-//
