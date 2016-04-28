@@ -43,7 +43,7 @@ volatile unsigned char lastPacket[16];
 void update_mode();
 void update_speed_and_angle();
 void update_height();
-
+	unsigned char temp[18];
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////									MAIN											////
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,6 +90,16 @@ int main(void)
 	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!	
 
+	//_delay_ms(2000);
+	//for(int i =1; i<19; ++i)
+	//{
+			//temp[i-1] = Get_Servo_Temp(i);
+	//
+	//}
+	//while(1)
+	//{
+		//
+	//}
 	//_delay_ms(100);
 	////Send_Leg3_Kar(22,0,0);
 	////_delay_ms(1);

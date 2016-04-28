@@ -21,7 +21,7 @@ unsigned char UART_Receive( void )
 	while ((!(UCSR0A & (1<<RXC0))))
 	{
 		i = i + 1; 
-		if(i>2000000000)
+		if(i>50)
 		{
 			return 0xBB;
 		}
@@ -114,7 +114,7 @@ void Configure_Servos_Max_Torque(void)
 {
 	for (uint8_t i = 1; i < 19; i++)
 	{
-		unsigned char response_settings[] = {i, 0x05, 0x03, 0x0E, 0xFF, 0x03};
+		unsigned char response_settings[] = {i, 0x05, 0x03, 0x0E, 0xFF, 0x01};
 		Send_Servo_Message(response_settings, 3);
 		
 		_delay_ms(1);
@@ -123,7 +123,7 @@ void Configure_Servos_Max_Torque(void)
 
 unsigned int Get_Servo_Load(unsigned char ID)
 {	
-	unsigned char message[6];
+	unsigned char message[5];
 	unsigned char load_LSByte;
 	unsigned char load_MSByte;
 	unsigned char start_byte1= 0;
@@ -136,7 +136,7 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	message[0] = ID;
 	message[1] = 0x04;
 	message[2] = 0x02;
-	message[3] = 0x24; //Läser ut Present load 
+	message[3] = 0x28; //Läser ut Present load 
 	message[4] = 0x02;
 	
 	Send_Servo_Message(message, 2);
@@ -150,17 +150,18 @@ unsigned int Get_Servo_Load(unsigned char ID)
 		start_byte2 = start_byte1; 
 		start_byte1 = UART_Receive();
 		timer = timer + 1; 
-		if(timer>20000)
+		if(timer>10)
 		{
 			return 0xBB;
 		}
 	}
+	UART_Receive(); //dont know lol
 	ID = UART_Receive(); //ID
 	length = UART_Receive(); //Längd
 	error = UART_Receive(); //Error
 	load_LSByte = UART_Receive(); //LS Byte av load
 	load_MSByte = UART_Receive(); //MS Byte av load
-	UART_Receive(); //Checksum
+	checksum = UART_Receive(); //Checksum
 	
 	_delay_ms(0.05); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 	
@@ -170,36 +171,51 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	return load;
 }
 
-
-unsigned int Get_Servo_Position(unsigned char ID) //FUNKAR ATT RETURNERA SÅHÄR?
-{
-	unsigned char message[6];
-	unsigned char position_LSByte;
-	unsigned char position_MSByte;
+unsigned char Get_Servo_Temp(unsigned char ID)
+{	
+	unsigned char message[5];
+	unsigned char temp;
+	unsigned char start_byte1= 0;
+	unsigned char start_byte2= 0; 
+	unsigned char length; 
+	unsigned char error; 
+	unsigned char checksum;
+	float timer = 0; 
 	
 	message[0] = ID;
 	message[1] = 0x04;
 	message[2] = 0x02;
-	message[3] = 0x24; //Läser ut Present Position (önskas istället Goal Position får man ändra här till 0x1E)
-	message[4] = 0x02;
+	message[3] = 0x2B; //Läser ut Present load 
+	message[4] = 0x01;
 	
 	Send_Servo_Message(message, 2);
 	
-	_delay_ms(0.02); //Lite extra tidsmarginal så bussen hinner bli ledig ändras!!!
+	
+	_delay_ms(0.02); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
 	
-	UART_Receive(); //Första startbyten
-	UART_Receive(); //Andra startbyten
-	UART_Receive(); //ID
-	UART_Receive(); //Längd
-	UART_Receive(); //Error
-	position_LSByte = UART_Receive(); //LS Byte av positionen
-	position_MSByte = UART_Receive(); //MS Byte av positionen
-	UART_Receive(); //Checksum
-
-	unsigned int position = (((unsigned int)position_MSByte) << 8) | position_LSByte;
+	while((start_byte1 != 0xFF) && (start_byte2 != 0xFF))
+	{
+		start_byte2 = start_byte1; 
+		start_byte1 = UART_Receive();
+		timer = timer + 1; 
+		if(timer>10)
+		{
+			return 0xBB;
+		}
+	}
+	UART_Receive(); //dont know lol
+	ID = UART_Receive(); //ID
+	length = UART_Receive(); //Längd
+	error = UART_Receive(); //Error
+	temp = UART_Receive(); //LS Byte av load
+	checksum = UART_Receive(); //Checksum
+	
+	_delay_ms(0.05); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
+	
 	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
-	return position;
+	
+	return temp;
 }
 
 
@@ -446,11 +462,11 @@ void Send_Leg1_Kar(float x, float y, float z)
 	 pos13 = -(pos.c - third_servo_offset) + 0x01FF;
 	
 	Send_Servo_Position(8, pos11);
-	_delay_ms(1);
+	//_delay_ms(1);
 	Send_Servo_Position(10, pos12);
-	_delay_ms(1);
+	//_delay_ms(1);
 	Send_Servo_Position(12, pos13);
-	_delay_ms(1);
+	//_delay_ms(1);
 }
 
 //Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till servona.
@@ -670,7 +686,7 @@ void Send_Servo_Position_And_Velocity(unsigned char ID, unsigned int pos, unsign
 	unsigned char posLS = pos; //Plockar ut LS Byte av hastigheten för det första servot (översta servot)
 	unsigned char posMS = (pos>>8); //Som ovan men med MS Byte
 	
-	unsigned char message[6];
+	unsigned char message[8];
 	message[0] = ID;
 	message[1] = 0x07;	
 	message[2] = 0x03;
@@ -681,6 +697,8 @@ void Send_Servo_Position_And_Velocity(unsigned char ID, unsigned int pos, unsign
 	message[7] = velMS;
 	Send_Servo_Message(message, 5);
 }
+
+
 
 void Send_Leg1_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)
 {

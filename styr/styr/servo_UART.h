@@ -89,11 +89,13 @@ void Configure_Servos_No_Response(void);
 unsigned int Get_Servo_Load(unsigned char ID);
 
 /**
-* @brief Gets the current position of a specific servo
+* @brief Gets the current temperature of a specific servo
 *
-* @return The position as an int. 0x0000 is min 0x03FF i max
+* @return The temperature as an unsigned char in celsius
 */
-unsigned int Get_Servo_Position(unsigned char ID);
+unsigned char Get_Servo_Temp(unsigned char ID);
+
+
 //unsigned char[] Receive_Servo_Statuspackage(uint8_t size); FUNKAR EJ TY KAN EJ RETURNERA STRUCT
 //void Check_Servo_Temp(unsigned char ID)
 

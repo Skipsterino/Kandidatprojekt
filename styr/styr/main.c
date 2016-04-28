@@ -23,19 +23,19 @@
 #include "over_hinder.h"
 unsigned int loadd[100];
 unsigned int message[100][8];
-
+unsigned char temp; 
 int main_old(void)
 {
 	Init();
 	//Configure_Servos_No_Response();
 	_delay_ms(1000);
 	
-	Send_Servo_Position(5, 0x200);
-	_delay_ms(2000);
+	//Send_Servo_Position(5, 0x200);
+	//_delay_ms(2000);
 	//for(int i=0; i<100; i++)
 	//{
 		//
-		//unsigned char message1[6];
+		//unsigned char message1[5];
 		//unsigned char load_LSByte;
 		//unsigned char load_MSByte;
 		//
@@ -50,15 +50,18 @@ int main_old(void)
 		//_delay_ms(0.02); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 		//PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
 //
+		//while (message[i][0] == 0)
+		//{
+		//message[i][0]=UART_Receive(); //mp är "triggerhappy"
+		//}
 		//
-		//message[i][0]=USART_Receive(); //mp är "triggerhappy"
-		//message[i][1]=USART_Receive(); //Första startbyten
-		//message[i][2]=USART_Receive(); //Andra startbyten
-		//message[i][3]=USART_Receive(); //ID
-		//message[i][4]=USART_Receive(); //Längd
-		//message[i][5]=USART_Receive(); //Error
-		//message[i][6]= USART_Receive(); //LS Byte av load
-		//message[i][7]= USART_Receive(); //MS Byte av load
+		//message[i][1]=UART_Receive(); //Första startbyten
+		//message[i][2]=UART_Receive(); //Andra startbyten
+		//message[i][3]=UART_Receive(); //ID
+		//message[i][4]=UART_Receive(); //Längd
+		//message[i][5]=UART_Receive(); //Error
+		//message[i][6]= UART_Receive(); //LS Byte av load
+		//message[i][7]= UART_Receive(); //MS Byte av load
 		////message[i][8]=USART_Receive(); //Checksum
 		//_delay_ms(0.05); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 		//
@@ -66,14 +69,22 @@ int main_old(void)
 		//PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
 	//}
 	
+	
+
+
+	while(1)
+	{
+		temp = Get_Servo_Temp(3);
+	}
 
 	for(int i; i<100; ++i)
 	{
 		loadd[i]=Get_Servo_Load(5);
+		_delay_ms(1000);
 	}
 	
-	Send_Leg5_Kar(20,0,-5);
-	
+	//Send_Leg5_Kar(20,0,-5);
+	//
 	//Walk_Up();
 
 	while(1)
