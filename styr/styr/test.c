@@ -138,7 +138,7 @@ int main(void)
 	//}
 	unsigned char first_kom_byte;
 	
-	Walk_Half_Cycle(0, 0,height);	//Ställ in default-höjd
+	Walk_Half_Cycle(0, 0.01,height);	//Ställ in default-höjd
 
 	while(1)
 	{
@@ -176,7 +176,7 @@ int main(void)
 				}
 				if (first_kom_byte & 0b00100000) //Nytt Kd?
 				{
-					Kd = ((float)lastPacket[6])/1000.f; //Kd skickas som 1000 ggr det önskade värdet!!!
+					Kd = ((float)lastPacket[6])/100.f; //Kd skickas som 100 ggr det önskade värdet!!!
 				}
 				
 				Walk_Half_Cycle(speed,angle,height);
