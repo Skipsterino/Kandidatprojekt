@@ -96,19 +96,27 @@ triple_float Adjust_Servo_Speed(float theta, int sgn_theta, int8_t leg_down)
 	int speed_inner ;
 	int speed_middle;
 	int speed_outer;
+	
 	if(leg_down == 1)
 			{
-	speed_inner =  170 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	speed_inner =  180 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
 	speed_middle  = 90; 
 	speed_outer  =  90;
 			}     
-			else
+			else if(theta*sgn_theta <=0.20)
 			{                                                                   
 	//justerar servospeed ÄNDRA SKALFAKTOR !!
-	 speed_inner =  150 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
-	 speed_middle  = 220 + 340 * (sgn_theta * theta - theta_max);//320 + 430 *//220
-	 speed_outer  =  220 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//250
+	 speed_inner =  180 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	 speed_middle  = 350 + 340 * (sgn_theta * theta - theta_max);//320 + 430 *//220
+	 speed_outer  =  250 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//250
 			}
+		else
+		{
+	 speed_inner =  70 + 160 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	 speed_middle  = 280 + 340 * (sgn_theta * theta - theta_max);//320 + 430 *//220
+	 speed_outer  =  240 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//250
+		}	
+		
  return create_triple_float(speed_inner, speed_middle, speed_outer);
 }	
 
@@ -121,7 +129,7 @@ void Adjust_Height(float l, float height_step, float corner_pitch)
 		last_height = last_height + 2 * height_step;
 		
 		//triple_float kar_p1 = Tripod(l, 0, last_height, n); //kart koord för par 1
-		//triple_float kar_p2 = Tripod(l, 0, last_height, n+(m + swing_l)/2); //kart koord för par 2
+		//triple_float kar_p2 = Tripod(l, 0, last_height, n+(m + swing_l)/2); //kart koord för par 2  
 		
 		//Send_Legs_Kar(kar_p1, kar_p2, corner_pitch, s, p2_down);
 		_delay_ms(5); // =5 delay för kart provar mer speed
@@ -230,8 +238,8 @@ double_float Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta 
 	speed = speed * sgn_speed;
 	int speed_int = speed;
 	float speed_dec = speed - speed_int;
-	float thlimits[7] = {0.4,0.33,0.30,0.3,0.2,0.11,0};//{0.56,0.46,0.36,0.3,0.2,0.11,0};
-	float thlin[7] =    {-0.07,0.03, 0,-0.1,-0.09,-0.11,0};
+	float thlimits[7] = {0.43,0.33,0.30,0.3,0.2,0.11,0};//{0.56,0.46,0.36,0.3,0.2,0.11,0};
+	float thlin[7] =    {-0.10,0.03, 0,-0.1,-0.09,-0.11,0};
 	
 	//th_max beräknas med linjärsering mellan heltal av speed.
 	float th_max = thlimits[speed_int] + speed_dec * thlin[speed_int];
