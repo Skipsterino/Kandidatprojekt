@@ -62,8 +62,8 @@ void calculate_Yaw()
 		}
 		
 		default:
-		Yaw = 0;		//Om inget annat är sagt görs ingen reglering
-		break;
+			Yaw = 0;		//Om inget annat är sagt görs ingen reglering
+			break;
 	}
 
 	Yaw_rad = (Yaw/180)*3.1415926;		//Konvertera till radianer!
@@ -110,8 +110,8 @@ void calculate_p_part()
 		}
 		
 		default:
-		p_part = 0;		//Om inget annat är sagt görs ingen reglering
-		break;
+			p_part = 0;		//Om inget annat är sagt görs ingen reglering
+			break;
 	}
 }
 
@@ -139,14 +139,14 @@ void update_state()
 			|| ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE)))
 			{
 				ROBOT_STATE = OUT_OF_CORRIDOR_LEFT_WALL;
-				trust_sensors = false;		// Första gången statet körs kan roboten stå PRECIS på gränsen till en c-korsning, bör då ej lita på sensorerna
+				trust_sensors = false;		// Första gången tillståndet körs kan roboten stå PRECIS på gränsen till en c-korsning, bör då ej lita på sensorerna
 			}
 			
 			else if (((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
 			|| ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE)))
 			{
 				ROBOT_STATE = OUT_OF_CORRIDOR_RIGHT_WALL;
-				trust_sensors = false;		// Första gången statet körs kan roboten stå PRECIS på gränsen till en c-korsning, bör då ej lita på sensorerna
+				trust_sensors = false;		// Första gången tillståndet körs kan roboten stå PRECIS på gränsen till en c-korsning, bör då ej lita på sensorerna
 			}
 			
 			else if (((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
@@ -263,8 +263,7 @@ void update_state()
 				ROBOT_STATE = OUT_OF_TURN_RIGHT;
 				rotation_count = 0;
 			}
-			
-			
+				
 			break;
 		}
 		
@@ -276,8 +275,6 @@ void update_state()
 				rotation_count = 0;
 			}
 			
-		
-			
 			break;
 		}
 
@@ -287,10 +284,8 @@ void update_state()
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_A_RIGHT;
 				rotation_count = 0;
-				IMU_Yaw_start = IMU_Yaw;
+				IMU_Yaw_start = IMU_Yaw; //Hjälper verkligen detta? Detta hjälper ju bara om roboten driver åt något håll...
 			}
-			
-		
 			
 			break;
 		}
@@ -303,7 +298,6 @@ void update_state()
 				rotation_count = 0;
 				IMU_Yaw_start = IMU_Yaw;
 			}
-			
 			
 			break;
 		}
@@ -326,7 +320,6 @@ void update_state()
 				ROBOT_STATE = OUT_OF_JUNCTION_C_LEFT;
 				rotation_count = 0;
 			}
-		
 			
 			break;
 		}
@@ -338,7 +331,6 @@ void update_state()
 				ROBOT_STATE = CORRIDOR;
 				rotation_count = 0;
 			}
-			
 			
 			break;
 		}
