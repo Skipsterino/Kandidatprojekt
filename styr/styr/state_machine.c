@@ -62,8 +62,8 @@ void calculate_Yaw()
 		}
 		
 		default:
-			Yaw = 0;		//Om inget annat är sagt görs ingen reglering
-			break;
+		Yaw = 0;		//Om inget annat är sagt görs ingen reglering
+		break;
 	}
 
 	Yaw_rad = (Yaw/180)*3.1415926;		//Konvertera till radianer!
@@ -109,9 +109,15 @@ void calculate_p_part()
 			break;
 		}
 		
-		default:
-			p_part = 0;		//Om inget annat är sagt görs ingen reglering
+		case OUT_OF_JUNCTION_A:
+		{
+			p_part = IR_6 - IR_2;
 			break;
+		}
+		
+		default:
+		p_part = 0;		//Om inget annat är sagt görs ingen reglering
+		break;
 	}
 }
 
@@ -158,11 +164,11 @@ void update_state()
 				IMU_Yaw_start = IMU_Yaw;
 			}
 			
-			else if ((US < US_HIGH_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))
-			{
-				ROBOT_STATE = INTO_HIGH_OBSTACLE;
-				break;
-			}
+			//else if ((US < US_HIGH_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))
+			//{
+			//ROBOT_STATE = INTO_HIGH_OBSTACLE;
+			//break;
+			//}
 			
 			//else if ((IR_1 < LOW_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))
 			//{
@@ -258,18 +264,18 @@ void update_state()
 		
 		case TURN_RIGHT:
 		{
-			if (rotation_count > 5)
+			if (((rotation_count > 6) && (IR_0 > SIDE_DEAD_END_DISTANCE)) || (rotation_count >8))
 			{
 				ROBOT_STATE = OUT_OF_TURN_RIGHT;
 				rotation_count = 0;
 			}
-				
+			
 			break;
 		}
 		
 		case TURN_LEFT:
 		{
-			if (rotation_count > 5)
+			if (((rotation_count > 6) && (IR_0 > SIDE_DEAD_END_DISTANCE)) || (rotation_count >8))
 			{
 				ROBOT_STATE = OUT_OF_TURN_LEFT;
 				rotation_count = 0;
@@ -280,7 +286,7 @@ void update_state()
 
 		case JUNCTION_A_RIGHT:
 		{
-			if (rotation_count > 5)
+			if (((rotation_count > 6) && (IR_0 > SIDE_DEAD_END_DISTANCE)) || (rotation_count > 8))
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_A_RIGHT;
 				rotation_count = 0;
@@ -292,7 +298,7 @@ void update_state()
 		
 		case JUNCTION_A_LEFT:
 		{
-			if (rotation_count > 5)
+			if (((rotation_count > 6) && (IR_0 > SIDE_DEAD_END_DISTANCE)) || (rotation_count >8))
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_A_LEFT;
 				rotation_count = 0;
@@ -304,7 +310,7 @@ void update_state()
 		
 		case JUNCTION_C_RIGHT:
 		{
-			if (rotation_count > 5)
+			if (((rotation_count > 6) && (IR_0 > SIDE_DEAD_END_DISTANCE)) || (rotation_count >8))
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_C_RIGHT;
 				rotation_count = 0;
@@ -315,7 +321,7 @@ void update_state()
 		
 		case JUNCTION_C_LEFT:
 		{
-			if (rotation_count > 5)
+			if (((rotation_count > 6) && (IR_0 > SIDE_DEAD_END_DISTANCE)) || (rotation_count >8))
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_C_LEFT;
 				rotation_count = 0;
@@ -326,7 +332,7 @@ void update_state()
 		
 		case DEAD_END:
 		{
-			if (rotation_count > 9)
+			if (rotation_count > 14)
 			{
 				ROBOT_STATE = CORRIDOR;
 				rotation_count = 0;
@@ -339,12 +345,28 @@ void update_state()
 		case JUNCTION_B_RIGHT:
 		case OUT_OF_JUNCTION_C_LEFT:
 		case OUT_OF_JUNCTION_C_RIGHT:
-		case OUT_OF_JUNCTION_A_LEFT:
-		case OUT_OF_JUNCTION_A_RIGHT:
 		case OUT_OF_TURN_LEFT:
 		case OUT_OF_TURN_RIGHT:
+		case OUT_OF_JUNCTION_A:
 		{
 			if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
+			{
+				ROBOT_STATE = CORRIDOR;
+			}
+			
+			break;
+		}
+		
+		case OUT_OF_JUNCTION_A_LEFT:
+		case OUT_OF_JUNCTION_A_RIGHT:
+		{
+			if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
+			{
+				ROBOT_STATE = OUT_OF_JUNCTION_A;
+				trust_sensors = false;
+			}
+			
+			else if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			{
 				ROBOT_STATE = CORRIDOR;
 			}
@@ -424,8 +446,6 @@ void run_state(float height)
 	
 	switch (ROBOT_STATE)
 	{
-		case OUT_OF_JUNCTION_A_RIGHT:		// XXXX Kan eventuellt behöva köras med något lägre speed
-		case OUT_OF_JUNCTION_A_LEFT:		// XXXX Kan eventuellt behöva köras med något lägre speed
 		case OUT_OF_JUNCTION_C_RIGHT:
 		case OUT_OF_JUNCTION_C_LEFT:
 		case JUNCTION_B_LEFT:
@@ -436,33 +456,41 @@ void run_state(float height)
 		{
 			if(trust_sensors)
 			{
-				Walk_Half_Cycle(5, alpha, height);
+				Walk_Half_Cycle(4, alpha, height);
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(5, 0, height);
+				Walk_Half_Cycle(4, 0.01, height);  // XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
 				trust_sensors = true;			// Default så litar vi på sensorerna
 			}
 			
 			break;
 		}
 		
+		case OUT_OF_JUNCTION_A:
 		case OUT_OF_CORRIDOR_RIGHT_WALL:
 		case OUT_OF_CORRIDOR_LEFT_WALL:
-		case OUT_OF_CORRIDOR_NO_WALL:
 		{
 			if (trust_sensors)
 			{
-				Walk_Half_Cycle(5, alpha, height);
+				Walk_Half_Cycle(4, alpha, height);
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(5, 0, height);
+				Walk_Half_Cycle(4, 0.01, height); // XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
 				trust_sensors = true;
 			}
 			
+			break;
+		}
+		
+		case OUT_OF_JUNCTION_A_RIGHT:
+		case OUT_OF_JUNCTION_A_LEFT:
+		case OUT_OF_CORRIDOR_NO_WALL:
+		{
+			Walk_Half_Cycle(4, 0.01, height);	// XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
 			break;
 		}
 		
@@ -476,7 +504,7 @@ void run_state(float height)
 		case JUNCTION_A_RIGHT:
 		case TURN_RIGHT:
 		{
-			Walk_Half_Cycle(0, 0.39, height);
+			Walk_Half_Cycle(0, 0.2, height);
 			++rotation_count;
 			break;
 		}
@@ -486,19 +514,19 @@ void run_state(float height)
 		case JUNCTION_A_LEFT:
 		case TURN_LEFT:
 		{
-			Walk_Half_Cycle(0, -0.39, height);
+			Walk_Half_Cycle(0, -0.2, height);
 			++rotation_count;
 			break;
 		}
 		
 		case INTO_HIGH_OBSTACLE:			// XXXX Tycker att man borde kunna köra med samma speed som i CRAWLING_UNDER_HIGH_OBSTACLE efter testning
 		{
-			Walk_Half_Cycle(5, alpha, height/2); //Testa fram lagom höjd som roboten ska sänkas till
+			Walk_Half_Cycle(4, alpha, height/2); //Testa fram lagom höjd som roboten ska sänkas till
 		}
 		
 		case CRAWLING_UNDER_HIGH_OBSTACLE:
 		{
-			Walk_Half_Cycle(5, alpha, height/2); //Samma höjd som i INTO_HIGH_OBSTACLE
+			Walk_Half_Cycle(4, alpha, height/2); //Samma höjd som i INTO_HIGH_OBSTACLE
 		}
 		
 		//case INTO_LOW_OBSTACLE:

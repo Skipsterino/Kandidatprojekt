@@ -67,6 +67,7 @@ typedef enum {
 	INTO_JUNCTION_C_RIGHT = 36,
 	INTO_JUNCTION_C_LEFT = 37,
 	INTO_CORRIDOR_NO_WALL = 38,
+	OUT_OF_JUNCTION_A = 39,
 } STATES;
 
 #define HALF_ROTATION_ANGLE 45			/**< Rotation angle for a 90 degree turn. */
@@ -74,8 +75,8 @@ typedef enum {
 #define CORRIDOR_SIDE_DISTANCE 60		/**< Distance for determining whether corridor or not. */
 #define SIDE_DEAD_END_DISTANCE 150		/**< Distance for determining whether dead end to right or left in junction. */
 #define END_OF_COURSE_DISTANCE 80		/**< Distance that IR_0, 2, 3, 5, 6 should be larger than at the end of the course. */
-#define SHORT_TURN_DISTANCE 38			/**< Distance to wall for rotating in turns and C junctions. */
-#define LONG_TURN_DISTANCE 110			/**< Distance to wall for rotating in A junctions. */
+#define SHORT_TURN_DISTANCE 40			/**< Distance to wall for rotating in turns and C junctions. */
+#define LONG_TURN_DISTANCE 113			/**< Distance to wall for rotating in A junctions. */
 #define FORWARD_DEAD_END_DISTANCE 180	/**< Distance for determining whether dead end straight ahead in junction or not. */
 #define JUNCTION_A_FORWARD_DISTANCE 80	/**< Distance for determining whether A junction or not (junction or turn?). */
 #define LOW_OBSTACLE_DISTANCE 40		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
