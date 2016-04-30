@@ -124,7 +124,7 @@ int main(void)
 	//Send_Servo_Position(7,0x01FF);
 	//Send_Servo_Position(8,0x01FF);
 	//Send_Servo_Position(9,0x01FF-0xA0);
-	//Send_Servo_Position(10,0x01FF+0xA0);
+	//Send_Servo_Position(10,0x01FF+0xA0);s
 	//Send_Servo_Position(11,0x01FF+0xA0);
 	//Send_Servo_Position(12,0x01FF-0xA0);
 	//Send_Servo_Position(13,0x01FF);

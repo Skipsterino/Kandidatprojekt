@@ -50,7 +50,8 @@ typedef struct
 	double distance;
 } ADC_distance_pair;
 
-volatile double US_reading;				/**< The most recent reading from the US sensor */
+volatile double US_latest_reading;				/**< The most recent reading from the US sensor */
+double US_reading[5];
 double US_distance;						/**< Distance calculated from the US sensor */
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -77,6 +77,7 @@ typedef enum {
 #define END_OF_COURSE_DISTANCE 80		/**< Distance that IR_0, 2, 3, 5, 6 should be larger than at the end of the course. */
 #define SHORT_TURN_DISTANCE 40			/**< Distance to wall for rotating in turns and C junctions. */
 #define LONG_TURN_DISTANCE 113			/**< Distance to wall for rotating in A junctions. */
+#define JUNCTION_C_TURN_DISTANCE 45
 #define FORWARD_DEAD_END_DISTANCE 180	/**< Distance for determining whether dead end straight ahead in junction or not. */
 #define JUNCTION_A_FORWARD_DISTANCE 80	/**< Distance for determining whether A junction or not (junction or turn?). */
 #define LOW_OBSTACLE_DISTANCE 40		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
@@ -95,6 +96,7 @@ bool climbed_up; /**< true -> the robot has climbed up on top of a low obstacle.
 bool climbed_down; /**< true -> the robot has climbed down from a low obstacle. */
 bool trust_sensors; /**< false -> for some reason, we don't trust the current sensor data. */
 uint8_t rotation_count; /**< Counter that keeps track of rotation in a turn or junction. */
+uint8_t cycle_count;
 
 float Yaw, Yaw_rad, p_part, Kp, Kd, alpha; /**< Angles and parameters for motion control. */
 float IR_0, IR_1, IR_2, IR_3, IR_4, IR_5, IR_6, US, IR_Yaw_left, IR_Yaw_right, IMU_Yaw, Yaw, Pitch, Roll; /**< Sensor values. */
