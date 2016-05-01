@@ -28,7 +28,7 @@ typedef enum {
 	OUT_OF_CORRIDOR_LEFT_WALL = 3, 
 	OUT_OF_CORRIDOR_RIGHT_WALL = 4,
 	
-	INTO_HIGH_OBSTACLE = 5, 
+	INTO_HIGH_OBSTACLE = 5,
 	INTO_LOW_OBSTACLE = 6, 
 	INTO_TURN_RIGHT = 7,  
 	INTO_TURN_LEFT = 8, 
@@ -45,7 +45,7 @@ typedef enum {
 	JUNCTION_C_LEFT = 18, 
 	
 	DEAD_END = 19,
-	MID_DEAD_END = 20,
+	MID_DEAD_END = 20,				// XXXXX TA BORT!
 	
 	HIGH_OBSTACLE = 21, 
 	LOW_OBSTACLE = 22, 
@@ -78,14 +78,14 @@ typedef enum {
 #define SHORT_TURN_DISTANCE 40			/**< Distance to wall for rotating in turns and C junctions. */
 #define LONG_TURN_DISTANCE 113			/**< Distance to wall for rotating in A junctions. */
 #define JUNCTION_C_TURN_DISTANCE 45
-#define FORWARD_DEAD_END_DISTANCE 180	/**< Distance for determining whether dead end straight ahead in junction or not. */
+#define FORWARD_DEAD_END_DISTANCE 170	/**< Distance for determining whether dead end straight ahead in junction or not. */
 #define JUNCTION_A_FORWARD_DISTANCE 80	/**< Distance for determining whether A junction or not (junction or turn?). */
 #define LOW_OBSTACLE_DISTANCE 40		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
 #define START_CLIMBING_UP_DISTANCE 20	/**< Distance for beginning climbing onto low obstacle (if IR_1 is less than this). */
 #define START_CLIMBING_DOWN_DISTANCE 50	/**< Distance for beginning climbing down from low obstacle (if IR_1 is greater than this). */
-#define US_HIGH_OBSTACLE_DISTANCE 40	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
-#define IR_HIGH_OBSTACLE_DISTANCE 40	/**< Distance for determining whether high obstacle or not (IR sensor). */	
-#define NO_WALL_DISTANCE 60				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
+#define US_HIGH_OBSTACLE_DISTANCE 30	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
+#define IR_HIGH_OBSTACLE_DISTANCE 30	/**< Distance for determining whether high obstacle or not (IR sensor). */	
+#define NO_WALL_DISTANCE 160				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
 #define DEAD_END_DISTANCE 40			/**< Distance to wall for turning in a dead end (which we shouldn't even enter). */
 
 #define CENTRE_OFFSET 8 /**< Horizontal distance from centre of robot to its legs. */
