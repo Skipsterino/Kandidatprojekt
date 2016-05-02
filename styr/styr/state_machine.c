@@ -414,7 +414,7 @@ void update_state()
 		//}
 		
 		////
-		//case CLIMB_UP:
+		//case CLIMBING_UP:
 		//{
 		//if (climbed_up)
 		//{
@@ -434,7 +434,7 @@ void update_state()
 		//}
 		//
 		////
-		//case OUT_OF_LOW_OBSTACLE:
+		//case CLIMBING_DOWN:
 		//{
 		//if (climbed_down)
 		//{
