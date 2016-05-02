@@ -554,7 +554,7 @@ void run_state(float height)
 		//Walk_Half_Cycle(1, alpha, 1.5*height); //Testa fram lagom höjd som roboten ska höjas till
 		//}
 		
-		//case CLIMB_UP:
+		//case CLIMBING_UP:
 		//{
 		////Hårdkodad sekvens av steg för att klättra upp! När hela sekvensen är utförd -> sätt climbed_up till TRUE!
 		//}
@@ -564,7 +564,7 @@ void run_state(float height)
 		//Walk_Half_Cycle(1, alpha, height/2); //Troligtvis ganska låg höjd här eftersom roboten inte ska luta vid gång över hindret
 		//}
 		
-		//case OUT_OF_LOW_OBSTACLE:
+		//case CLIMBING_DOWN:
 		//{
 		////Hårdkodad sekvens av steg för att klättra ned! När hela sekvensen är utförd -> sätt climbed_down till TRUE!
 		//}
