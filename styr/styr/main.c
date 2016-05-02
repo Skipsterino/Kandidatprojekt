@@ -65,8 +65,8 @@ int main(void)
 	delta_h = 0.4;
 	
 	//Defaultvärden för state_machine
-	Kp = 0.003;
-	Kd = 0.250;
+	Kp = 0.01;
+	Kd = 0.55;
 	climbed_up = false;
 	climbed_down = false;
 	trust_sensors = true;
@@ -192,7 +192,7 @@ int main(void)
 			case RACE:
 				if ((PIND & (1 << PIND3)) == 0) //Har knapp tryckts ned?
 				{
-					_delay_ms(2000);
+					_delay_ms(1000);
 					cm = AUTO;
 				}
 				break;
