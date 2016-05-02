@@ -634,7 +634,7 @@ void read_IMU()
 			gravity[y] = 2*(q0*q1 + q2*q3);
 			gravity[z] = q0*q0 - q1*q1 - q2*q2 + q3*q3;
 			
-			IMU_Yaw = (atan2(2*q1*q2 - 2*q0*q3, 2*q0*q0 + 2*q1*q1 - 1)/3.14)*180;// - 0.28/250 - 0.06/250;		// Beräkna yaw-vinkel i grader
+			IMU_Yaw = (atan2(2*q1*q2 - 2*q0*q3, 2*q0*q0 + 2*q1*q1 - 1)/3.14)*180;							// Beräkna yaw-vinkel i grader
 			IMU_Pitch = (atan(gravity[x] / sqrt(gravity[y]*gravity[y] + gravity[z]*gravity[z]))/3.14)*180;	// Beräkna pitch-vinkel i grader
 			IMU_Roll = (atan(gravity[y] / sqrt(gravity[x]*gravity[x] + gravity[z]*gravity[z]))/3.14)*180;	// Beräkna roll-vinkel i grader
 			
