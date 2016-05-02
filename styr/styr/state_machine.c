@@ -243,7 +243,7 @@ void update_state()
 		
 		case INTO_JUNCTION_A_RIGHT:
 		{
-			if (cycle_count > 4)
+			if (cycle_count > 3)
 			{
 				ROBOT_STATE = JUNCTION_A_RIGHT;
 			}
@@ -252,7 +252,7 @@ void update_state()
 		
 		case INTO_JUNCTION_A_LEFT:
 		{
-			if (cycle_count > 4)
+			if (cycle_count > 3)
 			{
 				ROBOT_STATE = JUNCTION_A_LEFT;
 			}
