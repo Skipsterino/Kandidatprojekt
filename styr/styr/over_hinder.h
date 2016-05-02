@@ -17,9 +17,11 @@
 void Probe_Walk(void);
 void Probe_Height_Up(void); 
 void Walk_Up(void); 
+void Walk_Up_Hard(void);
 void Walk_Top(void);
 void Probe_Height_Down(void); 
 void Walk_Down(void); 
+void Walk_Down_Hard(void);
 
 
 #endif /* OVER_HINDER_H_ */
