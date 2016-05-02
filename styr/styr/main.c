@@ -77,7 +77,7 @@ int main(void)
 	Configure_Servos_Delaytime();
 	Configure_Servos_LED();
 	Configure_Servos_No_Response();
-	Configure_Servos_Angle_Limit();
+	Configure_Servos_Angle_Limit('r');
 	Configure_Servos_Max_Torque();
 	
 	//

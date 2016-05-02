@@ -97,7 +97,7 @@ int main_old(void)
 	//Configure_Servos_LED();
 	
 	Configure_Servos_No_Response();
-	Configure_Servos_Angle_Limit();
+	Configure_Servos_Angle_Limit('r');
 	
 	Send_Inner_P1_Velocity(0x0010); //DESSA SEX ANROP MÅSTE ALLTID KÖRAS EFTERSOM HASTIGHETEN LIGGER I RAM!!!
 	Send_Middle_P1_Velocity(0x0010);//

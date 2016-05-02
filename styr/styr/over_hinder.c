@@ -49,11 +49,6 @@ void Walk_Up(void)
 
 void Walk_Up_Hard()
 {
-	
-	// Ändra Begränsningarna
-	
-	
-	
 	float height = 15;
 	float obstacle_height = 6.3;
 	float x_ground = 11;
@@ -68,37 +63,7 @@ void Walk_Up_Hard()
 	unsigned int speed_outer = 0x0040;
 	_delay_ms(1000);
 	
-	// Ändra Begränsningarna
-		uint8_t inner_middle[] = {13,14};
-		uint8_t inner_lf_rb[] = {1,8};
-		uint8_t inner_rf_lb[] = {2,7};
-		uint8_t middle[] = {3,4,9,10,15,16};
-		uint8_t outer_left[] = {6,12,18};
-		uint8_t outer_right[] = {5,11,17};
-		
-		for (uint8_t i = 0; i < 6; i++)
-		{
-			Send_Servo_Angle_Limit(middle[i], 0x00CD, 0x0331); // pos 1FF -+ 1023/300pos/vinkl*90grader= 0x00CD,0x0331
-			_delay_ms(1);
-		}
-		for (uint8_t i = 0; i < 3; i++)
-		{
-			Send_Servo_Angle_Limit(outer_left[i], 0x00CD, 0x0287); // pos 1FF + (1023/300pos/vinkl*(+40grader eller - 90 grader)= 0x00CD,0x0287
-			_delay_ms(1);
-			Send_Servo_Angle_Limit(outer_right[i], 0x0177, 0x0331); // pos 1FF + (1023/300pos/vinkl*(-40grader eller + 90 grader)= 0x0177,0x0331
-			_delay_ms(1);
-		}
-		for (uint8_t i = 0; i < 2; i++)
-		{
-			Send_Servo_Angle_Limit(inner_lf_rb[i], 0x0146, 0x02EB);  // pos 1FF + (1023/300pos/vinkl*(-45grader eller + 60 grader)= 0x0166,0x02CB
-			_delay_ms(1);
-			Send_Servo_Angle_Limit(inner_middle[i], 0x017F, 0x027F); // pos 1FF + (1023/300pos/vinkl*(-15grader eller + 15 grader)= 0x01BB,0x0243
-			_delay_ms(1);
-			Send_Servo_Angle_Limit(inner_rf_lb[i], 0x0111, 0x02B8); // pos 1FF + (1023/300pos/vinkl*(-60grader eller + 45 grader)= 0x0131,0x0298
-			_delay_ms(1);
-		}
-		
-	
+	Configure_Servos_Angle_Limit('c'); // Ändra servobegränsningarna
 	
 	_delay_ms(1000);
 	Send_Leg1_Kar(x_ground, 0+corner_pitch, -height);
@@ -401,19 +366,13 @@ void Walk_Up_Hard()
 	_delay_ms(3000);
 	
 	_delay_ms(3000);
-
-
 	
+	Configure_Servos_Angle_Limit('r'); //BEHÖVS VÄL FÖR ATT SERVOBEGRÄNSNINGARNA SKA ÅTERGÅ TILL RÄTTA VÄRDEN??????????????????????
 }
 
 
 void Walk_Down_Hard()
 {
-	
-	// Ändra Begränsningarna
-	
-	
-	
 	float height = 15-6.3;
 	float obstacle_height = -6.3;
 	float x_ground = 12;
@@ -428,38 +387,8 @@ void Walk_Down_Hard()
 	unsigned int speed_outer = 0x0040;
 	_delay_ms(1000);
 	
-	// Ändra Begränsningarna
-	uint8_t inner_middle[] = {13,14};
-	uint8_t inner_lf_rb[] = {1,8};
-	uint8_t inner_rf_lb[] = {2,7};
-	uint8_t middle[] = {3,4,9,10,15,16};
-	uint8_t outer_left[] = {6,12,18};
-	uint8_t outer_right[] = {5,11,17};
-	
-	for (uint8_t i = 0; i < 6; i++)
-	{
-		Send_Servo_Angle_Limit(middle[i], 0x00CD, 0x0331); // pos 1FF -+ 1023/300pos/vinkl*90grader= 0x00CD,0x0331
-		_delay_ms(1);
-	}
-	for (uint8_t i = 0; i < 3; i++)
-	{
-		Send_Servo_Angle_Limit(outer_left[i], 0x00CD, 0x0287); // pos 1FF + (1023/300pos/vinkl*(+40grader eller - 90 grader)= 0x00CD,0x0287
-		_delay_ms(1);
-		Send_Servo_Angle_Limit(outer_right[i], 0x0177, 0x0331); // pos 1FF + (1023/300pos/vinkl*(-40grader eller + 90 grader)= 0x0177,0x0331
-		_delay_ms(1);
-	}
-	for (uint8_t i = 0; i < 2; i++)
-	{
-		Send_Servo_Angle_Limit(inner_lf_rb[i], 0x0146, 0x02EB);  // pos 1FF + (1023/300pos/vinkl*(-45grader eller + 60 grader)= 0x0166,0x02CB
-		_delay_ms(1);
-		Send_Servo_Angle_Limit(inner_middle[i], 0x017F, 0x027F); // pos 1FF + (1023/300pos/vinkl*(-15grader eller + 15 grader)= 0x01BB,0x0243
-		_delay_ms(1);
-		Send_Servo_Angle_Limit(inner_rf_lb[i], 0x0111, 0x02B8); // pos 1FF + (1023/300pos/vinkl*(-60grader eller + 45 grader)= 0x0131,0x0298
-		_delay_ms(1);
-	}
-	
-	
-	
+	Configure_Servos_Angle_Limit('c');
+
 	_delay_ms(1000);
 	Send_Leg1_Kar(x_ground, 0+corner_pitch, -height);
 	Send_Leg2_Kar(x_ground, 0+corner_pitch, -height);
@@ -762,6 +691,5 @@ void Walk_Down_Hard()
 	
 	_delay_ms(3000);
 
-
-	
+	Configure_Servos_Angle_Limit('r'); //BEHÖVS VÄL FÖR ATT SERVOBEGRÄNSNINGARNA SKA ÅTERGÅ TILL RÄTTA VÄRDEN??????????????????????
 }
