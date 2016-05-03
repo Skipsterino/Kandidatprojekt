@@ -10,7 +10,7 @@ uint8_t m = 24; //l'ng st;dfas 24
 uint8_t swing_l = 12; //längd på svingfas 12
 int n = 12; //index gångcykel startvärde m/2 ska göras snyggare
 int n2 = 0;
-float last_height = 10;
+float last_height = 11;
 float last_speed = 0;
 float last_theta = 0;
 float theta_max = 0;
@@ -225,9 +225,9 @@ float Limit_Height(float height)
 	{
 		height = 11;
 	}
-	if(height < 8)
+	if(height < 4)
 	{
-		height = 8;
+		height = 4;
 	}
 	return height;
 }
@@ -258,7 +258,6 @@ triple_float Tripod(float x, float stroke, float height,float lift, uint8_t n)
 	
 	float y = 0;
 	float z = 0;
-	
 	
 	if(n <= 2 ) //delat upp bensänkingen i steg
 	{
@@ -296,7 +295,7 @@ triple_float Tripod(float x, float stroke, float height,float lift, uint8_t n)
 void Walk_Half_Cycle(float speed, float theta, float height)
 {
 	//theta = 0;
-	//height = 11;
+	height = 4;
 	//justeringar
 	//height = 11;//tilfällig steloperation
 	float l = 11; //fötters förskjuting från kropp i x-led OBS orginal = 13
@@ -311,7 +310,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 	//sätter parametrar till LP-filtrerade
 	speed = last_speed;
 	theta = last_theta;
-	float height_step = (height - last_height)/m;
+	float height_step = (height - last_height)/((m+swing_l)*2);
 	
 	if( (speed*sgn_speed < 0.2 ) && (theta*sgn_theta < 0.01) && (height_step == 0)) // gör inget
 	{
@@ -343,6 +342,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 		
 		//stegvis höjdjustering
 		last_height += height_step;
+		
 		n2= n+(m + swing_l)/2;
 		
 		if(n2 > m + swing_l) //ser till att det blir cykliskt

@@ -72,6 +72,7 @@ int main(void)
 	trust_sensors = true;
 	
 	Init();
+	init_fuck();
 	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
 	Configure_Servos_Delaytime();
