@@ -91,17 +91,15 @@ int main(void)
 	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!	
 	
+	_delay_ms(1000);
+	//TEST
+	
+	Walk_Down_Hard();
+	while(1)
+	{
+		
+	}
 
-	//_delay_ms(2000);
-	//for(int i =1; i<19; ++i)
-	//{
-			//temp[i-1] = Get_Servo_Temp(i);
-	//
-	//}
-	//while(1)
-	//{
-		//
-	//}
 	//_delay_ms(100);
 	////Send_Leg3_Kar(22,0,0);
 	////_delay_ms(1);
@@ -134,13 +132,13 @@ int main(void)
 	//Send_Servo_Position(17,0x01FF+0xA0);
 	//Send_Servo_Position(18,0x01FF-0xA0);
 	//
-	//
 	//while(1)
 	//{
 	//}
+	
 	unsigned char first_kom_byte;
 	
-	Walk_Half_Cycle(0, 0.01,height);	//Ställ in default-höjd
+	Walk_Half_Cycle(0, 0.01,height); //Ställ in default-höjd
 
 	while(1)
 	{

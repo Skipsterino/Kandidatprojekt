@@ -107,7 +107,7 @@ void Configure_Servos_Angle_Limit(char mode)
 		{
 			Send_Servo_Angle_Limit(inner_lf_rb[i], 0x0166, 0x02CB);  // pos 1FF + (1023/300pos/vinkl*(-45grader eller + 60 grader)= 0x0166,0x02CB
 			_delay_ms(1);
-			Send_Servo_Angle_Limit(inner_middle[i], 0x019F, 0x025F); // pos 1FF + (1023/300pos/vinkl*(-15grader eller + 15 grader)= 0x01BB,0x0243
+			Send_Servo_Angle_Limit(inner_middle[i], 0x019F, 0x025F); // pos 1FF + (1023/300pos/vinkl*(-15grader eller + 15 grader)= 0x01BB,0x0243 -> 0x019F, 0x025F (lite marginal)
 			_delay_ms(1);
 			Send_Servo_Angle_Limit(inner_rf_lb[i], 0x0131, 0x0298); // pos 1FF + (1023/300pos/vinkl*(-60grader eller + 45 grader)= 0x0131,0x0298
 			_delay_ms(1);
