@@ -63,10 +63,10 @@ void Walk_Up(void)
 
 void Walk_Up_Hard()
 {
-	height = 15;
+	height = 11;
 	obstacle_height = 6.3;
 	x_ground = 11;
-	x_obstacle = 12;
+	x_obstacle = 11;
 	corner_pitch = 4;
 	step = 5.2;
 	lift = 2.5;
@@ -95,9 +95,9 @@ void Walk_Up_Hard()
 
 void Walk_Down_Hard()
 {
-	height = 15-6.3;
+	height = 11-6.3;
 	obstacle_height = -6.3;
-	x_ground = 12;
+	x_ground = 11;
 	x_obstacle = 11;
 	corner_pitch = 4;
 	step = 5.2;
