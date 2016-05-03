@@ -82,9 +82,9 @@ void Configure_Servos_Angle_Limit(char mode)
 	
 	for (uint8_t i = 0; i < 3; i++)
 	{
-		Send_Servo_Angle_Limit(outer_left[i], 0x00CD, 0x0287); // pos 1FF + (1023/300pos/vinkl*(+40grader eller - 90 grader)= 0x00CD,0x0287
+		Send_Servo_Angle_Limit(outer_left[i], 0x00AE, 0x0287); // pos 1FF + (1023/300pos/vinkl*(+40grader eller - 90 grader)= 0x00CD (- 0x1F för vi behöver extraspelet),0x0287
 		_delay_ms(1);
-		Send_Servo_Angle_Limit(outer_right[i], 0x0177, 0x0331); // pos 1FF + (1023/300pos/vinkl*(-40grader eller + 90 grader)= 0x0177,0x0331
+		Send_Servo_Angle_Limit(outer_right[i], 0x0177, 0x0350); // pos 1FF + (1023/300pos/vinkl*(-40grader eller + 90 grader)= 0x0177,0x0331 (+ 0x1F för vi behöver extraspelet)
 		_delay_ms(1);
 	}
 	
