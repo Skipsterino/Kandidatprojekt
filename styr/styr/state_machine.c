@@ -173,11 +173,11 @@ void update_state()
 				break;
 			}
 			
-			//else if ((IR_1 < LOW_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))
-			//{
-			//ROBOT_STATE = INTO_LOW_OBSTACLE;
-			//break;
-			//}
+			else if ((IR_1 < LOW_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))
+			{
+			ROBOT_STATE = INTO_LOW_OBSTACLE;
+			break;
+			}
 			
 			break;
 		}
@@ -404,14 +404,14 @@ void update_state()
 			break;
 		}
 		
-		//case INTO_LOW_OBSTACLE:
-		//{
+		case INTO_LOW_OBSTACLE:
+		{
 		//if (IR_1 < START_CLIMBING_UP_DISTANCE)
 		//{
 		//ROBOT_STATE = CLIMB_UP;
 		//}
-		//break;
-		//}
+		break;
+		}
 		
 		////
 		//case CLIMBING_UP:
@@ -448,7 +448,7 @@ void update_state()
 	}
 }
 
-void run_state(float height)
+void run_state()
 {
 	calculate_Yaw();
 	calculate_p_part();

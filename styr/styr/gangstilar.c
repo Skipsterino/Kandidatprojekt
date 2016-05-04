@@ -6,12 +6,13 @@
  */ 
 
 #include "gangstilar.h"
-uint8_t m = 24; //l'ng st;dfas 24
+
 uint8_t swing_l = 12; //längd på svingfas 12
 uint8_t cycle_length = 36;
 
-int n = 12; //index för benpar
+n = 12; //index för benpar
 int n_2 = 30;
+uint8_t m=24;
 
 float last_height = 11;
 float last_speed = 0;
@@ -26,6 +27,21 @@ float sideways_fuck;
 //unsigned int speed_outer;
 int8_t p1_down = 0;
 int8_t p2_down = 1;
+
+void Adjust_Stance_Climbed(char direction)
+{
+	if(direction == 'u')
+	{
+		last_height = 14-6.3;
+		height = 14-6.3;
+	}
+	else 
+	{
+		last_height = 14;
+		height = 14;
+	}
+	n=m/2 + (m + swing_l)/2;
+}
 
 void init_fuck()
 {

@@ -71,7 +71,7 @@ typedef enum {
 #define JUNCTION_C_TURN_DISTANCE 45
 #define FORWARD_DEAD_END_DISTANCE 170	/**< Distance for determining whether dead end straight ahead in junction or not. */
 #define JUNCTION_A_FORWARD_DISTANCE 80	/**< Distance for determining whether A junction or not (junction or turn?). */
-#define LOW_OBSTACLE_DISTANCE 40		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
+#define LOW_OBSTACLE_DISTANCE 25		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
 #define START_CLIMBING_UP_DISTANCE 20	/**< Distance for beginning climbing onto low obstacle (if IR_1 is less than this). */
 #define START_CLIMBING_DOWN_DISTANCE 50	/**< Distance for beginning climbing down from low obstacle (if IR_1 is greater than this). */
 #define US_HIGH_OBSTACLE_DISTANCE 30	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
@@ -105,9 +105,8 @@ void update_state();
 * @brief Executes the robot's current state
 *
 * Executes robot state based on current state and sensor values.
-* @param height Indicates the robot's distance to ground.
 */
-void run_state(float height);
+void run_state();
 
 /**
 * @brief Loads sensor values
