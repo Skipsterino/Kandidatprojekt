@@ -81,8 +81,8 @@ void Walk_Up_Hard()
 	number_of_steps =20;
 
 	speed_inner = 0x0060;
-	speed_middle = 0x0085;
-	speed_outer = 0x0085;
+	speed_middle = 0x085;
+	speed_outer = 0x00B0;
 	_delay_ms(1000);
 	
 	Configure_Servos_Angle_Limit('c'); // Ändra servobegränsningarna
@@ -117,8 +117,8 @@ void Walk_Down_Hard()
 	weight_adjust = 3;
 	
 	speed_inner = 0x0060;
-	speed_middle = 0x085;
-	speed_outer = 0x0085;
+	speed_middle = 0x0085;
+	speed_outer = 0x00B0;
 	
 	_delay_ms(1000);
 	

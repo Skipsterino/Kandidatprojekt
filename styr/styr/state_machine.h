@@ -24,7 +24,7 @@
 * Enum that contains the different possible states that the robot can be in.
 */
 typedef enum {
-	STOP = 1,
+	//STOP = 1,
 	DEAD_END = 2,
 	CORRIDOR = 3,
 	
@@ -38,6 +38,7 @@ typedef enum {
 	PREPARE_CLIMBING_UP = 9,
 	CLIMBING_UP = 10,
 	LOW_OBSTACLE = 11,
+	PREPARE_CLIMBING_DOWN = 1,		// XXXX BYT NUMMER!
 	CLIMBING_DOWN = 12,
 	
 	INTO_JUNCTION_A_RIGHT = 13,
@@ -60,8 +61,6 @@ typedef enum {
 	OUT_OF_JUNCTION_A_LEFT = 28,
 	OUT_OF_JUNCTION_C_RIGHT = 29,
 	OUT_OF_JUNCTION_C_LEFT = 30,
-	
-	PREPARE_CLIMBING_DOWN = 31, //LÄGG UPP HÖGRE UPP
 } STATES;
 
 #define HALF_ROTATION_ANGLE 45			/**< Rotation angle for a 90 degree turn. */
