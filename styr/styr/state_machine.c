@@ -141,7 +141,7 @@ void update_state()
 	{
 		case CORRIDOR:
 		{
-			
+				
 			if ((IR_0 < DEAD_END_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			{
 				ROBOT_STATE = DEAD_END;
@@ -169,7 +169,7 @@ void update_state()
 				ROBOT_STATE = OUT_OF_CORRIDOR_NO_WALL;
 			}
 			
-			else if ((US < US_HIGH_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))
+			else if ((US < US_HIGH_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			{
 				ROBOT_STATE = INTO_HIGH_OBSTACLE;
 			}
@@ -402,6 +402,7 @@ void update_state()
 		{
 			if (IR_4 > IR_HIGH_OBSTACLE_DISTANCE)
 			{
+				height = 11;
 				ROBOT_STATE = CORRIDOR;
 			}
 			break;
@@ -449,6 +450,7 @@ void update_state()
 		{
 			if (!on_top_of_obstacle)
 			{
+				height = 11;
 				ROBOT_STATE = CORRIDOR;
 			}
 			break;
@@ -562,7 +564,7 @@ void run_state()
 		
 		case PREPARE_CLIMBING_UP:
 		{
-			Walk_Half_Cycle(2, alpha, 14); //Testa fram lagom höjd och speed
+			Walk_Half_Cycle(2.1, alpha, 14); //Testa fram lagom höjd och speed
 			++cycle_count;
 			break;
 		}
@@ -576,7 +578,7 @@ void run_state()
 		
 		case LOW_OBSTACLE:
 		{
-			Walk_Half_Cycle(2, alpha, 7.7);
+			Walk_Half_Cycle(3, alpha, 7.7);
 			break;
 		}
 		

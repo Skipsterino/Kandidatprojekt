@@ -24,7 +24,7 @@
 * Enum that contains the different possible states that the robot can be in.
 */
 typedef enum {
-	//STOP = 1,
+	STOP = 31,		// XXX Byt nummer !
 	DEAD_END = 2,
 	CORRIDOR = 3,
 	
