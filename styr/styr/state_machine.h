@@ -17,6 +17,7 @@
 
 #include "SPI.h"
 #include "gangstilar.h"
+#include "over_hinder.h"
 #include <stdbool.h>
 
 /**
@@ -34,7 +35,7 @@ typedef enum {
 	INTO_HIGH_OBSTACLE = 7,
 	CRAWLING_UNDER_HIGH_OBSTACLE = 8,
 	
-	INTO_LOW_OBSTACLE = 9,
+	PREPARE_CLIMBING_UP = 9,
 	CLIMBING_UP = 10,
 	LOW_OBSTACLE = 11,
 	CLIMBING_DOWN = 12,
@@ -59,6 +60,8 @@ typedef enum {
 	OUT_OF_JUNCTION_A_LEFT = 28,
 	OUT_OF_JUNCTION_C_RIGHT = 29,
 	OUT_OF_JUNCTION_C_LEFT = 30,
+	
+	PREPARE_CLIMBING_DOWN = 31, //LÄGG UPP HÖGRE UPP
 } STATES;
 
 #define HALF_ROTATION_ANGLE 45			/**< Rotation angle for a 90 degree turn. */
@@ -71,9 +74,9 @@ typedef enum {
 #define JUNCTION_C_TURN_DISTANCE 45
 #define FORWARD_DEAD_END_DISTANCE 170	/**< Distance for determining whether dead end straight ahead in junction or not. */
 #define JUNCTION_A_FORWARD_DISTANCE 80	/**< Distance for determining whether A junction or not (junction or turn?). */
-#define LOW_OBSTACLE_DISTANCE 40		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
-#define START_CLIMBING_UP_DISTANCE 20	/**< Distance for beginning climbing onto low obstacle (if IR_1 is less than this). */
-#define START_CLIMBING_DOWN_DISTANCE 50	/**< Distance for beginning climbing down from low obstacle (if IR_1 is greater than this). */
+//#define LOW_OBSTACLE_DISTANCE 40		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
+#define PREPARE_CLIMBING_UP_DISTANCE 30	/**< Distance for preparing climbing onto low obstacle (if IR_1 is less than this). */
+#define PREPARE_CLIMBING_DOWN_DISTANCE 40	/**< Distance for preparing climbing down from low obstacle (if IR_1 is greater than this). */
 #define US_HIGH_OBSTACLE_DISTANCE 30	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
 #define IR_HIGH_OBSTACLE_DISTANCE 30	/**< Distance for determining whether high obstacle or not (IR sensor). */
 #define NO_WALL_DISTANCE 160				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
@@ -83,8 +86,7 @@ typedef enum {
 #define CORRIDOR_WIDTH 80 /**< Width of the labyrinth's corridors. */
 
 float IMU_Yaw_start; /**< The IMU's start Yaw angle when entering turns and junctions. */
-bool climbed_up; /**< true -> the robot has climbed up on top of a low obstacle. */
-bool climbed_down; /**< true -> the robot has climbed down from a low obstacle. */
+bool on_top_of_obstacle; /**< true -> the robot has climbed up on top of a low obstacle. */
 bool trust_sensors; /**< false -> for some reason, we don't trust the current sensor data. */
 uint8_t rotation_count; /**< Counter that keeps track of rotation in a turn or junction. */
 uint8_t cycle_count;

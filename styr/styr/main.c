@@ -67,8 +67,7 @@ int main(void)
 	//Defaultvärden för state_machine
 	Kp = 0.01;
 	Kd = 0.55;
-	climbed_up = false;
-	climbed_down = false;
+	on_top_of_obstacle = false;
 	trust_sensors = true;
 	
 	Init();
