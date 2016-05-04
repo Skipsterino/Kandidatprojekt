@@ -53,7 +53,7 @@ int main(void)
 {
 	memset(lastPacket, 0, sizeof(lastPacket));
 	
-	cm = MANUAL; //Aktuellt styrläge hos roboten
+	cm = RACE; //Aktuellt styrläge hos roboten
 	ROBOT_STATE = CORRIDOR; //Default-tillstånd hos roboten
 	
 	//Defaultvärden
@@ -67,12 +67,12 @@ int main(void)
 	//Defaultvärden för state_machine
 	Kp = 0.01;
 	Kd = 0.55;
-	climbed_up = false;
-	climbed_down = false;
+	on_top_of_obstacle = false;
 	trust_sensors = true;
 	
 	Init();
-	init_fuck();
+	
+	//init_fuck();
 	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
 	Configure_Servos_Delaytime();
@@ -91,15 +91,6 @@ int main(void)
 	Send_Outer_P2_Velocity(0x0010);//
 	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!	
-	
-	_delay_ms(1000);
-	//TEST
-	
-	Walk_Down_Hard();
-	while(1)
-	{
-		
-	}
 
 	//_delay_ms(100);
 	////Send_Leg3_Kar(22,0,0);
