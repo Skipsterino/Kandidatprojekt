@@ -438,7 +438,7 @@ void update_state()
 		
 		case PREPARE_CLIMBING_DOWN:
 		{
-			if (cycle_count > 2) //Testa fram lagom värde så avstånd till hinder blir lagom för klättring
+			if (cycle_count > 5) //Testa fram lagom värde så avstånd till hinder blir lagom för klättring
 			{
 				ROBOT_STATE = CLIMBING_DOWN;
 			}
@@ -562,15 +562,15 @@ void run_state()
 		
 		case PREPARE_CLIMBING_UP:
 		{
-			Walk_Half_Cycle(2.6, alpha, 14); //Testa fram lagom höjd och speed
+			Walk_Half_Cycle(2, alpha, 14); //Testa fram lagom höjd och speed
 			++cycle_count;
 			break;
 		}
 		
 		case CLIMBING_UP:
 		{
-			//Walk_Up_Hard(); //Hårdkodad sekvens för att klättra upp
-			//on_top_of_obstacle = true;
+			Walk_Up_Hard(); //Hårdkodad sekvens för att klättra upp
+			on_top_of_obstacle = true;
 			break;
 		}
 		
@@ -582,7 +582,7 @@ void run_state()
 		
 		case PREPARE_CLIMBING_DOWN:
 		{
-			Walk_Half_Cycle(1, alpha, 7.7); //Samma som i LOW_OBSTACLE
+			Walk_Half_Cycle(2, alpha, 7.7); //Samma som i LOW_OBSTACLE
 			++cycle_count;
 			break;
 		}

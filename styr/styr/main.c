@@ -176,7 +176,7 @@ int main(void)
 			
 			case AUTO: //Autonomt läge
 				update_state();
-				run_state(height);
+				run_state();
 				break;
 			
 			case RACE:
