@@ -409,7 +409,7 @@ void update_state()
 		
 		case PREPARE_CLIMBING_UP:
 		{
-			if (cycle_count > 2) //Testa fram lagom värde så avstånd till hinder blir lagom för klättring
+			if (cycle_count > 3) //Testa fram lagom värde så avstånd till hinder blir lagom för klättring
 			{
 				ROBOT_STATE = CLIMBING_UP;
 			}
@@ -562,7 +562,7 @@ void run_state(float height)
 		
 		case PREPARE_CLIMBING_UP:
 		{
-			Walk_Half_Cycle(1, alpha, 14); //Testa fram lagom höjd och speed
+			Walk_Half_Cycle(2.6, alpha, 14); //Testa fram lagom höjd och speed
 			++cycle_count;
 			break;
 		}
