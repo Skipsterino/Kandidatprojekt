@@ -21,6 +21,11 @@
 #include "structs.h"
 #include "servo_UART.h"
 
+float height;
+int n;
+
+
+void Adjust_Stance_Climbed(char direction);
 float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn_theta, float height);
 int max_speed(float theta,int sgn_theta);
 triple_float Adjust_Servo_Speed(float theta, int sgn_theta, int8_t leg_down);

@@ -67,15 +67,19 @@ void Configure_Servos_Delaytime(void);
 void Configure_Servos_LED(void);
 
 /**
-* @brief Configures the servos angles limits 
+* @brief Configures the servo angle limits
 *
-* Configures servo angle limitations. 
-* If a servo is told to exceed these limits, it will go as close as possible
+* Configures servo angle limitations in different ways for different values of mode.
+* The value 'r' indicates "regular mode", i.e. corridor, turn etc.
+* The value 'c' indicates "climbing mode", i.e. climbing on top of low obstacles.
+* If a servo is told to exceed a limit, it will move to the limit, i.e. as close as possible.
+*
+* @param mode Indicates which angle limits is to be used. Can take on the values 'r' and 'c'.
 */
-void Configure_Servos_Angle_Limit(void);
+void Configure_Servos_Angle_Limit(char mode);
 
 /**
-* @brief Configures the servos responses
+* @brief Configures the servo responses
 *
 * Configures servos only to respond when explicitly asked to. 
 */

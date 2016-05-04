@@ -65,7 +65,7 @@ void Configure_Servos_LED(void)
 }
 
 
-void Configure_Servos_Angle_Limit(void)
+void Configure_Servos_Angle_Limit(char mode)
 {
 	uint8_t inner_middle[] = {13,14};
 	uint8_t inner_lf_rb[] = {1,8};
@@ -79,25 +79,41 @@ void Configure_Servos_Angle_Limit(void)
 		Send_Servo_Angle_Limit(middle[i], 0x00CD, 0x0331); // pos 1FF -+ 1023/300pos/vinkl*90grader= 0x00CD,0x0331
 		_delay_ms(1);
 	}
+	
 	for (uint8_t i = 0; i < 3; i++)
 	{
-		Send_Servo_Angle_Limit(outer_left[i], 0x00CD, 0x0287); // pos 1FF + (1023/300pos/vinkl*(+40grader eller - 90 grader)= 0x00CD,0x0287
+		Send_Servo_Angle_Limit(outer_left[i], 0x00AE, 0x0287); // pos 1FF + (1023/300pos/vinkl*(+40grader eller - 90 grader)= 0x00CD (- 0x1F för vi behöver extraspelet),0x0287
 		_delay_ms(1);
-		Send_Servo_Angle_Limit(outer_right[i], 0x0177, 0x0331); // pos 1FF + (1023/300pos/vinkl*(-40grader eller + 90 grader)= 0x0177,0x0331
+		Send_Servo_Angle_Limit(outer_right[i], 0x0177, 0x0350); // pos 1FF + (1023/300pos/vinkl*(-40grader eller + 90 grader)= 0x0177,0x0331 (+ 0x1F för vi behöver extraspelet)
 		_delay_ms(1);
 	}
-	for (uint8_t i = 0; i < 2; i++)
+	
+	if (mode == 'c') //"Climbing mode"?
 	{
-		Send_Servo_Angle_Limit(inner_lf_rb[i], 0x0166, 0x02CB);  // pos 1FF + (1023/300pos/vinkl*(-45grader eller + 60 grader)= 0x0166,0x02CB
-		_delay_ms(1);
-		Send_Servo_Angle_Limit(inner_middle[i], 0x019F, 0x025F); // pos 1FF + (1023/300pos/vinkl*(-15grader eller + 15 grader)= 0x01BB,0x0243
-		_delay_ms(1);
-		Send_Servo_Angle_Limit(inner_rf_lb[i], 0x0131, 0x0298); // pos 1FF + (1023/300pos/vinkl*(-60grader eller + 45 grader)= 0x0131,0x0298
-		_delay_ms(1);
+		for (uint8_t i = 0; i < 2; i++)
+		{
+			Send_Servo_Angle_Limit(inner_lf_rb[i], 0x0146, 0x02EB);  // pos 1FF + (1023/300pos/vinkl*(-45grader eller + 60 grader)= 0x0166,0x02CB
+			_delay_ms(1);
+			Send_Servo_Angle_Limit(inner_middle[i], 0x017F, 0x027F); // pos 1FF + (1023/300pos/vinkl*(-15grader eller + 15 grader)= 0x01BB,0x0243
+			_delay_ms(1);
+			Send_Servo_Angle_Limit(inner_rf_lb[i], 0x0111, 0x02B8); // pos 1FF + (1023/300pos/vinkl*(-60grader eller + 45 grader)= 0x0131,0x0298
+			_delay_ms(1);
+		}
 	}
-		
+	
+	else //Annars antas mode == 'r', dvs "regular mode".
+	{
+		for (uint8_t i = 0; i < 2; i++)
+		{
+			Send_Servo_Angle_Limit(inner_lf_rb[i], 0x0166, 0x02CB);  // pos 1FF + (1023/300pos/vinkl*(-45grader eller + 60 grader)= 0x0166,0x02CB
+			_delay_ms(1);
+			Send_Servo_Angle_Limit(inner_middle[i], 0x019F, 0x025F); // pos 1FF + (1023/300pos/vinkl*(-15grader eller + 15 grader)= 0x01BB,0x0243 -> 0x019F, 0x025F (lite marginal)
+			_delay_ms(1);
+			Send_Servo_Angle_Limit(inner_rf_lb[i], 0x0131, 0x0298); // pos 1FF + (1023/300pos/vinkl*(-60grader eller + 45 grader)= 0x0131,0x0298
+			_delay_ms(1);
+		}
+	}
 }
-
 
 void Configure_Servos_No_Response(void)
 {

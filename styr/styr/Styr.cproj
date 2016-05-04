@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
@@ -47,7 +47,7 @@
         <InterfaceName>JTAG</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
-      <ToolNumber>J41800004465</ToolNumber>
+      <ToolNumber>J41800004589</ToolNumber>
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
     <avrtoolinterface>JTAG</avrtoolinterface>
@@ -111,6 +111,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="gammal_testmain.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="over_hinder.h">
       <SubType>compile</SubType>
     </Compile>
@@ -160,9 +163,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="test.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

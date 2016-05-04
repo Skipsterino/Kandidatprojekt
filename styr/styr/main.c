@@ -1,4 +1,4 @@
-/*
+/* 
 * testloop.c
 *
 * Created: 4/15/2016 4:17:57 PM
@@ -53,7 +53,7 @@ int main(void)
 {
 	memset(lastPacket, 0, sizeof(lastPacket));
 	
-	cm = MANUAL; //Aktuellt styrläge hos roboten
+	cm = RACE; //Aktuellt styrläge hos roboten
 	ROBOT_STATE = CORRIDOR; //Default-tillstånd hos roboten
 	
 	//Defaultvärden
@@ -65,19 +65,20 @@ int main(void)
 	delta_h = 0.4;
 	
 	//Defaultvärden för state_machine
-	Kp = 0.003;
-	Kd = 0.250;
-	climbed_up = false;
-	climbed_down = false;
+	Kp = 0.01;
+	Kd = 0.55;
+	on_top_of_obstacle = false;
 	trust_sensors = true;
 	
 	Init();
+	
+	//init_fuck();
 	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
 	Configure_Servos_Delaytime();
 	Configure_Servos_LED();
 	Configure_Servos_No_Response();
-	Configure_Servos_Angle_Limit();
+	Configure_Servos_Angle_Limit('r');
 	Configure_Servos_Max_Torque();
 	
 	//
@@ -90,18 +91,7 @@ int main(void)
 	Send_Outer_P2_Velocity(0x0010);//
 	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!	
-	
 
-	//_delay_ms(2000);
-	//for(int i =1; i<19; ++i)
-	//{
-			//temp[i-1] = Get_Servo_Temp(i);
-	//
-	//}
-	//while(1)
-	//{
-		//
-	//}
 	//_delay_ms(100);
 	////Send_Leg3_Kar(22,0,0);
 	////_delay_ms(1);
@@ -134,13 +124,13 @@ int main(void)
 	//Send_Servo_Position(17,0x01FF+0xA0);
 	//Send_Servo_Position(18,0x01FF-0xA0);
 	//
-	//
 	//while(1)
 	//{
 	//}
+	
 	unsigned char first_kom_byte;
 	
-	Walk_Half_Cycle(0, 0.01,height);	//Ställ in default-höjd
+	Walk_Half_Cycle(0, 0.01,height); //Ställ in default-höjd
 
 	while(1)
 	{
@@ -192,7 +182,7 @@ int main(void)
 			case RACE:
 				if ((PIND & (1 << PIND3)) == 0) //Har knapp tryckts ned?
 				{
-					_delay_ms(2000);
+					_delay_ms(1000);
 					cm = AUTO;
 				}
 				break;

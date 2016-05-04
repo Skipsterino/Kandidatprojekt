@@ -13,7 +13,8 @@ void calculate_Yaw()
 	{
 		case INTO_HIGH_OBSTACLE:
 		case CRAWLING_UNDER_HIGH_OBSTACLE:
-		case INTO_LOW_OBSTACLE:
+		case PREPARE_CLIMBING_DOWN:
+		case PREPARE_CLIMBING_UP:
 		case LOW_OBSTACLE:
 		{
 			Yaw = (IR_Yaw_right + IR_Yaw_left)/2;
@@ -78,7 +79,8 @@ void calculate_p_part()
 	{
 		case INTO_HIGH_OBSTACLE:
 		case CRAWLING_UNDER_HIGH_OBSTACLE:
-		case INTO_LOW_OBSTACLE:
+		case PREPARE_CLIMBING_UP:
+		case PREPARE_CLIMBING_DOWN:
 		case LOW_OBSTACLE:
 		case CORRIDOR:
 		{
@@ -148,15 +150,15 @@ void update_state()
 			else if (((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			|| ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE)))
 			{
-				ROBOT_STATE = OUT_OF_CORRIDOR_LEFT_WALL;
 				cycle_count = 0;
+				ROBOT_STATE = OUT_OF_CORRIDOR_LEFT_WALL;
 			}
 			
 			else if (((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
 			|| ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE)))
 			{
-				ROBOT_STATE = OUT_OF_CORRIDOR_RIGHT_WALL;
 				cycle_count = 0;
+				ROBOT_STATE = OUT_OF_CORRIDOR_RIGHT_WALL;
 			}
 			
 			else if (((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
@@ -170,14 +172,13 @@ void update_state()
 			else if ((US < US_HIGH_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))
 			{
 				ROBOT_STATE = INTO_HIGH_OBSTACLE;
-				break;
 			}
 			
-			//else if ((IR_1 < LOW_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))
-			//{
-			//ROBOT_STATE = INTO_LOW_OBSTACLE;
-			//break;
-			//}
+			else if ((IR_1 < PREPARE_CLIMBING_UP_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))
+			{
+				cycle_count = 0;
+				ROBOT_STATE = PREPARE_CLIMBING_UP;
+			}
 			
 			break;
 		}
@@ -217,12 +218,14 @@ void update_state()
 			else if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) &&
 			(IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 < FORWARD_DEAD_END_DISTANCE) && (IR_0 > JUNCTION_A_FORWARD_DISTANCE))
 			{
+				cycle_count = 0;
 				ROBOT_STATE = INTO_JUNCTION_A_RIGHT;
 			}
 			
 			else if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) &&
 			(IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_0 < FORWARD_DEAD_END_DISTANCE) && (IR_0 > JUNCTION_A_FORWARD_DISTANCE))
 			{
+				cycle_count = 0;
 				ROBOT_STATE = INTO_JUNCTION_A_LEFT;
 			}
 
@@ -243,7 +246,7 @@ void update_state()
 		
 		case INTO_JUNCTION_A_RIGHT:
 		{
-			if (cycle_count > 4)
+			if (cycle_count > 3)
 			{
 				ROBOT_STATE = JUNCTION_A_RIGHT;
 			}
@@ -252,7 +255,7 @@ void update_state()
 		
 		case INTO_JUNCTION_A_LEFT:
 		{
-			if (cycle_count > 4)
+			if (cycle_count > 3)
 			{
 				ROBOT_STATE = JUNCTION_A_LEFT;
 			}
@@ -404,51 +407,59 @@ void update_state()
 			break;
 		}
 		
-		//case INTO_LOW_OBSTACLE:
-		//{
-		//if (IR_1 < START_CLIMBING_UP_DISTANCE)
-		//{
-		//ROBOT_STATE = CLIMB_UP;
-		//}
-		//break;
-		//}
+		case PREPARE_CLIMBING_UP:
+		{
+			if (cycle_count > 3) //Testa fram lagom värde så avstånd till hinder blir lagom för klättring
+			{
+				ROBOT_STATE = CLIMBING_UP;
+			}
+			break;
+		}
 		
-		////
-		//case CLIMBING_UP:
-		//{
-		//if (climbed_up)
-		//{
-		//ROBOT_STATE = LOW_OBSTACLE;
-		//}
-		//break;
-		//}
-		//
-		////
-		//case LOW_OBSTACLE:
-		//{
-		//if (IR_1 > START_CLIMBING_DOWN_DISTANCE)
-		//{
-		//ROBOT_STATE = OUT_OF_LOW_OBSTACLE;
-		//}
-		//break;
-		//}
-		//
-		////
-		//case CLIMBING_DOWN:
-		//{
-		//if (climbed_down)
-		//{
-		//ROBOT_STATE = CORRIDOR;
-		//}
-		//break;
-		//}
+		case CLIMBING_UP:
+		{
+			if (on_top_of_obstacle)
+			{
+				ROBOT_STATE = LOW_OBSTACLE;
+			}
+			break;
+		}
+		
+		
+		case LOW_OBSTACLE:
+		{
+			if (IR_1 > PREPARE_CLIMBING_DOWN_DISTANCE)
+			{
+				cycle_count = 0;
+				ROBOT_STATE = PREPARE_CLIMBING_DOWN;
+			}
+			break;
+		}
+		
+		case PREPARE_CLIMBING_DOWN:
+		{
+			if (cycle_count > 2) //Testa fram lagom värde så avstånd till hinder blir lagom för klättring
+			{
+				ROBOT_STATE = CLIMBING_DOWN;
+			}
+			break;
+		}
+		
+		case CLIMBING_DOWN:
+		{
+			if (!on_top_of_obstacle)
+			{
+				ROBOT_STATE = CORRIDOR;
+			}
+			break;
+		}
 		
 		default:
 		break;
 	}
 }
 
-void run_state(float height)
+void run_state()
 {
 	calculate_Yaw();
 	calculate_p_part();
@@ -539,35 +550,49 @@ void run_state(float height)
 		
 		case INTO_HIGH_OBSTACLE:
 		{
-			//Walk_Half_Cycle(4, alpha, height/2); //Testa fram lagom höjd som roboten ska sänkas till
-			Walk_Half_Cycle(2, alpha, height);	// XXXX ENDAST FÖR TEST
+			Walk_Half_Cycle(3, alpha, height/2);
+			break;
 		}
 		
 		case CRAWLING_UNDER_HIGH_OBSTACLE:
 		{
-			//Walk_Half_Cycle(4, alpha, height/2); //Samma höjd som i INTO_HIGH_OBSTACLE
-			Walk_Half_Cycle(2, alpha, height); // XXXX ENDAST FÖR TEST
+			Walk_Half_Cycle(3, alpha, height/2); //Samma höjd som i INTO_HIGH_OBSTACLE
+			break;
 		}
 		
-		//case INTO_LOW_OBSTACLE:
-		//{
-		//Walk_Half_Cycle(1, alpha, 1.5*height); //Testa fram lagom höjd som roboten ska höjas till
-		//}
+		case PREPARE_CLIMBING_UP:
+		{
+			Walk_Half_Cycle(2.6, alpha, 14); //Testa fram lagom höjd och speed
+			++cycle_count;
+			break;
+		}
 		
-		//case CLIMBING_UP:
-		//{
-		////Hårdkodad sekvens av steg för att klättra upp! När hela sekvensen är utförd -> sätt climbed_up till TRUE!
-		//}
+		case CLIMBING_UP:
+		{
+			//Walk_Up_Hard(); //Hårdkodad sekvens för att klättra upp
+			//on_top_of_obstacle = true;
+			break;
+		}
 		
-		//case LOW_OBSTACLE:
-		//{
-		//Walk_Half_Cycle(1, alpha, height/2); //Troligtvis ganska låg höjd här eftersom roboten inte ska luta vid gång över hindret
-		//}
+		case LOW_OBSTACLE:
+		{
+			Walk_Half_Cycle(2, alpha, 7.7);
+			break;
+		}
 		
-		//case CLIMBING_DOWN:
-		//{
-		////Hårdkodad sekvens av steg för att klättra ned! När hela sekvensen är utförd -> sätt climbed_down till TRUE!
-		//}
+		case PREPARE_CLIMBING_DOWN:
+		{
+			Walk_Half_Cycle(1, alpha, 7.7); //Samma som i LOW_OBSTACLE
+			++cycle_count;
+			break;
+		}
+		
+		case CLIMBING_DOWN:
+		{
+			Walk_Down_Hard();
+			on_top_of_obstacle = false;
+			break;
+		}
 		
 		default:
 		break;
