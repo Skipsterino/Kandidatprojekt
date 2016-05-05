@@ -88,7 +88,7 @@ float IMU_Yaw_start; /**< The IMU's start Yaw angle when entering turns and junc
 bool on_top_of_obstacle; /**< true -> the robot has climbed up on top of a low obstacle. */
 bool trust_sensors; /**< false -> for some reason, we don't trust the current sensor data. */
 uint8_t rotation_count; /**< Counter that keeps track of rotation in a turn or junction. */
-uint8_t cycle_count;
+uint8_t cycle_count; /**< Counter that keeps track of the number of cycles. Is used in some, but not all, states. */
 
 float Yaw, Yaw_rad, p_part, Kp, Kd, alpha; /**< Angles and parameters for motion control. */
 float IR_0, IR_1, IR_2, IR_3, IR_4, IR_5, IR_6, US, IR_Yaw_left, IR_Yaw_right, IMU_Yaw, Yaw, Pitch, Roll; /**< Sensor values. */

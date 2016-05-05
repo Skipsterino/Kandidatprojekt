@@ -1,15 +1,14 @@
-﻿/*
- * over_hinder.h
- *
- * Created: 4/18/2016 1:57:34 PM
- *  Author: chrma018
- */ 
-
+﻿/**
+* @file over_hinder.h
+* @author Christoffer, Erik
+* @date 5 may 2016
+* @brief Climbing up/down
+*
+* Functions for climbing onto and down from obstacles of height approx. eq. to 6,5 cm.
+*/ 
 
 #ifndef OVER_HINDER_H_
 #define OVER_HINDER_H_
-
-
 
 #include "servo_UART.h"
 #include "gangstilar.h"
@@ -17,7 +16,6 @@
 #include <util/delay.h>
 //unsigned int load;
 uint8_t number_of_steps;
-
 
 void Probe_Walk(void);
 void Probe_Height_Up(void); 
@@ -41,6 +39,5 @@ void Fourth_Leg(char direction);
 void Second_Body_Adjust(void);
 void Fifth_Leg(char direction);
 void Sixth_Leg(char direction);
-
 
 #endif /* OVER_HINDER_H_ */
