@@ -2,7 +2,7 @@
 * @file servo_UART.h
 * @author Christoffer
 * @date 25 apr 2016
-* @brief Servo kommunication 
+* @brief Servo communication 
 *
 * Functions which sends different messages to the servos via UART.  
 *
@@ -21,7 +21,6 @@
 #include <util/delay.h>
 
 #include "structs.h"
-
 
 void Configure_Servos_Max_Torque(void);
 
@@ -52,7 +51,6 @@ unsigned char UART_Receive(void);
 * @return The checksum, which is the final byte in a transmitt. 
 */
 unsigned char checksum_calc(unsigned char param[], uint8_t num_of_par);
-
 
 /**
 * @brief Configures the servos response delaytime
@@ -102,7 +100,6 @@ unsigned char Get_Servo_Temp(unsigned char ID);
 
 //unsigned char[] Receive_Servo_Statuspackage(uint8_t size); FUNKAR EJ TY KAN EJ RETURNERA STRUCT
 //void Check_Servo_Temp(unsigned char ID)
-
 
 /**
 * @brief Sends a message to the servos
