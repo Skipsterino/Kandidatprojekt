@@ -192,13 +192,15 @@ void update_state()
 		case OUT_OF_CORRIDOR_LEFT_WALL:
 		case OUT_OF_CORRIDOR_RIGHT_WALL:
 		{
-			if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 < SHORT_TURN_DISTANCE))
+			if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 < 70))
 			{
+				cycle_count = 0;
 				ROBOT_STATE = TURN_RIGHT;
 			}
 			
-			else if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_0 < SHORT_TURN_DISTANCE))
+			else if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_0 < 70))
 			{
+				cycle_count = 0;
 				ROBOT_STATE = TURN_LEFT;
 			}
 			
@@ -286,7 +288,12 @@ void update_state()
 		
 		case TURN_RIGHT:
 		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE))
+			//if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE))
+			//{
+				//ROBOT_STATE = OUT_OF_TURN_RIGHT;
+			//}
+			
+			if(cycle_count > 3)
 			{
 				ROBOT_STATE = OUT_OF_TURN_RIGHT;
 			}
@@ -296,7 +303,12 @@ void update_state()
 		
 		case TURN_LEFT:
 		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
+			//if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
+			//{
+				//ROBOT_STATE = OUT_OF_TURN_LEFT;
+			//}
+			
+			if(cycle_count > 3)
 			{
 				ROBOT_STATE = OUT_OF_TURN_LEFT;
 			}
@@ -535,7 +547,7 @@ void run_state()
 		
 		case JUNCTION_C_RIGHT:
 		case JUNCTION_A_RIGHT:
-		case TURN_RIGHT:
+		//case TURN_RIGHT:
 		{
 			Walk_Half_Cycle(0, 0.2, height);
 			break;
@@ -544,9 +556,23 @@ void run_state()
 		case DEAD_END:
 		case JUNCTION_C_LEFT:
 		case JUNCTION_A_LEFT:
-		case TURN_LEFT:
+		//case TURN_LEFT:
 		{
 			Walk_Half_Cycle(0, -0.2, height);
+			break;
+		}
+		
+		case TURN_RIGHT:
+		{
+			Walk_Half_Cycle(4, 0.2, height);
+			++cycle_count;
+			break;
+		}
+		
+		case TURN_LEFT:
+		{
+			Walk_Half_Cycle(4, -0.2, height);
+			++cycle_count;
 			break;
 		}
 		
