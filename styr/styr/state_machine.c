@@ -201,6 +201,7 @@ void update_state()
 			
 			else if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_0 < SHORT_TURN_DISTANCE))
 			{
+
 				ROBOT_STATE = TURN_LEFT;
 			}
 			
@@ -515,9 +516,15 @@ void run_state()
 		
 		case OUT_OF_JUNCTION_A_RIGHT:
 		case OUT_OF_JUNCTION_A_LEFT:
-		case OUT_OF_CORRIDOR_NO_WALL:
+		//case OUT_OF_CORRIDOR_NO_WALL:
 		{
 			Walk_Half_Cycle(4, 0.01, height);	// XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
+			break;
+		}
+		
+		case OUT_OF_CORRIDOR_NO_WALL:
+		{
+			Walk_Half_Cycle(4, 0.01, 0.8*height);		// Sänk höjden så att junction_C kan identifieras även om högt hinder är placerat precis intill
 			break;
 		}
 		
