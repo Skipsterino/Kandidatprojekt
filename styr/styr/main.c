@@ -130,7 +130,7 @@ int main(void)
 	
 	unsigned char first_kom_byte;
 	
-	Walk_Half_Cycle(0, 0.01,height); //Ställ in default-höjd
+	Walk_Half_Cycle(1, 0.01, height); //Ställ in default-höjd
 
 	while(1)
 	{
@@ -175,6 +175,7 @@ int main(void)
 				break;
 			
 			case AUTO: //Autonomt läge
+				height = 11;
 				update_state();
 				run_state();
 				break;
