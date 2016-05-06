@@ -24,7 +24,7 @@
 * Enum that contains the different possible states that the robot can be in.
 */
 typedef enum {
-	STOP = 31,		// XXX Byt nummer !
+	STOP = 1,
 	DEAD_END = 2,
 	CORRIDOR = 3,
 	
@@ -38,29 +38,29 @@ typedef enum {
 	PREPARE_CLIMBING_UP = 9,
 	CLIMBING_UP = 10,
 	LOW_OBSTACLE = 11,
-	PREPARE_CLIMBING_DOWN = 1,		// XXXX BYT NUMMER!
-	CLIMBING_DOWN = 12,
+	PREPARE_CLIMBING_DOWN = 12,	
+	CLIMBING_DOWN = 13,
 	
-	INTO_JUNCTION_A_RIGHT = 13,
-	INTO_JUNCTION_A_LEFT = 14,
+	INTO_JUNCTION_A_RIGHT = 14,
+	INTO_JUNCTION_A_LEFT = 15,
 	
-	TURN_RIGHT = 15,
-	TURN_LEFT = 16,
-	JUNCTION_A_RIGHT = 17,
-	JUNCTION_A_LEFT = 18,
-	JUNCTION_B_RIGHT = 19,
-	JUNCTION_B_LEFT = 20,
-	JUNCTION_C_RIGHT = 21,
-	JUNCTION_C_LEFT = 22,
-	END_OF_COURSE = 23,
+	TURN_RIGHT = 16,
+	TURN_LEFT = 17,
+	JUNCTION_A_RIGHT = 18,
+	JUNCTION_A_LEFT = 19,
+	JUNCTION_B_RIGHT = 20,
+	JUNCTION_B_LEFT = 21,
+	JUNCTION_C_RIGHT = 22,
+	JUNCTION_C_LEFT = 23,
+	END_OF_COURSE = 24,
 	
-	OUT_OF_TURN_RIGHT = 24,
-	OUT_OF_TURN_LEFT = 25,
-	OUT_OF_JUNCTION_A = 26,
-	OUT_OF_JUNCTION_A_RIGHT = 27,
-	OUT_OF_JUNCTION_A_LEFT = 28,
-	OUT_OF_JUNCTION_C_RIGHT = 29,
-	OUT_OF_JUNCTION_C_LEFT = 30,
+	OUT_OF_TURN_RIGHT = 25,
+	OUT_OF_TURN_LEFT = 26,
+	OUT_OF_JUNCTION_A = 27,
+	OUT_OF_JUNCTION_A_RIGHT = 28,
+	OUT_OF_JUNCTION_A_LEFT = 29,
+	OUT_OF_JUNCTION_C_RIGHT = 30,
+	OUT_OF_JUNCTION_C_LEFT = 31,
 	JUNCTION_D_STRAIGHT = 32,
 	JUNCTION_D_RIGHT = 33,
 	JUNCTION_D_LEFT = 34,
@@ -84,7 +84,7 @@ typedef enum {
 //#define LOW_OBSTACLE_DISTANCE 40		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
 #define PREPARE_CLIMBING_UP_DISTANCE 30	/**< Distance for preparing climbing onto low obstacle (if IR_1 is less than this). */
 #define PREPARE_CLIMBING_DOWN_DISTANCE 40	/**< Distance for preparing climbing down from low obstacle (if IR_1 is greater than this). */
-#define US_HIGH_OBSTACLE_DISTANCE 30	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
+#define US_HIGH_OBSTACLE_DISTANCE 20	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
 #define IR_HIGH_OBSTACLE_DISTANCE 60	/**< Distance for determining whether high obstacle or not (IR sensor). */
 #define NO_WALL_DISTANCE 120				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
 #define DEAD_END_DISTANCE 40			/**< Distance to wall for turning in a dead end (which we shouldn't have entered). */

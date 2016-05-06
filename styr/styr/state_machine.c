@@ -21,6 +21,7 @@ void calculate_Yaw()
 			break;
 		}
 		
+		//case CORRIDOR_ONE_UL_HIT:
 		case CORRIDOR:
 		{
 			if ((fabs(fabs(IR_Yaw_right) - fabs(IR_Yaw_left)) > 10)
@@ -84,6 +85,7 @@ void calculate_p_part()
 		case PREPARE_CLIMBING_UP:
 		case PREPARE_CLIMBING_DOWN:
 		case LOW_OBSTACLE:
+		//case CORRIDOR_ONE_UL_HIT:
 		case CORRIDOR:
 		{
 			p_part = IR_3 - IR_6;
@@ -186,7 +188,7 @@ void update_state()
 				ROBOT_STATE = INTO_HIGH_OBSTACLE;
 			}
 			
-			else if ((IR_1 < PREPARE_CLIMBING_UP_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))
+			else if ((IR_1 < PREPARE_CLIMBING_UP_DISTANCE) && (IR_0 > NO_WALL_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			{
 				cycle_count = 0;
 				ROBOT_STATE = PREPARE_CLIMBING_UP;
@@ -194,6 +196,15 @@ void update_state()
 			
 			break;
 		}
+		
+		//case CORRIDOR_ONE_UL_HIT:
+		//{
+			//if ((US < US_HIGH_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
+			//{
+				//ROBOT_STATE = INTO_HIGH_OBSTACLE;
+			//}
+			//break;
+		//}
 		
 		case END_OF_COURSE:
 		case STOP:
@@ -312,7 +323,7 @@ void update_state()
 		
 		case NO_WALL:
 		{
-			if (cycle_count > 2)
+			if (cycle_count > 3)
 			{
 				ROBOT_STATE = DETERMINE_JUNCTION;
 			}
@@ -362,7 +373,7 @@ void update_state()
 		
 		case JUNCTION_D_RIGHT: //
 		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE))
+			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE))
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_D_RIGHT;
 			}
@@ -372,7 +383,7 @@ void update_state()
 		
 		case JUNCTION_D_LEFT: //
 		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
+			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
 			{
 				ROBOT_STATE = OUT_OF_JUNCTION_D_LEFT;
 			}
@@ -380,9 +391,9 @@ void update_state()
 			break;
 		}
 		
-		case OUT_OF_JUNCTION_D_LEFT: //
-		case OUT_OF_JUNCTION_D_RIGHT: //
-		case JUNCTION_D_STRAIGHT: //
+		case OUT_OF_JUNCTION_D_LEFT: 
+		case OUT_OF_JUNCTION_D_RIGHT: 
+		case JUNCTION_D_STRAIGHT: 
 		{
 			if (((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			|| ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
@@ -400,7 +411,7 @@ void update_state()
 			break;
 		}
 		
-		case OUT_OF_JUNCTION_D: //
+		case OUT_OF_JUNCTION_D: 
 		{
 			if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			{
@@ -642,7 +653,6 @@ void run_state()
 		
 		case OUT_OF_JUNCTION_A_RIGHT:
 		case OUT_OF_JUNCTION_A_LEFT:
-		//case OUT_OF_CORRIDOR_NO_WALL:
 		{
 			Walk_Half_Cycle(4, 0.01, height);	// XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
 			break;
@@ -657,7 +667,7 @@ void run_state()
 		case INTO_JUNCTION_A_LEFT:
 		case INTO_JUNCTION_A_RIGHT:
 		{
-			Walk_Half_Cycle(3, alpha, height);
+			Walk_Half_Cycle(4, alpha, height);
 			++cycle_count;
 			break;
 		}
@@ -673,7 +683,7 @@ void run_state()
 		
 		case DETERMINE_JUNCTION:
 		{
-			
+			break;
 		}
 		
 		case JUNCTION_D_RIGHT:
@@ -692,7 +702,7 @@ void run_state()
 		case OUT_OF_JUNCTION_D_RIGHT:
 		case JUNCTION_D_STRAIGHT:
 		{
-			Walk_Half_Cycle(3, 0.01, height);	// XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
+			Walk_Half_Cycle(4, 0.01, height);	// XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
 			break;
 		}
 		
@@ -700,12 +710,12 @@ void run_state()
 		{
 			if(trust_sensors)
 			{
-				Walk_Half_Cycle(3, alpha, height);
+				Walk_Half_Cycle(4, alpha, height);
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(3, 0.01, height);  // XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
+				Walk_Half_Cycle(4, 0.01, height);  // XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
 				trust_sensors = true;			// Default så litar vi på sensorerna
 			}
 			
