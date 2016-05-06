@@ -94,7 +94,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Servo kommunication.  
+<p>Servo communication.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;avr/io.h&gt;</code><br />
 <code>#include &lt;avr/interrupt.h&gt;</code><br />
@@ -105,14 +105,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a43bafb28b29491ec7f871319b5a3b2f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43bafb28b29491ec7f871319b5a3b2f8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>F_CPU</b>&#160;&#160;&#160;16000000UL</td></tr>
+<tr class="memitem:a43bafb28b29491ec7f871319b5a3b2f8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a43bafb28b29491ec7f871319b5a3b2f8">F_CPU</a>&#160;&#160;&#160;16000000UL</td></tr>
 <tr class="separator:a43bafb28b29491ec7f871319b5a3b2f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2f788735cafd686c547c9340d905c3ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f788735cafd686c547c9340d905c3ad"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Configure_Servos_Max_Torque</b> (void)</td></tr>
+<tr class="memitem:a2f788735cafd686c547c9340d905c3ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a2f788735cafd686c547c9340d905c3ad">Configure_Servos_Max_Torque</a> (void)</td></tr>
 <tr class="separator:a2f788735cafd686c547c9340d905c3ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af34dbb08e8f6cfc1a58d9b7f2b81f455"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#af34dbb08e8f6cfc1a58d9b7f2b81f455">UART_Transmit</a> (unsigned char data)</td></tr>
 <tr class="memdesc:af34dbb08e8f6cfc1a58d9b7f2b81f455"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits one byte on the USART.  <a href="#af34dbb08e8f6cfc1a58d9b7f2b81f455">More...</a><br /></td></tr>
@@ -123,25 +121,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Configure_Servos_Max_
 <tr class="memitem:a45e02356d032e2069888899bf1a987bf"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a45e02356d032e2069888899bf1a987bf">checksum_calc</a> (unsigned char param[], uint8_t num_of_par)</td></tr>
 <tr class="memdesc:a45e02356d032e2069888899bf1a987bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the checksum.  <a href="#a45e02356d032e2069888899bf1a987bf">More...</a><br /></td></tr>
 <tr class="separator:a45e02356d032e2069888899bf1a987bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7522eb3c86cfa713aade9cbe082bcbba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7522eb3c86cfa713aade9cbe082bcbba"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a7522eb3c86cfa713aade9cbe082bcbba">Configure_Servos_Delaytime</a> (void)</td></tr>
-<tr class="memdesc:a7522eb3c86cfa713aade9cbe082bcbba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the servos response delaytime. <br /></td></tr>
+<tr class="memitem:a7522eb3c86cfa713aade9cbe082bcbba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a7522eb3c86cfa713aade9cbe082bcbba">Configure_Servos_Delaytime</a> (void)</td></tr>
+<tr class="memdesc:a7522eb3c86cfa713aade9cbe082bcbba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the servos response delaytime.  <a href="#a7522eb3c86cfa713aade9cbe082bcbba">More...</a><br /></td></tr>
 <tr class="separator:a7522eb3c86cfa713aade9cbe082bcbba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7bfd5ff29686df194ec9f4e310cf2e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#ae7bfd5ff29686df194ec9f4e310cf2e4">Configure_Servos_LED</a> (void)</td></tr>
 <tr class="memdesc:ae7bfd5ff29686df194ec9f4e310cf2e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the servos LED messages.  <a href="#ae7bfd5ff29686df194ec9f4e310cf2e4">More...</a><br /></td></tr>
 <tr class="separator:ae7bfd5ff29686df194ec9f4e310cf2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6bb8d88629b6d2a6c18e2e0d8909574"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#aa6bb8d88629b6d2a6c18e2e0d8909574">Configure_Servos_Angle_Limit</a> (void)</td></tr>
-<tr class="memdesc:aa6bb8d88629b6d2a6c18e2e0d8909574"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the servos angles limits.  <a href="#aa6bb8d88629b6d2a6c18e2e0d8909574">More...</a><br /></td></tr>
-<tr class="separator:aa6bb8d88629b6d2a6c18e2e0d8909574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac61953255036321acac8c2e20b76d692"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#ac61953255036321acac8c2e20b76d692">Configure_Servos_Angle_Limit</a> (char mode)</td></tr>
+<tr class="memdesc:ac61953255036321acac8c2e20b76d692"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the servo angle limits.  <a href="#ac61953255036321acac8c2e20b76d692">More...</a><br /></td></tr>
+<tr class="separator:ac61953255036321acac8c2e20b76d692"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17e89f3d8b4abe3abe352ffba8b684f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a17e89f3d8b4abe3abe352ffba8b684f1">Configure_Servos_No_Response</a> (void)</td></tr>
-<tr class="memdesc:a17e89f3d8b4abe3abe352ffba8b684f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the servos responses.  <a href="#a17e89f3d8b4abe3abe352ffba8b684f1">More...</a><br /></td></tr>
+<tr class="memdesc:a17e89f3d8b4abe3abe352ffba8b684f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the servo responses.  <a href="#a17e89f3d8b4abe3abe352ffba8b684f1">More...</a><br /></td></tr>
 <tr class="separator:a17e89f3d8b4abe3abe352ffba8b684f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1aae94381111766cdccb93eae5b5c382"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a1aae94381111766cdccb93eae5b5c382">Get_Servo_Load</a> (unsigned char ID)</td></tr>
 <tr class="memdesc:a1aae94381111766cdccb93eae5b5c382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current load on a specific servo.  <a href="#a1aae94381111766cdccb93eae5b5c382">More...</a><br /></td></tr>
 <tr class="separator:a1aae94381111766cdccb93eae5b5c382"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70031bcf598a9d8568d8e344d9fc170b"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a70031bcf598a9d8568d8e344d9fc170b">Get_Servo_Position</a> (unsigned char ID)</td></tr>
-<tr class="memdesc:a70031bcf598a9d8568d8e344d9fc170b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current position of a specific servo.  <a href="#a70031bcf598a9d8568d8e344d9fc170b">More...</a><br /></td></tr>
-<tr class="separator:a70031bcf598a9d8568d8e344d9fc170b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5990b8542094df57d8fda7c5a3f26bed"><td class="memItemLeft" align="right" valign="top">unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a5990b8542094df57d8fda7c5a3f26bed">Get_Servo_Temp</a> (unsigned char ID)</td></tr>
+<tr class="memdesc:a5990b8542094df57d8fda7c5a3f26bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current temperature of a specific servo.  <a href="#a5990b8542094df57d8fda7c5a3f26bed">More...</a><br /></td></tr>
+<tr class="separator:a5990b8542094df57d8fda7c5a3f26bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ed3a2903977a774d1b174665d50661c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a2ed3a2903977a774d1b174665d50661c">Send_Servo_Message</a> (unsigned char message[], uint8_t num_of_par)</td></tr>
 <tr class="memdesc:a2ed3a2903977a774d1b174665d50661c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a message to the servos.  <a href="#a2ed3a2903977a774d1b174665d50661c">More...</a><br /></td></tr>
 <tr class="separator:a2ed3a2903977a774d1b174665d50661c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -211,48 +208,49 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="serv
 <tr class="memitem:aef28545296037ecc0350638a407a680f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#aef28545296037ecc0350638a407a680f">Send_Servo_Position_And_Velocity</a> (unsigned char ID, unsigned int pos, unsigned int vel)</td></tr>
 <tr class="memdesc:aef28545296037ecc0350638a407a680f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends desired position and velicity to a servo.  <a href="#aef28545296037ecc0350638a407a680f">More...</a><br /></td></tr>
 <tr class="separator:aef28545296037ecc0350638a407a680f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1501df88c7ba1630f81577522ac2bbeb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1501df88c7ba1630f81577522ac2bbeb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg1_Kar_And_Velocity</b> (float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
+<tr class="memitem:a1501df88c7ba1630f81577522ac2bbeb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a1501df88c7ba1630f81577522ac2bbeb">Send_Leg1_Kar_And_Velocity</a> (float <a class="el" href="sensor_8h.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>, float <a class="el" href="sensor_8h.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>, float <a class="el" href="over__hinder_8c.html#af73583b1e980b0aa03f9884812e9fd4d">z</a>, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
 <tr class="separator:a1501df88c7ba1630f81577522ac2bbeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ab1230fdabe0bcf16d18c331c75057e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ab1230fdabe0bcf16d18c331c75057e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg2_Kar_And_Velocity</b> (float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
+<tr class="memitem:a7ab1230fdabe0bcf16d18c331c75057e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a7ab1230fdabe0bcf16d18c331c75057e">Send_Leg2_Kar_And_Velocity</a> (float <a class="el" href="sensor_8h.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>, float <a class="el" href="sensor_8h.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>, float <a class="el" href="over__hinder_8c.html#af73583b1e980b0aa03f9884812e9fd4d">z</a>, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
 <tr class="separator:a7ab1230fdabe0bcf16d18c331c75057e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15260e1c5159c1047ca8ec867a8fc56c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15260e1c5159c1047ca8ec867a8fc56c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg3_Kar_And_Velocity</b> (float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
+<tr class="memitem:a15260e1c5159c1047ca8ec867a8fc56c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a15260e1c5159c1047ca8ec867a8fc56c">Send_Leg3_Kar_And_Velocity</a> (float <a class="el" href="sensor_8h.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>, float <a class="el" href="sensor_8h.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>, float <a class="el" href="over__hinder_8c.html#af73583b1e980b0aa03f9884812e9fd4d">z</a>, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
 <tr class="separator:a15260e1c5159c1047ca8ec867a8fc56c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1cff60ca27b892abf86b8a55b6b4ccd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1cff60ca27b892abf86b8a55b6b4ccd"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg4_Kar_And_Velocity</b> (float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
+<tr class="memitem:ae1cff60ca27b892abf86b8a55b6b4ccd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#ae1cff60ca27b892abf86b8a55b6b4ccd">Send_Leg4_Kar_And_Velocity</a> (float <a class="el" href="sensor_8h.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>, float <a class="el" href="sensor_8h.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>, float <a class="el" href="over__hinder_8c.html#af73583b1e980b0aa03f9884812e9fd4d">z</a>, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
 <tr class="separator:ae1cff60ca27b892abf86b8a55b6b4ccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7cd98c6b9c0d2127feb9dfece072b3b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7cd98c6b9c0d2127feb9dfece072b3b0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg5_Kar_And_Velocity</b> (float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
+<tr class="memitem:a7cd98c6b9c0d2127feb9dfece072b3b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a7cd98c6b9c0d2127feb9dfece072b3b0">Send_Leg5_Kar_And_Velocity</a> (float <a class="el" href="sensor_8h.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>, float <a class="el" href="sensor_8h.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>, float <a class="el" href="over__hinder_8c.html#af73583b1e980b0aa03f9884812e9fd4d">z</a>, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
 <tr class="separator:a7cd98c6b9c0d2127feb9dfece072b3b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cd710e0714336201bd84b46a1e1877d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8cd710e0714336201bd84b46a1e1877d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Kar_And_Velocity</b> (float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
+<tr class="memitem:a8cd710e0714336201bd84b46a1e1877d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a8cd710e0714336201bd84b46a1e1877d">Send_Leg6_Kar_And_Velocity</a> (float <a class="el" href="sensor_8h.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>, float <a class="el" href="sensor_8h.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>, float <a class="el" href="over__hinder_8c.html#af73583b1e980b0aa03f9884812e9fd4d">z</a>, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
 <tr class="separator:a8cd710e0714336201bd84b46a1e1877d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7783d05fa4457ed256d04d0eac4713cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7783d05fa4457ed256d04d0eac4713cc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg1_Cyl_And_Velocity</b> (float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
+<tr class="memitem:a7783d05fa4457ed256d04d0eac4713cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a7783d05fa4457ed256d04d0eac4713cc">Send_Leg1_Cyl_And_Velocity</a> (float r, float th, float <a class="el" href="over__hinder_8c.html#af73583b1e980b0aa03f9884812e9fd4d">z</a>, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
 <tr class="separator:a7783d05fa4457ed256d04d0eac4713cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16c2e98e0befea13b10d322b5a13c24a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16c2e98e0befea13b10d322b5a13c24a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg2_Cyl_And_Velocity</b> (float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
+<tr class="memitem:a16c2e98e0befea13b10d322b5a13c24a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a16c2e98e0befea13b10d322b5a13c24a">Send_Leg2_Cyl_And_Velocity</a> (float r, float th, float <a class="el" href="over__hinder_8c.html#af73583b1e980b0aa03f9884812e9fd4d">z</a>, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
 <tr class="separator:a16c2e98e0befea13b10d322b5a13c24a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f98bedbfd8c6462fbc873fd56ad6094"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f98bedbfd8c6462fbc873fd56ad6094"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg3_Cyl_And_Velocity</b> (float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
+<tr class="memitem:a3f98bedbfd8c6462fbc873fd56ad6094"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a3f98bedbfd8c6462fbc873fd56ad6094">Send_Leg3_Cyl_And_Velocity</a> (float r, float th, float <a class="el" href="over__hinder_8c.html#af73583b1e980b0aa03f9884812e9fd4d">z</a>, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
 <tr class="separator:a3f98bedbfd8c6462fbc873fd56ad6094"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cddf44c6a11c7907911d03af1e3f127"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6cddf44c6a11c7907911d03af1e3f127"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg4_Cyl_And_Velocity</b> (float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
+<tr class="memitem:a6cddf44c6a11c7907911d03af1e3f127"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a6cddf44c6a11c7907911d03af1e3f127">Send_Leg4_Cyl_And_Velocity</a> (float r, float th, float <a class="el" href="over__hinder_8c.html#af73583b1e980b0aa03f9884812e9fd4d">z</a>, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
 <tr class="separator:a6cddf44c6a11c7907911d03af1e3f127"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aacc5d4be18de766587abbb83098916a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aacc5d4be18de766587abbb83098916a3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg5_Cyl_And_Velocity</b> (float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
+<tr class="memitem:aacc5d4be18de766587abbb83098916a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#aacc5d4be18de766587abbb83098916a3">Send_Leg5_Cyl_And_Velocity</a> (float r, float th, float <a class="el" href="over__hinder_8c.html#af73583b1e980b0aa03f9884812e9fd4d">z</a>, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
 <tr class="separator:aacc5d4be18de766587abbb83098916a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f6d26397b69e462327480969aa40d1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f6d26397b69e462327480969aa40d1b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Velocity</b> (float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
+<tr class="memitem:a3f6d26397b69e462327480969aa40d1b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo___u_a_r_t_8h.html#a3f6d26397b69e462327480969aa40d1b">Send_Leg6_Cyl_And_Velocity</a> (float r, float th, float <a class="el" href="over__hinder_8c.html#af73583b1e980b0aa03f9884812e9fd4d">z</a>, unsigned int inner, unsigned int middle, unsigned int outer)</td></tr>
 <tr class="separator:a3f6d26397b69e462327480969aa40d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Servo kommunication. </p>
+<div class="textblock"><p>Servo communication. </p>
 <dl class="section author"><dt>Author</dt><dd>Christoffer </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>25 apr 2016 Functions which sends different messages to the servos via UART. </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a43bafb28b29491ec7f871319b5a3b2f8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define F_CPU&#160;&#160;&#160;16000000UL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a45e02356d032e2069888899bf1a987bf"></a>
 <div class="memitem">
 <div class="memproto">
@@ -288,12 +286,37 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
 
 </div>
 </div>
-<a class="anchor" id="aa6bb8d88629b6d2a6c18e2e0d8909574"></a>
+<a class="anchor" id="ac61953255036321acac8c2e20b76d692"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Configure_Servos_Angle_Limit </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>mode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configures the servo angle limits. </p>
+<p>Configures servo angle limitations in different ways for different values of mode. The value 'r' indicates "regular mode", i.e. corridor, turn etc. The value 'c' indicates "climbing mode", i.e. climbing on top of low obstacles. If a servo is told to exceed a limit, it will move to the limit, i.e. as close as possible.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>Indicates which angle limits is to be used. Can take on the values 'r' and 'c'. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a7522eb3c86cfa713aade9cbe082bcbba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Configure_Servos_Delaytime </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -302,8 +325,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
       </table>
 </div><div class="memdoc">
 
-<p>Configures the servos angles limits. </p>
-<p>Configures servo angle limitations. If a servo is told to exceed these limits, it will go as close as possible </p>
+<p>Configures the servos response delaytime. </p>
 
 </div>
 </div>
@@ -326,6 +348,22 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
 
 </div>
 </div>
+<a class="anchor" id="a2f788735cafd686c547c9340d905c3ad"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Configure_Servos_Max_Torque </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a17e89f3d8b4abe3abe352ffba8b684f1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -340,7 +378,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
       </table>
 </div><div class="memdoc">
 
-<p>Configures the servos responses. </p>
+<p>Configures the servo responses. </p>
 <p>Configures servos only to respond when explicitly asked to. </p>
 
 </div>
@@ -364,12 +402,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
 
 </div>
 </div>
-<a class="anchor" id="a70031bcf598a9d8568d8e344d9fc170b"></a>
+<a class="anchor" id="a5990b8542094df57d8fda7c5a3f26bed"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int Get_Servo_Position </td>
+          <td class="memname">unsigned char Get_Servo_Temp </td>
           <td>(</td>
           <td class="paramtype">unsigned char&#160;</td>
           <td class="paramname"><em>ID</em></td><td>)</td>
@@ -378,8 +416,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
       </table>
 </div><div class="memdoc">
 
-<p>Gets the current position of a specific servo. </p>
-<dl class="section return"><dt>Returns</dt><dd>The position as an int. 0x0000 is min 0x03FF i max </dd></dl>
+<p>Gets the current temperature of a specific servo. </p>
+<dl class="section return"><dt>Returns</dt><dd>The temperature as an unsigned char in celsius </dd></dl>
 
 </div>
 </div>
@@ -473,6 +511,56 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
 
 </div>
 </div>
+<a class="anchor" id="a7783d05fa4457ed256d04d0eac4713cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Send_Leg1_Cyl_And_Velocity </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>th</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>middle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="adde8722cd4b494d02bce7a39b14aed52"></a>
 <div class="memitem">
 <div class="memproto">
@@ -512,6 +600,56 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a1501df88c7ba1630f81577522ac2bbeb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Send_Leg1_Kar_And_Velocity </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>middle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -557,6 +695,56 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
 
 </div>
 </div>
+<a class="anchor" id="a16c2e98e0befea13b10d322b5a13c24a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Send_Leg2_Cyl_And_Velocity </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>th</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>middle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a85bfa5d3057fbf4096d5fc8665d717b8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -596,6 +784,56 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a7ab1230fdabe0bcf16d18c331c75057e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Send_Leg2_Kar_And_Velocity </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>middle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -641,6 +879,56 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
 
 </div>
 </div>
+<a class="anchor" id="a3f98bedbfd8c6462fbc873fd56ad6094"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Send_Leg3_Cyl_And_Velocity </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>th</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>middle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a855b410dfcceb0e5f25d57ee17f86932"></a>
 <div class="memitem">
 <div class="memproto">
@@ -680,6 +968,56 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a15260e1c5159c1047ca8ec867a8fc56c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Send_Leg3_Kar_And_Velocity </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>middle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -725,6 +1063,56 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
 
 </div>
 </div>
+<a class="anchor" id="a6cddf44c6a11c7907911d03af1e3f127"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Send_Leg4_Cyl_And_Velocity </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>th</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>middle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="adc36f085a0d265c937fae59651a06703"></a>
 <div class="memitem">
 <div class="memproto">
@@ -764,6 +1152,56 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="ae1cff60ca27b892abf86b8a55b6b4ccd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Send_Leg4_Kar_And_Velocity </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>middle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -809,6 +1247,56 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
 
 </div>
 </div>
+<a class="anchor" id="aacc5d4be18de766587abbb83098916a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Send_Leg5_Cyl_And_Velocity </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>th</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>middle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a0945e0fa1be61238d314e7334bdc9990"></a>
 <div class="memitem">
 <div class="memproto">
@@ -848,6 +1336,56 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a7cd98c6b9c0d2127feb9dfece072b3b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Send_Leg5_Kar_And_Velocity </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>middle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -893,6 +1431,56 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
 
 </div>
 </div>
+<a class="anchor" id="a3f6d26397b69e462327480969aa40d1b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Send_Leg6_Cyl_And_Velocity </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>th</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>middle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a2178defeed6cf9781991514439dd799b"></a>
 <div class="memitem">
 <div class="memproto">
@@ -932,6 +1520,56 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Send_Leg6_Cyl_And_Vel
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a8cd710e0714336201bd84b46a1e1877d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Send_Leg6_Kar_And_Velocity </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>inner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>middle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>outer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

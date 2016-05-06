@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['junction_5fa_5fforward_5fdistance',['JUNCTION_A_FORWARD_DISTANCE',['../state__machine_8h.html#ada224a95ca04ac21b410ef6e23814eea',1,'state_machine.h']]]
+  ['half_5frotation_5fangle',['HALF_ROTATION_ANGLE',['../state__machine_8h.html#a5776a711f0156180fe5efb79c9ffc24f',1,'state_machine.h']]]
 ];

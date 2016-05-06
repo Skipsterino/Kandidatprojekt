@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['sample_5frate',['sample_rate',['../structmotion__int__cache__s.html#a1aa4e026c4d2f691506f2d713a405aea',1,'motion_int_cache_s::sample_rate()'],['../structchip__cfg__s.html#a1aa4e026c4d2f691506f2d713a405aea',1,'chip_cfg_s::sample_rate()']]],
+  ['sensors',['sensors',['../structchip__cfg__s.html#aaa21c01566947e7007476657cb614e3f',1,'chip_cfg_s']]],
+  ['sensors_5fon',['sensors_on',['../structmotion__int__cache__s.html#a90574f8e8515ef8fee3114ba7e0ddc5c',1,'motion_int_cache_s']]],
+  ['servofuck_5fadjust_5fp1',['servofuck_adjust_p1',['../gangstilar_8c.html#a5f38e3685a4eb3714e9e9fe6715ab937',1,'gangstilar.c']]],
+  ['servofuck_5fadjust_5fp2',['servofuck_adjust_p2',['../gangstilar_8c.html#a05b13d88e61cc9130cf9a67fc867c926',1,'gangstilar.c']]],
+  ['sideways_5ffuck',['sideways_fuck',['../gangstilar_8c.html#ae2f8c742d04bca8b1369837e36004d6b',1,'gangstilar.c']]],
+  ['speed',['speed',['../styr_2styr_2main_8c.html#a7f7e4724cf57d59513b39c5ecc81adc8',1,'main.c']]],
+  ['speed_5finner',['speed_inner',['../over__hinder_8c.html#ae104a742861491ef3fa14b9926deb4ff',1,'over_hinder.c']]],
+  ['speed_5fmiddle',['speed_middle',['../over__hinder_8c.html#a37e34fcb133065290754a0c320fa04d9',1,'over_hinder.c']]],
+  ['speed_5fouter',['speed_outer',['../over__hinder_8c.html#a92f49a1710c0649467c996317430aec8',1,'over_hinder.c']]],
+  ['spi_5fdone',['SPI_done',['../sensor_8h.html#a320a1ee237ba550bcdffd131a4198e17',1,'sensor.h']]],
+  ['spi_5foverflow',['SPI_overflow',['../sensor_8h.html#a2c687b5d4d67e6900cd35ec11107a4ee',1,'sensor.h']]],
+  ['spicounter',['SPIcounter',['../_s_p_i__comm_8c.html#a65d46084e88aa717b668dffbbda1bf3b',1,'SPIcounter():&#160;SPI_comm.c'],['../_s_p_i_8c.html#a65d46084e88aa717b668dffbbda1bf3b',1,'SPIcounter():&#160;SPI.c']]],
+  ['spioverflow',['spiOverflow',['../_l_c_d__controller_8h.html#a5462652fe95683f50bcbd6d5fbbc3ae1',1,'LCD_controller.h']]],
+  ['step',['step',['../over__hinder_8c.html#a863c86bdfd96bf9c461846689c2614aa',1,'over_hinder.c']]],
+  ['sum',['sum',['../sensor_8h.html#a2943e5895f5488ed44ed4a86e59dcf1b',1,'sensor.h']]],
+  ['swing_5fl',['swing_l',['../gangstilar_8c.html#a9a74797712c10908dbbc9d01ace4fadd',1,'gangstilar.c']]]
+];

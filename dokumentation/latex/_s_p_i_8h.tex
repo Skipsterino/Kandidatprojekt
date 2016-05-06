@@ -1,0 +1,117 @@
+\hypertarget{_s_p_i_8h}{}\section{styr/styr/\+S\+PI.h File Reference}
+\label{_s_p_i_8h}\index{styr/styr/\+S\+P\+I.\+h@{styr/styr/\+S\+P\+I.\+h}}
+
+
+S\+PI bus interface.  
+
+
+{\ttfamily \#include $<$avr/io.\+h$>$}\\*
+{\ttfamily \#include $<$avr/interrupt.\+h$>$}\\*
+{\ttfamily \#include $<$util/delay.\+h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_s_p_i_8h_a43bafb28b29491ec7f871319b5a3b2f8}{F\+\_\+\+C\+PU}~16000000\+UL
+\item 
+\#define \hyperlink{_s_p_i_8h_a58ac62acddf451691b748c71454e0137}{S\+S\+\_\+sen}~3
+\item 
+\#define \hyperlink{_s_p_i_8h_acbbd0eb471ac972ee5d3bb2563a6c72e}{S\+S\+\_\+kom}~4
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_s_p_i_8h_a49ddfef1b082be9cebd28e4bbebf247d}{S\+P\+I\+\_\+init\+\_\+master} ()
+\begin{DoxyCompactList}\small\item\em Initiation. \end{DoxyCompactList}\item 
+void \hyperlink{_s_p_i_8h_aef55913736b574735fdfca21de557988}{S\+P\+I\+\_\+sen\+\_\+transmit\+\_\+master} ()
+\begin{DoxyCompactList}\small\item\em Master transmit. \end{DoxyCompactList}\item 
+void \hyperlink{_s_p_i_8h_a21ae89e79b07cfb95e2674541cf5ee27}{Set\+\_\+\+S\+S\+\_\+sen\+\_\+kom} (uint8\+\_\+t \hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{to\+Sen}, uint8\+\_\+t \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{to\+Kom})
+\begin{DoxyCompactList}\small\item\em Change slave select. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+volatile unsigned char \hyperlink{_s_p_i_8h_a2963725e5681e7e146da28127b3e09d3}{from\+Sen} \mbox{[}16\mbox{]}
+\item 
+volatile unsigned char \hyperlink{_s_p_i_8h_a4c1a44ecc2e0f0cf45cf9b6c0bc3e645}{from\+Kom} \mbox{[}16\mbox{]}
+\item 
+volatile unsigned char \hyperlink{_s_p_i_8h_ab15ab508531e452eb0768f69f7c588da}{last\+Valid\+Packet} \mbox{[}16\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+S\+PI bus interface. 
+
+S\+PI Driver.
+
+\begin{DoxyAuthor}{Author}
+Joakim 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+25 apr 2016 Defines functions to communicate over S\+PI with the other modules.
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+Christoffer 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+26 apr 2016 Defines communication through the S\+PI bus given a triggered interruppt 
+\end{DoxyDate}
+
+
+\subsection{Macro Definition Documentation}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!F\+\_\+\+C\+PU@{F\+\_\+\+C\+PU}}
+\index{F\+\_\+\+C\+PU@{F\+\_\+\+C\+PU}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\subsubsection[{\texorpdfstring{F\+\_\+\+C\+PU}{F_CPU}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+\_\+\+C\+PU~16000000\+UL}\hypertarget{_s_p_i_8h_a43bafb28b29491ec7f871319b5a3b2f8}{}\label{_s_p_i_8h_a43bafb28b29491ec7f871319b5a3b2f8}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+S\+\_\+kom@{S\+S\+\_\+kom}}
+\index{S\+S\+\_\+kom@{S\+S\+\_\+kom}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\subsubsection[{\texorpdfstring{S\+S\+\_\+kom}{SS_kom}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+S\+\_\+kom~4}\hypertarget{_s_p_i_8h_acbbd0eb471ac972ee5d3bb2563a6c72e}{}\label{_s_p_i_8h_acbbd0eb471ac972ee5d3bb2563a6c72e}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+S\+\_\+sen@{S\+S\+\_\+sen}}
+\index{S\+S\+\_\+sen@{S\+S\+\_\+sen}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\subsubsection[{\texorpdfstring{S\+S\+\_\+sen}{SS_sen}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+S\+\_\+sen~3}\hypertarget{_s_p_i_8h_a58ac62acddf451691b748c71454e0137}{}\label{_s_p_i_8h_a58ac62acddf451691b748c71454e0137}
+
+
+\subsection{Function Documentation}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!Set\+\_\+\+S\+S\+\_\+sen\+\_\+kom@{Set\+\_\+\+S\+S\+\_\+sen\+\_\+kom}}
+\index{Set\+\_\+\+S\+S\+\_\+sen\+\_\+kom@{Set\+\_\+\+S\+S\+\_\+sen\+\_\+kom}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\subsubsection[{\texorpdfstring{Set\+\_\+\+S\+S\+\_\+sen\+\_\+kom(uint8\+\_\+t to\+Sen, uint8\+\_\+t to\+Kom)}{Set_SS_sen_kom(uint8_t toSen, uint8_t toKom)}}]{\setlength{\rightskip}{0pt plus 5cm}void Set\+\_\+\+S\+S\+\_\+sen\+\_\+kom (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{to\+Sen, }
+\item[{uint8\+\_\+t}]{to\+Kom}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_p_i_8h_a21ae89e79b07cfb95e2674541cf5ee27}{}\label{_s_p_i_8h_a21ae89e79b07cfb95e2674541cf5ee27}
+
+
+Change slave select. 
+
+Sets the slave select ports to their respective value given \textquotesingle{}bools\textquotesingle{} of what they should be \index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+init\+\_\+master@{S\+P\+I\+\_\+init\+\_\+master}}
+\index{S\+P\+I\+\_\+init\+\_\+master@{S\+P\+I\+\_\+init\+\_\+master}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\subsubsection[{\texorpdfstring{S\+P\+I\+\_\+init\+\_\+master()}{SPI_init_master()}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+P\+I\+\_\+init\+\_\+master (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_p_i_8h_a49ddfef1b082be9cebd28e4bbebf247d}{}\label{_s_p_i_8h_a49ddfef1b082be9cebd28e4bbebf247d}
+
+
+Initiation. 
+
+Initiates the outputs and S\+PI configuration as a master on the bus \index{S\+P\+I.\+h@{S\+P\+I.\+h}!S\+P\+I\+\_\+sen\+\_\+transmit\+\_\+master@{S\+P\+I\+\_\+sen\+\_\+transmit\+\_\+master}}
+\index{S\+P\+I\+\_\+sen\+\_\+transmit\+\_\+master@{S\+P\+I\+\_\+sen\+\_\+transmit\+\_\+master}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\subsubsection[{\texorpdfstring{S\+P\+I\+\_\+sen\+\_\+transmit\+\_\+master()}{SPI_sen_transmit_master()}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+P\+I\+\_\+sen\+\_\+transmit\+\_\+master (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_p_i_8h_aef55913736b574735fdfca21de557988}{}\label{_s_p_i_8h_aef55913736b574735fdfca21de557988}
+
+
+Master transmit. 
+
+Transmits the first byte to Sensor Module starting the chain of 16 
+
+\subsection{Variable Documentation}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!from\+Kom@{from\+Kom}}
+\index{from\+Kom@{from\+Kom}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\subsubsection[{\texorpdfstring{from\+Kom}{fromKom}}]{\setlength{\rightskip}{0pt plus 5cm}volatile unsigned char from\+Kom\mbox{[}16\mbox{]}}\hypertarget{_s_p_i_8h_a4c1a44ecc2e0f0cf45cf9b6c0bc3e645}{}\label{_s_p_i_8h_a4c1a44ecc2e0f0cf45cf9b6c0bc3e645}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!from\+Sen@{from\+Sen}}
+\index{from\+Sen@{from\+Sen}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\subsubsection[{\texorpdfstring{from\+Sen}{fromSen}}]{\setlength{\rightskip}{0pt plus 5cm}volatile unsigned char from\+Sen\mbox{[}16\mbox{]}}\hypertarget{_s_p_i_8h_a2963725e5681e7e146da28127b3e09d3}{}\label{_s_p_i_8h_a2963725e5681e7e146da28127b3e09d3}
+\index{S\+P\+I.\+h@{S\+P\+I.\+h}!last\+Valid\+Packet@{last\+Valid\+Packet}}
+\index{last\+Valid\+Packet@{last\+Valid\+Packet}!S\+P\+I.\+h@{S\+P\+I.\+h}}
+\subsubsection[{\texorpdfstring{last\+Valid\+Packet}{lastValidPacket}}]{\setlength{\rightskip}{0pt plus 5cm}volatile unsigned char last\+Valid\+Packet\mbox{[}16\mbox{]}}\hypertarget{_s_p_i_8h_ab15ab508531e452eb0768f69f7c588da}{}\label{_s_p_i_8h_ab15ab508531e452eb0768f69f7c588da}

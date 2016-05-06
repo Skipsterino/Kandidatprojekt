@@ -1,0 +1,193 @@
+\hypertarget{_i2_c_8h}{}\section{sensor/sensor/\+I2C.h File Reference}
+\label{_i2_c_8h}\index{sensor/sensor/\+I2\+C.\+h@{sensor/sensor/\+I2\+C.\+h}}
+
+
+The code for the I2\+C-\/bus.  
+
+
+{\ttfamily \#include $<$util/atomic.\+h$>$}\\*
+{\ttfamily \#include $<$avr/io.\+h$>$}\\*
+{\ttfamily \#include $<$avr/interrupt.\+h$>$}\\*
+{\ttfamily \#include $<$util/delay.\+h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_i2_c_8h_a43bafb28b29491ec7f871319b5a3b2f8}{F\+\_\+\+C\+PU}~16000000\+UL
+\item 
+\#define \hyperlink{_i2_c_8h_ae106ed126eff0ffa33378daacfbbcdb7}{I2\+Cstatus\+\_\+\+S\+T\+A\+RT}~0x08
+\item 
+\#define \hyperlink{_i2_c_8h_a86ef56020aa435f9af57015ee220c3e4}{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+A\+CK}~0x18
+\item 
+\#define \hyperlink{_i2_c_8h_a28004b2b2ef10d3131ac4c4756da0ba0}{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK}~0x20
+\item 
+\#define \hyperlink{_i2_c_8h_a083e480a49a539cd4740d0e1a15216f3}{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK}~0x28
+\item 
+\#define \hyperlink{_i2_c_8h_a9de9a018a3f258d9e7a9ce44fb9e5cd1}{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK}~0x30
+\item 
+\#define \hyperlink{_i2_c_8h_af046bfee1b2f1837e8a043ead63f8152}{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+A\+CK}~0x40
+\item 
+\#define \hyperlink{_i2_c_8h_ae17f24111fe34b4aa114e90824b7865a}{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK}~0x48
+\item 
+\#define \hyperlink{_i2_c_8h_aae56c6775054400d706c68b4701a1659}{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK}~0x50
+\item 
+\#define \hyperlink{_i2_c_8h_a3678a376b6b796511e60d0eda8a89dbe}{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK}~0x58
+\item 
+\#define \hyperlink{_i2_c_8h_a3df22e1e7b66be8b74b33ce077824292}{S\+L\+A\+\_\+W}~0x\+D0
+\item 
+\#define \hyperlink{_i2_c_8h_ae4af1f304be9d3202a445e7d6c235eaa}{S\+L\+A\+\_\+R}~0x\+D1
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_i2_c_8h_a263c74ce484e3680c05a9118707fadb7}{I2\+C\+\_\+start} ()
+\begin{DoxyCompactList}\small\item\em Opens up the I2\+C-\/bus. \end{DoxyCompactList}\item 
+void \hyperlink{_i2_c_8h_af8dcc1bcb3e1c6c0fcdca4cf599a239b}{I2\+C\+\_\+stop} ()
+\begin{DoxyCompactList}\small\item\em Shuts down the I2\+C-\/bus. \end{DoxyCompactList}\item 
+int \hyperlink{_i2_c_8h_ad1a5ba420409525ff5ab1be86ac5e526}{error} ()
+\begin{DoxyCompactList}\small\item\em An error function for the I2\+C-\/bus. \end{DoxyCompactList}\item 
+int \hyperlink{_i2_c_8h_ac0f145afe8d662af199043939f4398d6}{i2c\+\_\+write} (unsigned char slave\+\_\+addr, unsigned char reg\+\_\+addr, unsigned char length, unsigned char const $\ast$data)
+\begin{DoxyCompactList}\small\item\em Writes data to a register at slave. \end{DoxyCompactList}\item 
+int \hyperlink{_i2_c_8h_ac2d47e7a6c76f93f9b537c31a2986e7b}{i2c\+\_\+read} (unsigned char slave\+\_\+addr, unsigned char reg\+\_\+addr, unsigned char length, unsigned char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Reads data from a register at slave. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The code for the I2\+C-\/bus. 
+
+\begin{DoxyAuthor}{Author}
+Fredrik, Jonas 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+26 apr 2016 The code used by the sensor module to communicate with the I\+MU by the I2\+C-\/bus. 
+\end{DoxyDate}
+
+
+\subsection{Macro Definition Documentation}
+\index{I2\+C.\+h@{I2\+C.\+h}!F\+\_\+\+C\+PU@{F\+\_\+\+C\+PU}}
+\index{F\+\_\+\+C\+PU@{F\+\_\+\+C\+PU}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{F\+\_\+\+C\+PU}{F_CPU}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+\_\+\+C\+PU~16000000\+UL}\hypertarget{_i2_c_8h_a43bafb28b29491ec7f871319b5a3b2f8}{}\label{_i2_c_8h_a43bafb28b29491ec7f871319b5a3b2f8}
+Define the frequency for the C\+PU as 16 M\+Hz \index{I2\+C.\+h@{I2\+C.\+h}!I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK@{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK}}
+\index{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK@{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK}{I2Cstatus_MR_DATA_ACK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK~0x50}\hypertarget{_i2_c_8h_aae56c6775054400d706c68b4701a1659}{}\label{_i2_c_8h_aae56c6775054400d706c68b4701a1659}
+Master Receiver Mode recieving data A\+CK \index{I2\+C.\+h@{I2\+C.\+h}!I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK@{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK}}
+\index{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK@{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK}{I2Cstatus_MR_DATA_NACK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+Cstatus\+\_\+\+M\+R\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK~0x58}\hypertarget{_i2_c_8h_a3678a376b6b796511e60d0eda8a89dbe}{}\label{_i2_c_8h_a3678a376b6b796511e60d0eda8a89dbe}
+Master Receiver Mode recieving data N\+A\+CK \index{I2\+C.\+h@{I2\+C.\+h}!I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+A\+CK@{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+A\+CK}}
+\index{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+A\+CK@{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+A\+CK}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+A\+CK}{I2Cstatus_MR_SLA_ACK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+A\+CK~0x40}\hypertarget{_i2_c_8h_af046bfee1b2f1837e8a043ead63f8152}{}\label{_i2_c_8h_af046bfee1b2f1837e8a043ead63f8152}
+Master Receiver Mode addressing the slave A\+CK \index{I2\+C.\+h@{I2\+C.\+h}!I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK@{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK}}
+\index{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK@{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK}{I2Cstatus_MR_SLA_NACK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+Cstatus\+\_\+\+M\+R\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK~0x48}\hypertarget{_i2_c_8h_ae17f24111fe34b4aa114e90824b7865a}{}\label{_i2_c_8h_ae17f24111fe34b4aa114e90824b7865a}
+Master Receiver Mode addressing the slave N\+A\+CK \index{I2\+C.\+h@{I2\+C.\+h}!I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK@{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK}}
+\index{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK@{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK}{I2Cstatus_MT_DATA_ACK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+A\+CK~0x28}\hypertarget{_i2_c_8h_a083e480a49a539cd4740d0e1a15216f3}{}\label{_i2_c_8h_a083e480a49a539cd4740d0e1a15216f3}
+Master Transmitter Mode sending data A\+CK \index{I2\+C.\+h@{I2\+C.\+h}!I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK@{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK}}
+\index{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK@{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK}{I2Cstatus_MT_DATA_NACK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+Cstatus\+\_\+\+M\+T\+\_\+\+D\+A\+T\+A\+\_\+\+N\+A\+CK~0x30}\hypertarget{_i2_c_8h_a9de9a018a3f258d9e7a9ce44fb9e5cd1}{}\label{_i2_c_8h_a9de9a018a3f258d9e7a9ce44fb9e5cd1}
+Master Transmitter Mode sending data N\+A\+CK \index{I2\+C.\+h@{I2\+C.\+h}!I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+A\+CK@{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+A\+CK}}
+\index{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+A\+CK@{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+A\+CK}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+A\+CK}{I2Cstatus_MT_SLA_ACK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+A\+CK~0x18}\hypertarget{_i2_c_8h_a86ef56020aa435f9af57015ee220c3e4}{}\label{_i2_c_8h_a86ef56020aa435f9af57015ee220c3e4}
+Master Transmitter Mode addressing the slave A\+CK \index{I2\+C.\+h@{I2\+C.\+h}!I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK@{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK}}
+\index{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK@{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK}{I2Cstatus_MT_SLA_NACK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+Cstatus\+\_\+\+M\+T\+\_\+\+S\+L\+A\+\_\+\+N\+A\+CK~0x20}\hypertarget{_i2_c_8h_a28004b2b2ef10d3131ac4c4756da0ba0}{}\label{_i2_c_8h_a28004b2b2ef10d3131ac4c4756da0ba0}
+Master Transmitter Mode addressing the slave N\+A\+CK \index{I2\+C.\+h@{I2\+C.\+h}!I2\+Cstatus\+\_\+\+S\+T\+A\+RT@{I2\+Cstatus\+\_\+\+S\+T\+A\+RT}}
+\index{I2\+Cstatus\+\_\+\+S\+T\+A\+RT@{I2\+Cstatus\+\_\+\+S\+T\+A\+RT}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{I2\+Cstatus\+\_\+\+S\+T\+A\+RT}{I2Cstatus_START}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I2\+Cstatus\+\_\+\+S\+T\+A\+RT~0x08}\hypertarget{_i2_c_8h_ae106ed126eff0ffa33378daacfbbcdb7}{}\label{_i2_c_8h_ae106ed126eff0ffa33378daacfbbcdb7}
+Define the start state for the I2\+C-\/bus \index{I2\+C.\+h@{I2\+C.\+h}!S\+L\+A\+\_\+R@{S\+L\+A\+\_\+R}}
+\index{S\+L\+A\+\_\+R@{S\+L\+A\+\_\+R}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{S\+L\+A\+\_\+R}{SLA_R}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+L\+A\+\_\+R~0x\+D1}\hypertarget{_i2_c_8h_ae4af1f304be9d3202a445e7d6c235eaa}{}\label{_i2_c_8h_ae4af1f304be9d3202a445e7d6c235eaa}
+Slave address + read \index{I2\+C.\+h@{I2\+C.\+h}!S\+L\+A\+\_\+W@{S\+L\+A\+\_\+W}}
+\index{S\+L\+A\+\_\+W@{S\+L\+A\+\_\+W}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{S\+L\+A\+\_\+W}{SLA_W}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+L\+A\+\_\+W~0x\+D0}\hypertarget{_i2_c_8h_a3df22e1e7b66be8b74b33ce077824292}{}\label{_i2_c_8h_a3df22e1e7b66be8b74b33ce077824292}
+Slave address + write 
+
+\subsection{Function Documentation}
+\index{I2\+C.\+h@{I2\+C.\+h}!error@{error}}
+\index{error@{error}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{error()}{error()}}]{\setlength{\rightskip}{0pt plus 5cm}int error (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_i2_c_8h_ad1a5ba420409525ff5ab1be86ac5e526}{}\label{_i2_c_8h_ad1a5ba420409525ff5ab1be86ac5e526}
+
+
+An error function for the I2\+C-\/bus. 
+
+An error function called if a problem is encountered during I2\+C-\/communication. \index{I2\+C.\+h@{I2\+C.\+h}!i2c\+\_\+read@{i2c\+\_\+read}}
+\index{i2c\+\_\+read@{i2c\+\_\+read}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{i2c\+\_\+read(unsigned char slave\+\_\+addr, unsigned char reg\+\_\+addr, unsigned char length, unsigned char $\ast$data)}{i2c_read(unsigned char slave_addr, unsigned char reg_addr, unsigned char length, unsigned char *data)}}]{\setlength{\rightskip}{0pt plus 5cm}int i2c\+\_\+read (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{slave\+\_\+addr, }
+\item[{unsigned char}]{reg\+\_\+addr, }
+\item[{unsigned char}]{length, }
+\item[{unsigned char $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{_i2_c_8h_ac2d47e7a6c76f93f9b537c31a2986e7b}{}\label{_i2_c_8h_ac2d47e7a6c76f93f9b537c31a2986e7b}
+
+
+Reads data from a register at slave. 
+
+Reads some data from a register at the slave address. \begin{DoxySeeAlso}{See also}
+I2\+C-\/start 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em slave\+\_\+addr} & The address of the slave \\
+\hline
+{\em reg\+\_\+addr} & The register address of the register to be read from at the slave \\
+\hline
+{\em length} & The length of the transmission \\
+\hline
+{\em data} & The data received \\
+\hline
+\end{DoxyParams}
+\index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+start@{I2\+C\+\_\+start}}
+\index{I2\+C\+\_\+start@{I2\+C\+\_\+start}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{I2\+C\+\_\+start()}{I2C_start()}}]{\setlength{\rightskip}{0pt plus 5cm}void I2\+C\+\_\+start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_i2_c_8h_a263c74ce484e3680c05a9118707fadb7}{}\label{_i2_c_8h_a263c74ce484e3680c05a9118707fadb7}
+
+
+Opens up the I2\+C-\/bus. 
+
+Opens the bus for communication. All transmissions must be started with this command. Leaves the data line high. \index{I2\+C.\+h@{I2\+C.\+h}!I2\+C\+\_\+stop@{I2\+C\+\_\+stop}}
+\index{I2\+C\+\_\+stop@{I2\+C\+\_\+stop}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{I2\+C\+\_\+stop()}{I2C_stop()}}]{\setlength{\rightskip}{0pt plus 5cm}void I2\+C\+\_\+stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_i2_c_8h_af8dcc1bcb3e1c6c0fcdca4cf599a239b}{}\label{_i2_c_8h_af8dcc1bcb3e1c6c0fcdca4cf599a239b}
+
+
+Shuts down the I2\+C-\/bus. 
+
+Sends the stop command for the bus. Leaves the data line high. \index{I2\+C.\+h@{I2\+C.\+h}!i2c\+\_\+write@{i2c\+\_\+write}}
+\index{i2c\+\_\+write@{i2c\+\_\+write}!I2\+C.\+h@{I2\+C.\+h}}
+\subsubsection[{\texorpdfstring{i2c\+\_\+write(unsigned char slave\+\_\+addr, unsigned char reg\+\_\+addr, unsigned char length, unsigned char const $\ast$data)}{i2c_write(unsigned char slave_addr, unsigned char reg_addr, unsigned char length, unsigned char const *data)}}]{\setlength{\rightskip}{0pt plus 5cm}int i2c\+\_\+write (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{slave\+\_\+addr, }
+\item[{unsigned char}]{reg\+\_\+addr, }
+\item[{unsigned char}]{length, }
+\item[{unsigned char const $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{_i2_c_8h_ac0f145afe8d662af199043939f4398d6}{}\label{_i2_c_8h_ac0f145afe8d662af199043939f4398d6}
+
+
+Writes data to a register at slave. 
+
+Sends some data using the I2\+C-\/bus to a register at the slave address. \begin{DoxySeeAlso}{See also}
+I2\+C-\/start 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{Parameters}
+{\em slave\+\_\+addr} & The address of the slave \\
+\hline
+{\em reg\+\_\+addr} & The register address of the register to be written to at the slave \\
+\hline
+{\em length} & The length of the transmission \\
+\hline
+{\em data} & The data to be sent \\
+\hline
+\end{DoxyParams}

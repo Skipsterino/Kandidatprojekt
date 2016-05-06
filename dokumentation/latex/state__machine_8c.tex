@@ -1,0 +1,77 @@
+\hypertarget{state__machine_8c}{}\section{styr/styr/state\+\_\+machine.c File Reference}
+\label{state__machine_8c}\index{styr/styr/state\+\_\+machine.\+c@{styr/styr/state\+\_\+machine.\+c}}
+{\ttfamily \#include \char`\"{}state\+\_\+machine.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{state__machine_8c_a5611f3fef1c7ebe6f76d952adf576e86}{calculate\+\_\+\+Yaw} ()
+\begin{DoxyCompactList}\small\item\em Calculate Yaw angle from the values from the IR sensors. \end{DoxyCompactList}\item 
+void \hyperlink{state__machine_8c_a1207bf6b642796032a59633adcb689f2}{calculate\+\_\+p\+\_\+part} ()
+\begin{DoxyCompactList}\small\item\em Calculates current P part. \end{DoxyCompactList}\item 
+void \hyperlink{state__machine_8c_af7c798149db27b6d271bf5845a489513}{update\+\_\+state} ()
+\begin{DoxyCompactList}\small\item\em Updates the robot\textquotesingle{}s current state. \end{DoxyCompactList}\item 
+void \hyperlink{state__machine_8c_a11237cafa6d63fa57107c8ae2f3a1ea3}{run\+\_\+state} ()
+\begin{DoxyCompactList}\small\item\em Executes the robot\textquotesingle{}s current state. \end{DoxyCompactList}\item 
+void \hyperlink{state__machine_8c_aefb7e87df9971d6e6c5641db5185ca6c}{load\+\_\+sensor\+\_\+values} ()
+\begin{DoxyCompactList}\small\item\em Loads sensor values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{state\+\_\+machine.\+c@{state\+\_\+machine.\+c}!calculate\+\_\+p\+\_\+part@{calculate\+\_\+p\+\_\+part}}
+\index{calculate\+\_\+p\+\_\+part@{calculate\+\_\+p\+\_\+part}!state\+\_\+machine.\+c@{state\+\_\+machine.\+c}}
+\subsubsection[{\texorpdfstring{calculate\+\_\+p\+\_\+part()}{calculate_p_part()}}]{\setlength{\rightskip}{0pt plus 5cm}void calculate\+\_\+p\+\_\+part (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{state__machine_8c_a1207bf6b642796032a59633adcb689f2}{}\label{state__machine_8c_a1207bf6b642796032a59633adcb689f2}
+
+
+Calculates current P part. 
+
+Calculates current P part (for control) in different ways depending on current state. \index{state\+\_\+machine.\+c@{state\+\_\+machine.\+c}!calculate\+\_\+\+Yaw@{calculate\+\_\+\+Yaw}}
+\index{calculate\+\_\+\+Yaw@{calculate\+\_\+\+Yaw}!state\+\_\+machine.\+c@{state\+\_\+machine.\+c}}
+\subsubsection[{\texorpdfstring{calculate\+\_\+\+Yaw()}{calculate_Yaw()}}]{\setlength{\rightskip}{0pt plus 5cm}void calculate\+\_\+\+Yaw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{state__machine_8c_a5611f3fef1c7ebe6f76d952adf576e86}{}\label{state__machine_8c_a5611f3fef1c7ebe6f76d952adf576e86}
+
+
+Calculate Yaw angle from the values from the IR sensors. 
+
+Calculates current Yaw angle.
+
+Uses the distances from the IR sensors to calculate a Yaw angle relative to the corridor using trigonometry. \index{state\+\_\+machine.\+c@{state\+\_\+machine.\+c}!load\+\_\+sensor\+\_\+values@{load\+\_\+sensor\+\_\+values}}
+\index{load\+\_\+sensor\+\_\+values@{load\+\_\+sensor\+\_\+values}!state\+\_\+machine.\+c@{state\+\_\+machine.\+c}}
+\subsubsection[{\texorpdfstring{load\+\_\+sensor\+\_\+values()}{load_sensor_values()}}]{\setlength{\rightskip}{0pt plus 5cm}void load\+\_\+sensor\+\_\+values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{state__machine_8c_aefb7e87df9971d6e6c5641db5185ca6c}{}\label{state__machine_8c_aefb7e87df9971d6e6c5641db5185ca6c}
+
+
+Loads sensor values. 
+
+Loads sensor values into corresponding variables. \index{state\+\_\+machine.\+c@{state\+\_\+machine.\+c}!run\+\_\+state@{run\+\_\+state}}
+\index{run\+\_\+state@{run\+\_\+state}!state\+\_\+machine.\+c@{state\+\_\+machine.\+c}}
+\subsubsection[{\texorpdfstring{run\+\_\+state()}{run_state()}}]{\setlength{\rightskip}{0pt plus 5cm}void run\+\_\+state (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{state__machine_8c_a11237cafa6d63fa57107c8ae2f3a1ea3}{}\label{state__machine_8c_a11237cafa6d63fa57107c8ae2f3a1ea3}
+
+
+Executes the robot\textquotesingle{}s current state. 
+
+Executes robot state based on current state and sensor values. \index{state\+\_\+machine.\+c@{state\+\_\+machine.\+c}!update\+\_\+state@{update\+\_\+state}}
+\index{update\+\_\+state@{update\+\_\+state}!state\+\_\+machine.\+c@{state\+\_\+machine.\+c}}
+\subsubsection[{\texorpdfstring{update\+\_\+state()}{update_state()}}]{\setlength{\rightskip}{0pt plus 5cm}void update\+\_\+state (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{state__machine_8c_af7c798149db27b6d271bf5845a489513}{}\label{state__machine_8c_af7c798149db27b6d271bf5845a489513}
+
+
+Updates the robot\textquotesingle{}s current state. 
+
+Updates robot state based on current state and sensor values. 

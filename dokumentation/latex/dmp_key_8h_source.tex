@@ -1,5 +1,5 @@
 \hypertarget{dmp_key_8h_source}{}\section{dmp\+Key.\+h}
-\label{dmp_key_8h_source}\index{sensor/dmp\+Key.\+h@{sensor/dmp\+Key.\+h}}
+\label{dmp_key_8h_source}\index{sensor/sensor/dmp\+Key.\+h@{sensor/sensor/dmp\+Key.\+h}}
 
 \begin{DoxyCode}
 00001 \textcolor{comment}{/*}
@@ -10,488 +10,488 @@
 00006 \textcolor{preprocessor}{#ifndef DMPKEY\_H\_\_}
 00007 \textcolor{preprocessor}{#define DMPKEY\_H\_\_}
 00008 
-00009 \textcolor{preprocessor}{#define KEY\_CFG\_25                  (0)}
-00010 \textcolor{preprocessor}{#define KEY\_CFG\_24                  (KEY\_CFG\_25 + 1)}
-00011 \textcolor{preprocessor}{#define KEY\_CFG\_26                  (KEY\_CFG\_24 + 1)}
-00012 \textcolor{preprocessor}{#define KEY\_CFG\_27                  (KEY\_CFG\_26 + 1)}
-00013 \textcolor{preprocessor}{#define KEY\_CFG\_21                  (KEY\_CFG\_27 + 1)}
-00014 \textcolor{preprocessor}{#define KEY\_CFG\_20                  (KEY\_CFG\_21 + 1)}
-00015 \textcolor{preprocessor}{#define KEY\_CFG\_TAP4                (KEY\_CFG\_20 + 1)}
-00016 \textcolor{preprocessor}{#define KEY\_CFG\_TAP5                (KEY\_CFG\_TAP4 + 1)}
-00017 \textcolor{preprocessor}{#define KEY\_CFG\_TAP6                (KEY\_CFG\_TAP5 + 1)}
-00018 \textcolor{preprocessor}{#define KEY\_CFG\_TAP7                (KEY\_CFG\_TAP6 + 1)}
-00019 \textcolor{preprocessor}{#define KEY\_CFG\_TAP0                (KEY\_CFG\_TAP7 + 1)}
-00020 \textcolor{preprocessor}{#define KEY\_CFG\_TAP1                (KEY\_CFG\_TAP0 + 1)}
-00021 \textcolor{preprocessor}{#define KEY\_CFG\_TAP2                (KEY\_CFG\_TAP1 + 1)}
-00022 \textcolor{preprocessor}{#define KEY\_CFG\_TAP3                (KEY\_CFG\_TAP2 + 1)}
-00023 \textcolor{preprocessor}{#define KEY\_CFG\_TAP\_QUANTIZE        (KEY\_CFG\_TAP3 + 1)}
-00024 \textcolor{preprocessor}{#define KEY\_CFG\_TAP\_JERK            (KEY\_CFG\_TAP\_QUANTIZE + 1)}
-00025 \textcolor{preprocessor}{#define KEY\_CFG\_DR\_INT              (KEY\_CFG\_TAP\_JERK + 1)}
-00026 \textcolor{preprocessor}{#define KEY\_CFG\_AUTH                (KEY\_CFG\_DR\_INT + 1)}
-00027 \textcolor{preprocessor}{#define KEY\_CFG\_TAP\_SAVE\_ACCB       (KEY\_CFG\_AUTH + 1)}
-00028 \textcolor{preprocessor}{#define KEY\_CFG\_TAP\_CLEAR\_STICKY    (KEY\_CFG\_TAP\_SAVE\_ACCB + 1)}
-00029 \textcolor{preprocessor}{#define KEY\_CFG\_FIFO\_ON\_EVENT       (KEY\_CFG\_TAP\_CLEAR\_STICKY + 1)}
-00030 \textcolor{preprocessor}{#define KEY\_FCFG\_ACCEL\_INPUT        (KEY\_CFG\_FIFO\_ON\_EVENT + 1)}
-00031 \textcolor{preprocessor}{#define KEY\_FCFG\_ACCEL\_INIT         (KEY\_FCFG\_ACCEL\_INPUT + 1)}
-00032 \textcolor{preprocessor}{#define KEY\_CFG\_23                  (KEY\_FCFG\_ACCEL\_INIT + 1)}
-00033 \textcolor{preprocessor}{#define KEY\_FCFG\_1                  (KEY\_CFG\_23 + 1)}
-00034 \textcolor{preprocessor}{#define KEY\_FCFG\_3                  (KEY\_FCFG\_1 + 1)}
-00035 \textcolor{preprocessor}{#define KEY\_FCFG\_2                  (KEY\_FCFG\_3 + 1)}
-00036 \textcolor{preprocessor}{#define KEY\_CFG\_3D                  (KEY\_FCFG\_2 + 1)}
-00037 \textcolor{preprocessor}{#define KEY\_CFG\_3B                  (KEY\_CFG\_3D + 1)}
-00038 \textcolor{preprocessor}{#define KEY\_CFG\_3C                  (KEY\_CFG\_3B + 1)}
-00039 \textcolor{preprocessor}{#define KEY\_FCFG\_5                  (KEY\_CFG\_3C + 1)}
-00040 \textcolor{preprocessor}{#define KEY\_FCFG\_4                  (KEY\_FCFG\_5 + 1)}
-00041 \textcolor{preprocessor}{#define KEY\_FCFG\_7                  (KEY\_FCFG\_4 + 1)}
-00042 \textcolor{preprocessor}{#define KEY\_FCFG\_FSCALE             (KEY\_FCFG\_7 + 1)}
-00043 \textcolor{preprocessor}{#define KEY\_FCFG\_AZ                 (KEY\_FCFG\_FSCALE + 1)}
-00044 \textcolor{preprocessor}{#define KEY\_FCFG\_6                  (KEY\_FCFG\_AZ + 1)}
-00045 \textcolor{preprocessor}{#define KEY\_FCFG\_LSB4               (KEY\_FCFG\_6 + 1)}
-00046 \textcolor{preprocessor}{#define KEY\_CFG\_12                  (KEY\_FCFG\_LSB4 + 1)}
-00047 \textcolor{preprocessor}{#define KEY\_CFG\_14                  (KEY\_CFG\_12 + 1)}
-00048 \textcolor{preprocessor}{#define KEY\_CFG\_15                  (KEY\_CFG\_14 + 1)}
-00049 \textcolor{preprocessor}{#define KEY\_CFG\_16                  (KEY\_CFG\_15 + 1)}
-00050 \textcolor{preprocessor}{#define KEY\_CFG\_18                  (KEY\_CFG\_16 + 1)}
-00051 \textcolor{preprocessor}{#define KEY\_CFG\_6                   (KEY\_CFG\_18 + 1)}
-00052 \textcolor{preprocessor}{#define KEY\_CFG\_7                   (KEY\_CFG\_6 + 1)}
-00053 \textcolor{preprocessor}{#define KEY\_CFG\_4                   (KEY\_CFG\_7 + 1)}
-00054 \textcolor{preprocessor}{#define KEY\_CFG\_5                   (KEY\_CFG\_4 + 1)}
-00055 \textcolor{preprocessor}{#define KEY\_CFG\_2                   (KEY\_CFG\_5 + 1)}
-00056 \textcolor{preprocessor}{#define KEY\_CFG\_3                   (KEY\_CFG\_2 + 1)}
-00057 \textcolor{preprocessor}{#define KEY\_CFG\_1                   (KEY\_CFG\_3 + 1)}
-00058 \textcolor{preprocessor}{#define KEY\_CFG\_EXTERNAL            (KEY\_CFG\_1 + 1)}
-00059 \textcolor{preprocessor}{#define KEY\_CFG\_8                   (KEY\_CFG\_EXTERNAL + 1)}
-00060 \textcolor{preprocessor}{#define KEY\_CFG\_9                   (KEY\_CFG\_8 + 1)}
-00061 \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_3            (KEY\_CFG\_9 + 1)}
-00062 \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_2            (KEY\_CFG\_ORIENT\_3 + 1)}
-00063 \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_1            (KEY\_CFG\_ORIENT\_2 + 1)}
-00064 \textcolor{preprocessor}{#define KEY\_CFG\_GYRO\_SOURCE         (KEY\_CFG\_ORIENT\_1 + 1)}
-00065 \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_IRQ\_1        (KEY\_CFG\_GYRO\_SOURCE + 1)}
-00066 \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_IRQ\_2        (KEY\_CFG\_ORIENT\_IRQ\_1 + 1)}
-00067 \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_IRQ\_3        (KEY\_CFG\_ORIENT\_IRQ\_2 + 1)}
-00068 \textcolor{preprocessor}{#define KEY\_FCFG\_MAG\_VAL            (KEY\_CFG\_ORIENT\_IRQ\_3 + 1)}
-00069 \textcolor{preprocessor}{#define KEY\_FCFG\_MAG\_MOV            (KEY\_FCFG\_MAG\_VAL + 1)}
-00070 \textcolor{preprocessor}{#define KEY\_CFG\_LP\_QUAT             (KEY\_FCFG\_MAG\_MOV + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00009}{}\hyperlink{dmp_key_8h_afb06e105999e6243c0ae2e818034647e}{00009} \textcolor{preprocessor}{#define KEY\_CFG\_25                  (0)}
+\hypertarget{dmp_key_8h_source.tex_l00010}{}\hyperlink{dmp_key_8h_aa5e453c6dea0f527e5bd6c30a5ed445d}{00010} \textcolor{preprocessor}{#define KEY\_CFG\_24                  (KEY\_CFG\_25 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00011}{}\hyperlink{dmp_key_8h_a3a8e339ff2e7e0356c7e71426d8675cf}{00011} \textcolor{preprocessor}{#define KEY\_CFG\_26                  (KEY\_CFG\_24 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00012}{}\hyperlink{dmp_key_8h_a4aba163b8ed5e6c1a87c56bf423cc7fd}{00012} \textcolor{preprocessor}{#define KEY\_CFG\_27                  (KEY\_CFG\_26 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00013}{}\hyperlink{dmp_key_8h_acdc7f07883695b91a68b3acc4c31c27f}{00013} \textcolor{preprocessor}{#define KEY\_CFG\_21                  (KEY\_CFG\_27 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00014}{}\hyperlink{dmp_key_8h_abe161054d4821ef13eca134276cbe871}{00014} \textcolor{preprocessor}{#define KEY\_CFG\_20                  (KEY\_CFG\_21 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00015}{}\hyperlink{dmp_key_8h_a3a4710e22864214fe2ab8a080814d085}{00015} \textcolor{preprocessor}{#define KEY\_CFG\_TAP4                (KEY\_CFG\_20 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00016}{}\hyperlink{dmp_key_8h_a91494c73908d422b5e139346abe52e5a}{00016} \textcolor{preprocessor}{#define KEY\_CFG\_TAP5                (KEY\_CFG\_TAP4 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00017}{}\hyperlink{dmp_key_8h_aeeb1342d7237f5dd71a62f3cc5285eee}{00017} \textcolor{preprocessor}{#define KEY\_CFG\_TAP6                (KEY\_CFG\_TAP5 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00018}{}\hyperlink{dmp_key_8h_ac1c8373cbe29cee40b8b645820424862}{00018} \textcolor{preprocessor}{#define KEY\_CFG\_TAP7                (KEY\_CFG\_TAP6 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00019}{}\hyperlink{dmp_key_8h_a2381461c31df922510a2dab0c87074dc}{00019} \textcolor{preprocessor}{#define KEY\_CFG\_TAP0                (KEY\_CFG\_TAP7 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00020}{}\hyperlink{dmp_key_8h_a2a7971149e8d561f5ff6a812990114f4}{00020} \textcolor{preprocessor}{#define KEY\_CFG\_TAP1                (KEY\_CFG\_TAP0 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00021}{}\hyperlink{dmp_key_8h_a0cc1a00556dd860ae3fbb84c7b90f208}{00021} \textcolor{preprocessor}{#define KEY\_CFG\_TAP2                (KEY\_CFG\_TAP1 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00022}{}\hyperlink{dmp_key_8h_a9ddb8947dd125a30491d45ee528af428}{00022} \textcolor{preprocessor}{#define KEY\_CFG\_TAP3                (KEY\_CFG\_TAP2 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00023}{}\hyperlink{dmp_key_8h_a42cecc6cfd04d63187c3a42fcaffd85f}{00023} \textcolor{preprocessor}{#define KEY\_CFG\_TAP\_QUANTIZE        (KEY\_CFG\_TAP3 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00024}{}\hyperlink{dmp_key_8h_a1cf1ef77505274a13b6480f1aa7d9389}{00024} \textcolor{preprocessor}{#define KEY\_CFG\_TAP\_JERK            (KEY\_CFG\_TAP\_QUANTIZE + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00025}{}\hyperlink{dmp_key_8h_a7879a5cc9e8d48368fdf66ecb4ea7016}{00025} \textcolor{preprocessor}{#define KEY\_CFG\_DR\_INT              (KEY\_CFG\_TAP\_JERK + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00026}{}\hyperlink{dmp_key_8h_ab2e0eac97341ae102666b036ca7b994c}{00026} \textcolor{preprocessor}{#define KEY\_CFG\_AUTH                (KEY\_CFG\_DR\_INT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00027}{}\hyperlink{dmp_key_8h_af2b9a5e5491b57fbfe64a6d979b1ff45}{00027} \textcolor{preprocessor}{#define KEY\_CFG\_TAP\_SAVE\_ACCB       (KEY\_CFG\_AUTH + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00028}{}\hyperlink{dmp_key_8h_ae7725cddab0831815e93942e1fbb1278}{00028} \textcolor{preprocessor}{#define KEY\_CFG\_TAP\_CLEAR\_STICKY    (KEY\_CFG\_TAP\_SAVE\_ACCB + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00029}{}\hyperlink{dmp_key_8h_a68a87ce723375f0bb235e9fc4356a46b}{00029} \textcolor{preprocessor}{#define KEY\_CFG\_FIFO\_ON\_EVENT       (KEY\_CFG\_TAP\_CLEAR\_STICKY + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00030}{}\hyperlink{dmp_key_8h_af2254874bb524938b8749e524ed845d2}{00030} \textcolor{preprocessor}{#define KEY\_FCFG\_ACCEL\_INPUT        (KEY\_CFG\_FIFO\_ON\_EVENT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00031}{}\hyperlink{dmp_key_8h_a893ccb4c34573d60c12c372d8b6649a6}{00031} \textcolor{preprocessor}{#define KEY\_FCFG\_ACCEL\_INIT         (KEY\_FCFG\_ACCEL\_INPUT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00032}{}\hyperlink{dmp_key_8h_a3f98e9e85d79d49c0dac77d6855d603e}{00032} \textcolor{preprocessor}{#define KEY\_CFG\_23                  (KEY\_FCFG\_ACCEL\_INIT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00033}{}\hyperlink{dmp_key_8h_a9b1a7d7daa4fb73fb03dabaf6f4c97b9}{00033} \textcolor{preprocessor}{#define KEY\_FCFG\_1                  (KEY\_CFG\_23 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00034}{}\hyperlink{dmp_key_8h_a2857c6fba1bb99df3e5f6da3e9b85a52}{00034} \textcolor{preprocessor}{#define KEY\_FCFG\_3                  (KEY\_FCFG\_1 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00035}{}\hyperlink{dmp_key_8h_ac6bad3ac6c9d72158389154551e1bd45}{00035} \textcolor{preprocessor}{#define KEY\_FCFG\_2                  (KEY\_FCFG\_3 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00036}{}\hyperlink{dmp_key_8h_a364597bae86eafc8fd74a851c1ad737c}{00036} \textcolor{preprocessor}{#define KEY\_CFG\_3D                  (KEY\_FCFG\_2 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00037}{}\hyperlink{dmp_key_8h_a0e803abade5497b66f0f72a52dfa47b1}{00037} \textcolor{preprocessor}{#define KEY\_CFG\_3B                  (KEY\_CFG\_3D + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00038}{}\hyperlink{dmp_key_8h_af7e7b99c7694ffada093356f6f23dd0b}{00038} \textcolor{preprocessor}{#define KEY\_CFG\_3C                  (KEY\_CFG\_3B + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00039}{}\hyperlink{dmp_key_8h_a24055723a9605fc056840bfa4b3099e2}{00039} \textcolor{preprocessor}{#define KEY\_FCFG\_5                  (KEY\_CFG\_3C + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00040}{}\hyperlink{dmp_key_8h_af41ef0867f5403642cedca80fd269a69}{00040} \textcolor{preprocessor}{#define KEY\_FCFG\_4                  (KEY\_FCFG\_5 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00041}{}\hyperlink{dmp_key_8h_adac5dd01ac0d30282f2346095867d09c}{00041} \textcolor{preprocessor}{#define KEY\_FCFG\_7                  (KEY\_FCFG\_4 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00042}{}\hyperlink{dmp_key_8h_aa2d4b9ea9c8e0e82fa0cbde09c6c99d1}{00042} \textcolor{preprocessor}{#define KEY\_FCFG\_FSCALE             (KEY\_FCFG\_7 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00043}{}\hyperlink{dmp_key_8h_a3c8c999449db24e646889bde950408a1}{00043} \textcolor{preprocessor}{#define KEY\_FCFG\_AZ                 (KEY\_FCFG\_FSCALE + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00044}{}\hyperlink{dmp_key_8h_a6d42a94e25bf38609e89a2259694f8db}{00044} \textcolor{preprocessor}{#define KEY\_FCFG\_6                  (KEY\_FCFG\_AZ + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00045}{}\hyperlink{dmp_key_8h_a2a8a7369e21b3e6446ac417a9f767e10}{00045} \textcolor{preprocessor}{#define KEY\_FCFG\_LSB4               (KEY\_FCFG\_6 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00046}{}\hyperlink{dmp_key_8h_ab51fcfee1074d4d953ec3ea5bec99509}{00046} \textcolor{preprocessor}{#define KEY\_CFG\_12                  (KEY\_FCFG\_LSB4 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00047}{}\hyperlink{dmp_key_8h_a57b6b7e9d0d35132440e8a7c09a93d16}{00047} \textcolor{preprocessor}{#define KEY\_CFG\_14                  (KEY\_CFG\_12 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00048}{}\hyperlink{dmp_key_8h_a0435046e662150820a0cc24da587f7d5}{00048} \textcolor{preprocessor}{#define KEY\_CFG\_15                  (KEY\_CFG\_14 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00049}{}\hyperlink{dmp_key_8h_a19880a4f37b85adf9dfaa7eccbd183ae}{00049} \textcolor{preprocessor}{#define KEY\_CFG\_16                  (KEY\_CFG\_15 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00050}{}\hyperlink{dmp_key_8h_a55f22b6e47ca024decdb65c3dab95a50}{00050} \textcolor{preprocessor}{#define KEY\_CFG\_18                  (KEY\_CFG\_16 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00051}{}\hyperlink{dmp_key_8h_ab8203becdd3b2ab7511ecb5ca5a7a69c}{00051} \textcolor{preprocessor}{#define KEY\_CFG\_6                   (KEY\_CFG\_18 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00052}{}\hyperlink{dmp_key_8h_af8570555f78a4e1d73520be090f23d9a}{00052} \textcolor{preprocessor}{#define KEY\_CFG\_7                   (KEY\_CFG\_6 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00053}{}\hyperlink{dmp_key_8h_a91802491b6da4684594ec8f3a6c21f4f}{00053} \textcolor{preprocessor}{#define KEY\_CFG\_4                   (KEY\_CFG\_7 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00054}{}\hyperlink{dmp_key_8h_ab7bac070f097a941d52987f17958c2be}{00054} \textcolor{preprocessor}{#define KEY\_CFG\_5                   (KEY\_CFG\_4 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00055}{}\hyperlink{dmp_key_8h_ae61b4f19fcf032540a6494e5625da38a}{00055} \textcolor{preprocessor}{#define KEY\_CFG\_2                   (KEY\_CFG\_5 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00056}{}\hyperlink{dmp_key_8h_a981bb2252129c3032a380f819cee0672}{00056} \textcolor{preprocessor}{#define KEY\_CFG\_3                   (KEY\_CFG\_2 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00057}{}\hyperlink{dmp_key_8h_a4288b8fd9061526e1c67b7769258227a}{00057} \textcolor{preprocessor}{#define KEY\_CFG\_1                   (KEY\_CFG\_3 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00058}{}\hyperlink{dmp_key_8h_a63349c3281878c9812df9b8c50ce0e14}{00058} \textcolor{preprocessor}{#define KEY\_CFG\_EXTERNAL            (KEY\_CFG\_1 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00059}{}\hyperlink{dmp_key_8h_a3692f6ad2f88c915a9fc393f6dd46a7c}{00059} \textcolor{preprocessor}{#define KEY\_CFG\_8                   (KEY\_CFG\_EXTERNAL + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00060}{}\hyperlink{dmp_key_8h_a1eefc8eff407aef7783647dd936d9bfa}{00060} \textcolor{preprocessor}{#define KEY\_CFG\_9                   (KEY\_CFG\_8 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00061}{}\hyperlink{dmp_key_8h_a4c2f4e94cf149b7e4d74bd531e33f363}{00061} \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_3            (KEY\_CFG\_9 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00062}{}\hyperlink{dmp_key_8h_a82b40f1055d41ed86fa0072fa9f76256}{00062} \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_2            (KEY\_CFG\_ORIENT\_3 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00063}{}\hyperlink{dmp_key_8h_a28f73c835e6c16e3998bc5daee542cc4}{00063} \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_1            (KEY\_CFG\_ORIENT\_2 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00064}{}\hyperlink{dmp_key_8h_ad6e6d13e3c7505e27e9cd310b7dc69f9}{00064} \textcolor{preprocessor}{#define KEY\_CFG\_GYRO\_SOURCE         (KEY\_CFG\_ORIENT\_1 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00065}{}\hyperlink{dmp_key_8h_a214abdd061d834dbee6f8d804585cdd8}{00065} \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_IRQ\_1        (KEY\_CFG\_GYRO\_SOURCE + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00066}{}\hyperlink{dmp_key_8h_a629f9aa58f13d9d70d82da360ef8a2ac}{00066} \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_IRQ\_2        (KEY\_CFG\_ORIENT\_IRQ\_1 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00067}{}\hyperlink{dmp_key_8h_a841eaa472f5eea819364b8a52e4f375d}{00067} \textcolor{preprocessor}{#define KEY\_CFG\_ORIENT\_IRQ\_3        (KEY\_CFG\_ORIENT\_IRQ\_2 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00068}{}\hyperlink{dmp_key_8h_a5c00ed33c857436d4d62d4a43cc0551f}{00068} \textcolor{preprocessor}{#define KEY\_FCFG\_MAG\_VAL            (KEY\_CFG\_ORIENT\_IRQ\_3 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00069}{}\hyperlink{dmp_key_8h_ad7299dd182e8feb57a9a5026d356cd5f}{00069} \textcolor{preprocessor}{#define KEY\_FCFG\_MAG\_MOV            (KEY\_FCFG\_MAG\_VAL + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00070}{}\hyperlink{dmp_key_8h_aa1976f8770a8d7a6fe33d911df1a7e71}{00070} \textcolor{preprocessor}{#define KEY\_CFG\_LP\_QUAT             (KEY\_FCFG\_MAG\_MOV + 1)}
 00071 
 00072 \textcolor{comment}{/* MPU6050 keys */}
-00073 \textcolor{preprocessor}{#define KEY\_CFG\_ACCEL\_FILTER        (KEY\_CFG\_LP\_QUAT + 1)}
-00074 \textcolor{preprocessor}{#define KEY\_CFG\_MOTION\_BIAS         (KEY\_CFG\_ACCEL\_FILTER + 1)}
-00075 \textcolor{preprocessor}{#define KEY\_TEMPLABEL               (KEY\_CFG\_MOTION\_BIAS + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00073}{}\hyperlink{dmp_key_8h_ac0902228305c8c231e322e1a25ac5ee7}{00073} \textcolor{preprocessor}{#define KEY\_CFG\_ACCEL\_FILTER        (KEY\_CFG\_LP\_QUAT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00074}{}\hyperlink{dmp_key_8h_a941389ecdbed59f71ff7eda4e65291d5}{00074} \textcolor{preprocessor}{#define KEY\_CFG\_MOTION\_BIAS         (KEY\_CFG\_ACCEL\_FILTER + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00075}{}\hyperlink{dmp_key_8h_a57995608a071771b3bb0ac1ea29c1656}{00075} \textcolor{preprocessor}{#define KEY\_TEMPLABEL               (KEY\_CFG\_MOTION\_BIAS + 1)}
 00076 
-00077 \textcolor{preprocessor}{#define KEY\_D\_0\_22                  (KEY\_TEMPLABEL + 1)}
-00078 \textcolor{preprocessor}{#define KEY\_D\_0\_24                  (KEY\_D\_0\_22 + 1)}
-00079 \textcolor{preprocessor}{#define KEY\_D\_0\_36                  (KEY\_D\_0\_24 + 1)}
-00080 \textcolor{preprocessor}{#define KEY\_D\_0\_52                  (KEY\_D\_0\_36 + 1)}
-00081 \textcolor{preprocessor}{#define KEY\_D\_0\_96                  (KEY\_D\_0\_52 + 1)}
-00082 \textcolor{preprocessor}{#define KEY\_D\_0\_104                 (KEY\_D\_0\_96 + 1)}
-00083 \textcolor{preprocessor}{#define KEY\_D\_0\_108                 (KEY\_D\_0\_104 + 1)}
-00084 \textcolor{preprocessor}{#define KEY\_D\_0\_163                 (KEY\_D\_0\_108 + 1)}
-00085 \textcolor{preprocessor}{#define KEY\_D\_0\_188                 (KEY\_D\_0\_163 + 1)}
-00086 \textcolor{preprocessor}{#define KEY\_D\_0\_192                 (KEY\_D\_0\_188 + 1)}
-00087 \textcolor{preprocessor}{#define KEY\_D\_0\_224                 (KEY\_D\_0\_192 + 1)}
-00088 \textcolor{preprocessor}{#define KEY\_D\_0\_228                 (KEY\_D\_0\_224 + 1)}
-00089 \textcolor{preprocessor}{#define KEY\_D\_0\_232                 (KEY\_D\_0\_228 + 1)}
-00090 \textcolor{preprocessor}{#define KEY\_D\_0\_236                 (KEY\_D\_0\_232 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00077}{}\hyperlink{dmp_key_8h_af0873c8b363dd566dc21032860193300}{00077} \textcolor{preprocessor}{#define KEY\_D\_0\_22                  (KEY\_TEMPLABEL + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00078}{}\hyperlink{dmp_key_8h_a831c958c87b23c6216e8385cda7de3b6}{00078} \textcolor{preprocessor}{#define KEY\_D\_0\_24                  (KEY\_D\_0\_22 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00079}{}\hyperlink{dmp_key_8h_a6bfccb29906ebc85dfa35e9c88e15b9d}{00079} \textcolor{preprocessor}{#define KEY\_D\_0\_36                  (KEY\_D\_0\_24 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00080}{}\hyperlink{dmp_key_8h_a326762aac6aaf7e3aac39556229bb999}{00080} \textcolor{preprocessor}{#define KEY\_D\_0\_52                  (KEY\_D\_0\_36 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00081}{}\hyperlink{dmp_key_8h_a80b93be0fea044def553e18670d5032d}{00081} \textcolor{preprocessor}{#define KEY\_D\_0\_96                  (KEY\_D\_0\_52 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00082}{}\hyperlink{dmp_key_8h_a35d749f51ec4fcbf2abd7cc2c4ea5a2d}{00082} \textcolor{preprocessor}{#define KEY\_D\_0\_104                 (KEY\_D\_0\_96 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00083}{}\hyperlink{dmp_key_8h_a67f29e65b6421d7d8c750389508c904d}{00083} \textcolor{preprocessor}{#define KEY\_D\_0\_108                 (KEY\_D\_0\_104 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00084}{}\hyperlink{dmp_key_8h_aa062d41f202bcb4dc036c2f65115a169}{00084} \textcolor{preprocessor}{#define KEY\_D\_0\_163                 (KEY\_D\_0\_108 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00085}{}\hyperlink{dmp_key_8h_a0cdb5b848e5771c1e18e11513628806d}{00085} \textcolor{preprocessor}{#define KEY\_D\_0\_188                 (KEY\_D\_0\_163 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00086}{}\hyperlink{dmp_key_8h_ace2bc6282ca8c6e3a226d81bc0a4f2f1}{00086} \textcolor{preprocessor}{#define KEY\_D\_0\_192                 (KEY\_D\_0\_188 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00087}{}\hyperlink{dmp_key_8h_ac793f65090ac62fdc8821cf59fb1ec5a}{00087} \textcolor{preprocessor}{#define KEY\_D\_0\_224                 (KEY\_D\_0\_192 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00088}{}\hyperlink{dmp_key_8h_adcdba2672a0bf9d1c519c5101351160c}{00088} \textcolor{preprocessor}{#define KEY\_D\_0\_228                 (KEY\_D\_0\_224 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00089}{}\hyperlink{dmp_key_8h_a7c10b1c90336275cd7055e9e7eb71f53}{00089} \textcolor{preprocessor}{#define KEY\_D\_0\_232                 (KEY\_D\_0\_228 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00090}{}\hyperlink{dmp_key_8h_a7f3b517a452bb2eb6170a65153042224}{00090} \textcolor{preprocessor}{#define KEY\_D\_0\_236                 (KEY\_D\_0\_232 + 1)}
 00091 
-00092 \textcolor{preprocessor}{#define KEY\_DMP\_PREVPTAT            (KEY\_D\_0\_236 + 1)}
-00093 \textcolor{preprocessor}{#define KEY\_D\_1\_2                   (KEY\_DMP\_PREVPTAT + 1)}
-00094 \textcolor{preprocessor}{#define KEY\_D\_1\_4                   (KEY\_D\_1\_2 + 1)}
-00095 \textcolor{preprocessor}{#define KEY\_D\_1\_8                   (KEY\_D\_1\_4 + 1)}
-00096 \textcolor{preprocessor}{#define KEY\_D\_1\_10                  (KEY\_D\_1\_8 + 1)}
-00097 \textcolor{preprocessor}{#define KEY\_D\_1\_24                  (KEY\_D\_1\_10 + 1)}
-00098 \textcolor{preprocessor}{#define KEY\_D\_1\_28                  (KEY\_D\_1\_24 + 1)}
-00099 \textcolor{preprocessor}{#define KEY\_D\_1\_36                  (KEY\_D\_1\_28 + 1)}
-00100 \textcolor{preprocessor}{#define KEY\_D\_1\_40                  (KEY\_D\_1\_36 + 1)}
-00101 \textcolor{preprocessor}{#define KEY\_D\_1\_44                  (KEY\_D\_1\_40 + 1)}
-00102 \textcolor{preprocessor}{#define KEY\_D\_1\_72                  (KEY\_D\_1\_44 + 1)}
-00103 \textcolor{preprocessor}{#define KEY\_D\_1\_74                  (KEY\_D\_1\_72 + 1)}
-00104 \textcolor{preprocessor}{#define KEY\_D\_1\_79                  (KEY\_D\_1\_74 + 1)}
-00105 \textcolor{preprocessor}{#define KEY\_D\_1\_88                  (KEY\_D\_1\_79 + 1)}
-00106 \textcolor{preprocessor}{#define KEY\_D\_1\_90                  (KEY\_D\_1\_88 + 1)}
-00107 \textcolor{preprocessor}{#define KEY\_D\_1\_92                  (KEY\_D\_1\_90 + 1)}
-00108 \textcolor{preprocessor}{#define KEY\_D\_1\_96                  (KEY\_D\_1\_92 + 1)}
-00109 \textcolor{preprocessor}{#define KEY\_D\_1\_98                  (KEY\_D\_1\_96 + 1)}
-00110 \textcolor{preprocessor}{#define KEY\_D\_1\_100                 (KEY\_D\_1\_98 + 1)}
-00111 \textcolor{preprocessor}{#define KEY\_D\_1\_106                 (KEY\_D\_1\_100 + 1)}
-00112 \textcolor{preprocessor}{#define KEY\_D\_1\_108                 (KEY\_D\_1\_106 + 1)}
-00113 \textcolor{preprocessor}{#define KEY\_D\_1\_112                 (KEY\_D\_1\_108 + 1)}
-00114 \textcolor{preprocessor}{#define KEY\_D\_1\_128                 (KEY\_D\_1\_112 + 1)}
-00115 \textcolor{preprocessor}{#define KEY\_D\_1\_152                 (KEY\_D\_1\_128 + 1)}
-00116 \textcolor{preprocessor}{#define KEY\_D\_1\_160                 (KEY\_D\_1\_152 + 1)}
-00117 \textcolor{preprocessor}{#define KEY\_D\_1\_168                 (KEY\_D\_1\_160 + 1)}
-00118 \textcolor{preprocessor}{#define KEY\_D\_1\_175                 (KEY\_D\_1\_168 + 1)}
-00119 \textcolor{preprocessor}{#define KEY\_D\_1\_176                 (KEY\_D\_1\_175 + 1)}
-00120 \textcolor{preprocessor}{#define KEY\_D\_1\_178                 (KEY\_D\_1\_176 + 1)}
-00121 \textcolor{preprocessor}{#define KEY\_D\_1\_179                 (KEY\_D\_1\_178 + 1)}
-00122 \textcolor{preprocessor}{#define KEY\_D\_1\_218                 (KEY\_D\_1\_179 + 1)}
-00123 \textcolor{preprocessor}{#define KEY\_D\_1\_232                 (KEY\_D\_1\_218 + 1)}
-00124 \textcolor{preprocessor}{#define KEY\_D\_1\_236                 (KEY\_D\_1\_232 + 1)}
-00125 \textcolor{preprocessor}{#define KEY\_D\_1\_240                 (KEY\_D\_1\_236 + 1)}
-00126 \textcolor{preprocessor}{#define KEY\_D\_1\_244                 (KEY\_D\_1\_240 + 1)}
-00127 \textcolor{preprocessor}{#define KEY\_D\_1\_250                 (KEY\_D\_1\_244 + 1)}
-00128 \textcolor{preprocessor}{#define KEY\_D\_1\_252                 (KEY\_D\_1\_250 + 1)}
-00129 \textcolor{preprocessor}{#define KEY\_D\_2\_12                  (KEY\_D\_1\_252 + 1)}
-00130 \textcolor{preprocessor}{#define KEY\_D\_2\_96                  (KEY\_D\_2\_12 + 1)}
-00131 \textcolor{preprocessor}{#define KEY\_D\_2\_108                 (KEY\_D\_2\_96 + 1)}
-00132 \textcolor{preprocessor}{#define KEY\_D\_2\_208                 (KEY\_D\_2\_108 + 1)}
-00133 \textcolor{preprocessor}{#define KEY\_FLICK\_MSG               (KEY\_D\_2\_208 + 1)}
-00134 \textcolor{preprocessor}{#define KEY\_FLICK\_COUNTER           (KEY\_FLICK\_MSG + 1)}
-00135 \textcolor{preprocessor}{#define KEY\_FLICK\_LOWER             (KEY\_FLICK\_COUNTER + 1)}
-00136 \textcolor{preprocessor}{#define KEY\_CFG\_FLICK\_IN            (KEY\_FLICK\_LOWER + 1)}
-00137 \textcolor{preprocessor}{#define KEY\_FLICK\_UPPER             (KEY\_CFG\_FLICK\_IN + 1)}
-00138 \textcolor{preprocessor}{#define KEY\_CGNOTICE\_INTR           (KEY\_FLICK\_UPPER + 1)}
-00139 \textcolor{preprocessor}{#define KEY\_D\_2\_224                 (KEY\_CGNOTICE\_INTR + 1)}
-00140 \textcolor{preprocessor}{#define KEY\_D\_2\_244                 (KEY\_D\_2\_224 + 1)}
-00141 \textcolor{preprocessor}{#define KEY\_D\_2\_248                 (KEY\_D\_2\_244 + 1)}
-00142 \textcolor{preprocessor}{#define KEY\_D\_2\_252                 (KEY\_D\_2\_248 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00092}{}\hyperlink{dmp_key_8h_a4f1ffa03a5aaadae912f77bea3aa1e45}{00092} \textcolor{preprocessor}{#define KEY\_DMP\_PREVPTAT            (KEY\_D\_0\_236 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00093}{}\hyperlink{dmp_key_8h_a8443c7d0fb74a7bbde9eb544488784e5}{00093} \textcolor{preprocessor}{#define KEY\_D\_1\_2                   (KEY\_DMP\_PREVPTAT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00094}{}\hyperlink{dmp_key_8h_a697743e37a7618f01dcfaa98e1d8c2fc}{00094} \textcolor{preprocessor}{#define KEY\_D\_1\_4                   (KEY\_D\_1\_2 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00095}{}\hyperlink{dmp_key_8h_a76873cc5494a3dd7391efed751830f1d}{00095} \textcolor{preprocessor}{#define KEY\_D\_1\_8                   (KEY\_D\_1\_4 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00096}{}\hyperlink{dmp_key_8h_a9b6ded7db3adb2728d969d09a5ff70be}{00096} \textcolor{preprocessor}{#define KEY\_D\_1\_10                  (KEY\_D\_1\_8 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00097}{}\hyperlink{dmp_key_8h_a6d0900bec758b034e695b2897daface3}{00097} \textcolor{preprocessor}{#define KEY\_D\_1\_24                  (KEY\_D\_1\_10 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00098}{}\hyperlink{dmp_key_8h_a8196693e40634a0707d95de47c101552}{00098} \textcolor{preprocessor}{#define KEY\_D\_1\_28                  (KEY\_D\_1\_24 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00099}{}\hyperlink{dmp_key_8h_a56d9ae995492efaccaa678b1f3deb3ab}{00099} \textcolor{preprocessor}{#define KEY\_D\_1\_36                  (KEY\_D\_1\_28 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00100}{}\hyperlink{dmp_key_8h_a1cfb10bb01bcc73b68a499d6d6ece59d}{00100} \textcolor{preprocessor}{#define KEY\_D\_1\_40                  (KEY\_D\_1\_36 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00101}{}\hyperlink{dmp_key_8h_a0775bcb966fd3f62d333362114fbbb0b}{00101} \textcolor{preprocessor}{#define KEY\_D\_1\_44                  (KEY\_D\_1\_40 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00102}{}\hyperlink{dmp_key_8h_a82875b8cc5fa54998b772bcc70aacb49}{00102} \textcolor{preprocessor}{#define KEY\_D\_1\_72                  (KEY\_D\_1\_44 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00103}{}\hyperlink{dmp_key_8h_a713bb0f226cdbd71d9905f442fcb6fc1}{00103} \textcolor{preprocessor}{#define KEY\_D\_1\_74                  (KEY\_D\_1\_72 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00104}{}\hyperlink{dmp_key_8h_a4ff00907f1143a9b22daf6ad549fae62}{00104} \textcolor{preprocessor}{#define KEY\_D\_1\_79                  (KEY\_D\_1\_74 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00105}{}\hyperlink{dmp_key_8h_a2ec7e177e414126830d7455007d275ea}{00105} \textcolor{preprocessor}{#define KEY\_D\_1\_88                  (KEY\_D\_1\_79 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00106}{}\hyperlink{dmp_key_8h_a1799daafc7f1c0c4ce5f3c7811e2f70c}{00106} \textcolor{preprocessor}{#define KEY\_D\_1\_90                  (KEY\_D\_1\_88 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00107}{}\hyperlink{dmp_key_8h_add4af5ac6126e371445436c720b0ca38}{00107} \textcolor{preprocessor}{#define KEY\_D\_1\_92                  (KEY\_D\_1\_90 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00108}{}\hyperlink{dmp_key_8h_ac6344fb39e1cba370c91ac2147eade2e}{00108} \textcolor{preprocessor}{#define KEY\_D\_1\_96                  (KEY\_D\_1\_92 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00109}{}\hyperlink{dmp_key_8h_a26d9fb22968140339cec4da5c6feb8b1}{00109} \textcolor{preprocessor}{#define KEY\_D\_1\_98                  (KEY\_D\_1\_96 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00110}{}\hyperlink{dmp_key_8h_a31535214bb1689eb7450b5671e285f91}{00110} \textcolor{preprocessor}{#define KEY\_D\_1\_100                 (KEY\_D\_1\_98 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00111}{}\hyperlink{dmp_key_8h_a9def206df3655f69506bf353d0518745}{00111} \textcolor{preprocessor}{#define KEY\_D\_1\_106                 (KEY\_D\_1\_100 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00112}{}\hyperlink{dmp_key_8h_accddb692fb2898367b88e281b73d9ce6}{00112} \textcolor{preprocessor}{#define KEY\_D\_1\_108                 (KEY\_D\_1\_106 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00113}{}\hyperlink{dmp_key_8h_ac5c45471a712eb2970c85e03a4ab4f7d}{00113} \textcolor{preprocessor}{#define KEY\_D\_1\_112                 (KEY\_D\_1\_108 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00114}{}\hyperlink{dmp_key_8h_ab17dc55a2d320dec80a00660e8ee0a75}{00114} \textcolor{preprocessor}{#define KEY\_D\_1\_128                 (KEY\_D\_1\_112 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00115}{}\hyperlink{dmp_key_8h_a1e90238af4b07d64fe95d9d2e95d6021}{00115} \textcolor{preprocessor}{#define KEY\_D\_1\_152                 (KEY\_D\_1\_128 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00116}{}\hyperlink{dmp_key_8h_aa715b843e85e6844277c39aef7b6b929}{00116} \textcolor{preprocessor}{#define KEY\_D\_1\_160                 (KEY\_D\_1\_152 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00117}{}\hyperlink{dmp_key_8h_a69a742a9b4ee8a5ed4109b93e85604b5}{00117} \textcolor{preprocessor}{#define KEY\_D\_1\_168                 (KEY\_D\_1\_160 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00118}{}\hyperlink{dmp_key_8h_ab6ca1f2a7510ffc9c23858f49843af88}{00118} \textcolor{preprocessor}{#define KEY\_D\_1\_175                 (KEY\_D\_1\_168 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00119}{}\hyperlink{dmp_key_8h_aeff930bd54cde17b6cf381bc583bfc2d}{00119} \textcolor{preprocessor}{#define KEY\_D\_1\_176                 (KEY\_D\_1\_175 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00120}{}\hyperlink{dmp_key_8h_a24dd0fa1bca546b44417d8437e16aa00}{00120} \textcolor{preprocessor}{#define KEY\_D\_1\_178                 (KEY\_D\_1\_176 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00121}{}\hyperlink{dmp_key_8h_a30bbe5e12b3c138038fee0807af3a9ca}{00121} \textcolor{preprocessor}{#define KEY\_D\_1\_179                 (KEY\_D\_1\_178 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00122}{}\hyperlink{dmp_key_8h_a194231f69c028b220d737062f0ccbe75}{00122} \textcolor{preprocessor}{#define KEY\_D\_1\_218                 (KEY\_D\_1\_179 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00123}{}\hyperlink{dmp_key_8h_af87debf46120ddd419f199bd5e16cf19}{00123} \textcolor{preprocessor}{#define KEY\_D\_1\_232                 (KEY\_D\_1\_218 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00124}{}\hyperlink{dmp_key_8h_ab6c43f0cc8475834e7e5d6e728da7bb2}{00124} \textcolor{preprocessor}{#define KEY\_D\_1\_236                 (KEY\_D\_1\_232 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00125}{}\hyperlink{dmp_key_8h_a383c41677cba7f92439593b54348ce76}{00125} \textcolor{preprocessor}{#define KEY\_D\_1\_240                 (KEY\_D\_1\_236 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00126}{}\hyperlink{dmp_key_8h_afc87225098310289bbe1fec4f1f65dcf}{00126} \textcolor{preprocessor}{#define KEY\_D\_1\_244                 (KEY\_D\_1\_240 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00127}{}\hyperlink{dmp_key_8h_a99b10aa6e7b2ac6eb9aebabf938a7532}{00127} \textcolor{preprocessor}{#define KEY\_D\_1\_250                 (KEY\_D\_1\_244 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00128}{}\hyperlink{dmp_key_8h_a211af07d226946ad2c16ee2cb3875056}{00128} \textcolor{preprocessor}{#define KEY\_D\_1\_252                 (KEY\_D\_1\_250 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00129}{}\hyperlink{dmp_key_8h_a1b907f168ae88396be0f6020bd1a9c16}{00129} \textcolor{preprocessor}{#define KEY\_D\_2\_12                  (KEY\_D\_1\_252 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00130}{}\hyperlink{dmp_key_8h_a12b601807e4469fd558c90b14cbca8a8}{00130} \textcolor{preprocessor}{#define KEY\_D\_2\_96                  (KEY\_D\_2\_12 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00131}{}\hyperlink{dmp_key_8h_add19d31a65a00b17e9551c5bc5059793}{00131} \textcolor{preprocessor}{#define KEY\_D\_2\_108                 (KEY\_D\_2\_96 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00132}{}\hyperlink{dmp_key_8h_ab33e81a3e1768a6fa5e153cd30a7196a}{00132} \textcolor{preprocessor}{#define KEY\_D\_2\_208                 (KEY\_D\_2\_108 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00133}{}\hyperlink{dmp_key_8h_a4e087dbe9371b396ec1db7f3162cfecc}{00133} \textcolor{preprocessor}{#define KEY\_FLICK\_MSG               (KEY\_D\_2\_208 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00134}{}\hyperlink{dmp_key_8h_a9819ea4a86d606453cffa54ce76aaab8}{00134} \textcolor{preprocessor}{#define KEY\_FLICK\_COUNTER           (KEY\_FLICK\_MSG + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00135}{}\hyperlink{dmp_key_8h_ad014d1d1e25860c08d35e8bdc10bba8c}{00135} \textcolor{preprocessor}{#define KEY\_FLICK\_LOWER             (KEY\_FLICK\_COUNTER + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00136}{}\hyperlink{dmp_key_8h_a0bf1aa125523ba79e89fd86f3827878a}{00136} \textcolor{preprocessor}{#define KEY\_CFG\_FLICK\_IN            (KEY\_FLICK\_LOWER + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00137}{}\hyperlink{dmp_key_8h_a0bec5499d24ecfdecb16902a481ff99f}{00137} \textcolor{preprocessor}{#define KEY\_FLICK\_UPPER             (KEY\_CFG\_FLICK\_IN + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00138}{}\hyperlink{dmp_key_8h_ae065cd2d13551072f4583ed8d8d1f2d2}{00138} \textcolor{preprocessor}{#define KEY\_CGNOTICE\_INTR           (KEY\_FLICK\_UPPER + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00139}{}\hyperlink{dmp_key_8h_a347a636f558e3dbe34416cd0bf1c2553}{00139} \textcolor{preprocessor}{#define KEY\_D\_2\_224                 (KEY\_CGNOTICE\_INTR + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00140}{}\hyperlink{dmp_key_8h_ae6367d55927a5d33025e26cdb2802156}{00140} \textcolor{preprocessor}{#define KEY\_D\_2\_244                 (KEY\_D\_2\_224 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00141}{}\hyperlink{dmp_key_8h_a88cb8e3e64bc8a2fe2ff8eaab144ee9e}{00141} \textcolor{preprocessor}{#define KEY\_D\_2\_248                 (KEY\_D\_2\_244 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00142}{}\hyperlink{dmp_key_8h_abb1983e9ff8a9ea79e3f25c25d7abd40}{00142} \textcolor{preprocessor}{#define KEY\_D\_2\_252                 (KEY\_D\_2\_248 + 1)}
 00143 
-00144 \textcolor{preprocessor}{#define KEY\_D\_GYRO\_BIAS\_X               (KEY\_D\_2\_252 + 1)}
-00145 \textcolor{preprocessor}{#define KEY\_D\_GYRO\_BIAS\_Y               (KEY\_D\_GYRO\_BIAS\_X + 1)}
-00146 \textcolor{preprocessor}{#define KEY\_D\_GYRO\_BIAS\_Z               (KEY\_D\_GYRO\_BIAS\_Y + 1)}
-00147 \textcolor{preprocessor}{#define KEY\_D\_ACC\_BIAS\_X                (KEY\_D\_GYRO\_BIAS\_Z + 1)}
-00148 \textcolor{preprocessor}{#define KEY\_D\_ACC\_BIAS\_Y                (KEY\_D\_ACC\_BIAS\_X + 1)}
-00149 \textcolor{preprocessor}{#define KEY\_D\_ACC\_BIAS\_Z                (KEY\_D\_ACC\_BIAS\_Y + 1)}
-00150 \textcolor{preprocessor}{#define KEY\_D\_GYRO\_ENABLE               (KEY\_D\_ACC\_BIAS\_Z + 1)}
-00151 \textcolor{preprocessor}{#define KEY\_D\_ACCEL\_ENABLE              (KEY\_D\_GYRO\_ENABLE + 1)}
-00152 \textcolor{preprocessor}{#define KEY\_D\_QUAT\_ENABLE               (KEY\_D\_ACCEL\_ENABLE +1)}
-00153 \textcolor{preprocessor}{#define KEY\_D\_OUTPUT\_ENABLE             (KEY\_D\_QUAT\_ENABLE + 1)}
-00154 \textcolor{preprocessor}{#define KEY\_D\_CR\_TIME\_G                 (KEY\_D\_OUTPUT\_ENABLE + 1)}
-00155 \textcolor{preprocessor}{#define KEY\_D\_CR\_TIME\_A                 (KEY\_D\_CR\_TIME\_G + 1)}
-00156 \textcolor{preprocessor}{#define KEY\_D\_CR\_TIME\_Q                 (KEY\_D\_CR\_TIME\_A + 1)}
-00157 \textcolor{preprocessor}{#define KEY\_D\_CS\_TAX                    (KEY\_D\_CR\_TIME\_Q + 1)}
-00158 \textcolor{preprocessor}{#define KEY\_D\_CS\_TAY                    (KEY\_D\_CS\_TAX + 1)}
-00159 \textcolor{preprocessor}{#define KEY\_D\_CS\_TAZ                    (KEY\_D\_CS\_TAY + 1)}
-00160 \textcolor{preprocessor}{#define KEY\_D\_CS\_TGX                    (KEY\_D\_CS\_TAZ + 1)}
-00161 \textcolor{preprocessor}{#define KEY\_D\_CS\_TGY                    (KEY\_D\_CS\_TGX + 1)}
-00162 \textcolor{preprocessor}{#define KEY\_D\_CS\_TGZ                    (KEY\_D\_CS\_TGY + 1)}
-00163 \textcolor{preprocessor}{#define KEY\_D\_CS\_TQ0                    (KEY\_D\_CS\_TGZ + 1)}
-00164 \textcolor{preprocessor}{#define KEY\_D\_CS\_TQ1                    (KEY\_D\_CS\_TQ0 + 1)}
-00165 \textcolor{preprocessor}{#define KEY\_D\_CS\_TQ2                    (KEY\_D\_CS\_TQ1 + 1)}
-00166 \textcolor{preprocessor}{#define KEY\_D\_CS\_TQ3                    (KEY\_D\_CS\_TQ2 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00144}{}\hyperlink{dmp_key_8h_aef766eac70bd5f9b79063b218defdb75}{00144} \textcolor{preprocessor}{#define KEY\_D\_GYRO\_BIAS\_X               (KEY\_D\_2\_252 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00145}{}\hyperlink{dmp_key_8h_a6b4c25f825b632321adbb3f6a2e4a24e}{00145} \textcolor{preprocessor}{#define KEY\_D\_GYRO\_BIAS\_Y               (KEY\_D\_GYRO\_BIAS\_X + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00146}{}\hyperlink{dmp_key_8h_aacbde5b7bf772a13472196e8a39cd4a3}{00146} \textcolor{preprocessor}{#define KEY\_D\_GYRO\_BIAS\_Z               (KEY\_D\_GYRO\_BIAS\_Y + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00147}{}\hyperlink{dmp_key_8h_ae9e554e3ebbcf665607d9be691bd67c3}{00147} \textcolor{preprocessor}{#define KEY\_D\_ACC\_BIAS\_X                (KEY\_D\_GYRO\_BIAS\_Z + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00148}{}\hyperlink{dmp_key_8h_a5428e476798576d70c877d9e681da541}{00148} \textcolor{preprocessor}{#define KEY\_D\_ACC\_BIAS\_Y                (KEY\_D\_ACC\_BIAS\_X + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00149}{}\hyperlink{dmp_key_8h_aee86cca74b68b4f54f8e939a4419f7b4}{00149} \textcolor{preprocessor}{#define KEY\_D\_ACC\_BIAS\_Z                (KEY\_D\_ACC\_BIAS\_Y + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00150}{}\hyperlink{dmp_key_8h_a0dd3a972304419a5326d112028fd83a6}{00150} \textcolor{preprocessor}{#define KEY\_D\_GYRO\_ENABLE               (KEY\_D\_ACC\_BIAS\_Z + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00151}{}\hyperlink{dmp_key_8h_ad0155ccde405af83a10eb2793b33b56a}{00151} \textcolor{preprocessor}{#define KEY\_D\_ACCEL\_ENABLE              (KEY\_D\_GYRO\_ENABLE + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00152}{}\hyperlink{dmp_key_8h_a6fa7c9b483cce82b1ec3a36fe5d0b9ab}{00152} \textcolor{preprocessor}{#define KEY\_D\_QUAT\_ENABLE               (KEY\_D\_ACCEL\_ENABLE +1)}
+\hypertarget{dmp_key_8h_source.tex_l00153}{}\hyperlink{dmp_key_8h_ae710188d91f576d2cca5e9a492cb853d}{00153} \textcolor{preprocessor}{#define KEY\_D\_OUTPUT\_ENABLE             (KEY\_D\_QUAT\_ENABLE + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00154}{}\hyperlink{dmp_key_8h_afa242687c09ebc82383746057ddb3350}{00154} \textcolor{preprocessor}{#define KEY\_D\_CR\_TIME\_G                 (KEY\_D\_OUTPUT\_ENABLE + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00155}{}\hyperlink{dmp_key_8h_ac676932e91ed7a745409c566be915de1}{00155} \textcolor{preprocessor}{#define KEY\_D\_CR\_TIME\_A                 (KEY\_D\_CR\_TIME\_G + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00156}{}\hyperlink{dmp_key_8h_a992ffb967c87f52515786285afd0294c}{00156} \textcolor{preprocessor}{#define KEY\_D\_CR\_TIME\_Q                 (KEY\_D\_CR\_TIME\_A + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00157}{}\hyperlink{dmp_key_8h_af1885d9c431f01f338c8ba949c3b5ab7}{00157} \textcolor{preprocessor}{#define KEY\_D\_CS\_TAX                    (KEY\_D\_CR\_TIME\_Q + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00158}{}\hyperlink{dmp_key_8h_ac8ea06ca1df86193290ed973995b600b}{00158} \textcolor{preprocessor}{#define KEY\_D\_CS\_TAY                    (KEY\_D\_CS\_TAX + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00159}{}\hyperlink{dmp_key_8h_aca381a83beb9fe70bc1f691f46af90da}{00159} \textcolor{preprocessor}{#define KEY\_D\_CS\_TAZ                    (KEY\_D\_CS\_TAY + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00160}{}\hyperlink{dmp_key_8h_a0cc1bbdb7c88767dde6752df7eceb9a1}{00160} \textcolor{preprocessor}{#define KEY\_D\_CS\_TGX                    (KEY\_D\_CS\_TAZ + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00161}{}\hyperlink{dmp_key_8h_aaf379b295a074e258f3b2830899c8dd1}{00161} \textcolor{preprocessor}{#define KEY\_D\_CS\_TGY                    (KEY\_D\_CS\_TGX + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00162}{}\hyperlink{dmp_key_8h_a01094a31362254939019ae7377499c83}{00162} \textcolor{preprocessor}{#define KEY\_D\_CS\_TGZ                    (KEY\_D\_CS\_TGY + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00163}{}\hyperlink{dmp_key_8h_a6153e0a0b75906eb642386010662852d}{00163} \textcolor{preprocessor}{#define KEY\_D\_CS\_TQ0                    (KEY\_D\_CS\_TGZ + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00164}{}\hyperlink{dmp_key_8h_a107a6b6fcc3d6b96fc2edb0862bf5862}{00164} \textcolor{preprocessor}{#define KEY\_D\_CS\_TQ1                    (KEY\_D\_CS\_TQ0 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00165}{}\hyperlink{dmp_key_8h_a237f4791eec9ec3105994b251c967d92}{00165} \textcolor{preprocessor}{#define KEY\_D\_CS\_TQ2                    (KEY\_D\_CS\_TQ1 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00166}{}\hyperlink{dmp_key_8h_a11f4cdfb5db8624c11a0cedce6d5ce5a}{00166} \textcolor{preprocessor}{#define KEY\_D\_CS\_TQ3                    (KEY\_D\_CS\_TQ2 + 1)}
 00167 
 00168 \textcolor{comment}{/* Compass keys */}
-00169 \textcolor{preprocessor}{#define KEY\_CPASS\_BIAS\_X            (KEY\_D\_CS\_TQ3 + 1)}
-00170 \textcolor{preprocessor}{#define KEY\_CPASS\_BIAS\_Y            (KEY\_CPASS\_BIAS\_X + 1)}
-00171 \textcolor{preprocessor}{#define KEY\_CPASS\_BIAS\_Z            (KEY\_CPASS\_BIAS\_Y + 1)}
-00172 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_00            (KEY\_CPASS\_BIAS\_Z + 1)}
-00173 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_01            (KEY\_CPASS\_MTX\_00 + 1)}
-00174 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_02            (KEY\_CPASS\_MTX\_01 + 1)}
-00175 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_10            (KEY\_CPASS\_MTX\_02 + 1)}
-00176 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_11            (KEY\_CPASS\_MTX\_10 + 1)}
-00177 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_12            (KEY\_CPASS\_MTX\_11 + 1)}
-00178 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_20            (KEY\_CPASS\_MTX\_12 + 1)}
-00179 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_21            (KEY\_CPASS\_MTX\_20 + 1)}
-00180 \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_22            (KEY\_CPASS\_MTX\_21 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00169}{}\hyperlink{dmp_key_8h_a2da3f36266d9b105a92dc81c7b5961ce}{00169} \textcolor{preprocessor}{#define KEY\_CPASS\_BIAS\_X            (KEY\_D\_CS\_TQ3 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00170}{}\hyperlink{dmp_key_8h_a46b38dc4a2ff0c9b823218316f80ed6f}{00170} \textcolor{preprocessor}{#define KEY\_CPASS\_BIAS\_Y            (KEY\_CPASS\_BIAS\_X + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00171}{}\hyperlink{dmp_key_8h_a9b42236436c858d2de49063bc0c2465f}{00171} \textcolor{preprocessor}{#define KEY\_CPASS\_BIAS\_Z            (KEY\_CPASS\_BIAS\_Y + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00172}{}\hyperlink{dmp_key_8h_abe89c3a827ff9493140eaa27aef71933}{00172} \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_00            (KEY\_CPASS\_BIAS\_Z + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00173}{}\hyperlink{dmp_key_8h_acfc365e5be51d99a6c34421908dc1861}{00173} \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_01            (KEY\_CPASS\_MTX\_00 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00174}{}\hyperlink{dmp_key_8h_aa952b7623929bd6bb0b1373ff9834752}{00174} \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_02            (KEY\_CPASS\_MTX\_01 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00175}{}\hyperlink{dmp_key_8h_a8c65416f2758458dd5fd3a3bd1846813}{00175} \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_10            (KEY\_CPASS\_MTX\_02 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00176}{}\hyperlink{dmp_key_8h_ad9d4ff38897023052b584c07634e9997}{00176} \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_11            (KEY\_CPASS\_MTX\_10 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00177}{}\hyperlink{dmp_key_8h_ab523943c496c23d274804b08edf0c2a0}{00177} \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_12            (KEY\_CPASS\_MTX\_11 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00178}{}\hyperlink{dmp_key_8h_add9d93f2020678b2c0a1037f97fc31c9}{00178} \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_20            (KEY\_CPASS\_MTX\_12 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00179}{}\hyperlink{dmp_key_8h_a9f75392213c1292ef83d3e5223500e57}{00179} \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_21            (KEY\_CPASS\_MTX\_20 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00180}{}\hyperlink{dmp_key_8h_a106019b24d04189a83cbe262d0b4f881}{00180} \textcolor{preprocessor}{#define KEY\_CPASS\_MTX\_22            (KEY\_CPASS\_MTX\_21 + 1)}
 00181 
 00182 \textcolor{comment}{/* Gesture Keys */}
-00183 \textcolor{preprocessor}{#define KEY\_DMP\_TAPW\_MIN            (KEY\_CPASS\_MTX\_22 + 1)}
-00184 \textcolor{preprocessor}{#define KEY\_DMP\_TAP\_THR\_X           (KEY\_DMP\_TAPW\_MIN + 1)}
-00185 \textcolor{preprocessor}{#define KEY\_DMP\_TAP\_THR\_Y           (KEY\_DMP\_TAP\_THR\_X + 1)}
-00186 \textcolor{preprocessor}{#define KEY\_DMP\_TAP\_THR\_Z           (KEY\_DMP\_TAP\_THR\_Y + 1)}
-00187 \textcolor{preprocessor}{#define KEY\_DMP\_SH\_TH\_Y             (KEY\_DMP\_TAP\_THR\_Z + 1)}
-00188 \textcolor{preprocessor}{#define KEY\_DMP\_SH\_TH\_X             (KEY\_DMP\_SH\_TH\_Y + 1)}
-00189 \textcolor{preprocessor}{#define KEY\_DMP\_SH\_TH\_Z             (KEY\_DMP\_SH\_TH\_X + 1)}
-00190 \textcolor{preprocessor}{#define KEY\_DMP\_ORIENT              (KEY\_DMP\_SH\_TH\_Z + 1)}
-00191 \textcolor{preprocessor}{#define KEY\_D\_ACT0                  (KEY\_DMP\_ORIENT + 1)}
-00192 \textcolor{preprocessor}{#define KEY\_D\_ACSX                  (KEY\_D\_ACT0 + 1)}
-00193 \textcolor{preprocessor}{#define KEY\_D\_ACSY                  (KEY\_D\_ACSX + 1)}
-00194 \textcolor{preprocessor}{#define KEY\_D\_ACSZ                  (KEY\_D\_ACSY + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00183}{}\hyperlink{dmp_key_8h_afe62349990c597a5f753eef233885e9d}{00183} \textcolor{preprocessor}{#define KEY\_DMP\_TAPW\_MIN            (KEY\_CPASS\_MTX\_22 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00184}{}\hyperlink{dmp_key_8h_a2fe4310934a466f948cc0a52fabf8a10}{00184} \textcolor{preprocessor}{#define KEY\_DMP\_TAP\_THR\_X           (KEY\_DMP\_TAPW\_MIN + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00185}{}\hyperlink{dmp_key_8h_a0c33b33024b7b91167510ee7dff3231a}{00185} \textcolor{preprocessor}{#define KEY\_DMP\_TAP\_THR\_Y           (KEY\_DMP\_TAP\_THR\_X + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00186}{}\hyperlink{dmp_key_8h_a79f2fd731f5be0e4ed4572f2d64de318}{00186} \textcolor{preprocessor}{#define KEY\_DMP\_TAP\_THR\_Z           (KEY\_DMP\_TAP\_THR\_Y + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00187}{}\hyperlink{dmp_key_8h_a4a1d4465e08051e77aec004995ff8ed2}{00187} \textcolor{preprocessor}{#define KEY\_DMP\_SH\_TH\_Y             (KEY\_DMP\_TAP\_THR\_Z + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00188}{}\hyperlink{dmp_key_8h_a53e640147baaac161809f81c7a13293a}{00188} \textcolor{preprocessor}{#define KEY\_DMP\_SH\_TH\_X             (KEY\_DMP\_SH\_TH\_Y + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00189}{}\hyperlink{dmp_key_8h_a6d3d587a63dd8db885121376f3d9de93}{00189} \textcolor{preprocessor}{#define KEY\_DMP\_SH\_TH\_Z             (KEY\_DMP\_SH\_TH\_X + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00190}{}\hyperlink{dmp_key_8h_ac41087ebcc3dc0d4cd083a1ee71e01d8}{00190} \textcolor{preprocessor}{#define KEY\_DMP\_ORIENT              (KEY\_DMP\_SH\_TH\_Z + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00191}{}\hyperlink{dmp_key_8h_ab66e05ae1513ae27ec6275cc275e6b66}{00191} \textcolor{preprocessor}{#define KEY\_D\_ACT0                  (KEY\_DMP\_ORIENT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00192}{}\hyperlink{dmp_key_8h_aac3f8565178bc31cd9c1b8276c2e7b5b}{00192} \textcolor{preprocessor}{#define KEY\_D\_ACSX                  (KEY\_D\_ACT0 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00193}{}\hyperlink{dmp_key_8h_a8369f23b6e35faeb0a046ef3d9e3ce7d}{00193} \textcolor{preprocessor}{#define KEY\_D\_ACSY                  (KEY\_D\_ACSX + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00194}{}\hyperlink{dmp_key_8h_a831073a12eb6af4bd0e26a0295b93535}{00194} \textcolor{preprocessor}{#define KEY\_D\_ACSZ                  (KEY\_D\_ACSY + 1)}
 00195 
-00196 \textcolor{preprocessor}{#define KEY\_X\_GRT\_Y\_TMP             (KEY\_D\_ACSZ + 1)}
-00197 \textcolor{preprocessor}{#define KEY\_SKIP\_X\_GRT\_Y\_TMP        (KEY\_X\_GRT\_Y\_TMP + 1)}
-00198 \textcolor{preprocessor}{#define KEY\_SKIP\_END\_COMPARE        (KEY\_SKIP\_X\_GRT\_Y\_TMP + 1)}
-00199 \textcolor{preprocessor}{#define KEY\_END\_COMPARE\_Y\_X\_TMP2    (KEY\_SKIP\_END\_COMPARE + 1)       }
-00200 \textcolor{preprocessor}{#define KEY\_CFG\_ANDROID\_ORIENT\_INT  (KEY\_END\_COMPARE\_Y\_X\_TMP2 + 1)}
-00201 \textcolor{preprocessor}{#define KEY\_NO\_ORIENT\_INTERRUPT     (KEY\_CFG\_ANDROID\_ORIENT\_INT + 1)}
-00202 \textcolor{preprocessor}{#define KEY\_END\_COMPARE\_Y\_X\_TMP     (KEY\_NO\_ORIENT\_INTERRUPT + 1)}
-00203 \textcolor{preprocessor}{#define KEY\_END\_ORIENT\_1            (KEY\_END\_COMPARE\_Y\_X\_TMP + 1)}
-00204 \textcolor{preprocessor}{#define KEY\_END\_COMPARE\_Y\_X         (KEY\_END\_ORIENT\_1 + 1) }
-00205 \textcolor{preprocessor}{#define KEY\_END\_ORIENT              (KEY\_END\_COMPARE\_Y\_X + 1)}
-00206 \textcolor{preprocessor}{#define KEY\_X\_GRT\_Y                 (KEY\_END\_ORIENT + 1)}
-00207 \textcolor{preprocessor}{#define KEY\_NOT\_TIME\_MINUS\_1        (KEY\_X\_GRT\_Y + 1)       }
-00208 \textcolor{preprocessor}{#define KEY\_END\_COMPARE\_Y\_X\_TMP3    (KEY\_NOT\_TIME\_MINUS\_1 + 1) }
-00209 \textcolor{preprocessor}{#define KEY\_X\_GRT\_Y\_TMP2            (KEY\_END\_COMPARE\_Y\_X\_TMP3 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00196}{}\hyperlink{dmp_key_8h_a186843904fb6bda544ba733ff7803f7b}{00196} \textcolor{preprocessor}{#define KEY\_X\_GRT\_Y\_TMP             (KEY\_D\_ACSZ + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00197}{}\hyperlink{dmp_key_8h_aadef1338ea6db9da1dd57dca58b22780}{00197} \textcolor{preprocessor}{#define KEY\_SKIP\_X\_GRT\_Y\_TMP        (KEY\_X\_GRT\_Y\_TMP + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00198}{}\hyperlink{dmp_key_8h_ab86fb35f9751e04aa23835026c12bc2d}{00198} \textcolor{preprocessor}{#define KEY\_SKIP\_END\_COMPARE        (KEY\_SKIP\_X\_GRT\_Y\_TMP + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00199}{}\hyperlink{dmp_key_8h_a868972f8a262529b22eb381e136db38e}{00199} \textcolor{preprocessor}{#define KEY\_END\_COMPARE\_Y\_X\_TMP2    (KEY\_SKIP\_END\_COMPARE + 1)       }
+\hypertarget{dmp_key_8h_source.tex_l00200}{}\hyperlink{dmp_key_8h_af70b2e42ca4a7ba6595f038d0d129bf6}{00200} \textcolor{preprocessor}{#define KEY\_CFG\_ANDROID\_ORIENT\_INT  (KEY\_END\_COMPARE\_Y\_X\_TMP2 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00201}{}\hyperlink{dmp_key_8h_a49fee5f045566542c31528c9d1635f32}{00201} \textcolor{preprocessor}{#define KEY\_NO\_ORIENT\_INTERRUPT     (KEY\_CFG\_ANDROID\_ORIENT\_INT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00202}{}\hyperlink{dmp_key_8h_abe47fcf029cbd3e4c755b66b647a31e6}{00202} \textcolor{preprocessor}{#define KEY\_END\_COMPARE\_Y\_X\_TMP     (KEY\_NO\_ORIENT\_INTERRUPT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00203}{}\hyperlink{dmp_key_8h_a9820d8f168cbb46606169ab66a2f2800}{00203} \textcolor{preprocessor}{#define KEY\_END\_ORIENT\_1            (KEY\_END\_COMPARE\_Y\_X\_TMP + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00204}{}\hyperlink{dmp_key_8h_afd623a534dace67adcd728ad56171565}{00204} \textcolor{preprocessor}{#define KEY\_END\_COMPARE\_Y\_X         (KEY\_END\_ORIENT\_1 + 1) }
+\hypertarget{dmp_key_8h_source.tex_l00205}{}\hyperlink{dmp_key_8h_a8677f7b8360e93ac183cd343a2fe13e7}{00205} \textcolor{preprocessor}{#define KEY\_END\_ORIENT              (KEY\_END\_COMPARE\_Y\_X + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00206}{}\hyperlink{dmp_key_8h_a83a4c32ff31709bd76843a480e04ff3a}{00206} \textcolor{preprocessor}{#define KEY\_X\_GRT\_Y                 (KEY\_END\_ORIENT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00207}{}\hyperlink{dmp_key_8h_ab1bf47800a1876cde2b38ed43380180e}{00207} \textcolor{preprocessor}{#define KEY\_NOT\_TIME\_MINUS\_1        (KEY\_X\_GRT\_Y + 1)       }
+\hypertarget{dmp_key_8h_source.tex_l00208}{}\hyperlink{dmp_key_8h_a7e19d54f40e69e66c4c6f5d07bd9a3ff}{00208} \textcolor{preprocessor}{#define KEY\_END\_COMPARE\_Y\_X\_TMP3    (KEY\_NOT\_TIME\_MINUS\_1 + 1) }
+\hypertarget{dmp_key_8h_source.tex_l00209}{}\hyperlink{dmp_key_8h_a4a328a8ff13b50c160f74d3c2598d329}{00209} \textcolor{preprocessor}{#define KEY\_X\_GRT\_Y\_TMP2            (KEY\_END\_COMPARE\_Y\_X\_TMP3 + 1)}
 00210 
 00211 \textcolor{comment}{/* Authenticate Keys */}
-00212 \textcolor{preprocessor}{#define KEY\_D\_AUTH\_OUT              (KEY\_X\_GRT\_Y\_TMP2 + 1)}
-00213 \textcolor{preprocessor}{#define KEY\_D\_AUTH\_IN               (KEY\_D\_AUTH\_OUT + 1)}
-00214 \textcolor{preprocessor}{#define KEY\_D\_AUTH\_A                (KEY\_D\_AUTH\_IN + 1)}
-00215 \textcolor{preprocessor}{#define KEY\_D\_AUTH\_B                (KEY\_D\_AUTH\_A + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00212}{}\hyperlink{dmp_key_8h_a4c29ca8efec08f8a64600e8aa5a32c12}{00212} \textcolor{preprocessor}{#define KEY\_D\_AUTH\_OUT              (KEY\_X\_GRT\_Y\_TMP2 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00213}{}\hyperlink{dmp_key_8h_a59e847b64e33e61f9966b3d983b10b15}{00213} \textcolor{preprocessor}{#define KEY\_D\_AUTH\_IN               (KEY\_D\_AUTH\_OUT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00214}{}\hyperlink{dmp_key_8h_a92d1d618492b7328916f55b8f7abea3c}{00214} \textcolor{preprocessor}{#define KEY\_D\_AUTH\_A                (KEY\_D\_AUTH\_IN + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00215}{}\hyperlink{dmp_key_8h_a70e9d248e43cdfa63d3831f7f82f9b93}{00215} \textcolor{preprocessor}{#define KEY\_D\_AUTH\_B                (KEY\_D\_AUTH\_A + 1)}
 00216 
 00217 \textcolor{comment}{/* Pedometer standalone only keys */}
-00218 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_B           (KEY\_D\_AUTH\_B + 1)}
-00219 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_HP\_A           (KEY\_D\_PEDSTD\_BP\_B + 1)}
-00220 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_HP\_B           (KEY\_D\_PEDSTD\_HP\_A + 1)}
-00221 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_A4          (KEY\_D\_PEDSTD\_HP\_B + 1)}
-00222 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_A3          (KEY\_D\_PEDSTD\_BP\_A4 + 1)}
-00223 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_A2          (KEY\_D\_PEDSTD\_BP\_A3 + 1)}
-00224 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_A1          (KEY\_D\_PEDSTD\_BP\_A2 + 1)}
-00225 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_INT\_THRSH      (KEY\_D\_PEDSTD\_BP\_A1 + 1)}
-00226 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_CLIP           (KEY\_D\_PEDSTD\_INT\_THRSH + 1)}
-00227 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_SB             (KEY\_D\_PEDSTD\_CLIP + 1)}
-00228 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_SB\_TIME        (KEY\_D\_PEDSTD\_SB + 1)}
-00229 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_PEAKTHRSH      (KEY\_D\_PEDSTD\_SB\_TIME + 1)}
-00230 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_TIML           (KEY\_D\_PEDSTD\_PEAKTHRSH + 1)}
-00231 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_TIMH           (KEY\_D\_PEDSTD\_TIML + 1)}
-00232 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_PEAK           (KEY\_D\_PEDSTD\_TIMH + 1)}
-00233 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_TIMECTR        (KEY\_D\_PEDSTD\_PEAK + 1)}
-00234 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_STEPCTR        (KEY\_D\_PEDSTD\_TIMECTR + 1)}
-00235 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_WALKTIME       (KEY\_D\_PEDSTD\_STEPCTR + 1)}
-00236 \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_DECI           (KEY\_D\_PEDSTD\_WALKTIME + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00218}{}\hyperlink{dmp_key_8h_a8f8b3b0a8943bd307b1dec4bd72359f8}{00218} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_B           (KEY\_D\_AUTH\_B + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00219}{}\hyperlink{dmp_key_8h_ac990aaace317529e60bae4a8d0488b4a}{00219} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_HP\_A           (KEY\_D\_PEDSTD\_BP\_B + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00220}{}\hyperlink{dmp_key_8h_a984c0056912d9764a95a8688bc411ba4}{00220} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_HP\_B           (KEY\_D\_PEDSTD\_HP\_A + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00221}{}\hyperlink{dmp_key_8h_a00642103ec420a4ce4e0ecaccb307e3d}{00221} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_A4          (KEY\_D\_PEDSTD\_HP\_B + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00222}{}\hyperlink{dmp_key_8h_a3b6016875ac268e46923fb9e7ce7dd2c}{00222} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_A3          (KEY\_D\_PEDSTD\_BP\_A4 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00223}{}\hyperlink{dmp_key_8h_a93b4bfc0f7d08df58f26ee0b0fea8961}{00223} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_A2          (KEY\_D\_PEDSTD\_BP\_A3 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00224}{}\hyperlink{dmp_key_8h_a917ece48b64c9e901bfeb3faf78f5daa}{00224} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_BP\_A1          (KEY\_D\_PEDSTD\_BP\_A2 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00225}{}\hyperlink{dmp_key_8h_ad04090bd27a4e24a4bfd0c00d04e4d02}{00225} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_INT\_THRSH      (KEY\_D\_PEDSTD\_BP\_A1 + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00226}{}\hyperlink{dmp_key_8h_a17f86dc80dfdfe11ddc66c336e3060d9}{00226} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_CLIP           (KEY\_D\_PEDSTD\_INT\_THRSH + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00227}{}\hyperlink{dmp_key_8h_a6336f3662c2a9ad16c1ed60d88d5fd52}{00227} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_SB             (KEY\_D\_PEDSTD\_CLIP + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00228}{}\hyperlink{dmp_key_8h_a08f94b42741662987878db54eea9cc33}{00228} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_SB\_TIME        (KEY\_D\_PEDSTD\_SB + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00229}{}\hyperlink{dmp_key_8h_a88041bbbd66473c7ca9f8f9283699e46}{00229} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_PEAKTHRSH      (KEY\_D\_PEDSTD\_SB\_TIME + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00230}{}\hyperlink{dmp_key_8h_a77ea7861309656c13cbde8473814487f}{00230} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_TIML           (KEY\_D\_PEDSTD\_PEAKTHRSH + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00231}{}\hyperlink{dmp_key_8h_afe293d2e9cac339ff82c6794d00f0fb9}{00231} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_TIMH           (KEY\_D\_PEDSTD\_TIML + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00232}{}\hyperlink{dmp_key_8h_a8d6c043c17a97c1d803f9d53f83d00a1}{00232} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_PEAK           (KEY\_D\_PEDSTD\_TIMH + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00233}{}\hyperlink{dmp_key_8h_a77841577cf104713d837791e727dc6c5}{00233} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_TIMECTR        (KEY\_D\_PEDSTD\_PEAK + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00234}{}\hyperlink{dmp_key_8h_a9cc22745fd13b5719bf609a53659ecaf}{00234} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_STEPCTR        (KEY\_D\_PEDSTD\_TIMECTR + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00235}{}\hyperlink{dmp_key_8h_a7955e0338ae5b73b276a47ce651db549}{00235} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_WALKTIME       (KEY\_D\_PEDSTD\_STEPCTR + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00236}{}\hyperlink{dmp_key_8h_a63895bd35b3593d468fa509e71a3a2ac}{00236} \textcolor{preprocessor}{#define KEY\_D\_PEDSTD\_DECI           (KEY\_D\_PEDSTD\_WALKTIME + 1)}
 00237 
 00238 \textcolor{comment}{/*Host Based No Motion*/}
-00239 \textcolor{preprocessor}{#define KEY\_D\_HOST\_NO\_MOT           (KEY\_D\_PEDSTD\_DECI + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00239}{}\hyperlink{dmp_key_8h_a14af95d31024cc2ced44a85f8616a590}{00239} \textcolor{preprocessor}{#define KEY\_D\_HOST\_NO\_MOT           (KEY\_D\_PEDSTD\_DECI + 1)}
 00240 
 00241 \textcolor{comment}{/* EIS keys */}
-00242 \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_FOOTER       (KEY\_D\_HOST\_NO\_MOT + 1)}
-00243 \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_YSHIFT       (KEY\_P\_EIS\_FIFO\_FOOTER + 1)}
-00244 \textcolor{preprocessor}{#define KEY\_P\_EIS\_DATA\_RATE         (KEY\_P\_EIS\_FIFO\_YSHIFT + 1)}
-00245 \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_XSHIFT       (KEY\_P\_EIS\_DATA\_RATE + 1)}
-00246 \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_SYNC         (KEY\_P\_EIS\_FIFO\_XSHIFT + 1)}
-00247 \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_ZSHIFT       (KEY\_P\_EIS\_FIFO\_SYNC + 1)}
-00248 \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_READY        (KEY\_P\_EIS\_FIFO\_ZSHIFT + 1)}
-00249 \textcolor{preprocessor}{#define KEY\_DMP\_FOOTER              (KEY\_P\_EIS\_FIFO\_READY + 1)}
-00250 \textcolor{preprocessor}{#define KEY\_DMP\_INTX\_HC             (KEY\_DMP\_FOOTER + 1)}
-00251 \textcolor{preprocessor}{#define KEY\_DMP\_INTX\_PH             (KEY\_DMP\_INTX\_HC + 1)}
-00252 \textcolor{preprocessor}{#define KEY\_DMP\_INTX\_SH             (KEY\_DMP\_INTX\_PH + 1)}
-00253 \textcolor{preprocessor}{#define KEY\_DMP\_AINV\_SH             (KEY\_DMP\_INTX\_SH + 1)}
-00254 \textcolor{preprocessor}{#define KEY\_DMP\_A\_INV\_XH            (KEY\_DMP\_AINV\_SH + 1)}
-00255 \textcolor{preprocessor}{#define KEY\_DMP\_AINV\_PH             (KEY\_DMP\_A\_INV\_XH + 1)}
-00256 \textcolor{preprocessor}{#define KEY\_DMP\_CTHX\_H              (KEY\_DMP\_AINV\_PH + 1)}
-00257 \textcolor{preprocessor}{#define KEY\_DMP\_CTHY\_H              (KEY\_DMP\_CTHX\_H + 1)}
-00258 \textcolor{preprocessor}{#define KEY\_DMP\_CTHZ\_H              (KEY\_DMP\_CTHY\_H + 1)}
-00259 \textcolor{preprocessor}{#define KEY\_DMP\_NCTHX\_H             (KEY\_DMP\_CTHZ\_H + 1)}
-00260 \textcolor{preprocessor}{#define KEY\_DMP\_NCTHY\_H             (KEY\_DMP\_NCTHX\_H + 1)}
-00261 \textcolor{preprocessor}{#define KEY\_DMP\_NCTHZ\_H             (KEY\_DMP\_NCTHY\_H + 1)}
-00262 \textcolor{preprocessor}{#define KEY\_DMP\_CTSQ\_XH             (KEY\_DMP\_NCTHZ\_H + 1)}
-00263 \textcolor{preprocessor}{#define KEY\_DMP\_CTSQ\_YH             (KEY\_DMP\_CTSQ\_XH + 1)}
-00264 \textcolor{preprocessor}{#define KEY\_DMP\_CTSQ\_ZH             (KEY\_DMP\_CTSQ\_YH + 1)}
-00265 \textcolor{preprocessor}{#define KEY\_DMP\_INTX\_H              (KEY\_DMP\_CTSQ\_ZH + 1)}
-00266 \textcolor{preprocessor}{#define KEY\_DMP\_INTY\_H              (KEY\_DMP\_INTX\_H + 1)}
-00267 \textcolor{preprocessor}{#define KEY\_DMP\_INTZ\_H              (KEY\_DMP\_INTY\_H + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00242}{}\hyperlink{dmp_key_8h_a5acc661ecde5155aa565ab5f632a8445}{00242} \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_FOOTER       (KEY\_D\_HOST\_NO\_MOT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00243}{}\hyperlink{dmp_key_8h_af09f81cf9cdfda4189808231387d1d8c}{00243} \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_YSHIFT       (KEY\_P\_EIS\_FIFO\_FOOTER + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00244}{}\hyperlink{dmp_key_8h_a070a6ebc8d69e7419e3593b2416d6e97}{00244} \textcolor{preprocessor}{#define KEY\_P\_EIS\_DATA\_RATE         (KEY\_P\_EIS\_FIFO\_YSHIFT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00245}{}\hyperlink{dmp_key_8h_a5a2c2fa3f0fce81a56cb446e370ba863}{00245} \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_XSHIFT       (KEY\_P\_EIS\_DATA\_RATE + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00246}{}\hyperlink{dmp_key_8h_a95eb69c611571b0a2d04c480df10d32c}{00246} \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_SYNC         (KEY\_P\_EIS\_FIFO\_XSHIFT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00247}{}\hyperlink{dmp_key_8h_a10694004c2c3f6d4926ee14263ad8e3d}{00247} \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_ZSHIFT       (KEY\_P\_EIS\_FIFO\_SYNC + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00248}{}\hyperlink{dmp_key_8h_abf1859a84ecc0d91d724b61dfb8cbb49}{00248} \textcolor{preprocessor}{#define KEY\_P\_EIS\_FIFO\_READY        (KEY\_P\_EIS\_FIFO\_ZSHIFT + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00249}{}\hyperlink{dmp_key_8h_aa757f17f6d6165f8e71fe472cfaf86cf}{00249} \textcolor{preprocessor}{#define KEY\_DMP\_FOOTER              (KEY\_P\_EIS\_FIFO\_READY + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00250}{}\hyperlink{dmp_key_8h_ad0519db3144da273560b198144f2422c}{00250} \textcolor{preprocessor}{#define KEY\_DMP\_INTX\_HC             (KEY\_DMP\_FOOTER + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00251}{}\hyperlink{dmp_key_8h_a9479ccc025c923d07f4854ea7348a706}{00251} \textcolor{preprocessor}{#define KEY\_DMP\_INTX\_PH             (KEY\_DMP\_INTX\_HC + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00252}{}\hyperlink{dmp_key_8h_a8dea641bae304fd2969dc1cda327b822}{00252} \textcolor{preprocessor}{#define KEY\_DMP\_INTX\_SH             (KEY\_DMP\_INTX\_PH + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00253}{}\hyperlink{dmp_key_8h_ab0149aeb858ec27aa149a76b56c403c2}{00253} \textcolor{preprocessor}{#define KEY\_DMP\_AINV\_SH             (KEY\_DMP\_INTX\_SH + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00254}{}\hyperlink{dmp_key_8h_a35c6bae9104e5181a35c6a808e7a65fc}{00254} \textcolor{preprocessor}{#define KEY\_DMP\_A\_INV\_XH            (KEY\_DMP\_AINV\_SH + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00255}{}\hyperlink{dmp_key_8h_a1e8e4cd27c89df79a58b09fec5b95f4c}{00255} \textcolor{preprocessor}{#define KEY\_DMP\_AINV\_PH             (KEY\_DMP\_A\_INV\_XH + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00256}{}\hyperlink{dmp_key_8h_a5848e728aacad5a425f4a5c3ed7a500f}{00256} \textcolor{preprocessor}{#define KEY\_DMP\_CTHX\_H              (KEY\_DMP\_AINV\_PH + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00257}{}\hyperlink{dmp_key_8h_a67b8ae62af92003fd452071b16d2fa20}{00257} \textcolor{preprocessor}{#define KEY\_DMP\_CTHY\_H              (KEY\_DMP\_CTHX\_H + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00258}{}\hyperlink{dmp_key_8h_a8a2add4a668b1d74ea608d9efc8bc137}{00258} \textcolor{preprocessor}{#define KEY\_DMP\_CTHZ\_H              (KEY\_DMP\_CTHY\_H + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00259}{}\hyperlink{dmp_key_8h_aad93cba2ac9fd2b0e5aa200c03fe5b0b}{00259} \textcolor{preprocessor}{#define KEY\_DMP\_NCTHX\_H             (KEY\_DMP\_CTHZ\_H + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00260}{}\hyperlink{dmp_key_8h_abdd6a4aba1149508cf939940d5ce1e25}{00260} \textcolor{preprocessor}{#define KEY\_DMP\_NCTHY\_H             (KEY\_DMP\_NCTHX\_H + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00261}{}\hyperlink{dmp_key_8h_a32c1477991a438d9c3c11465675bdc14}{00261} \textcolor{preprocessor}{#define KEY\_DMP\_NCTHZ\_H             (KEY\_DMP\_NCTHY\_H + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00262}{}\hyperlink{dmp_key_8h_ab61a9f07575290815a2bd193db7b56ab}{00262} \textcolor{preprocessor}{#define KEY\_DMP\_CTSQ\_XH             (KEY\_DMP\_NCTHZ\_H + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00263}{}\hyperlink{dmp_key_8h_a286ee2a5021630e3da18cca9dc15deb2}{00263} \textcolor{preprocessor}{#define KEY\_DMP\_CTSQ\_YH             (KEY\_DMP\_CTSQ\_XH + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00264}{}\hyperlink{dmp_key_8h_ac8c3e06a0141185c406f24af44f1a171}{00264} \textcolor{preprocessor}{#define KEY\_DMP\_CTSQ\_ZH             (KEY\_DMP\_CTSQ\_YH + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00265}{}\hyperlink{dmp_key_8h_a8dc9644f1f944bc9b737bc6fc5660a98}{00265} \textcolor{preprocessor}{#define KEY\_DMP\_INTX\_H              (KEY\_DMP\_CTSQ\_ZH + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00266}{}\hyperlink{dmp_key_8h_ad560e542748c0d1dbe4bc83e5fb91195}{00266} \textcolor{preprocessor}{#define KEY\_DMP\_INTY\_H              (KEY\_DMP\_INTX\_H + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00267}{}\hyperlink{dmp_key_8h_a6f915c26c147edce87bc035c93f2eff0}{00267} \textcolor{preprocessor}{#define KEY\_DMP\_INTZ\_H              (KEY\_DMP\_INTY\_H + 1)}
 00268 \textcolor{comment}{//#define KEY\_DMP\_HPX\_H               (KEY\_DMP\_INTZ\_H + 1)}
 00269 \textcolor{comment}{//#define KEY\_DMP\_HPY\_H               (KEY\_DMP\_HPX\_H + 1)}
 00270 \textcolor{comment}{//#define KEY\_DMP\_HPZ\_H               (KEY\_DMP\_HPY\_H + 1)}
 00271 
 00272 \textcolor{comment}{/* Stream keys */}
-00273 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_GYRO\_Z         (KEY\_DMP\_INTZ\_H + 1)}
-00274 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_GYRO\_Y         (KEY\_STREAM\_P\_GYRO\_Z + 1)}
-00275 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_GYRO\_X         (KEY\_STREAM\_P\_GYRO\_Y + 1)}
-00276 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_TEMP           (KEY\_STREAM\_P\_GYRO\_X + 1)}
-00277 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_AUX\_Y          (KEY\_STREAM\_P\_TEMP + 1)}
-00278 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_AUX\_X          (KEY\_STREAM\_P\_AUX\_Y + 1)}
-00279 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_AUX\_Z          (KEY\_STREAM\_P\_AUX\_X + 1)}
-00280 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_ACCEL\_Y        (KEY\_STREAM\_P\_AUX\_Z + 1)}
-00281 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_ACCEL\_X        (KEY\_STREAM\_P\_ACCEL\_Y + 1)}
-00282 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_FOOTER         (KEY\_STREAM\_P\_ACCEL\_X + 1)}
-00283 \textcolor{preprocessor}{#define KEY\_STREAM\_P\_ACCEL\_Z        (KEY\_STREAM\_P\_FOOTER + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00273}{}\hyperlink{dmp_key_8h_aa5d4b294e70011d67eb69fac5fd25a2b}{00273} \textcolor{preprocessor}{#define KEY\_STREAM\_P\_GYRO\_Z         (KEY\_DMP\_INTZ\_H + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00274}{}\hyperlink{dmp_key_8h_a5fa600da02cc72043e861e7ce367883f}{00274} \textcolor{preprocessor}{#define KEY\_STREAM\_P\_GYRO\_Y         (KEY\_STREAM\_P\_GYRO\_Z + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00275}{}\hyperlink{dmp_key_8h_a57050efd179f73b7cbd39acfda55aaa9}{00275} \textcolor{preprocessor}{#define KEY\_STREAM\_P\_GYRO\_X         (KEY\_STREAM\_P\_GYRO\_Y + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00276}{}\hyperlink{dmp_key_8h_a8165ecdca80347f0afcc058a0328eb26}{00276} \textcolor{preprocessor}{#define KEY\_STREAM\_P\_TEMP           (KEY\_STREAM\_P\_GYRO\_X + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00277}{}\hyperlink{dmp_key_8h_a19282ce8b2d02687eef36c9d9b94fa96}{00277} \textcolor{preprocessor}{#define KEY\_STREAM\_P\_AUX\_Y          (KEY\_STREAM\_P\_TEMP + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00278}{}\hyperlink{dmp_key_8h_a905a8b6b6a702a439eec4793921d6338}{00278} \textcolor{preprocessor}{#define KEY\_STREAM\_P\_AUX\_X          (KEY\_STREAM\_P\_AUX\_Y + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00279}{}\hyperlink{dmp_key_8h_a49e10328ac2c75c11481933baff54862}{00279} \textcolor{preprocessor}{#define KEY\_STREAM\_P\_AUX\_Z          (KEY\_STREAM\_P\_AUX\_X + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00280}{}\hyperlink{dmp_key_8h_ad942f069622a953edc04409b54ace78b}{00280} \textcolor{preprocessor}{#define KEY\_STREAM\_P\_ACCEL\_Y        (KEY\_STREAM\_P\_AUX\_Z + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00281}{}\hyperlink{dmp_key_8h_a9f8de22e915f162ee9b32468c6435612}{00281} \textcolor{preprocessor}{#define KEY\_STREAM\_P\_ACCEL\_X        (KEY\_STREAM\_P\_ACCEL\_Y + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00282}{}\hyperlink{dmp_key_8h_a28c1f50101e38f495f9faf15412b7535}{00282} \textcolor{preprocessor}{#define KEY\_STREAM\_P\_FOOTER         (KEY\_STREAM\_P\_ACCEL\_X + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00283}{}\hyperlink{dmp_key_8h_a56b9da368656d668ea4c453f74d0d92f}{00283} \textcolor{preprocessor}{#define KEY\_STREAM\_P\_ACCEL\_Z        (KEY\_STREAM\_P\_FOOTER + 1)}
 00284 
-00285 \textcolor{preprocessor}{#define NUM\_KEYS                    (KEY\_STREAM\_P\_ACCEL\_Z + 1)}
+\hypertarget{dmp_key_8h_source.tex_l00285}{}\hyperlink{dmp_key_8h_a9a8c7403a867e0c9543467ee8754050d}{00285} \textcolor{preprocessor}{#define NUM\_KEYS                    (KEY\_STREAM\_P\_ACCEL\_Z + 1)}
 00286 
 \hypertarget{dmp_key_8h_source.tex_l00287}{}\hyperlink{structt_key_label}{00287} \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\{
-00288     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} key;
-00289     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} addr;
+\hypertarget{dmp_key_8h_source.tex_l00288}{}\hyperlink{structt_key_label_ad42a2de4cc8381513f980278161372bb}{00288}     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} \hyperlink{structt_key_label_ad42a2de4cc8381513f980278161372bb}{key};
+\hypertarget{dmp_key_8h_source.tex_l00289}{}\hyperlink{structt_key_label_af2d98bb0b152ca3d254d1c534236c2e6}{00289}     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} \hyperlink{structt_key_label_af2d98bb0b152ca3d254d1c534236c2e6}{addr};
 00290 \} \hyperlink{structt_key_label}{tKeyLabel};
 00291 
-00292 \textcolor{preprocessor}{#define DINA0A 0x0a}
-00293 \textcolor{preprocessor}{#define DINA22 0x22}
-00294 \textcolor{preprocessor}{#define DINA42 0x42}
-00295 \textcolor{preprocessor}{#define DINA5A 0x5a}
+\hypertarget{dmp_key_8h_source.tex_l00292}{}\hyperlink{dmp_key_8h_a83d8d45b7a1893230d1091f1cb434593}{00292} \textcolor{preprocessor}{#define DINA0A 0x0a}
+\hypertarget{dmp_key_8h_source.tex_l00293}{}\hyperlink{dmp_key_8h_a6b2c5967114f9bbb0ea3537b853d66bc}{00293} \textcolor{preprocessor}{#define DINA22 0x22}
+\hypertarget{dmp_key_8h_source.tex_l00294}{}\hyperlink{dmp_key_8h_a5ec25ed9e0306ecdd7e2895810cfcd30}{00294} \textcolor{preprocessor}{#define DINA42 0x42}
+\hypertarget{dmp_key_8h_source.tex_l00295}{}\hyperlink{dmp_key_8h_a9c56ff1e84ce084b7573af4cfcebf42c}{00295} \textcolor{preprocessor}{#define DINA5A 0x5a}
 00296 
-00297 \textcolor{preprocessor}{#define DINA06 0x06}
-00298 \textcolor{preprocessor}{#define DINA0E 0x0e}
-00299 \textcolor{preprocessor}{#define DINA16 0x16}
-00300 \textcolor{preprocessor}{#define DINA1E 0x1e}
-00301 \textcolor{preprocessor}{#define DINA26 0x26}
-00302 \textcolor{preprocessor}{#define DINA2E 0x2e}
-00303 \textcolor{preprocessor}{#define DINA36 0x36}
-00304 \textcolor{preprocessor}{#define DINA3E 0x3e}
-00305 \textcolor{preprocessor}{#define DINA46 0x46}
-00306 \textcolor{preprocessor}{#define DINA4E 0x4e}
-00307 \textcolor{preprocessor}{#define DINA56 0x56}
-00308 \textcolor{preprocessor}{#define DINA5E 0x5e}
-00309 \textcolor{preprocessor}{#define DINA66 0x66}
-00310 \textcolor{preprocessor}{#define DINA6E 0x6e}
-00311 \textcolor{preprocessor}{#define DINA76 0x76}
-00312 \textcolor{preprocessor}{#define DINA7E 0x7e}
+\hypertarget{dmp_key_8h_source.tex_l00297}{}\hyperlink{dmp_key_8h_aff93a81ad786a9051ef77e88312eacf1}{00297} \textcolor{preprocessor}{#define DINA06 0x06}
+\hypertarget{dmp_key_8h_source.tex_l00298}{}\hyperlink{dmp_key_8h_aee7de752e761b87e07b3856c543552f8}{00298} \textcolor{preprocessor}{#define DINA0E 0x0e}
+\hypertarget{dmp_key_8h_source.tex_l00299}{}\hyperlink{dmp_key_8h_abe9526a40c6783f2ae678821821aaff8}{00299} \textcolor{preprocessor}{#define DINA16 0x16}
+\hypertarget{dmp_key_8h_source.tex_l00300}{}\hyperlink{dmp_key_8h_a7bb57a38ba4915e2a94d366e6ed77d0c}{00300} \textcolor{preprocessor}{#define DINA1E 0x1e}
+\hypertarget{dmp_key_8h_source.tex_l00301}{}\hyperlink{dmp_key_8h_ab20b98c1b6b4a1826769b8ff3e2b559d}{00301} \textcolor{preprocessor}{#define DINA26 0x26}
+\hypertarget{dmp_key_8h_source.tex_l00302}{}\hyperlink{dmp_key_8h_a881f458d7ef4eb6b292b76358df850fa}{00302} \textcolor{preprocessor}{#define DINA2E 0x2e}
+\hypertarget{dmp_key_8h_source.tex_l00303}{}\hyperlink{dmp_key_8h_a3bf2a77c13703721c9908a2f0427aa51}{00303} \textcolor{preprocessor}{#define DINA36 0x36}
+\hypertarget{dmp_key_8h_source.tex_l00304}{}\hyperlink{dmp_key_8h_a9b91acf462bce57a76517cc7930d94bd}{00304} \textcolor{preprocessor}{#define DINA3E 0x3e}
+\hypertarget{dmp_key_8h_source.tex_l00305}{}\hyperlink{dmp_key_8h_a8b9b8c9cc6e238b2a63696e7fe73b312}{00305} \textcolor{preprocessor}{#define DINA46 0x46}
+\hypertarget{dmp_key_8h_source.tex_l00306}{}\hyperlink{dmp_key_8h_a4ae04ed86405bde7786d749fa97df8f8}{00306} \textcolor{preprocessor}{#define DINA4E 0x4e}
+\hypertarget{dmp_key_8h_source.tex_l00307}{}\hyperlink{dmp_key_8h_ad99c60f48e726f6b1b1a0b5dd8ef0b2a}{00307} \textcolor{preprocessor}{#define DINA56 0x56}
+\hypertarget{dmp_key_8h_source.tex_l00308}{}\hyperlink{dmp_key_8h_ae6231b78c8f25cd028e35f8b1d43b23c}{00308} \textcolor{preprocessor}{#define DINA5E 0x5e}
+\hypertarget{dmp_key_8h_source.tex_l00309}{}\hyperlink{dmp_key_8h_a99ecf6ce38fef8eabcf7f618f37f5f88}{00309} \textcolor{preprocessor}{#define DINA66 0x66}
+\hypertarget{dmp_key_8h_source.tex_l00310}{}\hyperlink{dmp_key_8h_a536257ee4c46a30915495beaa6aefe39}{00310} \textcolor{preprocessor}{#define DINA6E 0x6e}
+\hypertarget{dmp_key_8h_source.tex_l00311}{}\hyperlink{dmp_key_8h_a2d212a13b747010ba331de74d408fce6}{00311} \textcolor{preprocessor}{#define DINA76 0x76}
+\hypertarget{dmp_key_8h_source.tex_l00312}{}\hyperlink{dmp_key_8h_a10c8aa8948a6ce13c0857029c8c52c82}{00312} \textcolor{preprocessor}{#define DINA7E 0x7e}
 00313 
-00314 \textcolor{preprocessor}{#define DINA00 0x00}
-00315 \textcolor{preprocessor}{#define DINA08 0x08}
-00316 \textcolor{preprocessor}{#define DINA10 0x10}
-00317 \textcolor{preprocessor}{#define DINA18 0x18}
-00318 \textcolor{preprocessor}{#define DINA20 0x20}
-00319 \textcolor{preprocessor}{#define DINA28 0x28}
-00320 \textcolor{preprocessor}{#define DINA30 0x30}
-00321 \textcolor{preprocessor}{#define DINA38 0x38}
-00322 \textcolor{preprocessor}{#define DINA40 0x40}
-00323 \textcolor{preprocessor}{#define DINA48 0x48}
-00324 \textcolor{preprocessor}{#define DINA50 0x50}
-00325 \textcolor{preprocessor}{#define DINA58 0x58}
-00326 \textcolor{preprocessor}{#define DINA60 0x60}
-00327 \textcolor{preprocessor}{#define DINA68 0x68}
-00328 \textcolor{preprocessor}{#define DINA70 0x70}
-00329 \textcolor{preprocessor}{#define DINA78 0x78}
+\hypertarget{dmp_key_8h_source.tex_l00314}{}\hyperlink{dmp_key_8h_a2ecd1e6530421de5a2a3cf36fc7b9e19}{00314} \textcolor{preprocessor}{#define DINA00 0x00}
+\hypertarget{dmp_key_8h_source.tex_l00315}{}\hyperlink{dmp_key_8h_a63b4a47ca86e18aac239f0dbc5596296}{00315} \textcolor{preprocessor}{#define DINA08 0x08}
+\hypertarget{dmp_key_8h_source.tex_l00316}{}\hyperlink{dmp_key_8h_ad887466442641758f2b6fe8814474b4e}{00316} \textcolor{preprocessor}{#define DINA10 0x10}
+\hypertarget{dmp_key_8h_source.tex_l00317}{}\hyperlink{dmp_key_8h_a544c4c5c7362dd90b63f094e51158fec}{00317} \textcolor{preprocessor}{#define DINA18 0x18}
+\hypertarget{dmp_key_8h_source.tex_l00318}{}\hyperlink{dmp_key_8h_a2b6f6c9e544536e4c10f2a828621b87b}{00318} \textcolor{preprocessor}{#define DINA20 0x20}
+\hypertarget{dmp_key_8h_source.tex_l00319}{}\hyperlink{dmp_key_8h_a9bf039b1ae9e7538e239094efd52ccac}{00319} \textcolor{preprocessor}{#define DINA28 0x28}
+\hypertarget{dmp_key_8h_source.tex_l00320}{}\hyperlink{dmp_key_8h_a36e38090f76b423468d88f275b02b8bb}{00320} \textcolor{preprocessor}{#define DINA30 0x30}
+\hypertarget{dmp_key_8h_source.tex_l00321}{}\hyperlink{dmp_key_8h_ab904b6b28e9710721475f247140ec7aa}{00321} \textcolor{preprocessor}{#define DINA38 0x38}
+\hypertarget{dmp_key_8h_source.tex_l00322}{}\hyperlink{dmp_key_8h_af60e353ea12e096e8947143b80e65581}{00322} \textcolor{preprocessor}{#define DINA40 0x40}
+\hypertarget{dmp_key_8h_source.tex_l00323}{}\hyperlink{dmp_key_8h_a82b99edbe1330444369851bd8ea3f86a}{00323} \textcolor{preprocessor}{#define DINA48 0x48}
+\hypertarget{dmp_key_8h_source.tex_l00324}{}\hyperlink{dmp_key_8h_ab68573d58567ccf5c205d2f447f02c65}{00324} \textcolor{preprocessor}{#define DINA50 0x50}
+\hypertarget{dmp_key_8h_source.tex_l00325}{}\hyperlink{dmp_key_8h_a3c9ceaef348bbbc6a68c407564f3164c}{00325} \textcolor{preprocessor}{#define DINA58 0x58}
+\hypertarget{dmp_key_8h_source.tex_l00326}{}\hyperlink{dmp_key_8h_a3efec83fa317a91f88fb3b932a73263a}{00326} \textcolor{preprocessor}{#define DINA60 0x60}
+\hypertarget{dmp_key_8h_source.tex_l00327}{}\hyperlink{dmp_key_8h_ad18b8e7297a4a8912717d84e533e3f91}{00327} \textcolor{preprocessor}{#define DINA68 0x68}
+\hypertarget{dmp_key_8h_source.tex_l00328}{}\hyperlink{dmp_key_8h_af2824db5f306fc2e224c7153beb8210d}{00328} \textcolor{preprocessor}{#define DINA70 0x70}
+\hypertarget{dmp_key_8h_source.tex_l00329}{}\hyperlink{dmp_key_8h_a9fd3b21be651f593b88968073c6ed936}{00329} \textcolor{preprocessor}{#define DINA78 0x78}
 00330 
-00331 \textcolor{preprocessor}{#define DINA04 0x04}
-00332 \textcolor{preprocessor}{#define DINA0C 0x0c}
-00333 \textcolor{preprocessor}{#define DINA14 0x14}
-00334 \textcolor{preprocessor}{#define DINA1C 0x1C}
-00335 \textcolor{preprocessor}{#define DINA24 0x24}
-00336 \textcolor{preprocessor}{#define DINA2C 0x2c}
-00337 \textcolor{preprocessor}{#define DINA34 0x34}
-00338 \textcolor{preprocessor}{#define DINA3C 0x3c}
-00339 \textcolor{preprocessor}{#define DINA44 0x44}
-00340 \textcolor{preprocessor}{#define DINA4C 0x4c}
-00341 \textcolor{preprocessor}{#define DINA54 0x54}
-00342 \textcolor{preprocessor}{#define DINA5C 0x5c}
-00343 \textcolor{preprocessor}{#define DINA64 0x64}
-00344 \textcolor{preprocessor}{#define DINA6C 0x6c}
-00345 \textcolor{preprocessor}{#define DINA74 0x74}
-00346 \textcolor{preprocessor}{#define DINA7C 0x7c}
+\hypertarget{dmp_key_8h_source.tex_l00331}{}\hyperlink{dmp_key_8h_a309c2c5c4a77f505720fb62761f51c3c}{00331} \textcolor{preprocessor}{#define DINA04 0x04}
+\hypertarget{dmp_key_8h_source.tex_l00332}{}\hyperlink{dmp_key_8h_ae5613957164ac19bde823e6e03857f95}{00332} \textcolor{preprocessor}{#define DINA0C 0x0c}
+\hypertarget{dmp_key_8h_source.tex_l00333}{}\hyperlink{dmp_key_8h_aae93dc1dc6592cb858e650dc3ba8a187}{00333} \textcolor{preprocessor}{#define DINA14 0x14}
+\hypertarget{dmp_key_8h_source.tex_l00334}{}\hyperlink{dmp_key_8h_a0e601af5623655a879708a90c323f89e}{00334} \textcolor{preprocessor}{#define DINA1C 0x1C}
+\hypertarget{dmp_key_8h_source.tex_l00335}{}\hyperlink{dmp_key_8h_ae7fcfad621242106783a986f0cb67dcc}{00335} \textcolor{preprocessor}{#define DINA24 0x24}
+\hypertarget{dmp_key_8h_source.tex_l00336}{}\hyperlink{dmp_key_8h_a167b76fbcef1ddcd2535deaa5716e75a}{00336} \textcolor{preprocessor}{#define DINA2C 0x2c}
+\hypertarget{dmp_key_8h_source.tex_l00337}{}\hyperlink{dmp_key_8h_a24d4357f2b5aa9773eb3a565b2c0e081}{00337} \textcolor{preprocessor}{#define DINA34 0x34}
+\hypertarget{dmp_key_8h_source.tex_l00338}{}\hyperlink{dmp_key_8h_a33d93830a76a8f93352db81eb72909ed}{00338} \textcolor{preprocessor}{#define DINA3C 0x3c}
+\hypertarget{dmp_key_8h_source.tex_l00339}{}\hyperlink{dmp_key_8h_adee2eff963474afd9a2c88d353b6370d}{00339} \textcolor{preprocessor}{#define DINA44 0x44}
+\hypertarget{dmp_key_8h_source.tex_l00340}{}\hyperlink{dmp_key_8h_a9b27e6d8cc2695be889396deba983c68}{00340} \textcolor{preprocessor}{#define DINA4C 0x4c}
+\hypertarget{dmp_key_8h_source.tex_l00341}{}\hyperlink{dmp_key_8h_a390f60080f6ae024f0b7e1126d0e0fd8}{00341} \textcolor{preprocessor}{#define DINA54 0x54}
+\hypertarget{dmp_key_8h_source.tex_l00342}{}\hyperlink{dmp_key_8h_a969db23c26f9b64309197086166375ec}{00342} \textcolor{preprocessor}{#define DINA5C 0x5c}
+\hypertarget{dmp_key_8h_source.tex_l00343}{}\hyperlink{dmp_key_8h_a481c76c7240f0f743598530923e3a8a4}{00343} \textcolor{preprocessor}{#define DINA64 0x64}
+\hypertarget{dmp_key_8h_source.tex_l00344}{}\hyperlink{dmp_key_8h_a7b67d759acd8c51da25770cea5909bfc}{00344} \textcolor{preprocessor}{#define DINA6C 0x6c}
+\hypertarget{dmp_key_8h_source.tex_l00345}{}\hyperlink{dmp_key_8h_a6a31421ec0f06c57ce94929bfc249192}{00345} \textcolor{preprocessor}{#define DINA74 0x74}
+\hypertarget{dmp_key_8h_source.tex_l00346}{}\hyperlink{dmp_key_8h_ad62be883681c3112ac129b63f2c5f1eb}{00346} \textcolor{preprocessor}{#define DINA7C 0x7c}
 00347 
-00348 \textcolor{preprocessor}{#define DINA01 0x01}
-00349 \textcolor{preprocessor}{#define DINA09 0x09}
-00350 \textcolor{preprocessor}{#define DINA11 0x11}
-00351 \textcolor{preprocessor}{#define DINA19 0x19}
-00352 \textcolor{preprocessor}{#define DINA21 0x21}
-00353 \textcolor{preprocessor}{#define DINA29 0x29}
-00354 \textcolor{preprocessor}{#define DINA31 0x31}
-00355 \textcolor{preprocessor}{#define DINA39 0x39}
-00356 \textcolor{preprocessor}{#define DINA41 0x41}
-00357 \textcolor{preprocessor}{#define DINA49 0x49}
-00358 \textcolor{preprocessor}{#define DINA51 0x51}
-00359 \textcolor{preprocessor}{#define DINA59 0x59}
-00360 \textcolor{preprocessor}{#define DINA61 0x61}
-00361 \textcolor{preprocessor}{#define DINA69 0x69}
-00362 \textcolor{preprocessor}{#define DINA71 0x71}
-00363 \textcolor{preprocessor}{#define DINA79 0x79}
+\hypertarget{dmp_key_8h_source.tex_l00348}{}\hyperlink{dmp_key_8h_a3581639dc2dbe1cd4fa64e8f6d523554}{00348} \textcolor{preprocessor}{#define DINA01 0x01}
+\hypertarget{dmp_key_8h_source.tex_l00349}{}\hyperlink{dmp_key_8h_afe4af4413b1d74aacdbbbcb7a45b74c9}{00349} \textcolor{preprocessor}{#define DINA09 0x09}
+\hypertarget{dmp_key_8h_source.tex_l00350}{}\hyperlink{dmp_key_8h_abe957e3d978dc56f25832bb9975e462e}{00350} \textcolor{preprocessor}{#define DINA11 0x11}
+\hypertarget{dmp_key_8h_source.tex_l00351}{}\hyperlink{dmp_key_8h_a742f858b8ad5949421912b2c76c52a86}{00351} \textcolor{preprocessor}{#define DINA19 0x19}
+\hypertarget{dmp_key_8h_source.tex_l00352}{}\hyperlink{dmp_key_8h_a96493d91896e382d36c62fad6fdc7b9c}{00352} \textcolor{preprocessor}{#define DINA21 0x21}
+\hypertarget{dmp_key_8h_source.tex_l00353}{}\hyperlink{dmp_key_8h_ad33d358aacaca4644624d23432706ca0}{00353} \textcolor{preprocessor}{#define DINA29 0x29}
+\hypertarget{dmp_key_8h_source.tex_l00354}{}\hyperlink{dmp_key_8h_a1649cd243258b2d32335c37c7fb078ba}{00354} \textcolor{preprocessor}{#define DINA31 0x31}
+\hypertarget{dmp_key_8h_source.tex_l00355}{}\hyperlink{dmp_key_8h_a96629a1e4db577a2193aa91ac3b4576c}{00355} \textcolor{preprocessor}{#define DINA39 0x39}
+\hypertarget{dmp_key_8h_source.tex_l00356}{}\hyperlink{dmp_key_8h_a8bdf064752c811aa1879bb0432b6470d}{00356} \textcolor{preprocessor}{#define DINA41 0x41}
+\hypertarget{dmp_key_8h_source.tex_l00357}{}\hyperlink{dmp_key_8h_a3cd4e2e8795f7812bdbce089be342151}{00357} \textcolor{preprocessor}{#define DINA49 0x49}
+\hypertarget{dmp_key_8h_source.tex_l00358}{}\hyperlink{dmp_key_8h_a72f45a06b918d5a72ec3393c8eaa21cd}{00358} \textcolor{preprocessor}{#define DINA51 0x51}
+\hypertarget{dmp_key_8h_source.tex_l00359}{}\hyperlink{dmp_key_8h_aa76cbefe77ed24dd356cd5860d9ee5bb}{00359} \textcolor{preprocessor}{#define DINA59 0x59}
+\hypertarget{dmp_key_8h_source.tex_l00360}{}\hyperlink{dmp_key_8h_a4c2d8cfeb9678be4630a4b4f5d047795}{00360} \textcolor{preprocessor}{#define DINA61 0x61}
+\hypertarget{dmp_key_8h_source.tex_l00361}{}\hyperlink{dmp_key_8h_ad57c7b928e6d2894a589d47e9fb6cebc}{00361} \textcolor{preprocessor}{#define DINA69 0x69}
+\hypertarget{dmp_key_8h_source.tex_l00362}{}\hyperlink{dmp_key_8h_ac0f2511ffea797c4a40d01a07738d88a}{00362} \textcolor{preprocessor}{#define DINA71 0x71}
+\hypertarget{dmp_key_8h_source.tex_l00363}{}\hyperlink{dmp_key_8h_acd6df53f79fc325d9d5a946f4ab0d721}{00363} \textcolor{preprocessor}{#define DINA79 0x79}
 00364 
-00365 \textcolor{preprocessor}{#define DINA25 0x25}
-00366 \textcolor{preprocessor}{#define DINA2D 0x2d}
-00367 \textcolor{preprocessor}{#define DINA35 0x35}
-00368 \textcolor{preprocessor}{#define DINA3D 0x3d}
-00369 \textcolor{preprocessor}{#define DINA4D 0x4d}
-00370 \textcolor{preprocessor}{#define DINA55 0x55}
-00371 \textcolor{preprocessor}{#define DINA5D 0x5D}
-00372 \textcolor{preprocessor}{#define DINA6D 0x6d}
-00373 \textcolor{preprocessor}{#define DINA75 0x75}
-00374 \textcolor{preprocessor}{#define DINA7D 0x7d}
+\hypertarget{dmp_key_8h_source.tex_l00365}{}\hyperlink{dmp_key_8h_ab0d0c436b1bf13a55cd064253e0e81df}{00365} \textcolor{preprocessor}{#define DINA25 0x25}
+\hypertarget{dmp_key_8h_source.tex_l00366}{}\hyperlink{dmp_key_8h_a671bf1a1615d61b335c11498d0597da5}{00366} \textcolor{preprocessor}{#define DINA2D 0x2d}
+\hypertarget{dmp_key_8h_source.tex_l00367}{}\hyperlink{dmp_key_8h_ad691d1aae7026d49eba04b7485e73877}{00367} \textcolor{preprocessor}{#define DINA35 0x35}
+\hypertarget{dmp_key_8h_source.tex_l00368}{}\hyperlink{dmp_key_8h_a44daf57724326ba55ccdba7b71bf92cf}{00368} \textcolor{preprocessor}{#define DINA3D 0x3d}
+\hypertarget{dmp_key_8h_source.tex_l00369}{}\hyperlink{dmp_key_8h_a1fb6f30b4d8c9d860caacfb31762dab6}{00369} \textcolor{preprocessor}{#define DINA4D 0x4d}
+\hypertarget{dmp_key_8h_source.tex_l00370}{}\hyperlink{dmp_key_8h_a939f6a30861d1018ee40ca25d1bfc1f0}{00370} \textcolor{preprocessor}{#define DINA55 0x55}
+\hypertarget{dmp_key_8h_source.tex_l00371}{}\hyperlink{dmp_key_8h_a68579f8226a68f1c13fdd24a9230c2d1}{00371} \textcolor{preprocessor}{#define DINA5D 0x5D}
+\hypertarget{dmp_key_8h_source.tex_l00372}{}\hyperlink{dmp_key_8h_a3658dac2411332b22eabe2550ed698a8}{00372} \textcolor{preprocessor}{#define DINA6D 0x6d}
+\hypertarget{dmp_key_8h_source.tex_l00373}{}\hyperlink{dmp_key_8h_a1e275e8eff772ec9054a37450df218aa}{00373} \textcolor{preprocessor}{#define DINA75 0x75}
+\hypertarget{dmp_key_8h_source.tex_l00374}{}\hyperlink{dmp_key_8h_a88e040099a17c6393b8b126b1aab044d}{00374} \textcolor{preprocessor}{#define DINA7D 0x7d}
 00375 
-00376 \textcolor{preprocessor}{#define DINADC 0xdc}
-00377 \textcolor{preprocessor}{#define DINAF2 0xf2}
-00378 \textcolor{preprocessor}{#define DINAAB 0xab}
-00379 \textcolor{preprocessor}{#define DINAAA 0xaa}
-00380 \textcolor{preprocessor}{#define DINAF1 0xf1}
-00381 \textcolor{preprocessor}{#define DINADF 0xdf}
-00382 \textcolor{preprocessor}{#define DINADA 0xda}
-00383 \textcolor{preprocessor}{#define DINAB1 0xb1}
-00384 \textcolor{preprocessor}{#define DINAB9 0xb9}
-00385 \textcolor{preprocessor}{#define DINAF3 0xf3}
-00386 \textcolor{preprocessor}{#define DINA8B 0x8b}
-00387 \textcolor{preprocessor}{#define DINAA3 0xa3}
-00388 \textcolor{preprocessor}{#define DINA91 0x91}
-00389 \textcolor{preprocessor}{#define DINAB6 0xb6}
-00390 \textcolor{preprocessor}{#define DINAB4 0xb4}
+\hypertarget{dmp_key_8h_source.tex_l00376}{}\hyperlink{dmp_key_8h_a247fa1b0fafb22f114169da00ee7c66d}{00376} \textcolor{preprocessor}{#define DINADC 0xdc}
+\hypertarget{dmp_key_8h_source.tex_l00377}{}\hyperlink{dmp_key_8h_a02164a87762ad628851cb75fb3862e64}{00377} \textcolor{preprocessor}{#define DINAF2 0xf2}
+\hypertarget{dmp_key_8h_source.tex_l00378}{}\hyperlink{dmp_key_8h_a6afb3fa4c11350dbd2ab8cb2a486d441}{00378} \textcolor{preprocessor}{#define DINAAB 0xab}
+\hypertarget{dmp_key_8h_source.tex_l00379}{}\hyperlink{dmp_key_8h_adc43f6e3194e06db0cb9ef1d76fc75fa}{00379} \textcolor{preprocessor}{#define DINAAA 0xaa}
+\hypertarget{dmp_key_8h_source.tex_l00380}{}\hyperlink{dmp_key_8h_aaa9602f10af03cf274745cf22ec87667}{00380} \textcolor{preprocessor}{#define DINAF1 0xf1}
+\hypertarget{dmp_key_8h_source.tex_l00381}{}\hyperlink{dmp_key_8h_adc331c8f66eebd5902aaa688b2f92999}{00381} \textcolor{preprocessor}{#define DINADF 0xdf}
+\hypertarget{dmp_key_8h_source.tex_l00382}{}\hyperlink{dmp_key_8h_ae5c21999888119edd0fe2a2a63ccb664}{00382} \textcolor{preprocessor}{#define DINADA 0xda}
+\hypertarget{dmp_key_8h_source.tex_l00383}{}\hyperlink{dmp_key_8h_a29fbaf57a1f2ea050d9366578074c816}{00383} \textcolor{preprocessor}{#define DINAB1 0xb1}
+\hypertarget{dmp_key_8h_source.tex_l00384}{}\hyperlink{dmp_key_8h_ab0c061ee7be759495a8c38a99de966df}{00384} \textcolor{preprocessor}{#define DINAB9 0xb9}
+\hypertarget{dmp_key_8h_source.tex_l00385}{}\hyperlink{dmp_key_8h_ae7f5a2d99100f4118ebd6e6f7655eeea}{00385} \textcolor{preprocessor}{#define DINAF3 0xf3}
+\hypertarget{dmp_key_8h_source.tex_l00386}{}\hyperlink{dmp_key_8h_aeee4a69c090f22dc1548f2a2acbf172c}{00386} \textcolor{preprocessor}{#define DINA8B 0x8b}
+\hypertarget{dmp_key_8h_source.tex_l00387}{}\hyperlink{dmp_key_8h_af4deb194ebc437cd74e5f75b8aefeae8}{00387} \textcolor{preprocessor}{#define DINAA3 0xa3}
+\hypertarget{dmp_key_8h_source.tex_l00388}{}\hyperlink{dmp_key_8h_a5c4b25453b5409860db0be2bafc2dfba}{00388} \textcolor{preprocessor}{#define DINA91 0x91}
+\hypertarget{dmp_key_8h_source.tex_l00389}{}\hyperlink{dmp_key_8h_a5d5a018a4039da6a12a971591b3fb309}{00389} \textcolor{preprocessor}{#define DINAB6 0xb6}
+\hypertarget{dmp_key_8h_source.tex_l00390}{}\hyperlink{dmp_key_8h_a11422cc8761a0409a7a151ac4548fa2f}{00390} \textcolor{preprocessor}{#define DINAB4 0xb4}
 00391 
 00392 
-00393 \textcolor{preprocessor}{#define DINC00 0x00}
-00394 \textcolor{preprocessor}{#define DINC01 0x01}
-00395 \textcolor{preprocessor}{#define DINC02 0x02}
-00396 \textcolor{preprocessor}{#define DINC03 0x03}
-00397 \textcolor{preprocessor}{#define DINC08 0x08}
-00398 \textcolor{preprocessor}{#define DINC09 0x09}
-00399 \textcolor{preprocessor}{#define DINC0A 0x0a}
-00400 \textcolor{preprocessor}{#define DINC0B 0x0b}
-00401 \textcolor{preprocessor}{#define DINC10 0x10}
-00402 \textcolor{preprocessor}{#define DINC11 0x11}
-00403 \textcolor{preprocessor}{#define DINC12 0x12}
-00404 \textcolor{preprocessor}{#define DINC13 0x13}
-00405 \textcolor{preprocessor}{#define DINC18 0x18}
-00406 \textcolor{preprocessor}{#define DINC19 0x19}
-00407 \textcolor{preprocessor}{#define DINC1A 0x1a}
-00408 \textcolor{preprocessor}{#define DINC1B 0x1b}
+\hypertarget{dmp_key_8h_source.tex_l00393}{}\hyperlink{dmp_key_8h_a566570c9c937be4452806f29dced050c}{00393} \textcolor{preprocessor}{#define DINC00 0x00}
+\hypertarget{dmp_key_8h_source.tex_l00394}{}\hyperlink{dmp_key_8h_a1995de300aeb78e6b4670f32b506508e}{00394} \textcolor{preprocessor}{#define DINC01 0x01}
+\hypertarget{dmp_key_8h_source.tex_l00395}{}\hyperlink{dmp_key_8h_a6339b8945c4ff7e51bb84245b67367af}{00395} \textcolor{preprocessor}{#define DINC02 0x02}
+\hypertarget{dmp_key_8h_source.tex_l00396}{}\hyperlink{dmp_key_8h_a632450c0328d215decea521516309347}{00396} \textcolor{preprocessor}{#define DINC03 0x03}
+\hypertarget{dmp_key_8h_source.tex_l00397}{}\hyperlink{dmp_key_8h_aff14d480c579a7246c9336e6a7f9c000}{00397} \textcolor{preprocessor}{#define DINC08 0x08}
+\hypertarget{dmp_key_8h_source.tex_l00398}{}\hyperlink{dmp_key_8h_a1140f12c5d3fec687fc38970880cf677}{00398} \textcolor{preprocessor}{#define DINC09 0x09}
+\hypertarget{dmp_key_8h_source.tex_l00399}{}\hyperlink{dmp_key_8h_a807cf6389f1c2149285353705d06235e}{00399} \textcolor{preprocessor}{#define DINC0A 0x0a}
+\hypertarget{dmp_key_8h_source.tex_l00400}{}\hyperlink{dmp_key_8h_a31ff4f957d8c40f05f8c9117ef859298}{00400} \textcolor{preprocessor}{#define DINC0B 0x0b}
+\hypertarget{dmp_key_8h_source.tex_l00401}{}\hyperlink{dmp_key_8h_a800a31a0f2ede41b4f6aca3fb3e0b959}{00401} \textcolor{preprocessor}{#define DINC10 0x10}
+\hypertarget{dmp_key_8h_source.tex_l00402}{}\hyperlink{dmp_key_8h_ab40d242e47cafa6ee9951490ee4251a0}{00402} \textcolor{preprocessor}{#define DINC11 0x11}
+\hypertarget{dmp_key_8h_source.tex_l00403}{}\hyperlink{dmp_key_8h_a3bff7f7f04e46eea2945dae2999f3d3a}{00403} \textcolor{preprocessor}{#define DINC12 0x12}
+\hypertarget{dmp_key_8h_source.tex_l00404}{}\hyperlink{dmp_key_8h_ac788d53309edb02f24d82a61ff113c78}{00404} \textcolor{preprocessor}{#define DINC13 0x13}
+\hypertarget{dmp_key_8h_source.tex_l00405}{}\hyperlink{dmp_key_8h_a2e4ed68a98d0a4f0c8fb69c6cf9c8c9b}{00405} \textcolor{preprocessor}{#define DINC18 0x18}
+\hypertarget{dmp_key_8h_source.tex_l00406}{}\hyperlink{dmp_key_8h_ae66a806068e6c7a5a2ababc7666aa37d}{00406} \textcolor{preprocessor}{#define DINC19 0x19}
+\hypertarget{dmp_key_8h_source.tex_l00407}{}\hyperlink{dmp_key_8h_adbebce8259d076670d9b9df6e2c356a6}{00407} \textcolor{preprocessor}{#define DINC1A 0x1a}
+\hypertarget{dmp_key_8h_source.tex_l00408}{}\hyperlink{dmp_key_8h_a135433a037c5b14aee4b2b520f5d8f62}{00408} \textcolor{preprocessor}{#define DINC1B 0x1b}
 00409 
-00410 \textcolor{preprocessor}{#define DINC20 0x20}
-00411 \textcolor{preprocessor}{#define DINC21 0x21}
-00412 \textcolor{preprocessor}{#define DINC22 0x22}
-00413 \textcolor{preprocessor}{#define DINC23 0x23}
-00414 \textcolor{preprocessor}{#define DINC28 0x28}
-00415 \textcolor{preprocessor}{#define DINC29 0x29}
-00416 \textcolor{preprocessor}{#define DINC2A 0x2a}
-00417 \textcolor{preprocessor}{#define DINC2B 0x2b}
-00418 \textcolor{preprocessor}{#define DINC30 0x30}
-00419 \textcolor{preprocessor}{#define DINC31 0x31}
-00420 \textcolor{preprocessor}{#define DINC32 0x32}
-00421 \textcolor{preprocessor}{#define DINC33 0x33}
-00422 \textcolor{preprocessor}{#define DINC38 0x38}
-00423 \textcolor{preprocessor}{#define DINC39 0x39}
-00424 \textcolor{preprocessor}{#define DINC3A 0x3a}
-00425 \textcolor{preprocessor}{#define DINC3B 0x3b}
+\hypertarget{dmp_key_8h_source.tex_l00410}{}\hyperlink{dmp_key_8h_a894e4034e61c3ab7bbf328377f0b9f7f}{00410} \textcolor{preprocessor}{#define DINC20 0x20}
+\hypertarget{dmp_key_8h_source.tex_l00411}{}\hyperlink{dmp_key_8h_a1bb88625343f86be75533a780c037665}{00411} \textcolor{preprocessor}{#define DINC21 0x21}
+\hypertarget{dmp_key_8h_source.tex_l00412}{}\hyperlink{dmp_key_8h_a1437874c85d5472f433273f9017844d9}{00412} \textcolor{preprocessor}{#define DINC22 0x22}
+\hypertarget{dmp_key_8h_source.tex_l00413}{}\hyperlink{dmp_key_8h_ae9d4f6ab10dc49a41499f547ae56daea}{00413} \textcolor{preprocessor}{#define DINC23 0x23}
+\hypertarget{dmp_key_8h_source.tex_l00414}{}\hyperlink{dmp_key_8h_a0f2202a1f3a1728af5c5b66c8eef0b71}{00414} \textcolor{preprocessor}{#define DINC28 0x28}
+\hypertarget{dmp_key_8h_source.tex_l00415}{}\hyperlink{dmp_key_8h_ac49a54b09f28615e7f0713a77db8e214}{00415} \textcolor{preprocessor}{#define DINC29 0x29}
+\hypertarget{dmp_key_8h_source.tex_l00416}{}\hyperlink{dmp_key_8h_ae1dca1336ef3effc3158888c1a63bfc9}{00416} \textcolor{preprocessor}{#define DINC2A 0x2a}
+\hypertarget{dmp_key_8h_source.tex_l00417}{}\hyperlink{dmp_key_8h_ad9e63216778621bb32fa91af3c34bed5}{00417} \textcolor{preprocessor}{#define DINC2B 0x2b}
+\hypertarget{dmp_key_8h_source.tex_l00418}{}\hyperlink{dmp_key_8h_afc0a460026dccef37d929594b2e5d0f9}{00418} \textcolor{preprocessor}{#define DINC30 0x30}
+\hypertarget{dmp_key_8h_source.tex_l00419}{}\hyperlink{dmp_key_8h_a14b86ae0768b9ebdccc62bd038affea8}{00419} \textcolor{preprocessor}{#define DINC31 0x31}
+\hypertarget{dmp_key_8h_source.tex_l00420}{}\hyperlink{dmp_key_8h_a67d8717e41ee87d36eaedeeb72b45713}{00420} \textcolor{preprocessor}{#define DINC32 0x32}
+\hypertarget{dmp_key_8h_source.tex_l00421}{}\hyperlink{dmp_key_8h_ab2493f5ab49410d20967acce9ae51b05}{00421} \textcolor{preprocessor}{#define DINC33 0x33}
+\hypertarget{dmp_key_8h_source.tex_l00422}{}\hyperlink{dmp_key_8h_ab4b4fbfb76c788fe6d869ce5cb2f8037}{00422} \textcolor{preprocessor}{#define DINC38 0x38}
+\hypertarget{dmp_key_8h_source.tex_l00423}{}\hyperlink{dmp_key_8h_adc85d3255fdfd39cb0ee23e1f93c98c1}{00423} \textcolor{preprocessor}{#define DINC39 0x39}
+\hypertarget{dmp_key_8h_source.tex_l00424}{}\hyperlink{dmp_key_8h_aba48f085eb86d6e4234b5930ec0a1bb9}{00424} \textcolor{preprocessor}{#define DINC3A 0x3a}
+\hypertarget{dmp_key_8h_source.tex_l00425}{}\hyperlink{dmp_key_8h_a00412542ab358da51f90fede17c05127}{00425} \textcolor{preprocessor}{#define DINC3B 0x3b}
 00426 
-00427 \textcolor{preprocessor}{#define DINC40 0x40}
-00428 \textcolor{preprocessor}{#define DINC41 0x41}
-00429 \textcolor{preprocessor}{#define DINC42 0x42}
-00430 \textcolor{preprocessor}{#define DINC43 0x43}
-00431 \textcolor{preprocessor}{#define DINC48 0x48}
-00432 \textcolor{preprocessor}{#define DINC49 0x49}
-00433 \textcolor{preprocessor}{#define DINC4A 0x4a}
-00434 \textcolor{preprocessor}{#define DINC4B 0x4b}
-00435 \textcolor{preprocessor}{#define DINC50 0x50}
-00436 \textcolor{preprocessor}{#define DINC51 0x51}
-00437 \textcolor{preprocessor}{#define DINC52 0x52}
-00438 \textcolor{preprocessor}{#define DINC53 0x53}
-00439 \textcolor{preprocessor}{#define DINC58 0x58}
-00440 \textcolor{preprocessor}{#define DINC59 0x59}
-00441 \textcolor{preprocessor}{#define DINC5A 0x5a}
-00442 \textcolor{preprocessor}{#define DINC5B 0x5b}
+\hypertarget{dmp_key_8h_source.tex_l00427}{}\hyperlink{dmp_key_8h_a3facb2dbcfd6d18312814696571737db}{00427} \textcolor{preprocessor}{#define DINC40 0x40}
+\hypertarget{dmp_key_8h_source.tex_l00428}{}\hyperlink{dmp_key_8h_a4a2a2206028ac1ad75a80ccddb0e0075}{00428} \textcolor{preprocessor}{#define DINC41 0x41}
+\hypertarget{dmp_key_8h_source.tex_l00429}{}\hyperlink{dmp_key_8h_aab2847d18809899fb462b4e798a50800}{00429} \textcolor{preprocessor}{#define DINC42 0x42}
+\hypertarget{dmp_key_8h_source.tex_l00430}{}\hyperlink{dmp_key_8h_acbf826bfddc6816dbe3c3abd6bd98598}{00430} \textcolor{preprocessor}{#define DINC43 0x43}
+\hypertarget{dmp_key_8h_source.tex_l00431}{}\hyperlink{dmp_key_8h_ade3f60e47fb6694c5fb31c880dacf112}{00431} \textcolor{preprocessor}{#define DINC48 0x48}
+\hypertarget{dmp_key_8h_source.tex_l00432}{}\hyperlink{dmp_key_8h_aed46da59e1108365c7b49b6729d7da9e}{00432} \textcolor{preprocessor}{#define DINC49 0x49}
+\hypertarget{dmp_key_8h_source.tex_l00433}{}\hyperlink{dmp_key_8h_abf8b22a7f3f94b295d50a99a77049e1d}{00433} \textcolor{preprocessor}{#define DINC4A 0x4a}
+\hypertarget{dmp_key_8h_source.tex_l00434}{}\hyperlink{dmp_key_8h_a843ecd1ed2a9f1a2a48ce9c471dec569}{00434} \textcolor{preprocessor}{#define DINC4B 0x4b}
+\hypertarget{dmp_key_8h_source.tex_l00435}{}\hyperlink{dmp_key_8h_a6c1c07867793cbe42adc200021f899bf}{00435} \textcolor{preprocessor}{#define DINC50 0x50}
+\hypertarget{dmp_key_8h_source.tex_l00436}{}\hyperlink{dmp_key_8h_a9cfb7c378f92a63ace4c7e309a21f22e}{00436} \textcolor{preprocessor}{#define DINC51 0x51}
+\hypertarget{dmp_key_8h_source.tex_l00437}{}\hyperlink{dmp_key_8h_a55935c128430a2728b142b81ecfed221}{00437} \textcolor{preprocessor}{#define DINC52 0x52}
+\hypertarget{dmp_key_8h_source.tex_l00438}{}\hyperlink{dmp_key_8h_ae2736d75a59db5ce529c78c23f439380}{00438} \textcolor{preprocessor}{#define DINC53 0x53}
+\hypertarget{dmp_key_8h_source.tex_l00439}{}\hyperlink{dmp_key_8h_addc6748831e605958e0a9c0dc1e74d7d}{00439} \textcolor{preprocessor}{#define DINC58 0x58}
+\hypertarget{dmp_key_8h_source.tex_l00440}{}\hyperlink{dmp_key_8h_a649ba8390966a13a5e552091c952ea51}{00440} \textcolor{preprocessor}{#define DINC59 0x59}
+\hypertarget{dmp_key_8h_source.tex_l00441}{}\hyperlink{dmp_key_8h_a235da7cd99143df2c831e58754d55ff7}{00441} \textcolor{preprocessor}{#define DINC5A 0x5a}
+\hypertarget{dmp_key_8h_source.tex_l00442}{}\hyperlink{dmp_key_8h_af39975945d43da7dac5c5c1a6df800c4}{00442} \textcolor{preprocessor}{#define DINC5B 0x5b}
 00443 
-00444 \textcolor{preprocessor}{#define DINC60 0x60}
-00445 \textcolor{preprocessor}{#define DINC61 0x61}
-00446 \textcolor{preprocessor}{#define DINC62 0x62}
-00447 \textcolor{preprocessor}{#define DINC63 0x63}
-00448 \textcolor{preprocessor}{#define DINC68 0x68}
-00449 \textcolor{preprocessor}{#define DINC69 0x69}
-00450 \textcolor{preprocessor}{#define DINC6A 0x6a}
-00451 \textcolor{preprocessor}{#define DINC6B 0x6b}
-00452 \textcolor{preprocessor}{#define DINC70 0x70}
-00453 \textcolor{preprocessor}{#define DINC71 0x71}
-00454 \textcolor{preprocessor}{#define DINC72 0x72}
-00455 \textcolor{preprocessor}{#define DINC73 0x73}
-00456 \textcolor{preprocessor}{#define DINC78 0x78}
-00457 \textcolor{preprocessor}{#define DINC79 0x79}
-00458 \textcolor{preprocessor}{#define DINC7A 0x7a}
-00459 \textcolor{preprocessor}{#define DINC7B 0x7b}
+\hypertarget{dmp_key_8h_source.tex_l00444}{}\hyperlink{dmp_key_8h_ac489da30edde07c0a7016dfbe13720fe}{00444} \textcolor{preprocessor}{#define DINC60 0x60}
+\hypertarget{dmp_key_8h_source.tex_l00445}{}\hyperlink{dmp_key_8h_a0d69241f3cf7455bfe35e00b559eaa5e}{00445} \textcolor{preprocessor}{#define DINC61 0x61}
+\hypertarget{dmp_key_8h_source.tex_l00446}{}\hyperlink{dmp_key_8h_a44761d4a8084ee886548be4ca1e13f26}{00446} \textcolor{preprocessor}{#define DINC62 0x62}
+\hypertarget{dmp_key_8h_source.tex_l00447}{}\hyperlink{dmp_key_8h_af43b7cb353fec36bcc8d2f58e3e18b66}{00447} \textcolor{preprocessor}{#define DINC63 0x63}
+\hypertarget{dmp_key_8h_source.tex_l00448}{}\hyperlink{dmp_key_8h_a749850b0e4cfe0d2e01a2002c221bad1}{00448} \textcolor{preprocessor}{#define DINC68 0x68}
+\hypertarget{dmp_key_8h_source.tex_l00449}{}\hyperlink{dmp_key_8h_a107043f53aeda793153776f0d6929a3f}{00449} \textcolor{preprocessor}{#define DINC69 0x69}
+\hypertarget{dmp_key_8h_source.tex_l00450}{}\hyperlink{dmp_key_8h_acfb600176755cbdbf1810a3fa1d4b4fa}{00450} \textcolor{preprocessor}{#define DINC6A 0x6a}
+\hypertarget{dmp_key_8h_source.tex_l00451}{}\hyperlink{dmp_key_8h_a13add02454d49aade26ad9d56ceb26cd}{00451} \textcolor{preprocessor}{#define DINC6B 0x6b}
+\hypertarget{dmp_key_8h_source.tex_l00452}{}\hyperlink{dmp_key_8h_a896d4cb66c5ecc6a011f9fa8946555b1}{00452} \textcolor{preprocessor}{#define DINC70 0x70}
+\hypertarget{dmp_key_8h_source.tex_l00453}{}\hyperlink{dmp_key_8h_a936ef34430d5a3125efd22354be9444d}{00453} \textcolor{preprocessor}{#define DINC71 0x71}
+\hypertarget{dmp_key_8h_source.tex_l00454}{}\hyperlink{dmp_key_8h_af8c3573f50d4b3633e21fe489757752e}{00454} \textcolor{preprocessor}{#define DINC72 0x72}
+\hypertarget{dmp_key_8h_source.tex_l00455}{}\hyperlink{dmp_key_8h_a81f21e0b0a10d29a6e0692adc6645c28}{00455} \textcolor{preprocessor}{#define DINC73 0x73}
+\hypertarget{dmp_key_8h_source.tex_l00456}{}\hyperlink{dmp_key_8h_ac4b517f1e720ca864ed598aaa3ef5f71}{00456} \textcolor{preprocessor}{#define DINC78 0x78}
+\hypertarget{dmp_key_8h_source.tex_l00457}{}\hyperlink{dmp_key_8h_a27810265b16c2ae64e38f8af3fa4ec75}{00457} \textcolor{preprocessor}{#define DINC79 0x79}
+\hypertarget{dmp_key_8h_source.tex_l00458}{}\hyperlink{dmp_key_8h_ac3a80472bd44f705703964f3f715f0e7}{00458} \textcolor{preprocessor}{#define DINC7A 0x7a}
+\hypertarget{dmp_key_8h_source.tex_l00459}{}\hyperlink{dmp_key_8h_a8f3c5f70db880f46fa3967ec1a4f7b6b}{00459} \textcolor{preprocessor}{#define DINC7B 0x7b}
 00460 
-00461 \textcolor{preprocessor}{#define DIND40 0x40}
+\hypertarget{dmp_key_8h_source.tex_l00461}{}\hyperlink{dmp_key_8h_a5631d008e1531aec5205a7ec5d4c089c}{00461} \textcolor{preprocessor}{#define DIND40 0x40}
 00462 
 00463 
-00464 \textcolor{preprocessor}{#define DINA80 0x80}
-00465 \textcolor{preprocessor}{#define DINA90 0x90}
-00466 \textcolor{preprocessor}{#define DINAA0 0xa0}
-00467 \textcolor{preprocessor}{#define DINAC9 0xc9}
-00468 \textcolor{preprocessor}{#define DINACB 0xcb}
-00469 \textcolor{preprocessor}{#define DINACD 0xcd}
-00470 \textcolor{preprocessor}{#define DINACF 0xcf}
-00471 \textcolor{preprocessor}{#define DINAC8 0xc8}
-00472 \textcolor{preprocessor}{#define DINACA 0xca}
-00473 \textcolor{preprocessor}{#define DINACC 0xcc}
-00474 \textcolor{preprocessor}{#define DINACE 0xce}
-00475 \textcolor{preprocessor}{#define DINAD8 0xd8}
-00476 \textcolor{preprocessor}{#define DINADD 0xdd}
-00477 \textcolor{preprocessor}{#define DINAF8 0xf0}
-00478 \textcolor{preprocessor}{#define DINAFE 0xfe}
+\hypertarget{dmp_key_8h_source.tex_l00464}{}\hyperlink{dmp_key_8h_afc42e54169b23fd9319d59cccde6199f}{00464} \textcolor{preprocessor}{#define DINA80 0x80}
+\hypertarget{dmp_key_8h_source.tex_l00465}{}\hyperlink{dmp_key_8h_a067d7d3582cec5360b65783c031b8a05}{00465} \textcolor{preprocessor}{#define DINA90 0x90}
+\hypertarget{dmp_key_8h_source.tex_l00466}{}\hyperlink{dmp_key_8h_aafcc7791eb74679c714024fa282a400c}{00466} \textcolor{preprocessor}{#define DINAA0 0xa0}
+\hypertarget{dmp_key_8h_source.tex_l00467}{}\hyperlink{dmp_key_8h_abf1781aef14b0bf60cede867717c0acb}{00467} \textcolor{preprocessor}{#define DINAC9 0xc9}
+\hypertarget{dmp_key_8h_source.tex_l00468}{}\hyperlink{dmp_key_8h_a6eb93471d47be0300f61af65981f75ba}{00468} \textcolor{preprocessor}{#define DINACB 0xcb}
+\hypertarget{dmp_key_8h_source.tex_l00469}{}\hyperlink{dmp_key_8h_a42a4b57f7ce73c019a5456aed0777ae2}{00469} \textcolor{preprocessor}{#define DINACD 0xcd}
+\hypertarget{dmp_key_8h_source.tex_l00470}{}\hyperlink{dmp_key_8h_a3e5e1d13a836f84f9296c162266730c6}{00470} \textcolor{preprocessor}{#define DINACF 0xcf}
+\hypertarget{dmp_key_8h_source.tex_l00471}{}\hyperlink{dmp_key_8h_ab85fc00764ec5f3d1cc9c9f579df81af}{00471} \textcolor{preprocessor}{#define DINAC8 0xc8}
+\hypertarget{dmp_key_8h_source.tex_l00472}{}\hyperlink{dmp_key_8h_ac5c34d55ffff17c4344c2f7d477db4ba}{00472} \textcolor{preprocessor}{#define DINACA 0xca}
+\hypertarget{dmp_key_8h_source.tex_l00473}{}\hyperlink{dmp_key_8h_a4ddb236bca3c337f89a3c78670ef47e3}{00473} \textcolor{preprocessor}{#define DINACC 0xcc}
+\hypertarget{dmp_key_8h_source.tex_l00474}{}\hyperlink{dmp_key_8h_a7ee3266bdce7a47508c6377a41cda694}{00474} \textcolor{preprocessor}{#define DINACE 0xce}
+\hypertarget{dmp_key_8h_source.tex_l00475}{}\hyperlink{dmp_key_8h_ae26b149d97411d5244c0f3c3abc4514b}{00475} \textcolor{preprocessor}{#define DINAD8 0xd8}
+\hypertarget{dmp_key_8h_source.tex_l00476}{}\hyperlink{dmp_key_8h_ac84187d40dc561d5b28c8de2449da6f8}{00476} \textcolor{preprocessor}{#define DINADD 0xdd}
+\hypertarget{dmp_key_8h_source.tex_l00477}{}\hyperlink{dmp_key_8h_ab651ea5c6eeb5bc60546fb0b611d4aa0}{00477} \textcolor{preprocessor}{#define DINAF8 0xf0}
+\hypertarget{dmp_key_8h_source.tex_l00478}{}\hyperlink{dmp_key_8h_a371499e1b724b447dfd2293c3567b5bb}{00478} \textcolor{preprocessor}{#define DINAFE 0xfe}
 00479 
-00480 \textcolor{preprocessor}{#define DINBF8 0xf8}
-00481 \textcolor{preprocessor}{#define DINAC0 0xb0}
-00482 \textcolor{preprocessor}{#define DINAC1 0xb1}
-00483 \textcolor{preprocessor}{#define DINAC2 0xb4}
-00484 \textcolor{preprocessor}{#define DINAC3 0xb5}
-00485 \textcolor{preprocessor}{#define DINAC4 0xb8}
-00486 \textcolor{preprocessor}{#define DINAC5 0xb9}
-00487 \textcolor{preprocessor}{#define DINBC0 0xc0}
-00488 \textcolor{preprocessor}{#define DINBC2 0xc2}
-00489 \textcolor{preprocessor}{#define DINBC4 0xc4}
-00490 \textcolor{preprocessor}{#define DINBC6 0xc6}
+\hypertarget{dmp_key_8h_source.tex_l00480}{}\hyperlink{dmp_key_8h_af44a8b91b35afdc9b831fee7b714fe4e}{00480} \textcolor{preprocessor}{#define DINBF8 0xf8}
+\hypertarget{dmp_key_8h_source.tex_l00481}{}\hyperlink{dmp_key_8h_a090e2de2c4154541f57ae6b818884cf4}{00481} \textcolor{preprocessor}{#define DINAC0 0xb0}
+\hypertarget{dmp_key_8h_source.tex_l00482}{}\hyperlink{dmp_key_8h_a628c1cf8f2fa661c6b8434527a8a1e10}{00482} \textcolor{preprocessor}{#define DINAC1 0xb1}
+\hypertarget{dmp_key_8h_source.tex_l00483}{}\hyperlink{dmp_key_8h_ac75342203eb32cb43e0f9404accb37a3}{00483} \textcolor{preprocessor}{#define DINAC2 0xb4}
+\hypertarget{dmp_key_8h_source.tex_l00484}{}\hyperlink{dmp_key_8h_acd7d116975fb8f03a0f21d85a9e2995e}{00484} \textcolor{preprocessor}{#define DINAC3 0xb5}
+\hypertarget{dmp_key_8h_source.tex_l00485}{}\hyperlink{dmp_key_8h_a1d8bb02a7c232cf4ab4f1457396e9ccd}{00485} \textcolor{preprocessor}{#define DINAC4 0xb8}
+\hypertarget{dmp_key_8h_source.tex_l00486}{}\hyperlink{dmp_key_8h_a1afcf09967753a1a9b4535fa82c2ac28}{00486} \textcolor{preprocessor}{#define DINAC5 0xb9}
+\hypertarget{dmp_key_8h_source.tex_l00487}{}\hyperlink{dmp_key_8h_a0ab58ef64f279a76d1f1be67616cf579}{00487} \textcolor{preprocessor}{#define DINBC0 0xc0}
+\hypertarget{dmp_key_8h_source.tex_l00488}{}\hyperlink{dmp_key_8h_a9e426a02a039b5e6c2e1d641077af3e9}{00488} \textcolor{preprocessor}{#define DINBC2 0xc2}
+\hypertarget{dmp_key_8h_source.tex_l00489}{}\hyperlink{dmp_key_8h_aa9e0a837de04950e42f00e074c3d6566}{00489} \textcolor{preprocessor}{#define DINBC4 0xc4}
+\hypertarget{dmp_key_8h_source.tex_l00490}{}\hyperlink{dmp_key_8h_a0677bcabb419e066434b7163a109d9a1}{00490} \textcolor{preprocessor}{#define DINBC6 0xc6}
 00491 
 00492 
 00493 

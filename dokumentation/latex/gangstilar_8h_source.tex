@@ -14,7 +14,7 @@
 00010 \textcolor{preprocessor}{#define GANGSTILAR\_H\_}
 00011 
 00012 \textcolor{preprocessor}{#ifndef F\_CPU}
-00013 \textcolor{preprocessor}{#define F\_CPU 16000000UL        // 16 MHz}
+\hypertarget{gangstilar_8h_source.tex_l00013}{}\hyperlink{gangstilar_8h_a43bafb28b29491ec7f871319b5a3b2f8}{00013} \textcolor{preprocessor}{#define F\_CPU 16000000UL        // 16 MHz}
 00014 \textcolor{preprocessor}{#endif}
 00015 
 00016 \textcolor{preprocessor}{#include <avr/io.h>}
@@ -25,26 +25,36 @@
 00021 \textcolor{preprocessor}{#include "\hyperlink{structs_8h}{structs.h}"}
 00022 \textcolor{preprocessor}{#include "\hyperlink{servo___u_a_r_t_8h}{servo\_UART.h}"}
 00023 
-00024 \textcolor{keywordtype}{float} LP\_Filter\_And\_Limit\_Input(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{int} sgn\_speed, \textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} sgn\_theta, \textcolor{keywordtype}{float} height);
-00025 \textcolor{keywordtype}{int} max\_speed(\textcolor{keywordtype}{float} theta,\textcolor{keywordtype}{int} sgn\_theta);
-00026 \textcolor{keywordtype}{void} Adjust\_Servo\_Speed(\textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} sgn\_theta);
-00027 \textcolor{keywordtype}{void} Adjust\_Height(\textcolor{keywordtype}{float} l, \textcolor{keywordtype}{float} height\_step, \textcolor{keywordtype}{float} corner\_pitch);
-00028 \textcolor{keywordtype}{void} Send\_Legs\_Kar(\hyperlink{structtriple__float}{triple\_float} kar\_p1, \hyperlink{structtriple__float}{triple\_float} kar\_p2, \textcolor{keywordtype}{float} corner\_pitch);
-00029 \textcolor{keywordtype}{void} Rotate\_And\_Send\_Legs(\hyperlink{structtriple__float}{triple\_float} kar\_p1, \hyperlink{structtriple__float}{triple\_float} kar\_p2, \textcolor{keywordtype}{float} 
-      corner\_pitch, \textcolor{keywordtype}{int} sgn\_speed,\textcolor{keywordtype}{float} theta);
-00030 \hyperlink{structdouble__float}{double\_float} Limit\_Theta(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{int} sgn\_speed, \textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} sgn\_theta );
-00031 \textcolor{keywordtype}{float} Limit\_Speed(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{int} sgn\_speed);
-00032 \textcolor{keywordtype}{float} Limit\_Height(\textcolor{keywordtype}{float} height);
-00033 
-00034 
-00035 \hyperlink{structtriple__float}{triple\_float} Tripod(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} stroke, \textcolor{keywordtype}{float} height, uint8\_t n);
-00036 \hyperlink{structtriple__float}{triple\_float} Tripod2(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} stroke, \textcolor{keywordtype}{float} height, uint8\_t n);
-00037 \textcolor{keywordtype}{void} Walk\_Half\_Cycle(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} height);
-00038 \textcolor{keywordtype}{void} Walk\_Half\_Crab\_Cycle(\textcolor{keywordtype}{float} speed);
-00039 \textcolor{keywordtype}{void} Walk\_Half\_Crab\_Cycle2(\textcolor{keywordtype}{float} speed);
-00040 \textcolor{keywordtype}{void} Walk\_Half\_Safe\_Cycle(\textcolor{keywordtype}{float} speed, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} height) ;
-00041 
-00042 
-00043 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* GANGSTILAR\_H\_ */}\textcolor{preprocessor}{}
-00044 
+\hypertarget{gangstilar_8h_source.tex_l00024}{}\hyperlink{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{00024} \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{height};
+\hypertarget{gangstilar_8h_source.tex_l00025}{}\hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{00025} \textcolor{keywordtype}{int} \hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{n};
+00026 
+00027 
+00028 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_a1cdd1ec49baae5876bf4185c0696ee45}{Adjust\_Stance\_Climbed}(\textcolor{keywordtype}{char} direction);
+00029 \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a7686716eb9ff55e001f00b15a53f83f0}{LP\_Filter\_And\_Limit\_Input}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, \textcolor{keywordtype}{int} sgn\_speed, \textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} 
+      sgn\_theta, \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{height});
+00030 \textcolor{keywordtype}{int} \hyperlink{gangstilar_8h_a7e22034136fbee493cd09711e57eff2d}{max\_speed}(\textcolor{keywordtype}{float} theta,\textcolor{keywordtype}{int} sgn\_theta);
+00031 \hyperlink{structtriple__float}{triple\_float} \hyperlink{gangstilar_8h_a2d87f3a4b99915d806ba0b31e2270028}{Adjust\_Servo\_Speed}(\textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} sgn\_theta, int8\_t leg\_down);
+00032 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_af2fde91636f94ada8898458a8e631a9a}{Adjust\_Height}(\textcolor{keywordtype}{float} l, \textcolor{keywordtype}{float} height\_step, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch});
+00033 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_ad91d62548b0e007cac2f92e12d5ab273}{Send\_Legs\_Kar}(\hyperlink{structtriple__float}{triple\_float} kar\_p1, \hyperlink{structtriple__float}{triple\_float} kar\_p2, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, \hyperlink{structtriple__float}{triple\_float} speed\_p1, \hyperlink{structtriple__float}{triple\_float} speed\_p2); 
+00034 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_a5727fa4a438523e18ea5409ca5bf938e}{Rotate\_And\_Send\_Legs}(\hyperlink{structtriple__float}{triple\_float} kar\_p1, 
+      \hyperlink{structtriple__float}{triple\_float} kar\_p2, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, \textcolor{keywordtype}{int} sgn\_speed,\textcolor{keywordtype}{float} theta, 
+      \hyperlink{structtriple__float}{triple\_float} speed\_p1, \hyperlink{structtriple__float}{triple\_float} speed\_p2);
+00035 \hyperlink{structdouble__float}{double\_float} \hyperlink{gangstilar_8h_adda531189948a09fca5b2ba7eb85ed72}{Limit\_Theta}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, \textcolor{keywordtype}{int} sgn\_speed, \textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} sgn\_theta
+       );
+00036 \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a0253c9cd3c65bdec3e155f66c7575f3e}{Limit\_Speed}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, \textcolor{keywordtype}{int} sgn\_speed);
+00037 \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a7a64feb9f04fb68c5c7c44afb5975acf}{Limit\_Height}(\textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{height});
+00038 
+00039 
+00040 \hyperlink{structtriple__float}{triple\_float} \hyperlink{gangstilar_8h_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{Tripod}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} stroke, \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{height},\textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_a5e433c2d90f9d7f1ff1868b9e8b91868}{lift}, uint8\_t \hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{n});
+00041 \textcolor{comment}{//triple\_float Tripod2(float x, float stroke, float height, uint8\_t n); }
+00042 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_ae56b8515b1ea2c6035e04e3e2df2b52a}{Walk\_Half\_Cycle}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{height});
+00043 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_a4c2ee7390bb80e121c51116c7fe30bd1}{Walk\_Half\_Crab\_Cycle}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed});
+00044 \textcolor{comment}{//void Walk\_Half\_Crab\_Cycle2(float speed);}
+00045 \textcolor{comment}{//void Walk\_Half\_Safe\_Cycle(float speed, float th, float height) ;}
+00046 
+00047 
+00048 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* GANGSTILAR\_H\_ */}\textcolor{preprocessor}{}
+00049 
 \end{DoxyCode}
