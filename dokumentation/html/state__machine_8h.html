@@ -98,19 +98,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>State machine for the robot's autonomous mode.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;SPI.h&quot;</code><br />
-<code>#include &quot;gangstilar.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="_s_p_i_8h_source.html">SPI.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="gangstilar_8h_source.html">gangstilar.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="over__hinder_8h_source.html">over_hinder.h</a>&quot;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
 </div>
 <p><a href="state__machine_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a43bafb28b29491ec7f871319b5a3b2f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43bafb28b29491ec7f871319b5a3b2f8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>F_CPU</b>&#160;&#160;&#160;16000000UL</td></tr>
+<tr class="memitem:a43bafb28b29491ec7f871319b5a3b2f8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a43bafb28b29491ec7f871319b5a3b2f8">F_CPU</a>&#160;&#160;&#160;16000000UL</td></tr>
 <tr class="separator:a43bafb28b29491ec7f871319b5a3b2f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5776a711f0156180fe5efb79c9ffc24f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a5776a711f0156180fe5efb79c9ffc24f">HALF_ROTATION_ANGLE</a>&#160;&#160;&#160;85</td></tr>
+<tr class="memitem:a5776a711f0156180fe5efb79c9ffc24f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a5776a711f0156180fe5efb79c9ffc24f">HALF_ROTATION_ANGLE</a>&#160;&#160;&#160;45</td></tr>
 <tr class="separator:a5776a711f0156180fe5efb79c9ffc24f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40718a26b2b107afdc38533db41cc0a3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a40718a26b2b107afdc38533db41cc0a3">FULL_ROTATION_ANGLE</a>&#160;&#160;&#160;175</td></tr>
+<tr class="memitem:a40718a26b2b107afdc38533db41cc0a3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a40718a26b2b107afdc38533db41cc0a3">FULL_ROTATION_ANGLE</a>&#160;&#160;&#160;90</td></tr>
 <tr class="separator:a40718a26b2b107afdc38533db41cc0a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a201d56046ddf552d57b4862e0ec07a10"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a201d56046ddf552d57b4862e0ec07a10">CORRIDOR_SIDE_DISTANCE</a>&#160;&#160;&#160;60</td></tr>
 <tr class="separator:a201d56046ddf552d57b4862e0ec07a10"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,25 +119,23 @@ Macros</h2></td></tr>
 <tr class="separator:a31ba7e3e0116f665d5825f669052ed09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a1286b84f437e1c90d21ffc833a8b79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a9a1286b84f437e1c90d21ffc833a8b79">END_OF_COURSE_DISTANCE</a>&#160;&#160;&#160;80</td></tr>
 <tr class="separator:a9a1286b84f437e1c90d21ffc833a8b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf843098ef425aa129f5ff16d879f7f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#adf843098ef425aa129f5ff16d879f7f2">SHORT_TURN_DISTANCE</a>&#160;&#160;&#160;38</td></tr>
+<tr class="memitem:adf843098ef425aa129f5ff16d879f7f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#adf843098ef425aa129f5ff16d879f7f2">SHORT_TURN_DISTANCE</a>&#160;&#160;&#160;40</td></tr>
 <tr class="separator:adf843098ef425aa129f5ff16d879f7f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a365e437f4fdaddff7b28fa56e61a0060"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a365e437f4fdaddff7b28fa56e61a0060">LONG_TURN_DISTANCE</a>&#160;&#160;&#160;100</td></tr>
-<tr class="separator:a365e437f4fdaddff7b28fa56e61a0060"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8118fdbf1a36265000f2d42844e10747"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a8118fdbf1a36265000f2d42844e10747">FORWARD_DEAD_END_DISTANCE</a>&#160;&#160;&#160;180</td></tr>
+<tr class="memitem:a8f7e1b7ccc92504f03ca42fb3e76e7d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a8f7e1b7ccc92504f03ca42fb3e76e7d4">JUNCTION_C_TURN_DISTANCE</a>&#160;&#160;&#160;45</td></tr>
+<tr class="separator:a8f7e1b7ccc92504f03ca42fb3e76e7d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8118fdbf1a36265000f2d42844e10747"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a8118fdbf1a36265000f2d42844e10747">FORWARD_DEAD_END_DISTANCE</a>&#160;&#160;&#160;170</td></tr>
 <tr class="separator:a8118fdbf1a36265000f2d42844e10747"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada224a95ca04ac21b410ef6e23814eea"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#ada224a95ca04ac21b410ef6e23814eea">JUNCTION_A_FORWARD_DISTANCE</a>&#160;&#160;&#160;80</td></tr>
 <tr class="separator:ada224a95ca04ac21b410ef6e23814eea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29b3e85ce789185a96d28f139e003d4c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a29b3e85ce789185a96d28f139e003d4c">LOW_OBSTACLE_DISTANCE</a>&#160;&#160;&#160;40</td></tr>
-<tr class="separator:a29b3e85ce789185a96d28f139e003d4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7dc7e4111003eb72dfc6cfede130fb5f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a7dc7e4111003eb72dfc6cfede130fb5f">START_CLIMBING_UP_DISTANCE</a>&#160;&#160;&#160;20</td></tr>
-<tr class="separator:a7dc7e4111003eb72dfc6cfede130fb5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9df2253e22c049d64aab5f0cbfd7dae3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a9df2253e22c049d64aab5f0cbfd7dae3">START_CLIMBING_DOWN_DISTANCE</a>&#160;&#160;&#160;50</td></tr>
-<tr class="separator:a9df2253e22c049d64aab5f0cbfd7dae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a647ce7a809da5ed12ea5319ed1c2b73f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a647ce7a809da5ed12ea5319ed1c2b73f">US_HIGH_OBSTACLE_DISTANCE</a>&#160;&#160;&#160;40</td></tr>
+<tr class="memitem:a1bdeb86204e23b0e597ffe87d6579167"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a1bdeb86204e23b0e597ffe87d6579167">PREPARE_CLIMBING_UP_DISTANCE</a>&#160;&#160;&#160;30</td></tr>
+<tr class="separator:a1bdeb86204e23b0e597ffe87d6579167"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7fbc26bb7b50f3502c893ecdccd8ab4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#af7fbc26bb7b50f3502c893ecdccd8ab4">PREPARE_CLIMBING_DOWN_DISTANCE</a>&#160;&#160;&#160;40</td></tr>
+<tr class="separator:af7fbc26bb7b50f3502c893ecdccd8ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a647ce7a809da5ed12ea5319ed1c2b73f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a647ce7a809da5ed12ea5319ed1c2b73f">US_HIGH_OBSTACLE_DISTANCE</a>&#160;&#160;&#160;30</td></tr>
 <tr class="separator:a647ce7a809da5ed12ea5319ed1c2b73f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83b61a7a575cb23097805af83236bcf0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a83b61a7a575cb23097805af83236bcf0">IR_HIGH_OBSTACLE_DISTANCE</a>&#160;&#160;&#160;50</td></tr>
+<tr class="memitem:a83b61a7a575cb23097805af83236bcf0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a83b61a7a575cb23097805af83236bcf0">IR_HIGH_OBSTACLE_DISTANCE</a>&#160;&#160;&#160;30</td></tr>
 <tr class="separator:a83b61a7a575cb23097805af83236bcf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d981c215ebe94b6be6a0d49ccd2dce8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a9d981c215ebe94b6be6a0d49ccd2dce8">NO_WALL_DISTANCE</a>&#160;&#160;&#160;50</td></tr>
+<tr class="memitem:a9d981c215ebe94b6be6a0d49ccd2dce8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a9d981c215ebe94b6be6a0d49ccd2dce8">NO_WALL_DISTANCE</a>&#160;&#160;&#160;60</td></tr>
 <tr class="separator:a9d981c215ebe94b6be6a0d49ccd2dce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa31835133338361e7bffbaf776c9c7a1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#aa31835133338361e7bffbaf776c9c7a1">DEAD_END_DISTANCE</a>&#160;&#160;&#160;40</td></tr>
 <tr class="separator:aa31835133338361e7bffbaf776c9c7a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,93 +147,44 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:a94b1da2e055fff4d143aa6aa891f79a9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9">STATES</a> { <br />
-&#160;&#160;<b>CORRIDOR</b>, 
-<b>OUT_OF_CORRIDOR</b>, 
-<b>INTO_HIGH_OBSTACLE</b>, 
-<b>INTO_LOW_OBSTACLE</b>, 
+&#160;&#160;<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a679ee5320d66c8322e310daeb2ee99b8">STOP</a> = 31, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9ae66a6dc1f3ff114acf2efb4926e7975e">DEAD_END</a> = 2, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9af4fc00ebf5a552ca632130e794617d58">CORRIDOR</a> = 3, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a24fb9d9ff0b7ac346a2527509a251125">OUT_OF_CORRIDOR_NO_WALL</a> = 4, 
 <br />
-&#160;&#160;<b>INTO_TURN_RIGHT</b>, 
-<b>INTO_TURN_LEFT</b>, 
-<b>INTO_JUNCTION_A_RIGHT</b>, 
-<b>INTO_JUNCTION_A_LEFT</b>, 
+&#160;&#160;<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a36e0fb056921e3c44cbbe999c0814fdd">OUT_OF_CORRIDOR_LEFT_WALL</a> = 5, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9abb071018d1b1e80867c6ba4c5ddc1615">OUT_OF_CORRIDOR_RIGHT_WALL</a> = 6, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a5720da833432aa3b68ff7e1a6529a7a6">INTO_HIGH_OBSTACLE</a> = 7, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9ac115d428bec2ff3acfb56f605a12dde5">CRAWLING_UNDER_HIGH_OBSTACLE</a> = 8, 
 <br />
-&#160;&#160;<b>TURN_RIGHT</b>, 
-<b>TURN_LEFT</b>, 
-<b>JUNCTION_A_LEFT</b>, 
-<b>JUNCTION_A_RIGHT</b>, 
+&#160;&#160;<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a16c309eb8317f88a8a0440d04f5020bd">PREPARE_CLIMBING_UP</a> = 9, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a3555ae926f7e1c144e6f5ff285b8a306">CLIMBING_UP</a> = 10, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a10649b908487397730b45977dd2ceb20">LOW_OBSTACLE</a> = 11, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a2700ce69c7587770afa814fa351d8364">PREPARE_CLIMBING_DOWN</a> = 1, 
 <br />
-&#160;&#160;<b>JUNCTION_B_RIGHT</b>, 
-<b>JUNCTION_B_LEFT</b>, 
-<b>JUNCTION_C_RIGHT</b>, 
-<b>JUNCTION_C_LEFT</b>, 
+&#160;&#160;<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a2e040f9d636c99eb3b8a25ef44714fcb">CLIMBING_DOWN</a> = 12, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a146b6b47df32dc00c98e80fd088ac544">INTO_JUNCTION_A_RIGHT</a> = 13, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a0f6a84655b20690436b90884c6c12929">INTO_JUNCTION_A_LEFT</a> = 14, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a5867af0449808578577a55aad42450ed">TURN_RIGHT</a> = 15, 
 <br />
-&#160;&#160;<b>DEAD_END</b>, 
-<b>MID_DEAD_END</b>, 
-<b>HIGH_OBSTACLE</b>, 
-<b>LOW_OBSTACLE</b>, 
+&#160;&#160;<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9aa680fb2367a2e11042d902b7d6320f12">TURN_LEFT</a> = 16, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9ad673dc3a905d1f1d7006a598b44c4f49">JUNCTION_A_RIGHT</a> = 17, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a739447f1c1a49d43e6fb0203260f97fe">JUNCTION_A_LEFT</a> = 18, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a26671ad0a5647338693043b705dff1b4">JUNCTION_B_RIGHT</a> = 19, 
 <br />
-&#160;&#160;<b>CRAWLING_OUT_OF_HIGH_OBSTACLE</b>, 
-<b>CRAWLING_UNDER_HIGH_OBSTACLE</b>, 
-<b>CLIMB_UP</b>, 
-<b>OUT_OF_TURN_RIGHT</b>, 
+&#160;&#160;<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9adbc162c33ce4f98bcb8e7f670f324e6d">JUNCTION_B_LEFT</a> = 20, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9af47d2ce80e1460d0e5e877eac3115eb5">JUNCTION_C_RIGHT</a> = 21, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a4d0c8d9068b5a03bc9149cc8f320ae81">JUNCTION_C_LEFT</a> = 22, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a0800e881bdbe6153aba3ae4ef194b6dd">END_OF_COURSE</a> = 23, 
 <br />
-&#160;&#160;<b>OUT_OF_TURN_LEFT</b>, 
-<b>OUT_OF_JUNCTION_A_RIGHT</b>, 
-<b>OUT_OF_JUNCTION_A_LEFT</b>, 
-<b>OUT_OF_JUNCTION_C_RIGHT</b>, 
+&#160;&#160;<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a519a7a811bc5fd9f274308fb31a09fcc">OUT_OF_TURN_RIGHT</a> = 24, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9aa067a626023130425d23479f09f6642f">OUT_OF_TURN_LEFT</a> = 25, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9ae0736738e9d2beffffb2dcce39aecfbf">OUT_OF_JUNCTION_A</a> = 26, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a026efbf245bbe8a3ba6a6f625569f60c">OUT_OF_JUNCTION_A_RIGHT</a> = 27, 
 <br />
-&#160;&#160;<b>OUT_OF_JUNCTION_C_LEFT</b>, 
-<b>OUT_OF_HIGH_OBSTACLE</b>, 
-<b>OUT_OF_LOW_OBSTACLE</b>, 
-<b>END_OF_COURSE</b>, 
-<br />
-&#160;&#160;<b>CORRIDOR</b> = 1, 
-<b>OUT_OF_CORRIDOR_NO_WALL</b> = 2, 
-<b>OUT_OF_CORRIDOR_LEFT_WALL</b> = 3, 
-<b>OUT_OF_CORRIDOR_RIGHT_WALL</b> = 4, 
-<br />
-&#160;&#160;<b>INTO_HIGH_OBSTACLE</b> = 5, 
-<b>INTO_LOW_OBSTACLE</b> = 6, 
-<b>INTO_TURN_RIGHT</b> = 7, 
-<b>INTO_TURN_LEFT</b> = 8, 
-<br />
-&#160;&#160;<b>INTO_JUNCTION_A_RIGHT</b> = 9, 
-<b>INTO_JUNCTION_A_LEFT</b> = 10, 
-<b>TURN_RIGHT</b> = 11, 
-<b>TURN_LEFT</b> = 12, 
-<br />
-&#160;&#160;<b>JUNCTION_A_RIGHT</b> = 13, 
-<b>JUNCTION_A_LEFT</b> = 14, 
-<b>JUNCTION_B_RIGHT</b> = 15, 
-<b>JUNCTION_B_LEFT</b> = 16, 
-<br />
-&#160;&#160;<b>JUNCTION_C_RIGHT</b> = 17, 
-<b>JUNCTION_C_LEFT</b> = 18, 
-<b>DEAD_END</b> = 19, 
-<b>MID_DEAD_END</b> = 20, 
-<br />
-&#160;&#160;<b>HIGH_OBSTACLE</b> = 21, 
-<b>LOW_OBSTACLE</b> = 22, 
-<b>CRAWLING_OUT_OF_HIGH_OBSTACLE</b> = 23, 
-<b>CRAWLING_UNDER_HIGH_OBSTACLE</b> = 24, 
-<br />
-&#160;&#160;<b>CLIMB_UP</b> = 25, 
-<b>OUT_OF_TURN_RIGHT</b> = 26, 
-<b>OUT_OF_TURN_LEFT</b> = 27, 
-<b>OUT_OF_JUNCTION_A_RIGHT</b> = 28, 
-<br />
-&#160;&#160;<b>OUT_OF_JUNCTION_A_LEFT</b> = 29, 
-<b>OUT_OF_JUNCTION_C_RIGHT</b> = 30, 
-<b>OUT_OF_JUNCTION_C_LEFT</b> = 31, 
-<b>OUT_OF_HIGH_OBSTACLE</b> = 32, 
-<br />
-&#160;&#160;<b>OUT_OF_LOW_OBSTACLE</b> = 33, 
-<b>END_OF_COURSE</b> = 34, 
-<b>STOP</b> = 35, 
-<b>INTO_JUNCTION_C_RIGHT</b> = 36, 
-<br />
-&#160;&#160;<b>INTO_JUNCTION_C_LEFT</b> = 37, 
-<b>INTO_CORRIDOR_NO_WALL</b> = 38
+&#160;&#160;<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a321b7084c0d17a55bc78f09ad33bf4ae">OUT_OF_JUNCTION_A_LEFT</a> = 28, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9ad3d859731c8dc9918fe9d7ccccfa8f42">OUT_OF_JUNCTION_C_RIGHT</a> = 29, 
+<a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9a881116d547fa3ff6908e9f19270eff26">OUT_OF_JUNCTION_C_LEFT</a> = 30
 <br />
  }</td></tr>
 <tr class="separator:a94b1da2e055fff4d143aa6aa891f79a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -244,9 +194,9 @@ Functions</h2></td></tr>
 <tr class="memitem:af7c798149db27b6d271bf5845a489513"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#af7c798149db27b6d271bf5845a489513">update_state</a> ()</td></tr>
 <tr class="memdesc:af7c798149db27b6d271bf5845a489513"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the robot's current state.  <a href="#af7c798149db27b6d271bf5845a489513">More...</a><br /></td></tr>
 <tr class="separator:af7c798149db27b6d271bf5845a489513"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba55a309968f3014c9c40ea01400e733"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#aba55a309968f3014c9c40ea01400e733">run_state</a> (float height_value)</td></tr>
-<tr class="memdesc:aba55a309968f3014c9c40ea01400e733"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the robot's current state.  <a href="#aba55a309968f3014c9c40ea01400e733">More...</a><br /></td></tr>
-<tr class="separator:aba55a309968f3014c9c40ea01400e733"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11237cafa6d63fa57107c8ae2f3a1ea3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a11237cafa6d63fa57107c8ae2f3a1ea3">run_state</a> ()</td></tr>
+<tr class="memdesc:a11237cafa6d63fa57107c8ae2f3a1ea3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the robot's current state.  <a href="#a11237cafa6d63fa57107c8ae2f3a1ea3">More...</a><br /></td></tr>
+<tr class="separator:a11237cafa6d63fa57107c8ae2f3a1ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefb7e87df9971d6e6c5641db5185ca6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#aefb7e87df9971d6e6c5641db5185ca6c">load_sensor_values</a> ()</td></tr>
 <tr class="memdesc:aefb7e87df9971d6e6c5641db5185ca6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads sensor values.  <a href="#aefb7e87df9971d6e6c5641db5185ca6c">More...</a><br /></td></tr>
 <tr class="separator:aefb7e87df9971d6e6c5641db5185ca6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -261,64 +211,49 @@ Functions</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:a74134a484bf5067e7afa67b9a5911d24"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a74134a484bf5067e7afa67b9a5911d24">IMU_Yaw_start</a></td></tr>
 <tr class="separator:a74134a484bf5067e7afa67b9a5911d24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51f98684c825046dd85a9256f18bbce9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a51f98684c825046dd85a9256f18bbce9">start_Yaw_set</a></td></tr>
-<tr class="separator:a51f98684c825046dd85a9256f18bbce9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1397b4e16ab884b8328c03fd65fe9d52"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a1397b4e16ab884b8328c03fd65fe9d52">first_state_cycle</a></td></tr>
-<tr class="separator:a1397b4e16ab884b8328c03fd65fe9d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e6264018cf52dca4260c8f3b50125b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a7e6264018cf52dca4260c8f3b50125b4">on_top_of_obstacle</a></td></tr>
+<tr class="separator:a7e6264018cf52dca4260c8f3b50125b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab10ef355c6ebe68985b8ee64030b0926"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#ab10ef355c6ebe68985b8ee64030b0926">trust_sensors</a></td></tr>
+<tr class="separator:ab10ef355c6ebe68985b8ee64030b0926"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad03c0546202eb3154602cb8a0993c51f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#ad03c0546202eb3154602cb8a0993c51f">rotation_count</a></td></tr>
 <tr class="separator:ad03c0546202eb3154602cb8a0993c51f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86cd3708ed18a9bdfec5c43fc837f206"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86cd3708ed18a9bdfec5c43fc837f206"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>Yaw</b></td></tr>
+<tr class="memitem:a937f74a65988b9e22241ab3765b82c50"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a937f74a65988b9e22241ab3765b82c50">cycle_count</a></td></tr>
+<tr class="separator:a937f74a65988b9e22241ab3765b82c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86cd3708ed18a9bdfec5c43fc837f206"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a86cd3708ed18a9bdfec5c43fc837f206">Yaw</a></td></tr>
 <tr class="separator:a86cd3708ed18a9bdfec5c43fc837f206"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58652d73ca5e1528e36798054ac1ad9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58652d73ca5e1528e36798054ac1ad9e"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>Yaw_rad</b></td></tr>
+<tr class="memitem:a58652d73ca5e1528e36798054ac1ad9e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a58652d73ca5e1528e36798054ac1ad9e">Yaw_rad</a></td></tr>
 <tr class="separator:a58652d73ca5e1528e36798054ac1ad9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2aa77bd4c4683bf248fba3a031c8816e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2aa77bd4c4683bf248fba3a031c8816e"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>p_part</b></td></tr>
+<tr class="memitem:a2aa77bd4c4683bf248fba3a031c8816e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a2aa77bd4c4683bf248fba3a031c8816e">p_part</a></td></tr>
 <tr class="separator:a2aa77bd4c4683bf248fba3a031c8816e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09cfc766a233ad617270562cc4146d07"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09cfc766a233ad617270562cc4146d07"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>Kp</b></td></tr>
+<tr class="memitem:a09cfc766a233ad617270562cc4146d07"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a09cfc766a233ad617270562cc4146d07">Kp</a></td></tr>
 <tr class="separator:a09cfc766a233ad617270562cc4146d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98268d71502ba080d88a9b1f50fdbe80"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98268d71502ba080d88a9b1f50fdbe80"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>Kd</b></td></tr>
+<tr class="memitem:a98268d71502ba080d88a9b1f50fdbe80"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a98268d71502ba080d88a9b1f50fdbe80">Kd</a></td></tr>
 <tr class="separator:a98268d71502ba080d88a9b1f50fdbe80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1551d8043c2aa4410fb7dbb1fe3be7b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#ab1551d8043c2aa4410fb7dbb1fe3be7b">alpha</a></td></tr>
 <tr class="separator:ab1551d8043c2aa4410fb7dbb1fe3be7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7afcf874a71b2cde367dc9c28f5f01f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7afcf874a71b2cde367dc9c28f5f01f1"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>IR_0</b></td></tr>
+<tr class="memitem:a7afcf874a71b2cde367dc9c28f5f01f1"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a7afcf874a71b2cde367dc9c28f5f01f1">IR_0</a></td></tr>
 <tr class="separator:a7afcf874a71b2cde367dc9c28f5f01f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adee1bbc4817ed82271bd0d5904bda5d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adee1bbc4817ed82271bd0d5904bda5d1"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>IR_1</b></td></tr>
+<tr class="memitem:adee1bbc4817ed82271bd0d5904bda5d1"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#adee1bbc4817ed82271bd0d5904bda5d1">IR_1</a></td></tr>
 <tr class="separator:adee1bbc4817ed82271bd0d5904bda5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07cfb2e201909d017a88a2a86c32cd4b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07cfb2e201909d017a88a2a86c32cd4b"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>IR_2</b></td></tr>
+<tr class="memitem:a07cfb2e201909d017a88a2a86c32cd4b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a07cfb2e201909d017a88a2a86c32cd4b">IR_2</a></td></tr>
 <tr class="separator:a07cfb2e201909d017a88a2a86c32cd4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7831b71dc250258ecefe0e23f9920688"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7831b71dc250258ecefe0e23f9920688"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>IR_3</b></td></tr>
+<tr class="memitem:a7831b71dc250258ecefe0e23f9920688"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a7831b71dc250258ecefe0e23f9920688">IR_3</a></td></tr>
 <tr class="separator:a7831b71dc250258ecefe0e23f9920688"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45751d0c905b4d8c58c0461640594e97"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45751d0c905b4d8c58c0461640594e97"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>IR_4</b></td></tr>
+<tr class="memitem:a45751d0c905b4d8c58c0461640594e97"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a45751d0c905b4d8c58c0461640594e97">IR_4</a></td></tr>
 <tr class="separator:a45751d0c905b4d8c58c0461640594e97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad00ba6cc1cf461bda7059f5aafc06142"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad00ba6cc1cf461bda7059f5aafc06142"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>IR_5</b></td></tr>
+<tr class="memitem:ad00ba6cc1cf461bda7059f5aafc06142"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#ad00ba6cc1cf461bda7059f5aafc06142">IR_5</a></td></tr>
 <tr class="separator:ad00ba6cc1cf461bda7059f5aafc06142"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c51bcd8b555e8c78fea79b88d28b55e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c51bcd8b555e8c78fea79b88d28b55e"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>IR_6</b></td></tr>
+<tr class="memitem:a8c51bcd8b555e8c78fea79b88d28b55e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a8c51bcd8b555e8c78fea79b88d28b55e">IR_6</a></td></tr>
 <tr class="separator:a8c51bcd8b555e8c78fea79b88d28b55e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f9b7bcc44d43aac6b387f2aaacc3a18"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f9b7bcc44d43aac6b387f2aaacc3a18"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>US</b></td></tr>
+<tr class="memitem:a6f9b7bcc44d43aac6b387f2aaacc3a18"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a6f9b7bcc44d43aac6b387f2aaacc3a18">US</a></td></tr>
 <tr class="separator:a6f9b7bcc44d43aac6b387f2aaacc3a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a78596948fb325d4e213e9c371b35e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a78596948fb325d4e213e9c371b35e5"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>IR_Yaw_left</b></td></tr>
+<tr class="memitem:a6a78596948fb325d4e213e9c371b35e5"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a6a78596948fb325d4e213e9c371b35e5">IR_Yaw_left</a></td></tr>
 <tr class="separator:a6a78596948fb325d4e213e9c371b35e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab11513fa2fd2a21b39f60ac1e5bbb064"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab11513fa2fd2a21b39f60ac1e5bbb064"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>IR_Yaw_right</b></td></tr>
+<tr class="memitem:ab11513fa2fd2a21b39f60ac1e5bbb064"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#ab11513fa2fd2a21b39f60ac1e5bbb064">IR_Yaw_right</a></td></tr>
 <tr class="separator:ab11513fa2fd2a21b39f60ac1e5bbb064"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03d9ec4915ff658ec4a465315895106d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a03d9ec4915ff658ec4a465315895106d"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>IMU_Yaw</b></td></tr>
+<tr class="memitem:a03d9ec4915ff658ec4a465315895106d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#a03d9ec4915ff658ec4a465315895106d">IMU_Yaw</a></td></tr>
 <tr class="separator:a03d9ec4915ff658ec4a465315895106d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa412fb786d18d393b80ce4d2a00ba51c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa412fb786d18d393b80ce4d2a00ba51c"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
+<tr class="memitem:aa412fb786d18d393b80ce4d2a00ba51c"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#aa412fb786d18d393b80ce4d2a00ba51c">Pitch</a></td></tr>
 <tr class="separator:aa412fb786d18d393b80ce4d2a00ba51c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade9e1f9555516012861be1695fe4a9a0"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__machine_8h.html#ade9e1f9555516012861be1695fe4a9a0">Roll</a></td></tr>
 <tr class="separator:ade9e1f9555516012861be1695fe4a9a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -378,7 +313,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Distance to wall for turning in a dead end (which we shouln't even enter). </p>
+<p>Distance to wall for turning in a dead end (which we shouldn't have entered). </p>
 
 </div>
 </div>
@@ -395,12 +330,24 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a43bafb28b29491ec7f871319b5a3b2f8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define F_CPU&#160;&#160;&#160;16000000UL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a8118fdbf1a36265000f2d42844e10747"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FORWARD_DEAD_END_DISTANCE&#160;&#160;&#160;180</td>
+          <td class="memname">#define FORWARD_DEAD_END_DISTANCE&#160;&#160;&#160;170</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -413,7 +360,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FULL_ROTATION_ANGLE&#160;&#160;&#160;175</td>
+          <td class="memname">#define FULL_ROTATION_ANGLE&#160;&#160;&#160;90</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -426,7 +373,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define HALF_ROTATION_ANGLE&#160;&#160;&#160;85</td>
+          <td class="memname">#define HALF_ROTATION_ANGLE&#160;&#160;&#160;45</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -439,7 +386,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define IR_HIGH_OBSTACLE_DISTANCE&#160;&#160;&#160;50</td>
+          <td class="memname">#define IR_HIGH_OBSTACLE_DISTANCE&#160;&#160;&#160;30</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -460,29 +407,15 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a365e437f4fdaddff7b28fa56e61a0060"></a>
+<a class="anchor" id="a8f7e1b7ccc92504f03ca42fb3e76e7d4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define LONG_TURN_DISTANCE&#160;&#160;&#160;100</td>
+          <td class="memname">#define JUNCTION_C_TURN_DISTANCE&#160;&#160;&#160;45</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Distance to wall for rotating in A junctions. </p>
-
-</div>
-</div>
-<a class="anchor" id="a29b3e85ce789185a96d28f139e003d4c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LOW_OBSTACLE_DISTANCE&#160;&#160;&#160;40</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. </p>
 
 </div>
 </div>
@@ -491,11 +424,37 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NO_WALL_DISTANCE&#160;&#160;&#160;50</td>
+          <td class="memname">#define NO_WALL_DISTANCE&#160;&#160;&#160;60</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). </p>
+
+</div>
+</div>
+<a class="anchor" id="af7fbc26bb7b50f3502c893ecdccd8ab4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PREPARE_CLIMBING_DOWN_DISTANCE&#160;&#160;&#160;40</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Distance for preparing climbing down from low obstacle (if IR_1 is greater than this). </p>
+
+</div>
+</div>
+<a class="anchor" id="a1bdeb86204e23b0e597ffe87d6579167"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PREPARE_CLIMBING_UP_DISTANCE&#160;&#160;&#160;30</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Distance for preparing climbing onto low obstacle (if IR_1 is less than this). </p>
 
 </div>
 </div>
@@ -504,7 +463,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHORT_TURN_DISTANCE&#160;&#160;&#160;38</td>
+          <td class="memname">#define SHORT_TURN_DISTANCE&#160;&#160;&#160;40</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -525,38 +484,12 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9df2253e22c049d64aab5f0cbfd7dae3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define START_CLIMBING_DOWN_DISTANCE&#160;&#160;&#160;50</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Distance for beginning climbing down from low obstacle (if IR_1 is less than this). </p>
-
-</div>
-</div>
-<a class="anchor" id="a7dc7e4111003eb72dfc6cfede130fb5f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define START_CLIMBING_UP_DISTANCE&#160;&#160;&#160;20</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Distance for beginning climbing onto low obstacle (if IR_1 is less than this). </p>
-
-</div>
-</div>
 <a class="anchor" id="a647ce7a809da5ed12ea5319ed1c2b73f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define US_HIGH_OBSTACLE_DISTANCE&#160;&#160;&#160;40</td>
+          <td class="memname">#define US_HIGH_OBSTACLE_DISTANCE&#160;&#160;&#160;30</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -570,11 +503,75 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum STATES</td>
+          <td class="memname">enum <a class="el" href="state__machine_8h.html#a94b1da2e055fff4d143aa6aa891f79a9">STATES</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Enum that contains the different possible states that the robot can be in. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a679ee5320d66c8322e310daeb2ee99b8"></a>STOP&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9ae66a6dc1f3ff114acf2efb4926e7975e"></a>DEAD_END&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9af4fc00ebf5a552ca632130e794617d58"></a>CORRIDOR&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a24fb9d9ff0b7ac346a2527509a251125"></a>OUT_OF_CORRIDOR_NO_WALL&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a36e0fb056921e3c44cbbe999c0814fdd"></a>OUT_OF_CORRIDOR_LEFT_WALL&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9abb071018d1b1e80867c6ba4c5ddc1615"></a>OUT_OF_CORRIDOR_RIGHT_WALL&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a5720da833432aa3b68ff7e1a6529a7a6"></a>INTO_HIGH_OBSTACLE&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9ac115d428bec2ff3acfb56f605a12dde5"></a>CRAWLING_UNDER_HIGH_OBSTACLE&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a16c309eb8317f88a8a0440d04f5020bd"></a>PREPARE_CLIMBING_UP&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a3555ae926f7e1c144e6f5ff285b8a306"></a>CLIMBING_UP&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a10649b908487397730b45977dd2ceb20"></a>LOW_OBSTACLE&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a2700ce69c7587770afa814fa351d8364"></a>PREPARE_CLIMBING_DOWN&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a2e040f9d636c99eb3b8a25ef44714fcb"></a>CLIMBING_DOWN&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a146b6b47df32dc00c98e80fd088ac544"></a>INTO_JUNCTION_A_RIGHT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a0f6a84655b20690436b90884c6c12929"></a>INTO_JUNCTION_A_LEFT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a5867af0449808578577a55aad42450ed"></a>TURN_RIGHT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9aa680fb2367a2e11042d902b7d6320f12"></a>TURN_LEFT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9ad673dc3a905d1f1d7006a598b44c4f49"></a>JUNCTION_A_RIGHT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a739447f1c1a49d43e6fb0203260f97fe"></a>JUNCTION_A_LEFT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a26671ad0a5647338693043b705dff1b4"></a>JUNCTION_B_RIGHT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9adbc162c33ce4f98bcb8e7f670f324e6d"></a>JUNCTION_B_LEFT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9af47d2ce80e1460d0e5e877eac3115eb5"></a>JUNCTION_C_RIGHT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a4d0c8d9068b5a03bc9149cc8f320ae81"></a>JUNCTION_C_LEFT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a0800e881bdbe6153aba3ae4ef194b6dd"></a>END_OF_COURSE&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a519a7a811bc5fd9f274308fb31a09fcc"></a>OUT_OF_TURN_RIGHT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9aa067a626023130425d23479f09f6642f"></a>OUT_OF_TURN_LEFT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9ae0736738e9d2beffffb2dcce39aecfbf"></a>OUT_OF_JUNCTION_A&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a026efbf245bbe8a3ba6a6f625569f60c"></a>OUT_OF_JUNCTION_A_RIGHT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a321b7084c0d17a55bc78f09ad33bf4ae"></a>OUT_OF_JUNCTION_A_LEFT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9ad3d859731c8dc9918fe9d7ccccfa8f42"></a>OUT_OF_JUNCTION_C_RIGHT&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a94b1da2e055fff4d143aa6aa891f79a9a881116d547fa3ff6908e9f19270eff26"></a>OUT_OF_JUNCTION_C_LEFT&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -611,7 +608,9 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
 </div><div class="memdoc">
 
 <p>Calculates current Yaw angle. </p>
-<p>Calculates current Yaw angle (for control) in different ways depending on current state. </p>
+<p>Calculates current Yaw angle (for control) in different ways depending on current state.</p>
+<p>Calculates current Yaw angle.</p>
+<p>Uses the distances from the IR sensors to calculate a Yaw angle relative to the corridor using trigonometry. </p>
 
 </div>
 </div>
@@ -633,27 +632,21 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aba55a309968f3014c9c40ea01400e733"></a>
+<a class="anchor" id="a11237cafa6d63fa57107c8ae2f3a1ea3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void run_state </td>
           <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>height_value</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Executes the robot's current state. </p>
-<p>Executes robot state based on current state and sensor values. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">height_value</td><td>Indicates the robot's distance to ground. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Executes robot state based on current state and sensor values. </p>
 
 </div>
 </div>
@@ -689,16 +682,28 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1397b4e16ab884b8328c03fd65fe9d52"></a>
+<a class="anchor" id="a937f74a65988b9e22241ab3765b82c50"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t first_state_cycle</td>
+          <td class="memname">uint8_t cycle_count</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>1 = first time that run_state is executed in a certain state. </p>
+<p>Counter that keeps track of the number of cycles. Is used in some, but not all, states. </p>
+
+</div>
+</div>
+<a class="anchor" id="a03d9ec4915ff658ec4a465315895106d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float IMU_Yaw</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -712,6 +717,175 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
       </table>
 </div><div class="memdoc">
 <p>The IMU's start Yaw angle when entering turns and junctions. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7afcf874a71b2cde367dc9c28f5f01f1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float IR_0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="adee1bbc4817ed82271bd0d5904bda5d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float IR_1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a07cfb2e201909d017a88a2a86c32cd4b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float IR_2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7831b71dc250258ecefe0e23f9920688"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float IR_3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a45751d0c905b4d8c58c0461640594e97"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float IR_4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad00ba6cc1cf461bda7059f5aafc06142"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float IR_5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8c51bcd8b555e8c78fea79b88d28b55e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float IR_6</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6a78596948fb325d4e213e9c371b35e5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float IR_Yaw_left</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab11513fa2fd2a21b39f60ac1e5bbb064"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float IR_Yaw_right</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a98268d71502ba080d88a9b1f50fdbe80"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Kd</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a09cfc766a233ad617270562cc4146d07"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Kp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7e6264018cf52dca4260c8f3b50125b4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool on_top_of_obstacle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>true -&gt; the robot has climbed up on top of a low obstacle. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2aa77bd4c4683bf248fba3a031c8816e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float p_part</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa412fb786d18d393b80ce4d2a00ba51c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Pitch</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -754,16 +928,52 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>Pitch</b></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a51f98684c825046dd85a9256f18bbce9"></a>
+<a class="anchor" id="ab10ef355c6ebe68985b8ee64030b0926"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t start_Yaw_set</td>
+          <td class="memname">bool trust_sensors</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Used to determine whether to set start Yaw value or not. 0 = hasn't set start value. </p>
+<p>false -&gt; for some reason, we don't trust the current sensor data. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6f9b7bcc44d43aac6b387f2aaacc3a18"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float US</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a86cd3708ed18a9bdfec5c43fc837f206"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Yaw</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a58652d73ca5e1528e36798054ac1ad9e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Yaw_rad</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

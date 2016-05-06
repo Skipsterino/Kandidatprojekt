@@ -1,0 +1,81 @@
+\hypertarget{millis_8h}{}\section{sensor/sensor/millis.h File Reference}
+\label{millis_8h}\index{sensor/sensor/millis.\+h@{sensor/sensor/millis.\+h}}
+
+
+The code required to get a timestamp.  
+
+
+{\ttfamily \#include $<$util/atomic.\+h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{millis_8h_ab640966289e34d6fe31434f37090e6e6}{M\+I\+L\+L\+I\+S\+\_\+\+I\+NC}~(1024 / 1000)
+\item 
+\#define \hyperlink{millis_8h_a5647e40017bbd34a202f6a672ca116e4}{F\+R\+A\+C\+T\+\_\+\+I\+NC}~((1024 \% 1000) $>$$>$ 3)
+\item 
+\#define \hyperlink{millis_8h_a3d5262b0f828700a2ce29198838e0d9e}{F\+R\+A\+C\+T\+\_\+\+M\+AX}~(1000 $>$$>$ 3)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+unsigned long \hyperlink{millis_8h_a6ff7f2532a22366f0013bc41397129fd}{millis} ()
+\begin{DoxyCompactList}\small\item\em Gives a timestamp in ms. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+volatile unsigned long \hyperlink{millis_8h_ab34d3974411fdee7da8c6b4f650502e9}{timer0\+\_\+millis}
+\item 
+volatile unsigned char \hyperlink{millis_8h_ae7c36fe51c2f3d6dbee84a935ea15420}{timer0\+\_\+fract}
+\item 
+volatile unsigned long \hyperlink{millis_8h_a79a4c8c254cfb57c6ac3393a396c7a4f}{timer0\+\_\+overflow\+\_\+count}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The code required to get a timestamp. 
+
+\begin{DoxyAuthor}{Author}
+Fredrik, Jonas 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+26 apr 2016 The code enabling the timestamp required by the D\+MP library. 
+\end{DoxyDate}
+
+
+\subsection{Macro Definition Documentation}
+\index{millis.\+h@{millis.\+h}!F\+R\+A\+C\+T\+\_\+\+I\+NC@{F\+R\+A\+C\+T\+\_\+\+I\+NC}}
+\index{F\+R\+A\+C\+T\+\_\+\+I\+NC@{F\+R\+A\+C\+T\+\_\+\+I\+NC}!millis.\+h@{millis.\+h}}
+\subsubsection[{\texorpdfstring{F\+R\+A\+C\+T\+\_\+\+I\+NC}{FRACT_INC}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+R\+A\+C\+T\+\_\+\+I\+NC~((1024 \% 1000) $>$$>$ 3)}\hypertarget{millis_8h_a5647e40017bbd34a202f6a672ca116e4}{}\label{millis_8h_a5647e40017bbd34a202f6a672ca116e4}
+Number with which the timer0\+\_\+fract should increase every overflow \index{millis.\+h@{millis.\+h}!F\+R\+A\+C\+T\+\_\+\+M\+AX@{F\+R\+A\+C\+T\+\_\+\+M\+AX}}
+\index{F\+R\+A\+C\+T\+\_\+\+M\+AX@{F\+R\+A\+C\+T\+\_\+\+M\+AX}!millis.\+h@{millis.\+h}}
+\subsubsection[{\texorpdfstring{F\+R\+A\+C\+T\+\_\+\+M\+AX}{FRACT_MAX}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+R\+A\+C\+T\+\_\+\+M\+AX~(1000 $>$$>$ 3)}\hypertarget{millis_8h_a3d5262b0f828700a2ce29198838e0d9e}{}\label{millis_8h_a3d5262b0f828700a2ce29198838e0d9e}
+Number when if reached timer0\+\_\+millis should be increased \index{millis.\+h@{millis.\+h}!M\+I\+L\+L\+I\+S\+\_\+\+I\+NC@{M\+I\+L\+L\+I\+S\+\_\+\+I\+NC}}
+\index{M\+I\+L\+L\+I\+S\+\_\+\+I\+NC@{M\+I\+L\+L\+I\+S\+\_\+\+I\+NC}!millis.\+h@{millis.\+h}}
+\subsubsection[{\texorpdfstring{M\+I\+L\+L\+I\+S\+\_\+\+I\+NC}{MILLIS_INC}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+I\+L\+L\+I\+S\+\_\+\+I\+NC~(1024 / 1000)}\hypertarget{millis_8h_ab640966289e34d6fe31434f37090e6e6}{}\label{millis_8h_ab640966289e34d6fe31434f37090e6e6}
+Number with which the timer0\+\_\+millis should increase every overflow 
+
+\subsection{Function Documentation}
+\index{millis.\+h@{millis.\+h}!millis@{millis}}
+\index{millis@{millis}!millis.\+h@{millis.\+h}}
+\subsubsection[{\texorpdfstring{millis()}{millis()}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long millis (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{millis_8h_a6ff7f2532a22366f0013bc41397129fd}{}\label{millis_8h_a6ff7f2532a22366f0013bc41397129fd}
+
+
+Gives a timestamp in ms. 
+
+A function that gives a timestamp since the start of the program in ms. Required by the D\+MP library. 
+
+\subsection{Variable Documentation}
+\index{millis.\+h@{millis.\+h}!timer0\+\_\+fract@{timer0\+\_\+fract}}
+\index{timer0\+\_\+fract@{timer0\+\_\+fract}!millis.\+h@{millis.\+h}}
+\subsubsection[{\texorpdfstring{timer0\+\_\+fract}{timer0_fract}}]{\setlength{\rightskip}{0pt plus 5cm}volatile unsigned char timer0\+\_\+fract}\hypertarget{millis_8h_ae7c36fe51c2f3d6dbee84a935ea15420}{}\label{millis_8h_ae7c36fe51c2f3d6dbee84a935ea15420}
+\index{millis.\+h@{millis.\+h}!timer0\+\_\+millis@{timer0\+\_\+millis}}
+\index{timer0\+\_\+millis@{timer0\+\_\+millis}!millis.\+h@{millis.\+h}}
+\subsubsection[{\texorpdfstring{timer0\+\_\+millis}{timer0_millis}}]{\setlength{\rightskip}{0pt plus 5cm}volatile unsigned long timer0\+\_\+millis}\hypertarget{millis_8h_ab34d3974411fdee7da8c6b4f650502e9}{}\label{millis_8h_ab34d3974411fdee7da8c6b4f650502e9}
+The timer value in ms \index{millis.\+h@{millis.\+h}!timer0\+\_\+overflow\+\_\+count@{timer0\+\_\+overflow\+\_\+count}}
+\index{timer0\+\_\+overflow\+\_\+count@{timer0\+\_\+overflow\+\_\+count}!millis.\+h@{millis.\+h}}
+\subsubsection[{\texorpdfstring{timer0\+\_\+overflow\+\_\+count}{timer0_overflow_count}}]{\setlength{\rightskip}{0pt plus 5cm}volatile unsigned long timer0\+\_\+overflow\+\_\+count}\hypertarget{millis_8h_a79a4c8c254cfb57c6ac3393a396c7a4f}{}\label{millis_8h_a79a4c8c254cfb57c6ac3393a396c7a4f}
+Number of overflow interrupts generated by the timer 

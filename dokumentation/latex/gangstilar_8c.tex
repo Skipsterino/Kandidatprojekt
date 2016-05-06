@@ -1,0 +1,240 @@
+\hypertarget{gangstilar_8c}{}\section{styr/styr/gangstilar.c File Reference}
+\label{gangstilar_8c}\index{styr/styr/gangstilar.\+c@{styr/styr/gangstilar.\+c}}
+{\ttfamily \#include \char`\"{}gangstilar.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{gangstilar_8c_a1cdd1ec49baae5876bf4185c0696ee45}{Adjust\+\_\+\+Stance\+\_\+\+Climbed} (char direction)
+\item 
+void \hyperlink{gangstilar_8c_aa889d7e3936d74a7c5d2a8884a9e8329}{init\+\_\+fuck} ()
+\item 
+float \hyperlink{gangstilar_8c_a7686716eb9ff55e001f00b15a53f83f0}{L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input} (float \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, int sgn\+\_\+speed, float theta, int sgn\+\_\+theta, float \hyperlink{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height})
+\item 
+int \hyperlink{gangstilar_8c_a7e22034136fbee493cd09711e57eff2d}{max\+\_\+speed} (float theta, int sgn\+\_\+theta)
+\item 
+\hyperlink{structtriple__float}{triple\+\_\+float} \hyperlink{gangstilar_8c_a2d87f3a4b99915d806ba0b31e2270028}{Adjust\+\_\+\+Servo\+\_\+\+Speed} (float theta, int sgn\+\_\+theta, int8\+\_\+t leg\+\_\+down)
+\item 
+void \hyperlink{gangstilar_8c_af2fde91636f94ada8898458a8e631a9a}{Adjust\+\_\+\+Height} (float l, float height\+\_\+step, float \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\+\_\+pitch})
+\item 
+void \hyperlink{gangstilar_8c_ad91d62548b0e007cac2f92e12d5ab273}{Send\+\_\+\+Legs\+\_\+\+Kar} (\hyperlink{structtriple__float}{triple\+\_\+float} kar\+\_\+p1, \hyperlink{structtriple__float}{triple\+\_\+float} kar\+\_\+p2, float \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\+\_\+pitch}, \hyperlink{structtriple__float}{triple\+\_\+float} speed\+\_\+p1, \hyperlink{structtriple__float}{triple\+\_\+float} speed\+\_\+p2)
+\item 
+void \hyperlink{gangstilar_8c_a5727fa4a438523e18ea5409ca5bf938e}{Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs} (\hyperlink{structtriple__float}{triple\+\_\+float} kar\+\_\+p1, \hyperlink{structtriple__float}{triple\+\_\+float} kar\+\_\+p2, float \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\+\_\+pitch}, int sgn\+\_\+speed, float theta, \hyperlink{structtriple__float}{triple\+\_\+float} speed\+\_\+p1, \hyperlink{structtriple__float}{triple\+\_\+float} speed\+\_\+p2)
+\item 
+float \hyperlink{gangstilar_8c_a0253c9cd3c65bdec3e155f66c7575f3e}{Limit\+\_\+\+Speed} (float \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, int sgn\+\_\+speed)
+\item 
+float \hyperlink{gangstilar_8c_a7a64feb9f04fb68c5c7c44afb5975acf}{Limit\+\_\+\+Height} (float \hyperlink{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height})
+\item 
+\hyperlink{structdouble__float}{double\+\_\+float} \hyperlink{gangstilar_8c_adda531189948a09fca5b2ba7eb85ed72}{Limit\+\_\+\+Theta} (float \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, int sgn\+\_\+speed, float theta, int sgn\+\_\+theta)
+\item 
+\hyperlink{structtriple__float}{triple\+\_\+float} \hyperlink{gangstilar_8c_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{Tripod} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float stroke, float \hyperlink{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height}, float \hyperlink{over__hinder_8c_a5e433c2d90f9d7f1ff1868b9e8b91868}{lift}, uint8\+\_\+t \hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{n})
+\item 
+void \hyperlink{gangstilar_8c_ad46b7aad9ab9ad04e7a43cd8f1b9cc9f}{Walk\+\_\+\+Half\+\_\+\+Cycle} (float \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, float theta, float \hyperlink{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height})
+\item 
+void \hyperlink{gangstilar_8c_a4c2ee7390bb80e121c51116c7fe30bd1}{Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle} (float \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \hyperlink{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}{swing\+\_\+l} = 12
+\item 
+uint8\+\_\+t \hyperlink{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}{cycle\+\_\+length} = 36
+\item 
+\hyperlink{gangstilar_8c_aeab71244afb687f16d8c4f5ee9d6ef0e}{n} = 12
+\item 
+int \hyperlink{gangstilar_8c_a8f8587b0154878a5169466c807345d19}{n\+\_\+2} = 30
+\item 
+uint8\+\_\+t \hyperlink{gangstilar_8c_a6b3284d8492267a77ca46948daf5545e}{m} =24
+\item 
+float \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\+\_\+height} = 11
+\item 
+float \hyperlink{gangstilar_8c_a661742ef73698e09fd0cc0352f5456ed}{last\+\_\+speed} = 0
+\item 
+float \hyperlink{gangstilar_8c_a85bd8e6f67b3521a995db392b0079ba9}{last\+\_\+theta} = 0
+\item 
+float \hyperlink{gangstilar_8c_aa99d587e22b149bc7ce358fb0827d12e}{theta\+\_\+max} = 0
+\item 
+\hyperlink{structtriple__float}{triple\+\_\+float} \hyperlink{gangstilar_8c_a5f38e3685a4eb3714e9e9fe6715ab937}{servofuck\+\_\+adjust\+\_\+p1}
+\item 
+\hyperlink{structtriple__float}{triple\+\_\+float} \hyperlink{gangstilar_8c_a05b13d88e61cc9130cf9a67fc867c926}{servofuck\+\_\+adjust\+\_\+p2}
+\item 
+float \hyperlink{gangstilar_8c_ae2f8c742d04bca8b1369837e36004d6b}{sideways\+\_\+fuck}
+\item 
+int8\+\_\+t \hyperlink{gangstilar_8c_addc9e0b047da90ba8d4534c483d6eb62}{p1\+\_\+down} = 0
+\item 
+int8\+\_\+t \hyperlink{gangstilar_8c_aa1b8a2f7c5da67e0112c973474a6c999}{p2\+\_\+down} = 1
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{gangstilar.\+c@{gangstilar.\+c}!Adjust\+\_\+\+Height@{Adjust\+\_\+\+Height}}
+\index{Adjust\+\_\+\+Height@{Adjust\+\_\+\+Height}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{Adjust\+\_\+\+Height(float l, float height\+\_\+step, float corner\+\_\+pitch)}{Adjust_Height(float l, float height_step, float corner_pitch)}}]{\setlength{\rightskip}{0pt plus 5cm}void Adjust\+\_\+\+Height (
+\begin{DoxyParamCaption}
+\item[{float}]{l, }
+\item[{float}]{height\+\_\+step, }
+\item[{float}]{corner\+\_\+pitch}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_af2fde91636f94ada8898458a8e631a9a}{}\label{gangstilar_8c_af2fde91636f94ada8898458a8e631a9a}
+\index{gangstilar.\+c@{gangstilar.\+c}!Adjust\+\_\+\+Servo\+\_\+\+Speed@{Adjust\+\_\+\+Servo\+\_\+\+Speed}}
+\index{Adjust\+\_\+\+Servo\+\_\+\+Speed@{Adjust\+\_\+\+Servo\+\_\+\+Speed}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{Adjust\+\_\+\+Servo\+\_\+\+Speed(float theta, int sgn\+\_\+theta, int8\+\_\+t leg\+\_\+down)}{Adjust_Servo_Speed(float theta, int sgn_theta, int8_t leg_down)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+float} Adjust\+\_\+\+Servo\+\_\+\+Speed (
+\begin{DoxyParamCaption}
+\item[{float}]{theta, }
+\item[{int}]{sgn\+\_\+theta, }
+\item[{int8\+\_\+t}]{leg\+\_\+down}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_a2d87f3a4b99915d806ba0b31e2270028}{}\label{gangstilar_8c_a2d87f3a4b99915d806ba0b31e2270028}
+\index{gangstilar.\+c@{gangstilar.\+c}!Adjust\+\_\+\+Stance\+\_\+\+Climbed@{Adjust\+\_\+\+Stance\+\_\+\+Climbed}}
+\index{Adjust\+\_\+\+Stance\+\_\+\+Climbed@{Adjust\+\_\+\+Stance\+\_\+\+Climbed}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{Adjust\+\_\+\+Stance\+\_\+\+Climbed(char direction)}{Adjust_Stance_Climbed(char direction)}}]{\setlength{\rightskip}{0pt plus 5cm}void Adjust\+\_\+\+Stance\+\_\+\+Climbed (
+\begin{DoxyParamCaption}
+\item[{char}]{direction}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_a1cdd1ec49baae5876bf4185c0696ee45}{}\label{gangstilar_8c_a1cdd1ec49baae5876bf4185c0696ee45}
+\index{gangstilar.\+c@{gangstilar.\+c}!init\+\_\+fuck@{init\+\_\+fuck}}
+\index{init\+\_\+fuck@{init\+\_\+fuck}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{init\+\_\+fuck()}{init_fuck()}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+\_\+fuck (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_aa889d7e3936d74a7c5d2a8884a9e8329}{}\label{gangstilar_8c_aa889d7e3936d74a7c5d2a8884a9e8329}
+\index{gangstilar.\+c@{gangstilar.\+c}!Limit\+\_\+\+Height@{Limit\+\_\+\+Height}}
+\index{Limit\+\_\+\+Height@{Limit\+\_\+\+Height}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{Limit\+\_\+\+Height(float height)}{Limit_Height(float height)}}]{\setlength{\rightskip}{0pt plus 5cm}float Limit\+\_\+\+Height (
+\begin{DoxyParamCaption}
+\item[{float}]{height}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_a7a64feb9f04fb68c5c7c44afb5975acf}{}\label{gangstilar_8c_a7a64feb9f04fb68c5c7c44afb5975acf}
+\index{gangstilar.\+c@{gangstilar.\+c}!Limit\+\_\+\+Speed@{Limit\+\_\+\+Speed}}
+\index{Limit\+\_\+\+Speed@{Limit\+\_\+\+Speed}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{Limit\+\_\+\+Speed(float speed, int sgn\+\_\+speed)}{Limit_Speed(float speed, int sgn_speed)}}]{\setlength{\rightskip}{0pt plus 5cm}float Limit\+\_\+\+Speed (
+\begin{DoxyParamCaption}
+\item[{float}]{speed, }
+\item[{int}]{sgn\+\_\+speed}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_a0253c9cd3c65bdec3e155f66c7575f3e}{}\label{gangstilar_8c_a0253c9cd3c65bdec3e155f66c7575f3e}
+\index{gangstilar.\+c@{gangstilar.\+c}!Limit\+\_\+\+Theta@{Limit\+\_\+\+Theta}}
+\index{Limit\+\_\+\+Theta@{Limit\+\_\+\+Theta}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{Limit\+\_\+\+Theta(float speed, int sgn\+\_\+speed, float theta, int sgn\+\_\+theta)}{Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf double\+\_\+float} Limit\+\_\+\+Theta (
+\begin{DoxyParamCaption}
+\item[{float}]{speed, }
+\item[{int}]{sgn\+\_\+speed, }
+\item[{float}]{theta, }
+\item[{int}]{sgn\+\_\+theta}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_adda531189948a09fca5b2ba7eb85ed72}{}\label{gangstilar_8c_adda531189948a09fca5b2ba7eb85ed72}
+\index{gangstilar.\+c@{gangstilar.\+c}!L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input@{L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input}}
+\index{L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input@{L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input(float speed, int sgn\+\_\+speed, float theta, int sgn\+\_\+theta, float height)}{LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn_theta, float height)}}]{\setlength{\rightskip}{0pt plus 5cm}float L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input (
+\begin{DoxyParamCaption}
+\item[{float}]{speed, }
+\item[{int}]{sgn\+\_\+speed, }
+\item[{float}]{theta, }
+\item[{int}]{sgn\+\_\+theta, }
+\item[{float}]{height}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_a7686716eb9ff55e001f00b15a53f83f0}{}\label{gangstilar_8c_a7686716eb9ff55e001f00b15a53f83f0}
+\index{gangstilar.\+c@{gangstilar.\+c}!max\+\_\+speed@{max\+\_\+speed}}
+\index{max\+\_\+speed@{max\+\_\+speed}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{max\+\_\+speed(float theta, int sgn\+\_\+theta)}{max_speed(float theta, int sgn_theta)}}]{\setlength{\rightskip}{0pt plus 5cm}int max\+\_\+speed (
+\begin{DoxyParamCaption}
+\item[{float}]{theta, }
+\item[{int}]{sgn\+\_\+theta}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_a7e22034136fbee493cd09711e57eff2d}{}\label{gangstilar_8c_a7e22034136fbee493cd09711e57eff2d}
+\index{gangstilar.\+c@{gangstilar.\+c}!Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs@{Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs}}
+\index{Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs@{Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs(triple\+\_\+float kar\+\_\+p1, triple\+\_\+float kar\+\_\+p2, float corner\+\_\+pitch, int sgn\+\_\+speed, float theta, triple\+\_\+float speed\+\_\+p1, triple\+\_\+float speed\+\_\+p2)}{Rotate_And_Send_Legs(triple_float kar_p1, triple_float kar_p2, float corner_pitch, int sgn_speed, float theta, triple_float speed_p1, triple_float speed_p2)}}]{\setlength{\rightskip}{0pt plus 5cm}void Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs (
+\begin{DoxyParamCaption}
+\item[{{\bf triple\+\_\+float}}]{kar\+\_\+p1, }
+\item[{{\bf triple\+\_\+float}}]{kar\+\_\+p2, }
+\item[{float}]{corner\+\_\+pitch, }
+\item[{int}]{sgn\+\_\+speed, }
+\item[{float}]{theta, }
+\item[{{\bf triple\+\_\+float}}]{speed\+\_\+p1, }
+\item[{{\bf triple\+\_\+float}}]{speed\+\_\+p2}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_a5727fa4a438523e18ea5409ca5bf938e}{}\label{gangstilar_8c_a5727fa4a438523e18ea5409ca5bf938e}
+\index{gangstilar.\+c@{gangstilar.\+c}!Send\+\_\+\+Legs\+\_\+\+Kar@{Send\+\_\+\+Legs\+\_\+\+Kar}}
+\index{Send\+\_\+\+Legs\+\_\+\+Kar@{Send\+\_\+\+Legs\+\_\+\+Kar}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{Send\+\_\+\+Legs\+\_\+\+Kar(triple\+\_\+float kar\+\_\+p1, triple\+\_\+float kar\+\_\+p2, float corner\+\_\+pitch, triple\+\_\+float speed\+\_\+p1, triple\+\_\+float speed\+\_\+p2)}{Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch, triple_float speed_p1, triple_float speed_p2)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Legs\+\_\+\+Kar (
+\begin{DoxyParamCaption}
+\item[{{\bf triple\+\_\+float}}]{kar\+\_\+p1, }
+\item[{{\bf triple\+\_\+float}}]{kar\+\_\+p2, }
+\item[{float}]{corner\+\_\+pitch, }
+\item[{{\bf triple\+\_\+float}}]{speed\+\_\+p1, }
+\item[{{\bf triple\+\_\+float}}]{speed\+\_\+p2}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_ad91d62548b0e007cac2f92e12d5ab273}{}\label{gangstilar_8c_ad91d62548b0e007cac2f92e12d5ab273}
+\index{gangstilar.\+c@{gangstilar.\+c}!Tripod@{Tripod}}
+\index{Tripod@{Tripod}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{Tripod(float x, float stroke, float height, float lift, uint8\+\_\+t n)}{Tripod(float x, float stroke, float height, float lift, uint8_t n)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+float} Tripod (
+\begin{DoxyParamCaption}
+\item[{float}]{x, }
+\item[{float}]{stroke, }
+\item[{float}]{height, }
+\item[{float}]{lift, }
+\item[{uint8\+\_\+t}]{n}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{}\label{gangstilar_8c_ac6bbb42bb1b2d403d560a2a2b15c1cc8}
+\index{gangstilar.\+c@{gangstilar.\+c}!Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle@{Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle}}
+\index{Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle@{Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle(float speed)}{Walk_Half_Crab_Cycle(float speed)}}]{\setlength{\rightskip}{0pt plus 5cm}void Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle (
+\begin{DoxyParamCaption}
+\item[{float}]{speed}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_a4c2ee7390bb80e121c51116c7fe30bd1}{}\label{gangstilar_8c_a4c2ee7390bb80e121c51116c7fe30bd1}
+\index{gangstilar.\+c@{gangstilar.\+c}!Walk\+\_\+\+Half\+\_\+\+Cycle@{Walk\+\_\+\+Half\+\_\+\+Cycle}}
+\index{Walk\+\_\+\+Half\+\_\+\+Cycle@{Walk\+\_\+\+Half\+\_\+\+Cycle}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{Walk\+\_\+\+Half\+\_\+\+Cycle(float speed, float theta, float height)}{Walk_Half_Cycle(float speed, float theta, float height)}}]{\setlength{\rightskip}{0pt plus 5cm}void Walk\+\_\+\+Half\+\_\+\+Cycle (
+\begin{DoxyParamCaption}
+\item[{float}]{speed, }
+\item[{float}]{theta, }
+\item[{float}]{height}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8c_ad46b7aad9ab9ad04e7a43cd8f1b9cc9f}{}\label{gangstilar_8c_ad46b7aad9ab9ad04e7a43cd8f1b9cc9f}
+
+
+\subsection{Variable Documentation}
+\index{gangstilar.\+c@{gangstilar.\+c}!cycle\+\_\+length@{cycle\+\_\+length}}
+\index{cycle\+\_\+length@{cycle\+\_\+length}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{cycle\+\_\+length}{cycle_length}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t cycle\+\_\+length = 36}\hypertarget{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}{}\label{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}
+\index{gangstilar.\+c@{gangstilar.\+c}!last\+\_\+height@{last\+\_\+height}}
+\index{last\+\_\+height@{last\+\_\+height}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{last\+\_\+height}{last_height}}]{\setlength{\rightskip}{0pt plus 5cm}float last\+\_\+height = 11}\hypertarget{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{}\label{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}
+\index{gangstilar.\+c@{gangstilar.\+c}!last\+\_\+speed@{last\+\_\+speed}}
+\index{last\+\_\+speed@{last\+\_\+speed}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{last\+\_\+speed}{last_speed}}]{\setlength{\rightskip}{0pt plus 5cm}float last\+\_\+speed = 0}\hypertarget{gangstilar_8c_a661742ef73698e09fd0cc0352f5456ed}{}\label{gangstilar_8c_a661742ef73698e09fd0cc0352f5456ed}
+\index{gangstilar.\+c@{gangstilar.\+c}!last\+\_\+theta@{last\+\_\+theta}}
+\index{last\+\_\+theta@{last\+\_\+theta}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{last\+\_\+theta}{last_theta}}]{\setlength{\rightskip}{0pt plus 5cm}float last\+\_\+theta = 0}\hypertarget{gangstilar_8c_a85bd8e6f67b3521a995db392b0079ba9}{}\label{gangstilar_8c_a85bd8e6f67b3521a995db392b0079ba9}
+\index{gangstilar.\+c@{gangstilar.\+c}!m@{m}}
+\index{m@{m}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{m}{m}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t m =24}\hypertarget{gangstilar_8c_a6b3284d8492267a77ca46948daf5545e}{}\label{gangstilar_8c_a6b3284d8492267a77ca46948daf5545e}
+\index{gangstilar.\+c@{gangstilar.\+c}!n@{n}}
+\index{n@{n}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{n}{n}}]{\setlength{\rightskip}{0pt plus 5cm}n = 12}\hypertarget{gangstilar_8c_aeab71244afb687f16d8c4f5ee9d6ef0e}{}\label{gangstilar_8c_aeab71244afb687f16d8c4f5ee9d6ef0e}
+\index{gangstilar.\+c@{gangstilar.\+c}!n\+\_\+2@{n\+\_\+2}}
+\index{n\+\_\+2@{n\+\_\+2}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{n\+\_\+2}{n_2}}]{\setlength{\rightskip}{0pt plus 5cm}int n\+\_\+2 = 30}\hypertarget{gangstilar_8c_a8f8587b0154878a5169466c807345d19}{}\label{gangstilar_8c_a8f8587b0154878a5169466c807345d19}
+\index{gangstilar.\+c@{gangstilar.\+c}!p1\+\_\+down@{p1\+\_\+down}}
+\index{p1\+\_\+down@{p1\+\_\+down}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{p1\+\_\+down}{p1_down}}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t p1\+\_\+down = 0}\hypertarget{gangstilar_8c_addc9e0b047da90ba8d4534c483d6eb62}{}\label{gangstilar_8c_addc9e0b047da90ba8d4534c483d6eb62}
+\index{gangstilar.\+c@{gangstilar.\+c}!p2\+\_\+down@{p2\+\_\+down}}
+\index{p2\+\_\+down@{p2\+\_\+down}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{p2\+\_\+down}{p2_down}}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t p2\+\_\+down = 1}\hypertarget{gangstilar_8c_aa1b8a2f7c5da67e0112c973474a6c999}{}\label{gangstilar_8c_aa1b8a2f7c5da67e0112c973474a6c999}
+\index{gangstilar.\+c@{gangstilar.\+c}!servofuck\+\_\+adjust\+\_\+p1@{servofuck\+\_\+adjust\+\_\+p1}}
+\index{servofuck\+\_\+adjust\+\_\+p1@{servofuck\+\_\+adjust\+\_\+p1}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{servofuck\+\_\+adjust\+\_\+p1}{servofuck_adjust_p1}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+float} servofuck\+\_\+adjust\+\_\+p1}\hypertarget{gangstilar_8c_a5f38e3685a4eb3714e9e9fe6715ab937}{}\label{gangstilar_8c_a5f38e3685a4eb3714e9e9fe6715ab937}
+\index{gangstilar.\+c@{gangstilar.\+c}!servofuck\+\_\+adjust\+\_\+p2@{servofuck\+\_\+adjust\+\_\+p2}}
+\index{servofuck\+\_\+adjust\+\_\+p2@{servofuck\+\_\+adjust\+\_\+p2}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{servofuck\+\_\+adjust\+\_\+p2}{servofuck_adjust_p2}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+float} servofuck\+\_\+adjust\+\_\+p2}\hypertarget{gangstilar_8c_a05b13d88e61cc9130cf9a67fc867c926}{}\label{gangstilar_8c_a05b13d88e61cc9130cf9a67fc867c926}
+\index{gangstilar.\+c@{gangstilar.\+c}!sideways\+\_\+fuck@{sideways\+\_\+fuck}}
+\index{sideways\+\_\+fuck@{sideways\+\_\+fuck}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{sideways\+\_\+fuck}{sideways_fuck}}]{\setlength{\rightskip}{0pt plus 5cm}float sideways\+\_\+fuck}\hypertarget{gangstilar_8c_ae2f8c742d04bca8b1369837e36004d6b}{}\label{gangstilar_8c_ae2f8c742d04bca8b1369837e36004d6b}
+\index{gangstilar.\+c@{gangstilar.\+c}!swing\+\_\+l@{swing\+\_\+l}}
+\index{swing\+\_\+l@{swing\+\_\+l}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{swing\+\_\+l}{swing_l}}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t swing\+\_\+l = 12}\hypertarget{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}{}\label{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}
+\index{gangstilar.\+c@{gangstilar.\+c}!theta\+\_\+max@{theta\+\_\+max}}
+\index{theta\+\_\+max@{theta\+\_\+max}!gangstilar.\+c@{gangstilar.\+c}}
+\subsubsection[{\texorpdfstring{theta\+\_\+max}{theta_max}}]{\setlength{\rightskip}{0pt plus 5cm}float theta\+\_\+max = 0}\hypertarget{gangstilar_8c_aa99d587e22b149bc7ce358fb0827d12e}{}\label{gangstilar_8c_aa99d587e22b149bc7ce358fb0827d12e}

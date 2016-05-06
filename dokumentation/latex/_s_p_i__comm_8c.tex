@@ -1,0 +1,44 @@
+\hypertarget{_s_p_i__comm_8c}{}\section{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+S\+P\+I\+\_\+comm.c File Reference}
+\label{_s_p_i__comm_8c}\index{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+S\+P\+I\+\_\+comm.\+c@{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+S\+P\+I\+\_\+comm.\+c}}
+{\ttfamily \#include \char`\"{}S\+P\+I.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}U\+S\+A\+R\+T.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}L\+C\+D\+\_\+controller.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_s_p_i__comm_8c_a9208b9a00dfa335b5dd56360ea5c7813}{S\+P\+I\+\_\+init\+\_\+slave} ()
+\begin{DoxyCompactList}\small\item\em Initiates the S\+PI interface. \end{DoxyCompactList}\item 
+\hyperlink{_s_p_i__comm_8c_af9cad97352f5ba9bbd800446131125a6}{I\+SR} (S\+P\+I\+\_\+\+S\+T\+C\+\_\+vect)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+volatile uint8\+\_\+t \hyperlink{_s_p_i__comm_8c_a65d46084e88aa717b668dffbbda1bf3b}{S\+P\+Icounter}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{S\+P\+I\+\_\+comm.\+c@{S\+P\+I\+\_\+comm.\+c}!I\+SR@{I\+SR}}
+\index{I\+SR@{I\+SR}!S\+P\+I\+\_\+comm.\+c@{S\+P\+I\+\_\+comm.\+c}}
+\subsubsection[{\texorpdfstring{I\+S\+R(\+S\+P\+I\+\_\+\+S\+T\+C\+\_\+vect)}{ISR(SPI_STC_vect)}}]{\setlength{\rightskip}{0pt plus 5cm}I\+SR (
+\begin{DoxyParamCaption}
+\item[{S\+P\+I\+\_\+\+S\+T\+C\+\_\+vect}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_p_i__comm_8c_af9cad97352f5ba9bbd800446131125a6}{}\label{_s_p_i__comm_8c_af9cad97352f5ba9bbd800446131125a6}
+\index{S\+P\+I\+\_\+comm.\+c@{S\+P\+I\+\_\+comm.\+c}!S\+P\+I\+\_\+init\+\_\+slave@{S\+P\+I\+\_\+init\+\_\+slave}}
+\index{S\+P\+I\+\_\+init\+\_\+slave@{S\+P\+I\+\_\+init\+\_\+slave}!S\+P\+I\+\_\+comm.\+c@{S\+P\+I\+\_\+comm.\+c}}
+\subsubsection[{\texorpdfstring{S\+P\+I\+\_\+init\+\_\+slave()}{SPI_init_slave()}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+P\+I\+\_\+init\+\_\+slave (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_p_i__comm_8c_a9208b9a00dfa335b5dd56360ea5c7813}{}\label{_s_p_i__comm_8c_a9208b9a00dfa335b5dd56360ea5c7813}
+
+
+Initiates the S\+PI interface. 
+
+Initiates the S\+PI interface as a slave unit on the bus. Communication is handled by using interupts. 
+
+\subsection{Variable Documentation}
+\index{S\+P\+I\+\_\+comm.\+c@{S\+P\+I\+\_\+comm.\+c}!S\+P\+Icounter@{S\+P\+Icounter}}
+\index{S\+P\+Icounter@{S\+P\+Icounter}!S\+P\+I\+\_\+comm.\+c@{S\+P\+I\+\_\+comm.\+c}}
+\subsubsection[{\texorpdfstring{S\+P\+Icounter}{SPIcounter}}]{\setlength{\rightskip}{0pt plus 5cm}volatile uint8\+\_\+t S\+P\+Icounter}\hypertarget{_s_p_i__comm_8c_a65d46084e88aa717b668dffbbda1bf3b}{}\label{_s_p_i__comm_8c_a65d46084e88aa717b668dffbbda1bf3b}

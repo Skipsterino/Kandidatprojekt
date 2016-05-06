@@ -1,20 +1,14 @@
 var searchData=
 [
-  ['lcd_2eh',['LCD.h',['../_l_c_d_8h.html',1,'']]],
-  ['lcd_5fbusy',['LCD_busy',['../_l_c_d_8h.html#a6679ea6f481524d1b6a30c4d99b8aad5',1,'LCD.c']]],
-  ['lcd_5fclear',['LCD_clear',['../_l_c_d_8h.html#abe38d05e225c701bebf5a61201331a85',1,'LCD.c']]],
-  ['lcd_5fcontroller_2eh',['LCD_controller.h',['../_l_c_d__controller_8h.html',1,'']]],
-  ['lcd_5fcontroller_5finit',['LCD_controller_init',['../_l_c_d__controller_8h.html#acdf924af672d862f021f6b4ace2bcebd',1,'LCD_controller.c']]],
-  ['lcd_5fcontroller_5fput_5fline',['LCD_controller_put_line',['../_l_c_d__controller_8h.html#af46260996769cfaea7bb98af9ab708d1',1,'LCD_controller.h']]],
-  ['lcd_5finit',['LCD_init',['../_l_c_d_8h.html#a0742e25c23ca1096ceba081b98fd58ba',1,'LCD.c']]],
-  ['lcd_5fline_5fwidth',['LCD_LINE_WIDTH',['../_l_c_d_8h.html#a5bdd8750b215c775f2227262a1934b54',1,'LCD.h']]],
-  ['lcd_5fnumber_5fof_5flines',['LCD_NUMBER_OF_LINES',['../_l_c_d_8h.html#a5bb24c05980471cbc9086fef965deacc',1,'LCD.h']]],
-  ['lcd_5fprint_5fstring',['LCD_print_string',['../_l_c_d_8h.html#afbc155e4e9d279ccd12c2695fe78a0e3',1,'LCD.c']]],
-  ['lcd_5fput_5fnum_5fu',['LCD_put_num_u',['../_l_c_d_8h.html#ab7c7379b10d76669edf03099f799b357',1,'LCD.c']]],
-  ['lcd_5fputc',['LCD_putc',['../_l_c_d_8h.html#a7a19aaec7f9deb1589a7efddf3da8d3f',1,'LCD.c']]],
-  ['lcd_5fsend_5fcommand',['LCD_send_command',['../_l_c_d_8h.html#aa6d8c104e37eef62ba3a6046d1333ca6',1,'LCD.c']]],
-  ['lines',['lines',['../_l_c_d__controller_8h.html#a075b70e7692af8221284f00c90d70fb2',1,'LCD_controller.h']]],
-  ['load_5fsensor_5fvalues',['load_sensor_values',['../state__machine_8h.html#aefb7e87df9971d6e6c5641db5185ca6c',1,'state_machine.c']]],
-  ['long_5fturn_5fdistance',['LONG_TURN_DISTANCE',['../state__machine_8h.html#a365e437f4fdaddff7b28fa56e61a0060',1,'state_machine.h']]],
-  ['low_5fobstacle_5fdistance',['LOW_OBSTACLE_DISTANCE',['../state__machine_8h.html#a29b3e85ce789185a96d28f139e003d4c',1,'state_machine.h']]]
+  ['kalibrering',['kalibrering',['../sensor_8c.html#ac6723e64e3c0cb29dcf2a13409964453',1,'kalibrering():&#160;sensor.c'],['../sensor_8h.html#ac6723e64e3c0cb29dcf2a13409964453',1,'kalibrering():&#160;sensor.c']]],
+  ['kar_5fto_5fcyl_5fleg1',['Kar_To_Cyl_Leg1',['../invers__kinematik_8c.html#ae696af5df234c2f15694317bcf2a4bec',1,'Kar_To_Cyl_Leg1(float x, float y, float z):&#160;invers_kinematik.c'],['../invers__kinematik_8h.html#ae696af5df234c2f15694317bcf2a4bec',1,'Kar_To_Cyl_Leg1(float x, float y, float z):&#160;invers_kinematik.c']]],
+  ['kar_5fto_5fcyl_5fleg2',['Kar_To_Cyl_Leg2',['../invers__kinematik_8c.html#addfbc7c7fdb83567e74239fb6333d92c',1,'Kar_To_Cyl_Leg2(float x, float y, float z):&#160;invers_kinematik.c'],['../invers__kinematik_8h.html#addfbc7c7fdb83567e74239fb6333d92c',1,'Kar_To_Cyl_Leg2(float x, float y, float z):&#160;invers_kinematik.c']]],
+  ['kar_5fto_5fcyl_5fleg3',['Kar_To_Cyl_Leg3',['../invers__kinematik_8c.html#a60f2e45cc22b107f9c5020ca85c6ab31',1,'Kar_To_Cyl_Leg3(float x, float y, float z):&#160;invers_kinematik.c'],['../invers__kinematik_8h.html#a60f2e45cc22b107f9c5020ca85c6ab31',1,'Kar_To_Cyl_Leg3(float x, float y, float z):&#160;invers_kinematik.c']]],
+  ['kar_5fto_5fcyl_5fleg4',['Kar_To_Cyl_Leg4',['../invers__kinematik_8c.html#aaaaddfbb21d42ca2d7f2ff855a3b1a01',1,'Kar_To_Cyl_Leg4(float x, float y, float z):&#160;invers_kinematik.c'],['../invers__kinematik_8h.html#aaaaddfbb21d42ca2d7f2ff855a3b1a01',1,'Kar_To_Cyl_Leg4(float x, float y, float z):&#160;invers_kinematik.c']]],
+  ['kar_5fto_5fcyl_5fleg5',['Kar_To_Cyl_Leg5',['../invers__kinematik_8c.html#abc3e6e1ada8dc2e48c5b0dc980c0dc81',1,'Kar_To_Cyl_Leg5(float x, float y, float z):&#160;invers_kinematik.c'],['../invers__kinematik_8h.html#abc3e6e1ada8dc2e48c5b0dc980c0dc81',1,'Kar_To_Cyl_Leg5(float x, float y, float z):&#160;invers_kinematik.c']]],
+  ['kar_5fto_5fcyl_5fleg6',['Kar_To_Cyl_Leg6',['../invers__kinematik_8c.html#aac6d276df2445e288447c993547ecbc4',1,'Kar_To_Cyl_Leg6(float x, float y, float z):&#160;invers_kinematik.c'],['../invers__kinematik_8h.html#aac6d276df2445e288447c993547ecbc4',1,'Kar_To_Cyl_Leg6(float x, float y, float z):&#160;invers_kinematik.c']]],
+  ['kar_5fto_5fpos',['Kar_To_Pos',['../invers__kinematik_8c.html#a68f82386196ad991ed54fb9796d90f7c',1,'Kar_To_Pos(float x, float y, float z):&#160;invers_kinematik.c'],['../invers__kinematik_8h.html#a68f82386196ad991ed54fb9796d90f7c',1,'Kar_To_Pos(float x, float y, float z):&#160;invers_kinematik.c']]],
+  ['kd',['Kd',['../state__machine_8h.html#a98268d71502ba080d88a9b1f50fdbe80',1,'state_machine.h']]],
+  ['kp',['Kp',['../state__machine_8h.html#a09cfc766a233ad617270562cc4146d07',1,'state_machine.h']]],
+  ['kandidatprojekt',['Kandidatprojekt',['../md_README.html',1,'']]]
 ];

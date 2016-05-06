@@ -1,0 +1,223 @@
+\hypertarget{over__hinder_8c}{}\section{styr/styr/over\+\_\+hinder.c File Reference}
+\label{over__hinder_8c}\index{styr/styr/over\+\_\+hinder.\+c@{styr/styr/over\+\_\+hinder.\+c}}
+{\ttfamily \#include \char`\"{}over\+\_\+hinder.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{over__hinder_8c_a8b5aad37478f0d1e34bee01d18f3446b}{U\+P\+\_\+\+D\+E\+L\+AY}~1000
+\item 
+\#define \hyperlink{over__hinder_8c_a9cc5d7a0a3307e0d6c7fa79924a1c247}{F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+L\+AY}~700
+\item 
+\#define \hyperlink{over__hinder_8c_a05af9bcc7a748a7ec55613cdd0aaa625}{D\+O\+W\+N\+\_\+\+D\+E\+L\+AY}~300
+\item 
+\#define \hyperlink{over__hinder_8c_abcd6f48b1639421524eb5bbe2cff3f4e}{B\+A\+C\+K\+\_\+\+D\+E\+L\+AY}~50
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{over__hinder_8c_ac5e595f6e488678c5e18cb3fd9364fb3}{Walk\+\_\+\+Up} (void)
+\item 
+void \hyperlink{over__hinder_8c_a1e57abbdd40e278a2f9ec29ffe9c3c2f}{Walk\+\_\+\+Up\+\_\+\+Hard} ()
+\item 
+void \hyperlink{over__hinder_8c_a0e1b66c48f810141b8dbb1f3adeaea7a}{Walk\+\_\+\+Down\+\_\+\+Hard} ()
+\item 
+void \hyperlink{over__hinder_8c_a714ffcc92e04ff07525c870fd063cefc}{To\+\_\+\+Climbing\+\_\+\+Stance} ()
+\item 
+void \hyperlink{over__hinder_8c_aa742647f917d0eb073dd8e4d9bd53e49}{To\+\_\+\+Default\+\_\+\+Stance} ()
+\item 
+void \hyperlink{over__hinder_8c_a8e93e827f047dac258e8334869fb2615}{First\+\_\+\+Leg} (char direction)
+\item 
+void \hyperlink{over__hinder_8c_a656636b54d65528c5f66fbe1ae0c793c}{Second\+\_\+\+Leg} (char direction)
+\item 
+void \hyperlink{over__hinder_8c_a24e1213c158cd0297fa7992cb07f9daf}{First\+\_\+\+Body\+\_\+\+Adjust} ()
+\item 
+void \hyperlink{over__hinder_8c_ae5a0956265d1177bb332cba019226908}{Third\+\_\+\+Leg} (char direction)
+\item 
+void \hyperlink{over__hinder_8c_aa7388d904fc9be082274a66dcb366d34}{Fourth\+\_\+\+Leg} (char direction)
+\item 
+void \hyperlink{over__hinder_8c_a4eea4d1376cfd523460d758931200401}{Second\+\_\+\+Body\+\_\+\+Adjust} ()
+\item 
+void \hyperlink{over__hinder_8c_ad5195902238f5ace14e522b1277f09ad}{Fifth\+\_\+\+Leg} (char direction)
+\item 
+void \hyperlink{over__hinder_8c_ae160f42d7debd07279bb1464bb3b39d1}{Sixth\+\_\+\+Leg} (char direction)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{over__hinder_8c_a29122f6df4a054b8141015682f877c82}{load}
+\item 
+float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}
+\item 
+float \hyperlink{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height}
+\item 
+float \hyperlink{over__hinder_8c_a4e47053e7bf2b9447374c498b454564b}{obstacle\+\_\+height}
+\item 
+float \hyperlink{over__hinder_8c_a1d2a0626903e969515ce52ad9dee74da}{x\+\_\+ground}
+\item 
+float \hyperlink{over__hinder_8c_a33f459ccd2450114280cc5f5b110fa35}{x\+\_\+obstacle}
+\item 
+float \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\+\_\+pitch}
+\item 
+float \hyperlink{over__hinder_8c_a863c86bdfd96bf9c461846689c2614aa}{step}
+\item 
+float \hyperlink{over__hinder_8c_a5e433c2d90f9d7f1ff1868b9e8b91868}{lift}
+\item 
+float \hyperlink{over__hinder_8c_ad32469023e64147ab9855a69d15572ea}{weight\+\_\+adjust}
+\item 
+unsigned int \hyperlink{over__hinder_8c_ae104a742861491ef3fa14b9926deb4ff}{speed\+\_\+inner}
+\item 
+unsigned int \hyperlink{over__hinder_8c_a37e34fcb133065290754a0c320fa04d9}{speed\+\_\+middle}
+\item 
+unsigned int \hyperlink{over__hinder_8c_a92f49a1710c0649467c996317430aec8}{speed\+\_\+outer}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!B\+A\+C\+K\+\_\+\+D\+E\+L\+AY@{B\+A\+C\+K\+\_\+\+D\+E\+L\+AY}}
+\index{B\+A\+C\+K\+\_\+\+D\+E\+L\+AY@{B\+A\+C\+K\+\_\+\+D\+E\+L\+AY}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{B\+A\+C\+K\+\_\+\+D\+E\+L\+AY}{BACK_DELAY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+A\+C\+K\+\_\+\+D\+E\+L\+AY~50}\hypertarget{over__hinder_8c_abcd6f48b1639421524eb5bbe2cff3f4e}{}\label{over__hinder_8c_abcd6f48b1639421524eb5bbe2cff3f4e}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!D\+O\+W\+N\+\_\+\+D\+E\+L\+AY@{D\+O\+W\+N\+\_\+\+D\+E\+L\+AY}}
+\index{D\+O\+W\+N\+\_\+\+D\+E\+L\+AY@{D\+O\+W\+N\+\_\+\+D\+E\+L\+AY}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{D\+O\+W\+N\+\_\+\+D\+E\+L\+AY}{DOWN_DELAY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+O\+W\+N\+\_\+\+D\+E\+L\+AY~300}\hypertarget{over__hinder_8c_a05af9bcc7a748a7ec55613cdd0aaa625}{}\label{over__hinder_8c_a05af9bcc7a748a7ec55613cdd0aaa625}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+L\+AY@{F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+L\+AY}}
+\index{F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+L\+AY@{F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+L\+AY}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+L\+AY}{FORWARD_DELAY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+O\+R\+W\+A\+R\+D\+\_\+\+D\+E\+L\+AY~700}\hypertarget{over__hinder_8c_a9cc5d7a0a3307e0d6c7fa79924a1c247}{}\label{over__hinder_8c_a9cc5d7a0a3307e0d6c7fa79924a1c247}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!U\+P\+\_\+\+D\+E\+L\+AY@{U\+P\+\_\+\+D\+E\+L\+AY}}
+\index{U\+P\+\_\+\+D\+E\+L\+AY@{U\+P\+\_\+\+D\+E\+L\+AY}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{U\+P\+\_\+\+D\+E\+L\+AY}{UP_DELAY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define U\+P\+\_\+\+D\+E\+L\+AY~1000}\hypertarget{over__hinder_8c_a8b5aad37478f0d1e34bee01d18f3446b}{}\label{over__hinder_8c_a8b5aad37478f0d1e34bee01d18f3446b}
+
+
+\subsection{Function Documentation}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!Fifth\+\_\+\+Leg@{Fifth\+\_\+\+Leg}}
+\index{Fifth\+\_\+\+Leg@{Fifth\+\_\+\+Leg}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{Fifth\+\_\+\+Leg(char direction)}{Fifth_Leg(char direction)}}]{\setlength{\rightskip}{0pt plus 5cm}void Fifth\+\_\+\+Leg (
+\begin{DoxyParamCaption}
+\item[{char}]{direction}
+\end{DoxyParamCaption}
+)}\hypertarget{over__hinder_8c_ad5195902238f5ace14e522b1277f09ad}{}\label{over__hinder_8c_ad5195902238f5ace14e522b1277f09ad}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!First\+\_\+\+Body\+\_\+\+Adjust@{First\+\_\+\+Body\+\_\+\+Adjust}}
+\index{First\+\_\+\+Body\+\_\+\+Adjust@{First\+\_\+\+Body\+\_\+\+Adjust}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{First\+\_\+\+Body\+\_\+\+Adjust()}{First_Body_Adjust()}}]{\setlength{\rightskip}{0pt plus 5cm}void First\+\_\+\+Body\+\_\+\+Adjust (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{over__hinder_8c_a24e1213c158cd0297fa7992cb07f9daf}{}\label{over__hinder_8c_a24e1213c158cd0297fa7992cb07f9daf}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!First\+\_\+\+Leg@{First\+\_\+\+Leg}}
+\index{First\+\_\+\+Leg@{First\+\_\+\+Leg}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{First\+\_\+\+Leg(char direction)}{First_Leg(char direction)}}]{\setlength{\rightskip}{0pt plus 5cm}void First\+\_\+\+Leg (
+\begin{DoxyParamCaption}
+\item[{char}]{direction}
+\end{DoxyParamCaption}
+)}\hypertarget{over__hinder_8c_a8e93e827f047dac258e8334869fb2615}{}\label{over__hinder_8c_a8e93e827f047dac258e8334869fb2615}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!Fourth\+\_\+\+Leg@{Fourth\+\_\+\+Leg}}
+\index{Fourth\+\_\+\+Leg@{Fourth\+\_\+\+Leg}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{Fourth\+\_\+\+Leg(char direction)}{Fourth_Leg(char direction)}}]{\setlength{\rightskip}{0pt plus 5cm}void Fourth\+\_\+\+Leg (
+\begin{DoxyParamCaption}
+\item[{char}]{direction}
+\end{DoxyParamCaption}
+)}\hypertarget{over__hinder_8c_aa7388d904fc9be082274a66dcb366d34}{}\label{over__hinder_8c_aa7388d904fc9be082274a66dcb366d34}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!Second\+\_\+\+Body\+\_\+\+Adjust@{Second\+\_\+\+Body\+\_\+\+Adjust}}
+\index{Second\+\_\+\+Body\+\_\+\+Adjust@{Second\+\_\+\+Body\+\_\+\+Adjust}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{Second\+\_\+\+Body\+\_\+\+Adjust()}{Second_Body_Adjust()}}]{\setlength{\rightskip}{0pt plus 5cm}void Second\+\_\+\+Body\+\_\+\+Adjust (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{over__hinder_8c_a4eea4d1376cfd523460d758931200401}{}\label{over__hinder_8c_a4eea4d1376cfd523460d758931200401}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!Second\+\_\+\+Leg@{Second\+\_\+\+Leg}}
+\index{Second\+\_\+\+Leg@{Second\+\_\+\+Leg}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{Second\+\_\+\+Leg(char direction)}{Second_Leg(char direction)}}]{\setlength{\rightskip}{0pt plus 5cm}void Second\+\_\+\+Leg (
+\begin{DoxyParamCaption}
+\item[{char}]{direction}
+\end{DoxyParamCaption}
+)}\hypertarget{over__hinder_8c_a656636b54d65528c5f66fbe1ae0c793c}{}\label{over__hinder_8c_a656636b54d65528c5f66fbe1ae0c793c}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!Sixth\+\_\+\+Leg@{Sixth\+\_\+\+Leg}}
+\index{Sixth\+\_\+\+Leg@{Sixth\+\_\+\+Leg}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{Sixth\+\_\+\+Leg(char direction)}{Sixth_Leg(char direction)}}]{\setlength{\rightskip}{0pt plus 5cm}void Sixth\+\_\+\+Leg (
+\begin{DoxyParamCaption}
+\item[{char}]{direction}
+\end{DoxyParamCaption}
+)}\hypertarget{over__hinder_8c_ae160f42d7debd07279bb1464bb3b39d1}{}\label{over__hinder_8c_ae160f42d7debd07279bb1464bb3b39d1}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!Third\+\_\+\+Leg@{Third\+\_\+\+Leg}}
+\index{Third\+\_\+\+Leg@{Third\+\_\+\+Leg}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{Third\+\_\+\+Leg(char direction)}{Third_Leg(char direction)}}]{\setlength{\rightskip}{0pt plus 5cm}void Third\+\_\+\+Leg (
+\begin{DoxyParamCaption}
+\item[{char}]{direction}
+\end{DoxyParamCaption}
+)}\hypertarget{over__hinder_8c_ae5a0956265d1177bb332cba019226908}{}\label{over__hinder_8c_ae5a0956265d1177bb332cba019226908}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!To\+\_\+\+Climbing\+\_\+\+Stance@{To\+\_\+\+Climbing\+\_\+\+Stance}}
+\index{To\+\_\+\+Climbing\+\_\+\+Stance@{To\+\_\+\+Climbing\+\_\+\+Stance}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{To\+\_\+\+Climbing\+\_\+\+Stance()}{To_Climbing_Stance()}}]{\setlength{\rightskip}{0pt plus 5cm}void To\+\_\+\+Climbing\+\_\+\+Stance (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{over__hinder_8c_a714ffcc92e04ff07525c870fd063cefc}{}\label{over__hinder_8c_a714ffcc92e04ff07525c870fd063cefc}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!To\+\_\+\+Default\+\_\+\+Stance@{To\+\_\+\+Default\+\_\+\+Stance}}
+\index{To\+\_\+\+Default\+\_\+\+Stance@{To\+\_\+\+Default\+\_\+\+Stance}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{To\+\_\+\+Default\+\_\+\+Stance()}{To_Default_Stance()}}]{\setlength{\rightskip}{0pt plus 5cm}void To\+\_\+\+Default\+\_\+\+Stance (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{over__hinder_8c_aa742647f917d0eb073dd8e4d9bd53e49}{}\label{over__hinder_8c_aa742647f917d0eb073dd8e4d9bd53e49}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!Walk\+\_\+\+Down\+\_\+\+Hard@{Walk\+\_\+\+Down\+\_\+\+Hard}}
+\index{Walk\+\_\+\+Down\+\_\+\+Hard@{Walk\+\_\+\+Down\+\_\+\+Hard}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{Walk\+\_\+\+Down\+\_\+\+Hard()}{Walk_Down_Hard()}}]{\setlength{\rightskip}{0pt plus 5cm}void Walk\+\_\+\+Down\+\_\+\+Hard (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{over__hinder_8c_a0e1b66c48f810141b8dbb1f3adeaea7a}{}\label{over__hinder_8c_a0e1b66c48f810141b8dbb1f3adeaea7a}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!Walk\+\_\+\+Up@{Walk\+\_\+\+Up}}
+\index{Walk\+\_\+\+Up@{Walk\+\_\+\+Up}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{Walk\+\_\+\+Up(void)}{Walk_Up(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void Walk\+\_\+\+Up (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{over__hinder_8c_ac5e595f6e488678c5e18cb3fd9364fb3}{}\label{over__hinder_8c_ac5e595f6e488678c5e18cb3fd9364fb3}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!Walk\+\_\+\+Up\+\_\+\+Hard@{Walk\+\_\+\+Up\+\_\+\+Hard}}
+\index{Walk\+\_\+\+Up\+\_\+\+Hard@{Walk\+\_\+\+Up\+\_\+\+Hard}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{Walk\+\_\+\+Up\+\_\+\+Hard()}{Walk_Up_Hard()}}]{\setlength{\rightskip}{0pt plus 5cm}void Walk\+\_\+\+Up\+\_\+\+Hard (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{over__hinder_8c_a1e57abbdd40e278a2f9ec29ffe9c3c2f}{}\label{over__hinder_8c_a1e57abbdd40e278a2f9ec29ffe9c3c2f}
+
+
+\subsection{Variable Documentation}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!corner\+\_\+pitch@{corner\+\_\+pitch}}
+\index{corner\+\_\+pitch@{corner\+\_\+pitch}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{corner\+\_\+pitch}{corner_pitch}}]{\setlength{\rightskip}{0pt plus 5cm}float corner\+\_\+pitch}\hypertarget{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{}\label{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!height@{height}}
+\index{height@{height}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{height}{height}}]{\setlength{\rightskip}{0pt plus 5cm}float height}\hypertarget{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{}\label{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!lift@{lift}}
+\index{lift@{lift}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{lift}{lift}}]{\setlength{\rightskip}{0pt plus 5cm}float lift}\hypertarget{over__hinder_8c_a5e433c2d90f9d7f1ff1868b9e8b91868}{}\label{over__hinder_8c_a5e433c2d90f9d7f1ff1868b9e8b91868}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!load@{load}}
+\index{load@{load}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{load}{load}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int load}\hypertarget{over__hinder_8c_a29122f6df4a054b8141015682f877c82}{}\label{over__hinder_8c_a29122f6df4a054b8141015682f877c82}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!obstacle\+\_\+height@{obstacle\+\_\+height}}
+\index{obstacle\+\_\+height@{obstacle\+\_\+height}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{obstacle\+\_\+height}{obstacle_height}}]{\setlength{\rightskip}{0pt plus 5cm}float obstacle\+\_\+height}\hypertarget{over__hinder_8c_a4e47053e7bf2b9447374c498b454564b}{}\label{over__hinder_8c_a4e47053e7bf2b9447374c498b454564b}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!speed\+\_\+inner@{speed\+\_\+inner}}
+\index{speed\+\_\+inner@{speed\+\_\+inner}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{speed\+\_\+inner}{speed_inner}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int speed\+\_\+inner}\hypertarget{over__hinder_8c_ae104a742861491ef3fa14b9926deb4ff}{}\label{over__hinder_8c_ae104a742861491ef3fa14b9926deb4ff}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!speed\+\_\+middle@{speed\+\_\+middle}}
+\index{speed\+\_\+middle@{speed\+\_\+middle}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{speed\+\_\+middle}{speed_middle}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int speed\+\_\+middle}\hypertarget{over__hinder_8c_a37e34fcb133065290754a0c320fa04d9}{}\label{over__hinder_8c_a37e34fcb133065290754a0c320fa04d9}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!speed\+\_\+outer@{speed\+\_\+outer}}
+\index{speed\+\_\+outer@{speed\+\_\+outer}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{speed\+\_\+outer}{speed_outer}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int speed\+\_\+outer}\hypertarget{over__hinder_8c_a92f49a1710c0649467c996317430aec8}{}\label{over__hinder_8c_a92f49a1710c0649467c996317430aec8}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!step@{step}}
+\index{step@{step}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{step}{step}}]{\setlength{\rightskip}{0pt plus 5cm}float step}\hypertarget{over__hinder_8c_a863c86bdfd96bf9c461846689c2614aa}{}\label{over__hinder_8c_a863c86bdfd96bf9c461846689c2614aa}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!weight\+\_\+adjust@{weight\+\_\+adjust}}
+\index{weight\+\_\+adjust@{weight\+\_\+adjust}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{weight\+\_\+adjust}{weight_adjust}}]{\setlength{\rightskip}{0pt plus 5cm}float weight\+\_\+adjust}\hypertarget{over__hinder_8c_ad32469023e64147ab9855a69d15572ea}{}\label{over__hinder_8c_ad32469023e64147ab9855a69d15572ea}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!x\+\_\+ground@{x\+\_\+ground}}
+\index{x\+\_\+ground@{x\+\_\+ground}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{x\+\_\+ground}{x_ground}}]{\setlength{\rightskip}{0pt plus 5cm}float x\+\_\+ground}\hypertarget{over__hinder_8c_a1d2a0626903e969515ce52ad9dee74da}{}\label{over__hinder_8c_a1d2a0626903e969515ce52ad9dee74da}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!x\+\_\+obstacle@{x\+\_\+obstacle}}
+\index{x\+\_\+obstacle@{x\+\_\+obstacle}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{x\+\_\+obstacle}{x_obstacle}}]{\setlength{\rightskip}{0pt plus 5cm}float x\+\_\+obstacle}\hypertarget{over__hinder_8c_a33f459ccd2450114280cc5f5b110fa35}{}\label{over__hinder_8c_a33f459ccd2450114280cc5f5b110fa35}
+\index{over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}!z@{z}}
+\index{z@{z}!over\+\_\+hinder.\+c@{over\+\_\+hinder.\+c}}
+\subsubsection[{\texorpdfstring{z}{z}}]{\setlength{\rightskip}{0pt plus 5cm}float z}\hypertarget{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{}\label{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}

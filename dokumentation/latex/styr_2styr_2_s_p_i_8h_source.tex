@@ -2,36 +2,32 @@
 \label{styr_2styr_2_s_p_i_8h_source}\index{styr/styr/\+S\+P\+I.\+h@{styr/styr/\+S\+P\+I.\+h}}
 
 \begin{DoxyCode}
-00001 \textcolor{comment}{/*}
-00002 \textcolor{comment}{ * SPI.h}
-00003 \textcolor{comment}{ *}
-00004 \textcolor{comment}{ * Created: 4/8/2016 2:53:17 PM}
-00005 \textcolor{comment}{ *  Author: chrma018}
-00006 \textcolor{comment}{ */} 
-00007 
-00008 
-00009 \textcolor{preprocessor}{#ifndef SPI\_H\_}
-00010 \textcolor{preprocessor}{#define SPI\_H\_}
-00011 
-00012 \textcolor{preprocessor}{#ifndef F\_CPU}
-00013 \textcolor{preprocessor}{#define F\_CPU 16000000UL        // 16 MHz}
-00014 \textcolor{preprocessor}{#endif}
-00015 
-00016 \textcolor{preprocessor}{#include <avr/io.h>}
-00017 \textcolor{preprocessor}{#include <avr/interrupt.h>}
-00018 \textcolor{preprocessor}{#include <util/delay.h>}
-00019 
-00020 \textcolor{preprocessor}{#define SS\_sen 3}
-00021 \textcolor{preprocessor}{#define SS\_kom 4}
-00022 
-00023 \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} fromSen[16];
-00024 \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} fromKom[16];
-00025 
-00026 \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} lastValidPacket[16];
-00027 
-00028 \textcolor{keywordtype}{void} SPI\_init\_master();
-00029 \textcolor{keywordtype}{void} SPI\_sen\_transmit\_master();
-00030 \textcolor{keywordtype}{void} Set\_SS\_sen\_kom(uint8\_t toSen, uint8\_t toKom);
-00031 
-00032 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* SPI\_H\_ */}\textcolor{preprocessor}{}
+00001 
+00010 \textcolor{preprocessor}{#ifndef SPI\_H\_}
+00011 \textcolor{preprocessor}{#define SPI\_H\_}
+00012 
+00013 \textcolor{preprocessor}{#ifndef F\_CPU}
+\hypertarget{styr_2styr_2_s_p_i_8h_source.tex_l00014}{}\hyperlink{styr_2styr_2_s_p_i_8h_a43bafb28b29491ec7f871319b5a3b2f8}{00014} \textcolor{preprocessor}{#define F\_CPU 16000000UL //*< Speed of processor (16 Mhz) */}
+00015 \textcolor{preprocessor}{#endif}
+00016 
+00017 \textcolor{preprocessor}{#include <avr/io.h>}
+00018 \textcolor{preprocessor}{#include <avr/interrupt.h>}
+00019 \textcolor{preprocessor}{#include <util/delay.h>}
+00020 
+\hypertarget{styr_2styr_2_s_p_i_8h_source.tex_l00021}{}\hyperlink{styr_2styr_2_s_p_i_8h_a58ac62acddf451691b748c71454e0137}{00021} \textcolor{preprocessor}{#define SS\_sen 3 //*< Offset of the slave-select bit to Sensor module */}
+\hypertarget{styr_2styr_2_s_p_i_8h_source.tex_l00022}{}\hyperlink{styr_2styr_2_s_p_i_8h_acbbd0eb471ac972ee5d3bb2563a6c72e}{00022} \textcolor{preprocessor}{#define SS\_kom 4 //*< Offset of the slave-select bit to Kommunacation module */}
+00023 
+\hypertarget{styr_2styr_2_s_p_i_8h_source.tex_l00024}{}\hyperlink{styr_2styr_2_s_p_i_8h_a2963725e5681e7e146da28127b3e09d3}{00024} \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{styr_2styr_2_s_p_i_8h_a2963725e5681e7e146da28127b3e09d3}{fromSen}[16]; \textcolor{comment}{//*< Array in which data from Sensor module is stored */}
+\hypertarget{styr_2styr_2_s_p_i_8h_source.tex_l00025}{}\hyperlink{styr_2styr_2_s_p_i_8h_a4c1a44ecc2e0f0cf45cf9b6c0bc3e645}{00025} \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{styr_2styr_2_s_p_i_8h_a4c1a44ecc2e0f0cf45cf9b6c0bc3e645}{fromKom}[16]; \textcolor{comment}{//*< Array in which data form Kommunication module is stored */}
+00026 
+\hypertarget{styr_2styr_2_s_p_i_8h_source.tex_l00027}{}\hyperlink{styr_2styr_2_s_p_i_8h_ab15ab508531e452eb0768f69f7c588da}{00027} \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{styr_2styr_2_s_p_i_8h_ab15ab508531e452eb0768f69f7c588da}{lastValidPacket}[16]; \textcolor{comment}{//*< Array in which the last checksum-valid
+       fromKom array is stored */}
+00028 
+00035 \textcolor{keywordtype}{void} \hyperlink{styr_2styr_2_s_p_i_8h_a49ddfef1b082be9cebd28e4bbebf247d}{SPI\_init\_master}();
+00036 
+00043 \textcolor{keywordtype}{void} \hyperlink{styr_2styr_2_s_p_i_8h_aef55913736b574735fdfca21de557988}{SPI\_sen\_transmit\_master}();
+00044 
+00051 \textcolor{keywordtype}{void} \hyperlink{styr_2styr_2_s_p_i_8h_a21ae89e79b07cfb95e2674541cf5ee27}{Set\_SS\_sen\_kom}(uint8\_t \hyperlink{styr_2styr_2_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen}, uint8\_t \hyperlink{styr_2styr_2_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom});
+00052 
+00053 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* SPI\_H\_ */}\textcolor{preprocessor}{}
 \end{DoxyCode}

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['alpha',['alpha',['../state__machine_8h.html#ab1551d8043c2aa4410fb7dbb1fe3be7b',1,'state_machine.h']]]
+  ['_5forientation',['_orientation',['../sensor_8h.html#abc4898c1a34c444db2963e65dccbf97c',1,'sensor.h']]]
 ];

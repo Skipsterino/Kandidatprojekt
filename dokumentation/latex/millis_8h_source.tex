@@ -1,27 +1,20 @@
 \hypertarget{millis_8h_source}{}\section{millis.\+h}
-\label{millis_8h_source}\index{sensor/millis.\+h@{sensor/millis.\+h}}
+\label{millis_8h_source}\index{sensor/sensor/millis.\+h@{sensor/sensor/millis.\+h}}
 
 \begin{DoxyCode}
-00001 \textcolor{comment}{/*}
-00002 \textcolor{comment}{ * millis.h}
-00003 \textcolor{comment}{ *}
-00004 \textcolor{comment}{ * Created: 4/12/2016 9:30:34 AM}
-00005 \textcolor{comment}{ *  Author: fregu856}
-00006 \textcolor{comment}{ */} 
-00007 
-00008 \textcolor{preprocessor}{#ifndef MILLIS\_H\_}
-00009 \textcolor{preprocessor}{#define MILLIS\_H\_}
-00010 
-00011 \textcolor{preprocessor}{#include <util/atomic.h>}
+00001 
+00010 \textcolor{preprocessor}{#ifndef MILLIS\_H\_}
+00011 \textcolor{preprocessor}{#define MILLIS\_H\_}
 00012 
-00013 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} timer0\_millis;
-00014 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} timer0\_fract;
-00015 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} timer0\_overflow\_count;
-00016 \textcolor{preprocessor}{#define MILLIS\_INC (1024 / 1000)}
-00017 \textcolor{preprocessor}{#define FRACT\_INC ((1024 % 1000) >> 3)}
-00018 \textcolor{preprocessor}{#define FRACT\_MAX (1000 >> 3)}
-00019 
-00020 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} millis();
-00021 
-00022 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* MILLIS\_H\_ */}\textcolor{preprocessor}{}
+00013 \textcolor{preprocessor}{#include <util/atomic.h>}
+00014 
+\hypertarget{millis_8h_source.tex_l00015}{}\hyperlink{millis_8h_ab34d3974411fdee7da8c6b4f650502e9}{00015} \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \hyperlink{millis_8h_ab34d3974411fdee7da8c6b4f650502e9}{timer0\_millis};          
+\hypertarget{millis_8h_source.tex_l00016}{}\hyperlink{millis_8h_ae7c36fe51c2f3d6dbee84a935ea15420}{00016} \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{millis_8h_ae7c36fe51c2f3d6dbee84a935ea15420}{timer0\_fract};            
+\hypertarget{millis_8h_source.tex_l00017}{}\hyperlink{millis_8h_a79a4c8c254cfb57c6ac3393a396c7a4f}{00017} \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \hyperlink{millis_8h_a79a4c8c254cfb57c6ac3393a396c7a4f}{timer0\_overflow\_count};  
+\hypertarget{millis_8h_source.tex_l00018}{}\hyperlink{millis_8h_ab640966289e34d6fe31434f37090e6e6}{00018} \textcolor{preprocessor}{#define MILLIS\_INC (1024 / 1000)                }
+\hypertarget{millis_8h_source.tex_l00019}{}\hyperlink{millis_8h_a5647e40017bbd34a202f6a672ca116e4}{00019} \textcolor{preprocessor}{#define FRACT\_INC ((1024 % 1000) >> 3)          }
+\hypertarget{millis_8h_source.tex_l00020}{}\hyperlink{millis_8h_a3d5262b0f828700a2ce29198838e0d9e}{00020} \textcolor{preprocessor}{#define FRACT\_MAX (1000 >> 3)                   }
+00028 \textcolor{preprocessor}{unsigned long millis();}
+00029 
+00030 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* MILLIS\_H\_ */}\textcolor{preprocessor}{}
 \end{DoxyCode}

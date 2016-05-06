@@ -144,10 +144,10 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SPI.c">
+    <Compile Include="SPI_comm.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SPI.h">
+    <Compile Include="SPI_comm.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="USART.c">

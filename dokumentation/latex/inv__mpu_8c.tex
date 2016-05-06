@@ -1,0 +1,1520 @@
+\hypertarget{inv__mpu_8c}{}\section{sensor/sensor/inv\+\_\+mpu.c File Reference}
+\label{inv__mpu_8c}\index{sensor/sensor/inv\+\_\+mpu.\+c@{sensor/sensor/inv\+\_\+mpu.\+c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdint.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$util/delay.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}inv\+\_\+mpu.\+h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structgyro__reg__s}{gyro\+\_\+reg\+\_\+s}
+\item 
+struct \hyperlink{structhw__s}{hw\+\_\+s}
+\item 
+struct \hyperlink{structmotion__int__cache__s}{motion\+\_\+int\+\_\+cache\+\_\+s}
+\item 
+struct \hyperlink{structchip__cfg__s}{chip\+\_\+cfg\+\_\+s}
+\item 
+struct \hyperlink{structtest__s}{test\+\_\+s}
+\item 
+struct \hyperlink{structgyro__state__s}{gyro\+\_\+state\+\_\+s}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{inv__mpu_8c_a43bafb28b29491ec7f871319b5a3b2f8}{F\+\_\+\+C\+PU}~16000000\+UL
+\item 
+\#define \hyperlink{inv__mpu_8c_a67fc07fa528d8e62dc7b88a847b563f5}{log\+\_\+i}(...)      ~do \{\} while (0)
+\item 
+\#define \hyperlink{inv__mpu_8c_ae36aca5baf9b6b7d74992aef00686d67}{delay\+\_\+ms}~\+\_\+delay\+\_\+ms
+\item 
+\#define \hyperlink{inv__mpu_8c_ac52d7caf4efc485ef6faa1211bfe60dc}{B\+I\+T\+\_\+\+I2\+C\+\_\+\+M\+S\+T\+\_\+\+V\+D\+D\+IO}~(0x80)
+\item 
+\#define \hyperlink{inv__mpu_8c_ae3c4a18accb84992faaf2534a84a147c}{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+EN}~(0x40)
+\item 
+\#define \hyperlink{inv__mpu_8c_a02c3e9ddd63128f1c3cf50bf1e9b5fe6}{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+EN}~(0x80)
+\item 
+\#define \hyperlink{inv__mpu_8c_aeae2cc64314ad05f3a93d2358a2369db}{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+R\+ST}~(0x04)
+\item 
+\#define \hyperlink{inv__mpu_8c_a37d5ceb74c3568e4bab6dcdd0afaa95b}{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+R\+ST}~(0x08)
+\item 
+\#define \hyperlink{inv__mpu_8c_afb9b49ce5dd973b3c29ae72680924fa7}{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+O\+V\+E\+R\+F\+L\+OW}~(0x10)
+\item 
+\#define \hyperlink{inv__mpu_8c_a45eec9dbc46778c356703dcf90b9e0c3}{B\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+\+R\+D\+Y\+\_\+\+EN}~(0x01)
+\item 
+\#define \hyperlink{inv__mpu_8c_a4dc5309ed09fc683d8e5a247feaad69d}{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+I\+N\+T\+\_\+\+EN}~(0x02)
+\item 
+\#define \hyperlink{inv__mpu_8c_a6a8f2f7f3dd17bc05d9c6286d15c7ada}{B\+I\+T\+\_\+\+M\+O\+T\+\_\+\+I\+N\+T\+\_\+\+EN}~(0x40)
+\item 
+\#define \hyperlink{inv__mpu_8c_a2d9aff1be96b1fc021ca96f251c3e72b}{B\+I\+T\+S\+\_\+\+F\+SR}~(0x18)
+\item 
+\#define \hyperlink{inv__mpu_8c_a4d83411e736da86163a61828816a200a}{B\+I\+T\+S\+\_\+\+L\+PF}~(0x07)
+\item 
+\#define \hyperlink{inv__mpu_8c_a3c9c0234d4a71c9d35bb0da64ea867eb}{B\+I\+T\+S\+\_\+\+H\+PF}~(0x07)
+\item 
+\#define \hyperlink{inv__mpu_8c_a1823f90ac353cf4cde25d297a8627dd4}{B\+I\+T\+S\+\_\+\+C\+LK}~(0x07)
+\item 
+\#define \hyperlink{inv__mpu_8c_a3769fd3fa71deaef1e77ce14c26f679d}{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+1024}~(0x40)
+\item 
+\#define \hyperlink{inv__mpu_8c_a0fa95b278851b0c05a9995f65ba2b895}{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+2048}~(0x80)
+\item 
+\#define \hyperlink{inv__mpu_8c_ac067df9d789eaae04585abfc5ffdb2b6}{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+4096}~(0x\+C0)
+\item 
+\#define \hyperlink{inv__mpu_8c_af4ce49fd1fc9b1461b5241f9ef4812f4}{B\+I\+T\+\_\+\+R\+E\+S\+ET}~(0x80)
+\item 
+\#define \hyperlink{inv__mpu_8c_a1fed8bd436e9b7dfccb1cae99ca89103}{B\+I\+T\+\_\+\+S\+L\+E\+EP}~(0x40)
+\item 
+\#define \hyperlink{inv__mpu_8c_ac4b33689dd697c1cf2411638a017c009}{B\+I\+T\+\_\+\+S0\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN}~(0x01)
+\item 
+\#define \hyperlink{inv__mpu_8c_a22e4452fe8abca7fe12a2dc45194e6df}{B\+I\+T\+\_\+\+S2\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN}~(0x04)
+\item 
+\#define \hyperlink{inv__mpu_8c_abc5c2ee59baeb02a0f761740466f3c28}{B\+I\+T\+S\+\_\+\+S\+L\+A\+V\+E\+\_\+\+L\+E\+N\+G\+TH}~(0x0\+F)
+\item 
+\#define \hyperlink{inv__mpu_8c_a5e8f3ccff1b3eeb95a938b207ca873ff}{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+B\+Y\+T\+E\+\_\+\+SW}~(0x40)
+\item 
+\#define \hyperlink{inv__mpu_8c_af616c3ecf97ffd7bde444f0b74e7453e}{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+G\+R\+O\+UP}~(0x10)
+\item 
+\#define \hyperlink{inv__mpu_8c_ae9440f48b6d70d900366dc040a8714d7}{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+EN}~(0x80)
+\item 
+\#define \hyperlink{inv__mpu_8c_a8ef1963ec6fb3df5586e50959cf00a70}{B\+I\+T\+\_\+\+I2\+C\+\_\+\+R\+E\+AD}~(0x80)
+\item 
+\#define \hyperlink{inv__mpu_8c_ab470b625fa05ff228b3fdb94802b1c0d}{B\+I\+T\+S\+\_\+\+I2\+C\+\_\+\+M\+A\+S\+T\+E\+R\+\_\+\+D\+LY}~(0x1\+F)
+\item 
+\#define \hyperlink{inv__mpu_8c_abcdedbd3098140aa14ad17bcaca8e176}{B\+I\+T\+\_\+\+A\+U\+X\+\_\+\+I\+F\+\_\+\+EN}~(0x20)
+\item 
+\#define \hyperlink{inv__mpu_8c_a8467782bedc44051c95643e303543655}{B\+I\+T\+\_\+\+A\+C\+TL}~(0x80)
+\item 
+\#define \hyperlink{inv__mpu_8c_a588b5a95724c4a68c6868faa78fd3a7f}{B\+I\+T\+\_\+\+L\+A\+T\+C\+H\+\_\+\+EN}~(0x20)
+\item 
+\#define \hyperlink{inv__mpu_8c_a1f50796ca0363292d9ac9cc1d29d9225}{B\+I\+T\+\_\+\+A\+N\+Y\+\_\+\+R\+D\+\_\+\+C\+LR}~(0x10)
+\item 
+\#define \hyperlink{inv__mpu_8c_add12a8d89e1a4c4e008b12a96dd4c75d}{B\+I\+T\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+EN}~(0x02)
+\item 
+\#define \hyperlink{inv__mpu_8c_a75b1479e451b747afb3b24cbc4df99f7}{B\+I\+T\+S\+\_\+\+W\+O\+M\+\_\+\+EN}~(0x\+C0)
+\item 
+\#define \hyperlink{inv__mpu_8c_a63e6f23af37626aa1498d8c248f259e7}{B\+I\+T\+\_\+\+L\+P\+A\+\_\+\+C\+Y\+C\+LE}~(0x20)
+\item 
+\#define \hyperlink{inv__mpu_8c_acfc46ee2ea036d16b3df45c8fb241b5b}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XA}~(0x20)
+\item 
+\#define \hyperlink{inv__mpu_8c_a49e6d38569bfc4b58ccc45dbb19001fa}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YA}~(0x10)
+\item 
+\#define \hyperlink{inv__mpu_8c_afac8114288bae2db7ea7dbf0f6fb755c}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZA}~(0x08)
+\item 
+\#define \hyperlink{inv__mpu_8c_a82256fedeffe5b2443ab3ae34cf032d9}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XG}~(0x04)
+\item 
+\#define \hyperlink{inv__mpu_8c_abf1c0a844906a5e887a659971a4af417}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YG}~(0x02)
+\item 
+\#define \hyperlink{inv__mpu_8c_a30967a4efdf3c3f1e39814e72a4168b0}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZG}~(0x01)
+\item 
+\#define \hyperlink{inv__mpu_8c_a04a57159e34387dafe9b86b171c4654c}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZA}~(\hyperlink{inv__mpu_8c_acfc46ee2ea036d16b3df45c8fb241b5b}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XA} $\vert$ \hyperlink{inv__mpu_8c_a49e6d38569bfc4b58ccc45dbb19001fa}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YA} $\vert$ \hyperlink{inv__mpu_8c_afac8114288bae2db7ea7dbf0f6fb755c}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZA})
+\item 
+\#define \hyperlink{inv__mpu_8c_a4e2ef22b94b90f9b83394dfe1f688ce4}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZG}~(\hyperlink{inv__mpu_8c_a82256fedeffe5b2443ab3ae34cf032d9}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XG} $\vert$ \hyperlink{inv__mpu_8c_abf1c0a844906a5e887a659971a4af417}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YG} $\vert$ \hyperlink{inv__mpu_8c_a30967a4efdf3c3f1e39814e72a4168b0}{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZG})
+\item 
+\#define \hyperlink{inv__mpu_8c_a51c6f0bce9d0ad115514fd5d343c76e9}{B\+I\+T\+\_\+\+A\+C\+C\+L\+\_\+\+F\+C\+\_\+B}~(0x08)
+\item 
+\#define \hyperlink{inv__mpu_8c_a973c680573b37fc359fc68d0707da355}{M\+A\+X\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+L\+E\+N\+G\+TH}~(12)
+\item 
+\#define \hyperlink{inv__mpu_8c_a7750730ae7e5c713b619e347d44185fe}{L\+O\+A\+D\+\_\+\+C\+H\+U\+NK}~(16)
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9}{lpf\+\_\+e} \{ \\*
+\hyperlink{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a9f0263fbbdccd3c5a18fcb65be278d24}{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+256\+H\+Z\+\_\+\+N\+O\+L\+P\+F2} = 0, 
+\hyperlink{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9ab58e52e0b6be4cbaf0c7f32705a9fcec}{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+188\+HZ}, 
+\hyperlink{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a0f288da0c97b325a6cb57f1223f0cf98}{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+98\+HZ}, 
+\hyperlink{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a995b18a52a5bd919aa9c1411a2292110}{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+42\+HZ}, 
+\\*
+\hyperlink{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9aebecb86604e475ed8e2cb68340010ff1}{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+20\+HZ}, 
+\hyperlink{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a327619f406c6b2f6a221793881013508}{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+10\+HZ}, 
+\hyperlink{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9abdaaf85666fd6a490ee01dcd8a315678}{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+5\+HZ}, 
+\hyperlink{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a76de97a6c2f8eb3c5d1a73d717513f5d}{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+2100\+H\+Z\+\_\+\+N\+O\+L\+PF}, 
+\\*
+\hyperlink{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a053f39f04904f6103090bcba3002c4a3}{N\+U\+M\+\_\+\+F\+I\+L\+T\+ER}
+ \}
+\item 
+enum \hyperlink{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90}{gyro\+\_\+fsr\+\_\+e} \{ \\*
+\hyperlink{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90a5b8251a49db5cb8a676076b0b308ae35}{I\+N\+V\+\_\+\+F\+S\+R\+\_\+250\+D\+PS} = 0, 
+\hyperlink{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90a50901470ff389927fd010081e2b8fd09}{I\+N\+V\+\_\+\+F\+S\+R\+\_\+500\+D\+PS}, 
+\hyperlink{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90aee922e0daa4fbb404c3db6c49d897a13}{I\+N\+V\+\_\+\+F\+S\+R\+\_\+1000\+D\+PS}, 
+\hyperlink{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90ac0c37efc1c8acd6f70c0c5a768e5b8be}{I\+N\+V\+\_\+\+F\+S\+R\+\_\+2000\+D\+PS}, 
+\\*
+\hyperlink{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90ab50b300433c5bc3cbc7ae8adb980c815}{N\+U\+M\+\_\+\+G\+Y\+R\+O\+\_\+\+F\+SR}
+ \}
+\item 
+enum \hyperlink{inv__mpu_8c_aec8501b935143099e5f729dee221a81e}{accel\+\_\+fsr\+\_\+e} \{ \\*
+\hyperlink{inv__mpu_8c_aec8501b935143099e5f729dee221a81eae27c6f69463dab7de81fac0c51ff8aa7}{I\+N\+V\+\_\+\+F\+S\+R\+\_\+2G} = 0, 
+\hyperlink{inv__mpu_8c_aec8501b935143099e5f729dee221a81eaa91e3a89d0bbd01149fe71148595be6d}{I\+N\+V\+\_\+\+F\+S\+R\+\_\+4G}, 
+\hyperlink{inv__mpu_8c_aec8501b935143099e5f729dee221a81ea0a40371bdda397d234c53d0ee2f3be8b}{I\+N\+V\+\_\+\+F\+S\+R\+\_\+8G}, 
+\hyperlink{inv__mpu_8c_aec8501b935143099e5f729dee221a81ea6712e8563c97c11b458ef721d4f5f9d5}{I\+N\+V\+\_\+\+F\+S\+R\+\_\+16G}, 
+\\*
+\hyperlink{inv__mpu_8c_aec8501b935143099e5f729dee221a81ea6d466b2f73b176f1dfc8a3f94ae8a4df}{N\+U\+M\+\_\+\+A\+C\+C\+E\+L\+\_\+\+F\+SR}
+ \}
+\item 
+enum \hyperlink{inv__mpu_8c_a75570f009627c6f4ddfb2d936d81e207}{clock\+\_\+sel\+\_\+e} \{ \hyperlink{inv__mpu_8c_a75570f009627c6f4ddfb2d936d81e207a92059acf8d0ff5b7e12580c15f88466f}{I\+N\+V\+\_\+\+C\+L\+K\+\_\+\+I\+N\+T\+E\+R\+N\+AL} = 0, 
+\hyperlink{inv__mpu_8c_a75570f009627c6f4ddfb2d936d81e207a01b240917a78674d3e387110a6a8f94c}{I\+N\+V\+\_\+\+C\+L\+K\+\_\+\+P\+LL}, 
+\hyperlink{inv__mpu_8c_a75570f009627c6f4ddfb2d936d81e207a7f075b0360037232fdf24f90de7be1d7}{N\+U\+M\+\_\+\+C\+LK}
+ \}
+\item 
+enum \hyperlink{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7}{lp\+\_\+accel\+\_\+rate\+\_\+e} \{ \hyperlink{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7ab44c7d0127a9466747853533a537b567}{I\+N\+V\+\_\+\+L\+P\+A\+\_\+1\+\_\+25\+HZ}, 
+\hyperlink{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7a474cac76bff369dd656cc973207a1ca5}{I\+N\+V\+\_\+\+L\+P\+A\+\_\+5\+HZ}, 
+\hyperlink{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7accaaf47c58dfe32cbf2ffa11fdb83108}{I\+N\+V\+\_\+\+L\+P\+A\+\_\+20\+HZ}, 
+\hyperlink{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7a798d2b86eafcf3fc7c7fe775f46cb4cb}{I\+N\+V\+\_\+\+L\+P\+A\+\_\+40\+HZ}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{inv__mpu_8c_a0e1201ecfd8453f1d89e4299528baaf6}{mpu\+\_\+reg\+\_\+dump} (void)
+\begin{DoxyCompactList}\small\item\em Register dump for testing. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a5c35a3363337014e11769a0ea7c0dfa9}{mpu\+\_\+read\+\_\+reg} (unsigned char \hyperlink{inv__mpu_8c_a5448c351fc95ff052b110eee80e5f75c}{reg}, unsigned char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Read from a single register. N\+O\+TE\+: The memory and F\+I\+FO read/write registers cannot be accessed. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a63637cf3771995aeda99d91d5f345f29}{mpu\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initialize hardware. Initial configuration\+:~\newline
+Gyro F\+SR\+: +/-\/ 2000\+D\+PS~\newline
+Accel F\+SR +/-\/ 2G~\newline
+D\+L\+PF\+: 42\+Hz~\newline
+F\+I\+FO rate\+: 50\+Hz~\newline
+Clock source\+: Gyro P\+LL~\newline
+F\+I\+FO\+: Disabled.~\newline
+Data ready interrupt\+: Disabled, active low, unlatched. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_abdcf10922a1a20f1b5bbd7576d3189b9}{mpu\+\_\+lp\+\_\+accel\+\_\+mode} (unsigned short rate)
+\begin{DoxyCompactList}\small\item\em Enter low-\/power accel-\/only mode. In low-\/power accel mode, the chip goes to sleep and only wakes up to sample the accelerometer at one of the following frequencies\+: ~\newline
+ M\+P\+U6050\+: 1.\+25\+Hz, 5\+Hz, 20\+Hz, 40\+Hz ~\newline
+ M\+P\+U6500\+: 0.\+24\+Hz, 0.\+49\+Hz, 0.\+98\+Hz, 1.\+95\+Hz, 3.\+91\+Hz, 7.\+81\+Hz, 15.\+63\+Hz, 31.\+25\+Hz, 62.\+5\+Hz, 125\+Hz, 250\+Hz, 500\+Hz ~\newline
+ If the requested rate is not one listed above, the device will be set to the next highest rate. Requesting a rate above the maximum supported frequency will result in an error. ~\newline
+ To select a fractional wake-\/up frequency, round down the value passed to {\itshape rate}. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a5555854590ad11495c0e30401294bae2}{mpu\+\_\+get\+\_\+gyro\+\_\+reg} (short $\ast$data, unsigned long $\ast$timestamp)
+\begin{DoxyCompactList}\small\item\em Read raw gyro data directly from the registers. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_ae4ae960e5df78049ece2647772a3d809}{mpu\+\_\+get\+\_\+accel\+\_\+reg} (short $\ast$data, unsigned long $\ast$timestamp)
+\begin{DoxyCompactList}\small\item\em Read raw accel data directly from the registers. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_aa449b565a157b4b8ca0f491b7ed46018}{mpu\+\_\+get\+\_\+temperature} (long $\ast$data, unsigned long $\ast$timestamp)
+\begin{DoxyCompactList}\small\item\em Read temperature data directly from the registers. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a57bfbb356ce449135ce39659455041ae}{mpu\+\_\+read\+\_\+6500\+\_\+accel\+\_\+bias} (long $\ast$accel\+\_\+bias)
+\begin{DoxyCompactList}\small\item\em Read biases to the accel bias 6500 registers. This function reads from the M\+P\+U6500 accel offset cancellations registers. The format are G in +-\/8G format. The register is initialized with O\+TP factory trim values. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_aed37421e1f140d10ee0eff0efeade27b}{mpu\+\_\+read\+\_\+6050\+\_\+accel\+\_\+bias} (long $\ast$accel\+\_\+bias)
+\begin{DoxyCompactList}\small\item\em Read biases to the accel bias 6050 registers. This function reads from the M\+P\+U6050 accel offset cancellations registers. The format are G in +-\/8G format. The register is initialized with O\+TP factory trim values. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_ae387f1342e10bce129609f3c279a50a2}{mpu\+\_\+read\+\_\+6500\+\_\+gyro\+\_\+bias} (long $\ast$gyro\+\_\+bias)
+\item 
+int \hyperlink{inv__mpu_8c_a01361a0f5c1f048cb0742bd3d0e4d3a5}{mpu\+\_\+set\+\_\+gyro\+\_\+bias\+\_\+reg} (long $\ast$gyro\+\_\+bias)
+\begin{DoxyCompactList}\small\item\em Push biases to the gyro bias 6500/6050 registers. This function expects biases relative to the current sensor output, and these biases will be added to the factory-\/supplied values. Bias inputs are L\+SB in +-\/1000dps format. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_ae2eb5073dacc7455101bf6818e35c40a}{mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6050\+\_\+reg} (const long $\ast$accel\+\_\+bias)
+\begin{DoxyCompactList}\small\item\em Push biases to the accel bias 6050 registers. This function expects biases relative to the current sensor output, and these biases will be added to the factory-\/supplied values. Bias inputs are L\+SB in +-\/8G format. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_aa7265afee29b8307ff49a8b1ccd9238a}{mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6500\+\_\+reg} (const long $\ast$accel\+\_\+bias)
+\begin{DoxyCompactList}\small\item\em Push biases to the accel bias 6500 registers. This function expects biases relative to the current sensor output, and these biases will be added to the factory-\/supplied values. Bias inputs are L\+SB in +-\/8G format. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_af23e9f57c0059be6ec57862f0584de10}{mpu\+\_\+reset\+\_\+fifo} (void)
+\begin{DoxyCompactList}\small\item\em Reset F\+I\+FO read/write pointers. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_af973c32c73ba912ff512aab948fc31ca}{mpu\+\_\+get\+\_\+gyro\+\_\+fsr} (unsigned short $\ast$fsr)
+\begin{DoxyCompactList}\small\item\em Get the gyro full-\/scale range. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_ad09e6031c8677adc0b8a39b6deea8e27}{mpu\+\_\+set\+\_\+gyro\+\_\+fsr} (unsigned short fsr)
+\begin{DoxyCompactList}\small\item\em Set the gyro full-\/scale range. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_ab6087a15ee23db23b6aec41590329a60}{mpu\+\_\+get\+\_\+accel\+\_\+fsr} (unsigned char $\ast$fsr)
+\begin{DoxyCompactList}\small\item\em Get the accel full-\/scale range. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a2713a96af104cfb2ae8e0ed4c3718119}{mpu\+\_\+set\+\_\+accel\+\_\+fsr} (unsigned char fsr)
+\begin{DoxyCompactList}\small\item\em Set the accel full-\/scale range. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_aa95c7e216dcb2d888e9796001ca555f8}{mpu\+\_\+get\+\_\+lpf} (unsigned short $\ast$lpf)
+\begin{DoxyCompactList}\small\item\em Get the current D\+L\+PF setting. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a5661a9dee25152166769910767a2a93d}{mpu\+\_\+set\+\_\+lpf} (unsigned short lpf)
+\begin{DoxyCompactList}\small\item\em Set digital low pass filter. The following L\+PF settings are supported\+: 188, 98, 42, 20, 10, 5. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a2487dd551b701c1c7ed4d6335f02b2f1}{mpu\+\_\+get\+\_\+sample\+\_\+rate} (unsigned short $\ast$rate)
+\begin{DoxyCompactList}\small\item\em Get sampling rate. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a0144d666a67a82888b8580002afe8b55}{mpu\+\_\+set\+\_\+sample\+\_\+rate} (unsigned short rate)
+\begin{DoxyCompactList}\small\item\em Set sampling rate. Sampling rate must be between 4\+Hz and 1k\+Hz. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_ab5a45cd7783f6937788c0decb0b18b16}{mpu\+\_\+get\+\_\+compass\+\_\+sample\+\_\+rate} (unsigned short $\ast$rate)
+\begin{DoxyCompactList}\small\item\em Get compass sampling rate. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a78da3828de0ef9d080c4d03e7bc45e7b}{mpu\+\_\+set\+\_\+compass\+\_\+sample\+\_\+rate} (unsigned short rate)
+\begin{DoxyCompactList}\small\item\em Set compass sampling rate. The compass on the auxiliary I2C bus is read by the M\+PU hardware at a maximum of 100\+Hz. The actual rate can be set to a fraction of the gyro sampling rate. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a023c0cc94aa8f162dc33b15048a49421}{mpu\+\_\+get\+\_\+gyro\+\_\+sens} (float $\ast$sens)
+\begin{DoxyCompactList}\small\item\em Get gyro sensitivity scale factor. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a620408949052b96e856cad920f856583}{mpu\+\_\+get\+\_\+accel\+\_\+sens} (unsigned short $\ast$sens)
+\begin{DoxyCompactList}\small\item\em Get accel sensitivity scale factor. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a093f11eb10b2639a4b9fe344ea348c54}{mpu\+\_\+get\+\_\+fifo\+\_\+config} (unsigned char $\ast$sensors)
+\begin{DoxyCompactList}\small\item\em Get current F\+I\+FO configuration. {\itshape sensors} can contain a combination of the following flags\+: ~\newline
+ I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_ababbdda287e1f19323489f90a0889dd7}{mpu\+\_\+configure\+\_\+fifo} (unsigned char sensors)
+\begin{DoxyCompactList}\small\item\em Select which sensors are pushed to F\+I\+FO. {\itshape sensors} can contain a combination of the following flags\+: ~\newline
+ I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_aec8fa7a067988d174516bb735a4a0bc9}{mpu\+\_\+get\+\_\+power\+\_\+state} (unsigned char $\ast$power\+\_\+on)
+\begin{DoxyCompactList}\small\item\em Get current power state. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a6e77e7cc1cf6be5e8fdf617c5b4586d1}{mpu\+\_\+set\+\_\+sensors} (unsigned char sensors)
+\begin{DoxyCompactList}\small\item\em Turn specific sensors on/off. {\itshape sensors} can contain a combination of the following flags\+: ~\newline
+ I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+C\+O\+M\+P\+A\+SS. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a0afd02d8c76d3278b488ef7038c26e3e}{mpu\+\_\+get\+\_\+int\+\_\+status} (short $\ast$status)
+\begin{DoxyCompactList}\small\item\em Read the M\+PU interrupt status registers. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a2da20453aafbbba4a0f6fb9fbdd25572}{mpu\+\_\+read\+\_\+fifo} (short $\ast$gyro, short $\ast$accel, unsigned long $\ast$timestamp, unsigned char $\ast$sensors, unsigned char $\ast$more)
+\begin{DoxyCompactList}\small\item\em Get one packet from the F\+I\+FO. If {\itshape sensors} does not contain a particular sensor, disregard the data returned to that pointer. ~\newline
+ {\itshape sensors} can contain a combination of the following flags\+: ~\newline
+ I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL ~\newline
+ If the F\+I\+FO has no new data, {\itshape sensors} will be zero. ~\newline
+ If the F\+I\+FO is disabled, {\itshape sensors} will be zero and this function will return a non-\/zero error code. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a13593044949b460e9f571eb57e9a0788}{mpu\+\_\+read\+\_\+fifo\+\_\+stream} (unsigned short length, unsigned char $\ast$data, unsigned char $\ast$more)
+\begin{DoxyCompactList}\small\item\em Get one unparsed packet from the F\+I\+FO. This function should be used if the packet is to be parsed elsewhere. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a36f70f38371b48d81094d3b061233e15}{mpu\+\_\+set\+\_\+bypass} (unsigned char bypass\+\_\+on)
+\begin{DoxyCompactList}\small\item\em Set device to bypass mode. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_acc92fb1489ef32a04bcb6b0ebde4d657}{mpu\+\_\+set\+\_\+int\+\_\+level} (unsigned char active\+\_\+low)
+\begin{DoxyCompactList}\small\item\em Set interrupt level. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a653cb855300bff9285ce4b8dca6a503b}{mpu\+\_\+set\+\_\+int\+\_\+latched} (unsigned char enable)
+\begin{DoxyCompactList}\small\item\em Enable latched interrupts. Any M\+PU register will clear the interrupt. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a3773dc98eb1ba15da0091ae75abcf62f}{mpu\+\_\+run\+\_\+self\+\_\+test} (long $\ast$gyro, long $\ast$accel)
+\item 
+int \hyperlink{inv__mpu_8c_afea59910bc3dd30ba3356b1c75213a5f}{mpu\+\_\+write\+\_\+mem} (unsigned short mem\+\_\+addr, unsigned short length, unsigned char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Write to the D\+MP memory. This function prevents I2C writes past the bank boundaries. The D\+MP memory is only accessible when the chip is awake. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a3374bececb6743893c9eab27645c1182}{mpu\+\_\+read\+\_\+mem} (unsigned short mem\+\_\+addr, unsigned short length, unsigned char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Read from the D\+MP memory. This function prevents I2C reads past the bank boundaries. The D\+MP memory is only accessible when the chip is awake. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a8fbdfe1a50285d4ab438e29c2efc70f5}{mpu\+\_\+load\+\_\+firmware} (unsigned short length, const unsigned char $\ast$firmware, unsigned short start\+\_\+addr, unsigned short sample\+\_\+rate)
+\begin{DoxyCompactList}\small\item\em Load and verify D\+MP image. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a68ed20e6c9663cd7c50469329af8715f}{mpu\+\_\+set\+\_\+dmp\+\_\+state} (unsigned char enable)
+\begin{DoxyCompactList}\small\item\em Enable/disable D\+MP support. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_afe0f60ed0d7f8fd2dcd55d45b95a2363}{mpu\+\_\+get\+\_\+dmp\+\_\+state} (unsigned char $\ast$enabled)
+\begin{DoxyCompactList}\small\item\em Get D\+MP state. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a65e6b0ce980b8c0255d7be9b55c88c08}{mpu\+\_\+get\+\_\+compass\+\_\+reg} (short $\ast$data, unsigned long $\ast$timestamp)
+\begin{DoxyCompactList}\small\item\em Read raw compass data. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_ade8589573d09e0f14b84130428f286df}{mpu\+\_\+get\+\_\+compass\+\_\+fsr} (unsigned short $\ast$fsr)
+\begin{DoxyCompactList}\small\item\em Get the compass full-\/scale range. \end{DoxyCompactList}\item 
+int \hyperlink{inv__mpu_8c_a7d0b3259346898ccd1ba6ef78bf7df97}{mpu\+\_\+lp\+\_\+motion\+\_\+interrupt} (unsigned short thresh, unsigned char time, unsigned char lpa\+\_\+freq)
+\begin{DoxyCompactList}\small\item\em Enters LP accel motion interrupt mode. The behaviour of this feature is very different between the M\+P\+U6050 and the M\+P\+U6500. Each chip\textquotesingle{}s version of this feature is explained below. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const struct \hyperlink{structgyro__reg__s}{gyro\+\_\+reg\+\_\+s} \hyperlink{inv__mpu_8c_a5448c351fc95ff052b110eee80e5f75c}{reg}
+\item 
+const struct \hyperlink{structhw__s}{hw\+\_\+s} \hyperlink{inv__mpu_8c_a7fefd0bb47e09b7e39e25e9795cd7edc}{hw}
+\item 
+const struct \hyperlink{structtest__s}{test\+\_\+s} \hyperlink{inv__mpu_8c_a1e8f8b1ef7fb2c429e1ce7c2f9985530}{test}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+A\+C\+C\+L\+\_\+\+F\+C\+\_\+B@{B\+I\+T\+\_\+\+A\+C\+C\+L\+\_\+\+F\+C\+\_\+B}}
+\index{B\+I\+T\+\_\+\+A\+C\+C\+L\+\_\+\+F\+C\+\_\+B@{B\+I\+T\+\_\+\+A\+C\+C\+L\+\_\+\+F\+C\+\_\+B}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+A\+C\+C\+L\+\_\+\+F\+C\+\_\+B}{BIT_ACCL_FC_B}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+A\+C\+C\+L\+\_\+\+F\+C\+\_\+B~(0x08)}\hypertarget{inv__mpu_8c_a51c6f0bce9d0ad115514fd5d343c76e9}{}\label{inv__mpu_8c_a51c6f0bce9d0ad115514fd5d343c76e9}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+A\+C\+TL@{B\+I\+T\+\_\+\+A\+C\+TL}}
+\index{B\+I\+T\+\_\+\+A\+C\+TL@{B\+I\+T\+\_\+\+A\+C\+TL}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+A\+C\+TL}{BIT_ACTL}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+A\+C\+TL~(0x80)}\hypertarget{inv__mpu_8c_a8467782bedc44051c95643e303543655}{}\label{inv__mpu_8c_a8467782bedc44051c95643e303543655}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+A\+N\+Y\+\_\+\+R\+D\+\_\+\+C\+LR@{B\+I\+T\+\_\+\+A\+N\+Y\+\_\+\+R\+D\+\_\+\+C\+LR}}
+\index{B\+I\+T\+\_\+\+A\+N\+Y\+\_\+\+R\+D\+\_\+\+C\+LR@{B\+I\+T\+\_\+\+A\+N\+Y\+\_\+\+R\+D\+\_\+\+C\+LR}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+A\+N\+Y\+\_\+\+R\+D\+\_\+\+C\+LR}{BIT_ANY_RD_CLR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+A\+N\+Y\+\_\+\+R\+D\+\_\+\+C\+LR~(0x10)}\hypertarget{inv__mpu_8c_a1f50796ca0363292d9ac9cc1d29d9225}{}\label{inv__mpu_8c_a1f50796ca0363292d9ac9cc1d29d9225}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+A\+U\+X\+\_\+\+I\+F\+\_\+\+EN@{B\+I\+T\+\_\+\+A\+U\+X\+\_\+\+I\+F\+\_\+\+EN}}
+\index{B\+I\+T\+\_\+\+A\+U\+X\+\_\+\+I\+F\+\_\+\+EN@{B\+I\+T\+\_\+\+A\+U\+X\+\_\+\+I\+F\+\_\+\+EN}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+A\+U\+X\+\_\+\+I\+F\+\_\+\+EN}{BIT_AUX_IF_EN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+A\+U\+X\+\_\+\+I\+F\+\_\+\+EN~(0x20)}\hypertarget{inv__mpu_8c_abcdedbd3098140aa14ad17bcaca8e176}{}\label{inv__mpu_8c_abcdedbd3098140aa14ad17bcaca8e176}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+EN@{B\+I\+T\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+EN}}
+\index{B\+I\+T\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+EN@{B\+I\+T\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+EN}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+EN}{BIT_BYPASS_EN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+B\+Y\+P\+A\+S\+S\+\_\+\+EN~(0x02)}\hypertarget{inv__mpu_8c_add12a8d89e1a4c4e008b12a96dd4c75d}{}\label{inv__mpu_8c_add12a8d89e1a4c4e008b12a96dd4c75d}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+\+R\+D\+Y\+\_\+\+EN@{B\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+\+R\+D\+Y\+\_\+\+EN}}
+\index{B\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+\+R\+D\+Y\+\_\+\+EN@{B\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+\+R\+D\+Y\+\_\+\+EN}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+\+R\+D\+Y\+\_\+\+EN}{BIT_DATA_RDY_EN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+D\+A\+T\+A\+\_\+\+R\+D\+Y\+\_\+\+EN~(0x01)}\hypertarget{inv__mpu_8c_a45eec9dbc46778c356703dcf90b9e0c3}{}\label{inv__mpu_8c_a45eec9dbc46778c356703dcf90b9e0c3}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+EN@{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+EN}}
+\index{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+EN@{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+EN}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+EN}{BIT_DMP_EN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+EN~(0x80)}\hypertarget{inv__mpu_8c_a02c3e9ddd63128f1c3cf50bf1e9b5fe6}{}\label{inv__mpu_8c_a02c3e9ddd63128f1c3cf50bf1e9b5fe6}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+I\+N\+T\+\_\+\+EN@{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+I\+N\+T\+\_\+\+EN}}
+\index{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+I\+N\+T\+\_\+\+EN@{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+I\+N\+T\+\_\+\+EN}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+I\+N\+T\+\_\+\+EN}{BIT_DMP_INT_EN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+I\+N\+T\+\_\+\+EN~(0x02)}\hypertarget{inv__mpu_8c_a4dc5309ed09fc683d8e5a247feaad69d}{}\label{inv__mpu_8c_a4dc5309ed09fc683d8e5a247feaad69d}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+R\+ST@{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+R\+ST}}
+\index{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+R\+ST@{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+R\+ST}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+R\+ST}{BIT_DMP_RST}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+D\+M\+P\+\_\+\+R\+ST~(0x08)}\hypertarget{inv__mpu_8c_a37d5ceb74c3568e4bab6dcdd0afaa95b}{}\label{inv__mpu_8c_a37d5ceb74c3568e4bab6dcdd0afaa95b}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+EN@{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+EN}}
+\index{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+EN@{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+EN}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+EN}{BIT_FIFO_EN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+EN~(0x40)}\hypertarget{inv__mpu_8c_ae3c4a18accb84992faaf2534a84a147c}{}\label{inv__mpu_8c_ae3c4a18accb84992faaf2534a84a147c}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+O\+V\+E\+R\+F\+L\+OW@{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+O\+V\+E\+R\+F\+L\+OW}}
+\index{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+O\+V\+E\+R\+F\+L\+OW@{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+O\+V\+E\+R\+F\+L\+OW}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+O\+V\+E\+R\+F\+L\+OW}{BIT_FIFO_OVERFLOW}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+O\+V\+E\+R\+F\+L\+OW~(0x10)}\hypertarget{inv__mpu_8c_afb9b49ce5dd973b3c29ae72680924fa7}{}\label{inv__mpu_8c_afb9b49ce5dd973b3c29ae72680924fa7}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+R\+ST@{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+R\+ST}}
+\index{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+R\+ST@{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+R\+ST}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+R\+ST}{BIT_FIFO_RST}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+R\+ST~(0x04)}\hypertarget{inv__mpu_8c_aeae2cc64314ad05f3a93d2358a2369db}{}\label{inv__mpu_8c_aeae2cc64314ad05f3a93d2358a2369db}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+1024@{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+1024}}
+\index{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+1024@{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+1024}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+1024}{BIT_FIFO_SIZE_1024}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+1024~(0x40)}\hypertarget{inv__mpu_8c_a3769fd3fa71deaef1e77ce14c26f679d}{}\label{inv__mpu_8c_a3769fd3fa71deaef1e77ce14c26f679d}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+2048@{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+2048}}
+\index{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+2048@{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+2048}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+2048}{BIT_FIFO_SIZE_2048}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+2048~(0x80)}\hypertarget{inv__mpu_8c_a0fa95b278851b0c05a9995f65ba2b895}{}\label{inv__mpu_8c_a0fa95b278851b0c05a9995f65ba2b895}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+4096@{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+4096}}
+\index{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+4096@{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+4096}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+4096}{BIT_FIFO_SIZE_4096}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+F\+I\+F\+O\+\_\+\+S\+I\+Z\+E\+\_\+4096~(0x\+C0)}\hypertarget{inv__mpu_8c_ac067df9d789eaae04585abfc5ffdb2b6}{}\label{inv__mpu_8c_ac067df9d789eaae04585abfc5ffdb2b6}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+I2\+C\+\_\+\+M\+S\+T\+\_\+\+V\+D\+D\+IO@{B\+I\+T\+\_\+\+I2\+C\+\_\+\+M\+S\+T\+\_\+\+V\+D\+D\+IO}}
+\index{B\+I\+T\+\_\+\+I2\+C\+\_\+\+M\+S\+T\+\_\+\+V\+D\+D\+IO@{B\+I\+T\+\_\+\+I2\+C\+\_\+\+M\+S\+T\+\_\+\+V\+D\+D\+IO}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+I2\+C\+\_\+\+M\+S\+T\+\_\+\+V\+D\+D\+IO}{BIT_I2C_MST_VDDIO}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+I2\+C\+\_\+\+M\+S\+T\+\_\+\+V\+D\+D\+IO~(0x80)}\hypertarget{inv__mpu_8c_ac52d7caf4efc485ef6faa1211bfe60dc}{}\label{inv__mpu_8c_ac52d7caf4efc485ef6faa1211bfe60dc}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+I2\+C\+\_\+\+R\+E\+AD@{B\+I\+T\+\_\+\+I2\+C\+\_\+\+R\+E\+AD}}
+\index{B\+I\+T\+\_\+\+I2\+C\+\_\+\+R\+E\+AD@{B\+I\+T\+\_\+\+I2\+C\+\_\+\+R\+E\+AD}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+I2\+C\+\_\+\+R\+E\+AD}{BIT_I2C_READ}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+I2\+C\+\_\+\+R\+E\+AD~(0x80)}\hypertarget{inv__mpu_8c_a8ef1963ec6fb3df5586e50959cf00a70}{}\label{inv__mpu_8c_a8ef1963ec6fb3df5586e50959cf00a70}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+L\+A\+T\+C\+H\+\_\+\+EN@{B\+I\+T\+\_\+\+L\+A\+T\+C\+H\+\_\+\+EN}}
+\index{B\+I\+T\+\_\+\+L\+A\+T\+C\+H\+\_\+\+EN@{B\+I\+T\+\_\+\+L\+A\+T\+C\+H\+\_\+\+EN}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+L\+A\+T\+C\+H\+\_\+\+EN}{BIT_LATCH_EN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+L\+A\+T\+C\+H\+\_\+\+EN~(0x20)}\hypertarget{inv__mpu_8c_a588b5a95724c4a68c6868faa78fd3a7f}{}\label{inv__mpu_8c_a588b5a95724c4a68c6868faa78fd3a7f}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+L\+P\+A\+\_\+\+C\+Y\+C\+LE@{B\+I\+T\+\_\+\+L\+P\+A\+\_\+\+C\+Y\+C\+LE}}
+\index{B\+I\+T\+\_\+\+L\+P\+A\+\_\+\+C\+Y\+C\+LE@{B\+I\+T\+\_\+\+L\+P\+A\+\_\+\+C\+Y\+C\+LE}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+L\+P\+A\+\_\+\+C\+Y\+C\+LE}{BIT_LPA_CYCLE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+L\+P\+A\+\_\+\+C\+Y\+C\+LE~(0x20)}\hypertarget{inv__mpu_8c_a63e6f23af37626aa1498d8c248f259e7}{}\label{inv__mpu_8c_a63e6f23af37626aa1498d8c248f259e7}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+M\+O\+T\+\_\+\+I\+N\+T\+\_\+\+EN@{B\+I\+T\+\_\+\+M\+O\+T\+\_\+\+I\+N\+T\+\_\+\+EN}}
+\index{B\+I\+T\+\_\+\+M\+O\+T\+\_\+\+I\+N\+T\+\_\+\+EN@{B\+I\+T\+\_\+\+M\+O\+T\+\_\+\+I\+N\+T\+\_\+\+EN}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+M\+O\+T\+\_\+\+I\+N\+T\+\_\+\+EN}{BIT_MOT_INT_EN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+M\+O\+T\+\_\+\+I\+N\+T\+\_\+\+EN~(0x40)}\hypertarget{inv__mpu_8c_a6a8f2f7f3dd17bc05d9c6286d15c7ada}{}\label{inv__mpu_8c_a6a8f2f7f3dd17bc05d9c6286d15c7ada}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+R\+E\+S\+ET@{B\+I\+T\+\_\+\+R\+E\+S\+ET}}
+\index{B\+I\+T\+\_\+\+R\+E\+S\+ET@{B\+I\+T\+\_\+\+R\+E\+S\+ET}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+R\+E\+S\+ET}{BIT_RESET}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+R\+E\+S\+ET~(0x80)}\hypertarget{inv__mpu_8c_af4ce49fd1fc9b1461b5241f9ef4812f4}{}\label{inv__mpu_8c_af4ce49fd1fc9b1461b5241f9ef4812f4}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S0\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN@{B\+I\+T\+\_\+\+S0\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN}}
+\index{B\+I\+T\+\_\+\+S0\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN@{B\+I\+T\+\_\+\+S0\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S0\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN}{BIT_S0_DELAY_EN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S0\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN~(0x01)}\hypertarget{inv__mpu_8c_ac4b33689dd697c1cf2411638a017c009}{}\label{inv__mpu_8c_ac4b33689dd697c1cf2411638a017c009}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S2\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN@{B\+I\+T\+\_\+\+S2\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN}}
+\index{B\+I\+T\+\_\+\+S2\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN@{B\+I\+T\+\_\+\+S2\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S2\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN}{BIT_S2_DELAY_EN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S2\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+EN~(0x04)}\hypertarget{inv__mpu_8c_a22e4452fe8abca7fe12a2dc45194e6df}{}\label{inv__mpu_8c_a22e4452fe8abca7fe12a2dc45194e6df}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+B\+Y\+T\+E\+\_\+\+SW@{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+B\+Y\+T\+E\+\_\+\+SW}}
+\index{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+B\+Y\+T\+E\+\_\+\+SW@{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+B\+Y\+T\+E\+\_\+\+SW}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+B\+Y\+T\+E\+\_\+\+SW}{BIT_SLAVE_BYTE_SW}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+B\+Y\+T\+E\+\_\+\+SW~(0x40)}\hypertarget{inv__mpu_8c_a5e8f3ccff1b3eeb95a938b207ca873ff}{}\label{inv__mpu_8c_a5e8f3ccff1b3eeb95a938b207ca873ff}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+EN@{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+EN}}
+\index{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+EN@{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+EN}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+EN}{BIT_SLAVE_EN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+EN~(0x80)}\hypertarget{inv__mpu_8c_ae9440f48b6d70d900366dc040a8714d7}{}\label{inv__mpu_8c_ae9440f48b6d70d900366dc040a8714d7}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+G\+R\+O\+UP@{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+G\+R\+O\+UP}}
+\index{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+G\+R\+O\+UP@{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+G\+R\+O\+UP}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+G\+R\+O\+UP}{BIT_SLAVE_GROUP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+L\+A\+V\+E\+\_\+\+G\+R\+O\+UP~(0x10)}\hypertarget{inv__mpu_8c_af616c3ecf97ffd7bde444f0b74e7453e}{}\label{inv__mpu_8c_af616c3ecf97ffd7bde444f0b74e7453e}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S\+L\+E\+EP@{B\+I\+T\+\_\+\+S\+L\+E\+EP}}
+\index{B\+I\+T\+\_\+\+S\+L\+E\+EP@{B\+I\+T\+\_\+\+S\+L\+E\+EP}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S\+L\+E\+EP}{BIT_SLEEP}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+L\+E\+EP~(0x40)}\hypertarget{inv__mpu_8c_a1fed8bd436e9b7dfccb1cae99ca89103}{}\label{inv__mpu_8c_a1fed8bd436e9b7dfccb1cae99ca89103}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XA@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XA}}
+\index{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XA@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XA}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XA}{BIT_STBY_XA}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XA~(0x20)}\hypertarget{inv__mpu_8c_acfc46ee2ea036d16b3df45c8fb241b5b}{}\label{inv__mpu_8c_acfc46ee2ea036d16b3df45c8fb241b5b}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XG@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XG}}
+\index{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XG@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XG}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XG}{BIT_STBY_XG}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XG~(0x04)}\hypertarget{inv__mpu_8c_a82256fedeffe5b2443ab3ae34cf032d9}{}\label{inv__mpu_8c_a82256fedeffe5b2443ab3ae34cf032d9}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZA@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZA}}
+\index{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZA@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZA}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZA}{BIT_STBY_XYZA}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZA~({\bf B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XA} $\vert$ {\bf B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YA} $\vert$ {\bf B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZA})}\hypertarget{inv__mpu_8c_a04a57159e34387dafe9b86b171c4654c}{}\label{inv__mpu_8c_a04a57159e34387dafe9b86b171c4654c}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZG@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZG}}
+\index{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZG@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZG}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZG}{BIT_STBY_XYZG}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+X\+Y\+ZG~({\bf B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+XG} $\vert$ {\bf B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YG} $\vert$ {\bf B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZG})}\hypertarget{inv__mpu_8c_a4e2ef22b94b90f9b83394dfe1f688ce4}{}\label{inv__mpu_8c_a4e2ef22b94b90f9b83394dfe1f688ce4}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YA@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YA}}
+\index{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YA@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YA}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YA}{BIT_STBY_YA}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YA~(0x10)}\hypertarget{inv__mpu_8c_a49e6d38569bfc4b58ccc45dbb19001fa}{}\label{inv__mpu_8c_a49e6d38569bfc4b58ccc45dbb19001fa}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YG@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YG}}
+\index{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YG@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YG}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YG}{BIT_STBY_YG}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+YG~(0x02)}\hypertarget{inv__mpu_8c_abf1c0a844906a5e887a659971a4af417}{}\label{inv__mpu_8c_abf1c0a844906a5e887a659971a4af417}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZA@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZA}}
+\index{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZA@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZA}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZA}{BIT_STBY_ZA}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZA~(0x08)}\hypertarget{inv__mpu_8c_afac8114288bae2db7ea7dbf0f6fb755c}{}\label{inv__mpu_8c_afac8114288bae2db7ea7dbf0f6fb755c}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZG@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZG}}
+\index{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZG@{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZG}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZG}{BIT_STBY_ZG}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+\_\+\+S\+T\+B\+Y\+\_\+\+ZG~(0x01)}\hypertarget{inv__mpu_8c_a30967a4efdf3c3f1e39814e72a4168b0}{}\label{inv__mpu_8c_a30967a4efdf3c3f1e39814e72a4168b0}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+S\+\_\+\+C\+LK@{B\+I\+T\+S\+\_\+\+C\+LK}}
+\index{B\+I\+T\+S\+\_\+\+C\+LK@{B\+I\+T\+S\+\_\+\+C\+LK}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+S\+\_\+\+C\+LK}{BITS_CLK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+S\+\_\+\+C\+LK~(0x07)}\hypertarget{inv__mpu_8c_a1823f90ac353cf4cde25d297a8627dd4}{}\label{inv__mpu_8c_a1823f90ac353cf4cde25d297a8627dd4}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+S\+\_\+\+F\+SR@{B\+I\+T\+S\+\_\+\+F\+SR}}
+\index{B\+I\+T\+S\+\_\+\+F\+SR@{B\+I\+T\+S\+\_\+\+F\+SR}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+S\+\_\+\+F\+SR}{BITS_FSR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+S\+\_\+\+F\+SR~(0x18)}\hypertarget{inv__mpu_8c_a2d9aff1be96b1fc021ca96f251c3e72b}{}\label{inv__mpu_8c_a2d9aff1be96b1fc021ca96f251c3e72b}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+S\+\_\+\+H\+PF@{B\+I\+T\+S\+\_\+\+H\+PF}}
+\index{B\+I\+T\+S\+\_\+\+H\+PF@{B\+I\+T\+S\+\_\+\+H\+PF}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+S\+\_\+\+H\+PF}{BITS_HPF}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+S\+\_\+\+H\+PF~(0x07)}\hypertarget{inv__mpu_8c_a3c9c0234d4a71c9d35bb0da64ea867eb}{}\label{inv__mpu_8c_a3c9c0234d4a71c9d35bb0da64ea867eb}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+S\+\_\+\+I2\+C\+\_\+\+M\+A\+S\+T\+E\+R\+\_\+\+D\+LY@{B\+I\+T\+S\+\_\+\+I2\+C\+\_\+\+M\+A\+S\+T\+E\+R\+\_\+\+D\+LY}}
+\index{B\+I\+T\+S\+\_\+\+I2\+C\+\_\+\+M\+A\+S\+T\+E\+R\+\_\+\+D\+LY@{B\+I\+T\+S\+\_\+\+I2\+C\+\_\+\+M\+A\+S\+T\+E\+R\+\_\+\+D\+LY}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+S\+\_\+\+I2\+C\+\_\+\+M\+A\+S\+T\+E\+R\+\_\+\+D\+LY}{BITS_I2C_MASTER_DLY}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+S\+\_\+\+I2\+C\+\_\+\+M\+A\+S\+T\+E\+R\+\_\+\+D\+LY~(0x1\+F)}\hypertarget{inv__mpu_8c_ab470b625fa05ff228b3fdb94802b1c0d}{}\label{inv__mpu_8c_ab470b625fa05ff228b3fdb94802b1c0d}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+S\+\_\+\+L\+PF@{B\+I\+T\+S\+\_\+\+L\+PF}}
+\index{B\+I\+T\+S\+\_\+\+L\+PF@{B\+I\+T\+S\+\_\+\+L\+PF}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+S\+\_\+\+L\+PF}{BITS_LPF}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+S\+\_\+\+L\+PF~(0x07)}\hypertarget{inv__mpu_8c_a4d83411e736da86163a61828816a200a}{}\label{inv__mpu_8c_a4d83411e736da86163a61828816a200a}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+S\+\_\+\+S\+L\+A\+V\+E\+\_\+\+L\+E\+N\+G\+TH@{B\+I\+T\+S\+\_\+\+S\+L\+A\+V\+E\+\_\+\+L\+E\+N\+G\+TH}}
+\index{B\+I\+T\+S\+\_\+\+S\+L\+A\+V\+E\+\_\+\+L\+E\+N\+G\+TH@{B\+I\+T\+S\+\_\+\+S\+L\+A\+V\+E\+\_\+\+L\+E\+N\+G\+TH}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+S\+\_\+\+S\+L\+A\+V\+E\+\_\+\+L\+E\+N\+G\+TH}{BITS_SLAVE_LENGTH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+S\+\_\+\+S\+L\+A\+V\+E\+\_\+\+L\+E\+N\+G\+TH~(0x0\+F)}\hypertarget{inv__mpu_8c_abc5c2ee59baeb02a0f761740466f3c28}{}\label{inv__mpu_8c_abc5c2ee59baeb02a0f761740466f3c28}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!B\+I\+T\+S\+\_\+\+W\+O\+M\+\_\+\+EN@{B\+I\+T\+S\+\_\+\+W\+O\+M\+\_\+\+EN}}
+\index{B\+I\+T\+S\+\_\+\+W\+O\+M\+\_\+\+EN@{B\+I\+T\+S\+\_\+\+W\+O\+M\+\_\+\+EN}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{B\+I\+T\+S\+\_\+\+W\+O\+M\+\_\+\+EN}{BITS_WOM_EN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define B\+I\+T\+S\+\_\+\+W\+O\+M\+\_\+\+EN~(0x\+C0)}\hypertarget{inv__mpu_8c_a75b1479e451b747afb3b24cbc4df99f7}{}\label{inv__mpu_8c_a75b1479e451b747afb3b24cbc4df99f7}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!delay\+\_\+ms@{delay\+\_\+ms}}
+\index{delay\+\_\+ms@{delay\+\_\+ms}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{delay\+\_\+ms}{delay_ms}}]{\setlength{\rightskip}{0pt plus 5cm}\#define delay\+\_\+ms~\+\_\+delay\+\_\+ms}\hypertarget{inv__mpu_8c_ae36aca5baf9b6b7d74992aef00686d67}{}\label{inv__mpu_8c_ae36aca5baf9b6b7d74992aef00686d67}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!F\+\_\+\+C\+PU@{F\+\_\+\+C\+PU}}
+\index{F\+\_\+\+C\+PU@{F\+\_\+\+C\+PU}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{F\+\_\+\+C\+PU}{F_CPU}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+\_\+\+C\+PU~16000000\+UL}\hypertarget{inv__mpu_8c_a43bafb28b29491ec7f871319b5a3b2f8}{}\label{inv__mpu_8c_a43bafb28b29491ec7f871319b5a3b2f8}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!L\+O\+A\+D\+\_\+\+C\+H\+U\+NK@{L\+O\+A\+D\+\_\+\+C\+H\+U\+NK}}
+\index{L\+O\+A\+D\+\_\+\+C\+H\+U\+NK@{L\+O\+A\+D\+\_\+\+C\+H\+U\+NK}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{L\+O\+A\+D\+\_\+\+C\+H\+U\+NK}{LOAD_CHUNK}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+O\+A\+D\+\_\+\+C\+H\+U\+NK~(16)}\hypertarget{inv__mpu_8c_a7750730ae7e5c713b619e347d44185fe}{}\label{inv__mpu_8c_a7750730ae7e5c713b619e347d44185fe}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!log\+\_\+i@{log\+\_\+i}}
+\index{log\+\_\+i@{log\+\_\+i}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{log\+\_\+i}{log_i}}]{\setlength{\rightskip}{0pt plus 5cm}\#define log\+\_\+i(
+\begin{DoxyParamCaption}
+\item[{}]{...}
+\end{DoxyParamCaption}
+)~do \{\} while (0)}\hypertarget{inv__mpu_8c_a67fc07fa528d8e62dc7b88a847b563f5}{}\label{inv__mpu_8c_a67fc07fa528d8e62dc7b88a847b563f5}
+
+\begin{DoxyItemize}
+\item Instead of using the standard T\+WI driver from the A\+SF library, we\textquotesingle{}re using$\ast$ delay\+\_\+ms is a function already defined in A\+SF. $\ast$/$\ast$ U\+C3 is a 32-\/bit processor, so abs and labs are equivalent. $\ast$/ 
+\end{DoxyItemize}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!M\+A\+X\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+L\+E\+N\+G\+TH@{M\+A\+X\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+L\+E\+N\+G\+TH}}
+\index{M\+A\+X\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+L\+E\+N\+G\+TH@{M\+A\+X\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+L\+E\+N\+G\+TH}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+L\+E\+N\+G\+TH}{MAX_PACKET_LENGTH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+L\+E\+N\+G\+TH~(12)}\hypertarget{inv__mpu_8c_a973c680573b37fc359fc68d0707da355}{}\label{inv__mpu_8c_a973c680573b37fc359fc68d0707da355}
+
+
+\subsection{Enumeration Type Documentation}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!accel\+\_\+fsr\+\_\+e@{accel\+\_\+fsr\+\_\+e}}
+\index{accel\+\_\+fsr\+\_\+e@{accel\+\_\+fsr\+\_\+e}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{accel\+\_\+fsr\+\_\+e}{accel_fsr_e}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf accel\+\_\+fsr\+\_\+e}}\hypertarget{inv__mpu_8c_aec8501b935143099e5f729dee221a81e}{}\label{inv__mpu_8c_aec8501b935143099e5f729dee221a81e}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I\+N\+V\+\_\+\+F\+S\+R\+\_\+2G@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+2G}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+S\+R\+\_\+2G@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+2G}}\item[{\em 
+I\+N\+V\+\_\+\+F\+S\+R\+\_\+2G\hypertarget{inv__mpu_8c_aec8501b935143099e5f729dee221a81eae27c6f69463dab7de81fac0c51ff8aa7}{}\label{inv__mpu_8c_aec8501b935143099e5f729dee221a81eae27c6f69463dab7de81fac0c51ff8aa7}
+}]\index{I\+N\+V\+\_\+\+F\+S\+R\+\_\+4G@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+4G}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+S\+R\+\_\+4G@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+4G}}\item[{\em 
+I\+N\+V\+\_\+\+F\+S\+R\+\_\+4G\hypertarget{inv__mpu_8c_aec8501b935143099e5f729dee221a81eaa91e3a89d0bbd01149fe71148595be6d}{}\label{inv__mpu_8c_aec8501b935143099e5f729dee221a81eaa91e3a89d0bbd01149fe71148595be6d}
+}]\index{I\+N\+V\+\_\+\+F\+S\+R\+\_\+8G@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+8G}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+S\+R\+\_\+8G@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+8G}}\item[{\em 
+I\+N\+V\+\_\+\+F\+S\+R\+\_\+8G\hypertarget{inv__mpu_8c_aec8501b935143099e5f729dee221a81ea0a40371bdda397d234c53d0ee2f3be8b}{}\label{inv__mpu_8c_aec8501b935143099e5f729dee221a81ea0a40371bdda397d234c53d0ee2f3be8b}
+}]\index{I\+N\+V\+\_\+\+F\+S\+R\+\_\+16G@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+16G}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+S\+R\+\_\+16G@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+16G}}\item[{\em 
+I\+N\+V\+\_\+\+F\+S\+R\+\_\+16G\hypertarget{inv__mpu_8c_aec8501b935143099e5f729dee221a81ea6712e8563c97c11b458ef721d4f5f9d5}{}\label{inv__mpu_8c_aec8501b935143099e5f729dee221a81ea6712e8563c97c11b458ef721d4f5f9d5}
+}]\index{N\+U\+M\+\_\+\+A\+C\+C\+E\+L\+\_\+\+F\+SR@{N\+U\+M\+\_\+\+A\+C\+C\+E\+L\+\_\+\+F\+SR}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!N\+U\+M\+\_\+\+A\+C\+C\+E\+L\+\_\+\+F\+SR@{N\+U\+M\+\_\+\+A\+C\+C\+E\+L\+\_\+\+F\+SR}}\item[{\em 
+N\+U\+M\+\_\+\+A\+C\+C\+E\+L\+\_\+\+F\+SR\hypertarget{inv__mpu_8c_aec8501b935143099e5f729dee221a81ea6d466b2f73b176f1dfc8a3f94ae8a4df}{}\label{inv__mpu_8c_aec8501b935143099e5f729dee221a81ea6d466b2f73b176f1dfc8a3f94ae8a4df}
+}]\end{description}
+\end{Desc}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!clock\+\_\+sel\+\_\+e@{clock\+\_\+sel\+\_\+e}}
+\index{clock\+\_\+sel\+\_\+e@{clock\+\_\+sel\+\_\+e}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{clock\+\_\+sel\+\_\+e}{clock_sel_e}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf clock\+\_\+sel\+\_\+e}}\hypertarget{inv__mpu_8c_a75570f009627c6f4ddfb2d936d81e207}{}\label{inv__mpu_8c_a75570f009627c6f4ddfb2d936d81e207}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I\+N\+V\+\_\+\+C\+L\+K\+\_\+\+I\+N\+T\+E\+R\+N\+AL@{I\+N\+V\+\_\+\+C\+L\+K\+\_\+\+I\+N\+T\+E\+R\+N\+AL}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+C\+L\+K\+\_\+\+I\+N\+T\+E\+R\+N\+AL@{I\+N\+V\+\_\+\+C\+L\+K\+\_\+\+I\+N\+T\+E\+R\+N\+AL}}\item[{\em 
+I\+N\+V\+\_\+\+C\+L\+K\+\_\+\+I\+N\+T\+E\+R\+N\+AL\hypertarget{inv__mpu_8c_a75570f009627c6f4ddfb2d936d81e207a92059acf8d0ff5b7e12580c15f88466f}{}\label{inv__mpu_8c_a75570f009627c6f4ddfb2d936d81e207a92059acf8d0ff5b7e12580c15f88466f}
+}]\index{I\+N\+V\+\_\+\+C\+L\+K\+\_\+\+P\+LL@{I\+N\+V\+\_\+\+C\+L\+K\+\_\+\+P\+LL}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+C\+L\+K\+\_\+\+P\+LL@{I\+N\+V\+\_\+\+C\+L\+K\+\_\+\+P\+LL}}\item[{\em 
+I\+N\+V\+\_\+\+C\+L\+K\+\_\+\+P\+LL\hypertarget{inv__mpu_8c_a75570f009627c6f4ddfb2d936d81e207a01b240917a78674d3e387110a6a8f94c}{}\label{inv__mpu_8c_a75570f009627c6f4ddfb2d936d81e207a01b240917a78674d3e387110a6a8f94c}
+}]\index{N\+U\+M\+\_\+\+C\+LK@{N\+U\+M\+\_\+\+C\+LK}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!N\+U\+M\+\_\+\+C\+LK@{N\+U\+M\+\_\+\+C\+LK}}\item[{\em 
+N\+U\+M\+\_\+\+C\+LK\hypertarget{inv__mpu_8c_a75570f009627c6f4ddfb2d936d81e207a7f075b0360037232fdf24f90de7be1d7}{}\label{inv__mpu_8c_a75570f009627c6f4ddfb2d936d81e207a7f075b0360037232fdf24f90de7be1d7}
+}]\end{description}
+\end{Desc}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!gyro\+\_\+fsr\+\_\+e@{gyro\+\_\+fsr\+\_\+e}}
+\index{gyro\+\_\+fsr\+\_\+e@{gyro\+\_\+fsr\+\_\+e}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{gyro\+\_\+fsr\+\_\+e}{gyro_fsr_e}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf gyro\+\_\+fsr\+\_\+e}}\hypertarget{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90}{}\label{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I\+N\+V\+\_\+\+F\+S\+R\+\_\+250\+D\+PS@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+250\+D\+PS}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+S\+R\+\_\+250\+D\+PS@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+250\+D\+PS}}\item[{\em 
+I\+N\+V\+\_\+\+F\+S\+R\+\_\+250\+D\+PS\hypertarget{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90a5b8251a49db5cb8a676076b0b308ae35}{}\label{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90a5b8251a49db5cb8a676076b0b308ae35}
+}]\index{I\+N\+V\+\_\+\+F\+S\+R\+\_\+500\+D\+PS@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+500\+D\+PS}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+S\+R\+\_\+500\+D\+PS@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+500\+D\+PS}}\item[{\em 
+I\+N\+V\+\_\+\+F\+S\+R\+\_\+500\+D\+PS\hypertarget{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90a50901470ff389927fd010081e2b8fd09}{}\label{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90a50901470ff389927fd010081e2b8fd09}
+}]\index{I\+N\+V\+\_\+\+F\+S\+R\+\_\+1000\+D\+PS@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+1000\+D\+PS}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+S\+R\+\_\+1000\+D\+PS@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+1000\+D\+PS}}\item[{\em 
+I\+N\+V\+\_\+\+F\+S\+R\+\_\+1000\+D\+PS\hypertarget{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90aee922e0daa4fbb404c3db6c49d897a13}{}\label{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90aee922e0daa4fbb404c3db6c49d897a13}
+}]\index{I\+N\+V\+\_\+\+F\+S\+R\+\_\+2000\+D\+PS@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+2000\+D\+PS}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+S\+R\+\_\+2000\+D\+PS@{I\+N\+V\+\_\+\+F\+S\+R\+\_\+2000\+D\+PS}}\item[{\em 
+I\+N\+V\+\_\+\+F\+S\+R\+\_\+2000\+D\+PS\hypertarget{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90ac0c37efc1c8acd6f70c0c5a768e5b8be}{}\label{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90ac0c37efc1c8acd6f70c0c5a768e5b8be}
+}]\index{N\+U\+M\+\_\+\+G\+Y\+R\+O\+\_\+\+F\+SR@{N\+U\+M\+\_\+\+G\+Y\+R\+O\+\_\+\+F\+SR}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!N\+U\+M\+\_\+\+G\+Y\+R\+O\+\_\+\+F\+SR@{N\+U\+M\+\_\+\+G\+Y\+R\+O\+\_\+\+F\+SR}}\item[{\em 
+N\+U\+M\+\_\+\+G\+Y\+R\+O\+\_\+\+F\+SR\hypertarget{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90ab50b300433c5bc3cbc7ae8adb980c815}{}\label{inv__mpu_8c_a83acdc0eb37e8bfe0c2ae2348ded0a90ab50b300433c5bc3cbc7ae8adb980c815}
+}]\end{description}
+\end{Desc}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!lp\+\_\+accel\+\_\+rate\+\_\+e@{lp\+\_\+accel\+\_\+rate\+\_\+e}}
+\index{lp\+\_\+accel\+\_\+rate\+\_\+e@{lp\+\_\+accel\+\_\+rate\+\_\+e}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{lp\+\_\+accel\+\_\+rate\+\_\+e}{lp_accel_rate_e}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf lp\+\_\+accel\+\_\+rate\+\_\+e}}\hypertarget{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7}{}\label{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I\+N\+V\+\_\+\+L\+P\+A\+\_\+1\+\_\+25\+HZ@{I\+N\+V\+\_\+\+L\+P\+A\+\_\+1\+\_\+25\+HZ}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+L\+P\+A\+\_\+1\+\_\+25\+HZ@{I\+N\+V\+\_\+\+L\+P\+A\+\_\+1\+\_\+25\+HZ}}\item[{\em 
+I\+N\+V\+\_\+\+L\+P\+A\+\_\+1\+\_\+25\+HZ\hypertarget{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7ab44c7d0127a9466747853533a537b567}{}\label{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7ab44c7d0127a9466747853533a537b567}
+}]\index{I\+N\+V\+\_\+\+L\+P\+A\+\_\+5\+HZ@{I\+N\+V\+\_\+\+L\+P\+A\+\_\+5\+HZ}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+L\+P\+A\+\_\+5\+HZ@{I\+N\+V\+\_\+\+L\+P\+A\+\_\+5\+HZ}}\item[{\em 
+I\+N\+V\+\_\+\+L\+P\+A\+\_\+5\+HZ\hypertarget{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7a474cac76bff369dd656cc973207a1ca5}{}\label{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7a474cac76bff369dd656cc973207a1ca5}
+}]\index{I\+N\+V\+\_\+\+L\+P\+A\+\_\+20\+HZ@{I\+N\+V\+\_\+\+L\+P\+A\+\_\+20\+HZ}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+L\+P\+A\+\_\+20\+HZ@{I\+N\+V\+\_\+\+L\+P\+A\+\_\+20\+HZ}}\item[{\em 
+I\+N\+V\+\_\+\+L\+P\+A\+\_\+20\+HZ\hypertarget{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7accaaf47c58dfe32cbf2ffa11fdb83108}{}\label{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7accaaf47c58dfe32cbf2ffa11fdb83108}
+}]\index{I\+N\+V\+\_\+\+L\+P\+A\+\_\+40\+HZ@{I\+N\+V\+\_\+\+L\+P\+A\+\_\+40\+HZ}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+L\+P\+A\+\_\+40\+HZ@{I\+N\+V\+\_\+\+L\+P\+A\+\_\+40\+HZ}}\item[{\em 
+I\+N\+V\+\_\+\+L\+P\+A\+\_\+40\+HZ\hypertarget{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7a798d2b86eafcf3fc7c7fe775f46cb4cb}{}\label{inv__mpu_8c_a23c3fcde795e5aa2b141232d490c9ca7a798d2b86eafcf3fc7c7fe775f46cb4cb}
+}]\end{description}
+\end{Desc}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!lpf\+\_\+e@{lpf\+\_\+e}}
+\index{lpf\+\_\+e@{lpf\+\_\+e}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{lpf\+\_\+e}{lpf_e}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf lpf\+\_\+e}}\hypertarget{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9}{}\label{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+256\+H\+Z\+\_\+\+N\+O\+L\+P\+F2@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+256\+H\+Z\+\_\+\+N\+O\+L\+P\+F2}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+256\+H\+Z\+\_\+\+N\+O\+L\+P\+F2@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+256\+H\+Z\+\_\+\+N\+O\+L\+P\+F2}}\item[{\em 
+I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+256\+H\+Z\+\_\+\+N\+O\+L\+P\+F2\hypertarget{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a9f0263fbbdccd3c5a18fcb65be278d24}{}\label{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a9f0263fbbdccd3c5a18fcb65be278d24}
+}]\index{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+188\+HZ@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+188\+HZ}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+188\+HZ@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+188\+HZ}}\item[{\em 
+I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+188\+HZ\hypertarget{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9ab58e52e0b6be4cbaf0c7f32705a9fcec}{}\label{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9ab58e52e0b6be4cbaf0c7f32705a9fcec}
+}]\index{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+98\+HZ@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+98\+HZ}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+98\+HZ@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+98\+HZ}}\item[{\em 
+I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+98\+HZ\hypertarget{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a0f288da0c97b325a6cb57f1223f0cf98}{}\label{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a0f288da0c97b325a6cb57f1223f0cf98}
+}]\index{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+42\+HZ@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+42\+HZ}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+42\+HZ@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+42\+HZ}}\item[{\em 
+I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+42\+HZ\hypertarget{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a995b18a52a5bd919aa9c1411a2292110}{}\label{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a995b18a52a5bd919aa9c1411a2292110}
+}]\index{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+20\+HZ@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+20\+HZ}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+20\+HZ@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+20\+HZ}}\item[{\em 
+I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+20\+HZ\hypertarget{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9aebecb86604e475ed8e2cb68340010ff1}{}\label{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9aebecb86604e475ed8e2cb68340010ff1}
+}]\index{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+10\+HZ@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+10\+HZ}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+10\+HZ@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+10\+HZ}}\item[{\em 
+I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+10\+HZ\hypertarget{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a327619f406c6b2f6a221793881013508}{}\label{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a327619f406c6b2f6a221793881013508}
+}]\index{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+5\+HZ@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+5\+HZ}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+5\+HZ@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+5\+HZ}}\item[{\em 
+I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+5\+HZ\hypertarget{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9abdaaf85666fd6a490ee01dcd8a315678}{}\label{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9abdaaf85666fd6a490ee01dcd8a315678}
+}]\index{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+2100\+H\+Z\+\_\+\+N\+O\+L\+PF@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+2100\+H\+Z\+\_\+\+N\+O\+L\+PF}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+2100\+H\+Z\+\_\+\+N\+O\+L\+PF@{I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+2100\+H\+Z\+\_\+\+N\+O\+L\+PF}}\item[{\em 
+I\+N\+V\+\_\+\+F\+I\+L\+T\+E\+R\+\_\+2100\+H\+Z\+\_\+\+N\+O\+L\+PF\hypertarget{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a76de97a6c2f8eb3c5d1a73d717513f5d}{}\label{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a76de97a6c2f8eb3c5d1a73d717513f5d}
+}]\index{N\+U\+M\+\_\+\+F\+I\+L\+T\+ER@{N\+U\+M\+\_\+\+F\+I\+L\+T\+ER}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!N\+U\+M\+\_\+\+F\+I\+L\+T\+ER@{N\+U\+M\+\_\+\+F\+I\+L\+T\+ER}}\item[{\em 
+N\+U\+M\+\_\+\+F\+I\+L\+T\+ER\hypertarget{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a053f39f04904f6103090bcba3002c4a3}{}\label{inv__mpu_8c_a91c762a5bd71461f7911dc49ee7696e9a053f39f04904f6103090bcba3002c4a3}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+configure\+\_\+fifo@{mpu\+\_\+configure\+\_\+fifo}}
+\index{mpu\+\_\+configure\+\_\+fifo@{mpu\+\_\+configure\+\_\+fifo}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+configure\+\_\+fifo(unsigned char sensors)}{mpu_configure_fifo(unsigned char sensors)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+configure\+\_\+fifo (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{sensors}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_ababbdda287e1f19323489f90a0889dd7}{}\label{inv__mpu_8c_ababbdda287e1f19323489f90a0889dd7}
+
+
+Select which sensors are pushed to F\+I\+FO. {\itshape sensors} can contain a combination of the following flags\+: ~\newline
+ I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sensors} & Mask of sensors to push to F\+I\+FO. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+accel\+\_\+fsr@{mpu\+\_\+get\+\_\+accel\+\_\+fsr}}
+\index{mpu\+\_\+get\+\_\+accel\+\_\+fsr@{mpu\+\_\+get\+\_\+accel\+\_\+fsr}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+accel\+\_\+fsr(unsigned char $\ast$fsr)}{mpu_get_accel_fsr(unsigned char *fsr)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+accel\+\_\+fsr (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{fsr}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_ab6087a15ee23db23b6aec41590329a60}{}\label{inv__mpu_8c_ab6087a15ee23db23b6aec41590329a60}
+
+
+Get the accel full-\/scale range. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em fsr} & Current full-\/scale range. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+accel\+\_\+reg@{mpu\+\_\+get\+\_\+accel\+\_\+reg}}
+\index{mpu\+\_\+get\+\_\+accel\+\_\+reg@{mpu\+\_\+get\+\_\+accel\+\_\+reg}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+accel\+\_\+reg(short $\ast$data, unsigned long $\ast$timestamp)}{mpu_get_accel_reg(short *data, unsigned long *timestamp)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+accel\+\_\+reg (
+\begin{DoxyParamCaption}
+\item[{short $\ast$}]{data, }
+\item[{unsigned long $\ast$}]{timestamp}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_ae4ae960e5df78049ece2647772a3d809}{}\label{inv__mpu_8c_ae4ae960e5df78049ece2647772a3d809}
+
+
+Read raw accel data directly from the registers. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em data} & Raw data in hardware units. \\
+\hline
+\mbox{\tt out}  & {\em timestamp} & Timestamp in milliseconds. Null if not needed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+accel\+\_\+sens@{mpu\+\_\+get\+\_\+accel\+\_\+sens}}
+\index{mpu\+\_\+get\+\_\+accel\+\_\+sens@{mpu\+\_\+get\+\_\+accel\+\_\+sens}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+accel\+\_\+sens(unsigned short $\ast$sens)}{mpu_get_accel_sens(unsigned short *sens)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+accel\+\_\+sens (
+\begin{DoxyParamCaption}
+\item[{unsigned short $\ast$}]{sens}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a620408949052b96e856cad920f856583}{}\label{inv__mpu_8c_a620408949052b96e856cad920f856583}
+
+
+Get accel sensitivity scale factor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em sens} & Conversion from hardware units to g\textquotesingle{}s. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+compass\+\_\+fsr@{mpu\+\_\+get\+\_\+compass\+\_\+fsr}}
+\index{mpu\+\_\+get\+\_\+compass\+\_\+fsr@{mpu\+\_\+get\+\_\+compass\+\_\+fsr}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+compass\+\_\+fsr(unsigned short $\ast$fsr)}{mpu_get_compass_fsr(unsigned short *fsr)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+compass\+\_\+fsr (
+\begin{DoxyParamCaption}
+\item[{unsigned short $\ast$}]{fsr}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_ade8589573d09e0f14b84130428f286df}{}\label{inv__mpu_8c_ade8589573d09e0f14b84130428f286df}
+
+
+Get the compass full-\/scale range. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em fsr} & Current full-\/scale range. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+compass\+\_\+reg@{mpu\+\_\+get\+\_\+compass\+\_\+reg}}
+\index{mpu\+\_\+get\+\_\+compass\+\_\+reg@{mpu\+\_\+get\+\_\+compass\+\_\+reg}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+compass\+\_\+reg(short $\ast$data, unsigned long $\ast$timestamp)}{mpu_get_compass_reg(short *data, unsigned long *timestamp)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+compass\+\_\+reg (
+\begin{DoxyParamCaption}
+\item[{short $\ast$}]{data, }
+\item[{unsigned long $\ast$}]{timestamp}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a65e6b0ce980b8c0255d7be9b55c88c08}{}\label{inv__mpu_8c_a65e6b0ce980b8c0255d7be9b55c88c08}
+
+
+Read raw compass data. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em data} & Raw data in hardware units. \\
+\hline
+\mbox{\tt out}  & {\em timestamp} & Timestamp in milliseconds. Null if not needed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+compass\+\_\+sample\+\_\+rate@{mpu\+\_\+get\+\_\+compass\+\_\+sample\+\_\+rate}}
+\index{mpu\+\_\+get\+\_\+compass\+\_\+sample\+\_\+rate@{mpu\+\_\+get\+\_\+compass\+\_\+sample\+\_\+rate}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+compass\+\_\+sample\+\_\+rate(unsigned short $\ast$rate)}{mpu_get_compass_sample_rate(unsigned short *rate)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+compass\+\_\+sample\+\_\+rate (
+\begin{DoxyParamCaption}
+\item[{unsigned short $\ast$}]{rate}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_ab5a45cd7783f6937788c0decb0b18b16}{}\label{inv__mpu_8c_ab5a45cd7783f6937788c0decb0b18b16}
+
+
+Get compass sampling rate. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em rate} & Current compass sampling rate (Hz). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+dmp\+\_\+state@{mpu\+\_\+get\+\_\+dmp\+\_\+state}}
+\index{mpu\+\_\+get\+\_\+dmp\+\_\+state@{mpu\+\_\+get\+\_\+dmp\+\_\+state}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+dmp\+\_\+state(unsigned char $\ast$enabled)}{mpu_get_dmp_state(unsigned char *enabled)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+dmp\+\_\+state (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{enabled}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_afe0f60ed0d7f8fd2dcd55d45b95a2363}{}\label{inv__mpu_8c_afe0f60ed0d7f8fd2dcd55d45b95a2363}
+
+
+Get D\+MP state. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em enabled} & 1 if enabled. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+fifo\+\_\+config@{mpu\+\_\+get\+\_\+fifo\+\_\+config}}
+\index{mpu\+\_\+get\+\_\+fifo\+\_\+config@{mpu\+\_\+get\+\_\+fifo\+\_\+config}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+fifo\+\_\+config(unsigned char $\ast$sensors)}{mpu_get_fifo_config(unsigned char *sensors)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+fifo\+\_\+config (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{sensors}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a093f11eb10b2639a4b9fe344ea348c54}{}\label{inv__mpu_8c_a093f11eb10b2639a4b9fe344ea348c54}
+
+
+Get current F\+I\+FO configuration. {\itshape sensors} can contain a combination of the following flags\+: ~\newline
+ I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em sensors} & Mask of sensors in F\+I\+FO. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+gyro\+\_\+fsr@{mpu\+\_\+get\+\_\+gyro\+\_\+fsr}}
+\index{mpu\+\_\+get\+\_\+gyro\+\_\+fsr@{mpu\+\_\+get\+\_\+gyro\+\_\+fsr}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+gyro\+\_\+fsr(unsigned short $\ast$fsr)}{mpu_get_gyro_fsr(unsigned short *fsr)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+gyro\+\_\+fsr (
+\begin{DoxyParamCaption}
+\item[{unsigned short $\ast$}]{fsr}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_af973c32c73ba912ff512aab948fc31ca}{}\label{inv__mpu_8c_af973c32c73ba912ff512aab948fc31ca}
+
+
+Get the gyro full-\/scale range. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em fsr} & Current full-\/scale range. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+gyro\+\_\+reg@{mpu\+\_\+get\+\_\+gyro\+\_\+reg}}
+\index{mpu\+\_\+get\+\_\+gyro\+\_\+reg@{mpu\+\_\+get\+\_\+gyro\+\_\+reg}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+gyro\+\_\+reg(short $\ast$data, unsigned long $\ast$timestamp)}{mpu_get_gyro_reg(short *data, unsigned long *timestamp)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+gyro\+\_\+reg (
+\begin{DoxyParamCaption}
+\item[{short $\ast$}]{data, }
+\item[{unsigned long $\ast$}]{timestamp}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a5555854590ad11495c0e30401294bae2}{}\label{inv__mpu_8c_a5555854590ad11495c0e30401294bae2}
+
+
+Read raw gyro data directly from the registers. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em data} & Raw data in hardware units. \\
+\hline
+\mbox{\tt out}  & {\em timestamp} & Timestamp in milliseconds. Null if not needed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+gyro\+\_\+sens@{mpu\+\_\+get\+\_\+gyro\+\_\+sens}}
+\index{mpu\+\_\+get\+\_\+gyro\+\_\+sens@{mpu\+\_\+get\+\_\+gyro\+\_\+sens}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+gyro\+\_\+sens(float $\ast$sens)}{mpu_get_gyro_sens(float *sens)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+gyro\+\_\+sens (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{sens}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a023c0cc94aa8f162dc33b15048a49421}{}\label{inv__mpu_8c_a023c0cc94aa8f162dc33b15048a49421}
+
+
+Get gyro sensitivity scale factor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em sens} & Conversion from hardware units to dps. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+int\+\_\+status@{mpu\+\_\+get\+\_\+int\+\_\+status}}
+\index{mpu\+\_\+get\+\_\+int\+\_\+status@{mpu\+\_\+get\+\_\+int\+\_\+status}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+int\+\_\+status(short $\ast$status)}{mpu_get_int_status(short *status)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+int\+\_\+status (
+\begin{DoxyParamCaption}
+\item[{short $\ast$}]{status}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a0afd02d8c76d3278b488ef7038c26e3e}{}\label{inv__mpu_8c_a0afd02d8c76d3278b488ef7038c26e3e}
+
+
+Read the M\+PU interrupt status registers. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em status} & Mask of interrupt bits. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+lpf@{mpu\+\_\+get\+\_\+lpf}}
+\index{mpu\+\_\+get\+\_\+lpf@{mpu\+\_\+get\+\_\+lpf}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+lpf(unsigned short $\ast$lpf)}{mpu_get_lpf(unsigned short *lpf)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+lpf (
+\begin{DoxyParamCaption}
+\item[{unsigned short $\ast$}]{lpf}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_aa95c7e216dcb2d888e9796001ca555f8}{}\label{inv__mpu_8c_aa95c7e216dcb2d888e9796001ca555f8}
+
+
+Get the current D\+L\+PF setting. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em lpf} & Current L\+PF setting. 0 if successful. \\
+\hline
+\end{DoxyParams}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+power\+\_\+state@{mpu\+\_\+get\+\_\+power\+\_\+state}}
+\index{mpu\+\_\+get\+\_\+power\+\_\+state@{mpu\+\_\+get\+\_\+power\+\_\+state}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+power\+\_\+state(unsigned char $\ast$power\+\_\+on)}{mpu_get_power_state(unsigned char *power_on)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+power\+\_\+state (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{power\+\_\+on}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_aec8fa7a067988d174516bb735a4a0bc9}{}\label{inv__mpu_8c_aec8fa7a067988d174516bb735a4a0bc9}
+
+
+Get current power state. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em power\+\_\+on} & 1 if turned on, 0 if suspended. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+sample\+\_\+rate@{mpu\+\_\+get\+\_\+sample\+\_\+rate}}
+\index{mpu\+\_\+get\+\_\+sample\+\_\+rate@{mpu\+\_\+get\+\_\+sample\+\_\+rate}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+sample\+\_\+rate(unsigned short $\ast$rate)}{mpu_get_sample_rate(unsigned short *rate)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+sample\+\_\+rate (
+\begin{DoxyParamCaption}
+\item[{unsigned short $\ast$}]{rate}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a2487dd551b701c1c7ed4d6335f02b2f1}{}\label{inv__mpu_8c_a2487dd551b701c1c7ed4d6335f02b2f1}
+
+
+Get sampling rate. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em rate} & Current sampling rate (Hz). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+get\+\_\+temperature@{mpu\+\_\+get\+\_\+temperature}}
+\index{mpu\+\_\+get\+\_\+temperature@{mpu\+\_\+get\+\_\+temperature}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+get\+\_\+temperature(long $\ast$data, unsigned long $\ast$timestamp)}{mpu_get_temperature(long *data, unsigned long *timestamp)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+get\+\_\+temperature (
+\begin{DoxyParamCaption}
+\item[{long $\ast$}]{data, }
+\item[{unsigned long $\ast$}]{timestamp}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_aa449b565a157b4b8ca0f491b7ed46018}{}\label{inv__mpu_8c_aa449b565a157b4b8ca0f491b7ed46018}
+
+
+Read temperature data directly from the registers. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em data} & Data in q16 format. \\
+\hline
+\mbox{\tt out}  & {\em timestamp} & Timestamp in milliseconds. Null if not needed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+init@{mpu\+\_\+init}}
+\index{mpu\+\_\+init@{mpu\+\_\+init}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+init()}{mpu_init()}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a63637cf3771995aeda99d91d5f345f29}{}\label{inv__mpu_8c_a63637cf3771995aeda99d91d5f345f29}
+
+
+Initialize hardware. Initial configuration\+:~\newline
+Gyro F\+SR\+: +/-\/ 2000\+D\+PS~\newline
+Accel F\+SR +/-\/ 2G~\newline
+D\+L\+PF\+: 42\+Hz~\newline
+F\+I\+FO rate\+: 50\+Hz~\newline
+Clock source\+: Gyro P\+LL~\newline
+F\+I\+FO\+: Disabled.~\newline
+Data ready interrupt\+: Disabled, active low, unlatched. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em int\+\_\+param} & Platform-\/specific parameters to interrupt A\+PI. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+load\+\_\+firmware@{mpu\+\_\+load\+\_\+firmware}}
+\index{mpu\+\_\+load\+\_\+firmware@{mpu\+\_\+load\+\_\+firmware}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+load\+\_\+firmware(unsigned short length, const unsigned char $\ast$firmware, unsigned short start\+\_\+addr, unsigned short sample\+\_\+rate)}{mpu_load_firmware(unsigned short length, const unsigned char *firmware, unsigned short start_addr, unsigned short sample_rate)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+load\+\_\+firmware (
+\begin{DoxyParamCaption}
+\item[{unsigned short}]{length, }
+\item[{const unsigned char $\ast$}]{firmware, }
+\item[{unsigned short}]{start\+\_\+addr, }
+\item[{unsigned short}]{sample\+\_\+rate}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a8fbdfe1a50285d4ab438e29c2efc70f5}{}\label{inv__mpu_8c_a8fbdfe1a50285d4ab438e29c2efc70f5}
+
+
+Load and verify D\+MP image. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em length} & Length of D\+MP image. \\
+\hline
+\mbox{\tt in}  & {\em firmware} & D\+MP code. \\
+\hline
+\mbox{\tt in}  & {\em start\+\_\+addr} & Starting address of D\+MP code memory. \\
+\hline
+\mbox{\tt in}  & {\em sample\+\_\+rate} & Fixed sampling rate used when D\+MP is enabled. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+lp\+\_\+accel\+\_\+mode@{mpu\+\_\+lp\+\_\+accel\+\_\+mode}}
+\index{mpu\+\_\+lp\+\_\+accel\+\_\+mode@{mpu\+\_\+lp\+\_\+accel\+\_\+mode}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+lp\+\_\+accel\+\_\+mode(unsigned short rate)}{mpu_lp_accel_mode(unsigned short rate)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+lp\+\_\+accel\+\_\+mode (
+\begin{DoxyParamCaption}
+\item[{unsigned short}]{rate}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_abdcf10922a1a20f1b5bbd7576d3189b9}{}\label{inv__mpu_8c_abdcf10922a1a20f1b5bbd7576d3189b9}
+
+
+Enter low-\/power accel-\/only mode. In low-\/power accel mode, the chip goes to sleep and only wakes up to sample the accelerometer at one of the following frequencies\+: ~\newline
+ M\+P\+U6050\+: 1.\+25\+Hz, 5\+Hz, 20\+Hz, 40\+Hz ~\newline
+ M\+P\+U6500\+: 0.\+24\+Hz, 0.\+49\+Hz, 0.\+98\+Hz, 1.\+95\+Hz, 3.\+91\+Hz, 7.\+81\+Hz, 15.\+63\+Hz, 31.\+25\+Hz, 62.\+5\+Hz, 125\+Hz, 250\+Hz, 500\+Hz ~\newline
+ If the requested rate is not one listed above, the device will be set to the next highest rate. Requesting a rate above the maximum supported frequency will result in an error. ~\newline
+ To select a fractional wake-\/up frequency, round down the value passed to {\itshape rate}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em rate} & Minimum sampling rate, or zero to disable LP accel mode. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+lp\+\_\+motion\+\_\+interrupt@{mpu\+\_\+lp\+\_\+motion\+\_\+interrupt}}
+\index{mpu\+\_\+lp\+\_\+motion\+\_\+interrupt@{mpu\+\_\+lp\+\_\+motion\+\_\+interrupt}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+lp\+\_\+motion\+\_\+interrupt(unsigned short thresh, unsigned char time, unsigned char lpa\+\_\+freq)}{mpu_lp_motion_interrupt(unsigned short thresh, unsigned char time, unsigned char lpa_freq)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+lp\+\_\+motion\+\_\+interrupt (
+\begin{DoxyParamCaption}
+\item[{unsigned short}]{thresh, }
+\item[{unsigned char}]{time, }
+\item[{unsigned char}]{lpa\+\_\+freq}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a7d0b3259346898ccd1ba6ef78bf7df97}{}\label{inv__mpu_8c_a7d0b3259346898ccd1ba6ef78bf7df97}
+
+
+Enters LP accel motion interrupt mode. The behaviour of this feature is very different between the M\+P\+U6050 and the M\+P\+U6500. Each chip\textquotesingle{}s version of this feature is explained below. 
+
+~\newline
+ The hardware motion threshold can be between 32mg and 8160mg in 32mg increments.
+
+~\newline
+ Low-\/power accel mode supports the following frequencies\+: ~\newline
+ 1.\+25\+Hz, 5\+Hz, 20\+Hz, 40\+Hz
+
+~\newline
+ M\+P\+U6500\+: ~\newline
+ Unlike the M\+P\+U6050 version, the hardware does not \char`\"{}lock in\char`\"{} a reference sample. The hardware monitors the accel data and detects any large change over a short period of time.
+
+~\newline
+ The hardware motion threshold can be between 4mg and 1020mg in 4mg increments.
+
+~\newline
+ M\+P\+U6500 Low-\/power accel mode supports the following frequencies\+: ~\newline
+ 0.\+24\+Hz, 0.\+49\+Hz, 0.\+98\+Hz, 1.\+95\+Hz, 3.\+91\+Hz, 7.\+81\+Hz, 15.\+63\+Hz, 31.\+25\+Hz, 62.\+5\+Hz, 125\+Hz, 250\+Hz, 500\+Hz
+
+~\newline
+~\newline
+ N\+O\+T\+ES\+: ~\newline
+ The driver will round down {\itshape thresh} to the nearest supported value if an unsupported threshold is selected. ~\newline
+ To select a fractional wake-\/up frequency, round down the value passed to {\itshape lpa\+\_\+freq}. ~\newline
+ The M\+P\+U6500 does not support a delay parameter. If this function is used for the M\+P\+U6500, the value passed to {\itshape time} will be ignored. ~\newline
+ To disable this mode, set {\itshape lpa\+\_\+freq} to zero. The driver will restore the previous configuration.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em thresh} & Motion threshold in mg. \\
+\hline
+\mbox{\tt in}  & {\em time} & Duration in milliseconds that the accel data must exceed {\itshape thresh} before motion is reported. \\
+\hline
+\mbox{\tt in}  & {\em lpa\+\_\+freq} & Minimum sampling rate, or zero to disable. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+read\+\_\+6050\+\_\+accel\+\_\+bias@{mpu\+\_\+read\+\_\+6050\+\_\+accel\+\_\+bias}}
+\index{mpu\+\_\+read\+\_\+6050\+\_\+accel\+\_\+bias@{mpu\+\_\+read\+\_\+6050\+\_\+accel\+\_\+bias}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+read\+\_\+6050\+\_\+accel\+\_\+bias(long $\ast$accel\+\_\+bias)}{mpu_read_6050_accel_bias(long *accel_bias)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+read\+\_\+6050\+\_\+accel\+\_\+bias (
+\begin{DoxyParamCaption}
+\item[{long $\ast$}]{accel\+\_\+bias}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_aed37421e1f140d10ee0eff0efeade27b}{}\label{inv__mpu_8c_aed37421e1f140d10ee0eff0efeade27b}
+
+
+Read biases to the accel bias 6050 registers. This function reads from the M\+P\+U6050 accel offset cancellations registers. The format are G in +-\/8G format. The register is initialized with O\+TP factory trim values. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em accel\+\_\+bias} & returned structure with the accel bias \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+read\+\_\+6500\+\_\+accel\+\_\+bias@{mpu\+\_\+read\+\_\+6500\+\_\+accel\+\_\+bias}}
+\index{mpu\+\_\+read\+\_\+6500\+\_\+accel\+\_\+bias@{mpu\+\_\+read\+\_\+6500\+\_\+accel\+\_\+bias}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+read\+\_\+6500\+\_\+accel\+\_\+bias(long $\ast$accel\+\_\+bias)}{mpu_read_6500_accel_bias(long *accel_bias)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+read\+\_\+6500\+\_\+accel\+\_\+bias (
+\begin{DoxyParamCaption}
+\item[{long $\ast$}]{accel\+\_\+bias}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a57bfbb356ce449135ce39659455041ae}{}\label{inv__mpu_8c_a57bfbb356ce449135ce39659455041ae}
+
+
+Read biases to the accel bias 6500 registers. This function reads from the M\+P\+U6500 accel offset cancellations registers. The format are G in +-\/8G format. The register is initialized with O\+TP factory trim values. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em accel\+\_\+bias} & returned structure with the accel bias \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+read\+\_\+6500\+\_\+gyro\+\_\+bias@{mpu\+\_\+read\+\_\+6500\+\_\+gyro\+\_\+bias}}
+\index{mpu\+\_\+read\+\_\+6500\+\_\+gyro\+\_\+bias@{mpu\+\_\+read\+\_\+6500\+\_\+gyro\+\_\+bias}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+read\+\_\+6500\+\_\+gyro\+\_\+bias(long $\ast$gyro\+\_\+bias)}{mpu_read_6500_gyro_bias(long *gyro_bias)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+read\+\_\+6500\+\_\+gyro\+\_\+bias (
+\begin{DoxyParamCaption}
+\item[{long $\ast$}]{gyro\+\_\+bias}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_ae387f1342e10bce129609f3c279a50a2}{}\label{inv__mpu_8c_ae387f1342e10bce129609f3c279a50a2}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+read\+\_\+fifo@{mpu\+\_\+read\+\_\+fifo}}
+\index{mpu\+\_\+read\+\_\+fifo@{mpu\+\_\+read\+\_\+fifo}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+read\+\_\+fifo(short $\ast$gyro, short $\ast$accel, unsigned long $\ast$timestamp, unsigned char $\ast$sensors, unsigned char $\ast$more)}{mpu_read_fifo(short *gyro, short *accel, unsigned long *timestamp, unsigned char *sensors, unsigned char *more)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+read\+\_\+fifo (
+\begin{DoxyParamCaption}
+\item[{short $\ast$}]{gyro, }
+\item[{short $\ast$}]{accel, }
+\item[{unsigned long $\ast$}]{timestamp, }
+\item[{unsigned char $\ast$}]{sensors, }
+\item[{unsigned char $\ast$}]{more}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a2da20453aafbbba4a0f6fb9fbdd25572}{}\label{inv__mpu_8c_a2da20453aafbbba4a0f6fb9fbdd25572}
+
+
+Get one packet from the F\+I\+FO. If {\itshape sensors} does not contain a particular sensor, disregard the data returned to that pointer. ~\newline
+ {\itshape sensors} can contain a combination of the following flags\+: ~\newline
+ I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL ~\newline
+ If the F\+I\+FO has no new data, {\itshape sensors} will be zero. ~\newline
+ If the F\+I\+FO is disabled, {\itshape sensors} will be zero and this function will return a non-\/zero error code. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em gyro} & Gyro data in hardware units. \\
+\hline
+\mbox{\tt out}  & {\em accel} & Accel data in hardware units. \\
+\hline
+\mbox{\tt out}  & {\em timestamp} & Timestamp in milliseconds. \\
+\hline
+\mbox{\tt out}  & {\em sensors} & Mask of sensors read from F\+I\+FO. \\
+\hline
+\mbox{\tt out}  & {\em more} & Number of remaining packets. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+read\+\_\+fifo\+\_\+stream@{mpu\+\_\+read\+\_\+fifo\+\_\+stream}}
+\index{mpu\+\_\+read\+\_\+fifo\+\_\+stream@{mpu\+\_\+read\+\_\+fifo\+\_\+stream}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+read\+\_\+fifo\+\_\+stream(unsigned short length, unsigned char $\ast$data, unsigned char $\ast$more)}{mpu_read_fifo_stream(unsigned short length, unsigned char *data, unsigned char *more)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+read\+\_\+fifo\+\_\+stream (
+\begin{DoxyParamCaption}
+\item[{unsigned short}]{length, }
+\item[{unsigned char $\ast$}]{data, }
+\item[{unsigned char $\ast$}]{more}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a13593044949b460e9f571eb57e9a0788}{}\label{inv__mpu_8c_a13593044949b460e9f571eb57e9a0788}
+
+
+Get one unparsed packet from the F\+I\+FO. This function should be used if the packet is to be parsed elsewhere. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em length} & Length of one F\+I\+FO packet. \\
+\hline
+\mbox{\tt in}  & {\em data} & F\+I\+FO packet. \\
+\hline
+\mbox{\tt in}  & {\em more} & Number of remaining packets. \\
+\hline
+\end{DoxyParams}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+read\+\_\+mem@{mpu\+\_\+read\+\_\+mem}}
+\index{mpu\+\_\+read\+\_\+mem@{mpu\+\_\+read\+\_\+mem}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+read\+\_\+mem(unsigned short mem\+\_\+addr, unsigned short length, unsigned char $\ast$data)}{mpu_read_mem(unsigned short mem_addr, unsigned short length, unsigned char *data)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+read\+\_\+mem (
+\begin{DoxyParamCaption}
+\item[{unsigned short}]{mem\+\_\+addr, }
+\item[{unsigned short}]{length, }
+\item[{unsigned char $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a3374bececb6743893c9eab27645c1182}{}\label{inv__mpu_8c_a3374bececb6743893c9eab27645c1182}
+
+
+Read from the D\+MP memory. This function prevents I2C reads past the bank boundaries. The D\+MP memory is only accessible when the chip is awake. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em mem\+\_\+addr} & Memory location (bank $<$$<$ 8 $\vert$ start address) \\
+\hline
+\mbox{\tt in}  & {\em length} & Number of bytes to read. \\
+\hline
+\mbox{\tt out}  & {\em data} & Bytes read from memory. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+read\+\_\+reg@{mpu\+\_\+read\+\_\+reg}}
+\index{mpu\+\_\+read\+\_\+reg@{mpu\+\_\+read\+\_\+reg}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+read\+\_\+reg(unsigned char reg, unsigned char $\ast$data)}{mpu_read_reg(unsigned char reg, unsigned char *data)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+read\+\_\+reg (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{reg, }
+\item[{unsigned char $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a5c35a3363337014e11769a0ea7c0dfa9}{}\label{inv__mpu_8c_a5c35a3363337014e11769a0ea7c0dfa9}
+
+
+Read from a single register. N\+O\+TE\+: The memory and F\+I\+FO read/write registers cannot be accessed. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em reg} & Register address. \\
+\hline
+\mbox{\tt out}  & {\em data} & Register data. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+reg\+\_\+dump@{mpu\+\_\+reg\+\_\+dump}}
+\index{mpu\+\_\+reg\+\_\+dump@{mpu\+\_\+reg\+\_\+dump}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+reg\+\_\+dump(void)}{mpu_reg_dump(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+reg\+\_\+dump (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a0e1201ecfd8453f1d89e4299528baaf6}{}\label{inv__mpu_8c_a0e1201ecfd8453f1d89e4299528baaf6}
+
+
+Register dump for testing. 
+
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+reset\+\_\+fifo@{mpu\+\_\+reset\+\_\+fifo}}
+\index{mpu\+\_\+reset\+\_\+fifo@{mpu\+\_\+reset\+\_\+fifo}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+reset\+\_\+fifo(void)}{mpu_reset_fifo(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+reset\+\_\+fifo (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_af23e9f57c0059be6ec57862f0584de10}{}\label{inv__mpu_8c_af23e9f57c0059be6ec57862f0584de10}
+
+
+Reset F\+I\+FO read/write pointers. 
+
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+run\+\_\+self\+\_\+test@{mpu\+\_\+run\+\_\+self\+\_\+test}}
+\index{mpu\+\_\+run\+\_\+self\+\_\+test@{mpu\+\_\+run\+\_\+self\+\_\+test}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+run\+\_\+self\+\_\+test(long $\ast$gyro, long $\ast$accel)}{mpu_run_self_test(long *gyro, long *accel)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+run\+\_\+self\+\_\+test (
+\begin{DoxyParamCaption}
+\item[{long $\ast$}]{gyro, }
+\item[{long $\ast$}]{accel}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a3773dc98eb1ba15da0091ae75abcf62f}{}\label{inv__mpu_8c_a3773dc98eb1ba15da0091ae75abcf62f}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6050\+\_\+reg@{mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6050\+\_\+reg}}
+\index{mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6050\+\_\+reg@{mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6050\+\_\+reg}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6050\+\_\+reg(const long $\ast$accel\+\_\+bias)}{mpu_set_accel_bias_6050_reg(const long *accel_bias)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6050\+\_\+reg (
+\begin{DoxyParamCaption}
+\item[{const long $\ast$}]{accel\+\_\+bias}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_ae2eb5073dacc7455101bf6818e35c40a}{}\label{inv__mpu_8c_ae2eb5073dacc7455101bf6818e35c40a}
+
+
+Push biases to the accel bias 6050 registers. This function expects biases relative to the current sensor output, and these biases will be added to the factory-\/supplied values. Bias inputs are L\+SB in +-\/8G format. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em accel\+\_\+bias} & New biases. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6500\+\_\+reg@{mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6500\+\_\+reg}}
+\index{mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6500\+\_\+reg@{mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6500\+\_\+reg}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6500\+\_\+reg(const long $\ast$accel\+\_\+bias)}{mpu_set_accel_bias_6500_reg(const long *accel_bias)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6500\+\_\+reg (
+\begin{DoxyParamCaption}
+\item[{const long $\ast$}]{accel\+\_\+bias}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_aa7265afee29b8307ff49a8b1ccd9238a}{}\label{inv__mpu_8c_aa7265afee29b8307ff49a8b1ccd9238a}
+
+
+Push biases to the accel bias 6500 registers. This function expects biases relative to the current sensor output, and these biases will be added to the factory-\/supplied values. Bias inputs are L\+SB in +-\/8G format. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em accel\+\_\+bias} & New biases. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+set\+\_\+accel\+\_\+fsr@{mpu\+\_\+set\+\_\+accel\+\_\+fsr}}
+\index{mpu\+\_\+set\+\_\+accel\+\_\+fsr@{mpu\+\_\+set\+\_\+accel\+\_\+fsr}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+set\+\_\+accel\+\_\+fsr(unsigned char fsr)}{mpu_set_accel_fsr(unsigned char fsr)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+set\+\_\+accel\+\_\+fsr (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{fsr}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a2713a96af104cfb2ae8e0ed4c3718119}{}\label{inv__mpu_8c_a2713a96af104cfb2ae8e0ed4c3718119}
+
+
+Set the accel full-\/scale range. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em fsr} & Desired full-\/scale range. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+set\+\_\+bypass@{mpu\+\_\+set\+\_\+bypass}}
+\index{mpu\+\_\+set\+\_\+bypass@{mpu\+\_\+set\+\_\+bypass}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+set\+\_\+bypass(unsigned char bypass\+\_\+on)}{mpu_set_bypass(unsigned char bypass_on)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+set\+\_\+bypass (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{bypass\+\_\+on}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a36f70f38371b48d81094d3b061233e15}{}\label{inv__mpu_8c_a36f70f38371b48d81094d3b061233e15}
+
+
+Set device to bypass mode. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em bypass\+\_\+on} & 1 to enable bypass mode. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+set\+\_\+compass\+\_\+sample\+\_\+rate@{mpu\+\_\+set\+\_\+compass\+\_\+sample\+\_\+rate}}
+\index{mpu\+\_\+set\+\_\+compass\+\_\+sample\+\_\+rate@{mpu\+\_\+set\+\_\+compass\+\_\+sample\+\_\+rate}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+set\+\_\+compass\+\_\+sample\+\_\+rate(unsigned short rate)}{mpu_set_compass_sample_rate(unsigned short rate)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+set\+\_\+compass\+\_\+sample\+\_\+rate (
+\begin{DoxyParamCaption}
+\item[{unsigned short}]{rate}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a78da3828de0ef9d080c4d03e7bc45e7b}{}\label{inv__mpu_8c_a78da3828de0ef9d080c4d03e7bc45e7b}
+
+
+Set compass sampling rate. The compass on the auxiliary I2C bus is read by the M\+PU hardware at a maximum of 100\+Hz. The actual rate can be set to a fraction of the gyro sampling rate. 
+
+~\newline
+ W\+A\+R\+N\+I\+NG\+: The new rate may be different than what was requested. Call mpu\+\_\+get\+\_\+compass\+\_\+sample\+\_\+rate to check the actual setting. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em rate} & Desired compass sampling rate (Hz). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+set\+\_\+dmp\+\_\+state@{mpu\+\_\+set\+\_\+dmp\+\_\+state}}
+\index{mpu\+\_\+set\+\_\+dmp\+\_\+state@{mpu\+\_\+set\+\_\+dmp\+\_\+state}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+set\+\_\+dmp\+\_\+state(unsigned char enable)}{mpu_set_dmp_state(unsigned char enable)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+set\+\_\+dmp\+\_\+state (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{enable}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a68ed20e6c9663cd7c50469329af8715f}{}\label{inv__mpu_8c_a68ed20e6c9663cd7c50469329af8715f}
+
+
+Enable/disable D\+MP support. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em enable} & 1 to turn on the D\+MP. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+set\+\_\+gyro\+\_\+bias\+\_\+reg@{mpu\+\_\+set\+\_\+gyro\+\_\+bias\+\_\+reg}}
+\index{mpu\+\_\+set\+\_\+gyro\+\_\+bias\+\_\+reg@{mpu\+\_\+set\+\_\+gyro\+\_\+bias\+\_\+reg}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+set\+\_\+gyro\+\_\+bias\+\_\+reg(long $\ast$gyro\+\_\+bias)}{mpu_set_gyro_bias_reg(long *gyro_bias)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+set\+\_\+gyro\+\_\+bias\+\_\+reg (
+\begin{DoxyParamCaption}
+\item[{long $\ast$}]{gyro\+\_\+bias}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a01361a0f5c1f048cb0742bd3d0e4d3a5}{}\label{inv__mpu_8c_a01361a0f5c1f048cb0742bd3d0e4d3a5}
+
+
+Push biases to the gyro bias 6500/6050 registers. This function expects biases relative to the current sensor output, and these biases will be added to the factory-\/supplied values. Bias inputs are L\+SB in +-\/1000dps format. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em gyro\+\_\+bias} & New biases. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+set\+\_\+gyro\+\_\+fsr@{mpu\+\_\+set\+\_\+gyro\+\_\+fsr}}
+\index{mpu\+\_\+set\+\_\+gyro\+\_\+fsr@{mpu\+\_\+set\+\_\+gyro\+\_\+fsr}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+set\+\_\+gyro\+\_\+fsr(unsigned short fsr)}{mpu_set_gyro_fsr(unsigned short fsr)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+set\+\_\+gyro\+\_\+fsr (
+\begin{DoxyParamCaption}
+\item[{unsigned short}]{fsr}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_ad09e6031c8677adc0b8a39b6deea8e27}{}\label{inv__mpu_8c_ad09e6031c8677adc0b8a39b6deea8e27}
+
+
+Set the gyro full-\/scale range. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em fsr} & Desired full-\/scale range. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+set\+\_\+int\+\_\+latched@{mpu\+\_\+set\+\_\+int\+\_\+latched}}
+\index{mpu\+\_\+set\+\_\+int\+\_\+latched@{mpu\+\_\+set\+\_\+int\+\_\+latched}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+set\+\_\+int\+\_\+latched(unsigned char enable)}{mpu_set_int_latched(unsigned char enable)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+set\+\_\+int\+\_\+latched (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{enable}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a653cb855300bff9285ce4b8dca6a503b}{}\label{inv__mpu_8c_a653cb855300bff9285ce4b8dca6a503b}
+
+
+Enable latched interrupts. Any M\+PU register will clear the interrupt. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em enable} & 1 to enable, 0 to disable. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+set\+\_\+int\+\_\+level@{mpu\+\_\+set\+\_\+int\+\_\+level}}
+\index{mpu\+\_\+set\+\_\+int\+\_\+level@{mpu\+\_\+set\+\_\+int\+\_\+level}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+set\+\_\+int\+\_\+level(unsigned char active\+\_\+low)}{mpu_set_int_level(unsigned char active_low)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+set\+\_\+int\+\_\+level (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{active\+\_\+low}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_acc92fb1489ef32a04bcb6b0ebde4d657}{}\label{inv__mpu_8c_acc92fb1489ef32a04bcb6b0ebde4d657}
+
+
+Set interrupt level. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em active\+\_\+low} & 1 for active low, 0 for active high. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+set\+\_\+lpf@{mpu\+\_\+set\+\_\+lpf}}
+\index{mpu\+\_\+set\+\_\+lpf@{mpu\+\_\+set\+\_\+lpf}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+set\+\_\+lpf(unsigned short lpf)}{mpu_set_lpf(unsigned short lpf)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+set\+\_\+lpf (
+\begin{DoxyParamCaption}
+\item[{unsigned short}]{lpf}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a5661a9dee25152166769910767a2a93d}{}\label{inv__mpu_8c_a5661a9dee25152166769910767a2a93d}
+
+
+Set digital low pass filter. The following L\+PF settings are supported\+: 188, 98, 42, 20, 10, 5. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em lpf} & Desired L\+PF setting. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+set\+\_\+sample\+\_\+rate@{mpu\+\_\+set\+\_\+sample\+\_\+rate}}
+\index{mpu\+\_\+set\+\_\+sample\+\_\+rate@{mpu\+\_\+set\+\_\+sample\+\_\+rate}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+set\+\_\+sample\+\_\+rate(unsigned short rate)}{mpu_set_sample_rate(unsigned short rate)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+set\+\_\+sample\+\_\+rate (
+\begin{DoxyParamCaption}
+\item[{unsigned short}]{rate}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a0144d666a67a82888b8580002afe8b55}{}\label{inv__mpu_8c_a0144d666a67a82888b8580002afe8b55}
+
+
+Set sampling rate. Sampling rate must be between 4\+Hz and 1k\+Hz. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em rate} & Desired sampling rate (Hz). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+set\+\_\+sensors@{mpu\+\_\+set\+\_\+sensors}}
+\index{mpu\+\_\+set\+\_\+sensors@{mpu\+\_\+set\+\_\+sensors}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+set\+\_\+sensors(unsigned char sensors)}{mpu_set_sensors(unsigned char sensors)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+set\+\_\+sensors (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{sensors}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_a6e77e7cc1cf6be5e8fdf617c5b4586d1}{}\label{inv__mpu_8c_a6e77e7cc1cf6be5e8fdf617c5b4586d1}
+
+
+Turn specific sensors on/off. {\itshape sensors} can contain a combination of the following flags\+: ~\newline
+ I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+C\+O\+M\+P\+A\+SS. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em sensors} & Mask of sensors to wake. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!mpu\+\_\+write\+\_\+mem@{mpu\+\_\+write\+\_\+mem}}
+\index{mpu\+\_\+write\+\_\+mem@{mpu\+\_\+write\+\_\+mem}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{mpu\+\_\+write\+\_\+mem(unsigned short mem\+\_\+addr, unsigned short length, unsigned char $\ast$data)}{mpu_write_mem(unsigned short mem_addr, unsigned short length, unsigned char *data)}}]{\setlength{\rightskip}{0pt plus 5cm}int mpu\+\_\+write\+\_\+mem (
+\begin{DoxyParamCaption}
+\item[{unsigned short}]{mem\+\_\+addr, }
+\item[{unsigned short}]{length, }
+\item[{unsigned char $\ast$}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{inv__mpu_8c_afea59910bc3dd30ba3356b1c75213a5f}{}\label{inv__mpu_8c_afea59910bc3dd30ba3356b1c75213a5f}
+
+
+Write to the D\+MP memory. This function prevents I2C writes past the bank boundaries. The D\+MP memory is only accessible when the chip is awake. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em mem\+\_\+addr} & Memory location (bank $<$$<$ 8 $\vert$ start address) \\
+\hline
+\mbox{\tt in}  & {\em length} & Number of bytes to write. \\
+\hline
+\mbox{\tt in}  & {\em data} & Bytes to write to memory. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+
+
+\subsection{Variable Documentation}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!hw@{hw}}
+\index{hw@{hw}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{hw}{hw}}]{\setlength{\rightskip}{0pt plus 5cm}const struct {\bf hw\+\_\+s} hw}\hypertarget{inv__mpu_8c_a7fefd0bb47e09b7e39e25e9795cd7edc}{}\label{inv__mpu_8c_a7fefd0bb47e09b7e39e25e9795cd7edc}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+    .addr           = 0x68,
+    .max\_fifo       = 1024,
+    .num\_reg        = 118,
+    .temp\_sens      = 340,
+    .temp\_offset    = -521,
+    .bank\_size      = 256
+
+
+
+\}
+\end{DoxyCode}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!reg@{reg}}
+\index{reg@{reg}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{reg}{reg}}]{\setlength{\rightskip}{0pt plus 5cm}const struct {\bf gyro\+\_\+reg\+\_\+s} reg}\hypertarget{inv__mpu_8c_a5448c351fc95ff052b110eee80e5f75c}{}\label{inv__mpu_8c_a5448c351fc95ff052b110eee80e5f75c}
+\index{inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}!test@{test}}
+\index{test@{test}!inv\+\_\+mpu.\+c@{inv\+\_\+mpu.\+c}}
+\subsubsection[{\texorpdfstring{test}{test}}]{\setlength{\rightskip}{0pt plus 5cm}const struct {\bf test\+\_\+s} test}\hypertarget{inv__mpu_8c_a1e8f8b1ef7fb2c429e1ce7c2f9985530}{}\label{inv__mpu_8c_a1e8f8b1ef7fb2c429e1ce7c2f9985530}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{
+    .gyro\_sens      = 32768/250,
+    .accel\_sens     = 32768/16,
+    .reg\_rate\_div   = 0,    
+    .reg\_lpf        = 1,    
+    .reg\_gyro\_fsr   = 0,    
+    .reg\_accel\_fsr  = 0x18, 
+    .wait\_ms        = 50,
+    .packet\_thresh  = 5,    
+    .min\_dps        = 10.f,
+    .max\_dps        = 105.f,
+    .max\_gyro\_var   = 0.14f,
+    .min\_g          = 0.3f,
+    .max\_g          = 0.95f,
+    .max\_accel\_var  = 0.14f
+\}
+\end{DoxyCode}

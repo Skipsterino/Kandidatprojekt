@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['adc_5fdistance_5fpair',['ADC_distance_pair',['../struct_a_d_c__distance__pair.html',1,'']]],
-  ['alpha',['alpha',['../state__machine_8h.html#ab1551d8043c2aa4410fb7dbb1fe3be7b',1,'state_machine.h']]]
+  ['_5fi2c_5fh_5f',['_I2C_H_',['../_i2_c_8c.html#a9dcbbd7906a2df6cfb055ff82ff38d33',1,'I2C.c']]],
+  ['_5forientation',['_orientation',['../sensor_8h.html#abc4898c1a34c444db2963e65dccbf97c',1,'sensor.h']]]
 ];
