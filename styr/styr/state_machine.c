@@ -628,10 +628,10 @@ void update_state()
 		
 		case PREPARE_CLIMBING_UP:
 		{
-			if (cycle_count > 3 && IR_1 > PREPARE_CLIMBING_UP_DISTANCE + 10) //Fanns egentligen inget hinder? TESTA, ej tillräckligt felskydd?
-			{
-				ROBOT_STATE = CORRIDOR;
-			}
+			//if (cycle_count > 2 && IR_1 > PREPARE_CLIMBING_UP_DISTANCE + 10) // HUR FELSÄKRA PÅ BRA SÄTT!?
+			//{
+				//ROBOT_STATE = CORRIDOR;
+			//}
 			if (cycle_count > 6) //Testa fram lagom värde så avstånd till hinder blir lagom för klättring
 			{
 				ROBOT_STATE = CLIMBING_UP;
@@ -874,7 +874,7 @@ void run_state()
 		
 		case PREPARE_CLIMBING_DOWN:
 		{
-			Walk_Half_Cycle(2.2, alpha, 7.7); //Samma som i LOW_OBSTACLE
+			Walk_Half_Cycle(1.95, alpha, 7.7); //Samma som i LOW_OBSTACLE
 			++cycle_count;
 			break;
 		}
