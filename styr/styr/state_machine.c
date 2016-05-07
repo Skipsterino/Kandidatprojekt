@@ -39,51 +39,24 @@ void calculate_Yaw()
 			break;
 		}
 		
-		case OUT_OF_CORRIDOR_RIGHT_WALL:
-		case OUT_OF_TURN_LEFT:
-		case OUT_OF_JUNCTION_C_LEFT:
 		case JUNCTION_B_LEFT:
-		case INTO_JUNCTION_A_LEFT:
-		{
-			Yaw = IR_Yaw_right;
-			break;
-		}
-		
-		case OUT_OF_CORRIDOR_LEFT_WALL:
-		case OUT_OF_TURN_RIGHT:
-		case OUT_OF_JUNCTION_C_RIGHT:
-		case JUNCTION_B_RIGHT:
-		case INTO_JUNCTION_A_RIGHT:
-		{
-			Yaw = IR_Yaw_left;
-			break;
-		}
-		
-		case OUT_OF_CORRIDOR_NO_WALL:
-		case OUT_OF_JUNCTION_A_RIGHT:
-		case OUT_OF_JUNCTION_A_LEFT:
-		{
-			Yaw = 0;
-			break;
-		}
-		
-		/////////////////////////////// START TEST LÅNGA Å-GRÄNDER
-		
-		case OUT_OF_JUNCTION_F:
-		case INTO_JUNCTION_E_LEFT:
+		case OUT_OF_CORRIDOR_RIGHT_WALL:
+		case OUT_OF_JUNCTION_RIGHT_WALL:
+		case RIGHT_WALL:
 		{
 			Yaw = IR_Yaw_right;
 			break;
 		}
 		
 		case JUNCTION_E_RIGHT:
+		case JUNCTION_B_RIGHT:
+		case OUT_OF_CORRIDOR_LEFT_WALL:
+		case OUT_OF_JUNCTION_LEFT_WALL:
+		case LEFT_WALL:
 		{
 			Yaw = IR_Yaw_left;
 			break;
 		}
-	
-		
-		////////////////////////////// SLUT TEST LÅNGA Å-GRÄNDER
 		
 		default:
 		Yaw = 0;		//Om inget annat är sagt görs ingen reglering
@@ -108,73 +81,30 @@ void calculate_p_part()
 			break;
 		}
 		
-		case OUT_OF_CORRIDOR_RIGHT_WALL:
-		case OUT_OF_TURN_LEFT:
-		case OUT_OF_JUNCTION_C_LEFT:
 		case JUNCTION_B_LEFT:
-		case INTO_JUNCTION_A_LEFT:
-		{
-			p_part = ((IR_2 + IR_3)/2 + CENTRE_OFFSET)*cos(Yaw_rad) - CORRIDOR_WIDTH/2;
-			break;
-		}
-		
-		case OUT_OF_CORRIDOR_LEFT_WALL:
-		case OUT_OF_TURN_RIGHT:
-		case OUT_OF_JUNCTION_C_RIGHT:
-		case JUNCTION_B_RIGHT:
-		case INTO_JUNCTION_A_RIGHT:
-		{
-			p_part = CORRIDOR_WIDTH/2 - ((IR_5 + IR_6)/2 + CENTRE_OFFSET)*cos(Yaw_rad);
-			break;
-		}
-		
-		case OUT_OF_CORRIDOR_NO_WALL:
-		case OUT_OF_JUNCTION_A_RIGHT:
-		case OUT_OF_JUNCTION_A_LEFT:
-		{
-			p_part = 0;
-			break;
-		}
-		
-		case OUT_OF_JUNCTION_A:
-		{
-			p_part = (IR_2 - IR_6);
-			break;
-		}
-		
-		///////////////////////////////////////////// START AV TEST 4-VÄGSKORSNING
-		
-		case OUT_OF_JUNCTION_D:
-		{
-			p_part = (IR_2 - IR_6);
-			break;
-		}
-		
-		////////////////////////////////////////// SLUT AV TEST 4-VÄGSKORSNING
-		
-		
-		/////////////////////////////// START TEST LÅNGA Å-GRÄNDER
-		
-		case OUT_OF_JUNCTION_F:
-		case INTO_JUNCTION_E_LEFT:
+		case OUT_OF_CORRIDOR_RIGHT_WALL:
+		case OUT_OF_JUNCTION_RIGHT_WALL:
+		case RIGHT_WALL:
 		{
 			p_part = ((IR_2 + IR_3)/2 + CENTRE_OFFSET)*cos(Yaw_rad) - CORRIDOR_WIDTH/2;
 			break;
 		}
 		
 		case JUNCTION_E_RIGHT:
+		case JUNCTION_B_RIGHT:
+		case OUT_OF_CORRIDOR_LEFT_WALL:
+		case OUT_OF_JUNCTION_LEFT_WALL:
+		case LEFT_WALL:
 		{
 			p_part = CORRIDOR_WIDTH/2 - ((IR_5 + IR_6)/2 + CENTRE_OFFSET)*cos(Yaw_rad);
 			break;
 		}
 		
-		case OUT_OF_JUNCTION_E:
+		case INTO_CORRIDOR_NO_WALL:
 		{
 			p_part = (IR_2 - IR_6);
 			break;
 		}
-		
-		////////////////////////////// SLUT TEST LÅNGA Å-GRÄNDER
 		
 		default:
 		p_part = 0;		//Om inget annat är sagt görs ingen reglering
@@ -237,15 +167,6 @@ void update_state()
 			break;
 		}
 		
-		//case CORRIDOR_ONE_UL_HIT:
-		//{
-		//if ((US < US_HIGH_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-		//{
-		//ROBOT_STATE = INTO_HIGH_OBSTACLE;
-		//}
-		//break;
-		//}
-		
 		case END_OF_COURSE:
 		case STOP:
 		{
@@ -253,22 +174,11 @@ void update_state()
 		}
 		
 		case OUT_OF_CORRIDOR_LEFT_WALL:
-		case OUT_OF_CORRIDOR_RIGHT_WALL:
 		{
-			if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 < SHORT_TURN_DISTANCE))
+			if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			{
-				ROBOT_STATE = TURN_RIGHT;
-			}
-			
-			else if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_0 < SHORT_TURN_DISTANCE))
-			{
-
-				ROBOT_STATE = TURN_LEFT;
-			}
-			
-			else if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = CORRIDOR;
+				ROBOT_STATE = LEFT_WALL;
+				cycle_count = 0;
 			}
 			
 			else if (((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
@@ -279,177 +189,109 @@ void update_state()
 				ROBOT_STATE = OUT_OF_CORRIDOR_NO_WALL;
 			}
 			
-			else if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) &&
-			(IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 < FORWARD_DEAD_END_DISTANCE) && (IR_0 > JUNCTION_A_FORWARD_DISTANCE))
+			break;
+		}
+		
+		case OUT_OF_CORRIDOR_RIGHT_WALL:
+		{
+			if ((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE))
 			{
+				ROBOT_STATE = RIGHT_WALL;
 				cycle_count = 0;
-				ROBOT_STATE = INTO_JUNCTION_A_RIGHT;
 			}
 			
-			else if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) &&
-			(IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_0 < FORWARD_DEAD_END_DISTANCE) && (IR_0 > JUNCTION_A_FORWARD_DISTANCE))
+			else if (((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
+			|| ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
+			|| ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
+			|| ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE)))
 			{
-				cycle_count = 0;
-				ROBOT_STATE = INTO_JUNCTION_A_LEFT;
+				ROBOT_STATE = OUT_OF_CORRIDOR_NO_WALL;
+			}
+			
+			break;
+		}
+		
+		case LEFT_WALL:
+		{
+			if (cycle_count > 2)
+			{
+				ROBOT_STATE = DETERMINE_JUNCTION_LEFT_WALL;
+			}
+			
+			break;
+		}
+		
+		case RIGHT_WALL:
+		{
+			if (cycle_count > 2)
+			{
+				ROBOT_STATE = DETERMINE_JUNCTION_RIGHT_WALL;
+			}
+			
+			break;
+		}
+		
+		case DETERMINE_JUNCTION_LEFT_WALL:
+		{
+			if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 < 70))
+			{
+				ROBOT_STATE = TURN_RIGHT;
+			}
+			
+			else if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) &&
+			(IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 70) && (IR_0 < 150))
+			{
+				ROBOT_STATE = JUNCTION_A_RIGHT;
 			}
 
 			else if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < SIDE_DEAD_END_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < SIDE_DEAD_END_DISTANCE) &&
-			(IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > FORWARD_DEAD_END_DISTANCE))
+			(IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 150))
 			{
 				ROBOT_STATE = JUNCTION_B_RIGHT;
 			}
 			
-			else if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < SIDE_DEAD_END_DISTANCE) &&
-			(IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < SIDE_DEAD_END_DISTANCE) && (IR_0 > FORWARD_DEAD_END_DISTANCE))
+			else if (((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 150))
+			||((IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 150)))
+			{
+				ROBOT_STATE = JUNCTION_E_RIGHT;
+			}
+			
+			break;
+			
+		}
+		
+		case DETERMINE_JUNCTION_RIGHT_WALL:
+		{
+			if ((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_0 < 70))
+			{
+				ROBOT_STATE = TURN_LEFT;
+			}
+			
+			else if ((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) &&
+			(IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 70) && (IR_0 < 150))
+			{
+				ROBOT_STATE = JUNCTION_A_LEFT;
+			}
+			
+			else if ((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < SIDE_DEAD_END_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < SIDE_DEAD_END_DISTANCE) &&
+			(IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 150))
 			{
 				ROBOT_STATE = JUNCTION_B_LEFT;
 			}
 			
-			/////////////////////////////////////////////// START TEST LÅNGA Å-GRÄNDER
-			
-			else if ((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > FORWARD_DEAD_END_DISTANCE))
+			else if (((IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 150))
+			||((IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 150)))
 			{
-				ROBOT_STATE = JUNCTION_E_RIGHT; //
-			}
-			
-			else if ((IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > FORWARD_DEAD_END_DISTANCE))
-			{
-				cycle_count = 0;
-				ROBOT_STATE = INTO_JUNCTION_E_LEFT; //
-			}
-			
-			//////////////////////////////////////////////// SLUT TEST LÅNGA Å-GRÄNDER
-			
-			break;
-		}
-		
-		
-		/////////////////////////////////////////////// START TEST LÅNGA Å-GRÄNDER
-		
-		case INTO_JUNCTION_E_LEFT: //
-		{
-			if (cycle_count > 2)
-			{
-				ROBOT_STATE = JUNCTION_E_LEFT; //
-			}
-			break;
-		}
-		
-		case JUNCTION_E_LEFT: //
-		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = OUT_OF_JUNCTION_E_LEFT; //
+				ROBOT_STATE = JUNCTION_E_LEFT;
 			}
 			
 			break;
 		}
-		
-		case JUNCTION_E_RIGHT: //
-		{
-			if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = CORRIDOR;
-			}
-			
-			break;
-		}
-		
-		case JUNCTION_F: //
-		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = OUT_OF_JUNCTION_F; //
-			}
-			
-			break;
-		}
-		
-		case OUT_OF_JUNCTION_F: //
-		{
-			if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = CORRIDOR;
-			}
-			
-			break;
-		}
-		
-		case OUT_OF_JUNCTION_E_LEFT: //
-		{
-			if (((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-			|| ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-			|| ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE)))
-			{
-				ROBOT_STATE = OUT_OF_JUNCTION_E; //
-				trust_sensors = false;
-			}
-			
-			else if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = CORRIDOR;
-			}
-			
-			break;
-		}
-		
-			case OUT_OF_JUNCTION_E:
-			{
-				if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-				{
-					ROBOT_STATE = CORRIDOR;
-				}
-				
-				break;
-			}
-		
-		//////////////////////////////////////////////// SLUT TEST LÅNGA Å-GRÄNDER
-		
-		case INTO_JUNCTION_A_RIGHT:
-		{
-			if (cycle_count > 2)
-			{
-				ROBOT_STATE = JUNCTION_A_RIGHT;
-			}
-			break;
-		}
-		
-		case INTO_JUNCTION_A_LEFT:
-		{
-			if (cycle_count > 2)
-			{
-				ROBOT_STATE = JUNCTION_A_LEFT;
-			}
-			break;
-		}
-		
-		//case OUT_OF_CORRIDOR_NO_WALL:
-		//{
-		//if (((IR_2 > CORRIDOR_SIDE_DISTANCE) /*&& (IR_2 < SIDE_DEAD_END_DISTANCE)*/ && (IR_3 > CORRIDOR_SIDE_DISTANCE) /*&& (IR_3 < SIDE_DEAD_END_DISTANCE)*/ && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_0 < JUNCTION_C_TURN_DISTANCE))
-		//|| ((IR_2 > CORRIDOR_SIDE_DISTANCE) /*&& (IR_2 < SIDE_DEAD_END_DISTANCE)*/ && (IR_3 > CORRIDOR_SIDE_DISTANCE) /*&& (IR_3 < SIDE_DEAD_END_DISTANCE)*/ && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_0 < JUNCTION_C_TURN_DISTANCE)))
-		//{
-		//ROBOT_STATE = JUNCTION_C_LEFT;
-		//}
-		//
-		//else if (((IR_5 > CORRIDOR_SIDE_DISTANCE) /*&& (IR_5 < SIDE_DEAD_END_DISTANCE)*/ && (IR_6 > CORRIDOR_SIDE_DISTANCE)/* && (IR_6 < SIDE_DEAD_END_DISTANCE) */&& (IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_0 < JUNCTION_C_TURN_DISTANCE))
-		//|| ((IR_5 > CORRIDOR_SIDE_DISTANCE) /*&& (IR_5 < SIDE_DEAD_END_DISTANCE)*/ && (IR_6 > CORRIDOR_SIDE_DISTANCE) /*&& (IR_6 < SIDE_DEAD_END_DISTANCE) */&& (IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_0 < JUNCTION_C_TURN_DISTANCE)))
-		//{
-		//ROBOT_STATE = JUNCTION_C_RIGHT;
-		//}
-		//
-		//else if ((IR_0 > END_OF_COURSE_DISTANCE) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
-		//{
-		//ROBOT_STATE = END_OF_COURSE;
-		//}
-		//
-		//break;
-		//}
-		
-		/////////////////////////////////////////////////////////////////////////////// START AV TEST 4-VÄGSKORSNING
 		
 		case OUT_OF_CORRIDOR_NO_WALL:
 		{
-			if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
+			if (((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE))
+			|| ((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE)))
 			{
 				ROBOT_STATE = NO_WALL;
 				cycle_count = 0;
@@ -460,15 +302,15 @@ void update_state()
 		
 		case NO_WALL:
 		{
-			if (cycle_count > 3)
+			if (cycle_count > 2)
 			{
-				ROBOT_STATE = DETERMINE_JUNCTION;
+				ROBOT_STATE = DETERMINE_JUNCTION_NO_WALL;
 			}
 			
 			break;
 		}
 		
-		case DETERMINE_JUNCTION:
+		case DETERMINE_JUNCTION_NO_WALL:
 		{
 			if (((IR_2 < SIDE_DEAD_END_DISTANCE) && (IR_3 < SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_0 < 70))
 			|| ((IR_2 < SIDE_DEAD_END_DISTANCE) && (IR_3 < SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_0 < 70)))
@@ -499,138 +341,134 @@ void update_state()
 				ROBOT_STATE = JUNCTION_D_STRAIGHT;
 			}
 			
-			else if ((IR_0 > END_OF_COURSE_DISTANCE) && (IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE))
+			else if (((IR_2 < SIDE_DEAD_END_DISTANCE) && (IR_3 < SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_0 > 150))
+			|| ((IR_2 < SIDE_DEAD_END_DISTANCE) && (IR_3 < SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_0 > 150)))
 			{
-				ROBOT_STATE = END_OF_COURSE;
+				ROBOT_STATE = JUNCTION_H_LEFT;
+				cycle_count = 0;
 			}
 			
-			/////////////////////////////////////////////// START TEST LÅNGA Å-GRÄNDER
+			else if (((IR_5 < SIDE_DEAD_END_DISTANCE) && (IR_6 < SIDE_DEAD_END_DISTANCE) && (IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_0 > 150))
+			|| ((IR_5 < SIDE_DEAD_END_DISTANCE) && (IR_6 < SIDE_DEAD_END_DISTANCE) && (IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_0 > 150)))
+			{
+				ROBOT_STATE = JUNCTION_H_RIGHT;
+			}
+			
+			//else if ((IR_0 > END_OF_COURSE_DISTANCE) && (IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE))
+			//{
+				//ROBOT_STATE = END_OF_COURSE;
+			//}
 			
 			else if (((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_0 < 70))
 			|| ((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_0 < 70))
 			|| ((IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_0 < 70))
 			|| ((IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_0 < 70)))
 			{
-				ROBOT_STATE = JUNCTION_F; //
+				ROBOT_STATE = JUNCTION_F;
 			}
-
 			
+			else if (((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_0 > 70) && (IR_0 < 150))
+			|| ((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_0 > 70) && (IR_0 < 150))
+			|| ((IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_0 > 70) && (IR_0 < 150))
+			|| ((IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_0 > 70) && (IR_0 < 150)))
+			{
+				ROBOT_STATE = JUNCTION_G;
+			}
 			
-			
-			//////////////////////////////////////////////// SLUT TEST LÅNGA Å-GRÄNDER
+			else if (((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_0 > 150))
+			|| ((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_0 > 150))
+			|| ((IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE) && (IR_0 > 150))
+			|| ((IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE) && (IR_0 > 150)))
+			{
+				ROBOT_STATE = JUNCTION_I_OR_END;
+				cycle_count = 0;
+			}
 			
 			break;
 			
-		}
-		
-		case JUNCTION_D_RIGHT: //
-		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = OUT_OF_JUNCTION_D_RIGHT;
-			}
-			
-			break;
-		}
-		
-		case JUNCTION_D_LEFT: //
-		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = OUT_OF_JUNCTION_D_LEFT;
-			}
-			
-			break;
-		}
-		
-		case OUT_OF_JUNCTION_D_LEFT:
-		case OUT_OF_JUNCTION_D_RIGHT:
-		case JUNCTION_D_STRAIGHT:
-		{
-			if (((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-			|| ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-			|| ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE)))
-			{
-				ROBOT_STATE = OUT_OF_JUNCTION_D;
-				trust_sensors = false;
-			}
-			
-			else if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = CORRIDOR;
-			}
-			
-			break;
-		}
-		
-		case OUT_OF_JUNCTION_D:
-		{
-			if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = CORRIDOR;
-			}
-			
-			break;
-		}
-		
-		
-		/////////////////////////////////////////////////////////////////////////////////// SLUT AV TEST 4-VÄGSKORSNING
-		
-		case TURN_RIGHT:
-		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = OUT_OF_TURN_RIGHT;
-			}
-			
-			break;
-		}
-		
-		case TURN_LEFT:
-		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = OUT_OF_TURN_LEFT;
-			}
-			
-			break;
-		}
-
-		case JUNCTION_A_RIGHT:
-		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE))
-			{
-				ROBOT_STATE = OUT_OF_JUNCTION_A_RIGHT;
-			}
-			
-			break;
 		}
 		
 		case JUNCTION_A_LEFT:
+		case JUNCTION_A_RIGHT:
+		case JUNCTION_E_LEFT:
+		case JUNCTION_I:
 		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE))
+			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
 			{
-				ROBOT_STATE = OUT_OF_JUNCTION_A_LEFT;
+				ROBOT_STATE = OUT_OF_JUNCTION_NO_WALL;
 			}
 			
 			break;
 		}
 		
+		case TURN_RIGHT:
 		case JUNCTION_C_RIGHT:
 		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE))
+			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			{
-				ROBOT_STATE = OUT_OF_JUNCTION_C_RIGHT;
+				ROBOT_STATE = OUT_OF_JUNCTION_LEFT_WALL;
 			}
 			
 			break;
 		}
 		
+		case JUNCTION_F:
+		case TURN_LEFT:
 		case JUNCTION_C_LEFT:
 		{
-			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE))
+			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE))
 			{
-				ROBOT_STATE = OUT_OF_JUNCTION_C_LEFT;
+				ROBOT_STATE = OUT_OF_JUNCTION_RIGHT_WALL;
+			}
+			
+			break;
+		}
+		
+		case JUNCTION_D_RIGHT:
+		{
+			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < SIDE_DEAD_END_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < SIDE_DEAD_END_DISTANCE))
+			{
+				ROBOT_STATE = OUT_OF_JUNCTION_NO_WALL;
+			}
+			
+			break;
+		}
+		
+		case JUNCTION_G:
+		case JUNCTION_D_LEFT:
+		{
+			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < SIDE_DEAD_END_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < SIDE_DEAD_END_DISTANCE))
+			{
+				ROBOT_STATE = OUT_OF_JUNCTION_NO_WALL;
+			}
+			
+			break;
+		}
+		
+		case JUNCTION_H_LEFT:
+		{
+			if ((IR_0 > SIDE_DEAD_END_DISTANCE-30) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) 
+				&& (((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE)) || ((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE)) || ((IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE)) || ((IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE))))
+			{
+				ROBOT_STATE = OUT_OF_JUNCTION_NO_WALL;
+			}
+			
+			break;
+		}
+		
+		case JUNCTION_I_OR_END:
+		{
+			if (cycle_count > 4)
+			{
+				if ((IR_0 > 100) && (IR_2 > 100) && (IR_3 > 100))
+				{
+					ROBOT_STATE = END_OF_COURSE;
+				}
+				
+				else
+				{
+					ROBOT_STATE = JUNCTION_I;
+				}
 			}
 			
 			break;
@@ -646,13 +484,12 @@ void update_state()
 			break;
 		}
 		
+		case JUNCTION_E_RIGHT:
 		case JUNCTION_B_LEFT:
 		case JUNCTION_B_RIGHT:
-		case OUT_OF_JUNCTION_C_LEFT:
-		case OUT_OF_JUNCTION_C_RIGHT:
-		case OUT_OF_TURN_LEFT:
-		case OUT_OF_TURN_RIGHT:
-		case OUT_OF_JUNCTION_A:
+		case INTO_CORRIDOR_NO_WALL:
+		case OUT_OF_JUNCTION_RIGHT_WALL:
+		case OUT_OF_JUNCTION_LEFT_WALL:
 		{
 			if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			{
@@ -662,14 +499,15 @@ void update_state()
 			break;
 		}
 		
-		case OUT_OF_JUNCTION_A_LEFT:
-		case OUT_OF_JUNCTION_A_RIGHT:
+		case JUNCTION_H_RIGHT:
+		case JUNCTION_D_STRAIGHT:
+		case OUT_OF_JUNCTION_NO_WALL:
 		{
 			if (((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			|| ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			|| ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE)))
 			{
-				ROBOT_STATE = OUT_OF_JUNCTION_A;
+				ROBOT_STATE = INTO_CORRIDOR_NO_WALL;
 				trust_sensors = false;
 			}
 			
@@ -763,13 +601,12 @@ void run_state()
 	
 	switch (ROBOT_STATE)
 	{
-		case OUT_OF_JUNCTION_A:
-		case OUT_OF_JUNCTION_C_RIGHT:
-		case OUT_OF_JUNCTION_C_LEFT:
+		case JUNCTION_E_RIGHT:
+		case INTO_CORRIDOR_NO_WALL:
 		case JUNCTION_B_LEFT:
 		case JUNCTION_B_RIGHT:
-		case OUT_OF_TURN_LEFT:
-		case OUT_OF_TURN_RIGHT:
+		case OUT_OF_JUNCTION_LEFT_WALL:
+		case OUT_OF_JUNCTION_RIGHT_WALL:
 		case CORRIDOR:
 		{
 			if(trust_sensors)
@@ -779,7 +616,7 @@ void run_state()
 			
 			else
 			{
-				Walk_Half_Cycle(4, 0.01, height);  // XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
+				Walk_Half_Cycle(4, 0, height);
 				trust_sensors = true;			// Default så litar vi på sensorerna
 			}
 			
@@ -791,139 +628,50 @@ void run_state()
 		{
 			if (cycle_count <= 1)
 			{
-				Walk_Half_Cycle(4, 0.01, height); // XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
+				Walk_Half_Cycle(3, 0, height);
 				++cycle_count;
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(4, alpha, height);
+				Walk_Half_Cycle(3, alpha, height);
 			}
 			
-			break;
-		}
-		
-		case OUT_OF_JUNCTION_A_RIGHT:
-		case OUT_OF_JUNCTION_A_LEFT:
-		{
-			Walk_Half_Cycle(4, 0.01, height);	// XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
 			break;
 		}
 		
 		case OUT_OF_CORRIDOR_NO_WALL:
 		{
-			Walk_Half_Cycle(3, 0.01, 0.8*height);		// Sänk höjden så att junction_C kan identifieras även om högt hinder är placerat precis intill
+			Walk_Half_Cycle(3, 0, height);
 			break;
 		}
-		
-		case INTO_JUNCTION_A_LEFT:
-		case INTO_JUNCTION_A_RIGHT:
-		{
-			Walk_Half_Cycle(4, alpha, height);
-			++cycle_count;
-			break;
-		}
-		
-		/////////////////////////////////////////////////// START AV TEST 4-VÄGSKORSNING
 		
 		case NO_WALL:
 		{
-			Walk_Half_Cycle(3, 0.01, 0.8*height);
+			Walk_Half_Cycle(4, 0, 0.8*height);
 			++cycle_count;
 			break;
 		}
 		
-		case DETERMINE_JUNCTION:
+		case RIGHT_WALL:
+		case LEFT_WALL:
 		{
+			Walk_Half_Cycle(4, alpha, 0.8*height);
+			++cycle_count;
 			break;
 		}
 		
-		case JUNCTION_D_RIGHT:
-		{
-			Walk_Half_Cycle(0, 0.2, height);
-			break;
-		}
-		
-		case JUNCTION_D_LEFT:
-		{
-			Walk_Half_Cycle(0, -0.2, height);
-			break;
-		}
-		
-		case OUT_OF_JUNCTION_D_LEFT:
-		case OUT_OF_JUNCTION_D_RIGHT:
+		case JUNCTION_H_RIGHT:
 		case JUNCTION_D_STRAIGHT:
+		case OUT_OF_JUNCTION_NO_WALL:
 		{
-			Walk_Half_Cycle(4, 0.01, height);	// XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
+			Walk_Half_Cycle(4, 0, height);
 			break;
 		}
 		
-		case OUT_OF_JUNCTION_D:
-		{
-			if(trust_sensors)
-			{
-				Walk_Half_Cycle(4, alpha, height);
-			}
-			
-			else
-			{
-				Walk_Half_Cycle(4, 0.01, height);  // XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
-				trust_sensors = true;			// Default så litar vi på sensorerna
-			}
-			
-			break;
-		}
-		
-		/////////////////////////////////////////////////// SLUT AV TEST 4-VÄGSKORSNING
-		
-		
-		/////////////////////////////////////////////////// START TEST LÅNGA Å-GRÄNDER
-		
-		case INTO_JUNCTION_E_LEFT:
-		{
-			Walk_Half_Cycle(4, alpha, height);
-			++cycle_count;
-			break;
-		}
-		
-		case JUNCTION_F:
-		case JUNCTION_E_LEFT:
-		{
-			Walk_Half_Cycle(0, -0.2, height);
-			break;
-		}
-		
-		case OUT_OF_JUNCTION_F:
-		case JUNCTION_E_RIGHT:
-		{
-			Walk_Half_Cycle(4, alpha, height);
-			break;
-		}
-		
-		case OUT_OF_JUNCTION_E_LEFT:
-		{
-			Walk_Half_Cycle(4, 0.01, height);	// XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
-			break;
-		}
-		
-		case OUT_OF_JUNCTION_E:
-		{
-			if(trust_sensors)
-			{
-				Walk_Half_Cycle(4, alpha, height);
-			}
-			
-			else
-			{
-				Walk_Half_Cycle(4, 0.01, height);  // XXXXX Ändra 0.01 till 0 när den ej driver så till vänster!
-				trust_sensors = true;			// Default så litar vi på sensorerna
-			}
-			
-			break;
-		}
-		
-		//////////////////////////////////////////////////// SLUT TEST LÅNGA Å-GRÄNDER
-		
+		case DETERMINE_JUNCTION_RIGHT_WALL:
+		case DETERMINE_JUNCTION_LEFT_WALL:
+		case DETERMINE_JUNCTION_NO_WALL:
 		case END_OF_COURSE:
 		case STOP:
 		{
@@ -933,17 +681,31 @@ void run_state()
 		case JUNCTION_C_RIGHT:
 		case JUNCTION_A_RIGHT:
 		case TURN_RIGHT:
+		case JUNCTION_D_RIGHT:
 		{
 			Walk_Half_Cycle(0, 0.2, height);
 			break;
 		}
 		
+		case JUNCTION_I:
+		case JUNCTION_G:
+		case JUNCTION_F:
+		case JUNCTION_E_LEFT:
 		case DEAD_END:
 		case JUNCTION_C_LEFT:
 		case JUNCTION_A_LEFT:
 		case TURN_LEFT:
+		case JUNCTION_D_LEFT:
+		case JUNCTION_H_LEFT:
 		{
 			Walk_Half_Cycle(0, -0.2, height);
+			break;
+		}
+		
+		case JUNCTION_I_OR_END:
+		{
+			Walk_Half_Cycle(0, -0.2, height);
+			++cycle_count;
 			break;
 		}
 		

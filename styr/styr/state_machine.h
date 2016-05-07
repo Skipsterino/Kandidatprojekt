@@ -28,54 +28,66 @@ typedef enum {
 	DEAD_END = 2,
 	CORRIDOR = 3,
 	
-	OUT_OF_CORRIDOR_NO_WALL = 4,
+	OUT_OF_CORRIDOR_RIGHT_WALL = 4,
 	OUT_OF_CORRIDOR_LEFT_WALL = 5,
-	OUT_OF_CORRIDOR_RIGHT_WALL = 6,
+	OUT_OF_CORRIDOR_NO_WALL = 6,
 	
-	INTO_HIGH_OBSTACLE = 7,
-	CRAWLING_UNDER_HIGH_OBSTACLE = 8,
+	LEFT_WALL = 7,
+	RIGHT_WALL = 8,
+	NO_WALL = 9,
 	
-	PREPARE_CLIMBING_UP = 9,
-	CLIMBING_UP = 10,
-	LOW_OBSTACLE = 11,
-	PREPARE_CLIMBING_DOWN = 12,	
-	CLIMBING_DOWN = 13,
+	DETERMINE_JUNCTION_RIGHT_WALL = 10,
+	DETERMINE_JUNCTION_LEFT_WALL = 11,
+
+	DETERMINE_JUNCTION_NO_WALL = 12,
+
+	OUT_OF_JUNCTION_RIGHT_WALL = 13,	
+	OUT_OF_JUNCTION_LEFT_WALL = 14,
+	OUT_OF_JUNCTION_NO_WALL = 15,
 	
-	INTO_JUNCTION_A_RIGHT = 14,
-	INTO_JUNCTION_A_LEFT = 15,
+	INTO_CORRIDOR_NO_WALL = 16,
 	
-	TURN_RIGHT = 16,
-	TURN_LEFT = 17,
-	JUNCTION_A_RIGHT = 18,
-	JUNCTION_A_LEFT = 19,
-	JUNCTION_B_RIGHT = 20,
-	JUNCTION_B_LEFT = 21,
-	JUNCTION_C_RIGHT = 22,
-	JUNCTION_C_LEFT = 23,
-	END_OF_COURSE = 24,
+	INTO_HIGH_OBSTACLE = 17,
+	CRAWLING_UNDER_HIGH_OBSTACLE = 18,
 	
-	OUT_OF_TURN_RIGHT = 25,
-	OUT_OF_TURN_LEFT = 26,
-	OUT_OF_JUNCTION_A = 27,
-	OUT_OF_JUNCTION_A_RIGHT = 28,
-	OUT_OF_JUNCTION_A_LEFT = 29,
-	OUT_OF_JUNCTION_C_RIGHT = 30,
-	OUT_OF_JUNCTION_C_LEFT = 31,
-	JUNCTION_D_STRAIGHT = 32,
-	JUNCTION_D_RIGHT = 33,
-	JUNCTION_D_LEFT = 34,
-	OUT_OF_JUNCTION_D_LEFT = 35,
-	OUT_OF_JUNCTION_D_RIGHT = 36,
-	OUT_OF_JUNCTION_D = 37,  
-	NO_WALL = 38, 
-	DETERMINE_JUNCTION = 39,
-	JUNCTION_E_RIGHT = 40,
-	JUNCTION_E_LEFT = 41,
-	INTO_JUNCTION_E_LEFT = 42,
-	OUT_OF_JUNCTION_E_LEFT = 43,
-	JUNCTION_F = 44,
-	OUT_OF_JUNCTION_F = 45,
-	OUT_OF_JUNCTION_E = 46,
+	PREPARE_CLIMBING_UP = 19,
+	CLIMBING_UP = 20,
+	LOW_OBSTACLE = 21,
+	PREPARE_CLIMBING_DOWN = 22,
+	CLIMBING_DOWN = 23,
+	
+	TURN_RIGHT = 24,
+	TURN_LEFT = 25,
+	JUNCTION_A_RIGHT = 26,
+	JUNCTION_A_LEFT = 27,
+	JUNCTION_B_RIGHT = 28,
+	JUNCTION_B_LEFT = 29,
+	JUNCTION_C_RIGHT = 30,
+	JUNCTION_C_LEFT = 31,
+	JUNCTION_D_RIGHT = 32,
+	JUNCTION_D_LEFT = 33,
+	JUNCTION_D_STRAIGHT = 34,
+	JUNCTION_E_RIGHT = 35,
+	JUNCTION_E_LEFT = 36,
+	JUNCTION_F = 37,
+	JUNCTION_G = 38,
+	JUNCTION_H_RIGHT = 39,
+	JUNCTION_H_LEFT = 40,
+	JUNCTION_I = 41,
+	
+	JUNCTION_I_OR_END = 42,
+	END_OF_COURSE = 43,
+	
+	TEST_STATE_1 = 44,
+	TEST_STATE_2 = 45,
+	TEST_STATE_3 = 46,
+	TEST_STATE_4 = 47,
+	TEST_STATE_5 = 48,
+	TEST_STATE_6 = 49,
+	TEST_STATE_7 = 50,
+	TEST_STATE_8 = 51,
+	TEST_STATE_9 = 52,
+	TEST_STATE_10 = 53,	
 } STATES;
 
 #define HALF_ROTATION_ANGLE 45			/**< Rotation angle for a 90 degree turn. */
@@ -84,11 +96,9 @@ typedef enum {
 #define SIDE_DEAD_END_DISTANCE 150		/**< Distance for determining whether dead end to right or left in junction. */
 #define END_OF_COURSE_DISTANCE 100		/**< Distance that IR_0, 2, 3, 5, 6 should be larger than at the end of the course. */
 #define SHORT_TURN_DISTANCE 38			/**< Distance to wall for rotating in turns and C junctions. */
-//#define LONG_TURN_DISTANCE 113			/**< Distance to wall for rotating in A junctions. */
 #define JUNCTION_C_TURN_DISTANCE 45
 #define FORWARD_DEAD_END_DISTANCE 180	/**< Distance for determining whether dead end straight ahead in junction or not. */
 #define JUNCTION_A_FORWARD_DISTANCE 80	/**< Distance for determining whether A junction or not (junction or turn?). */
-//#define LOW_OBSTACLE_DISTANCE 40		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
 #define PREPARE_CLIMBING_UP_DISTANCE 30	/**< Distance for preparing climbing onto low obstacle (if IR_1 is less than this). */
 #define PREPARE_CLIMBING_DOWN_DISTANCE 40	/**< Distance for preparing climbing down from low obstacle (if IR_1 is greater than this). */
 #define US_HIGH_OBSTACLE_DISTANCE 20	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
