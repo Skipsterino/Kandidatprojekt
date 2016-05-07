@@ -78,13 +78,13 @@ typedef enum {
 	JUNCTION_I_OR_END = 42,
 	END_OF_COURSE = 43,
 	
-	TEST_STATE_1 = 44,
-	TEST_STATE_2 = 45,
-	TEST_STATE_3 = 46,
-	TEST_STATE_4 = 47,
-	TEST_STATE_5 = 48,
-	TEST_STATE_6 = 49,
-	TEST_STATE_7 = 50,
+	SLOW_CORRIDOR = 44,			// TEST_STATE_1
+	DEAD_END_A_RIGHT = 45,		// TEST_STATE_2	
+	DEAD_END_A_LEFT = 46,		// TEST_STATE_3	
+	DEAD_END_B_RIGHT = 47,		// TEST_STATE_4
+	DEAD_END_B_LEFT = 48,		// TEST_STATE_5
+	DEAD_END_C = 49,			// TEST_STATE_6
+	DEAD_END_D = 50,			// TEST_STATE_7
 	TEST_STATE_8 = 51,
 	TEST_STATE_9 = 52,
 	TEST_STATE_10 = 53,	
@@ -92,7 +92,7 @@ typedef enum {
 
 #define HALF_ROTATION_ANGLE 45			/**< Rotation angle for a 90 degree turn. */
 #define FULL_ROTATION_ANGLE 90			/**< Rotation angle for a 180 degree turn. */
-#define CORRIDOR_SIDE_DISTANCE 60		/**< Distance for determining whether corridor or not. */
+#define CORRIDOR_SIDE_DISTANCE 70		/**< Distance for determining whether corridor or not. */
 #define SIDE_DEAD_END_DISTANCE 150		/**< Distance for determining whether dead end to right or left in junction. */
 #define END_OF_COURSE_DISTANCE 100		/**< Distance that IR_0, 2, 3, 5, 6 should be larger than at the end of the course. */
 #define SHORT_TURN_DISTANCE 38			/**< Distance to wall for rotating in turns and C junctions. */
