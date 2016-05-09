@@ -22,6 +22,7 @@ uint8_t p2_down = 1; //benpar 2 mot mark
 
 
 //OBS tilfällig ändring i send legs kar!
+
 void Adjust_Stance_Climbed(char direction) //me no like 
 {
 	if(direction == 'u')
@@ -37,12 +38,7 @@ void Adjust_Stance_Climbed(char direction) //me no like
 	n_1=support_l/2 + cycle_length/2; 
 }
 
-void Set_Last_Heigth(float heigth)
-{
-	last_height = heigth;
-}
 
-	
 //LP-filtrerar input för att undvika våldsamheter Anropa limit_theta o limit_speed här, döp till LP_And_Limit_output, o begränsa höjd. Sätter även theta_max
 float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn_theta, float height)
 {
@@ -110,7 +106,7 @@ triple_float Adjust_Servo_Speed(float theta, int sgn_theta, int8_t leg_down)
 	
 	if(leg_down == 1)
 			{
-	speed_inner =  180 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	speed_inner =  200 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
 	speed_middle  = 100; 
 	speed_outer  =  100;
 			}     
@@ -148,12 +144,11 @@ void Adjust_Height(float l, float height_step, float corner_pitch)
 	return;
 }
 
-//skickar ut kartesiska koordinater till ben, trycker ner ensamt söden extra (anpassad för tripod) //testar att ha mindre x på hörnben
 void Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch, triple_float speed_p1, triple_float speed_p2) 
 {
 	Send_Leg5_Kar_And_Velocity(kar_p1.a, kar_p1.b - corner_pitch, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 	
 	Send_Leg3_Kar_And_Velocity(kar_p2.a, kar_p2.b, kar_p2.c, speed_p2.a, speed_p2.b, speed_p2.c); 
-	Send_Leg4_Kar_And_Velocity(kar_p1.a, kar_p1.b*0.75, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 	//OBS!!
+	Send_Leg4_Kar_And_Velocity(kar_p1.a, kar_p1.b*0.75, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 	//OBS!! ta bort efter servofix?? <------------------------------------------------------------------------
 	Send_Leg1_Kar_And_Velocity(kar_p1.a, kar_p1.b + corner_pitch, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 
 	Send_Leg2_Kar_And_Velocity(kar_p2.a, kar_p2.b + corner_pitch, kar_p2.c, speed_p2.a, speed_p2.b, speed_p2.c);
 	Send_Leg6_Kar_And_Velocity(kar_p2.a, kar_p2.b - corner_pitch, kar_p2.c, speed_p2.a, speed_p2.b, speed_p2.c);
@@ -410,73 +405,82 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 	}
 }
 
-
-/*void Walk_Half_Crab_Cycle(float speed) 
+//Crab 2.0 - The servokiller
+void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 {
-	return;
-	if( speed == 0 ) // gör inget
+	float l = 12;//13 låg //fötters förskjuting från kropp i x-led OBS orginal = 13, numera 12
+	float corner_pitch = 4; //förskjutning av arbetsområde i y-led för hörnben 8
+	int sgn_speed = (speed >= 0) - (speed < 0) ;
+	uint8_t walk_break = 1;
+	float stroke = 3 * sgn_speed;  //steglängd 2.2
+
+	if(speed == 0) // gör inget
 	{
 		return;
 	}
 	
-
-	//justeringar
-	float l = 13; //fötters förskjuting från kropp i x-led
-	float corner_pitch = 8; //förskjutning av arbetsområde i y-led för hörnben
-	
-	int sgn_speed = (speed >= 0) - (speed < 0) ;
-	uint8_t walk_break = 1;	
-	speed = Limit_Speed(speed, sgn_speed);
-	
-	float stroke = speed * 0.8; //steglängd 
-	unsigned int speed_drive =  150;
-	unsigned int speed_lift  =  250 + 30 * (sgn_speed * speed - 6);//fast värde 0x0100 //336 - 10 * //280
- 
-	//skickar hastighetsbegränsningar till servon.
-	Send_Inner_P1_Velocity(speed_drive);
-	Send_Middle_P1_Velocity(speed_lift);
-	Send_Outer_P1_Velocity(speed_lift);
-	Send_Inner_P2_Velocity(speed_drive);
-	Send_Middle_P2_Velocity(speed_lift);
-	Send_Outer_P2_Velocity(speed_lift);
-	
-	
-		if( last_height != 11)
-	{
-		Adjust_Height(l, (11-last_height)/support_l, corner_pitch);
-	}
-	
 	//gångloop, utför en halv gångfas och stannar när stödjande ben är i mitten av arbetsområde
-	 while( walk_break || ( n_1!= m/2 && n_1!= 3 * m/2 ))
+	while( walk_break || ( n_1 != support_l/2 && n_2 !=  support_l/2))
 	{
 		walk_break = 0;
-		
-		triple_float kar_p1 = Tripod(l, stroke, last_height,2, n_1); //kart koord för par 1
-		triple_float kar_p2 = Tripod(l, stroke, last_height,2, n_2); //kart koord för par 2
-		
-		//par 1 får pos
-		Send_Leg4_Kar(kar_p1.a - kar_p1.b, 0, kar_p1.c); 
-		Send_Leg1_Kar(kar_p1.a + kar_p1.b, corner_pitch, kar_p1.c);
-		Send_Leg5_Kar(kar_p1.a + kar_p1.b, - corner_pitch, kar_p1.c);
-			
-		//par 2 får pos
-		Send_Leg3_Kar(kar_p2.a + kar_p2.b, 0, kar_p2.c); 
-		Send_Leg2_Kar(kar_p2.a - kar_p2.b, corner_pitch, kar_p2.c);
-		Send_Leg6_Kar(kar_p2.a - kar_p2.b, - corner_pitch, kar_p2.c);
-		
-		if(walk_break || ( n+1 != m/2 && n+1 != 3 * m/2 ))
+			if(n_1 < cycle_length)
 		{
-			_delay_ms(10); // =5 delay för kart skippar på sista loopen, pga tids som mainloop tar TEST
-		}
-		
-		if(n < 2 * m)
-		{
-		n += 1; //stegar upp index
+			n_1 += 1; //stegar upp index
 		}
 		else
 		{
-			n = 1; //nollar index
-		}	
-	}
+			n_1 = 1; //nollar index
+		}
+		
+		n_2= n_1 + cycle_length/2; //barnpar 2 förskjuts en halv fas
+		
+		if(n_2 > cycle_length) //ser till att det blir cykliskt
+		{
+			n_2 -= cycle_length;
+		}
+		
+		if(n_1 <= 4 )
+		{
+			p1_down =1;
+		}
+		else
+		{
+			p1_down = 0;
+		}
+				
+		if((n_2 <= 4))
+		{
+			p2_down =1;
+		}
+		else
+		{
+			p2_down = 0;
+		}
+		
+		triple_float kar_p1;
+		triple_float kar_p2;
+		
+		//servospeeds
+		float speed_p1_middle = 150 - 80 * p1_down;
+		float speed_p1_outer = 150 - 80 * p1_down;
+		float speed_p2_middle = 150 - 80 * p2_down;
+		float speed_p2_outer = 150 - 80 * p2_down;
+
+		float lift =2; 
 	
-}*/ 
+			kar_p1 = Tripod(l, stroke, last_height, lift, n_1); //kart koord för par 1
+			kar_p2 = Tripod(l, stroke, last_height, lift, n_2); //kart koord för par 2
+			
+			Send_Leg5_Kar_And_Velocity(kar_p1.a - kar_p1.b, - corner_pitch, kar_p1.c, 100, speed_p1_middle, speed_p1_outer); 	
+			Send_Leg3_Kar_And_Velocity(kar_p2.a - kar_p2.b, 0, kar_p2.c, 100, speed_p2_middle, speed_p2_outer); 
+			Send_Leg4_Kar_And_Velocity(kar_p1.a +  kar_p1.b, 0, kar_p1.c, 100, speed_p1_middle, speed_p1_outer); 	
+			Send_Leg1_Kar_And_Velocity(kar_p1.a -  kar_p1.b, corner_pitch, kar_p1.c, 100, speed_p1_middle, speed_p1_outer); 
+			Send_Leg2_Kar_And_Velocity(kar_p2.a + kar_p2.b, corner_pitch, kar_p2.c, 100, speed_p2_middle, speed_p2_outer);
+			Send_Leg6_Kar_And_Velocity(kar_p2.a + kar_p2.b, - corner_pitch, kar_p2.c, 100, speed_p2_middle, speed_p2_outer);
+			
+			if( walk_break || (n_1 != support_l/2 && n_2 != support_l/2))
+			{
+			_delay_ms(20); 
+			}
+		}
+}
