@@ -5,7 +5,7 @@
 *  Author: Joakim
 */
 
-#include "SPI.h"
+#include "SPI_comm.h"
 #include "USART.h"
 #include "LCD_controller.h"
 

@@ -12,7 +12,7 @@
 #include <avr/interrupt.h>
 
 #include "USART.h"
-#include "SPI.h"
+#include "SPI_comm.h"
 #include "LCD.h"
 #include "LCD_controller.h"
 
@@ -33,23 +33,13 @@ int main(void)
 	
 	sei();
 	
-	LCD_controller_put_line(0, "BT status");
-	LCD_controller_put_line(1, "Disconnected");
-	LCD_controller_put_line(2, "Control Mode");
-	LCD_controller_put_line(3, "Manual");
-	LCD_controller_put_line(4, "kd");
-	LCD_controller_put_line(5, "40");
-	LCD_controller_put_line(6, "kp");
-	LCD_controller_put_line(7, "68");
-	LCD_controller_put_line(8, "Angle error");
-	LCD_controller_put_line(9, "4 deg");
-	LCD_controller_put_line(10, "Mood");
-	LCD_controller_put_line(11, "Happy");
-	LCD_controller_put_line(12, "Decision");
-	LCD_controller_put_line(13, "Go forward");
-	LCD_controller_put_line(14, "Bytes sent");
-	LCD_controller_put_line(15, "812");
+	LCD_controller_put_line(0, "");
+	LCD_controller_put_line(1, "");
+	LCD_controller_put_line(2, "");
+	LCD_controller_put_line(3, "");
 	
+	uint8_t lastStates[5];
+	memset(lastStates,0,sizeof(lastStates));
 	BTtimeout = 4;
 	while(1)
 	{
@@ -64,14 +54,65 @@ int main(void)
 		}
 		*/
 		char digits[16];
-		sprintf(digits, "%i", toSPI[0]);
+		//Skriv ut senaste states
+		
+		uint8_t currState = toBluetooth[14];
+		
+		if(currState != lastStates[0])
+		{
+			for(int i = 3; i >= 0; --i)
+			{
+				lastStates[i+1] = lastStates[i];
+			}
+			lastStates[0] = currState;
+			if(lastStates[4] != 0)
+			{
+				sprintf(digits,"%i,%i,%i,%i,%i", lastStates[0], lastStates[1], lastStates[2], lastStates[3], lastStates[4]);
+			}
+			else if(lastStates[3] != 0)
+			{
+				sprintf(digits,"%i,%i,%i,%i", lastStates[0], lastStates[1], lastStates[2], lastStates[3]);
+			}
+			else if(lastStates[2] != 0)
+			{
+				sprintf(digits,"%i,%i,%i", lastStates[0], lastStates[1], lastStates[2]);
+			}
+			else if(lastStates[1] != 0)
+			{
+				sprintf(digits,"%i,%i", lastStates[0], lastStates[1]);
+			}
+			else
+			{
+				sprintf(digits,"%i", lastStates[0]);
+			}
+			
+			LCD_controller_put_line(0, digits);
+		}
+		
+		
+		//Skriv ut Kp och Kd
+		sprintf(digits, "Kp:%i, Kd:%i", toSPI[5], toSPI[6]);
 		LCD_controller_put_line(1, digits);
-		sprintf(digits, "%i", toSPI[5]);
-		LCD_controller_put_line(2, digits);
-		sprintf(digits, "%i", toSPI[6]);
-		LCD_controller_put_line(3, digits);
 		
+		//Skriv ut styrläge (går att göra snyggare)
+		if(toSPI[4] == 0b00001111)
+		{
+			LCD_controller_put_line(2,"MODE=MANUAL");
+		}
+		else if(toSPI[4] == 0b00111100)
+		{
+			LCD_controller_put_line(2,"MODE=AUTO");	
+		}
+		else if(toSPI[4] == 0b11110000)
+		{
+			LCD_controller_put_line(2,"MODE=RACE");
+		}
+		else
+		{
+			LCD_controller_put_line(2,"MODE=UNDEF");
+		}
 		
+		//OBS tar lång tid
 		LCD_print_string(lines[currentLine], lines[currentLine+1], lines[currentLine + 2], lines[currentLine + 3]);
 		
 		_delay_ms(100);
