@@ -175,7 +175,7 @@ int main(void)
 				break;
 			
 			case AUTO: //Autonomt läge
-				height = 11;
+				//height = 11;
 				update_state();
 				run_state();
 				break;
