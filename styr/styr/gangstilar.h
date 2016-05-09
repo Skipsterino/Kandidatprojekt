@@ -1,10 +1,12 @@
-/*
- * gangstilar.h
- *
- * Created: 4/8/2016 3:03:52 PM
- *  Author: jenma421 
- */ 
-
+/**
+* @file gangstilar.h
+* @author Jens
+* @date 8 april 2016
+* @brief Functions for walking
+*
+* Functions for walking and rotation
+*
+*/
 
 #ifndef GANGSTILAR_H_
 #define GANGSTILAR_H_
@@ -25,7 +27,7 @@
 float height;
 
 /**
-* @brief Sets parameters for smooth transition with Övehinder
+* @brief Sets parameters for smooth transition with over_hinder
 *
 * Sets height and walking cycle phase correctly
 * 
