@@ -17,6 +17,8 @@
 //unsigned int load;
 uint8_t number_of_steps;
 
+
+void update_step(float new_step);
 void Probe_Walk(void);
 void Probe_Height_Up(void); 
 void Probe_Height_Down(void); 

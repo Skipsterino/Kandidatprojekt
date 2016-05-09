@@ -85,8 +85,8 @@ typedef enum {
 	DEAD_END_B_LEFT = 48,		// TEST_STATE_5
 	DEAD_END_C = 49,			// TEST_STATE_6
 	DEAD_END_D = 50,			// TEST_STATE_7
-	TEST_STATE_8 = 51,
-	TEST_STATE_9 = 52,
+	CHECK_IF_LOW_OBSTACLE = 51,
+	CHECK_IF_HIGH_OBSTACLE = 52,
 	TEST_STATE_10 = 53,	
 } STATES;
 
@@ -101,13 +101,18 @@ typedef enum {
 #define JUNCTION_A_FORWARD_DISTANCE 80	/**< Distance for determining whether A junction or not (junction or turn?). */
 #define PREPARE_CLIMBING_UP_DISTANCE 30	/**< Distance for preparing climbing onto low obstacle (if IR_1 is less than this). */
 #define PREPARE_CLIMBING_DOWN_DISTANCE 40	/**< Distance for preparing climbing down from low obstacle (if IR_1 is greater than this). */
-#define US_HIGH_OBSTACLE_DISTANCE 20	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
+#define US_HIGH_OBSTACLE_DISTANCE 30	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
 #define IR_HIGH_OBSTACLE_DISTANCE 60	/**< Distance for determining whether high obstacle or not (IR sensor). */
 #define NO_WALL_DISTANCE 120				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
 #define DEAD_END_DISTANCE 40			/**< Distance to wall for turning in a dead end (which we shouldn't have entered). */
 
 #define CENTRE_OFFSET 8 /**< Horizontal distance from centre of robot to its legs. */
 #define CORRIDOR_WIDTH 80 /**< Width of the labyrinth's corridors. */
+
+#define STANDARD_HEIGHT 11 /**< Standard height for use in corridors etc. */
+#define HIGH_OBSTACLE_HEIGHT 7 /**< Height for use in high obstacles. */
+#define LOW_OBSTACLE_HIGH_HEIGHT 14 /**< Height for use in preparing for low obstacles. */
+#define LOW_OBSTACLE_LOW_HEIGHT 7.7 /**< Height for use on top of low obstacles. */
 
 float IMU_Yaw_start; /**< The IMU's start Yaw angle when entering turns and junctions. */
 bool on_top_of_obstacle; /**< true -> the robot has climbed up on top of a low obstacle. */

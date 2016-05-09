@@ -12,8 +12,8 @@ unsigned int load;
 float z;
 
 #define UP_DELAY 1000
-#define FORWARD_DELAY 700
-#define DOWN_DELAY 300
+#define FORWARD_DELAY 400
+#define DOWN_DELAY 1000
 #define BACK_DELAY 50
 
 float height;
@@ -22,6 +22,8 @@ float x_ground;
 float x_obstacle;
 float corner_pitch;
 float step;
+float last_step; 
+float last_last_step; 
 float lift;
 
 float weight_adjust; 
@@ -29,6 +31,14 @@ float weight_adjust;
 unsigned int speed_inner;
 unsigned int speed_middle;
 unsigned int speed_outer;
+
+
+void update_step(float new_step)
+{
+	last_last_step = last_step;
+	last_step = step; 
+	step = new_step; 
+}
 
 void Walk_Up(void)
 {
@@ -75,6 +85,8 @@ void Walk_Up_Hard()
 	x_obstacle = 12;
 	corner_pitch = 4;
 	step = 5.2;
+	last_step = step; 
+	last_last_step = last_step;
 	lift = 2.5;
 	number_of_steps =20;
 
@@ -87,12 +99,19 @@ void Walk_Up_Hard()
 	To_Climbing_Stance(); //Flytta benen till ett utgångsläge lämpligt för klättring
 	
 	First_Leg('u');
+	update_step(5.2);
 	Second_Leg('u');
+	update_step(5.2);
 	First_Body_Adjust(); //Flytta kroppen lite närmare hindret
+	update_step(5.2);
 	Third_Leg('u');
+	update_step(5.2);
 	Fourth_Leg('u');
+	update_step(5.2);
 	Second_Body_Adjust(); //Flytta kroppen lite närmare hindret
+	update_step(3);
 	Fifth_Leg('u');
+	update_step(3);
 	Sixth_Leg('u');
 	
 	To_Default_Stance();
@@ -108,6 +127,8 @@ void Walk_Down_Hard()
 	x_obstacle = 12;
 	corner_pitch = 4;
 	step = 5.2;
+	last_step = step;
+	last_last_step = last_step; 
 	lift = 2.5;
 	
 	number_of_steps =20;
@@ -124,12 +145,19 @@ void Walk_Down_Hard()
 	To_Climbing_Stance();
 	
 	First_Leg('d');
+	update_step(5.2);
 	Second_Leg('d');
+	update_step(5.2);
 	First_Body_Adjust(); //Flytta kroppen lite närmare hindret
+	update_step(5.2);
 	Third_Leg('d');
+	update_step(5.2);
 	Fourth_Leg('d');
+	update_step(5.2);
 	Second_Body_Adjust(); //Flytta kroppen lite närmare hindret
+	update_step(5.2);
 	Fifth_Leg('d');
+	update_step(5.2);
 	Sixth_Leg('d');
 	
 	To_Default_Stance();
@@ -140,6 +168,7 @@ void Walk_Down_Hard()
 
 void To_Climbing_Stance()
 {
+	//mest bara för hastigheter 
 	_delay_ms(300);
 	Send_Leg1_Kar_And_Velocity(x_ground, 0+corner_pitch, -height, speed_inner, speed_middle, speed_outer);
 	Send_Leg2_Kar_And_Velocity(x_ground, 0+corner_pitch, -height, speed_inner, speed_middle, speed_outer);
@@ -150,6 +179,8 @@ void To_Climbing_Stance()
 	
 	_delay_ms(500);
 	
+	
+	// Vikt förskjutning
 	for (uint8_t n = 0; n<=number_of_steps; ++n)
 	{
 		Send_Leg1_Kar_And_Velocity(x_ground, 0 -(weight_adjust*n/number_of_steps)+corner_pitch, -(height), speed_inner, speed_middle, speed_outer);
@@ -164,56 +195,8 @@ void To_Climbing_Stance()
 	
 }
 
-void To_Default_Stance()
-{
-	/////   TILL UTGÅNGSLÄGE   /////
-	
-	
-	//upp
-	Send_Leg1_Kar_And_Velocity(x_obstacle, 0+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	Send_Leg4_Kar_And_Velocity(x_obstacle, 0-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	Send_Leg5_Kar_And_Velocity(x_obstacle, 0-corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	_delay_ms(500);
-	//Send_Leg1_Kar_And_Velocity(x_ground, 0+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	//Send_Leg4_Kar_And_Velocity(x_ground, 0-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	//Send_Leg5_Kar_And_Velocity(x_ground, 0-corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	//_delay_ms(2000);
 
-	for (uint8_t n = 0; n<=number_of_steps; ++n)
-	{
-		
-		Send_Leg2_Kar_And_Velocity(x_obstacle, step-weight_adjust -((step-weight_adjust)*n/number_of_steps)+corner_pitch, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-		Send_Leg3_Kar_And_Velocity(x_obstacle, step-weight_adjust -((step-weight_adjust)*n/number_of_steps), -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-		Send_Leg6_Kar_And_Velocity(x_obstacle, step-weight_adjust -((step-weight_adjust)*n/number_of_steps)-corner_pitch, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-		
-		Send_Leg1_Kar_And_Velocity(x_obstacle, 0+corner_pitch-weight_adjust + ((weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg4_Kar_And_Velocity(x_obstacle, 0-weight_adjust +((weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg5_Kar_And_Velocity(x_obstacle, 0-corner_pitch-weight_adjust +((weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		_delay_ms(BACK_DELAY);
-		
-	}
-	
-	//Send_Leg1_Kar_And_Velocity(x_ground, 0+corner_pitch, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-	//Send_Leg4_Kar_And_Velocity(x_ground, 0, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-	//Send_Leg5_Kar_And_Velocity(x_ground, 0-corner_pitch, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-	//_delay_ms(2000);
-	////
-	//Send_Leg2_Kar_And_Velocity(x_obstacle, 0+corner_pitch, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	//Send_Leg3_Kar_And_Velocity(x_obstacle, 0, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	//Send_Leg6_Kar_And_Velocity(x_obstacle, 0-corner_pitch, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	//_delay_ms(2000);
-	//Send_Leg2_Kar_And_Velocity(x_ground, 0+corner_pitch, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	//Send_Leg3_Kar_And_Velocity(x_ground, 0, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	//Send_Leg6_Kar_And_Velocity(x_ground, 0-corner_pitch, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	//_delay_ms(2000);
-	//Send_Leg2_Kar_And_Velocity(x_ground, 0+corner_pitch, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-	//Send_Leg3_Kar_And_Velocity(x_ground, 0, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-	//Send_Leg6_Kar_And_Velocity(x_ground, 0-corner_pitch, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-	//_delay_ms(2000);
-	//
-	//_delay_ms(2000);
-}
-
+// 
 void First_Leg(char direction)
 {
 	if(direction == 'u') //Klättra upp, dvs 'u'
@@ -262,7 +245,7 @@ void First_Leg(char direction)
 	
 	for (uint8_t n = 0; n<=number_of_steps; ++n)
 	{
-		Send_Leg1_Kar_And_Velocity(x_obstacle, 2*step -(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg1_Kar_And_Velocity(x_obstacle, 2*step-(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		Send_Leg4_Kar_And_Velocity(x_ground, step -(step*n/number_of_steps)-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		Send_Leg5_Kar_And_Velocity(x_ground, step -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		
@@ -282,9 +265,9 @@ void Second_Leg(char direction)
 	if(direction == 'u')//klättra upp dvs 'u'
 	{
 		//upp
-		Send_Leg2_Kar_And_Velocity(x_obstacle, -step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg3_Kar_And_Velocity(x_ground, -step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg6_Kar_And_Velocity(x_ground, -step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg2_Kar_And_Velocity(x_obstacle, -last_step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg3_Kar_And_Velocity(x_ground, -last_step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg6_Kar_And_Velocity(x_ground, -last_step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(UP_DELAY);
 		//fram
 		Send_Leg2_Kar_And_Velocity(x_obstacle, step/2+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -299,9 +282,9 @@ void Second_Leg(char direction)
 	else
 	{
 		//upp
-		Send_Leg2_Kar_And_Velocity(x_obstacle, -step+corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg3_Kar_And_Velocity(x_ground, -step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg6_Kar_And_Velocity(x_ground, -step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg2_Kar_And_Velocity(x_obstacle, -last_step+corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg3_Kar_And_Velocity(x_ground, -last_step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg6_Kar_And_Velocity(x_ground, -last_step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(UP_DELAY);
 		//fram
 		Send_Leg2_Kar_And_Velocity(x_obstacle, step/2+corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
@@ -326,7 +309,7 @@ void Second_Leg(char direction)
 		Send_Leg3_Kar_And_Velocity(x_ground, step -(step*n/number_of_steps)-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		Send_Leg6_Kar_And_Velocity(x_ground, step -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		
-		Send_Leg1_Kar_And_Velocity(x_obstacle, step -(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg1_Kar_And_Velocity(x_obstacle, last_step -(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		Send_Leg4_Kar_And_Velocity(x_ground, -(step*n/number_of_steps)-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		Send_Leg5_Kar_And_Velocity(x_ground, -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		_delay_ms(BACK_DELAY);
@@ -338,9 +321,9 @@ void Second_Leg(char direction)
 void First_Body_Adjust()
 {
 	//upp
-	Send_Leg1_Kar_And_Velocity(x_obstacle, 0+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	Send_Leg4_Kar_And_Velocity(x_ground, -step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-	Send_Leg5_Kar_And_Velocity(x_ground, -step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+	Send_Leg1_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+	Send_Leg4_Kar_And_Velocity(x_ground, -last_step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+	Send_Leg5_Kar_And_Velocity(x_ground, -last_step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 	_delay_ms(UP_DELAY);
 	//fram
 	Send_Leg1_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -359,7 +342,7 @@ void First_Body_Adjust()
 		Send_Leg4_Kar_And_Velocity(x_ground, step -(step*n/number_of_steps)-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		Send_Leg5_Kar_And_Velocity(x_ground, step -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		
-		Send_Leg2_Kar_And_Velocity(x_obstacle, step-(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg2_Kar_And_Velocity(x_obstacle, last_step-(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		Send_Leg3_Kar_And_Velocity(x_ground, -(step*n/number_of_steps)-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		Send_Leg6_Kar_And_Velocity(x_ground, -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		_delay_ms(BACK_DELAY);
@@ -373,9 +356,9 @@ void Third_Leg(char direction)
 	if(direction == 'u')
 	{
 		//upp
-		Send_Leg2_Kar_And_Velocity(x_obstacle, 0+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg3_Kar_And_Velocity(x_obstacle, -step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg6_Kar_And_Velocity(x_ground, -step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg2_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg3_Kar_And_Velocity(x_obstacle, -last_step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg6_Kar_And_Velocity(x_ground, -last_step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(UP_DELAY);
 		//fram
 		Send_Leg2_Kar_And_Velocity(x_obstacle, step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -390,9 +373,9 @@ void Third_Leg(char direction)
 	else //Klättra ner dvs 'd'
 	{
 		//upp
-		Send_Leg2_Kar_And_Velocity(x_obstacle, 0+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg3_Kar_And_Velocity(x_obstacle, -step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg6_Kar_And_Velocity(x_ground, -step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg2_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg3_Kar_And_Velocity(x_obstacle, -last_step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg6_Kar_And_Velocity(x_ground, -last_step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(UP_DELAY);
 		//fram
 		Send_Leg2_Kar_And_Velocity(x_obstacle, step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -416,7 +399,7 @@ void Third_Leg(char direction)
 		Send_Leg3_Kar_And_Velocity(x_obstacle, 2*step -(step*n/number_of_steps)-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		Send_Leg6_Kar_And_Velocity(x_ground, step -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		
-		Send_Leg1_Kar_And_Velocity(x_obstacle, step -(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg1_Kar_And_Velocity(x_obstacle, last_step -(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		Send_Leg4_Kar_And_Velocity(x_ground, -(step*n/number_of_steps)-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		Send_Leg5_Kar_And_Velocity(x_ground, -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		_delay_ms(BACK_DELAY);
@@ -429,9 +412,9 @@ void Fourth_Leg(char direction)
 	if(direction == 'u')
 	{
 		//upp
-		Send_Leg1_Kar_And_Velocity(x_obstacle, 0+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg4_Kar_And_Velocity(x_obstacle, -step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg5_Kar_And_Velocity(x_ground, -step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg1_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg4_Kar_And_Velocity(x_obstacle, -last_step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg5_Kar_And_Velocity(x_ground, -last_step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(UP_DELAY);
 		//fram
 		Send_Leg1_Kar_And_Velocity(x_obstacle, step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -447,9 +430,9 @@ void Fourth_Leg(char direction)
 	else
 	{
 		//upp
-		Send_Leg1_Kar_And_Velocity(x_obstacle, 0+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg4_Kar_And_Velocity(x_obstacle, -step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg5_Kar_And_Velocity(x_ground, -step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg1_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg4_Kar_And_Velocity(x_obstacle, -last_step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg5_Kar_And_Velocity(x_ground, -last_step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(UP_DELAY);
 		//fram
 		Send_Leg1_Kar_And_Velocity(x_obstacle, step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -474,8 +457,8 @@ void Fourth_Leg(char direction)
 		Send_Leg4_Kar_And_Velocity(x_obstacle, 2*step -(step*n/number_of_steps)-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		Send_Leg5_Kar_And_Velocity(x_ground, step -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		
-		Send_Leg2_Kar_And_Velocity(x_obstacle, step-(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-		Send_Leg3_Kar_And_Velocity(x_obstacle, step-(step*n/number_of_steps)-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg2_Kar_And_Velocity(x_obstacle, last_step-(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg3_Kar_And_Velocity(x_obstacle, last_step-(step*n/number_of_steps)-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		Send_Leg6_Kar_And_Velocity(x_ground, -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		_delay_ms(BACK_DELAY);
 	}
@@ -487,9 +470,9 @@ void Second_Body_Adjust()
 {
 	/////   PAR 2, INGET BEN UPP   /////
 	//upp
-	Send_Leg2_Kar_And_Velocity(x_obstacle, 0+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	Send_Leg3_Kar_And_Velocity(x_obstacle, 0-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	Send_Leg6_Kar_And_Velocity(x_ground, -step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+	Send_Leg2_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+	Send_Leg3_Kar_And_Velocity(x_obstacle, last_last_step-last_step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+	Send_Leg6_Kar_And_Velocity(x_ground, -last_step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 	_delay_ms(UP_DELAY);
 	//fram
 	Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -508,8 +491,8 @@ void Second_Body_Adjust()
 		Send_Leg3_Kar_And_Velocity(x_obstacle, 2*step -(step*n/number_of_steps)-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		Send_Leg6_Kar_And_Velocity(x_ground, step -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		
-		Send_Leg1_Kar_And_Velocity(x_obstacle, step -(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-		Send_Leg4_Kar_And_Velocity(x_obstacle, step-(step*n/number_of_steps)-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg1_Kar_And_Velocity(x_obstacle, last_step -(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg4_Kar_And_Velocity(x_obstacle, last_step-(step*n/number_of_steps)-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		Send_Leg5_Kar_And_Velocity(x_ground, -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		_delay_ms(BACK_DELAY);
 	}
@@ -522,9 +505,9 @@ void Fifth_Leg(char direction)
 	if(direction == 'u')
 	{
 		//upp
-		Send_Leg1_Kar_And_Velocity(x_obstacle, 0+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg4_Kar_And_Velocity(x_obstacle, 0-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg5_Kar_And_Velocity(x_obstacle, -step-corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg1_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg4_Kar_And_Velocity(x_obstacle, last_last_step-last_step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg5_Kar_And_Velocity(x_obstacle, -last_step-corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(UP_DELAY);
 		//fram
 		Send_Leg1_Kar_And_Velocity(x_obstacle, step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -539,9 +522,9 @@ void Fifth_Leg(char direction)
 	else
 	{
 		//upp
-		Send_Leg1_Kar_And_Velocity(x_obstacle, 0+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg4_Kar_And_Velocity(x_obstacle, 0-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg5_Kar_And_Velocity(x_obstacle, -step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg1_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg4_Kar_And_Velocity(x_obstacle, last_last_step-last_step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg5_Kar_And_Velocity(x_obstacle, -last_step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(UP_DELAY);
 		//fram
 		Send_Leg1_Kar_And_Velocity(x_obstacle, step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -565,8 +548,8 @@ void Fifth_Leg(char direction)
 		Send_Leg4_Kar_And_Velocity(x_obstacle, 2*step -(step*n/number_of_steps)-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		Send_Leg5_Kar_And_Velocity(x_obstacle, 2*step -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		
-		Send_Leg2_Kar_And_Velocity(x_obstacle, step-(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-		Send_Leg3_Kar_And_Velocity(x_obstacle, step-(step*n/number_of_steps)-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg2_Kar_And_Velocity(x_obstacle, last_step-(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg3_Kar_And_Velocity(x_obstacle, last_step-(step*n/number_of_steps)-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		Send_Leg6_Kar_And_Velocity(x_ground, -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 		_delay_ms(BACK_DELAY);
 	}
@@ -578,9 +561,9 @@ void Sixth_Leg(char direction)
 	if(direction == 'u')
 	{
 			//upp
-			Send_Leg2_Kar_And_Velocity(x_obstacle, 0+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			Send_Leg3_Kar_And_Velocity(x_obstacle, 0-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			Send_Leg6_Kar_And_Velocity(x_obstacle, -step-corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+			Send_Leg2_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+			Send_Leg3_Kar_And_Velocity(x_obstacle, last_last_step-last_step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+			Send_Leg6_Kar_And_Velocity(x_obstacle, -last_step-corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
 			_delay_ms(UP_DELAY);
 			//fram
 			Send_Leg2_Kar_And_Velocity(x_obstacle, step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -596,9 +579,9 @@ void Sixth_Leg(char direction)
 	else
 	{
 			//upp
-			Send_Leg2_Kar_And_Velocity(x_obstacle, 0+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			Send_Leg3_Kar_And_Velocity(x_obstacle, 0-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			Send_Leg6_Kar_And_Velocity(x_obstacle, -step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+			Send_Leg2_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+			Send_Leg3_Kar_And_Velocity(x_obstacle, last_last_step-last_step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+			Send_Leg6_Kar_And_Velocity(x_obstacle, -last_step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 			_delay_ms(UP_DELAY);
 			//fram
 			Send_Leg2_Kar_And_Velocity(x_obstacle, step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -623,10 +606,37 @@ void Sixth_Leg(char direction)
 		Send_Leg3_Kar_And_Velocity(x_obstacle, 2*step -(step*n/number_of_steps)-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		Send_Leg6_Kar_And_Velocity(x_obstacle, 2*step -(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		
-		Send_Leg1_Kar_And_Velocity(x_obstacle, step -(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-		Send_Leg4_Kar_And_Velocity(x_obstacle, step-(step*n/number_of_steps)-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-		Send_Leg5_Kar_And_Velocity(x_obstacle, step-(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg1_Kar_And_Velocity(x_obstacle, last_step -(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg4_Kar_And_Velocity(x_obstacle, last_step-(step*n/number_of_steps)-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg5_Kar_And_Velocity(x_obstacle, last_step-(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		_delay_ms(BACK_DELAY);
+	}
+	
+}
+
+void To_Default_Stance()
+{
+	/////   TILL UTGÅNGSLÄGE   /////
+	
+	
+	//upp
+	Send_Leg1_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+	Send_Leg4_Kar_And_Velocity(x_obstacle, last_last_step-last_step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+	Send_Leg5_Kar_And_Velocity(x_obstacle, last_last_step-last_step-corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+	_delay_ms(500);
+
+	for (uint8_t n = 0; n<=number_of_steps; ++n)
+	{
+		
+		Send_Leg2_Kar_And_Velocity(x_obstacle, step-weight_adjust -((step-weight_adjust)*n/number_of_steps)+corner_pitch, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg3_Kar_And_Velocity(x_obstacle, step-weight_adjust -((step-weight_adjust)*n/number_of_steps), -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		Send_Leg6_Kar_And_Velocity(x_obstacle, step-weight_adjust -((step-weight_adjust)*n/number_of_steps)-corner_pitch, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
+		
+		Send_Leg1_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust + ((-(last_last_step-last_step)+weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg4_Kar_And_Velocity(x_obstacle, last_last_step-last_step-weight_adjust +((-(last_last_step-last_step)+weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg5_Kar_And_Velocity(x_obstacle, last_last_step-last_step-corner_pitch-weight_adjust +((-(last_last_step-last_step)+weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		_delay_ms(BACK_DELAY);
+		
 	}
 	
 }
