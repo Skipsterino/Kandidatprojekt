@@ -11,10 +11,10 @@
 unsigned int load;
 float z;
 
-#define UP_DELAY 1000
-#define FORWARD_DELAY 400
-#define DOWN_DELAY 1000
-#define BACK_DELAY 50
+#define UP_DELAY 600
+#define FORWARD_DELAY 600
+#define DOWN_DELAY 600
+#define BACK_DELAY 20
 
 float height;
 float obstacle_height;
@@ -84,34 +84,36 @@ void Walk_Up_Hard()
 	x_ground = 12;
 	x_obstacle = 12;
 	corner_pitch = 4;
-	step = 5.2;
+	step = 5;
 	last_step = step; 
 	last_last_step = last_step;
-	lift = 2.5;
+	lift = 3;
 	number_of_steps =20;
+	
+	weight_adjust = 3;
 
-	speed_inner = 0x0060;
-	speed_middle = 0x085;
-	speed_outer = 0x00B0;
-	_delay_ms(1000);
+	speed_inner = 150;
+	speed_middle = 300;
+	speed_outer = 300;
+	
 	
 	Configure_Servos_Angle_Limit('c'); // Ändra servobegränsningarna
 	To_Climbing_Stance(); //Flytta benen till ett utgångsläge lämpligt för klättring
-	
+	_delay_ms(2000);
 	First_Leg('u');
-	update_step(5.2);
+	update_step(4);
 	Second_Leg('u');
-	update_step(5.2);
+	update_step(4);
 	First_Body_Adjust(); //Flytta kroppen lite närmare hindret
-	update_step(5.2);
+	update_step(6);
 	Third_Leg('u');
-	update_step(5.2);
+	update_step(4);
 	Fourth_Leg('u');
-	update_step(5.2);
+	update_step(6);
 	Second_Body_Adjust(); //Flytta kroppen lite närmare hindret
-	update_step(3);
+	update_step(6.5);
 	Fifth_Leg('u');
-	update_step(3);
+	update_step(4);
 	Sixth_Leg('u');
 	
 	To_Default_Stance();
@@ -135,11 +137,11 @@ void Walk_Down_Hard()
 
 	weight_adjust = 3;
 	
-	speed_inner = 0x0060;
-	speed_middle = 0x0085;
-	speed_outer = 0x00B0;
+	speed_inner = 150;
+	speed_middle = 300;
+	speed_outer = 300;
 	
-	_delay_ms(1000);
+	
 	
 	Configure_Servos_Angle_Limit('c');
 	To_Climbing_Stance();
@@ -147,15 +149,15 @@ void Walk_Down_Hard()
 	First_Leg('d');
 	update_step(5.2);
 	Second_Leg('d');
-	update_step(5.2);
+	update_step(4);
 	First_Body_Adjust(); //Flytta kroppen lite närmare hindret
-	update_step(5.2);
+	update_step(6);
 	Third_Leg('d');
 	update_step(5.2);
 	Fourth_Leg('d');
-	update_step(5.2);
+	update_step(4);
 	Second_Body_Adjust(); //Flytta kroppen lite närmare hindret
-	update_step(5.2);
+	update_step(6);
 	Fifth_Leg('d');
 	update_step(5.2);
 	Sixth_Leg('d');
@@ -180,7 +182,7 @@ void To_Climbing_Stance()
 	_delay_ms(500);
 	
 	
-	// Vikt förskjutning
+	// Tyngdpunktsförskjutning
 	for (uint8_t n = 0; n<=number_of_steps; ++n)
 	{
 		Send_Leg1_Kar_And_Velocity(x_ground, 0 -(weight_adjust*n/number_of_steps)+corner_pitch, -(height), speed_inner, speed_middle, speed_outer);
@@ -207,7 +209,7 @@ void First_Leg(char direction)
 		Send_Leg5_Kar_And_Velocity(x_ground, 0-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(UP_DELAY);
 		//fram
-		Send_Leg1_Kar_And_Velocity(x_obstacle,step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg1_Kar_And_Velocity(x_obstacle, step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
 		Send_Leg4_Kar_And_Velocity(x_ground, step/2-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 		Send_Leg5_Kar_And_Velocity(x_ground, step/2-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(FORWARD_DELAY);
@@ -620,9 +622,9 @@ void To_Default_Stance()
 	
 	
 	//upp
-	Send_Leg1_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	Send_Leg4_Kar_And_Velocity(x_obstacle, last_last_step-last_step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-	Send_Leg5_Kar_And_Velocity(x_obstacle, last_last_step-last_step-corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+	Send_Leg1_Kar_And_Velocity(x_obstacle, last_step-step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+	Send_Leg4_Kar_And_Velocity(x_obstacle, last_step-step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+	Send_Leg5_Kar_And_Velocity(x_obstacle, last_step-step-corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
 	_delay_ms(500);
 
 	for (uint8_t n = 0; n<=number_of_steps; ++n)
@@ -632,9 +634,9 @@ void To_Default_Stance()
 		Send_Leg3_Kar_And_Velocity(x_obstacle, step-weight_adjust -((step-weight_adjust)*n/number_of_steps), -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		Send_Leg6_Kar_And_Velocity(x_obstacle, step-weight_adjust -((step-weight_adjust)*n/number_of_steps)-corner_pitch, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		
-		Send_Leg1_Kar_And_Velocity(x_obstacle, last_last_step-last_step+corner_pitch-weight_adjust + ((-(last_last_step-last_step)+weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg4_Kar_And_Velocity(x_obstacle, last_last_step-last_step-weight_adjust +((-(last_last_step-last_step)+weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg5_Kar_And_Velocity(x_obstacle, last_last_step-last_step-corner_pitch-weight_adjust +((-(last_last_step-last_step)+weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg1_Kar_And_Velocity(x_obstacle, last_step-step+corner_pitch-weight_adjust + ((-(last_step-step)+weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg4_Kar_And_Velocity(x_obstacle, last_step-step-weight_adjust +((-(last_step-step)+weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg5_Kar_And_Velocity(x_obstacle, last_step-step-corner_pitch-weight_adjust +((-(last_step-step)+weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(BACK_DELAY);
 		
 	}

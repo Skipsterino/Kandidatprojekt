@@ -90,6 +90,9 @@ int main(void)
 	Send_Middle_P2_Velocity(0x0010);//
 	Send_Outer_P2_Velocity(0x0010);//
 	
+	
+
+	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!	
 
 	//_delay_ms(100);
