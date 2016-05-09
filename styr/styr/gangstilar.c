@@ -106,22 +106,22 @@ triple_float Adjust_Servo_Speed(float theta, int sgn_theta, int8_t leg_down)
 	
 	if(leg_down == 1)
 			{
-	speed_inner =  200 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	speed_inner =  210 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
 	speed_middle  = 100; 
 	speed_outer  =  100;
 			}     
 			else if(theta*sgn_theta <=0.20)
 			{                                                                   
 	//justerar servospeed ÄNDRA SKALFAKTOR !!
-	 speed_inner =  200 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
-	 speed_middle  = 370 + 340 * (sgn_theta * theta - theta_max);//320 + 430 *//220
-	 speed_outer  =  270 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//250
+	 speed_inner =  210 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	 speed_middle  = 350 + 340 * (sgn_theta * theta - theta_max);//320 + 430 *//220
+	 speed_outer  =  380 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//250
 			}
 		else
 		{
-	 speed_inner =  70 + 160 * (sgn_theta * theta - theta_max);// 250 + 500 * 
-	 speed_middle  = 290 + 340 * (sgn_theta * theta - theta_max);//320 + 430 *//220
-	 speed_outer  =  250 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//250
+	 speed_inner =  180 + 160 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	 speed_middle  = 350 + 340 * (sgn_theta * theta - theta_max);//320 + 430 *//220
+	 speed_outer  =  380 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//250
 		}	
 		
  return create_triple_float(speed_inner, speed_middle, speed_outer);
@@ -146,9 +146,12 @@ void Adjust_Height(float l, float height_step, float corner_pitch)
 
 void Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch, triple_float speed_p1, triple_float speed_p2) 
 {
-	Send_Leg5_Kar_And_Velocity(kar_p1.a, kar_p1.b - corner_pitch, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 	
+	int sgn_speed = (last_speed >= 0) - (last_speed < 0);
+	float scale = 1 + 0.2*sgn_speed;
+	
+	Send_Leg5_Kar_And_Velocity(kar_p1.a, kar_p1.b * scale - corner_pitch, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 	
 	Send_Leg3_Kar_And_Velocity(kar_p2.a, kar_p2.b, kar_p2.c, speed_p2.a, speed_p2.b, speed_p2.c); 
-	Send_Leg4_Kar_And_Velocity(kar_p1.a, kar_p1.b*0.75, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 	//OBS!! ta bort efter servofix?? <------------------------------------------------------------------------
+	Send_Leg4_Kar_And_Velocity(kar_p1.a, kar_p1.b, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 	//OBS!! ta bort efter servofix?? <------------------------------------------------------------------------
 	Send_Leg1_Kar_And_Velocity(kar_p1.a, kar_p1.b + corner_pitch, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 
 	Send_Leg2_Kar_And_Velocity(kar_p2.a, kar_p2.b + corner_pitch, kar_p2.c, speed_p2.a, speed_p2.b, speed_p2.c);
 	Send_Leg6_Kar_And_Velocity(kar_p2.a, kar_p2.b - corner_pitch, kar_p2.c, speed_p2.a, speed_p2.b, speed_p2.c);
@@ -285,7 +288,7 @@ triple_float Tripod(float x, float stroke, float height,float lift, uint8_t n)
 	else if( n <= cycle_length) // för ben frammmåt mot startpos
 	{
 		y = -stroke/2 + (n - support_l) * stroke/swing_l;
-		z=  lift/2 - height;  // + (cycle_length - n) * lift/4 - height;
+		z=  lift - height;  // + (cycle_length - n) * lift/4 - height;
 	}
 	
 	return create_triple_float(x,y,z);
@@ -313,6 +316,8 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 	//sätter parametrar till LP-filtrerade
 	speed = last_speed;
 	theta = last_theta;
+	sgn_speed = (speed >= 0) - (speed < 0) ;
+	sgn_theta = (theta >= 0) - (theta < 0) ;
 	float height_step = 2 * (height - last_height)/cycle_length;
 	
 	if( (speed*sgn_speed < 0.2 ) && (theta * sgn_theta < 0.01) && (height_step == 0)) // gör inget
@@ -374,7 +379,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 		triple_float speed_p1 = Adjust_Servo_Speed(theta, theta_max, p1_down);
 		triple_float speed_p2 = Adjust_Servo_Speed(theta, theta_max, p2_down);
 		
-		float lift =1.3 + sgn_speed*speed/6; //benens lyfthöjd justeras efter speed
+		float lift =1.2 + sgn_speed*speed/5; //benens lyfthöjd justeras efter speed 1.5 + sgn_speed*speed/6; 
 		
 		if(theta * sgn_theta < 0.01) //behöver ej gå via cyl koord vid rak gång.
 		{
@@ -385,12 +390,12 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 			
 			if( walk_break || (n_1 != support_l/2 && n_2 != support_l/2))
 			{
-			_delay_ms(10); // =5 delay för kart skippar på sista loopen, pga tids som mainloop tar TEST
+			_delay_ms(9); // =5 delay för kart skippar på sista loopen, pga tids som mainloop tar TEST
 			}
 		}
 		else //om sväng
 		{
-			lift = 1.5 + theta * sgn_theta *1.5;
+			lift = 1.5 + theta * sgn_theta * 1.8; //1.5 + theta * sgn_theta *1.5;
 			kar_p1 = Tripod(l, stroke, last_height, lift, n_1); //kart koord för par 1
 			kar_p2 = Tripod(l, stroke, last_height, lift, n_2); //kart koord för par 2
 			
@@ -398,7 +403,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 			
 			if( walk_break || ( n_1 != support_l/2 && n_2  !=  support_l/2))
 			{
-			_delay_ms(8); // =3 Delay för cyl skippar på sista loopen, pga tids som mainloop tar TEST
+			_delay_ms(7); // =3 Delay för cyl skippar på sista loopen, pga tids som mainloop tar TEST
 			}
 					
 		}
@@ -412,7 +417,7 @@ void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 	float corner_pitch = 4; //förskjutning av arbetsområde i y-led för hörnben 8
 	int sgn_speed = (speed >= 0) - (speed < 0) ;
 	uint8_t walk_break = 1;
-	float stroke = 3 * sgn_speed;  //steglängd 2.2
+	float stroke = 6 * sgn_speed;  //steglängd 2.2
 
 	if(speed == 0) // gör inget
 	{
@@ -461,10 +466,10 @@ void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 		triple_float kar_p2;
 		
 		//servospeeds
-		float speed_p1_middle = 150 - 80 * p1_down;
-		float speed_p1_outer = 150 - 80 * p1_down;
-		float speed_p2_middle = 150 - 80 * p2_down;
-		float speed_p2_outer = 150 - 80 * p2_down;
+		float speed_p1_middle = 250 - 80 * p1_down;
+		float speed_p1_outer = 250 - 80 * p1_down;
+		float speed_p2_middle = 250 - 80 * p2_down;
+		float speed_p2_outer = 250 - 80 * p2_down;
 
 		float lift =2; 
 	
@@ -480,7 +485,7 @@ void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 			
 			if( walk_break || (n_1 != support_l/2 && n_2 != support_l/2))
 			{
-			_delay_ms(20); 
+			_delay_ms(10); 
 			}
 		}
 }
