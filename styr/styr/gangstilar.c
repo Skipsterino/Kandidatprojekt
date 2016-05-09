@@ -1,7 +1,7 @@
 /*
  * GANGSTILAR.c
  *
- * Created: 4/8/2016 3:03:52 PM
+ * Created: 8 april 3:03:52 PM
  *  Author: jenma421 
  */ 
 
@@ -70,13 +70,13 @@ float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn
 		theta = last_theta - 0.29;
 	}
 	
-	if(height_diff > 1)
+	if(height_diff > 2)
 	{
-		height = last_height + 1;
+		height = last_height + 2;
 	}
-	else if(height_diff < - 1)
+	else if(height_diff < - 2)
 	{
-		height = last_height - 1;
+		height = last_height - 2;
 	}
 	
 	last_speed = speed;
