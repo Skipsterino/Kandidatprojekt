@@ -85,8 +85,8 @@ typedef enum {
 	DEAD_END_B_LEFT = 48,		// TEST_STATE_5
 	DEAD_END_C = 49,			// TEST_STATE_6
 	DEAD_END_D = 50,			// TEST_STATE_7
-	TEST_STATE_8 = 51,
-	TEST_STATE_9 = 52,
+	CHECK_IF_LOW_OBSTACLE = 51,
+	CHECK_IF_HIGH_OBSTACLE = 52,
 	TEST_STATE_10 = 53,	
 } STATES;
 
@@ -108,6 +108,11 @@ typedef enum {
 
 #define CENTRE_OFFSET 8 /**< Horizontal distance from centre of robot to its legs. */
 #define CORRIDOR_WIDTH 80 /**< Width of the labyrinth's corridors. */
+
+#define STANDARD_HEIGHT 11 /**< Standard height for use in corridors etc. */
+#define HIGH_OBSTACLE_HEIGHT 7 /**< Height for use in high obstacles. */
+#define LOW_OBSTACLE_HIGH_HEIGHT 14 /**< Height for use in preparing for low obstacles. */
+#define LOW_OBSTACLE_LOW_HEIGHT 7.7 /**< Height for use on top of low obstacles. */
 
 float IMU_Yaw_start; /**< The IMU's start Yaw angle when entering turns and junctions. */
 bool on_top_of_obstacle; /**< true -> the robot has climbed up on top of a low obstacle. */
