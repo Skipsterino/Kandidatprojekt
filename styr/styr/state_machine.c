@@ -308,7 +308,9 @@ void update_state()
 		
 		case DETERMINE_JUNCTION_LEFT_WALL:
 		{
-			if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 < 70) && ((IR_2 > SIDE_DEAD_END_DISTANCE) || (IR_3 > SIDE_DEAD_END_DISTANCE)))
+			if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) 
+			&& (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) 
+			&& (IR_0 < 70) && ((IR_2 > SIDE_DEAD_END_DISTANCE) || (IR_3 > SIDE_DEAD_END_DISTANCE)))
 			{
 				ROBOT_STATE = TURN_RIGHT;
 			}
@@ -346,7 +348,9 @@ void update_state()
 		
 		case DETERMINE_JUNCTION_RIGHT_WALL:
 		{
-			if ((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_0 < 70) && ((IR_5 > SIDE_DEAD_END_DISTANCE) || (IR_6 > SIDE_DEAD_END_DISTANCE)))
+			if ((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) 
+			&& (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) 
+			&& (IR_0 < 70) && ((IR_5 > SIDE_DEAD_END_DISTANCE) || (IR_6 > SIDE_DEAD_END_DISTANCE)))
 			{
 				ROBOT_STATE = TURN_LEFT;
 			}
@@ -829,13 +833,13 @@ void run_state()
 		{
 			if (cycle_count <= 2)
 			{
-				Walk_Half_Cycle(3, 0, 0.8*STANDARD_HEIGHT);
+				Walk_Half_Cycle(2, 0, 0.8*STANDARD_HEIGHT);
 				++cycle_count;
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(3, alpha, 0.8*STANDARD_HEIGHT);
+				Walk_Half_Cycle(2, alpha, 0.8*STANDARD_HEIGHT);
 			}
 			
 			break;
@@ -857,7 +861,7 @@ void run_state()
 		case RIGHT_WALL:
 		case LEFT_WALL:
 		{
-			Walk_Half_Cycle(4, alpha, 0.8*STANDARD_HEIGHT);
+			Walk_Half_Cycle(2, alpha, 0.8*STANDARD_HEIGHT);
 			++cycle_count;
 			break;
 		}
@@ -938,7 +942,7 @@ void run_state()
 		
 		case PREPARE_CLIMBING_UP:
 		{
-			Walk_Half_Cycle(1.4, alpha, LOW_OBSTACLE_HIGH_HEIGHT); //Testa fram lagom höjd och speed
+			Walk_Half_Cycle(1.5, alpha, LOW_OBSTACLE_HIGH_HEIGHT); //Testa fram lagom höjd och speed
 			++cycle_count;
 			break;
 		}
@@ -958,7 +962,7 @@ void run_state()
 		
 		case PREPARE_CLIMBING_DOWN:
 		{
-			Walk_Half_Cycle(1.6, alpha, LOW_OBSTACLE_LOW_HEIGHT); //Samma som i LOW_OBSTACLE
+			Walk_Half_Cycle(1.65, alpha, LOW_OBSTACLE_LOW_HEIGHT); //Samma som i LOW_OBSTACLE
 			++cycle_count;
 			break;
 		}
