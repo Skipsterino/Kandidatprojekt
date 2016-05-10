@@ -33,6 +33,7 @@ int main(void)
 	
 	sei();
 	
+	//Sätt in tomma rader
 	LCD_controller_put_line(0, "");
 	LCD_controller_put_line(1, "");
 	LCD_controller_put_line(2, "");
@@ -40,26 +41,17 @@ int main(void)
 	
 	uint8_t lastStates[5];
 	memset(lastStates,0,sizeof(lastStates));
-	BTtimeout = 4;
 	while(1)
 	{
-		/*
-		if(BTtimeout > 3)
-		{
-			LCD_controller_put_line(1,"Disconnected");
-		}
-		else
-		{
-			LCD_controller_put_line(1,"Connected");	
-		}
-		*/
 		char digits[16];
 		//Skriv ut senaste states
 		
 		uint8_t currState = toBluetooth[14];
+		uint8_t changedState = 0;
 		
 		if(currState != lastStates[0])
 		{
+			changedState = 1;
 			for(int i = 3; i >= 0; --i)
 			{
 				lastStates[i+1] = lastStates[i];
@@ -95,28 +87,35 @@ int main(void)
 		LCD_controller_put_line(1, digits);
 		
 		//Skriv ut styrläge (går att göra snyggare)
-		if(toSPI[4] == 0b00001111)
+		if(toSPI[0] & 0b00001000)
 		{
-			LCD_controller_put_line(2,"MODE=MANUAL");
+			
+			if(toSPI[4] == 0b00001111)
+			{
+				LCD_controller_put_line(2,"MODE=MANUAL");
+			}
+			else if(toSPI[4] == 0b00111100)
+			{
+				LCD_controller_put_line(2,"MODE=AUTO");
+			}
+			else if(toSPI[4] == 0b11110000)
+			{
+				LCD_controller_put_line(2,"MODE=RACE");
+			}
+			else
+			{
+				LCD_controller_put_line(2,"MODE=UNDEF");
+			}
 		}
-		else if(toSPI[4] == 0b00111100)
+		if(changedState)
 		{
-			LCD_controller_put_line(2,"MODE=AUTO");	
-		}
-		else if(toSPI[4] == 0b11110000)
-		{
-			LCD_controller_put_line(2,"MODE=RACE");
-		}
-		else
-		{
-			LCD_controller_put_line(2,"MODE=UNDEF");
+			LCD_controller_put_line(2,"MODE=AUTO");
 		}
 		
 		//OBS tar lång tid
 		LCD_print_string(lines[currentLine], lines[currentLine+1], lines[currentLine + 2], lines[currentLine + 3]);
 		
+		//Tar nog längre tid
 		_delay_ms(100);
-		
-		BTtimeout++;
 	}
 }
