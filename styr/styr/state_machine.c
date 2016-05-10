@@ -116,7 +116,7 @@ void calculate_p_part()
 		case OUT_OF_JUNCTION_RIGHT_WALL:
 		case RIGHT_WALL:
 		{
-			p_part = ((IR_2 + IR_3)/2 + CENTRE_OFFSET)*cos(Yaw_rad) - CORRIDOR_WIDTH/2;
+			p_part = ((IR_2 + IR_3)/2 + CENTRE_OFFSET + 1)*cos(Yaw_rad) - CORRIDOR_WIDTH/2;
 			break;
 		}
 		
@@ -126,7 +126,7 @@ void calculate_p_part()
 		case OUT_OF_JUNCTION_LEFT_WALL:
 		case LEFT_WALL:
 		{
-			p_part = CORRIDOR_WIDTH/2 - ((IR_5 + IR_6)/2 + CENTRE_OFFSET)*cos(Yaw_rad);
+			p_part = CORRIDOR_WIDTH/2 - ((IR_5 + IR_6)/2 + CENTRE_OFFSET - 1)*cos(Yaw_rad);
 			break;
 		}
 		
@@ -288,7 +288,7 @@ void update_state()
 		
 		case LEFT_WALL:
 		{
-			if (cycle_count > 3)
+			if (cycle_count > 4)
 			{
 				ROBOT_STATE = DETERMINE_JUNCTION_LEFT_WALL;
 			}
@@ -298,7 +298,7 @@ void update_state()
 		
 		case RIGHT_WALL:
 		{
-			if (cycle_count > 3)
+			if (cycle_count > 4)
 			{
 				ROBOT_STATE = DETERMINE_JUNCTION_RIGHT_WALL;
 			}
@@ -833,13 +833,13 @@ void run_state()
 		{
 			if (cycle_count <= 2)
 			{
-				Walk_Half_Cycle(2, 0, 0.8*STANDARD_HEIGHT);
+				Walk_Half_Cycle(2.5, 0, 0.8*STANDARD_HEIGHT);
 				++cycle_count;
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(2, alpha, 0.8*STANDARD_HEIGHT);
+				Walk_Half_Cycle(2.5, alpha, 0.8*STANDARD_HEIGHT);
 			}
 			
 			break;
@@ -861,7 +861,7 @@ void run_state()
 		case RIGHT_WALL:
 		case LEFT_WALL:
 		{
-			Walk_Half_Cycle(2, alpha, 0.8*STANDARD_HEIGHT);
+			Walk_Half_Cycle(3, alpha, 0.8*STANDARD_HEIGHT);
 			++cycle_count;
 			break;
 		}
