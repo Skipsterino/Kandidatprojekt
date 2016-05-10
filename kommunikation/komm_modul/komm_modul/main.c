@@ -81,7 +81,6 @@ int main(void)
 			LCD_controller_put_line(0, digits);
 		}
 		
-		
 		//Skriv ut Kp och Kd
 		sprintf(digits, "Kp:%i, Kd:%i", toSPI[5], toSPI[6]);
 		LCD_controller_put_line(1, digits);

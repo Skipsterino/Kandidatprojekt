@@ -26,19 +26,23 @@ void SPI_init_slave()
 //SPI Serial transfer complete avbrottsvektor
 ISR(SPI_STC_vect)
 {
+	//Om det har gått ett tag sedan senaste avbrottet nollställer vi räknaren.
 	if(spiOverflow >= 2)
 	{
 		SPIcounter = 0;
 	}
 	spiOverflow = 0;
 	
+	//Läs in data
 	toBluetooth[SPIcounter] = SPDR;
 	
+	//Fyll på med ny data
 	if(SPIcounter < 15){
 		++SPIcounter;
 		SPDR = toSPI[SPIcounter];
 	}
 	else{
+		//Om det var sista byten i överföringen vi fick
 		SPIcounter = 0;
 		SPDR = toSPI[0];
 		USART_Transmit_Array(toBluetooth, 16);
