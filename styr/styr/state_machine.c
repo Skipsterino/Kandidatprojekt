@@ -288,7 +288,7 @@ void update_state()
 		
 		case LEFT_WALL:
 		{
-			if (cycle_count > 4)
+			if (cycle_count > 3)
 			{
 				ROBOT_STATE = DETERMINE_JUNCTION_LEFT_WALL;
 			}
@@ -298,7 +298,7 @@ void update_state()
 		
 		case RIGHT_WALL:
 		{
-			if (cycle_count > 4)
+			if (cycle_count > 3)
 			{
 				ROBOT_STATE = DETERMINE_JUNCTION_RIGHT_WALL;
 			}

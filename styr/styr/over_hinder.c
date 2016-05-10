@@ -38,7 +38,7 @@ uint8_t Servo_Load_Too_Small(unsigned char ID)
 {
 	unsigned char load = Get_Servo_Load(ID);
 	unsigned char abs_load = 0x01FF & load; 
-	if(abs_load < 0x0060)
+	if(abs_load < 0x0048)
 	{
 		return 1;
 	}

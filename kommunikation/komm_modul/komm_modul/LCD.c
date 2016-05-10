@@ -54,12 +54,16 @@ void LCD_put_num_u(unsigned int num)
 
 void LCD_putc(char c)
 {
+	//Vänta tills LCDn är redo
 	while(LCD_busy())
 	{
 		_delay_ms(1);
 	}
+	//Sätt RS till 1 och skicka in data på port A
 	PORTB |= (1<<RS);
 	PORTA = c;
+	
+	//Signalera att kommandot är redo
 	PORTB |= (1<<E);
 	_delay_us(50);
 	PORTB &= ~(1<<E);

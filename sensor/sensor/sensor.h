@@ -31,8 +31,8 @@ volatile uint8_t SPI_overflow = 0;	/**< Help variable for the timer since last S
 
 const int delay_time = 50;			/**< A delay for testing to simulate activity on the SPI-bus */
 
-const double IR_sensor_distance_right = 19.5;		/**< Distance between the two IR-sensors on the right side [cm] */
-const double IR_sensor_distance_left = 19.5;		/**< Distance between the two IR-sensors on the left side [cm] */
+const double IR_sensor_distance_right = 14.5;		/**< Distance between the two IR-sensors on the right side [cm] */
+const double IR_sensor_distance_left = 14.5;		/**< Distance between the two IR-sensors on the left side [cm] */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 volatile double IR_latest_reading[7];	/**< The most recent readings from all the IR-sensors */
