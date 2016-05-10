@@ -174,7 +174,18 @@ int main(void)
 					Kd = ((float)lastPacket[6])/100.f; //Kd skickas som 100 ggr det önskade värdet!!!
 				}
 				
-				Walk_Half_Cycle(speed,angle,height);
+				if ((first_kom_byte & 0b01000000) && lastPacket[7] == 1)
+				{
+					Walk_Half_Crab_Cycle(-1);
+				}
+				else if ((first_kom_byte & 0b01000000) && lastPacket[7] == 2)
+				{
+					Walk_Half_Crab_Cycle(1);
+				}
+				else
+				{
+					Walk_Half_Cycle(speed,angle,height);
+				}
 				break;
 			
 			case AUTO: //Autonomt läge
