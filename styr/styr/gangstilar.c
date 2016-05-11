@@ -70,9 +70,9 @@ float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn
 		theta = last_theta - 0.54;
 	}*/
 	
-	if(height_diff > 4)
+	if(height_diff > 2)
 	{
-		height = last_height + 4;
+		height = last_height + 2;
 	}
 	else if(height_diff < - 4)
 	{
