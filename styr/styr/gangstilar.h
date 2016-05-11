@@ -173,7 +173,7 @@ void Walk_Half_Cycle(float speed, float theta, float height);
 * @param speed  höger vänster just nu.
 * 
 */
-void Walk_Half_Crab_Cycle(int8_t speed);
+void Walk_Half_Crab_Cycle(float speed);
 
 
 #endif /* GANGSTILAR_H_ */

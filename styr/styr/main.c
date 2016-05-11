@@ -176,11 +176,11 @@ int main(void)
 				
 				if ((first_kom_byte & 0b01000000) && lastPacket[7] == 1)
 				{
-					Walk_Half_Crab_Cycle(-1);
+					Walk_Half_Crab_Cycle(-6);
 				}
 				else if ((first_kom_byte & 0b01000000) && lastPacket[7] == 2)
 				{
-					Walk_Half_Crab_Cycle(1);
+					Walk_Half_Crab_Cycle(6);
 				}
 				else
 				{
