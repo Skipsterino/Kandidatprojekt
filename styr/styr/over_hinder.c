@@ -38,7 +38,7 @@ uint8_t Servo_Load_Too_Small(unsigned char ID)
 {
 	unsigned char load = Get_Servo_Load(ID);
 	unsigned char abs_load = 0x01FF & load; 
-	if(abs_load < 0x0048)
+	if(abs_load < 0x0038)
 	{
 		return 1;
 	}
@@ -116,7 +116,6 @@ void Walk_Up_Hard()
 	
 	Configure_Servos_Angle_Limit('c'); // Ändra servobegränsningarna
 	To_Climbing_Stance(); //Flytta benen till ett utgångsläge lämpligt för klättring
-	_delay_ms(2000);
 	First_Leg('u');
 	update_step(4);
 	Second_Leg('u');
@@ -498,7 +497,7 @@ void Third_Leg(char direction)
 		Send_Leg6_Kar_And_Velocity(x_ground, 0-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(FORWARD_DELAY);
 		Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-		Send_Leg3_Kar_And_Velocity(x_obstacle, 2*step/2-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
+		Send_Leg3_Kar_And_Velocity(x_obstacle, 2*step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 		Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(FORWARD_DELAY);
 	}

@@ -9,7 +9,7 @@
 
 #define HALF_ROTATION_ANGLE 45			/**< Rotation angle for a 90 degree turn. */
 #define FULL_ROTATION_ANGLE 90			/**< Rotation angle for a 180 degree turn. */
-#define CORRIDOR_SIDE_DISTANCE 70		/**< Distance for determining whether corridor or not. */
+#define CORRIDOR_SIDE_DISTANCE 60		/**< Distance for determining whether corridor or not. */
 #define SIDE_DEAD_END_DISTANCE 150		/**< Distance for determining whether dead end to right or left in junction. */
 #define END_OF_COURSE_DISTANCE 100		/**< Distance that IR_0, 2, 3, 5, 6 should be larger than at the end of the course. */
 #define SHORT_TURN_DISTANCE 38			/**< Distance to wall for rotating in turns and C junctions. */
@@ -103,8 +103,8 @@ void calculate_p_part()
 		case INTO_HIGH_OBSTACLE:
 		case CRAWLING_UNDER_HIGH_OBSTACLE:
 		//case PREPARE_CLIMBING_UP:
-		//case PREPARE_CLIMBING_DOWN:
-		//case LOW_OBSTACLE:
+		case PREPARE_CLIMBING_DOWN:
+		case LOW_OBSTACLE:
 		case CORRIDOR:
 		{
 			p_part = IR_3 - IR_6;
@@ -258,7 +258,8 @@ void update_state()
 				ROBOT_STATE = OUT_OF_CORRIDOR_NO_WALL;
 			}
 			
-			else if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
+			else if (((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
+					|| ((IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE)))
 			{
 				ROBOT_STATE = LEFT_WALL;
 				cycle_count = 0;
@@ -277,7 +278,8 @@ void update_state()
 				ROBOT_STATE = OUT_OF_CORRIDOR_NO_WALL;
 			}
 			
-			else if ((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE))
+			else if (((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE))
+			|| ((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE)))
 			{
 				ROBOT_STATE = RIGHT_WALL;
 				cycle_count = 0;
@@ -288,7 +290,7 @@ void update_state()
 		
 		case LEFT_WALL:
 		{
-			if (cycle_count > 3)
+			if (cycle_count > 4)
 			{
 				ROBOT_STATE = DETERMINE_JUNCTION_LEFT_WALL;
 			}
@@ -298,7 +300,7 @@ void update_state()
 		
 		case RIGHT_WALL:
 		{
-			if (cycle_count > 3)
+			if (cycle_count > 4)
 			{
 				ROBOT_STATE = DETERMINE_JUNCTION_RIGHT_WALL;
 			}
@@ -321,7 +323,7 @@ void update_state()
 			}
 
 			else if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < SIDE_DEAD_END_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < SIDE_DEAD_END_DISTANCE) &&
-			(IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 150))
+			(IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 140))
 			{
 				ROBOT_STATE = JUNCTION_B_RIGHT;
 			}
@@ -337,7 +339,7 @@ void update_state()
 				ROBOT_STATE = DEAD_END_A_RIGHT;
 			}
 			
-			else if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < SIDE_DEAD_END_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < SIDE_DEAD_END_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 70) && (IR_0 < 150))
+			else if ((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < SIDE_DEAD_END_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_3 < SIDE_DEAD_END_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 70) && (IR_0 < 140))
 			{
 				ROBOT_STATE = DEAD_END_B_RIGHT;
 			}
@@ -361,7 +363,7 @@ void update_state()
 			}
 			
 			else if ((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < SIDE_DEAD_END_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < SIDE_DEAD_END_DISTANCE) &&
-			(IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 150))
+			(IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 140))
 			{
 				ROBOT_STATE = JUNCTION_B_LEFT;
 			}
@@ -377,7 +379,7 @@ void update_state()
 				ROBOT_STATE = DEAD_END_A_LEFT;
 			}
 			
-			else if ((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < SIDE_DEAD_END_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < SIDE_DEAD_END_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 70) && (IR_0 < 150))
+			else if ((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < SIDE_DEAD_END_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_6 < SIDE_DEAD_END_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_0 > 70) && (IR_0 < 140))
 			{
 				ROBOT_STATE = DEAD_END_B_LEFT;
 			}
@@ -399,7 +401,7 @@ void update_state()
 		
 		case NO_WALL:
 		{
-			if (cycle_count > 3)
+			if (cycle_count > 4)
 			{
 				ROBOT_STATE = DETERMINE_JUNCTION_NO_WALL;
 			}
@@ -782,12 +784,12 @@ void run_state()
 		{
 			if(trust_sensors)
 			{
-				Walk_Half_Cycle(4, alpha, STANDARD_HEIGHT);
+				Walk_Half_Cycle(5, alpha, STANDARD_HEIGHT);
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(4, 0, STANDARD_HEIGHT);
+				Walk_Half_Cycle(5, 0, STANDARD_HEIGHT);
 				trust_sensors = true;			// Default så litar vi på sensorerna
 			}
 			
@@ -798,13 +800,13 @@ void run_state()
 		{
 			if(trust_sensors)
 			{
-				Walk_Half_Cycle(2.5, alpha, STANDARD_HEIGHT);
+				Walk_Half_Cycle(3, alpha, STANDARD_HEIGHT);
 				++cycle_count;
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(2.5, 0, STANDARD_HEIGHT);
+				Walk_Half_Cycle(3, 0, STANDARD_HEIGHT);
 				trust_sensors = true;			// Default så litar vi på sensorerna
 				++cycle_count;
 			}
@@ -816,13 +818,13 @@ void run_state()
 		{
 			if (cycle_count < 2)
 			{
-				Walk_Half_Cycle(2.5, 0, STANDARD_HEIGHT);
+				Walk_Half_Cycle(3, 0, STANDARD_HEIGHT);
 				++cycle_count;
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(2.5, alpha, STANDARD_HEIGHT);
+				Walk_Half_Cycle(3, alpha, STANDARD_HEIGHT);
 			}
 			
 			break;
@@ -833,13 +835,13 @@ void run_state()
 		{
 			if (cycle_count <= 2)
 			{
-				Walk_Half_Cycle(2.5, 0, 0.8*STANDARD_HEIGHT);
+				Walk_Half_Cycle(3, 0, 0.8*STANDARD_HEIGHT);
 				++cycle_count;
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(2.5, alpha, 0.8*STANDARD_HEIGHT);
+				Walk_Half_Cycle(3, alpha, 0.8*STANDARD_HEIGHT);
 			}
 			
 			break;
@@ -853,7 +855,7 @@ void run_state()
 		
 		case NO_WALL:
 		{
-			Walk_Half_Cycle(3, 0, 0.8*STANDARD_HEIGHT);
+			Walk_Half_Cycle(2.8, 0, 0.8*STANDARD_HEIGHT);
 			++cycle_count;
 			break;
 		}
@@ -861,7 +863,7 @@ void run_state()
 		case RIGHT_WALL:
 		case LEFT_WALL:
 		{
-			Walk_Half_Cycle(3, alpha, 0.8*STANDARD_HEIGHT);
+			Walk_Half_Cycle(2.6, alpha, 0.8*STANDARD_HEIGHT);
 			++cycle_count;
 			break;
 		}
