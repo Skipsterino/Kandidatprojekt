@@ -61,22 +61,22 @@ float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn
 		speed = last_speed - 3;
 	}
 	
-	if(theta_diff > 0.54)
+	/*if(theta_diff > 0.54)
 	{
 		theta = last_theta + 0.54;
 	}
 	else if(theta_diff < -0.54)
 	{
 		theta = last_theta - 0.54;
-	}
+	}*/
 	
-	if(height_diff > 2)
+	if(height_diff > 4)
 	{
-		height = last_height + 2;
+		height = last_height + 4;
 	}
-	else if(height_diff < - 2)
+	else if(height_diff < - 4)
 	{
-		height = last_height - 2;
+		height = last_height - 4;
 	}
 	
 	last_speed = speed;
