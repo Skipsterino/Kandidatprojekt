@@ -149,7 +149,7 @@ void Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch,
 	int sgn_speed = (last_speed >= 0) - (last_speed < 0);
 	float scale = 1 + 0.2*sgn_speed;
 	
-	Send_Leg5_Kar_And_Velocity(kar_p1.a, kar_p1.b * scale - corner_pitch, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 	
+	Send_Leg5_Kar_And_Velocity(kar_p1.a, kar_p1.b - corner_pitch, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 	
 	Send_Leg3_Kar_And_Velocity(kar_p2.a, kar_p2.b, kar_p2.c, speed_p2.a, speed_p2.b, speed_p2.c); 
 	Send_Leg4_Kar_And_Velocity(kar_p1.a, kar_p1.b, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 	//OBS!! ta bort efter servofix?? <------------------------------------------------------------------------
 	Send_Leg1_Kar_And_Velocity(kar_p1.a, kar_p1.b + corner_pitch, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 
@@ -244,8 +244,8 @@ double_float Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta 
 	speed = speed * sgn_speed;
 	int speed_int = speed;
 	float speed_dec = speed - speed_int;
-	float thlimits[7] = {0.33,0.33,0.30,0.3,0.2,0.11,0};//{0.56,0.46,0.36,0.3,0.2,0.11,0};
-	float thlin[7] =    {0.0,0.03, 0,-0.1,-0.09,-0.11,0};
+	float thlimits[7] = {0.52,0.42,0.32,0.3,0.2,0.11,0};//{0.56,0.46,0.36,0.3,0.2,0.11,0};{0.33,0.33,0.30,0.3,0.2,0.11,0};
+	float thlin[7] =    {-0.1,-0.1, -0.02,-0.1,-0.09,-0.11,0};
 	
 	//th_max beräknas med linjärsering mellan heltal av speed.
 	float th_max = thlimits[speed_int] + speed_dec * thlin[speed_int];
@@ -302,7 +302,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 {
 
 	float l = 12;//13 låg //fötters förskjuting från kropp i x-led OBS orginal = 13, numera 12
-	float corner_pitch = 4; //förskjutning av arbetsområde i y-led för hörnben 8
+	float corner_pitch = 4; //förskjutning av arbetsområde i y-led för hörnben 4
 	
 	int sgn_speed = (speed >= 0) - (speed < 0) ;
 	int sgn_theta = (theta >= 0) - (theta < 0) ;
@@ -316,7 +316,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 	sgn_speed = (speed >= 0) - (speed < 0) ;
 	sgn_theta = (theta >= 0) - (theta < 0) ;
 	float height_step = 2 * (height - last_height)/cycle_length;
-	float lift = 1.2 + sgn_speed*speed/5; //benens lyfthöjd justeras efter speed 1.5 + sgn_speed*speed/6; 
+	float lift = 1.2 + sgn_speed*speed/12; //benens lyfthöjd justeras efter speed 1.2 + sgn_speed*speed/5; 
 	float stroke =  1.8 * speed; //steglängd 2.2
 	
 	if( (speed*sgn_speed < 0.2 ) && (theta * sgn_theta < 0.01) && (height_step == 0)) // gör inget
@@ -405,6 +405,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 					
 		}
 	}
+	last_height = height;
 }
 
 //Crab 2.0 - The servokiller
@@ -467,10 +468,10 @@ void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 		triple_float kar_p2;
 		
 		//servospeeds
-		float speed_p1_middle = 250 - 80 * p1_down;
-		float speed_p1_outer = 250 - 80 * p1_down;
-		float speed_p2_middle = 250 - 80 * p2_down;
-		float speed_p2_outer = 250 - 80 * p2_down;
+		float speed_p1_middle = 350 - 80 * p1_down;
+		float speed_p1_outer = 350 - 80 * p1_down;
+		float speed_p2_middle = 350 - 80 * p2_down;
+		float speed_p2_outer = 350 - 80 * p2_down;
 
 		float lift =2; 
 	
@@ -486,7 +487,7 @@ void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 			
 			if( walk_break || (n_1 != support_l/2 && n_2 != support_l/2))
 			{
-			_delay_ms(10); 
+			_delay_ms(6); 
 			}
 		}
 }
