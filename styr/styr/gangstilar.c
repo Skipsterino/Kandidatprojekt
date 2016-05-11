@@ -417,7 +417,7 @@ void Walk_Half_Crab_Cycle(float speed)// höger är possitivt
 	float corner_pitch = 4; //förskjutning av arbetsområde i y-led för hörnben 8
 	int sgn_speed = (speed >= 0) - (speed < 0) ;
 	uint8_t walk_break = 1;
-	float stroke =6 * sgn_speed;  //steglängd 2.2
+	float stroke =speed;  //steglängd 2.2
 	if(speed* sgn_speed > 6)
 	{
 		speed = 6* sgn_speed;
