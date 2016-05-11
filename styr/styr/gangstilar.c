@@ -410,7 +410,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 }
 
 //Crab 2.0 - The servokiller
-void Walk_Half_Crab_Cycle(float speed)// höger är possitivt
+void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 {
 	
 	float l = 12;//13 låg //fötters förskjuting från kropp i x-led OBS orginal = 13, numera 12
@@ -418,6 +418,10 @@ void Walk_Half_Crab_Cycle(float speed)// höger är possitivt
 	int sgn_speed = (speed >= 0) - (speed < 0) ;
 	uint8_t walk_break = 1;
 	float stroke =speed;  //steglängd 2.2
+	if(speed * sgn_speed <2)
+	{
+		return;
+	}
 	if(speed* sgn_speed > 6)
 	{
 		speed = 6* sgn_speed;
