@@ -421,6 +421,10 @@ void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 		return;
 	}
 	
+	if(last_height != 11)
+	{
+		Walk_Half_Cycle(0,0,11);
+	}
 	//gångloop, utför en halv gångfas och stannar när stödjande ben är i mitten av arbetsområde
 	while( walk_break || ( n_1 != support_l/2 && n_2 !=  support_l/2))
 	{
