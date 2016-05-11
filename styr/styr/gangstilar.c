@@ -300,9 +300,6 @@ triple_float Tripod(float x, float stroke, float height,float lift, uint8_t n)
 //testar överlappande svingfas, strypt o ingen höj/sänk
 void Walk_Half_Cycle(float speed, float theta, float height)
 {
-	//theta = 0;
-	//height = 11;//7 låg 11 normal 14 hög
-	//justeringar
 
 	float l = 12;//13 låg //fötters förskjuting från kropp i x-led OBS orginal = 13, numera 12
 	float corner_pitch = 4; //förskjutning av arbetsområde i y-led för hörnben 8
@@ -319,18 +316,18 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 	sgn_speed = (speed >= 0) - (speed < 0) ;
 	sgn_theta = (theta >= 0) - (theta < 0) ;
 	float height_step = 2 * (height - last_height)/cycle_length;
+	float lift = 1.2 + sgn_speed*speed/5; //benens lyfthöjd justeras efter speed 1.5 + sgn_speed*speed/6; 
+	float stroke =  1.8 * speed; //steglängd 2.2
 	
 	if( (speed*sgn_speed < 0.2 ) && (theta * sgn_theta < 0.01) && (height_step == 0)) // gör inget
 	{
 		return;
 	}
-
-	float stroke =  1.8 * speed; //steglängd 2.2
-
-
-	if( (speed == 0) && (theta ==0) ) //justera höjd utan att gå
+	
+	if( (speed*sgn_speed < 0.2 ) && (theta * sgn_theta < 0.01) ) //justera höjd utan att gå
 	{
-		return;
+		stroke = 0;
+		lift = 0;
 	}
 	
 	//gångloop, utför en halv gångfas och stannar när stödjande ben är i mitten av arbetsområde
@@ -379,7 +376,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 		triple_float speed_p1 = Adjust_Servo_Speed(theta, theta_max, p1_down);
 		triple_float speed_p2 = Adjust_Servo_Speed(theta, theta_max, p2_down);
 		
-		float lift =1.2 + sgn_speed*speed/5; //benens lyfthöjd justeras efter speed 1.5 + sgn_speed*speed/6; 
+	
 		
 		if(theta * sgn_theta < 0.01) //behöver ej gå via cyl koord vid rak gång.
 		{
