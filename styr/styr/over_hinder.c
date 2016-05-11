@@ -37,17 +37,29 @@ unsigned int speed_outer;
 uint8_t Servo_Load_Too_Small(unsigned char ID)
 {
 	unsigned char load = Get_Servo_Load(ID);
-	unsigned char abs_load = 0x01FF & load; 
-	if(abs_load < 0x0038)
+	if(((ID == 3) || (ID == 9) || (ID == 15)))
 	{
-		return 1;
+		if(load < 0x0438)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
 	}
-	else
+	else // dvs ID = 4, 10, 16...
 	{
-		return 0;
+		if((load > 0x0038) && (load < 0x0400))
+		{
+			return 0;
+		}
+		else
+		{
+			return 1;
+		}
 	}
 }
-
 
 
 void update_step(float new_step)

@@ -259,10 +259,10 @@ void update_height()
 	
 	if (change_height == 1) //Sänk?
 	{
-		height -= delta_h;
+		//height -= delta_h;
 	}
 	else if (change_height == 2) //Höj?
 	{
-		height += delta_h;
+		//height += delta_h;
 	}
 }

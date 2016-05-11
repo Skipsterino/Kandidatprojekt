@@ -61,13 +61,13 @@ float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn
 		speed = last_speed - 3;
 	}
 	
-	if(theta_diff > 0.29)
+	if(theta_diff > 0.54)
 	{
-		theta = last_theta + 0.29;
+		theta = last_theta + 0.54;
 	}
-	else if(theta_diff < -0.29)
+	else if(theta_diff < -0.54)
 	{
-		theta = last_theta - 0.29;
+		theta = last_theta - 0.54;
 	}
 	
 	if(height_diff > 2)
@@ -106,23 +106,23 @@ triple_float Adjust_Servo_Speed(float theta, int sgn_theta, int8_t leg_down)
 	
 	if(leg_down == 1)
 			{
-	speed_inner =  210 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	speed_inner =  280 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
 	speed_middle  = 100; 
 	speed_outer  =  100;
 			}     
-			else if(theta*sgn_theta <=0.20)
+			else // if(theta*sgn_theta <=0.20)
 			{                                                                   
 	//justerar servospeed ÄNDRA SKALFAKTOR !!
-	 speed_inner =  210 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	 speed_inner =  280 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
 	 speed_middle  = 350 + 340 * (sgn_theta * theta - theta_max);//320 + 430 *//220
 	 speed_outer  =  380 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//250
 			}
-		else
+		/*else
 		{
-	 speed_inner =  180 + 160 * (sgn_theta * theta - theta_max);// 250 + 500 * 
-	 speed_middle  = 350 + 340 * (sgn_theta * theta - theta_max);//320 + 430 *//220
-	 speed_outer  =  380 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//250
-		}	
+	 speed_inner =  30 + 160 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	 speed_middle  = 350 + 340 * (sgn_theta * theta - theta_max);//320 + 430 //220
+	 speed_outer  =  380 + 300 * (sgn_theta * theta - theta_max);//320 + 430 //250
+		}	*/
 		
  return create_triple_float(speed_inner, speed_middle, speed_outer);
 }	
@@ -149,10 +149,11 @@ void Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch,
 	int sgn_speed = (last_speed >= 0) - (last_speed < 0);
 	float scale = 1 + 0.2*sgn_speed;
 	
-	Send_Leg5_Kar_And_Velocity(kar_p1.a, kar_p1.b - corner_pitch, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 	
+	Send_Leg5_Kar_And_Velocity(kar_p1.a, kar_p1.b - corner_pitch, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 
+	Send_Leg1_Kar_And_Velocity(kar_p1.a, kar_p1.b + corner_pitch, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c);	
 	Send_Leg3_Kar_And_Velocity(kar_p2.a, kar_p2.b, kar_p2.c, speed_p2.a, speed_p2.b, speed_p2.c); 
 	Send_Leg4_Kar_And_Velocity(kar_p1.a, kar_p1.b, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 	//OBS!! ta bort efter servofix?? <------------------------------------------------------------------------
-	Send_Leg1_Kar_And_Velocity(kar_p1.a, kar_p1.b + corner_pitch, kar_p1.c, speed_p1.a, speed_p1.b, speed_p1.c); 
+	 
 	Send_Leg2_Kar_And_Velocity(kar_p2.a, kar_p2.b + corner_pitch, kar_p2.c, speed_p2.a, speed_p2.b, speed_p2.c);
 	Send_Leg6_Kar_And_Velocity(kar_p2.a, kar_p2.b - corner_pitch, kar_p2.c, speed_p2.a, speed_p2.b, speed_p2.c);
 }
@@ -244,8 +245,8 @@ double_float Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta 
 	speed = speed * sgn_speed;
 	int speed_int = speed;
 	float speed_dec = speed - speed_int;
-	float thlimits[7] = {0.52,0.42,0.32,0.3,0.2,0.11,0};//{0.56,0.46,0.36,0.3,0.2,0.11,0};{0.33,0.33,0.30,0.3,0.2,0.11,0};
-	float thlin[7] =    {-0.1,-0.1, -0.02,-0.1,-0.09,-0.11,0};
+	float thlimits[7] = {0.57,0.45,0.35,0.33,0.23,0.13,0};//{0.56,0.46,0.36,0.3,0.2,0.11,0};{0.33,0.33,0.30,0.3,0.2,0.11,0};
+	float thlin[7] =    {-0.12,-0.1,-0.02,-0.1,-0.1,-0.13,0};
 	
 	//th_max beräknas med linjärsering mellan heltal av speed.
 	float th_max = thlimits[speed_int] + speed_dec * thlin[speed_int];
@@ -387,12 +388,12 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 			
 			if( walk_break || (n_1 != support_l/2 && n_2 != support_l/2))
 			{
-			_delay_ms(9); // =5 delay för kart skippar på sista loopen, pga tids som mainloop tar TEST
+			_delay_ms(7); // =9 delay för kart skippar på sista loopen, pga tids som mainloop tar TEST
 			}
 		}
 		else //om sväng
 		{
-			lift = 1.5 + theta * sgn_theta * 1.8; //1.5 + theta * sgn_theta *1.5;
+			lift = 1.5 + theta * sgn_theta * 1.2; //1.5 + theta * sgn_theta *1.8;
 			kar_p1 = Tripod(l, stroke, last_height, lift, n_1); //kart koord för par 1
 			kar_p2 = Tripod(l, stroke, last_height, lift, n_2); //kart koord för par 2
 			
@@ -400,7 +401,7 @@ void Walk_Half_Cycle(float speed, float theta, float height)
 			
 			if( walk_break || ( n_1 != support_l/2 && n_2  !=  support_l/2))
 			{
-			_delay_ms(7); // =3 Delay för cyl skippar på sista loopen, pga tids som mainloop tar TEST
+			_delay_ms(5); // 7 Delay för cyl skippar på sista loopen, pga tids som mainloop tar TEST
 			}
 					
 		}
@@ -415,7 +416,7 @@ void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 	float corner_pitch = 4; //förskjutning av arbetsområde i y-led för hörnben 8
 	int sgn_speed = (speed >= 0) - (speed < 0) ;
 	uint8_t walk_break = 1;
-	float stroke = 6 * sgn_speed;  //steglängd 2.2
+	float stroke =6 * sgn_speed;  //steglängd 2.2
 
 	if(speed == 0) // gör inget
 	{
@@ -468,26 +469,26 @@ void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 		triple_float kar_p2;
 		
 		//servospeeds
-		float speed_p1_middle = 350 - 80 * p1_down;
-		float speed_p1_outer = 350 - 80 * p1_down;
-		float speed_p2_middle = 350 - 80 * p2_down;
-		float speed_p2_outer = 350 - 80 * p2_down;
+		float speed_p1_middle = 310- 80 * p1_down;
+		float speed_p1_outer = 310 - 80 * p1_down;
+		float speed_p2_middle = 310 - 80 * p2_down;
+		float speed_p2_outer = 310 - 80 * p2_down;
 
-		float lift =2; 
+		float lift =1.4; 
 	
 			kar_p1 = Tripod(l, stroke, last_height, lift, n_1); //kart koord för par 1
 			kar_p2 = Tripod(l, stroke, last_height, lift, n_2); //kart koord för par 2
 			
-			Send_Leg5_Kar_And_Velocity(kar_p1.a - kar_p1.b, - corner_pitch, kar_p1.c, 100, speed_p1_middle, speed_p1_outer); 	
-			Send_Leg3_Kar_And_Velocity(kar_p2.a - kar_p2.b, 0, kar_p2.c, 100, speed_p2_middle, speed_p2_outer); 
-			Send_Leg4_Kar_And_Velocity(kar_p1.a +  kar_p1.b, 0, kar_p1.c, 100, speed_p1_middle, speed_p1_outer); 	
-			Send_Leg1_Kar_And_Velocity(kar_p1.a -  kar_p1.b, corner_pitch, kar_p1.c, 100, speed_p1_middle, speed_p1_outer); 
-			Send_Leg2_Kar_And_Velocity(kar_p2.a + kar_p2.b, corner_pitch, kar_p2.c, 100, speed_p2_middle, speed_p2_outer);
-			Send_Leg6_Kar_And_Velocity(kar_p2.a + kar_p2.b, - corner_pitch, kar_p2.c, 100, speed_p2_middle, speed_p2_outer);
+			Send_Leg5_Kar_And_Velocity(1 + kar_p1.a - kar_p1.b, - corner_pitch, kar_p1.c, 100, speed_p1_middle, speed_p1_outer); 	
+			Send_Leg3_Kar_And_Velocity(1 + kar_p2.a - kar_p2.b, 0, kar_p2.c, 100, speed_p2_middle, speed_p2_outer); 
+			Send_Leg4_Kar_And_Velocity(1 + kar_p1.a +  kar_p1.b, 0, kar_p1.c, 100, speed_p1_middle, speed_p1_outer); 	
+			Send_Leg1_Kar_And_Velocity(1 + kar_p1.a -  kar_p1.b, corner_pitch, kar_p1.c, 100, speed_p1_middle, speed_p1_outer); 
+			Send_Leg2_Kar_And_Velocity(1 + kar_p2.a + kar_p2.b, corner_pitch, kar_p2.c, 100, speed_p2_middle, speed_p2_outer);
+			Send_Leg6_Kar_And_Velocity(1 + kar_p2.a + kar_p2.b, - corner_pitch, kar_p2.c, 100, speed_p2_middle, speed_p2_outer);
 			
 			if( walk_break || (n_1 != support_l/2 && n_2 != support_l/2))
 			{
-			_delay_ms(6); 
+			_delay_ms(7); 
 			}
 		}
 }
