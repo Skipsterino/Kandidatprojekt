@@ -13,8 +13,8 @@ float z;
 
 #define UP_DELAY 600
 #define FORWARD_DELAY 600
-#define DOWN_DELAY 600
-#define BACK_DELAY 20
+#define DOWN_DELAY 700
+#define BACK_DELAY 15
 
 float height;
 float obstacle_height;
@@ -26,6 +26,7 @@ float last_step;
 float last_last_step; 
 float lift;
 uint8_t adjusted; 
+float step_adjust;
 
 float weight_adjust; 
 
@@ -36,21 +37,21 @@ unsigned int speed_outer;
 
 uint8_t Servo_Load_Too_Small(unsigned char ID)
 {
-	unsigned char load = Get_Servo_Load(ID);
+	unsigned int load = Get_Servo_Load(ID);
 	if(((ID == 3) || (ID == 9) || (ID == 15)))
 	{
-		if(load < 0x0438)
+		if(load > 0x0405)
 		{
-			return 1;
+			return 0;
 		}
 		else
 		{
-			return 0;
+			return 1;
 		}
 	}
 	else // dvs ID = 4, 10, 16...
 	{
-		if((load > 0x0038) && (load < 0x0400))
+		if((load > 0x0028) && (load < 0x0400))
 		{
 			return 0;
 		}
@@ -67,46 +68,12 @@ void update_step(float new_step)
 	last_last_step = last_step;
 	last_step = step; 
 	step = new_step; 
+
 }
 
-void Walk_Up(void)
-{
-	
-	//Denna kan man ju testa som probe start.
-	unsigned int contact_load = 0X04a0; //Mät fram denna
-	z = 3;
-	float probe_step = 0.4;
 
-	load = 0x000b;
 	
-	Send_Leg2_Kar(20, 0,0); //För att se att vi lyckats med load-test
-	
-	Send_Leg6_Kar(20, 0, 3); // upp med ben åt sidan
-	_delay_ms(1000);
-	Send_Leg6_Kar(18, 4, 3); // fram med ben
-	_delay_ms(1000);
-	
-	
-	while(load < contact_load)
-	{
-		z= z - probe_step;
-		_delay_ms(500);
-		Send_Leg6_Kar(18, 4, z);
-		load = Get_Servo_Load(3); // ID 3 är mittenservot på ben 1
-		//load = load && 0x3FF;
-		_delay_ms(500);
-		if( z < -5) // Test om man missar ytan
-		{
-			z=3;
-		}
-	}
-	
-	Send_Leg2_Kar(20, 0,-10); //För att se att vi lyckats med load-test
-	_delay_ms(3000);
-	
-}
-
-void Walk_Up_Hard()
+void Walk_Up()
 {
 	height = 14;
 	obstacle_height = 6.3;
@@ -124,6 +91,7 @@ void Walk_Up_Hard()
 	speed_inner = 150;
 	speed_middle = 300;
 	speed_outer = 300;
+	step_adjust = 5;
 	
 	
 	Configure_Servos_Angle_Limit('c'); // Ändra servobegränsningarna
@@ -146,10 +114,11 @@ void Walk_Up_Hard()
 	
 	To_Default_Stance();
 	Configure_Servos_Angle_Limit('r'); //Återgå till normala begränsningar
+	Configure_Servos_Angle_Limit('r'); //Återgå till normala begränsningar bara vi failar med ett servo blir det tråkigt, så vi kör det väll två gånger 
 	Adjust_Stance_Climbed('u');
 }
 
-void Walk_Down_Hard()
+void Walk_Down()
 {
 	height = 14-6.3;
 	obstacle_height = -6.3;
@@ -160,6 +129,7 @@ void Walk_Down_Hard()
 	last_step = step;
 	last_last_step = last_step; 
 	lift = 2.5;
+	step_adjust = 2; 
 	
 	number_of_steps =20;
 	adjusted =0;
@@ -191,7 +161,8 @@ void Walk_Down_Hard()
 	Sixth_Leg('d');
 	
 	To_Default_Stance();
-	Configure_Servos_Angle_Limit('r'); //Återgå till normala begränsningar
+	Configure_Servos_Angle_Limit('r'); //Återgå till normala begränsningar 
+	Configure_Servos_Angle_Limit('r'); //Återgå till normala begränsningar bara vi failar med ett servo blir det tråkigt, så vi kör det väll två gånger 
 	Adjust_Stance_Climbed('d');
 	
 }

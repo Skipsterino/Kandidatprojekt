@@ -43,8 +43,7 @@ volatile unsigned char lastPacket[16];
 void update_mode();
 void update_speed_and_angle();
 void update_height();
-unsigned char temp[18];
-//unsigned int load[100];
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////									MAIN											////
@@ -79,7 +78,7 @@ int main(void)
 	Configure_Servos_Delaytime();
 	Configure_Servos_LED();
 	Configure_Servos_No_Response();
-	Configure_Servos_Angle_Limit('r');
+	Configure_Servos_Angle_Limit('r'); // ta inte bort!!!!!!!!!!!!! allt kan faila......
 	Configure_Servos_Max_Torque();
 	
 	//
@@ -98,16 +97,8 @@ int main(void)
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!	
 
 
-//
-	//Send_Servo_Position(3,0x01ff);
-	//_delay_ms(2000);
-	//for(int i = 0; i<100; ++i)
-	//{
-		//load[i] = Get_Servo_Load(3);
-	//}
-	//while(1)
-	//{
-	//}
+	
+	
 	//_delay_ms(100);
 	////Send_Leg3_Kar(22,0,0);
 	////_delay_ms(1);

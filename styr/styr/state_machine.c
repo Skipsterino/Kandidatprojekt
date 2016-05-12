@@ -963,7 +963,7 @@ void run_state()
 		
 		case CLIMBING_UP:
 		{
-			Walk_Up_Hard(); //Hårdkodad sekvens för att klättra upp
+			Walk_Up(); //Hårdkodad sekvens för att klättra upp
 			on_top_of_obstacle = true;
 			break;
 		}
@@ -996,7 +996,7 @@ void run_state()
 		
 		case CLIMBING_DOWN:
 		{
-			Walk_Down_Hard();
+			Walk_Down();
 			on_top_of_obstacle = false;
 			break;
 		}
