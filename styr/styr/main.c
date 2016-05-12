@@ -98,7 +98,6 @@ int main(void)
 
 
 	
-	
 	//_delay_ms(100);
 	////Send_Leg3_Kar(22,0,0);
 	////_delay_ms(1);

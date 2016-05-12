@@ -19,6 +19,8 @@ float last_theta = 0; //theta senaste avslutade cykel
 float theta_max = 0;
 uint8_t p1_down = 0; //benpar 1 mot mark
 uint8_t p2_down = 1; //benpar 2 mot mark
+float dance_x = 0; 
+float dance_y = 0; 
 
 
 //OBS tilfällig ändring i send legs kar!
@@ -500,4 +502,67 @@ void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 			_delay_ms(7); 
 			}
 		}
+}
+
+void Dance(float x, float y)
+{
+	if(0) // måste återställa x, y i main innan man kan återgå till walk_half_cycle... därför stypt. 
+	{
+		float l = 12;//13 låg //fötters förskjuting från kropp i x-led OBS orginal = 13, numera 12
+		float corner_pitch = 4; //förskjutning av arbetsområde i y-led för hörnben 4
+		int speed_inner_dance= 180;
+		int speed_middle_dance= 200;
+		int speed_outer_dance  = 200;
+		float max_r = 7; 
+		float max_step= 0.3; 
+		float height_step = 0.5; 
+		
+		// höjdjustering
+		float height; 
+		if(last_height>12)
+		{
+			height=last_height-height_step; 
+		}
+		if(last_height<10)
+		{
+			height=last_height+height_step; 
+		}
+		else 
+		{
+			height=11;
+		}
+		last_height = height; 
+		
+		// lågpass 
+		float direction_x = x-dance_x; 
+		float direction_y = y-dance_y; 
+		float diff= sqrt(pow(direction_x,2) + pow(direction_y,2));
+		if(diff>max_step)
+		{
+			dance_x = dance_x + direction_x/diff*max_step;
+			dance_y = dance_y + direction_y/diff*max_step;
+		}
+		else
+		{
+		dance_x = dance_x + direction_x; 
+		dance_y = dance_y + direction_y;
+		
+		}
+		
+		//Begränsningar i radie;
+		dance_r = sqrt(pow(dance_y,2) + pow(dance_x,2));
+		if(dance_r>max_r)
+		{
+			dance_x= dance_x/dance_r*max_r;
+			dance_y= dance_y/dance_r*max_r;
+		}
+		
+		Send_Leg1_Kar_And_Velocity(l+dance_x, -dance_y + corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
+		Send_Leg2_Kar_And_Velocity(l-dance_x, -dance_y + corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
+		Send_Leg3_Kar_And_Velocity(l+dance_x, -dance_y, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
+		Send_Leg4_Kar_And_Velocity(l-dance_x, -dance_y, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
+		Send_Leg5_Kar_And_Velocity(l+dance_x, -dance_y - corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
+		Send_Leg6_Kar_And_Velocity(l-dance_x, -dance_y - corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
+		_delay_ms(70);
+	}
 }

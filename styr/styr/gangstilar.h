@@ -25,6 +25,7 @@
 
 
 float height;
+float dance_r; 
 
 /**
 * @brief Sets parameters for smooth transition with over_hinder
@@ -174,7 +175,7 @@ void Walk_Half_Cycle(float speed, float theta, float height);
 * 
 */
 void Walk_Half_Crab_Cycle(int8_t speed);
-
+void Dance(float x, float y);
 
 #endif /* GANGSTILAR_H_ */
 
