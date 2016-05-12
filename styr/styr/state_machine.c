@@ -21,7 +21,7 @@
 #define US_HIGH_OBSTACLE_DISTANCE 40	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
 #define IR_HIGH_OBSTACLE_DISTANCE 60	/**< Distance for determining whether high obstacle or not (IR sensor). */
 #define NO_WALL_DISTANCE 120				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
-#define DEAD_END_DISTANCE 45			/**< Distance to wall for turning in a dead end (which we shouldn't have entered). */
+#define DEAD_END_DISTANCE 48			/**< Distance to wall for turning in a dead end (which we shouldn't have entered). */
 
 #define CENTRE_OFFSET 8 /**< Horizontal distance from centre of robot to its legs. */
 #define CORRIDOR_WIDTH 80 /**< Width of the labyrinth's corridors. */
@@ -102,10 +102,16 @@ void calculate_p_part()
 		case SLOW_CORRIDOR:
 		case INTO_HIGH_OBSTACLE:
 		case CRAWLING_UNDER_HIGH_OBSTACLE:
-		case CENTER_CRAB:
 		case CORRIDOR:
 		{
 			p_part = IR_3 - IR_6;
+			break;
+		}
+		
+		case CENTER_CRAB_UP:
+		case CENTER_CRAB_DOWN:
+		{
+			p_part = (IR_3 - IR_6)*150;
 			break;
 		}
 		
@@ -688,7 +694,7 @@ void update_state()
 				(IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 				{
 					cycle_count = 0;
-					ROBOT_STATE = PREPARE_CLIMBING_UP;
+					ROBOT_STATE = CENTER_CRAB_UP;
 				}
 				else
 				{
@@ -698,9 +704,19 @@ void update_state()
 			break;
 		}
 		
+		case CENTER_CRAB_UP:
+		{
+			if (cycle_count > 0)
+			{
+				cycle_count = 0;
+				ROBOT_STATE = PREPARE_CLIMBING_UP;
+			}
+			break;
+		}
+		
 		case PREPARE_CLIMBING_UP:
 		{
-			if (cycle_count > 6) //Testa fram lagom värde så avstånd till hinder blir lagom för klättring
+			if (cycle_count > 4) //Testa fram lagom värde så avstånd till hinder blir lagom för klättring
 			{
 				ROBOT_STATE = CLIMBING_UP;
 			}
@@ -722,20 +738,21 @@ void update_state()
 			if (IR_1 > PREPARE_CLIMBING_DOWN_DISTANCE)
 			{
 				cycle_count = 0;
-				ROBOT_STATE = CENTER_CRAB;
+				ROBOT_STATE = CENTER_CRAB_DOWN;
 			}
 			break;
 		}
 		
-		case CENTER_CRAB:
+		case CENTER_CRAB_DOWN:
 		{
-			if (cycle_count > 20) //Testa fram lagom värde så avstånd till hinder blir lagom för klättring
+			if (cycle_count > 0) 
 			{
 				cycle_count = 0;
 				ROBOT_STATE = PREPARE_CLIMBING_DOWN;
 			}
 			break;
 		}
+		
 		
 		case PREPARE_CLIMBING_DOWN:
 		{
@@ -811,7 +828,7 @@ void run_state()
 		
 		case INTO_CORRIDOR_NO_WALL:
 		{
-			if (cycle_count < 2)
+			if (cycle_count < 1)
 			{
 				Walk_Half_Cycle(3, 0, STANDARD_HEIGHT);
 				++cycle_count;
@@ -858,7 +875,7 @@ void run_state()
 		case RIGHT_WALL:
 		case LEFT_WALL:
 		{
-			Walk_Half_Cycle(3, alpha, STANDARD_HEIGHT);
+			Walk_Half_Cycle(2.7, alpha, STANDARD_HEIGHT);
 			++cycle_count;
 			break;
 		}
@@ -890,7 +907,7 @@ void run_state()
 		case TURN_RIGHT:
 		case JUNCTION_D_RIGHT:
 		{
-			Walk_Half_Cycle(0, 0.3, STANDARD_HEIGHT);
+			Walk_Half_Cycle(0, 0.2, STANDARD_HEIGHT);
 			break;
 		}
 		
@@ -906,13 +923,13 @@ void run_state()
 		case JUNCTION_D_LEFT:
 		case JUNCTION_H_LEFT:
 		{
-			Walk_Half_Cycle(0, -0.3, STANDARD_HEIGHT);
+			Walk_Half_Cycle(0, -0.2, STANDARD_HEIGHT);
 			break;
 		}
 		
 		case JUNCTION_I_OR_END:
 		{
-			Walk_Half_Cycle(0, -0.3, STANDARD_HEIGHT);
+			Walk_Half_Cycle(0, -0.2, STANDARD_HEIGHT);
 			++cycle_count;
 			break;
 		}
@@ -957,8 +974,14 @@ void run_state()
 			break;
 		}
 		
-		case CENTER_CRAB:
+		case CENTER_CRAB_UP:
+		case CENTER_CRAB_DOWN:
 		{
+			if(alpha > 3)
+			{
+				alpha = 3;
+			}
+			
 			Walk_Half_Crab_Cycle(alpha);
 			++cycle_count;
 			break;

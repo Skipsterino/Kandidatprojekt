@@ -44,6 +44,7 @@ void update_mode();
 void update_speed_and_angle();
 void update_height();
 unsigned char temp[18];
+//unsigned int load[100];
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////									MAIN											////
@@ -65,8 +66,8 @@ int main(void)
 	delta_h = 0.4;
 	
 	//Defaultvärden för state_machine
-	Kp = 0.01;
-	Kd = 0.55;
+	Kp = 0.007;
+	Kd = 0.45;
 	on_top_of_obstacle = false;
 	trust_sensors = true;
 	
@@ -89,12 +90,24 @@ int main(void)
 	Send_Inner_P2_Velocity(0x0010);//
 	Send_Middle_P2_Velocity(0x0010);//
 	Send_Outer_P2_Velocity(0x0010);//
+
 	
 	
 
 	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!	
 
+
+//
+	//Send_Servo_Position(3,0x01ff);
+	//_delay_ms(2000);
+	//for(int i = 0; i<100; ++i)
+	//{
+		//load[i] = Get_Servo_Load(3);
+	//}
+	//while(1)
+	//{
+	//}
 	//_delay_ms(100);
 	////Send_Leg3_Kar(22,0,0);
 	////_delay_ms(1);
