@@ -97,7 +97,7 @@ uint8_t rotation_count; /**< Counter that keeps track of rotation in a turn or j
 uint8_t cycle_count; /**< Counter that keeps track of the number of cycles. Is used in some, but not all, states. */
 
 float Kp, Kd;
-float Yaw, Yaw_rad, p_part, alpha; /**< Angles and parameters for motion control. */
+float Yaw, Yaw_rad, p_part, alpha, previous_alpha; /**< Angles and parameters for motion control. */
 float IR_0, IR_1, IR_2, IR_3, IR_4, IR_5, IR_6, US, IR_Yaw_left, IR_Yaw_right, IMU_Yaw, Yaw, Pitch, Roll; /**< Sensor values. */
 
 STATES ROBOT_STATE; /**< Represents the robot's current state. */
