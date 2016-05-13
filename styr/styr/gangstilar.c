@@ -582,9 +582,25 @@ void Victory_Dance(void)
 	{
 		Dance_Cyl(6, 2*pi*0.01);
 	}
-	for(float i = 1; i< 500; ++i)
+	for(float i = 1; i< 200; ++i)
 	{
 		Dance_Cyl(6, 2*pi*0.01*i);
+	}
+	for(float i = 1; i< 20; ++i)
+	{
+		Dance(0,6-6*0.05*i);
+	}
+	for(float i = 1; i< 20; ++i)
+	{
+		Dance(0,-6*0.05*i);
+	}
+	for(float i = 1; i< 20; ++i)
+	{
+		Dance(0,-6+6*0.05*i);
+	}
+	for(float i = 1; i< 20; ++i)
+	{
+		Dance(0, 6*0.05*i);
 	}
 	for(float i = 1; i< 10; ++i)
 	{

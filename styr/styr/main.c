@@ -65,8 +65,8 @@ int main(void)
 	delta_h = 0.4;
 	
 	//Defaultvärden för state_machine
-	Kp = 0.01;
-	Kd = 0.55;
+	Kp = 0.005;
+	Kd = 0.45;
 	on_top_of_obstacle = false;
 	trust_sensors = true;
 	

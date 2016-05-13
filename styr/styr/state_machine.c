@@ -23,7 +23,7 @@
 #define NO_WALL_DISTANCE 120				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
 #define DEAD_END_DISTANCE 48			/**< Distance to wall for turning in a dead end (which we shouldn't have entered). */
 
-#define CENTRE_OFFSET 8 /**< Horizontal distance from centre of robot to its legs. */
+#define CENTRE_OFFSET 8 /**< Horizontal distance from center of robot to its legs. */
 #define CORRIDOR_WIDTH 80 /**< Width of the labyrinth's corridors. */
 
 #define STANDARD_HEIGHT 11 /**< Standard height for use in corridors etc. */
@@ -265,8 +265,8 @@ void update_state()
 				ROBOT_STATE = OUT_OF_CORRIDOR_NO_WALL;
 			}
 			
-			else if (((IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
-			|| ((IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE)))
+			else if (((cycle_count > 4) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
+			|| ((cycle_count > 4) &&  (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE)))
 			{
 				ROBOT_STATE = LEFT_WALL;
 				cycle_count = 0;
@@ -285,8 +285,8 @@ void update_state()
 				ROBOT_STATE = OUT_OF_CORRIDOR_NO_WALL;
 			}
 			
-			else if (((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE))
-			|| ((IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE)))
+			else if (((cycle_count > 4) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE))
+			|| ((cycle_count > 4) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE)))
 			{
 				ROBOT_STATE = RIGHT_WALL;
 				cycle_count = 0;
@@ -664,6 +664,7 @@ void update_state()
 		{
 			if ((IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 			{
+				previous_alpha = 0;
 				ROBOT_STATE = SLOW_CORRIDOR;
 			}
 			
@@ -733,7 +734,6 @@ void update_state()
 				(IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 				{
 					cycle_count = 0;
-					previous_alpha = 0;
 					ROBOT_STATE = CENTER_CRAB_UP;
 				}
 				else
@@ -784,7 +784,6 @@ void update_state()
 			if (IR_1 > PREPARE_CLIMBING_DOWN_DISTANCE)
 			{
 				cycle_count = 0;
-				previous_alpha = 0;
 				ROBOT_STATE = CENTER_CRAB_DOWN;
 			}
 			break;
@@ -831,19 +830,22 @@ void run_state()
 	calculate_p_part();
 	alpha = Kp*p_part + Kd*Yaw_rad;
 	
-	float alpha_diff = alpha - previous_alpha;
-	
-	if(alpha_diff > 0.25)
+	if (!((ROBOT_STATE == CENTER_CRAB_UP) || (ROBOT_STATE == CENTER_CRAB_DOWN)))	// LP-filtrera såvida vi inte ska köra crab_walk
 	{
-		alpha = previous_alpha + 0.25;
+		float alpha_diff = alpha - previous_alpha;
+		
+		if(alpha_diff > 0.29)
+		{
+			alpha = previous_alpha + 0.29;
+		}
+		else if(alpha_diff < -0.29)
+		{
+			alpha = previous_alpha - 0.29;
+		}
+		
+		previous_alpha = alpha;
 	}
-	else if(alpha_diff < -0.25)
-	{
-		alpha = previous_alpha - 0.25;
-	}
-	
-	previous_alpha = alpha;
-	
+		
 	fromSen[14] = ROBOT_STATE; // Tillstånd till bussen
 	
 	switch (ROBOT_STATE)
@@ -855,12 +857,12 @@ void run_state()
 		{
 			if(trust_sensors)
 			{
-				Walk_Half_Cycle(5, alpha, STANDARD_HEIGHT);
+				Walk_Half_Cycle(4.5, alpha, STANDARD_HEIGHT);
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(5, 0, STANDARD_HEIGHT);
+				Walk_Half_Cycle(4.5, 0, STANDARD_HEIGHT);
 				trust_sensors = true;			// Default så litar vi på sensorerna
 			}
 			
@@ -870,7 +872,7 @@ void run_state()
 		case OUT_OF_JUNCTION_LEFT_WALL:
 		case OUT_OF_JUNCTION_RIGHT_WALL:
 		{
-			Walk_Half_Cycle(5, alpha, STANDARD_HEIGHT);
+			Walk_Half_Cycle(4.5, alpha, STANDARD_HEIGHT);
 			break;
 		}
 		
@@ -878,13 +880,13 @@ void run_state()
 		{
 			if(trust_sensors)
 			{
-				Walk_Half_Cycle(3, alpha, STANDARD_HEIGHT);
+				Walk_Half_Cycle(2.5, alpha, STANDARD_HEIGHT);
 				++cycle_count;
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(3, 0, STANDARD_HEIGHT);
+				Walk_Half_Cycle(2.5, 0, STANDARD_HEIGHT);
 				trust_sensors = true;			// Default så litar vi på sensorerna
 				++cycle_count;
 			}
@@ -894,15 +896,15 @@ void run_state()
 		
 		case INTO_CORRIDOR_NO_WALL:
 		{
-			if (cycle_count < 1)
+			if (cycle_count < 2)
 			{
-				Walk_Half_Cycle(3, 0, STANDARD_HEIGHT);
+				Walk_Half_Cycle(2.5, 0, STANDARD_HEIGHT);
 				++cycle_count;
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(3, alpha, STANDARD_HEIGHT);
+				Walk_Half_Cycle(2.5, alpha, STANDARD_HEIGHT);
 			}
 			
 			break;
@@ -911,15 +913,15 @@ void run_state()
 		case OUT_OF_CORRIDOR_RIGHT_WALL:
 		case OUT_OF_CORRIDOR_LEFT_WALL:
 		{
-			if (cycle_count <= 2)
+			if (cycle_count <= 4)
 			{
-				Walk_Half_Cycle(3, 0, STANDARD_HEIGHT);
+				Walk_Half_Cycle(2.5, 0, STANDARD_HEIGHT);
 				++cycle_count;
 			}
 			
 			else
 			{
-				Walk_Half_Cycle(3, alpha, STANDARD_HEIGHT);
+				Walk_Half_Cycle(2.5, alpha, STANDARD_HEIGHT);
 			}
 			
 			break;
@@ -927,13 +929,13 @@ void run_state()
 		
 		case OUT_OF_CORRIDOR_NO_WALL:
 		{
-			Walk_Half_Cycle(3, 0, STANDARD_HEIGHT);
+			Walk_Half_Cycle(2.5, 0, STANDARD_HEIGHT);
 			break;
 		}
 		
 		case NO_WALL:
 		{
-			Walk_Half_Cycle(3, 0, STANDARD_HEIGHT);
+			Walk_Half_Cycle(2.5, 0, STANDARD_HEIGHT);
 			++cycle_count;
 			break;
 		}
@@ -941,7 +943,7 @@ void run_state()
 		case RIGHT_WALL:
 		case LEFT_WALL:
 		{
-			Walk_Half_Cycle(3, alpha, STANDARD_HEIGHT);
+			Walk_Half_Cycle(2.5, alpha, STANDARD_HEIGHT);
 			++cycle_count;
 			break;
 		}
@@ -950,7 +952,7 @@ void run_state()
 		case JUNCTION_D_STRAIGHT:
 		case OUT_OF_JUNCTION_NO_WALL:
 		{
-			Walk_Half_Cycle(3, 0, STANDARD_HEIGHT);
+			Walk_Half_Cycle(2.5, 0, STANDARD_HEIGHT);
 			break;
 		}
 		
@@ -1041,13 +1043,13 @@ void run_state()
 		
 		case INTO_HIGH_OBSTACLE:
 		{
-			Walk_Half_Cycle(5, alpha, HIGH_OBSTACLE_HEIGHT);
+			Walk_Half_Cycle(4.5, alpha, HIGH_OBSTACLE_HEIGHT);
 			break;
 		}
 		
 		case CRAWLING_UNDER_HIGH_OBSTACLE:
 		{
-			Walk_Half_Cycle(5, alpha, HIGH_OBSTACLE_HEIGHT); //Samma höjd som i INTO_HIGH_OBSTACLE
+			Walk_Half_Cycle(4.5, alpha, HIGH_OBSTACLE_HEIGHT); //Samma höjd som i INTO_HIGH_OBSTACLE
 			break;
 		}
 		
@@ -1081,8 +1083,13 @@ void run_state()
 		
 		case CENTER_CRAB_UP:
 		case CENTER_CRAB_DOWN:
-		{	
-			Walk_Half_Crab_Cycle(alpha*100);
+		{
+			if (alpha > 2)
+			{
+				alpha = 2;
+			}
+			
+			Walk_Half_Crab_Cycle(alpha*50);
 			++cycle_count;
 			break;
 		}
