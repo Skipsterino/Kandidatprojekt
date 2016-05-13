@@ -11,10 +11,10 @@
 unsigned int load;
 float z;
 
-#define UP_DELAY 600
-#define FORWARD_DELAY 600
-#define DOWN_DELAY 700
-#define BACK_DELAY 15
+#define UP_DELAY 400
+#define FORWARD_DELAY 300
+#define DOWN_DELAY 550
+#define BACK_DELAY 12
 
 float height;
 float obstacle_height;
@@ -88,7 +88,7 @@ void Walk_Up()
 	adjusted =0;
 	weight_adjust = 3;
 
-	speed_inner = 150;
+	speed_inner = 200;
 	speed_middle = 300;
 	speed_outer = 300;
 	step_adjust = 5;
@@ -135,7 +135,7 @@ void Walk_Down()
 	adjusted =0;
 	weight_adjust = 3;
 	
-	speed_inner = 150;
+	speed_inner = 200;
 	speed_middle = 300;
 	speed_outer = 300;
 	

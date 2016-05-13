@@ -1,4 +1,4 @@
-/* 
+/*
 * testloop.c
 *
 * Created: 4/15/2016 4:17:57 PM
@@ -65,8 +65,8 @@ int main(void)
 	delta_h = 0.4;
 	
 	//Defaultvärden för state_machine
-	Kp = 0.007;
-	Kd = 0.45;
+	Kp = 0.01;
+	Kd = 0.55;
 	on_top_of_obstacle = false;
 	trust_sensors = true;
 	
@@ -94,10 +94,8 @@ int main(void)
 	
 
 	
-	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!	
+	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
 
-
-	
 	//_delay_ms(100);
 	////Send_Leg3_Kar(22,0,0);
 	////_delay_ms(1);
@@ -112,7 +110,7 @@ int main(void)
 	////Send_Leg6_Kar(22,0,0);
 	////_delay_ms(1);
 	//Send_Servo_Position(1,0x01FF);
-	//Send_Servo_Position(2,0x01FF);	
+	//Send_Servo_Position(2,0x01FF);
 	//Send_Servo_Position(3,0x01FF-0xA0);
 	//Send_Servo_Position(4,0x01FF+0xA0);
 	//Send_Servo_Position(5,0x01FF+0xA0);
@@ -156,27 +154,34 @@ int main(void)
 		switch(cm)
 		{
 			case MANUAL: //Manuellt läge
-				ROBOT_STATE = CORRIDOR; //Ha CORRIDOR som default state
-				speed = 0;
-				angle = 0;
-				if (first_kom_byte & 0b00000011) //Skickas vinkel & intensitet?
-				{
-					update_speed_and_angle();
-				}
-				if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
-				{
-					update_height();
-				}
-				
-				if (first_kom_byte & 0b00010000) //Nytt Kp?
-				{
-					Kp = ((float)lastPacket[5])/1000.f; //Kp skickas som 1000 ggr det önskade värdet!!!
-				}
-				if (first_kom_byte & 0b00100000) //Nytt Kd?
-				{
-					Kd = ((float)lastPacket[6])/100.f; //Kd skickas som 100 ggr det önskade värdet!!!
-				}
-				
+			ROBOT_STATE = CORRIDOR; //Ha CORRIDOR som default state
+			speed = 0;
+			angle = 0;
+			
+			if (first_kom_byte & 0b00000011) //Skickas vinkel eller intensitet?
+			{
+				update_speed_and_angle();
+			}
+			if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
+			{
+				update_height();
+			}
+			
+			if (first_kom_byte & 0b00010000) //Nytt Kp?
+			{
+				Kp = ((float)lastPacket[5])/1000.f; //Kp skickas som 1000 ggr det önskade värdet!!!
+			}
+			if (first_kom_byte & 0b00100000) //Nytt Kd?
+			{
+				Kd = ((float)lastPacket[6])/100.f; //Kd skickas som 100 ggr det önskade värdet!!!
+			}
+			
+			if((!(first_kom_byte & 0b10000000)) && dance_r > 1)
+			{
+				Dance(0,0);
+			}
+			else
+			{
 				if ((first_kom_byte & 0b01000000) && lastPacket[7] == 1)
 				{
 					Walk_Half_Crab_Cycle(-6);
@@ -185,28 +190,33 @@ int main(void)
 				{
 					Walk_Half_Crab_Cycle(6);
 				}
+				else if(first_kom_byte & 0b10000000)
+				{
+					Dance(((float)((lastPacket[8] & 0b11110000) >> 4)-8), -(((float)(lastPacket[8] & 0b00001111))-8));
+				}
 				else
 				{
 					Walk_Half_Cycle(speed,angle,height);
 				}
-				break;
+			}
+			break;
 			
 			case AUTO: //Autonomt läge
-				//height = 11;
-				update_state();
-				run_state();
-				break;
+			//height = 11;
+			update_state();
+			run_state();
+			break;
 			
 			case RACE:
-				if ((PIND & (1 << PIND3)) == 0) //Har knapp tryckts ned?
-				{
-					_delay_ms(1000);
-					cm = AUTO;
-				}
-				break;
+			if ((PIND & (1 << PIND3)) == 0) //Har knapp tryckts ned?
+			{
+				_delay_ms(1000);
+				cm = AUTO;
+			}
+			break;
 			
 			default:
-				break;
+			break;
 		}
 	}
 }

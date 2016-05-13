@@ -506,7 +506,7 @@ void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 
 void Dance(float x, float y)
 {
-	if(0) // måste återställa x, y i main innan man kan återgå till walk_half_cycle... därför stypt. 
+	if(1) // måste återställa x, y i main innan man kan återgå till walk_half_cycle... därför stypt. 
 	{
 		float l = 12;//13 låg //fötters förskjuting från kropp i x-led OBS orginal = 13, numera 12
 		float corner_pitch = 4; //förskjutning av arbetsområde i y-led för hörnben 4
@@ -563,6 +563,32 @@ void Dance(float x, float y)
 		Send_Leg4_Kar_And_Velocity(l-dance_x, -dance_y, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
 		Send_Leg5_Kar_And_Velocity(l+dance_x, -dance_y - corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
 		Send_Leg6_Kar_And_Velocity(l-dance_x, -dance_y - corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
-		_delay_ms(70);
+		_delay_ms(15);
 	}
+}
+
+void Dance_Cyl(float r, float th)
+{
+	float x = r *cos(th);
+	float y = r * sin(th); 
+	Dance(x,y);
+}
+
+void Victory_Dance(void)
+{
+	float pi = 3.14159265359;
+	
+	for(float i = 1; i< 10; ++i)
+	{
+		Dance_Cyl(6, 2*pi*0.01);
+	}
+	for(float i = 1; i< 500; ++i)
+	{
+		Dance_Cyl(6, 2*pi*0.01*i);
+	}
+	for(float i = 1; i< 10; ++i)
+	{
+		Dance_Cyl(0, 2*pi*0.01);
+	}
+
 }

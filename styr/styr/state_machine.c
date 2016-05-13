@@ -111,7 +111,7 @@ void calculate_p_part()
 		case CENTER_CRAB_UP:
 		case CENTER_CRAB_DOWN:
 		{
-			p_part = (IR_3 - IR_6)*50;
+			p_part = (IR_3 - IR_6);
 			break;
 		}
 		
@@ -733,6 +733,7 @@ void update_state()
 				(IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 				{
 					cycle_count = 0;
+					previous_alpha = 0;
 					ROBOT_STATE = CENTER_CRAB_UP;
 				}
 				else
@@ -748,6 +749,7 @@ void update_state()
 			if (cycle_count > 5)
 			{
 				cycle_count = 0;
+				previous_alpha = 0;
 				ROBOT_STATE = PREPARE_CLIMBING_UP;
 			}
 			break;
@@ -782,6 +784,7 @@ void update_state()
 			if (IR_1 > PREPARE_CLIMBING_DOWN_DISTANCE)
 			{
 				cycle_count = 0;
+				previous_alpha = 0;
 				ROBOT_STATE = CENTER_CRAB_DOWN;
 			}
 			break;
@@ -792,6 +795,7 @@ void update_state()
 			if (cycle_count > 5)
 			{
 				cycle_count = 0;
+				previous_alpha = 0;
 				ROBOT_STATE = PREPARE_CLIMBING_DOWN;
 			}
 			break;
@@ -960,8 +964,18 @@ void run_state()
 		
 		case END_OF_COURSE:
 		{
-			Victory_Dance();
+			if (cycle_count == 0)
+			{
+				Victory_Dance();
+				++cycle_count;
+			}
+			
+			else
+			{
+				
+			}
 			break;
+			
 		}
 		
 		case DEAD_END_D:
@@ -1067,13 +1081,8 @@ void run_state()
 		
 		case CENTER_CRAB_UP:
 		case CENTER_CRAB_DOWN:
-		{
-			if(alpha > 2)
-			{
-				alpha = 2;
-			}
-			
-			Walk_Half_Crab_Cycle(alpha);
+		{	
+			Walk_Half_Crab_Cycle(alpha*100);
 			++cycle_count;
 			break;
 		}
