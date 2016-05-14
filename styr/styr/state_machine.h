@@ -87,8 +87,8 @@ typedef enum {
 	DEAD_END_D = 50,			// TEST_STATE_7
 	CHECK_IF_LOW_OBSTACLE = 51,
 	CHECK_IF_HIGH_OBSTACLE = 52,
-	CENTER_CRAB_DOWN = 53,	
-	CENTER_CRAB_UP = 54,
+	CENTER_CRAB = 53,
+	CENTER_NORMAL = 54,
 } STATES;
 
 bool on_top_of_obstacle; /**< true -> the robot has climbed up on top of a low obstacle. */
