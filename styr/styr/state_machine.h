@@ -89,10 +89,14 @@ typedef enum {
 	CHECK_IF_HIGH_OBSTACLE = 52,
 	CENTER_CRAB = 53,
 	CENTER_NORMAL = 54,
+	CENTER_CRAB_UP = 55,
+	CENTER_CRAB_DOWN = 56,
+	LOWER = 57,
 } STATES;
 
 bool on_top_of_obstacle; /**< true -> the robot has climbed up on top of a low obstacle. */
 bool trust_sensors; /**< false -> for some reason, we don't trust the current sensor data. */
+bool low;
 uint8_t rotation_count; /**< Counter that keeps track of rotation in a turn or junction. */
 uint8_t cycle_count; /**< Counter that keeps track of the number of cycles. Is used in some, but not all, states. */
 
