@@ -885,7 +885,7 @@ void update_state()
 			//ROBOT_STATE = CLIMBING_UP;
 			//}
 			
-			if (cycle_count > 4)
+			if (cycle_count > 5)
 			{
 				ROBOT_STATE = CLIMBING_UP;
 			}
