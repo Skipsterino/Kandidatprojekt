@@ -14,7 +14,7 @@ void UART_Transmit( unsigned char data )
 	UDR0 = data;
 }
 
-unsigned char UART_Receive( void )
+volatile unsigned char UART_Receive( void )
 {
 	float i=0;
 	// Wait for data to be received
@@ -142,12 +142,13 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	unsigned char message[5];
 	unsigned char load_LSByte;
 	unsigned char load_MSByte;
-	unsigned char start_byte1= 0;
-	unsigned char start_byte2= 0; 
+	volatile unsigned char start_byte1= 0;
+	volatile unsigned char start_byte2= 0; 
 	unsigned char length; 
 	unsigned char error; 
 	unsigned char checksum;
-	float timer = 0; 
+	uint8_t timer = 0; 
+	unsigned int load;
 	
 	message[0] = ID;
 	message[1] = 0x04;
@@ -157,18 +158,19 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	
 	Send_Servo_Message(message, 2);
 	
-	
+	timer_san=0;
 	_delay_ms(0.02); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
 	
 	while((start_byte1 != 0xFF) && (start_byte2 != 0xFF))
 	{
+		
 		start_byte2 = start_byte1; 
 		start_byte1 = UART_Receive();
-		timer = timer + 1; 
+		++timer;
 		if(timer>10)
 		{
-			return 0xBB;
+			break;
 		}
 	}
 	UART_Receive(); //dont know lol
@@ -181,7 +183,7 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	
 	_delay_ms(0.05); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 	
-	unsigned int load = (((unsigned int)load_MSByte) << 8) | load_LSByte;
+	load = (((unsigned int)load_MSByte) << 8) | load_LSByte;
 	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
 	
 	return load;

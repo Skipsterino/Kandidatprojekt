@@ -73,6 +73,9 @@ int main(void)
 	
 	Init();
 	
+	
+	
+	
 	//init_fuck();
 	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
@@ -132,6 +135,7 @@ int main(void)
 	//while(1)
 	//{
 	//}
+
 	
 	unsigned char first_kom_byte;
 	
