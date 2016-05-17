@@ -18,8 +18,8 @@
 #define JUNCTION_A_FORWARD_DISTANCE 80	/**< Distance for determining whether A junction or not (junction or turn?). */
 #define PREPARE_CLIMBING_UP_DISTANCE 30	/**< Distance for preparing climbing onto low obstacle (if IR_1 is less than this). */
 #define PREPARE_CLIMBING_DOWN_DISTANCE 40	/**< Distance for preparing climbing down from low obstacle (if IR_1 is greater than this). */
-#define US_HIGH_OBSTACLE_DISTANCE 60	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
-#define IR_HIGH_OBSTACLE_DISTANCE 60	/**< Distance for determining whether high obstacle or not (IR sensor). */
+#define US_HIGH_OBSTACLE_DISTANCE 70	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
+#define IR_HIGH_OBSTACLE_DISTANCE 30	/**< Distance for determining whether high obstacle or not (IR sensor). */
 #define NO_WALL_DISTANCE 120				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
 #define DEAD_END_DISTANCE 48			/**< Distance to wall for turning in a dead end (which we shouldn't have entered). */
 
@@ -714,7 +714,7 @@ void update_state()
 		case JUNCTION_H_LEFT:
 		{
 			if ((cycle_count > 3) && (IR_0 > SIDE_DEAD_END_DISTANCE-60) && (IR_2 > CORRIDOR_SIDE_DISTANCE) && (IR_3 > CORRIDOR_SIDE_DISTANCE) && (IR_5 > CORRIDOR_SIDE_DISTANCE) && (IR_6 > CORRIDOR_SIDE_DISTANCE)
-			&& (((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE)) || ((IR_2 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE)) || ((IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_5 > SIDE_DEAD_END_DISTANCE)) || ((IR_3 > SIDE_DEAD_END_DISTANCE) && (IR_6 > SIDE_DEAD_END_DISTANCE))))
+			&& ((IR_2 > SIDE_DEAD_END_DISTANCE) || (IR_3 > SIDE_DEAD_END_DISTANCE)))
 			{
 				Walk_Half_Cycle(0, 0.15, STANDARD_HEIGHT);
 				ROBOT_STATE = OUT_OF_JUNCTION_NO_WALL;
@@ -805,7 +805,7 @@ void update_state()
 		{
 			if (cycle_count > 5)
 			{
-				if ((US < US_HIGH_OBSTACLE_DISTANCE) && (IR_0 > NO_WALL_DISTANCE))// && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
+				if ((US < US_HIGH_OBSTACLE_DISTANCE + 20) && (IR_0 > NO_WALL_DISTANCE))// && (IR_2 < CORRIDOR_SIDE_DISTANCE) && (IR_3 < CORRIDOR_SIDE_DISTANCE) && (IR_5 < CORRIDOR_SIDE_DISTANCE) && (IR_6 < CORRIDOR_SIDE_DISTANCE))
 				{
 					ROBOT_STATE = INTO_HIGH_OBSTACLE;
 					Walk_Half_Cycle(0, 0, HIGH_OBSTACLE_HEIGHT);
@@ -823,14 +823,22 @@ void update_state()
 			if (IR_4 < IR_HIGH_OBSTACLE_DISTANCE)
 			{
 				ROBOT_STATE = CRAWLING_UNDER_HIGH_OBSTACLE;
+				cycle_count = 0;
 			}
 			break;
 		}
 		
 		case CRAWLING_UNDER_HIGH_OBSTACLE:
 		{
-			if (IR_4 > IR_HIGH_OBSTACLE_DISTANCE)
+			if ((IR_4 > IR_HIGH_OBSTACLE_DISTANCE) && (cycle_count < 2))
 			{
+				++cycle_count;
+			}
+			
+			else if ((IR_4 > IR_HIGH_OBSTACLE_DISTANCE) && (cycle_count >= 2))
+			{
+				Walk_Half_Cycle(0, 0.01, STANDARD_HEIGHT);
+				Walk_Half_Cycle(0, 0.01, STANDARD_HEIGHT);
 				ROBOT_STATE = CORRIDOR;
 			}
 			break;
@@ -941,7 +949,7 @@ void update_state()
 				ROBOT_STATE = CENTER_NORMAL;
 			}
 			
-			else if (cycle_count > 5)
+			else if (cycle_count > 3)
 			{
 				ROBOT_STATE = previous_state;
 			}
@@ -1231,6 +1239,13 @@ void run_state()
 		case CHECK_IF_HIGH_OBSTACLE:
 		case CHECK_IF_LOW_OBSTACLE:
 		{
+			if (fabs(alpha) < 0.01)
+			{
+				Walk_Half_Cycle(0, 0.01, STANDARD_HEIGHT);
+				++cycle_count;
+				break;
+			}
+			
 			Walk_Half_Cycle(0, alpha, STANDARD_HEIGHT);
 			++cycle_count;
 			break;
