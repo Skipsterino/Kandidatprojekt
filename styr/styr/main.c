@@ -233,6 +233,7 @@ void update_mode()
 	if (change_mode == 0b00001111) //Byt till MANUAL?
 	{
 		cm = MANUAL;
+		height = 11;
 	}
 	
 	else if (change_mode == 0b00111100) //Byt till AUTO?
