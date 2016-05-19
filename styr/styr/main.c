@@ -36,6 +36,7 @@ int8_t intensity_byte;
 int8_t angle_byte;
 float height;
 float delta_h;
+int8_t dx;
 
 volatile unsigned char lastPacket[16];
 
@@ -63,6 +64,7 @@ int main(void)
 	angle_byte = 120;
 	height = 11;
 	delta_h = 0.4;
+	dx = 0;
 	
 	//Defaultvärden för state_machine
 	Kp = 0.005;
@@ -93,7 +95,7 @@ int main(void)
 
 	unsigned char first_kom_byte;
 	
-	Walk_Half_Cycle(1, 0.01, height); //Ställ in default-höjd
+	Walk_Half_Cycle(1, 0.01, height,0); //Ställ in default-höjd
 
 	while(1)
 	{
@@ -142,19 +144,26 @@ int main(void)
 			{
 				if ((first_kom_byte & 0b01000000) && lastPacket[7] == 1)
 				{
-					Walk_Half_Crab_Cycle(-6);
+					//Walk_Half_Crab_Cycle(-6);
+					dx = -3;
 				}
 				else if ((first_kom_byte & 0b01000000) && lastPacket[7] == 2)
 				{
-					Walk_Half_Crab_Cycle(6);
+					//Walk_Half_Crab_Cycle(6);
+					dx = 3;
 				}
-				else if(first_kom_byte & 0b10000000)
+				else
+				{
+					dx = 0;
+				}
+				
+				if(first_kom_byte & 0b10000000) //else if
 				{
 					Dance(((float)((lastPacket[8] & 0b11110000) >> 4)-8), -(((float)(lastPacket[8] & 0b00001111))-8));
 				}
 				else
 				{
-					Walk_Half_Cycle(speed,angle,height);
+					Walk_Half_Cycle(speed,angle,height,dx);
 				}
 			}
 			break;
