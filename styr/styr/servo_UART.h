@@ -22,13 +22,19 @@
 
 #include "structs.h"
 
+/**
+* @brief Limits the servos maximum torque
+*
+* Limits the maximum output torque of the servos,
+* to minimize the wear. 
+*/
 void Configure_Servos_Max_Torque(void);
 
 /**
-* @brief Transmits one byte on the USART
+* @brief Transmits one byte on the UART
 *
-* Sends one byte on the UART 
-* @param data The data to be transmitted. 
+* Sends one byte on the UART
+* @param data The data to be transmitted.
 */
 void UART_Transmit(unsigned char data);
 
@@ -47,6 +53,7 @@ volatile unsigned char UART_Receive(void);
 *
 * @param param Message written in the servoprotocol 
 * without start and stopp bytes 
+* @param num_of_param Number of parameters in the transfer 
 *
 * @return The checksum, which is the final byte in a transmitt. 
 */
