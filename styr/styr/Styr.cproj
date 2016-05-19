@@ -111,9 +111,6 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="gammal_testmain.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="over_hinder.h">
       <SubType>compile</SubType>
     </Compile>
