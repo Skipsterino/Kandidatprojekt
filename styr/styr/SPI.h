@@ -4,7 +4,7 @@
 * @date 26 apr 2016
 * @brief SPI Driver
 *
-* Defines communication through the SPI bus given a triggered interruppt
+* Defines communication through the SPI bus given a triggered interrupt.
 */
 
 #ifndef SPI_H_

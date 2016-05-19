@@ -1,7 +1,7 @@
 /**
 * @file state_machine.h
-* @author Fredrik, Erik
-* @date 25 apr 2016
+* @author Fredrik, Erik, Jonas
+* @date 18 may 2016
 * @brief State machine for the robot's autonomous mode
 *
 * Contains the robot's state machine, which handles updating and execution of the robot's
@@ -12,7 +12,7 @@
 #define STATE_MACHINE_H_
 
 #ifndef F_CPU
-#define F_CPU 16000000UL		// 16 MHz
+#define F_CPU 16000000UL		// 16 MHz klockfrekvens
 #endif
 
 #include "SPI.h"
@@ -93,17 +93,12 @@ typedef enum {
 	LOWER = 57,
 } STATES;
 
+STATES ROBOT_STATE; /**< Represents the robot's current state. */
+float Kp, Kd; /**< Parameters for the PD-controller. */
+
 bool on_top_of_obstacle; /**< true -> the robot has climbed up on top of a low obstacle. */
 bool trust_sensors; /**< false -> for some reason, we don't trust the current sensor data. */
-bool low;
-uint8_t rotation_count; /**< Counter that keeps track of rotation in a turn or junction. */
-uint8_t cycle_count; /**< Counter that keeps track of the number of cycles. Is used in some, but not all, states. */
-
-float Kp, Kd;
-float Yaw, Yaw_rad, p_part, alpha, previous_alpha; /**< Angles and parameters for motion control. */
-float IR_0, IR_1, IR_2, IR_3, IR_4, IR_5, IR_6, US, IR_Yaw_left, IR_Yaw_right, IMU_Yaw, Yaw, Pitch, Roll; /**< Sensor values. */
-
-STATES ROBOT_STATE; /**< Represents the robot's current state. */
+bool low; /**< true -> the robot is lowered. */
 
 /**
 * @brief Updates the robot's current state
