@@ -1,10 +1,10 @@
 ﻿/**
 * @file servo_UART.h
-* @author Christoffer
+* @author Erik, Christoffer
 * @date 25 apr 2016
 * @brief Servo communication 
 *
-* Functions which sends different messages to the servos via UART.  
+* Functions that send different messages to the servos via UART.  
 *
 */
 
@@ -22,13 +22,6 @@
 
 #include "structs.h"
 
-/**
-* @brief Limits the servos maximum torque
-*
-* Limits the maximum output torque of the servos,
-* to minimize the wear. 
-*/
-void Configure_Servos_Max_Torque(void);
 
 /**
 * @brief Transmits one byte on the UART
@@ -89,6 +82,13 @@ void Configure_Servos_Angle_Limit(char mode);
 * Configures servos only to respond when explicitly asked to. 
 */
 void Configure_Servos_No_Response(void);
+
+/**
+* @brief Configures maximum torque
+*
+* Configures the maximum torque that each servo can support.
+*/
+void Configure_Servos_Max_Torque(void);
 
 /**
 * @brief Gets the current load on a specific servo
@@ -304,7 +304,7 @@ void Send_Leg6_Cyl(float,float,float);
 */
 void Send_Servo_Position_And_Velocity(unsigned char ID, unsigned int pos, unsigned int vel);
 
-
+// KOMMENTERA DESSA CHRIPPETY!
 void Send_Leg1_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer);
 void Send_Leg2_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer);
 void Send_Leg3_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer);
@@ -312,6 +312,7 @@ void Send_Leg4_Kar_And_Velocity(float x, float y, float z, unsigned int inner, u
 void Send_Leg5_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer);
 void Send_Leg6_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer);
 
+// KOMMENTERA!!!
 void Send_Leg1_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer);
 void Send_Leg2_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer);
 void Send_Leg3_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer);

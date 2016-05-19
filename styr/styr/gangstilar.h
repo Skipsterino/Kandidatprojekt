@@ -1,10 +1,10 @@
 /**
 * @file gangstilar.h
-* @author Jens
-* @date 8 april 2016
+* @author Jens, Christoffer
+* @date 20 may 2016
 * @brief Functions for walking
 *
-* Functions for walking and rotation
+* Functions for walking and rotation.
 *
 */
 
