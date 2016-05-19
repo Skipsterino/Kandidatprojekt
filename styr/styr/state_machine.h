@@ -24,7 +24,6 @@
 * Enum that contains the different possible states that the robot can be in.
 */
 typedef enum {
-	STOP = 1,
 	DEAD_END = 2,
 	CORRIDOR = 3,
 	
@@ -77,16 +76,16 @@ typedef enum {
 	
 	JUNCTION_I_OR_END = 42,
 	END_OF_COURSE = 43,
-	
-	SLOW_CORRIDOR = 44,			// TEST_STATE_1
-	DEAD_END_A_RIGHT = 45,		// TEST_STATE_2	
-	DEAD_END_A_LEFT = 46,		// TEST_STATE_3	
-	DEAD_END_B_RIGHT = 47,		// TEST_STATE_4
-	DEAD_END_B_LEFT = 48,		// TEST_STATE_5
-	DEAD_END_C = 49,			// TEST_STATE_6
-	DEAD_END_D = 50,			// TEST_STATE_7
+
+	DEAD_END_A_RIGHT = 45,
+	DEAD_END_A_LEFT = 46,		
+	DEAD_END_B_RIGHT = 47,	
+	DEAD_END_B_LEFT = 48,		
+	DEAD_END_C = 49,		
+	DEAD_END_D = 50,			
 	CHECK_IF_LOW_OBSTACLE = 51,
 	CHECK_IF_HIGH_OBSTACLE = 52,
+	
 	CENTER_CRAB = 53,
 	CENTER_NORMAL = 54,
 	CENTER_CRAB_UP = 55,
