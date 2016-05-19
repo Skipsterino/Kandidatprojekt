@@ -1,8 +1,7 @@
-/*
-* LCD_controller.c
-*
-* Created: 2016-04-08 08:49:38
-*  Author: Joakim
+/**
+* File: LCD_controller.c
+* Version: 1.0
+* Last edited: 19 Maj 2016
 */
 
 #include "LCD_controller.h"'
@@ -25,7 +24,7 @@ void LCD_controller_init()
 	//Init TIMER0 med prescaler 1024
 	TCCR0B |= (1<<CS02) | (1<<CS00);
 	
-	//Nollställ räknaren
+	//NollstÃ¤ll rÃ¤knaren
 	TCNT0 = 0;
 	
 	//Aktivera avbrott vid overflow
@@ -36,7 +35,7 @@ void LCD_controller_put_line(uint8_t line, char string[16])
 {
 	if(line >= LCD_NUMBER_OF_LINES*CONTROLLER_NUMBER_OF_PAGES)
 	{
-		//Error line utanför intervallet
+		//Error line utanfÃ¶r intervallet
 		return;
 	}
 	for(int i = 0; i < LCD_LINE_WIDTH; ++i)

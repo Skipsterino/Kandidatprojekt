@@ -1,8 +1,14 @@
-/*
- $License:
-    Copyright (C) 2011 InvenSense Corporation, All Rights Reserved.
- $
- */
+/**
+* @file dmpmap.h
+* @version 1.0
+* @author InvenSense
+* @date -
+* @brief Code by InvenSense
+* @license Copyright (C) 2011 InvenSense Corporation, All Rights Reserved.
+*
+* Coode by InvenSense.
+*/
+
 #ifndef DMPMAP_H
 #define DMPMAP_H
 

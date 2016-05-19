@@ -24,9 +24,8 @@
 #include "structs.h"
 #include "servo_UART.h"
 
-
-//float height; //vems?, inte min 
-float dance_r; //kommentera chris
+//Global Dans radie, för att man inte ska få göra för snabba förflyttningar
+float dance_r;
 
 /**
 * @brief Sets parameters for smooth transition with over_hinder

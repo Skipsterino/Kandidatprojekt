@@ -1,8 +1,14 @@
-/*
- $License:
-    Copyright (C) 2011 InvenSense Corporation, All Rights Reserved.
- $
- */
+/**
+* @file dmpKey.h
+* @version 1.0
+* @author InvenSense
+* @date -
+* @brief Code by InvenSense
+* @license Copyright (C) 2011 InvenSense Corporation, All Rights Reserved.
+*
+* Code by InvenSense.
+*/
+
 #ifndef DMPKEY_H__
 #define DMPKEY_H__
 
@@ -196,16 +202,16 @@
 #define KEY_X_GRT_Y_TMP             (KEY_D_ACSZ + 1)
 #define KEY_SKIP_X_GRT_Y_TMP        (KEY_X_GRT_Y_TMP + 1)
 #define KEY_SKIP_END_COMPARE        (KEY_SKIP_X_GRT_Y_TMP + 1)
-#define KEY_END_COMPARE_Y_X_TMP2    (KEY_SKIP_END_COMPARE + 1)       
+#define KEY_END_COMPARE_Y_X_TMP2    (KEY_SKIP_END_COMPARE + 1)
 #define KEY_CFG_ANDROID_ORIENT_INT  (KEY_END_COMPARE_Y_X_TMP2 + 1)
 #define KEY_NO_ORIENT_INTERRUPT     (KEY_CFG_ANDROID_ORIENT_INT + 1)
 #define KEY_END_COMPARE_Y_X_TMP     (KEY_NO_ORIENT_INTERRUPT + 1)
 #define KEY_END_ORIENT_1            (KEY_END_COMPARE_Y_X_TMP + 1)
-#define KEY_END_COMPARE_Y_X         (KEY_END_ORIENT_1 + 1) 
+#define KEY_END_COMPARE_Y_X         (KEY_END_ORIENT_1 + 1)
 #define KEY_END_ORIENT              (KEY_END_COMPARE_Y_X + 1)
 #define KEY_X_GRT_Y                 (KEY_END_ORIENT + 1)
-#define KEY_NOT_TIME_MINUS_1        (KEY_X_GRT_Y + 1)       
-#define KEY_END_COMPARE_Y_X_TMP3    (KEY_NOT_TIME_MINUS_1 + 1) 
+#define KEY_NOT_TIME_MINUS_1        (KEY_X_GRT_Y + 1)
+#define KEY_END_COMPARE_Y_X_TMP3    (KEY_NOT_TIME_MINUS_1 + 1)
 #define KEY_X_GRT_Y_TMP2            (KEY_END_COMPARE_Y_X_TMP3 + 1)
 
 /* Authenticate Keys */

@@ -1,5 +1,6 @@
 ﻿/**
 * @file millis.h
+* @version 1.0
 * @author Fredrik, Jonas
 * @date 26 apr 2016
 * @brief The code required to get a timestamp

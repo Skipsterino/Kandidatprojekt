@@ -1,23 +1,22 @@
-/*
-* USART.c
-*
-* Created: 2016-04-06 09:08:09
-*  Author: Joakim
+/**
+* File: USART.c
+* Version: 1.0
+* Last edited: 19 Maj 2016
 */
 
 #include "USART.h"
 
-//Sätter upp alla nödvändiga register för BT
+//SÃ¤tter upp alla nÃ¶dvÃ¤ndiga register fÃ¶r BT
 void initUSART()
 {
 	//Enl. datablad 14.7456MHz och 115200BPS
 	uint16_t ubrr_val = 7;
 	
-	//Sätt baud rate prescaler
+	//SÃ¤tt baud rate prescaler
 	UBRR0L = ubrr_val;
 	UBRR0H = (ubrr_val>>8);
 	
-	//Aktivera RxD och TxD samt aktivera avbrott på dessa
+	//Aktivera RxD och TxD samt aktivera avbrott pÃ¥ dessa
 	UCSR0B = 0b11011000;
 	
 	//Async
@@ -26,7 +25,7 @@ void initUSART()
 	//8 char size
 	UCSR0C = 0b00000110;
 	
-	//Töm bufferten
+	//TÃ¶m bufferten
 	USART_Flush();
 	
 	BTcounter = 0;
@@ -61,20 +60,20 @@ void USART_Transmit_Array(unsigned char array[], uint8_t size)
 	}
 }
 
-//töm databufferten
+//tÃ¶m databufferten
 void USART_Flush(void)
 {
 	unsigned char dummy;
 	while(UCSR0A & (1<<RXC0)) dummy = UDR0;
 }
 
-//Avbrottsrutin som körs då enheten har skickat data.
+//Avbrottsrutin som kÃ¶rs dÃ¥ enheten har skickat data.
 ISR(USART0_TX_vect)
 {
 	
 }
 
-//Avbrottsrutin som körs då det finns inkommande data.
+//Avbrottsrutin som kÃ¶rs dÃ¥ det finns inkommande data.
 ISR(USART0_RX_vect)
 {
 	toSPI[BTcounter] = USART_Recieve();

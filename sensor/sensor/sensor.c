@@ -1,8 +1,7 @@
-﻿/*
-* sensor.c
-*
-* Created: 3/30/2016 8:38:40 AM
-*  Author: fregu856
+﻿/**
+* File: sensor.c
+* Version: 1.0
+* Last edited: 19 maj 2016
 */
 
 // IR0 = IR fram - rakt
@@ -26,12 +25,12 @@ int main(void)
 	init_SPI();
 	init_timer();						// Initiera en timer för att hålla koll på förfluten tid.
 	init_I2C();
-	
+
 	_delay_ms(2000);
 	init_IMU();
 
 	sei();								// Tillåt avbrott (bit 7 på SREG sätts till 1)
-	
+
 	while (1)
 	{
 		if (SPI_done)
@@ -39,20 +38,20 @@ int main(void)
 
 			ADC_IR();						// Sampla IR-sensorerna
 			read_IMU();						// Hämta data från IMU
-			
+
 			send_ping();					// Starta en US-mätning
-			
+
 			ADC_to_distance();				// Konvertera ADC-värde till avstånd (IR-sensorerna)
 			time_to_distance();				// Konvertera tid till avstånd (US-sensorn)
 			calculate_Yaw();				// Räkna ut Yaw-vinkeln
 			save_to_buffer();				// Spara undan i buffert
-			
+
 			SPI_done = 0;
 
 			//kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
-			
+
 		}
-		
+
 		//_delay_ms(delay_time);			// Vila för att få lagom frekvens		// XXXX Endast vid testning utan bussen!
 	}
 }
@@ -199,9 +198,9 @@ ISR(SPI_STC_vect)
 	{
 		byte_to_send = 1;
 	}
-	
+
 	SPI_overflow = 0;
-	
+
 	switch(byte_to_send)
 	{
 		case 0:
@@ -299,7 +298,7 @@ ISR(SPI_STC_vect)
 		{
 			SPDR = 0x00;
 			byte_to_send = 0;
-			
+
 			break;
 		}
 	}
@@ -394,7 +393,7 @@ void init_SPI()
 	DDRB = 0x40;							// Skicka in 0100 0000 på DDRB för att sätta MISO till utgång, resten ingång. (SPI)
 	SPCR |= (1<<SPE);						// Enable:a SPI
 	SPDR = 0xff;							// Lägg in något nollskiljt i data registret, så att inte första sändningen missas.
-	
+
 	//Starta en timer för att hålla bussen i sync
 	TCCR2B |= 1<<CS22 | 1<< CS21| 1<<CS20;	// Prescaler 1024
 	TCNT2 = 0;								// Nollställ timern
@@ -486,11 +485,11 @@ void init_IMU()
 	dmp_enable_feature(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO | DMP_FEATURE_GYRO_CAL | DMP_FEATURE_TAP); // Välj funktioner som vi vill ha
 	dmp_set_fifo_rate(MPU_HZ);												// Väljer med vilken frekvens som data ska läggas ut i FIFO
 	mpu_set_dmp_state(USE_DMP);												// Slår på DMP
-	
+
 	_delay_ms(200);															// Ge IMU tid att starta
-	
+
 	run_self_test();														// Kalibrera gyro och accelometer
-	
+
 	IMU_data_ready = 0;															// Från start finns ingen data klar
 }
 
@@ -556,16 +555,16 @@ void ADC_IR()
 	}
 
 	ADMUX = 0x60;				// Återställ ADC:n till ADC0 som inkanal
-	
+
 	for(int sensor_ID = 0; sensor_ID <=7; ++sensor_ID)
 	{
 		for (int i = 5; i>=2; --i)		// Skifta ut den äldsta avläsningen
 		{
 			IR_reading[sensor_ID][i] = IR_reading[sensor_ID][i-1];
 		}
-		
+
 		IR_reading[sensor_ID][1] = IR_latest_reading[sensor_ID];	// Spara in den senaste.
-		
+
 		IR_ADC[sensor_ID] = (IR_reading[sensor_ID][1] + IR_reading[sensor_ID][2] + IR_reading[sensor_ID][3] + IR_reading[sensor_ID][4] + IR_reading[sensor_ID][5])/5;	// Medelvärdesbilda över de 5 senaste
 	}
 }
@@ -609,9 +608,9 @@ void read_IMU()
 
 		if (0 == dmp_read_fifo(gyro, accel, quat, &timestamp, &sensors, &more)) // Läser från IMU
 		{
-			
+
 			mpu_reset_fifo();
-			
+
 			//if (!more) // Kolla så att vi får med all data
 			//{
 			IMU_data_ready = 0;
@@ -623,25 +622,25 @@ void read_IMU()
 			quaternion[QUAT_Z] = (float)quat[QUAT_Z];
 
 			NormalizeQuaternion(quaternion);
-			
+
 			float q0 = quaternion[QUAT_W];
 			float q1 = quaternion[QUAT_X];
 			float q2 = quaternion[QUAT_Y];
 			float q3 = quaternion[QUAT_Z];
-			
+
 			/* Räkna ut gravitationsvektorn */
 			gravity[x] = 2*(q1*q3 - q0*q2);
 			gravity[y] = 2*(q0*q1 + q2*q3);
 			gravity[z] = q0*q0 - q1*q1 - q2*q2 + q3*q3;
-			
+
 			IMU_Yaw = (((atan2(2*q1*q2 - 2*q0*q3, 2*q0*q0 + 2*q1*q1 - 1)/3.14)*180)/58)*90;							// Beräkna yaw-vinkel i grader
 			IMU_Pitch = (atan(gravity[x] / sqrt(gravity[y]*gravity[y] + gravity[z]*gravity[z]))/3.14)*180;	// Beräkna pitch-vinkel i grader
 			IMU_Roll = (atan(gravity[y] / sqrt(gravity[x]*gravity[x] + gravity[z]*gravity[z]))/3.14)*180;	// Beräkna roll-vinkel i grader
-			
+
 			/* Säkerställ att vi inte får overflow i datatyperna */
 			IMU_Pitch = restrict_angle(IMU_Pitch);
 			IMU_Roll = restrict_angle(IMU_Roll);
-			
+
 		}
 		else
 		{
@@ -789,11 +788,11 @@ void time_to_distance()
 	{
 		US_reading[i] = US_reading[i-1];
 	}
-	
+
 	US_reading[1] = US_latest_reading;	// Spara in den senaste.
-	
+
 	US_distance = (US_reading[1] + US_reading[2] + US_reading[3] + US_reading[4] + US_reading[5])/5;	// Medelvärdesbilda över de 5 senaste
-	
+
 	US_distance =  US_distance*0.0642857143;		// Gör om till tid i millisekunder
 	US_distance = US_distance - 0.75;			// Subrtrahera offset mellan triggerpuls och ekopuls
 	US_distance = 34.33*US_distance/2;			// Gör om till cm
@@ -831,7 +830,7 @@ void calculate_Yaw()
 
 	IR_Yaw_right = (atan(l_delta_right/IR_sensor_distance_right)/3.14)*180;		// Yaw-beräkning med de högra sidosensorerna
 	IR_Yaw_left = (atan(l_delta_left/IR_sensor_distance_left)/3.14)*180;		// Yaw-beräkning med de vänstra sidosensorerna
-	
+
 	IR_Yaw_right = restrict_angle(IR_Yaw_right);												// Begränsa vinkeln så att overflow ej fås med int8_t
 	IR_Yaw_left = restrict_angle(IR_Yaw_left);
 }
@@ -856,7 +855,7 @@ void calculate_Yaw()
 void save_to_buffer()
 {
 	int16_t IMU_Yaw_16 = IMU_Yaw;						// Konvertera IMU_Yaw till int16_t
-	
+
 	buffer0_IR0 = IR_distance[0];
 	buffer1_IR1 = IR_distance[1];
 	buffer2_IR2 = IR_distance[2];
@@ -869,10 +868,10 @@ void save_to_buffer()
 
 	buffer8_IR_Yaw_left = IR_Yaw_left;
 	buffer9_IR_Yaw_right = IR_Yaw_right;
-	
+
 	buffer10_IMU_Yaw_Low = (0x00FF & IMU_Yaw_16);			// Skicka låga byten av IMU_Yaw_16
 	buffer11_IMU_Yaw_High = (0xFF00 & IMU_Yaw_16) / 256;	// Skicka höga byten av IMU_Yaw_16
-	
+
 	buffer12_Pitch = IMU_Pitch;
 	buffer13_Roll = IMU_Roll;
 }
@@ -902,10 +901,10 @@ float restrict_angle(float angle)
 {
 	if(angle > 127)
 	angle = 127;							// Sätt max-vinkel (så att ej får överslag då det görs om till 8 bitar (signed))
-	
+
 	if(angle < -128)
 	angle = -128;							// Sätt min-vinkel (så att ej får överslag då det görs om till 8 bitar (signed))
-	
+
 	return angle;
 }
 
@@ -970,7 +969,7 @@ void NormalizeQuaternion(float *quat)
 void run_self_test()
 {
 	long gyro_cal[3], accel_cal[3];
-	
+
 	mpu_run_self_test(gyro_cal, accel_cal);
 
 	for(uint8_t i = 0; i<3; i++)
