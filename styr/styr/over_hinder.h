@@ -14,11 +14,10 @@
 #include "gangstilar.h"
 
 #include <util/delay.h>
+
 //unsigned int load;
-uint8_t number_of_steps;
 
-
-void update_step(float new_step);
+void update_step(float new_step); // KOMMENTERA ALLA FUNKTIONER FÖR BÖVELEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 void Probe_Walk(void);
 void Probe_Height_Up(void); 
 void Probe_Height_Down(void); 

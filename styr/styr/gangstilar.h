@@ -1,6 +1,6 @@
 /**
 * @file gangstilar.h
-* @author Jens
+* @author Jens, Christoffer
 * @date 20 may 2016
 * @brief Functions for walking
 *

@@ -10,6 +10,7 @@
 
 unsigned int load;
 float z;
+uint8_t number_of_steps;
 
 #define UP_DELAY 400
 #define FORWARD_DELAY 300
@@ -33,7 +34,6 @@ float weight_adjust;
 unsigned int speed_inner;
 unsigned int speed_middle;
 unsigned int speed_outer;
-
 
 uint8_t Servo_Load_Too_Small(unsigned char ID)
 {
@@ -62,7 +62,6 @@ uint8_t Servo_Load_Too_Small(unsigned char ID)
 	}
 }
 
-
 void update_step(float new_step)
 {
 	last_last_step = last_step;
@@ -70,8 +69,6 @@ void update_step(float new_step)
 	step = new_step; 
 
 }
-
-
 	
 void Walk_Up()
 {
@@ -92,7 +89,6 @@ void Walk_Up()
 	speed_middle = 300;
 	speed_outer = 300;
 	step_adjust = 5;
-	
 	
 	Configure_Servos_Angle_Limit('c'); // Ändra servobegränsningarna
 	To_Climbing_Stance(); //Flytta benen till ett utgångsläge lämpligt för klättring
@@ -138,8 +134,6 @@ void Walk_Down()
 	speed_inner = 200;
 	speed_middle = 300;
 	speed_outer = 300;
-	
-	
 	
 	Configure_Servos_Angle_Limit('c');
 	To_Climbing_Stance();
@@ -196,8 +190,6 @@ void To_Climbing_Stance()
 	
 }
 
-
-// 
 void First_Leg(char direction)
 {
 	if(direction == 'u') //Klättra upp, dvs 'u'
@@ -399,7 +391,6 @@ void Second_Leg(char direction)
 		//
 	//}
 	
-	
 	for (uint8_t n = 0; n<=number_of_steps; ++n)
 	{
 		Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step -(step*n/number_of_steps)+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
@@ -590,8 +581,6 @@ void Fourth_Leg(char direction)
 		_delay_ms(FORWARD_DELAY);
 	}
 	
-	
-
 	//ner
 	Send_Leg1_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 	Send_Leg4_Kar_And_Velocity(x_obstacle, 2*step-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
@@ -902,13 +891,11 @@ void Sixth_Leg(char direction)
 		Send_Leg5_Kar_And_Velocity(x_obstacle, last_step-(step*n/number_of_steps)-corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 		_delay_ms(BACK_DELAY);
 	}
-	
 }
 
 void To_Default_Stance()
 {
 	/////   TILL UTGÅNGSLÄGE   /////
-	
 	
 	//upp
 	Send_Leg1_Kar_And_Velocity(x_obstacle, last_step-step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -927,7 +914,5 @@ void To_Default_Stance()
 		Send_Leg4_Kar_And_Velocity(x_obstacle, last_step-step-weight_adjust +((-(last_step-step)+weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
 		Send_Leg5_Kar_And_Velocity(x_obstacle, last_step-step-corner_pitch-weight_adjust +((-(last_step-step)+weight_adjust)*n/number_of_steps), -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
 		_delay_ms(BACK_DELAY);
-		
 	}
-	
 }
