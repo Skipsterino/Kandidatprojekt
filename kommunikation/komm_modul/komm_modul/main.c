@@ -1,8 +1,7 @@
-/*
-* komm_modul.c
-*
-* Created: 2016-04-04 15:31:53
-* Author : Joakim
+/**
+* File: main.c
+* Version: 1.0
+* Last edited: 19 Maj 2016
 */
 #ifndef F_CPU
 #define F_CPU 14745600UL
@@ -16,7 +15,7 @@
 #include "LCD.h"
 #include "LCD_controller.h"
 
-//Mainfunktion för komm-cpu
+//Mainfunktion fÃ¶r komm-cpu
 int main(void)
 {
 	cli();
@@ -33,7 +32,7 @@ int main(void)
 	
 	sei();
 	
-	//Sätt in tomma rader
+	//SÃ¤tt in tomma rader
 	LCD_controller_put_line(0, "");
 	LCD_controller_put_line(1, "");
 	LCD_controller_put_line(2, "");
@@ -85,7 +84,7 @@ int main(void)
 		sprintf(digits, "Kp:%i, Kd:%i", toSPI[5], toSPI[6]);
 		LCD_controller_put_line(1, digits);
 		
-		//Skriv ut styrläge (går att göra snyggare)
+		//Skriv ut styrlÃ¤ge (gÃ¥r att gÃ¶ra snyggare)
 		if(toSPI[0] & 0b00001000)
 		{
 			
@@ -111,10 +110,10 @@ int main(void)
 			LCD_controller_put_line(2,"MODE=AUTO");
 		}
 		
-		//OBS tar lång tid
+		//OBS tar lÃ¥ng tid
 		LCD_print_string(lines[currentLine], lines[currentLine+1], lines[currentLine + 2], lines[currentLine + 3]);
 		
-		//Tar nog längre tid
+		//Tar nog lÃ¤ngre tid
 		_delay_ms(100);
 	}
 }

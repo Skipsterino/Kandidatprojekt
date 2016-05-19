@@ -1,8 +1,7 @@
-/*
-* SPI.c
-*
-* Created: 2016-04-06 16:33:37
-*  Author: Joakim
+/**
+* File: SPI_comm.c
+* Version: 1.0
+* Last edited: 19 Maj 2016
 */
 
 #include "SPI_comm.h"
