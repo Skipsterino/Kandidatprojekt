@@ -24,7 +24,7 @@
 #include "servo_UART.h"
 
 
-float height; //vems?, inte min 
+//float height; //vems?, inte min 
 float dance_r; //kommentera chris
 
 /**
@@ -50,13 +50,14 @@ void Adjust_Stance_Climbed(char direction);
 * @return Limited height
 *
 */
-float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn_theta, float height);
+float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn_theta, float height, float dx, int sgn_dx);
 
 /**
 * @brief Calculates appropriate servo speeds
 *
 * Calculates appropriate servo speeds given theta
 * 
+
 * @param theta Input rotation angle
 * @param sgn_theta Signum of rotation angle
 * @param leg_down Tells if legs are in transition from swing to support phase
@@ -120,7 +121,7 @@ double_float Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta 
 * @return Limited speed
 * 
 */
-float Limit_Speed(float speed, int sgn_speed);
+float Limit_Speed(float speed, int sgn_speed, float dx, int sgn_dx);
 
 /**
 * @breif Limits height [7, 14]
@@ -161,8 +162,8 @@ triple_float Tripod(float x, float stroke, float height,float lift, uint8_t n);
 * @param height Robot height
 *
 */
-void Walk_Half_Cycle(float speed, float theta, float height);//dummy
-void Walk_Half_Cycle_T(float speed, float theta, float height, float dx);
+//void Walk_Half_Cycle(float speed, float theta, float height);//dummy
+void Walk_Half_Cycle(float speed, float theta, float height, float dx);
 
 /**
 * @breif Walks half cycle of tripod crab-walk

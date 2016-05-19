@@ -25,26 +25,24 @@ float dance_y = 0;
 
 //OBS tilfällig ändring i send legs kar!
 
-void Adjust_Stance_Climbed(char direction) //me no like 
+void Adjust_Stance_Climbed(char direction)
 {
 	if(direction == 'u')
 	{
 		last_height = 14-6.3;
-		height = 14-6.3;
 	}
 	else 
 	{
 		last_height = 14;
-		height = 14;
 	}
 	n_1=support_l/2 + cycle_length/2; 
 }
 
 
 //LP-filtrerar input för att undvika våldsamheter Anropa limit_theta o limit_speed här, döp till LP_And_Limit_output, o begränsa höjd. Sätter även theta_max
-float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn_theta, float height)
+float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn_theta, float height, float dx, int sgn_dx)
 {
-	speed = Limit_Speed(speed, sgn_speed);
+	speed = Limit_Speed(speed, sgn_speed, dx, sgn_dx);
 	double_float thetas = Limit_Theta(speed, sgn_speed, theta, sgn_theta);
 	height = Limit_Height(height);
 	theta = thetas.a;
@@ -186,15 +184,15 @@ void Rotate_And_Send_Legs(triple_float kar_p1, triple_float kar_p2, float corner
 
 
 //begränsar maxhastighet.
-float Limit_Speed(float speed, int sgn_speed)
+float Limit_Speed(float speed, int sgn_speed,  float dx, int sgn_dx)
 {
 	if( ((last_height <= 9) || (last_height >= 12)) && (speed * sgn_speed > 5))
 	{
 		speed = 5 * sgn_speed;
 	}
-	else if(speed * sgn_speed > 6)  //utförs beräkninge som float?
+	else if(speed * sgn_speed > ( 6 - dx * sgn_dx/4))  //utförs beräkninge som float? ja
 	{
-		speed = 6 * sgn_speed;
+		speed = 6 * sgn_speed - dx * sgn_dx/4;
 	}
 	return speed;
 }
@@ -272,7 +270,7 @@ triple_float Tripod(float x, float stroke, float height,float lift, uint8_t n)
 
 
 //testar överlappande svingfas, strypt o ingen höj/sänk
-void Walk_Half_Cycle_T(float speed, float theta, float height, float dx)
+void Walk_Half_Cycle(float speed, float theta, float height, float dx)
 {
 
 	float l = 12;//13 låg //fötters förskjuting från kropp i x-led OBS orginal = 13, numera 12
@@ -283,14 +281,14 @@ void Walk_Half_Cycle_T(float speed, float theta, float height, float dx)
 	int sgn_theta = (theta >= 0) - (theta < 0);
 	uint8_t walk_break = 1;
 	
-	if( dx * sgn_dx > 2)
+	if( dx * sgn_dx > 3)
 	{
-		dx = 2 * sgn_dx;
+		dx = 3 * sgn_dx;
 	}
 	
 	
 	//filtrerade o begränsade värden kommer som globala last_...sätter th_max och heigth step också.
-	height = LP_Filter_And_Limit_Input(speed, sgn_speed, theta, sgn_theta, height);
+	height = LP_Filter_And_Limit_Input(speed, sgn_speed, theta, sgn_theta, height, dx, sgn_dx);
 	//sätter parametrar till LP-filtrerade
 	speed = last_speed;
 	theta = last_theta;
@@ -306,15 +304,16 @@ void Walk_Half_Cycle_T(float speed, float theta, float height, float dx)
 	triple_float speed_p1;
 	triple_float speed_p2;
 	
-	if( (speed*sgn_speed < 0.2 ) && (theta * sgn_theta < 0.01) && (height_step == 0)) // gör inget
+	if( (speed*sgn_speed < 0.2 ) && (theta * sgn_theta < 0.01) && (height_step == 0) &&(dx * sgn_dx < 0.5)) // gör inget
 	{
 		return;
 	}
 	
-	if( (speed*sgn_speed < 0.2 ) && (theta * sgn_theta < 0.01) ) //justera höjd utan att gå
+	if( (speed*sgn_speed < 0.2 ) && (theta * sgn_theta < 0.01)&&(dx * sgn_dx < 0.5) ) //justera höjd utan att gå
 	{
 		stroke = 0;
 		lift = 0;
+		dx = 0;
 	}
 	
 	//gångloop, utför en halv gångfas och stannar när stödjande ben är i mitten av arbetsområde
@@ -439,7 +438,7 @@ void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 	
 	if(last_height != 11)
 	{
-		Walk_Half_Cycle(0,0,11);
+		Walk_Half_Cycle(0,0,11,0);
 	}
 	//gångloop, utför en halv gångfas och stannar när stödjande ben är i mitten av arbetsområde
 	while( walk_break || ( n_1 != support_l/2 && n_2 !=  support_l/2))
@@ -612,7 +611,3 @@ void Victory_Dance(void)
 
 }
 
-void Walk_Half_Cycle(float speed, float theta, float height)
-{
-	return;
-}
