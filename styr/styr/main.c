@@ -1,12 +1,12 @@
 /*
-* testloop.c
+* main.c
 *
 * Created: 4/15/2016 4:17:57 PM
 *  Author: erilj291
 */
 
 #ifndef F_CPU
-#define F_CPU 16000000UL		// 16 MHz
+#define F_CPU 16000000UL		// 16 MHz klockfrekvens
 #endif
 
 #include <avr/io.h>
@@ -73,77 +73,30 @@ int main(void)
 	
 	Init();
 	
-	
-	
-	
-	//init_fuck();
-	
 	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
 	Configure_Servos_Delaytime();
 	Configure_Servos_LED();
 	Configure_Servos_No_Response();
-	Configure_Servos_Angle_Limit('r'); // ta inte bort!!!!!!!!!!!!! allt kan faila......
+	Configure_Servos_Angle_Limit('r'); // MÅSTE KÖRAS ty begränsningarna tappas ibland trots att de ligger i ROM
 	Configure_Servos_Max_Torque();
-	
 	//
 	
-	Send_Inner_P1_Velocity(0x0010); //DESSA SEX ANROP MÅSTE ALLTID KÖRAS EFTERSOM HASTIGHETEN LIGGER I RAM!!!
-	Send_Middle_P1_Velocity(0x0010);//
-	Send_Outer_P1_Velocity(0x0010);//
-	Send_Inner_P2_Velocity(0x0010);//
-	Send_Middle_P2_Velocity(0x0010);//
-	Send_Outer_P2_Velocity(0x0010);//
+	//FÖLJANDE SEX ANROP MÅSTE ALLTID KÖRAS EFTERSOM HASTIGHETEN LIGGER I RAM
+	Send_Inner_P1_Velocity(0x0010); 
+	Send_Middle_P1_Velocity(0x0010);
+	Send_Outer_P1_Velocity(0x0010);
+	Send_Inner_P2_Velocity(0x0010);
+	Send_Middle_P2_Velocity(0x0010);
+	Send_Outer_P2_Velocity(0x0010);
 
-	
-	
-
-	
 	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
 
-	//_delay_ms(100);
-	////Send_Leg3_Kar(22,0,0);
-	////_delay_ms(1);
-	////Send_Leg1_Kar(22,0,0);
-	////_delay_ms(1);
-	////Send_Leg2_Kar(22,0,0);
-	////_delay_ms(1);
-	////Send_Leg4_Kar(22,0,0);
-	////_delay_ms(1);
-	////Send_Leg5_Kar(22,0,0);
-	////_delay_ms(1);
-	////Send_Leg6_Kar(22,0,0);
-	////_delay_ms(1);
-	//Send_Servo_Position(1,0x01FF);
-	//Send_Servo_Position(2,0x01FF);
-	//Send_Servo_Position(3,0x01FF-0xA0);
-	//Send_Servo_Position(4,0x01FF+0xA0);
-	//Send_Servo_Position(5,0x01FF+0xA0);
-	//Send_Servo_Position(6,0x01FF-0xA0);
-	//Send_Servo_Position(7,0x01FF);
-	//Send_Servo_Position(8,0x01FF);
-	//Send_Servo_Position(9,0x01FF-0xA0);
-	//Send_Servo_Position(10,0x01FF+0xA0);s
-	//Send_Servo_Position(11,0x01FF+0xA0);
-	//Send_Servo_Position(12,0x01FF-0xA0);
-	//Send_Servo_Position(13,0x01FF);
-	//Send_Servo_Position(14,0x01FF);
-	//Send_Servo_Position(15,0x01FF-0xA0);
-	//Send_Servo_Position(16,0x01FF+0xA0);
-	//Send_Servo_Position(17,0x01FF+0xA0);
-	//Send_Servo_Position(18,0x01FF-0xA0);
-	//
-	//while(1)
-	//{
-	//}
-
-	
 	unsigned char first_kom_byte;
 	
 	Walk_Half_Cycle(1, 0.01, height); //Ställ in default-höjd
 
 	while(1)
 	{
-		
 		//Hämta det senaste giltiga paketet
 		cli();
 		memcpy(lastPacket, lastValidPacket, sizeof(lastPacket));
@@ -174,11 +127,11 @@ int main(void)
 			
 			if (first_kom_byte & 0b00010000) //Nytt Kp?
 			{
-				Kp = ((float)lastPacket[5])/1000.f; //Kp skickas som 1000 ggr det önskade värdet!!!
+				Kp = ((float)lastPacket[5])/1000.f; //Kp skickas som 1000 ggr det önskade värdet, därav divisionen
 			}
 			if (first_kom_byte & 0b00100000) //Nytt Kd?
 			{
-				Kd = ((float)lastPacket[6])/100.f; //Kd skickas som 100 ggr det önskade värdet!!!
+				Kd = ((float)lastPacket[6])/100.f; //Kd skickas som 100 ggr det önskade värdet, därav divisionen
 			}
 			
 			if((!(first_kom_byte & 0b10000000)) && dance_r > 1)
@@ -267,9 +220,8 @@ void update_speed_and_angle()
 	}
 	
 	speed = (float)(intensity_byte)*((float)6)/((float)100); //100 på kontroll -> 6 i speed
-	//angle = (float)(angle_byte)*((float)0.57)/((float)100); //128 på kontroll -> 0.57 i vinkel
 	int8_t sgn_angle = (angle_byte >= 0) - (angle_byte < 0);
-	angle = sgn_angle * 0.57 * angle_byte * angle_byte/10000;
+	angle = sgn_angle * 0.57 * angle_byte * angle_byte/10000; //Kvadratisk skalning av mottaget värde till vinkel
 }
 
 void update_height()

@@ -2,10 +2,9 @@
 * @file invers_kinematik.h
 * @author Christoffer
 * @date 25 apr 2016
-* @brief Kinematic functions
+* @brief Functions for inverse kinematics
 *
-* Kinematic functions. 
-* For calculating servo angles with positions in other koordinates.    
+* Are used for calculating servo angles from positions in different coordinate systems.    
 */
 
 
@@ -17,26 +16,25 @@
 #include "structs.h"
 
 /**
-* @brief Cartesian koodinates to servo position
+* @brief Cartesian coordinates to servo position
 *
 * Calculates servo position without consideration to offset, 
-* given koordinates in Cartesian koodinates.
+* given coordinates in Cartesian coordinates.
+*
+* @param x The length in x-direction in cm
+* @param y The length in y-direction in cm
+* @param z The length in z-direction in cm
+*
+* @return The servopositions as triple_uint, a struct containing three unsigned integers
 */
 triple_uint Kar_To_Pos(float x, float y, float z);
 
 /**
-* @brief Servo position to Cartesian koodinates
-*
 * Calculates Cartesian koodinates,
 * given servo position, without consideration to offset.
-* 
-* @param x The length in x-direction in cm 
-* @param y The length in y-direction in cm
-* @param z The length in z-direction in cm
-* 
-* @return The servopositions as triple_uint, a struct containing three unsigned integers
 */
-triple_float Pos_To_Kar(float p1, float p2, float p3);
+
+//triple_float Pos_To_Kar(float p1, float p2, float p3); TA BORTELIBORT!
 
 
 /**

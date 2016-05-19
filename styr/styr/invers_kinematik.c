@@ -15,28 +15,28 @@ float pi=3.14159265359;
 
 //Räknar ut kartesiska koordinater (kar) mha servoposition (pos). Returnerar kar som en triple_float.
 //DENNA TAR EJ HÄNSYN TILL OFFSETS!!! EV INTE RELEVANT FUNKTION?
-triple_float Pos_To_Kar(float p1, float p2, float p3)
-{
-	//Skalfaktor mellan pos och vinkel (som mäts i RADIANER)
-	float pos_to_ang_scale = 0.0051182676011; 
-	
-	//Benlängder i cm
-	float L1 = 5.1;
-	float L2 = 6.6;
-	float L3 = 13.3;
-
-	v1= pos_to_ang_scale * (float)(p1);
-	v2= pos_to_ang_scale * (float)(p2);
-	v3= pos_to_ang_scale * (float)(p3);
-	
-	//Kinematik 
-	float x = L1*sin(v1) + L2*sin(v1)*cos(v2) + L3*cos(v1)*cos(v2 + v3);
-	float y = L1*cos(v1) + L2*cos(v1)*cos(v2) + L3*cos(v1)*cos(v2 + v3);
-	float z = -L2*sin(v2) - L3*sin(v2 + v3);
-	
-	triple_float kar = create_triple_float(x,y,z);
-	return kar;
-}
+//triple_float Pos_To_Kar(float p1, float p2, float p3)
+//{
+	////Skalfaktor mellan pos och vinkel (som mäts i RADIANER)
+	//float pos_to_ang_scale = 0.0051182676011; 
+	//
+	////Benlängder i cm
+	//float L1 = 5.1;
+	//float L2 = 6.6;
+	//float L3 = 13.3;
+//
+	//v1= pos_to_ang_scale * (float)(p1);
+	//v2= pos_to_ang_scale * (float)(p2);
+	//v3= pos_to_ang_scale * (float)(p3);
+	//
+	////Kinematik 
+	//float x = L1*sin(v1) + L2*sin(v1)*cos(v2) + L3*cos(v1)*cos(v2 + v3);
+	//float y = L1*cos(v1) + L2*cos(v1)*cos(v2) + L3*cos(v1)*cos(v2 + v3);
+	//float z = -L2*sin(v2) - L3*sin(v2 + v3);
+	//
+	//triple_float kar = create_triple_float(x,y,z);
+	//return kar;
+//}
 
 //Räknar ut servopositioner (pos) mha kartesiska koordinater (kar). Returnerar positionerna som en triple_uint. OBS! Konvertering till uchar sker i annan fil, t ex main.
 triple_uint Kar_To_Pos(float x, float y, float z)

@@ -935,19 +935,19 @@ void Send_Leg6_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, 
 	//_delay_ms(1);
 }
 
-void Rise_Robot_Height(float height)
-{
-	triple_float leg1 = Pos_To_Kar(Get_Servo_Position(8), Get_Servo_Position(10), Get_Servo_Position(12));
-	triple_float leg2 = Pos_To_Kar(Get_Servo_Position(7), Get_Servo_Position(9), Get_Servo_Position(11));
-	triple_float leg3 = Pos_To_Kar(Get_Servo_Position(14), Get_Servo_Position(16), Get_Servo_Position(18));
-	triple_float leg4 = Pos_To_Kar(Get_Servo_Position(13), Get_Servo_Position(15), Get_Servo_Position(17));
-	triple_float leg5 = Pos_To_Kar(Get_Servo_Position(2), Get_Servo_Position(4), Get_Servo_Position(6));
-	triple_float leg6 = Pos_To_Kar(Get_Servo_Position(1), Get_Servo_Position(3), Get_Servo_Position(5));
-	
-	Send_Leg1_Kar(leg1.a, height, leg1.c);
-	Send_Leg2_Kar(leg2.a, height, leg2.c);
-	Send_Leg3_Kar(leg3.a, height, leg3.c);
-	Send_Leg4_Kar(leg4.a, height, leg4.c);
-	Send_Leg5_Kar(leg5.a, height, leg5.c);
-	Send_Leg6_Kar(leg6.a, height, leg6.c);
-}
+//void Rise_Robot_Height(float height)
+//{
+	//triple_float leg1 = Pos_To_Kar(Get_Servo_Position(8), Get_Servo_Position(10), Get_Servo_Position(12));
+	//triple_float leg2 = Pos_To_Kar(Get_Servo_Position(7), Get_Servo_Position(9), Get_Servo_Position(11));
+	//triple_float leg3 = Pos_To_Kar(Get_Servo_Position(14), Get_Servo_Position(16), Get_Servo_Position(18));
+	//triple_float leg4 = Pos_To_Kar(Get_Servo_Position(13), Get_Servo_Position(15), Get_Servo_Position(17));
+	//triple_float leg5 = Pos_To_Kar(Get_Servo_Position(2), Get_Servo_Position(4), Get_Servo_Position(6));
+	//triple_float leg6 = Pos_To_Kar(Get_Servo_Position(1), Get_Servo_Position(3), Get_Servo_Position(5));
+	//
+	//Send_Leg1_Kar(leg1.a, height, leg1.c);
+	//Send_Leg2_Kar(leg2.a, height, leg2.c);
+	//Send_Leg3_Kar(leg3.a, height, leg3.c);
+	//Send_Leg4_Kar(leg4.a, height, leg4.c);
+	//Send_Leg5_Kar(leg5.a, height, leg5.c);
+	//Send_Leg6_Kar(leg6.a, height, leg6.c);
+//}

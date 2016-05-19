@@ -1,5 +1,5 @@
 /*
- * GANGSTILAR.c
+ * gangstilar.c
  *
  * Created: 8 april 3:03:52 PM
  *  Author: jenma421 
@@ -8,7 +8,7 @@
 #include "gangstilar.h"
 
 
-uint8_t support_l = 24; //läng på stödfas
+uint8_t support_l = 24; //längd på stödfas
 uint8_t swing_l = 12; //längd på svingfas 12
 uint8_t cycle_length = 36; //cykelängd = support_l + swing_l
 uint8_t n_1 = 12; //index för benpar 1
