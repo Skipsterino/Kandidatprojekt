@@ -21,6 +21,7 @@ volatile unsigned char UART_Receive( void )
 	while ((!(UCSR0A & (1<<RXC0))))
 	{
 		i = i + 1; 
+		// Timer för mottagningen
 		if(i>50)
 		{
 			return 0xBB;
@@ -45,7 +46,7 @@ void Configure_Servos_Delaytime(void)
 {
 	for (uint8_t i = 1; i < 19; i++)
 	{
-		unsigned char return_delay_time[] = {i, 0x04, 0x03, 0x05, 0x2D};
+		unsigned char return_delay_time[] = {i, 0x04, 0x03, 0x05, 0x2D}; //delaytime = 2D
 		Send_Servo_Message(return_delay_time, 2);
 		
 		_delay_ms(1);
@@ -57,7 +58,7 @@ void Configure_Servos_LED(void)
 {
 	for (uint8_t i = 1; i < 19; i++)
 	{
-		unsigned char LED_settings[] = {i, 0x04, 0x03, 0x11, 0xFF};
+		unsigned char LED_settings[] = {i, 0x04, 0x03, 0x11, 0xFF}; //LED  är på 
 		Send_Servo_Message(LED_settings, 2);
 		
 		_delay_ms(1);
@@ -95,13 +96,11 @@ void Configure_Servos_Angle_Limit(char mode)
 	{
 		for (uint8_t i = 0; i < 2; i++)
 		{
-			// pos 1FF + (1023/300pos/vinkl*(-45grader eller + 60 grader)= 0x0166,0x02CB ??????????????????????????????????????
+			//Inga begränsningar för de inre servona i klättrings läge 
 			Send_Servo_Angle_Limit(inner_lf_rb[i], 0x0000, 0x03ff);  
 			_delay_ms(1);
-			// pos 1FF + (1023/300pos/vinkl*(-15grader eller + 15 grader)= 0x01BB,0x0243 ????????????????????????????????????
 			Send_Servo_Angle_Limit(inner_middle[i], 0x0000, 0x03ff); 
 			_delay_ms(1);
-			// pos 1FF + (1023/300pos/vinkl*(-60grader eller + 45 grader)= 0x0131,0x0298 ?????????????????????????????????????
 			Send_Servo_Angle_Limit(inner_rf_lb[i], 0x0000, 0x03ff); 
 			_delay_ms(1);
 		}
@@ -139,7 +138,7 @@ void Configure_Servos_Max_Torque(void)
 {
 	for (uint8_t i = 1; i < 19; i++)
 	{
-		unsigned char response_settings[] = {i, 0x05, 0x03, 0x0E, 0x90, 0x02}; // alt. {i, 0x05, 0x03, 0x0E, 0xFF, 0x01}
+		unsigned char response_settings[] = {i, 0x05, 0x03, 0x0E, 0x90, 0x02}; // Ställer in maximum torque = 0x290 (förut var det {i, 0x05, 0x03, 0x0E, 0xFF, 0x01})
 		Send_Servo_Message(response_settings, 3);
 		
 		_delay_ms(1);
@@ -153,9 +152,6 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	unsigned char load_MSByte;
 	volatile unsigned char start_byte1= 0;
 	volatile unsigned char start_byte2= 0; 
-	unsigned char length; 
-	unsigned char error; 
-	unsigned char checksum;
 	uint8_t timer = 0; 
 	unsigned int load;
 	
@@ -181,12 +177,12 @@ unsigned int Get_Servo_Load(unsigned char ID)
 		}
 	}
 	UART_Receive(); //Hantera förskjutningen i bufferten
-	ID = UART_Receive(); //ID
-	length = UART_Receive(); //Längd
-	error = UART_Receive(); //Error
+	UART_Receive(); //ID
+	UART_Receive(); //Längd
+	UART_Receive(); //Error
 	load_LSByte = UART_Receive(); //LS Byte av load
 	load_MSByte = UART_Receive(); //MS Byte av load
-	checksum = UART_Receive(); //Checksum
+	UART_Receive(); //Checksum
 	
 	_delay_ms(0.05); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras
 	
@@ -195,55 +191,6 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	load = (((unsigned int)load_MSByte) << 8) | load_LSByte;
 	return load;
 }
-
-unsigned char Get_Servo_Temp(unsigned char ID)
-{	
-	unsigned char message[5];
-	unsigned char temp;
-	unsigned char start_byte1= 0;
-	unsigned char start_byte2= 0; 
-	unsigned char length; 
-	unsigned char error; 
-	unsigned char checksum;
-	float timer = 0; 
-	
-	message[0] = ID;
-	message[1] = 0x04;
-	message[2] = 0x02;
-	message[3] = 0x2B; //Läser ut Present load 
-	message[4] = 0x01;
-	
-	Send_Servo_Message(message, 2);
-	
-	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
-	
-	while((start_byte1 != 0xFF) && (start_byte2 != 0xFF))
-	{
-		start_byte2 = start_byte1; 
-		start_byte1 = UART_Receive();
-		timer = timer + 1; 
-		if(timer>10)
-		{
-			return 0xBB;
-		}
-	}
-	
-	UART_Receive(); //Hantera förskjutningen i bufferten
-	ID = UART_Receive(); //ID
-	length = UART_Receive(); //Längd
-	error = UART_Receive(); //Error
-	temp = UART_Receive(); //LS Byte av load
-	checksum = UART_Receive(); //Checksum
-	
-	_delay_ms(0.05); //Lite extra tidsmarginal så bussen hinner bli ledig
-	
-	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
-	
-	return temp;
-}
-
-
-	
 
 void Send_Servo_Velocity(unsigned char ID, unsigned int vel)
 {
@@ -379,34 +326,14 @@ void Send_Servo_Position(unsigned char ID, unsigned int pos)
 	Send_Servo_Message(message, 3);
 }
 
-unsigned int pos11; // VARFÖR I HELSIKE LIGGER ALLA DESSA HÄR UTE GLOBALT????????????????????????????????????????????
-unsigned int pos12;
-unsigned int pos13;
-unsigned int pos31;
-unsigned int pos32;
-unsigned int pos33;
-unsigned int pos51;
-unsigned int pos52;
-unsigned int pos53;
-
-unsigned int pos21; // ?????????????????????????????????????????
-unsigned int pos22;
-unsigned int pos23;
-unsigned int pos41;
-unsigned int pos42;
-unsigned int pos43;
-unsigned int pos61;
-unsigned int pos62;
-unsigned int pos63;
-
 //Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till servona.
 void Send_Leg1_Kar(float x, float y, float z)
 {
 	triple_uint pos = Kar_To_Pos(x, y, z);
 
-	 pos11 = -(pos.a - FIRST_SERVO_OFFSET) + 0x99 + 0x01FF;
-	 pos12 = -(pos.b - SECOND_SERVO_OFFSET) + 0x01FF;
-	 pos13 = -(pos.c - THIRD_SERVO_OFFSET) + 0x01FF;
+	 unsigned int pos11 = -(pos.a - FIRST_SERVO_OFFSET) + 0x99 + 0x01FF;
+	 unsigned int pos12 = -(pos.b - SECOND_SERVO_OFFSET) + 0x01FF;
+	 unsigned int pos13 = -(pos.c - THIRD_SERVO_OFFSET) + 0x01FF;
 	
 	Send_Servo_Position(8, pos11);
 	Send_Servo_Position(10, pos12);
@@ -418,9 +345,9 @@ void Send_Leg2_Kar(float x, float y, float z)
 {
 	triple_uint pos = Kar_To_Pos(x, y, z);
 	
-	 pos21 = pos.a - FIRST_SERVO_OFFSET - 0x99 + 0x01FF;
-	pos22 = pos.b - SECOND_SERVO_OFFSET + 0x01FF;
-	 pos23 = pos.c - THIRD_SERVO_OFFSET + 0x01FF;
+	unsigned int pos21 = pos.a - FIRST_SERVO_OFFSET - 0x99 + 0x01FF;
+	unsigned int pos22 = pos.b - SECOND_SERVO_OFFSET + 0x01FF;
+	unsigned int pos23 = pos.c - THIRD_SERVO_OFFSET + 0x01FF;
 	
 	Send_Servo_Position(7, pos21);
 	Send_Servo_Position(9, pos22);
@@ -432,9 +359,9 @@ void Send_Leg3_Kar(float x, float y, float z)
 {
 	triple_uint pos = Kar_To_Pos(x, y, z);
 	
-	pos31 = -(pos.a - FIRST_SERVO_OFFSET) + 0x01FF;
-	pos32 = -(pos.b - SECOND_SERVO_OFFSET) + 0x01FF;
-	pos33 = -(pos.c - THIRD_SERVO_OFFSET) + 0x01FF;
+	unsigned int pos31 = -(pos.a - FIRST_SERVO_OFFSET) + 0x01FF;
+	unsigned int pos32 = -(pos.b - SECOND_SERVO_OFFSET) + 0x01FF;
+	unsigned int pos33 = -(pos.c - THIRD_SERVO_OFFSET) + 0x01FF;
 	
 
 	Send_Servo_Position(14, pos31);
@@ -447,9 +374,9 @@ void Send_Leg4_Kar(float x, float y, float z)
 {	
 	triple_uint pos = Kar_To_Pos(x, y, z);
 	
-	pos41 = pos.a - FIRST_SERVO_OFFSET + 0x01FF;
-	pos42 = pos.b - SECOND_SERVO_OFFSET + 0x01FF;
-	pos43 = pos.c - THIRD_SERVO_OFFSET + 0x01FF;
+	unsigned int pos41 = pos.a - FIRST_SERVO_OFFSET + 0x01FF;
+	unsigned int pos42 = pos.b - SECOND_SERVO_OFFSET + 0x01FF;
+	unsigned int pos43 = pos.c - THIRD_SERVO_OFFSET + 0x01FF;
 	
 	Send_Servo_Position(13, pos41);
 	Send_Servo_Position(15, pos42);
@@ -461,9 +388,9 @@ void Send_Leg5_Kar(float x, float y, float z)
 {
 	triple_uint pos = Kar_To_Pos(x, y, z);
 	
-	pos51 = -(pos.a - FIRST_SERVO_OFFSET) - 0x99 + 0x01FF;
-	pos52 = -(pos.b - SECOND_SERVO_OFFSET) + 0x01FF;
-	pos53 = -(pos.c - THIRD_SERVO_OFFSET) + 0x01FF;
+	unsigned int pos51 = -(pos.a - FIRST_SERVO_OFFSET) - 0x99 + 0x01FF;
+	unsigned int pos52 = -(pos.b - SECOND_SERVO_OFFSET) + 0x01FF;
+	unsigned int pos53 = -(pos.c - THIRD_SERVO_OFFSET) + 0x01FF;
 	
 	Send_Servo_Position(2, pos51);
 	Send_Servo_Position(4, pos52);
@@ -475,9 +402,9 @@ void Send_Leg6_Kar(float x, float y, float z)
 {
 	triple_uint pos = Kar_To_Pos(x, y, z);
 	
-	pos61 = pos.a - FIRST_SERVO_OFFSET + 0x99 + 0x01FF;
-	 pos62 = pos.b - SECOND_SERVO_OFFSET + 0x01FF;
-	pos63 = pos.c - THIRD_SERVO_OFFSET + 0x01FF;
+	unsigned int pos61 = pos.a - FIRST_SERVO_OFFSET + 0x99 + 0x01FF;
+	unsigned int pos62 = pos.b - SECOND_SERVO_OFFSET + 0x01FF;
+	unsigned int pos63 = pos.c - THIRD_SERVO_OFFSET + 0x01FF;
 	
 	Send_Servo_Position(1, pos61);
 	Send_Servo_Position(3, pos62);
@@ -734,7 +661,7 @@ void Send_Leg3_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, 
 	
 	unsigned int pos1 = -(pos.a - FIRST_SERVO_OFFSET) + 0x01FF;
 	unsigned int pos2 = -(pos.b - SECOND_SERVO_OFFSET) + 0x01FF;
-	unsigned int pos3 = -(pos.c - THIRD_SERVO_OFFSET) + 0x01FF;
+	unsigned int pos3 = -(pos.c - THIRD_SERVO_OFFSET) + 0x01FF; 
 
 	Send_Servo_Position_And_Velocity(14, pos1, inner);
 	Send_Servo_Position_And_Velocity(16, pos2, middle);
@@ -788,20 +715,3 @@ void Send_Leg6_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, 
 	Send_Servo_Position_And_Velocity(3, pos2, middle);
 	Send_Servo_Position_And_Velocity(5, pos3, outer);
 }
-
-//void Rise_Robot_Height(float height)
-//{
-	//triple_float leg1 = Pos_To_Kar(Get_Servo_Position(8), Get_Servo_Position(10), Get_Servo_Position(12));
-	//triple_float leg2 = Pos_To_Kar(Get_Servo_Position(7), Get_Servo_Position(9), Get_Servo_Position(11));
-	//triple_float leg3 = Pos_To_Kar(Get_Servo_Position(14), Get_Servo_Position(16), Get_Servo_Position(18));
-	//triple_float leg4 = Pos_To_Kar(Get_Servo_Position(13), Get_Servo_Position(15), Get_Servo_Position(17));
-	//triple_float leg5 = Pos_To_Kar(Get_Servo_Position(2), Get_Servo_Position(4), Get_Servo_Position(6));
-	//triple_float leg6 = Pos_To_Kar(Get_Servo_Position(1), Get_Servo_Position(3), Get_Servo_Position(5));
-	//
-	//Send_Leg1_Kar(leg1.a, height, leg1.c);
-	//Send_Leg2_Kar(leg2.a, height, leg2.c);
-	//Send_Leg3_Kar(leg3.a, height, leg3.c);
-	//Send_Leg4_Kar(leg4.a, height, leg4.c);
-	//Send_Leg5_Kar(leg5.a, height, leg5.c);
-	//Send_Leg6_Kar(leg6.a, height, leg6.c);
-//}

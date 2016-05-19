@@ -30,14 +30,6 @@
 triple_uint Kar_To_Pos(float x, float y, float z);
 
 /**
-* Calculates Cartesian koodinates,
-* given servo position, without consideration to offset.
-*/
-
-//triple_float Pos_To_Kar(float p1, float p2, float p3); TA BORTELIBORT!
-
-
-/**
 * @brief Cartesian koodinates to cylindrical coordinates, for leg1
 *
 * Calculates cylindrical coordinates,

@@ -236,12 +236,8 @@ void First_Leg(char direction)
 	Send_Leg5_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 	_delay_ms(DOWN_DELAY);
 	
-	if(Servo_Load_Too_Small(10))
+	if(Servo_Load_Too_Small(10) && (direction == 'u')) //missade vi hindret på vägen upp? 
 	{
-		
-		if(direction == 'u') //Klättra upp, dvs 'u'
-		{
-			
 			//upp gamla
 			Send_Leg1_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
 			Send_Leg4_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
@@ -259,29 +255,6 @@ void First_Leg(char direction)
 			Send_Leg4_Kar_And_Velocity(x_ground, step-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 			Send_Leg5_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 			_delay_ms(DOWN_DELAY);		
-		}
-		
-		else //Klättra ner dvs 'd'
-		{
-			////upp gamla
-			//Send_Leg1_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg4_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg5_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(FORWARD_DELAY);
-			////uppdatera step
-			//step = step + 1 
-			//// fram nya 
-			//Send_Leg1_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg4_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg5_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(FORWARD_DELAY);
-			////ner 
-			//Send_Leg1_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-			//Send_Leg4_Kar_And_Velocity(x_ground, step-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			//Send_Leg5_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(DOWN_DELAY);
-		}
-		
 	}
 	
 	for (uint8_t n = 0; n<=number_of_steps; ++n)
@@ -343,53 +316,6 @@ void Second_Leg(char direction)
 	Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 	_delay_ms(DOWN_DELAY);
 	
-	//if(Servo_Load_Too_Small(8))
-	//{
-		//
-		//if(direction == 'u') //Klättra upp, dvs 'u'
-		//{
-			//
-			////upp gamla
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(FORWARD_DELAY);
-			////uppdatera step
-			//step=step+1;
-			////fram nya
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(FORWARD_DELAY);
-			////ner
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(DOWN_DELAY);
-		//}
-		//
-		//else //Klättra ner dvs 'd'
-		//{
-			//////upp gamla
-			////Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			////Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			////Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			////_delay_ms(FORWARD_DELAY);
-			//////uppdatera step
-			////step = step + 1
-			////// fram nya
-			////Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			////Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			////Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			////_delay_ms(FORWARD_DELAY);
-			//////ner
-			////Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-			////Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			////Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			////_delay_ms(DOWN_DELAY);
-		//}
-		//
-	//}
 	
 	for (uint8_t n = 0; n<=number_of_steps; ++n)
 	{
@@ -481,12 +407,8 @@ void Third_Leg(char direction)
 	Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 	_delay_ms(DOWN_DELAY);
 	
-	if(Servo_Load_Too_Small(16))
+	if(Servo_Load_Too_Small(16) && (direction == 'u')) //missade vi hindret på vägen upp? 
 	{
-		
-		if(direction == 'u') //Klättra upp, dvs 'u'
-		{
-			
 			//upp gamla
 			Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
 			Send_Leg3_Kar_And_Velocity(x_obstacle, 2*step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -503,30 +425,7 @@ void Third_Leg(char direction)
 			Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 			Send_Leg3_Kar_And_Velocity(x_obstacle, 2*step-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 			Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			_delay_ms(DOWN_DELAY);
-		}
-		
-		else //Klättra ner dvs 'd'
-		{
-			////upp gamla
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(FORWARD_DELAY);
-			////uppdatera step
-			//step = step + 1
-			//// fram nya
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(FORWARD_DELAY);
-			////ner
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(DOWN_DELAY);
-		}
-		
+			_delay_ms(DOWN_DELAY);	
 	}
 	
 	for (uint8_t n = 0; n<=number_of_steps; ++n)
@@ -587,12 +486,8 @@ void Fourth_Leg(char direction)
 	Send_Leg5_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 	_delay_ms(DOWN_DELAY);
 
-	if(Servo_Load_Too_Small(15))
+	if(Servo_Load_Too_Small(15) && (direction == 'u')) //missade vi hindret på vägen upp? 
 	{
-		
-		if(direction == 'u') //Klättra upp, dvs 'u'
-		{
-			
 			//upp gamla
 			Send_Leg1_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
 			Send_Leg4_Kar_And_Velocity(x_obstacle, 2*step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -610,29 +505,6 @@ void Fourth_Leg(char direction)
 			Send_Leg4_Kar_And_Velocity(x_obstacle, 2*step-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 			Send_Leg5_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
 			_delay_ms(DOWN_DELAY);
-		}
-		
-		else //Klättra ner dvs 'd'
-		{
-			////upp gamla
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(FORWARD_DELAY);
-			////uppdatera step
-			//step = step + 1
-			//// fram nya
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(FORWARD_DELAY);
-			////ner
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(DOWN_DELAY);
-		}
-		
 	}
 
 	for (uint8_t n = 0; n<=number_of_steps; ++n)
@@ -726,12 +598,8 @@ void Fifth_Leg(char direction)
 	Send_Leg5_Kar_And_Velocity(x_obstacle, 2*step-corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 	_delay_ms(DOWN_DELAY);
 
-	if(Servo_Load_Too_Small(4))
+	if(Servo_Load_Too_Small(4) && (direction == 'u')) //missade vi hindret på vägen upp? 
 	{
-		
-		if(direction == 'u') //Klättra upp, dvs 'u'
-		{
-			
 			//upp gamla
 			Send_Leg1_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
 			Send_Leg4_Kar_And_Velocity(x_obstacle, 2*step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -749,29 +617,6 @@ void Fifth_Leg(char direction)
 			Send_Leg4_Kar_And_Velocity(x_obstacle, 2*step-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 			Send_Leg5_Kar_And_Velocity(x_obstacle, 2*step-corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 			_delay_ms(DOWN_DELAY);
-		}
-		
-		else //Klättra ner dvs 'd'
-		{
-			////upp gamla
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(FORWARD_DELAY);
-			////uppdatera step
-			//step = step + 1
-			//// fram nya
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(FORWARD_DELAY);
-			////ner
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(DOWN_DELAY);
-		}
-		
 	}
 	
 	for (uint8_t n = 0; n<=number_of_steps; ++n)
@@ -832,12 +677,8 @@ void Sixth_Leg(char direction)
 	Send_Leg6_Kar_And_Velocity(x_obstacle, 2*step-corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 	_delay_ms(DOWN_DELAY);
 	
-	if(Servo_Load_Too_Small(3))
+	if(Servo_Load_Too_Small(3) && (direction == 'u')) //missade vi hindret på vägen upp? 
 	{
-		
-		if(direction == 'u') //Klättra upp, dvs 'u'
-		{
-			
 			//upp gamla
 			Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
 			Send_Leg3_Kar_And_Velocity(x_obstacle, 2*step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
@@ -855,29 +696,6 @@ void Sixth_Leg(char direction)
 			Send_Leg3_Kar_And_Velocity(x_obstacle, 2*step-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 			Send_Leg6_Kar_And_Velocity(x_obstacle, 2*step-corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
 			_delay_ms(DOWN_DELAY);
-		}
-		
-		else //Klättra ner dvs 'd'
-		{
-			////upp gamla
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(FORWARD_DELAY);
-			////uppdatera step
-			//step = step + 1
-			//// fram nya
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height-lift), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(FORWARD_DELAY);
-			////ner
-			//Send_Leg2_Kar_And_Velocity(x_obstacle, 2*step+corner_pitch-weight_adjust, -(height-obstacle_height), speed_inner, speed_middle, speed_outer);
-			//Send_Leg3_Kar_And_Velocity(x_ground, step-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			//Send_Leg6_Kar_And_Velocity(x_ground, step-corner_pitch-weight_adjust, -(height), speed_inner, speed_middle, speed_outer);
-			//_delay_ms(DOWN_DELAY);
-		}
-		
 	}
 	
 	for (uint8_t n = 0; n<=number_of_steps; ++n)
