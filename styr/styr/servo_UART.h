@@ -105,9 +105,6 @@ unsigned int Get_Servo_Load(unsigned char ID);
 unsigned char Get_Servo_Temp(unsigned char ID);
 
 
-//unsigned char[] Receive_Servo_Statuspackage(uint8_t size); FUNKAR EJ TY KAN EJ RETURNERA STRUCT
-//void Check_Servo_Temp(unsigned char ID)
-
 /**
 * @brief Sends a message to the servos
 *
@@ -296,7 +293,7 @@ void Send_Leg5_Cyl(float,float,float);
 void Send_Leg6_Cyl(float,float,float);
 
 /**
-* @brief Sends desired position and velicity to a servo
+* @brief Sends desired position and velocity to a servo
 *
 * @param ID The ID of the specific servo
 * @param pos The desired position of the servo. 0x000 is min 0x03FF is max
@@ -304,20 +301,148 @@ void Send_Leg6_Cyl(float,float,float);
 */
 void Send_Servo_Position_And_Velocity(unsigned char ID, unsigned int pos, unsigned int vel);
 
-// KOMMENTERA DESSA CHRIPPETY!
+/**
+* @brief Sends desired position and velocity to leg-1 in Kartesian koodinates
+*
+* @param r The length in r-direction in cm
+* @param th The angles in th-direction in radians
+* @param z The length in z-direction in cm
+* @param inner The servo speed of the inner servo
+* @param middle The servo speed of the middle servo
+* @param outer The servo speed of the outer servo
+*/
 void Send_Leg1_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer);
+
+/**
+* @brief Sends desired position and velocity to leg-2 in Kartesian koodinates
+*
+* @param r The length in r-direction in cm
+* @param th The angles in th-direction in radians
+* @param z The length in z-direction in cm
+* @param inner The servo speed of the inner servo
+* @param middle The servo speed of the middle servo
+* @param outer The servo speed of the outer servo
+*/
 void Send_Leg2_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer);
+
+/**
+* @brief Sends desired position and velocity to leg-3 in Kartesian koodinates
+*
+* @param r The length in r-direction in cm
+* @param th The angles in th-direction in radians
+* @param z The length in z-direction in cm
+* @param inner The servo speed of the inner servo
+* @param middle The servo speed of the middle servo
+* @param outer The servo speed of the outer servo
+*/
 void Send_Leg3_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer);
+
+/**
+* @brief Sends desired position and velocity to leg-4 in Kartesian koodinates
+*
+* @param r The length in r-direction in cm
+* @param th The angles in th-direction in radians
+* @param z The length in z-direction in cm
+* @param inner The servo speed of the inner servo
+* @param middle The servo speed of the middle servo
+* @param outer The servo speed of the outer servo
+*/
 void Send_Leg4_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer);
+
+/**
+* @brief Sends desired position and velocity to leg-5 in Kartesian koodinates
+*
+* @param r The length in r-direction in cm
+* @param th The angles in th-direction in radians
+* @param z The length in z-direction in cm
+* @param inner The servo speed of the inner servo
+* @param middle The servo speed of the middle servo
+* @param outer The servo speed of the outer servo
+*/
 void Send_Leg5_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer);
+
+/**
+* @brief Sends desired position and velocity to leg-6 in Kartesian koodinates
+*
+* @param r The length in r-direction in cm
+* @param th The angles in th-direction in radians
+* @param z The length in z-direction in cm
+* @param inner The servo speed of the inner servo
+* @param middle The servo speed of the middle servo
+* @param outer The servo speed of the outer servo
+*/
 void Send_Leg6_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer);
 
-// KOMMENTERA!!!
+/**
+* @brief Sends desired position and velocity to leg-1 in cylindrical koodinates
+*
+* @param r The length in r-direction in cm
+* @param th The angles in th-direction in radians
+* @param z The length in z-direction in cm
+* @param inner The servo speed of the inner servo
+* @param middle The servo speed of the middle servo
+* @param outer The servo speed of the outer servo
+*/
 void Send_Leg1_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer);
+
+/**
+* @brief Sends desired position and velocity to leg-2 in cylindrical koodinates
+*
+* @param r The length in r-direction in cm
+* @param th The angles in th-direction in radians
+* @param z The length in z-direction in cm
+* @param inner The servo speed of the inner servo
+* @param middle The servo speed of the middle servo
+* @param outer The servo speed of the outer servo
+*/
 void Send_Leg2_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer);
+
+/**
+* @brief Sends desired position and velocity to leg-3 in cylindrical koodinates
+*
+* @param r The length in r-direction in cm
+* @param th The angles in th-direction in radians
+* @param z The length in z-direction in cm
+* @param inner The servo speed of the inner servo
+* @param middle The servo speed of the middle servo
+* @param outer The servo speed of the outer servo
+*/
 void Send_Leg3_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer);
+
+/**
+* @brief Sends desired position and velocity to leg-4 in cylindrical koodinates
+*
+* @param r The length in r-direction in cm
+* @param th The angles in th-direction in radians
+* @param z The length in z-direction in cm
+* @param inner The servo speed of the inner servo
+* @param middle The servo speed of the middle servo
+* @param outer The servo speed of the outer servo
+*/
 void Send_Leg4_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer);
+
+/**
+* @brief Sends desired position and velocity to leg-5 in cylindrical koodinates
+*
+* @param r The length in r-direction in cm
+* @param th The angles in th-direction in radians
+* @param z The length in z-direction in cm
+* @param inner The servo speed of the inner servo
+* @param middle The servo speed of the middle servo
+* @param outer The servo speed of the outer servo
+*/
 void Send_Leg5_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer);
+
+/**
+* @brief Sends desired position and velocity to leg-6 in cylindrical koodinates
+*
+* @param r The length in r-direction in cm
+* @param th The angles in th-direction in radians
+* @param z The length in z-direction in cm
+* @param inner The servo speed of the inner servo
+* @param middle The servo speed of the middle servo
+* @param outer The servo speed of the outer servo
+*/
 void Send_Leg6_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer);
 
 #endif /* SERVO_UART_H_ */
