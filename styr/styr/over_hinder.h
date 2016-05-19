@@ -2,6 +2,7 @@
 * @file over_hinder.h
 * @author Christoffer, Erik
 * @date 5 may 2016
+* @version 1.0
 * @brief Climbing up/down
 *
 * Functions for climbing onto and down from obstacles of height approx. eq. to 6,5 cm.

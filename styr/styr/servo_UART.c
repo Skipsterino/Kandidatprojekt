@@ -1,4 +1,7 @@
-﻿
+﻿/*
+*
+*/
+
 #include "servo_UART.h"
 #include "invers_kinematik.h"
 

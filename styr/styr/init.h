@@ -2,6 +2,7 @@
 * @file init.h
 * @author Erik
 * @date 25 apr 2016
+* @version 1.0
 * @brief Config and init functions
 *
 */

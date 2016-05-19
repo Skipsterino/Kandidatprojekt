@@ -3,6 +3,7 @@
 *
 * Created: 4/18/2016 1:55:26 PM
 *  Author: chrma018
+* Version: 1.0
 */
 
 // Höjden på hinder kan ligga globalt...

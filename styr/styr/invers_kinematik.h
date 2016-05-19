@@ -2,6 +2,7 @@
 * @file invers_kinematik.h
 * @author Christoffer
 * @date 25 apr 2016
+* @version 1.0
 * @brief Functions for inverse kinematics
 *
 * Are used for calculating servo angles from positions in different coordinate systems.    

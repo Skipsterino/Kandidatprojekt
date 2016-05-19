@@ -3,6 +3,7 @@
  *
  * Created: 8 april 3:03:52 PM
  *  Author: jenma421 
+ * Version: 1.0
  */ 
 
 #include "gangstilar.h"

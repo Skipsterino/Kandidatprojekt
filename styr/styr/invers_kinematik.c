@@ -3,6 +3,7 @@
  *
  * Created: 4/8/2016 3:13:10 PM
  *  Author: chrma018
+ * Version: 1.0
  */ 
 
 #include "invers_kinematik.h"

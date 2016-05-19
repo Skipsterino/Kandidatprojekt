@@ -2,6 +2,7 @@
 * @file gangstilar.h
 * @author Jens, Christoffer
 * @date 20 may 2016
+* @version 1.0
 * @brief Functions for walking
 *
 * Functions for walking and rotation.
