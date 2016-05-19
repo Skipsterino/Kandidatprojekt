@@ -1,5 +1,6 @@
 /**
 * @file I2C.h
+* @version 1.0
 * @author Fredrik, Jonas
 * @date 26 apr 2016
 * @brief The code for the I2C-bus
@@ -51,7 +52,7 @@ void I2C_stop();
 /**
 * @brief An error function for the I2C-bus
 *
-* An error function called if a problem is encountered during I2C-communication. 
+* An error function called if a problem is encountered during I2C-communication.
 */
 int error();
 

@@ -1,11 +1,12 @@
 /**
 * @file sensor.h
+* @version 1.0
 * @author Fredrik, Jonas
 * @date 26 apr 2016
 * @brief The code governing the behaviour of the sensor module
 *
-* The code that governs the sensor module. Handles the collection of all the sensor 
-* data. 
+* The code that governs the sensor module. Handles the collection of all the sensor
+* data.
 */
 
 #ifndef SENSOR_H_
@@ -39,7 +40,7 @@ volatile double IR_latest_reading[7];	/**< The most recent readings from all the
 double IR_reading[7][5];				/**< 2D-array with the 5 latest readings for the 7 IR-sensors */
 double IR_ADC[7];						/**< Average value for the last 5 readings for the 7 IR-sensors */
 double IR_distance[7];					/**< Distance measured by the 7 IR-sensors */
-float IR_Yaw_right, IR_Yaw_left;		/**< Yaw angle calculated from the IR-measurements on each side */			
+float IR_Yaw_right, IR_Yaw_left;		/**< Yaw angle calculated from the IR-measurements on each side */
 
 /**
 * Struct that contains the tables that describe the conversion from sensor readings to distances
@@ -87,7 +88,7 @@ volatile unsigned char IMU_data_ready = 0;							/**< Flag stating if there's be
 
 const signed char _orientation[9] = {1, 0, 0,  0, 1, 0,  0, 0, 1};	/**< Rotation matrix describing the mounting of the IMU */
 
-float quaternion[4];					/**< Quaternions describing the orientation of the IMU */				
+float quaternion[4];					/**< Quaternions describing the orientation of the IMU */
 float gravity[3];						/**< The gravity vectors used to remove the effect of the gravity on the measurements from the IMU */
 float IMU_Yaw, IMU_Pitch, IMU_Roll;		/**< The orientation of the IMU in Euler angles */
 
@@ -268,7 +269,7 @@ void init_US();
 void init_SPI();
 
 /**
-* @brief Initiates a timer 
+* @brief Initiates a timer
 *
 * Initiates a timer to give us a timestamp.
 */
@@ -291,7 +292,7 @@ void init_IMU();
 /**
 * @brief Runs a self-test on the IMU
 *
-* Runs a self-test on the IMU calibrating the gyros and accelerometers. 
+* Runs a self-test on the IMU calibrating the gyros and accelerometers.
 */
 void run_self_test();
 

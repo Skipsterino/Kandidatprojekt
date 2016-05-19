@@ -1,9 +1,15 @@
 /*
- $License:
-    Copyright (C) 2011-2012 InvenSense Corporation, All Rights Reserved.
-    See included License.txt for License information.
- $
+* @file inv_mpu.h
+* @version 1.0
+* @author InvenSense
+* @date -
+* @brief Code by InvenSense
+* @license Copyright (C) 2011-2012 InvenSense Corporation, All Rights Reserved.
+ 			 See included License.txt for License information.
+ *
+ * Code by InvenSense.
  */
+ 
 /**
  *  @addtogroup  DRIVERS Sensor Driver Layer
  *  @brief       Hardware drivers to communicate with sensors via I2C.
@@ -62,7 +68,7 @@ struct int_param_s {
 //#elif defined EMPL_TARGET_UC3L0
     //unsigned long pin;
     //void (*cb)(volatile void*);
-    //void *arg;	
+    //void *arg;
 //#endif
 	void (*cb)(void);
 	unsigned short pin;
