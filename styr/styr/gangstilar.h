@@ -175,9 +175,31 @@ void Walk_Half_Cycle(float speed, float theta, float height, float dx);
 */
 void Walk_Half_Crab_Cycle(int8_t speed);
 
-//kommentera chris
+/**
+* @breif Moves the robots body to a position
+*
+*  Moves the robots body to a position in Kartesian coordinates 
+*  whilst the all legs are on the ground (z is fixed to 11) 
+*
+* @param y The y coordinate in cm 
+* @param x The x coordinate in cm 
+*/
 void Dance(float x, float y);
+
+/**
+* @breif Moves the robots body to a position
+*
+*  Moves the robots body to a position in cylindrical coordinates
+*  whilst the all legs are on the ground (z is fixed to 11) 
+*
+* @param r The r coordinate in cm
+* @param th The thetha coordinate in radians 
+*/
 void Dance_Cyl(float r, float th);
+
+/**
+* @breif Makes the robot preform a victory dance
+*/
 void Victory_Dance(void);
 #endif /* GANGSTILAR_H_ */
 

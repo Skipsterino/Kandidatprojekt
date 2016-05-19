@@ -510,7 +510,7 @@ void Dance(float x, float y)
 {
 	if(1) // måste återställa x, y i main innan man kan återgå till walk_half_cycle... därför stypt. 
 	{
-		float l = 12;//13 låg //fötters förskjuting från kropp i x-led OBS orginal = 13, numera 12
+		float l = 12;//fötters förskjuting från kropp i x-led OBS orginal = 13, numera 12
 		float corner_pitch = 4; //förskjutning av arbetsområde i y-led för hörnben 4
 		int speed_inner_dance= 180;
 		int speed_middle_dance= 200;
@@ -580,6 +580,7 @@ void Victory_Dance(void)
 {
 	float pi = 3.14159265359;
 	
+	//fixa rörelsemönster 
 	for(float i = 1; i< 10; ++i)
 	{
 		Dance_Cyl(6, 2*pi*0.01);
