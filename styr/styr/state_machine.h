@@ -85,37 +85,23 @@ typedef enum {
 	DEAD_END_B_LEFT = 48,		// TEST_STATE_5
 	DEAD_END_C = 49,			// TEST_STATE_6
 	DEAD_END_D = 50,			// TEST_STATE_7
-	TEST_STATE_8 = 51,
-	TEST_STATE_9 = 52,
-	TEST_STATE_10 = 53,	
+	CHECK_IF_LOW_OBSTACLE = 51,
+	CHECK_IF_HIGH_OBSTACLE = 52,
+	CENTER_CRAB = 53,
+	CENTER_NORMAL = 54,
+	CENTER_CRAB_UP = 55,
+	CENTER_CRAB_DOWN = 56,
+	LOWER = 57,
 } STATES;
 
-#define HALF_ROTATION_ANGLE 45			/**< Rotation angle for a 90 degree turn. */
-#define FULL_ROTATION_ANGLE 90			/**< Rotation angle for a 180 degree turn. */
-#define CORRIDOR_SIDE_DISTANCE 70		/**< Distance for determining whether corridor or not. */
-#define SIDE_DEAD_END_DISTANCE 150		/**< Distance for determining whether dead end to right or left in junction. */
-#define END_OF_COURSE_DISTANCE 100		/**< Distance that IR_0, 2, 3, 5, 6 should be larger than at the end of the course. */
-#define SHORT_TURN_DISTANCE 38			/**< Distance to wall for rotating in turns and C junctions. */
-#define JUNCTION_C_TURN_DISTANCE 45
-#define FORWARD_DEAD_END_DISTANCE 180	/**< Distance for determining whether dead end straight ahead in junction or not. */
-#define JUNCTION_A_FORWARD_DISTANCE 80	/**< Distance for determining whether A junction or not (junction or turn?). */
-#define PREPARE_CLIMBING_UP_DISTANCE 30	/**< Distance for preparing climbing onto low obstacle (if IR_1 is less than this). */
-#define PREPARE_CLIMBING_DOWN_DISTANCE 40	/**< Distance for preparing climbing down from low obstacle (if IR_1 is greater than this). */
-#define US_HIGH_OBSTACLE_DISTANCE 20	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
-#define IR_HIGH_OBSTACLE_DISTANCE 60	/**< Distance for determining whether high obstacle or not (IR sensor). */
-#define NO_WALL_DISTANCE 120				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
-#define DEAD_END_DISTANCE 40			/**< Distance to wall for turning in a dead end (which we shouldn't have entered). */
-
-#define CENTRE_OFFSET 8 /**< Horizontal distance from centre of robot to its legs. */
-#define CORRIDOR_WIDTH 80 /**< Width of the labyrinth's corridors. */
-
-float IMU_Yaw_start; /**< The IMU's start Yaw angle when entering turns and junctions. */
 bool on_top_of_obstacle; /**< true -> the robot has climbed up on top of a low obstacle. */
 bool trust_sensors; /**< false -> for some reason, we don't trust the current sensor data. */
+bool low;
 uint8_t rotation_count; /**< Counter that keeps track of rotation in a turn or junction. */
 uint8_t cycle_count; /**< Counter that keeps track of the number of cycles. Is used in some, but not all, states. */
 
-float Yaw, Yaw_rad, p_part, Kp, Kd, alpha; /**< Angles and parameters for motion control. */
+float Kp, Kd;
+float Yaw, Yaw_rad, p_part, alpha, previous_alpha; /**< Angles and parameters for motion control. */
 float IR_0, IR_1, IR_2, IR_3, IR_4, IR_5, IR_6, US, IR_Yaw_left, IR_Yaw_right, IMU_Yaw, Yaw, Pitch, Roll; /**< Sensor values. */
 
 STATES ROBOT_STATE; /**< Represents the robot's current state. */

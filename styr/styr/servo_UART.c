@@ -14,7 +14,7 @@ void UART_Transmit( unsigned char data )
 	UDR0 = data;
 }
 
-unsigned char UART_Receive( void )
+volatile unsigned char UART_Receive( void )
 {
 	float i=0;
 	// Wait for data to be received
@@ -92,11 +92,11 @@ void Configure_Servos_Angle_Limit(char mode)
 	{
 		for (uint8_t i = 0; i < 2; i++)
 		{
-			Send_Servo_Angle_Limit(inner_lf_rb[i], 0x0146, 0x02EB);  // pos 1FF + (1023/300pos/vinkl*(-45grader eller + 60 grader)= 0x0166,0x02CB
+			Send_Servo_Angle_Limit(inner_lf_rb[i], 0x0000, 0x03ff);  // pos 1FF + (1023/300pos/vinkl*(-45grader eller + 60 grader)= 0x0166,0x02CB
 			_delay_ms(1);
-			Send_Servo_Angle_Limit(inner_middle[i], 0x017F, 0x027F); // pos 1FF + (1023/300pos/vinkl*(-15grader eller + 15 grader)= 0x01BB,0x0243
+			Send_Servo_Angle_Limit(inner_middle[i], 0x0000, 0x03ff); // pos 1FF + (1023/300pos/vinkl*(-15grader eller + 15 grader)= 0x01BB,0x0243
 			_delay_ms(1);
-			Send_Servo_Angle_Limit(inner_rf_lb[i], 0x0111, 0x02B8); // pos 1FF + (1023/300pos/vinkl*(-60grader eller + 45 grader)= 0x0131,0x0298
+			Send_Servo_Angle_Limit(inner_rf_lb[i], 0x0000, 0x03ff); // pos 1FF + (1023/300pos/vinkl*(-60grader eller + 45 grader)= 0x0131,0x0298
 			_delay_ms(1);
 		}
 	}
@@ -130,7 +130,7 @@ void Configure_Servos_Max_Torque(void)
 {
 	for (uint8_t i = 1; i < 19; i++)
 	{
-		unsigned char response_settings[] = {i, 0x05, 0x03, 0x0E, 0x20, 0x02};//{i, 0x05, 0x03, 0x0E, 0xFF, 0x01};
+		unsigned char response_settings[] = {i, 0x05, 0x03, 0x0E, 0x90, 0x02};//{i, 0x05, 0x03, 0x0E, 0xFF, 0x01};
 		Send_Servo_Message(response_settings, 3);
 		
 		_delay_ms(1);
@@ -142,12 +142,13 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	unsigned char message[5];
 	unsigned char load_LSByte;
 	unsigned char load_MSByte;
-	unsigned char start_byte1= 0;
-	unsigned char start_byte2= 0; 
+	volatile unsigned char start_byte1= 0;
+	volatile unsigned char start_byte2= 0; 
 	unsigned char length; 
 	unsigned char error; 
 	unsigned char checksum;
-	float timer = 0; 
+	uint8_t timer = 0; 
+	unsigned int load;
 	
 	message[0] = ID;
 	message[1] = 0x04;
@@ -156,19 +157,19 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	message[4] = 0x02;
 	
 	Send_Servo_Message(message, 2);
-	
-	
+
 	_delay_ms(0.02); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 	PORTD &= ~(1<<PORTD2); //Välj riktning "från servon" i tri-state
 	
 	while((start_byte1 != 0xFF) && (start_byte2 != 0xFF))
 	{
+		
 		start_byte2 = start_byte1; 
 		start_byte1 = UART_Receive();
-		timer = timer + 1; 
+		++timer;
 		if(timer>10)
 		{
-			return 0xBB;
+			break;
 		}
 	}
 	UART_Receive(); //dont know lol
@@ -181,7 +182,7 @@ unsigned int Get_Servo_Load(unsigned char ID)
 	
 	_delay_ms(0.05); //Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras!!!
 	
-	unsigned int load = (((unsigned int)load_MSByte) << 8) | load_LSByte;
+	load = (((unsigned int)load_MSByte) << 8) | load_LSByte;
 	PORTD |= 1<<PORTD2; //Välj riktning "till servon" i tri-state
 	
 	return load;

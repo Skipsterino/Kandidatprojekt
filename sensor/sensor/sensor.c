@@ -998,7 +998,7 @@ void kalibrering()				// XXXXX Endast för att kunna kalibrera sensorer!
 	}
 	else
 	{
-		sum = sum + IR_ADC[6];
+		sum = sum + IR_ADC[3];
 		++counter;
 		result = sum/counter;
 	}

@@ -40,7 +40,7 @@ void UART_Transmit(unsigned char data);
 *
 * @return The received data, 0xBB if fail. 
 */
-unsigned char UART_Receive(void);
+volatile unsigned char UART_Receive(void);
 
 /**
 * @brief Calculates the checksum

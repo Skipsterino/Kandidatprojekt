@@ -1,4 +1,4 @@
-/* 
+/*
 * testloop.c
 *
 * Created: 4/15/2016 4:17:57 PM
@@ -43,7 +43,7 @@ volatile unsigned char lastPacket[16];
 void update_mode();
 void update_speed_and_angle();
 void update_height();
-unsigned char temp[18];
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////									MAIN											////
@@ -65,12 +65,16 @@ int main(void)
 	delta_h = 0.4;
 	
 	//Defaultvärden för state_machine
-	Kp = 0.01;
-	Kd = 0.55;
+	Kp = 0.005;
+	Kd = 0.45;
 	on_top_of_obstacle = false;
 	trust_sensors = true;
+	low = false;
 	
 	Init();
+	
+	
+	
 	
 	//init_fuck();
 	
@@ -78,7 +82,7 @@ int main(void)
 	Configure_Servos_Delaytime();
 	Configure_Servos_LED();
 	Configure_Servos_No_Response();
-	Configure_Servos_Angle_Limit('r');
+	Configure_Servos_Angle_Limit('r'); // ta inte bort!!!!!!!!!!!!! allt kan faila......
 	Configure_Servos_Max_Torque();
 	
 	//
@@ -89,8 +93,12 @@ int main(void)
 	Send_Inner_P2_Velocity(0x0010);//
 	Send_Middle_P2_Velocity(0x0010);//
 	Send_Outer_P2_Velocity(0x0010);//
+
 	
-	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!	
+	
+
+	
+	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
 
 	//_delay_ms(100);
 	////Send_Leg3_Kar(22,0,0);
@@ -106,7 +114,7 @@ int main(void)
 	////Send_Leg6_Kar(22,0,0);
 	////_delay_ms(1);
 	//Send_Servo_Position(1,0x01FF);
-	//Send_Servo_Position(2,0x01FF);	
+	//Send_Servo_Position(2,0x01FF);
 	//Send_Servo_Position(3,0x01FF-0xA0);
 	//Send_Servo_Position(4,0x01FF+0xA0);
 	//Send_Servo_Position(5,0x01FF+0xA0);
@@ -127,6 +135,7 @@ int main(void)
 	//while(1)
 	//{
 	//}
+
 	
 	unsigned char first_kom_byte;
 	
@@ -150,46 +159,69 @@ int main(void)
 		switch(cm)
 		{
 			case MANUAL: //Manuellt läge
-				ROBOT_STATE = CORRIDOR; //Ha CORRIDOR som default state
-				speed = 0;
-				angle = 0;
-				if (first_kom_byte & 0b00000011) //Skickas vinkel & intensitet?
+			ROBOT_STATE = CORRIDOR; //Ha CORRIDOR som default state
+			speed = 0;
+			angle = 0;
+			
+			if (first_kom_byte & 0b00000011) //Skickas vinkel eller intensitet?
+			{
+				update_speed_and_angle();
+			}
+			if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
+			{
+				update_height();
+			}
+			
+			if (first_kom_byte & 0b00010000) //Nytt Kp?
+			{
+				Kp = ((float)lastPacket[5])/1000.f; //Kp skickas som 1000 ggr det önskade värdet!!!
+			}
+			if (first_kom_byte & 0b00100000) //Nytt Kd?
+			{
+				Kd = ((float)lastPacket[6])/100.f; //Kd skickas som 100 ggr det önskade värdet!!!
+			}
+			
+			if((!(first_kom_byte & 0b10000000)) && dance_r > 1)
+			{
+				Dance(0,0);
+			}
+			else
+			{
+				if ((first_kom_byte & 0b01000000) && lastPacket[7] == 1)
 				{
-					update_speed_and_angle();
+					Walk_Half_Crab_Cycle(-6);
 				}
-				if (first_kom_byte & 0b00000100) //Höj/sänk gångstil?
+				else if ((first_kom_byte & 0b01000000) && lastPacket[7] == 2)
 				{
-					update_height();
+					Walk_Half_Crab_Cycle(6);
 				}
-				
-				if (first_kom_byte & 0b00010000) //Nytt Kp?
+				else if(first_kom_byte & 0b10000000)
 				{
-					Kp = ((float)lastPacket[5])/1000.f; //Kp skickas som 1000 ggr det önskade värdet!!!
+					Dance(((float)((lastPacket[8] & 0b11110000) >> 4)-8), -(((float)(lastPacket[8] & 0b00001111))-8));
 				}
-				if (first_kom_byte & 0b00100000) //Nytt Kd?
+				else
 				{
-					Kd = ((float)lastPacket[6])/100.f; //Kd skickas som 100 ggr det önskade värdet!!!
+					Walk_Half_Cycle(speed,angle,height);
 				}
-				
-				Walk_Half_Cycle(speed,angle,height);
-				break;
+			}
+			break;
 			
 			case AUTO: //Autonomt läge
-				height = 11;
-				update_state();
-				run_state();
-				break;
+			//height = 11;
+			update_state();
+			run_state();
+			break;
 			
 			case RACE:
-				if ((PIND & (1 << PIND3)) == 0) //Har knapp tryckts ned?
-				{
-					_delay_ms(1000);
-					cm = AUTO;
-				}
-				break;
+			if ((PIND & (1 << PIND3)) == 0) //Har knapp tryckts ned?
+			{
+				_delay_ms(1000);
+				cm = AUTO;
+			}
+			break;
 			
 			default:
-				break;
+			break;
 		}
 	}
 }
@@ -201,6 +233,7 @@ void update_mode()
 	if (change_mode == 0b00001111) //Byt till MANUAL?
 	{
 		cm = MANUAL;
+		height = 11;
 	}
 	
 	else if (change_mode == 0b00111100) //Byt till AUTO?
