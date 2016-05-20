@@ -1,12 +1,10 @@
 ﻿/*
-* over_hinder.c
-*
-* Created: 4/18/2016 1:55:26 PM
-*  Author: chrma018
-* Version: 1.0
-*/
+ *        File: over_hinder.c
+ *     Version: 1.0
+ * Last edited: 20/5/2016 
+ */ 
 
-// Höjden på hinder kan ligga globalt...
+
 #include "over_hinder.h"
 
 unsigned int load;
@@ -39,7 +37,7 @@ unsigned int speed_outer;
 uint8_t Servo_Load_Too_Small(unsigned char ID)
 {
 	unsigned int load = Get_Servo_Load(ID);
-	if(((ID == 3) || (ID == 9) || (ID == 15)))
+	if(((ID == 3) || (ID == 9) || (ID == 15))) //testar på de yttre servona 
 	{
 		if(load > 0x0405)
 		{
@@ -50,9 +48,9 @@ uint8_t Servo_Load_Too_Small(unsigned char ID)
 			return 1;
 		}
 	}
-	else // dvs ID = 4, 10, 16...
+	else // dvs ID = 4, 10, 16...//testar på de yttre servona 
 	{
-		if((load > 0x0028) && (load < 0x0400))
+		if((load > 0x0028) && (load < 0x0400)) 
 		{
 			return 0;
 		}
@@ -63,9 +61,10 @@ uint8_t Servo_Load_Too_Small(unsigned char ID)
 	}
 }
 
+// Håller koll på föregående steglängder
 void update_step(float new_step)
 {
-	last_last_step = last_step;
+	last_last_step = last_step; 
 	last_step = step; 
 	step = new_step; 
 
@@ -713,9 +712,7 @@ void Sixth_Leg(char direction)
 }
 
 void To_Default_Stance()
-{
-	/////   TILL UTGÅNGSLÄGE   /////
-	
+{	
 	//upp
 	Send_Leg1_Kar_And_Velocity(x_obstacle, last_step-step+corner_pitch-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
 	Send_Leg4_Kar_And_Velocity(x_obstacle, last_step-step-weight_adjust, -(height-obstacle_height-lift), speed_inner, speed_middle, speed_outer);
