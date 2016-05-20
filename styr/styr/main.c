@@ -55,8 +55,10 @@ int main(void)
 {
 	memset(lastPacket, 0, sizeof(lastPacket));
 	
-	cm = RACE; //Aktuellt styrläge hos roboten
-	ROBOT_STATE = CORRIDOR; //Default-tillstånd hos roboten
+	//Initiera robotens styrläge
+	cm = RACE;
+	//Default-tillstånd hos roboten
+	ROBOT_STATE = CORRIDOR;
 	
 	//Defaultvärden
 	angle = 0;
@@ -76,23 +78,22 @@ int main(void)
 	
 	Init();
 	
-	//KÖR CONFIGURE-FUNKTIONERNA NÄR SERVONA BEHÖVER KALIBRERAS PÅ NÅGOT SÄTT
+	//Konfigurering
 	Configure_Servos_Delaytime();
 	Configure_Servos_LED();
 	Configure_Servos_No_Response();
-	Configure_Servos_Angle_Limit('r'); // MÅSTE KÖRAS ty begränsningarna tappas ibland trots att de ligger i ROM
+	Configure_Servos_Angle_Limit('r'); // Måste köras ty begränsningarna tappas ibland trots att de ligger i ROM
 	Configure_Servos_Max_Torque();
-	//
 	
-	//FÖLJANDE SEX ANROP MÅSTE ALLTID KÖRAS EFTERSOM HASTIGHETEN LIGGER I RAM
-	Send_Inner_P1_Velocity(0x0010); 
+	//Inledande begränsning av hastigheterna så inget otrevligt sker vid start
+	Send_Inner_P1_Velocity(0x0010);
 	Send_Middle_P1_Velocity(0x0010);
 	Send_Outer_P1_Velocity(0x0010);
 	Send_Inner_P2_Velocity(0x0010);
 	Send_Middle_P2_Velocity(0x0010);
 	Send_Outer_P2_Velocity(0x0010);
 
-	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering klar!
+	sei(); //Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering är klar.
 
 	unsigned char first_kom_byte;
 	
@@ -100,7 +101,7 @@ int main(void)
 
 	while(1)
 	{
-		//Hämta det senaste giltiga paketet
+		//Hämta det senast giltiga paketet
 		cli();
 		memcpy(lastPacket, lastValidPacket, sizeof(lastPacket));
 		sei();
@@ -115,8 +116,8 @@ int main(void)
 		switch(cm)
 		{
 			case MANUAL: //Manuellt läge
-			ROBOT_STATE = CORRIDOR; //Ha CORRIDOR som default state
-			speed = 0;
+			ROBOT_STATE = CORRIDOR; //Ha CORRIDOR som default-tillstånd
+			speed = 0; //Nollställ speed och angle vid manuellt läge
 			angle = 0;
 			
 			if (first_kom_byte & 0b00000011) //Skickas vinkel eller intensitet?
@@ -137,7 +138,7 @@ int main(void)
 				Kd = ((float)lastPacket[6])/100.f; //Kd skickas som 100 ggr det önskade värdet, därav divisionen
 			}
 			
-			if((!(first_kom_byte & 0b10000000)) && dance_r > 1)  // Är kroppen inte i utgångsläge? 
+			if((!(first_kom_byte & 0b10000000)) && dance_r > 1)  // Är kroppen inte i utgångsläge?
 			{
 				Dance(0,0); //För tillbaka kroppen till utgångsläge
 			}

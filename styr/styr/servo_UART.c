@@ -135,10 +135,10 @@ void Configure_Servos_Angle_Limit(char mode)
 
 void Configure_Servos_No_Response(void)
 {
-	//till alla servon
+	//Skicka till alla servon
 	for (uint8_t i = 1; i < 19; i++)
 	{
-		unsigned char response_settings[] = {i, 0x04, 0x03, 0x10, 0x01}; //0x01 betyder att det inte svarar om det inte explicit frågas
+		unsigned char response_settings[] = {i, 0x04, 0x03, 0x10, 0x01}; //0x01 betyder att servot inte svarar om det inte explicit ombeds att göra det
 		Send_Servo_Message(response_settings, 2);
 		
 		_delay_ms(1);
@@ -147,10 +147,10 @@ void Configure_Servos_No_Response(void)
 
 void Configure_Servos_Max_Torque(void)
 {
-	//till alla servon
+	//Skicka till alla servon
 	for (uint8_t i = 1; i < 19; i++)
 	{
-		unsigned char response_settings[] = {i, 0x05, 0x03, 0x0E, 0x90, 0x02}; // Ställer in maximum torque = 0x290 
+		unsigned char response_settings[] = {i, 0x05, 0x03, 0x0E, 0x90, 0x02}; //Ställer in maximum torque = 0x290 
 		Send_Servo_Message(response_settings, 3);
 		
 		_delay_ms(1);
@@ -303,11 +303,13 @@ void Send_Outer_P2_Velocity(unsigned int vel)
 
 void Send_Servo_Message(unsigned char message[], uint8_t num_of_par)
 {
-	unsigned char checksum = checksum_calc(message, num_of_par); //beräknar checksum
-	cli(); //Deaktivera abrott
+	unsigned char checksum = checksum_calc(message, num_of_par); //Beräknar checksum
+	
+	cli(); //Deaktivera avbrott
+	
 	UART_Transmit(0xFF); //2 st Startbytes
 	UART_Transmit(0xFF);
-
+	
 	// Här skickas meddelandet (exkl checksum)
 	for(uint8_t i=0; i < num_of_par+3; i++)
 	{
@@ -315,24 +317,27 @@ void Send_Servo_Message(unsigned char message[], uint8_t num_of_par)
 	}
 	
 	UART_Transmit(checksum); //Checksum
+	
 	while(!( UCSR0A & (1<<TXC0))); //Vänta på att UART är redo att skicka ny data
 	_delay_ms(0.06); //Lite extra tidsmarginal så överföringen verkligen hinner bli klar
+	
 	sei(); //Aktivera avbrott igen
 }
 
 //Skickar önskad position till servo. Inargument = (ID, position)
 void Send_Servo_Position(unsigned char ID, unsigned int pos)
 {
-	//Dela upp positionen i LS respektive MS Byte, spara i unsigned chars (unsigned chars passar bättre vid kontakt med servona)
-	unsigned char posLS = pos; //Plockar ut LS Byte av positionen för det första servot (översta servot)
-	unsigned char posMS = (pos>>8); //Som ovan men med MS Byte
+	//Dela upp positionen i LS respektive MS Byte
+	unsigned char posLS = pos; 
+	unsigned char posMS = (pos>>8);
+	
 	unsigned char message[6];
 	message[0] = ID;
 	message[1] = 0x05; //Längd 
 	message[2] = 0x03; //Skriv 
 	message[3] = 0x1E; //Skriv vid Position
-	message[4] = posLS;//position LS byte 
-	message[5] = posMS;//position MS byte
+	message[4] = posLS;//Position LS byte 
+	message[5] = posMS;//Position MS byte
 	
 	Send_Servo_Message(message, 3);
 }
