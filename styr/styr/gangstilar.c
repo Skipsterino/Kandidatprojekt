@@ -24,7 +24,6 @@ float dance_x = 0;
 float dance_y = 0; 
 
 
-//OBS tilfällig ändring i send legs kar!
 
 void Adjust_Stance_Climbed(char direction)
 {
@@ -87,7 +86,7 @@ float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn
 			
 
 //Justerar servospeed efter förhåladne mellan theta o thetamax
-triple_float Calc_Servo_Speed(float theta, int sgn_theta, int8_t leg_down)
+triple_float Calc_Servo_Speed(float theta, int sgn_theta, int8_t leg_down, float dx, int sgn_dx)
 {    
 	int speed_inner ;
 	int speed_middle;
@@ -96,15 +95,15 @@ triple_float Calc_Servo_Speed(float theta, int sgn_theta, int8_t leg_down)
 	if(leg_down == 1)
 			{
 	speed_inner =  280 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
-	speed_middle  = 100; 
-	speed_outer  =  100;
+	speed_middle  = 100 + 10 * dx * sgn_dx;; 
+	speed_outer  =  100 + 20 * dx * sgn_dx;;
 			}     
 			else // if(theta*sgn_theta <=0.20)
 			{                                                                   
 	//justerar servospeed ÄNDRA SKALFAKTOR !!
-	 speed_inner =  280 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
-	 speed_middle  = 350 + 340 * (sgn_theta * theta - theta_max);//320 + 430 *//220
-	 speed_outer  =  380 + 300 * (sgn_theta * theta - theta_max);//320 + 430 *//250
+	 speed_inner =  280 + 200 * (sgn_theta * theta - theta_max) ;
+	 speed_middle  = 350 + 340 * (sgn_theta * theta - theta_max) + 20 * dx * sgn_dx;
+	 speed_outer  =  380 + 300 * (sgn_theta * theta - theta_max) + 20 * dx * sgn_dx;
 			}
 		/*else
 		{
@@ -234,7 +233,6 @@ double_float Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta 
 //Generar tripod gång testar bwta >½ 16 steg svingfas
 triple_float Tripod(float x, float stroke, float height,float lift, uint8_t n)
 {
-	
 	float y = 0;
 	float z = 0;
 	
@@ -282,9 +280,9 @@ void Walk_Half_Cycle(float speed, float theta, float height, float dx)
 	int sgn_theta = (theta >= 0) - (theta < 0);
 	uint8_t walk_break = 1;
 	
-	if( dx * sgn_dx > 3)
+	if( dx * sgn_dx > 6)
 	{
-		dx = 3 * sgn_dx;
+		dx = 6 * sgn_dx;
 	}
 	
 	
@@ -296,7 +294,7 @@ void Walk_Half_Cycle(float speed, float theta, float height, float dx)
 	sgn_speed = (speed >= 0) - (speed < 0) ;
 	sgn_theta = (theta >= 0) - (theta < 0) ;
 	float height_step = 2 * (height - last_height)/cycle_length;
-	float lift;//benens lyfthöjd justeras efter speed 1.2 + sgn_speed*speed/5; 
+	float lift = 1.2 + sgn_speed*speed/12;//benens lyfthöjd justeras efter speed 1.2 + sgn_speed*speed/5; 
 	float stroke =  1.8 * speed; //steglängd 2.2
 	float dx_p1 = 0;
 	float dx_p2 = 0;
@@ -316,6 +314,7 @@ void Walk_Half_Cycle(float speed, float theta, float height, float dx)
 		lift = 0;
 		dx = 0;
 	}
+	
 	
 	//gångloop, utför en halv gångfas och stannar när stödjande ben är i mitten av arbetsområde
 	while( walk_break || ( n_1 != support_l/2 && n_2 !=  support_l/2))
@@ -379,9 +378,9 @@ void Walk_Half_Cycle(float speed, float theta, float height, float dx)
 		}
 		
 
-		speed_p1 = Calc_Servo_Speed(theta, theta_max, p1_down);
-		speed_p2 = Calc_Servo_Speed(theta, theta_max, p2_down);
-		lift = 1.2 + sgn_speed*speed/12;
+		speed_p1 = Calc_Servo_Speed(theta, sgn_theta, p1_down, dx, sgn_dx);
+		speed_p2 = Calc_Servo_Speed(theta, sgn_theta, p2_down, dx, sgn_dx);
+
 		
 		
 		if(theta * sgn_theta < 0.01) //behöver ej gå via cyl koord vid rak gång.
@@ -509,65 +508,63 @@ void Walk_Half_Crab_Cycle(int8_t speed)// höger är possitivt
 
 void Dance(float x, float y)
 {
-	if(1) // måste återställa x, y i main innan man kan återgå till walk_half_cycle... därför stypt. 
+	float l = 12;//fötters förskjuting från kropp i x-led OBS orginal = 13, numera 12
+	float corner_pitch = 4; //förskjutning av arbetsområde i y-led för hörnben 4
+	int speed_inner_dance= 180;
+	int speed_middle_dance= 200;
+	int speed_outer_dance  = 200;
+	float max_r = 7; 
+	float max_step= 0.3; 
+	float height_step = 0.5; 
+		
+	// höjdjustering
+	float height; 
+	if(last_height>12)
 	{
-		float l = 12;//fötters förskjuting från kropp i x-led OBS orginal = 13, numera 12
-		float corner_pitch = 4; //förskjutning av arbetsområde i y-led för hörnben 4
-		int speed_inner_dance= 180;
-		int speed_middle_dance= 200;
-		int speed_outer_dance  = 200;
-		float max_r = 7; 
-		float max_step= 0.3; 
-		float height_step = 0.5; 
-		
-		// höjdjustering
-		float height; 
-		if(last_height>12)
-		{
-			height=last_height-height_step; 
-		}
-		if(last_height<10)
-		{
-			height=last_height+height_step; 
-		}
-		else 
-		{
-			height=11;
-		}
-		last_height = height; 
-		
-		// lågpass 
-		float direction_x = x-dance_x; 
-		float direction_y = y-dance_y; 
-		float diff= sqrt(pow(direction_x,2) + pow(direction_y,2));
-		if(diff>max_step)
-		{
-			dance_x = dance_x + direction_x/diff*max_step;
-			dance_y = dance_y + direction_y/diff*max_step;
-		}
-		else
-		{
-		dance_x = dance_x + direction_x; 
-		dance_y = dance_y + direction_y;
-		
-		}
-		
-		//Begränsningar i radie;
-		dance_r = sqrt(pow(dance_y,2) + pow(dance_x,2));
-		if(dance_r>max_r)
-		{
-			dance_x= dance_x/dance_r*max_r;
-			dance_y= dance_y/dance_r*max_r;
-		}
-		
-		Send_Leg1_Kar_And_Velocity(l+dance_x, -dance_y + corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
-		Send_Leg2_Kar_And_Velocity(l-dance_x, -dance_y + corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
-		Send_Leg3_Kar_And_Velocity(l+dance_x, -dance_y, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
-		Send_Leg4_Kar_And_Velocity(l-dance_x, -dance_y, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
-		Send_Leg5_Kar_And_Velocity(l+dance_x, -dance_y - corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
-		Send_Leg6_Kar_And_Velocity(l-dance_x, -dance_y - corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
-		_delay_ms(15);
+		height=last_height-height_step; 
 	}
+	if(last_height<10)
+	{
+		height=last_height+height_step; 
+	}
+	else 
+	{
+		height=11;
+	}
+	last_height = height; 
+		
+	// lågpass 
+	float direction_x = x-dance_x; 
+	float direction_y = y-dance_y; 
+	float diff= sqrt(pow(direction_x,2) + pow(direction_y,2));
+	if(diff>max_step)
+	{
+		dance_x = dance_x + direction_x/diff*max_step;
+		dance_y = dance_y + direction_y/diff*max_step;
+	}
+	else
+	{
+	dance_x = dance_x + direction_x; 
+	dance_y = dance_y + direction_y;
+		
+	}
+		
+	//Begränsningar i radie;
+	dance_r = sqrt(pow(dance_y,2) + pow(dance_x,2));
+	if(dance_r>max_r)
+	{
+		dance_x= dance_x/dance_r*max_r;
+		dance_y= dance_y/dance_r*max_r;
+	}
+		
+	Send_Leg1_Kar_And_Velocity(l+dance_x, -dance_y + corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
+	Send_Leg2_Kar_And_Velocity(l-dance_x, -dance_y + corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
+	Send_Leg3_Kar_And_Velocity(l+dance_x, -dance_y, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
+	Send_Leg4_Kar_And_Velocity(l-dance_x, -dance_y, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
+	Send_Leg5_Kar_And_Velocity(l+dance_x, -dance_y - corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
+	Send_Leg6_Kar_And_Velocity(l-dance_x, -dance_y - corner_pitch, -height, speed_inner_dance, speed_middle_dance, speed_outer_dance);
+	_delay_ms(15);
+	
 }
 
 void Dance_Cyl(float r, float th)

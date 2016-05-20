@@ -64,7 +64,7 @@ float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn
 * 
 * @return Appropriate speed for inner, middle and outer servo
 */
-triple_float Calc_Servo_Speed(float theta, int sgn_theta, int8_t leg_down);
+triple_float Calc_Servo_Speed(float theta, int sgn_theta, int8_t leg_down, float dx, int sgn_dx);
 
 /**
 * @brief Sends position and servo speed to legs 
