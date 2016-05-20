@@ -137,9 +137,9 @@ int main(void)
 				Kd = ((float)lastPacket[6])/100.f; //Kd skickas som 100 ggr det önskade värdet, därav divisionen
 			}
 			
-			if((!(first_kom_byte & 0b10000000)) && dance_r > 1)
+			if((!(first_kom_byte & 0b10000000)) && dance_r > 1)  // Är kroppen inte i utgångsläge? 
 			{
-				Dance(0,0);
+				Dance(0,0); //För tillbaka kroppen till utgångsläge
 			}
 			else
 			{
