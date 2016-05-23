@@ -2,6 +2,7 @@
  *        File: invers_kinematik.c
  *     Version: 1.0
  * Last edited: 20/5/2016 
+ *      Author: chrma018
  */ 
 
 #include "invers_kinematik.h"

@@ -1,10 +1,10 @@
 /*
-* main.c
-*
-* Created: 4/15/2016 4:17:57 PM
-*  Author: erilj291
-* Version: 1.0
-*/
+ *        File: main.c
+ *     Version: 1.0
+ * Last edited: 20/5/2016 
+ *     Authors: erilj291
+ */ 
+
 
 #ifndef F_CPU
 #define F_CPU 16000000UL		// 16 MHz klockfrekvens
