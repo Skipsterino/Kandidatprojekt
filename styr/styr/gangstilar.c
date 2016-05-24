@@ -1,13 +1,11 @@
 /*
- * gangstilar.c
- *
- * Created: 8 april 3:03:52 PM
- *  Author: jenma421 
- * Version: 1.0
+ *        File: gangstilar.c
+ *     Version: 1.0
+ * Last edited: 18/5/2016 
+ *	   Authors: jenma421
  */ 
 
 #include "gangstilar.h"
-
 
 uint8_t support_l = 24; //längd på stödfas
 uint8_t swing_l = 12; //längd på svingfas 12
@@ -23,8 +21,6 @@ uint8_t p2_down = 1; //benpar 2 mot mark
 float dance_x = 0; 
 float dance_y = 0; 
 
-
-
 void Adjust_Stance_Climbed(char direction)
 {
 	if(direction == 'u')
@@ -37,7 +33,6 @@ void Adjust_Stance_Climbed(char direction)
 	}
 	n_1=support_l/2 + cycle_length/2; 
 }
-
 
 //LP-filtrerar input för att undvika våldsamheter Anropa limit_theta o limit_speed här, döp till LP_And_Limit_output, o begränsa höjd. Sätter även theta_max
 float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn_theta, float height, float dx, int sgn_dx)
@@ -83,7 +78,6 @@ float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn
 	last_theta = theta;
 	return height;
 }
-			
 
 //Justerar servospeed efter förhåladne mellan theta o thetamax
 triple_float Calc_Servo_Speed(float theta, int sgn_theta, int8_t leg_down, float dx, int sgn_dx)
@@ -114,7 +108,6 @@ triple_float Calc_Servo_Speed(float theta, int sgn_theta, int8_t leg_down, float
 		
  return create_triple_float(speed_inner, speed_middle, speed_outer);
 }	
-
 
 void Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch, triple_float speed_p1, triple_float speed_p2, float dx_p1, float dx_p2) 
 {
@@ -181,8 +174,6 @@ void Rotate_And_Send_Legs(triple_float kar_p1, triple_float kar_p2, float corner
 	Send_Leg6_Cyl_And_Velocity(cyl6.a, cyl6.b, cyl6.c, speed_p2.a, speed_p2.b, speed_p2.c);
 }			
 
-
-
 //begränsar maxhastighet.
 float Limit_Speed(float speed, int sgn_speed,  float dx, int sgn_dx)
 {
@@ -229,7 +220,6 @@ double_float Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta 
 	return create_double_float(theta, th_max);
 }
 
-
 //Generar tripod gång testar bwta >½ 16 steg svingfas
 triple_float Tripod(float x, float stroke, float height,float lift, uint8_t n)
 {
@@ -264,9 +254,6 @@ triple_float Tripod(float x, float stroke, float height,float lift, uint8_t n)
 	
 	return create_triple_float(x,y,z);
 }
-
-
-
 
 //testar överlappande svingfas, strypt o ingen höj/sänk
 void Walk_Half_Cycle(float speed, float theta, float height, float dx)
@@ -607,6 +594,5 @@ void Victory_Dance(void)
 	{
 		Dance_Cyl(0, 2*pi*0.01);
 	}
-
 }
 

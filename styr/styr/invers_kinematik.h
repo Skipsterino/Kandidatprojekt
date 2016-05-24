@@ -1,7 +1,7 @@
 ﻿/**
 * @file invers_kinematik.h
-* @author Christoffer
-* @date 25 apr 2016
+* @author chrma018
+* @date 17/5/2016 
 * @version 1.0
 * @brief Functions for inverse kinematics
 *

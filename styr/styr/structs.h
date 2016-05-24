@@ -1,7 +1,7 @@
 ﻿/**
 * @file structs.h
-* @author Erik
-* @date 25 apr 2016
+* @author erilj291, chrma018
+* @date 15 apr 2016
 * @brief Useful structs
 *
 * Contains some structs that are useful for returning groups of values from functions.

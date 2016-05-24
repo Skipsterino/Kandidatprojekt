@@ -1,4 +1,11 @@
-﻿#include "structs.h"
+﻿/*
+ *        File: structs.c
+ *     Version: 1.0
+ * Last edited: 15/4/2016 
+ *     Authors: erilj291, chrma018
+ */ 
+
+#include "structs.h"
 
 triple_float create_triple_float(float a, float b, float c)
 {

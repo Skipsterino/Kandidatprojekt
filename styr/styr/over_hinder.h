@@ -1,7 +1,7 @@
 ﻿/**
 * @file over_hinder.h
-* @author Christoffer, Erik
-* @date 5 may 2016
+* @author chrma018, erilj291 
+* @date 18/5/2016 
 * @version 1.0
 * @brief Climbing up/down
 *

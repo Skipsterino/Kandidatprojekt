@@ -1,7 +1,7 @@
 /**
 * @file SPI.h
-* @author Christoffer
-* @date 26 apr 2016
+* @author kevkj515
+* @date 15/4/2016 
 * @brief SPI Driver
 *
 * Defines communication through the SPI bus given a triggered interrupt.

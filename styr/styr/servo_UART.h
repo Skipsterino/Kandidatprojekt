@@ -1,7 +1,7 @@
 ﻿/**
 * @file servo_UART.h
-* @author Erik, Christoffer
-* @date 25 apr 2016
+* @author chrma018, erilj291
+* @date 12/5/2016 
 * @brief Servo communication 
 *
 * Functions that send different messages to the servos via UART.  

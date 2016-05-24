@@ -1,7 +1,7 @@
 /**
 * @file state_machine.h
-* @author Fredrik, Erik, Jonas
-* @date 18 may 2016
+* @author fregu856, erilj291, joneh084
+* @date 17/5/2016 
 * @brief State machine for the robot's autonomous mode
 *
 * Contains the robot's state machine, which handles updating and execution of the robot's

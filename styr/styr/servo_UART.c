@@ -1,7 +1,7 @@
 ﻿/*
  *        File: servo_UART.c
  *     Version: 1.0
- * Last edited: 20/5/2016 
+ * Last edited: 12/5/2016 
  *     Authors: chrma018, erilj291
  */ 
 

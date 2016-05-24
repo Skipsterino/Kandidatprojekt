@@ -2,7 +2,7 @@
  *        File: main.c
  *     Version: 1.0
  * Last edited: 20/5/2016 
- *     Authors: erilj291
+ *     Authors: erilj291, joabe408
  */ 
 
 
