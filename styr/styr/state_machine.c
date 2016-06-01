@@ -684,7 +684,7 @@ void update_state()
 		{
 			if (cycle_count > 3)
 			{
-				if ((IR_0 > 100) && (IR_2 > 100) && (IR_3 > 100))
+				if ((IR_0 > 80) && (IR_2 > 80) && (IR_3 > 80))
 				{
 					cycle_count = 0;
 					ROBOT_STATE = END_OF_COURSE;
