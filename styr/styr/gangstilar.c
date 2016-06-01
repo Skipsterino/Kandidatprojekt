@@ -88,16 +88,16 @@ triple_float Calc_Servo_Speed(float theta, int sgn_theta, int8_t leg_down, float
 	
 	if(leg_down == 1)
 			{
-	speed_inner =  280 + 200 * (sgn_theta * theta - theta_max);// 250 + 500 * 
-	speed_middle  = 100 + 10 * dx * sgn_dx;; 
-	speed_outer  =  100 + 20 * dx * sgn_dx;;
+	speed_inner =  270 + 170 * (sgn_theta * theta - theta_max);// 250 + 500 * 
+	speed_middle  = 100 + 10 * dx * sgn_dx;
+	speed_outer  =  100 + 20 * dx * sgn_dx;
 			}     
 			else // if(theta*sgn_theta <=0.20)
 			{                                                                   
 	//justerar servospeed ÄNDRA SKALFAKTOR !!
-	 speed_inner =  280 + 200 * (sgn_theta * theta - theta_max) ;
-	 speed_middle  = 350 + 340 * (sgn_theta * theta - theta_max) + 20 * dx * sgn_dx;
-	 speed_outer  =  380 + 300 * (sgn_theta * theta - theta_max) + 20 * dx * sgn_dx;
+	 speed_inner =  270 + 170 * (sgn_theta * theta - theta_max) ;
+	 speed_middle  = 270 + 280 * (sgn_theta * theta - theta_max) + 40 * dx * sgn_dx;
+	 speed_outer  =  270  + 260 * (sgn_theta * theta - theta_max) + 40 * dx * sgn_dx;
 			}
 		/*else
 		{
@@ -207,8 +207,8 @@ double_float Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta 
 	speed = speed * sgn_speed;
 	int speed_int = speed;
 	float speed_dec = speed - speed_int;
-	float thlimits[7] = {0.57,0.45,0.35,0.33,0.23,0.13,0};//{0.56,0.46,0.36,0.3,0.2,0.11,0};{0.33,0.33,0.30,0.3,0.2,0.11,0};
-	float thlin[7] =    {-0.12,-0.1,-0.02,-0.1,-0.1,-0.13,0};
+	float thlimits[7] = {0.57,0.45,0.35,0.33,0.23,0.13,0.04};//{0.56,0.46,0.36,0.3,0.2,0.11,0};{0.33,0.33,0.30,0.3,0.2,0.11,0};
+	float thlin[7] =    {-0.12,-0.1,-0.02,-0.1,-0.1,-0.09,0};
 	
 	//th_max beräknas med linjärsering mellan heltal av speed.
 	float th_max = thlimits[speed_int] + speed_dec * thlin[speed_int];
