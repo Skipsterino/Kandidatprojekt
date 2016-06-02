@@ -1,10 +1,13 @@
-/*
- * gangstilar.h
- *
- * Created: 4/8/2016 3:03:52 PM
- *  Author: jenma421 
- */ 
-
+/**
+* @file gangstilar.h
+* @author jenma421
+* @date 18/5/2016 
+* @version 1.0
+* @brief Functions for walking
+*
+* Functions for walking and rotation.
+*
+*/
 
 #ifndef GANGSTILAR_H_
 #define GANGSTILAR_H_
@@ -21,40 +24,51 @@
 #include "structs.h"
 #include "servo_UART.h"
 
+//Global Dans radie, för att man inte ska få göra för snabba förflyttningar
+float dance_r;
 
-float height;//meingslÃ¶s (?)
-
+/**
+* @brief Sets parameters for smooth transition with over_hinder
+*
+* Sets height and walking cycle phase correctly
+* 
+* @param direction Tells if robot just finished climbing up or climbing down
+* 
+*/
 void Adjust_Stance_Climbed(char direction);
 
 /**
-* @brief Limits changes in walking parameters
+* @brief Limits changes in walking input parameters
 *
-* Sets global speed and theta to limited values
+* Sets global last_speed and last_theta to limited values and global theta_max to max allowed rotation.
 * 
 * @param speed Input speed
 * @param sgn_speed Signum of input speed
 * @param theta Input rotation angle
+* @param sgn_theta Signum of rotation angle
+* @param dx Sideways movement
+* @param sgn_dx Signum of Sideways movement
 * 
-* @return Limited heigth
+* @return Limited height
+*
 */
-float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn_theta, float height);
-
-int max_speed(float theta,int sgn_theta);
+float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn_theta, float height, float dx, int sgn_dx);
 
 /**
 * @brief Calculates appropriate servo speeds
 *
 * Calculates appropriate servo speeds given theta
 * 
+
 * @param theta Input rotation angle
 * @param sgn_theta Signum of rotation angle
 * @param leg_down Tells if legs are in transition from swing to support phase
+* @param dx Sideways movement
+* @param sgn_dx Signum of Sideways movement
 * 
 * @return Appropriate speed for inner, middle and outer servo
 */
-triple_float Adjust_Servo_Speed(float theta, int sgn_theta, int8_t leg_down);
-
-void Adjust_Height(float l, float height_step, float corner_pitch);
+triple_float Calc_Servo_Speed(float theta, int sgn_theta, int8_t leg_down, float dx, int sgn_dx);
 
 /**
 * @brief Sends position and servo speed to legs 
@@ -63,12 +77,14 @@ void Adjust_Height(float l, float height_step, float corner_pitch);
 * 
 * @param kar_p1 Kartesian coordinates for legs in pair 1
 * @param kar_p2 Kartesian coordinates for legs in pair 2
-* @param corner_pitch Working point offset in x-direction for corner legs
+* @param corner_pitch Working point offset in y-direction for corner legs
 * @param speed_p1 Servo speed for inner, middle and outer servo in pair 1
 * @param speed_p2 Servo speed for inner, middle and outer servo in pair 2
+* @param dx_p1 Sideways movement pair 1
+* @param dx_p2 Sideways movement pair 2
 * 
 */
-void Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch, triple_float speed_p1, triple_float speed_p2); 
+void Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch, triple_float speed_p1, triple_float speed_p2, float dx_p1, float dx_p2); 
 
 /**
 * @brief Sends position with added rotation and servo speed to legs 
@@ -77,28 +93,125 @@ void Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch,
 * 
 * @param kar_p1 Kartesian coordinates for legs in pair 1
 * @param kar_p2 Kartesian coordinates for legs in pair 2
-* @param sgn speed Signum of input speed
+* @param sgn _speed Signum of input speed
 * @param theta Rotation angle
-* @param corner_pitch Working point offset in x-direction for corner legs
+* @param corner_pitch Working point offset in y-direction for corner legs
 * @param speed_p1 Servo speed for inner, middle and outer servo in pair 1
 * @param speed_p2 Servo speed for inner, middle and outer servo in pair 2
+* @param dx_p1 Sideways movement pair 1
+* @param dx_p2 Sideways movement pair 2
 * 
 */
-void Rotate_And_Send_Legs(triple_float kar_p1, triple_float kar_p2, float corner_pitch, int sgn_speed,float theta, triple_float speed_p1, triple_float speed_p2);
+void Rotate_And_Send_Legs(triple_float kar_p1, triple_float kar_p2, float corner_pitch, int sgn_speed,float theta, triple_float speed_p1, triple_float speed_p2, float dx_p1, float dx_p2);
 
+/**
+* @breif Limits rotation depending on speed
+*
+* 
+* @param speed Input speed
+* @param sgn_speed Signum of speed
+* @param theta Input rotation
+* @param sgn_theta Signum of rotation
+*
+* @return Limited theta and max allowed theta for given speed
+*
+*/
 double_float Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta );
-float Limit_Speed(float speed, int sgn_speed);
+
+/**
+* @Limits speed 
+*
+* Limits speed to [-6, 6] or [-5, 5] if height >= 12 or <=9
+* 
+* @param speed Input speed
+* @param sgn_speed Signum of speed
+* @param dx Sideways movement
+* @param sgn_dx Signum of Sideways movement
+*
+* @return Limited speed
+* 
+*/
+float Limit_Speed(float speed, int sgn_speed, float dx, int sgn_dx);
+
+/**
+* @breif Limits height [7, 14]
+*
+* Sets height to 7 or 14 if outside [7, 14]
+* 
+* @param height input height
+* @param dx Sideways movement, possitive = right.
+*
+* @return Limited height
+* 
+*/
 float Limit_Height(float height);
-void Set_Last_Heigth(float heigth);
 
-
+/**
+* @breif Generates leg positions for tripod gait 
+*
+* Generates tripod gait leg positions with overlapping support phases. 
+* Global support_l sets the length of support phase and global swing_l sets the length of swing phase.
+* 
+* @param x Foot distance from body in x-direction 
+* @param stroke Leg stroke
+* @param height Robot height
+* @param lift Lift height for legs during swing phase
+* @param n Index of walk cycle, the step of walk cycle to be generated.
+*
+* @return Leg position in kartesian
+*
+*/
 triple_float Tripod(float x, float stroke, float height,float lift, uint8_t n);
-//triple_float Tripod2(float x, float stroke, float height, uint8_t n); 
-void Walk_Half_Cycle(float speed, float th, float height);
-void Walk_Half_Crab_Cycle(float speed);
-//void Walk_Half_Crab_Cycle2(float speed);
-//void Walk_Half_Safe_Cycle(float speed, float th, float height) ;
 
+/**
+* @breif Walks half cycle of tripod wave gait 
+*
+* Can walk forward, backward, turn and rotate 
+* 
+* @param speed Walking speed, positive = forward
+* @param theta Rotation angle, positive = counterclockwise
+* @param height Robot height
+* @param dx Sideways movement, possitive = right
+*
+*/
+//void Walk_Half_Cycle(float speed, float theta, float height);//dummy
+void Walk_Half_Cycle(float speed, float theta, float height, float dx);
 
+/**
+* @breif Walks half cycle of tripod crab-walk
+*
+* Walks sideways
+* 
+* @param speed  Walking speed, positive = right 
+* 
+*/
+void Walk_Half_Crab_Cycle(int8_t speed);
+
+/**
+* @breif Moves the robots body to a position
+*
+*  Moves the robots body to a position in Kartesian coordinates 
+*  whilst the all legs are on the ground (z is fixed to 11) 
+*
+* @param y The y coordinate in cm 
+* @param x The x coordinate in cm 
+*/
+void Dance(float x, float y);
+
+/**
+* @breif Moves the robots body to a position
+*
+*  Moves the robots body to a position in cylindrical coordinates
+*  whilst the all legs are on the ground (z is fixed to 11) 
+*
+* @param r The r coordinate in cm
+* @param th The thetha coordinate in radians 
+*/
+void Dance_Cyl(float r, float th);
+
+/**
+* @breif Makes the robot preform a victory dance
+*/
+void Victory_Dance(void);
 #endif /* GANGSTILAR_H_ */
 

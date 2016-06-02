@@ -1,9 +1,10 @@
 /*
- * init.c
- *
- * Created: 4/8/2016 3:12:02 PM
- *  Author: erilj291
+ *        File: init.c
+ *     Version: 1.0
+ * Last edited: 15/4/2016 
+ *	   Authors: erilj291 
  */ 
+
 
 #include "init.h"
 

@@ -1,9 +1,11 @@
-/*
- $License:
-    Copyright (C) 2011-2012 InvenSense Corporation, All Rights Reserved.
-    See included License.txt for License information.
- $
- */
+/**
+* File: inv_mpu_dmp_motion_driver.c
+* Version: 1.0
+* Last edited: -
+* license: Copyright (C) 2011-2012 InvenSense Corporation, All Rights Reserved.
+*          See included License.txt for License information.
+*/
+
 /**
  *  @addtogroup  DRIVERS Sensor Driver Layer
  *  @brief       Hardware drivers to communicate with sensors via I2C.

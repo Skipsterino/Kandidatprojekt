@@ -1,8 +1,7 @@
-/*
-* LCD.c
-*
-* Created: 2016-04-07 10:43:31
-*  Author: Joakim
+/**
+* File: LCD.c
+* Version: 1.0
+* Last edited: 19 Maj 2016
 */
 
 #include "LCD.h"
@@ -17,14 +16,14 @@
 #define DATA_IN			0x00
 #define COMMAND_PINS	0x07
 
-//Definitioner av adressen för första tecknet på varje rad
+//Definitioner av adressen fÃ¶r fÃ¶rsta tecknet pÃ¥ varje rad
 //i LCD:ns interna minne 
 #define DDRAM_LINE_1	0x80
 #define DDRAM_LINE_2	0xC0
 #define DDRAM_LINE_3	0x90
 #define DDRAM_LINE_4	0xD0
 
-//Definitioner av några möjliga kommandon 
+//Definitioner av nÃ¥gra mÃ¶jliga kommandon 
 #define COMMAND_CLEAR					0b00000001
 #define COMMAND_8BIT_2LINE_8DOTS		0b00110000
 #define COMMAND_8BIT_2LINE_11DOTS		0b00111000
@@ -54,12 +53,16 @@ void LCD_put_num_u(unsigned int num)
 
 void LCD_putc(char c)
 {
+	//VÃ¤nta tills LCDn Ã¤r redo
 	while(LCD_busy())
 	{
 		_delay_ms(1);
 	}
+	//SÃ¤tt RS till 1 och skicka in data pÃ¥ port A
 	PORTB |= (1<<RS);
 	PORTA = c;
+	
+	//Signalera att kommandot Ã¤r redo
 	PORTB |= (1<<E);
 	_delay_us(50);
 	PORTB &= ~(1<<E);
@@ -106,22 +109,22 @@ void LCD_print_string(char line1[LCD_LINE_WIDTH], char line2[LCD_LINE_WIDTH], ch
 
 int LCD_busy()
 {
-	//Byt riktning på dataregister
+	//Byt riktning pÃ¥ dataregister
 	DDRA = DATA_IN;
-	//Sätt RW till 1 för att läsa data
+	//SÃ¤tt RW till 1 fÃ¶r att lÃ¤sa data
 	PORTB |= (1<<RW);
 	PORTB &= ~(1<<RS);
 	PORTB |= (1<<E);
 	
 	_delay_us(2);
 	
-	//Data hämtas från dataportar
+	//Data hÃ¤mtas frÃ¥n dataportar
 	char data = PINA;
 	
 	PORTB &= ~(1<<E);
 	PORTB &= ~(1<<RW);
 	
-	//Återställ riktning
+	//Ã…terstÃ¤ll riktning
 	DDRA = DATA_OUT;
 	
 	//Skicka tillbaka BF-flaggan(bit 7)
@@ -140,8 +143,8 @@ void LCD_send_command(unsigned char command)
 	PORTB |= (1<<E);
 	
 	//Clear och return home tar 1.53 ms
-	//Alla andra tar 39 µs
-	//Vi väntar med lite extra marginal
+	//Alla andra tar 39 Âµs
+	//Vi vÃ¤ntar med lite extra marginal
 	if(command == 0x01 || command == 0x02)
 	{
 		_delay_us(1600);
@@ -156,27 +159,27 @@ void LCD_send_command(unsigned char command)
 
 void LCD_init()
 {
-	//Sätt alla a-pinnar till utgångar
+	//SÃ¤tt alla a-pinnar till utgÃ¥ngar
 	DDRA = DATA_OUT;
 	
-	//Sätt E, R/W, RS till utgångar
+	//SÃ¤tt E, R/W, RS till utgÃ¥ngar
 	DDRB |= COMMAND_PINS;
 
 	_delay_us(40);
 	
 	//8 bit dataportar
 	//2 raders display (faktiskt 4 st)
-	//11 dot karaktärer
+	//11 dot karaktÃ¤rer
 	LCD_send_command(COMMAND_8BIT_2LINE_11DOTS);
 	
 	LCD_send_command(COMMAND_DISPLAY_OFF);
 	
 	LCD_clear();
 	
-	//Cursor stegas uppåt
+	//Cursor stegas uppÃ¥t
 	//Ingen inskiftning
 	LCD_send_command(COMMAND_CURSOR_INC_NO_SHIFT);
 	
-	//Automatisk förflyttning av cursor vid skrivning
+	//Automatisk fÃ¶rflyttning av cursor vid skrivning
 	LCD_send_command(COMMAND_DISPLAY_ON_CURSOR_MOVE);
 }

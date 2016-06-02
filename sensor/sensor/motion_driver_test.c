@@ -1,3 +1,9 @@
+/**
+* File: motion_driver_test.c
+* Version: 1.0
+* Last edited: -
+*/
+
 ///**
  //*   @defgroup  eMPL
  //*   @brief     Embedded Motion Processing Library
@@ -441,7 +447,7 @@ static inline unsigned short inv_orientation_matrix_to_scalar(
         ///* Test the motion interrupt hardware feature. */
 		//#ifndef MPU6050 // not enabled for 6050 product
 		//hal.motion_int_mode = 1;
-		//#endif 
+		//#endif
         //break;
     //case 'p':
         ///* Read current pedometer count. */

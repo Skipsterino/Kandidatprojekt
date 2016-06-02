@@ -1,8 +1,7 @@
-﻿/*
-* sensor.c
-*
-* Created: 3/30/2016 8:38:40 AM
-*  Author: fregu856
+﻿/**
+* File: sensor.c
+* Version: 1.0
+* Last edited: 19 maj 2016
 */
 
 // IR0 = IR fram - rakt
@@ -24,14 +23,14 @@ int main(void)
 	init_ADC();
 	init_US();
 	init_SPI();
-	init_timer();						// Initiera en timer för att hålla koll på förfluten tid.
+	init_timer();	// Initiera en timer för att hålla koll på förfluten tid.
 	init_I2C();
-	
+
 	_delay_ms(2000);
 	init_IMU();
 
-	sei();								// Tillåt avbrott (bit 7 på SREG sätts till 1)
-	
+	sei();						// Tillåt avbrott (bit 7 på SREG sätts till 1)
+
 	while (1)
 	{
 		if (SPI_done)
@@ -39,73 +38,33 @@ int main(void)
 
 			ADC_IR();						// Sampla IR-sensorerna
 			read_IMU();						// Hämta data från IMU
-			
+
 			send_ping();					// Starta en US-mätning
 			
-			ADC_to_distance();				// Konvertera ADC-värde till avstånd (IR-sensorerna)
-			time_to_distance();				// Konvertera tid till avstånd (US-sensorn)
-			calculate_Yaw();				// Räkna ut Yaw-vinkeln
-			save_to_buffer();				// Spara undan i buffert
-			
-			SPI_done = 0;
+			// Konvertera ADC-värde till avstånd (IR-sensorerna)
+			ADC_to_distance();
 
-			//kalibrering();					// XXXXX Endast för att kunna kalibrera sensorer!
+			// Konvertera tid till avstånd (US-sensorn)
+			time_to_distance();
 			
+			// Räkna ut Yaw-vinkeln	
+			calculate_Yaw();	
+			
+			// Spara undan i buffert			
+			save_to_buffer();				
+
+			SPI_done = 0;
 		}
-		
-		//_delay_ms(delay_time);			// Vila för att få lagom frekvens		// XXXX Endast vid testning utan bussen!
 	}
 }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-* AVBROTTSVEKTOR INT0_vect
-*
-* BESKRIVNING
-*
-* Hanterar avbrott från IMU:n, nu finns ny data att läsa.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* IMU_data_ready:		Anger om det finns ny data att hämta från IMU:n (1) eller ej (0)
-*
-*/
+//									AVBROTTSRUTINER
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ISR(INT0_vect)
 {
 	IMU_data_ready = 1;
 }
-
-/*
-* AVBROTTSVEKTOR TIMER1_CAPT_vect
-*
-* BESKRIVNING
-*
-* Hanterar avbrott för ultraljudssensorn. Stannar timern som startades när ljudpulsen sändes och läser av dess värde.
-* Sparar undan värdet i US_reading.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* US_reading:		Det senaste mätvärdet från US-sensorn (tid)
-*
-*/
 
 ISR(TIMER1_CAPT_vect)
 {
@@ -115,83 +74,17 @@ ISR(TIMER1_CAPT_vect)
 	US_latest_reading = US_latest_reading + (ICR1H<<8);	// ...och addera timer-värdets höga byte.
 }
 
-/*
-* AVBROTTSVEKTOR ADC_vect
-*
-* BESKRIVNING
-*
-* Hanterar avbrott från ADC när en konvertering blir klar. Läser in värdet till IR_latest_reading.
-* Sätter att nästa IR-sensor ska samplas härnäst.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* IR_latest_reading:		Den senaste avlästa värdet för respektive IR-sensor
-*
-*/
-
 ISR(ADC_vect)		// ADC Conversion Complete
 {
 	IR_latest_reading[ADMUX - 0x60] = ADCH<<2;		// Läs in ADC:ns 8 högsta (av 10) bitar, skiftade två steg uppåt
 	++ADMUX;
 }
 
-/*
-* AVBROTTSVEKTOR TIMER2_OVF_vect
-*
-* BESKRIVNING
-*
-* Räknar antalet overflows som vi får på timern som rullar sedan senaste SPI-händelse.
-* När SPI_overflow är stor vet vi att nästa byte som vi ska skicka är byte noll.
-* Används för att återställa sync på bussen om vi skulle råka hamna ur sync.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* SPI_overflow:		Anger hur många gånger vi har fått overflow på TIMER2
-*
-*/
 
 ISR(TIMER2_OVF_vect)
 {
 	++SPI_overflow;
 }
-
-/*
-* AVBROTTSVEKTOR SPI_STC_vect
-*
-* BESKRIVNING
-*
-* Avbrottsvektor för datasändning. En ny bit skiftas in i "sänd-registret"
-*
-* INDATA
-*
-*
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* byte_to_send:		Nästa byte som skall skickas
-* SPI_done:			Anger om en hel överföring (16 bytes) är klar
-*
-*/
 
 ISR(SPI_STC_vect)
 {
@@ -199,9 +92,9 @@ ISR(SPI_STC_vect)
 	{
 		byte_to_send = 1;
 	}
-	
+
 	SPI_overflow = 0;
-	
+
 	switch(byte_to_send)
 	{
 		case 0:
@@ -299,34 +192,14 @@ ISR(SPI_STC_vect)
 		{
 			SPDR = 0x00;
 			byte_to_send = 0;
-			
+
 			break;
 		}
 	}
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//						FUNKTIONER
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-* FUNKTION init_ADC()
-*
-* BESKRIVNING
-*
-* Initierar ADC, se detaljer nednan.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* -
-*
-*/
 
 void init_ADC()
 {
@@ -338,27 +211,6 @@ void init_ADC()
 	SMCR |= 0<<SM2 | 0<<SM1 | 1<<SM0;	// Sleep Mode Select till "ADC Noise Reduction" (Så att "sleep_cpu()" ger just detta viloläge)
 }
 
-/*
-* FUNKTION init_US()
-*
-* BESKRIVNING
-*
-* Initierar avbrottssystem för ultraljudssensorn, se detljer nedan.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* -
-*
-*/
-
 void init_US()
 {
 	DDRD |= 1<<PORTD1;					// Sätt PD1 till utgång
@@ -367,26 +219,6 @@ void init_US()
 	TCCR1B &= ~(1<<ICES1);				// Input Capture triggar på negativ (fallande) flank
 }
 
-/*
-* FUNKTION init_SPI()
-*
-* BESKRIVNING
-*
-* Initierar SPI bussen. Se detaljer nedan.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* -
-*
-*/
 
 void init_SPI()
 {
@@ -394,60 +226,18 @@ void init_SPI()
 	DDRB = 0x40;							// Skicka in 0100 0000 på DDRB för att sätta MISO till utgång, resten ingång. (SPI)
 	SPCR |= (1<<SPE);						// Enable:a SPI
 	SPDR = 0xff;							// Lägg in något nollskiljt i data registret, så att inte första sändningen missas.
-	
+
 	//Starta en timer för att hålla bussen i sync
 	TCCR2B |= 1<<CS22 | 1<< CS21| 1<<CS20;	// Prescaler 1024
 	TCNT2 = 0;								// Nollställ timern
 	TIMSK2 |= 1<<TOIE2;						// Tillåt overflow-avbrott
 }
 
-/*
-* FUNKTION init_timer()
-*
-* BESKRIVNING
-*
-* Initierar en timer för att hålla koll på förfluten tid sedan programstart.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* -
-*
-*/
-
 void init_timer()
 {
 	TCCR0B |= 1<<CS01 | 1<<CS00;		//Sätt preskalern till 64
 	TIMSK0 |= 1<<TOIE0;					//Tillåt overflow-avbrott på timer0 för millis
 }
-
-/*
-* FUNKTION init_I2C()
-*
-* BESKRIVNING
-*
-* Initierar I2C, se detaljer nedan.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* -
-*
-*/
 
 void init_I2C()
 {
@@ -456,23 +246,6 @@ void init_I2C()
 	TWSR &= ~((1<<TWPS1) | (1<<TWPS0));	// Sätt presecalerbitarna till 0 (ger prescalervärde = 1)
 	TWBR = 0x0C;						// Skicka in 0x20 på TWBR för att tillsammans med Prescalerbitarna TWPS1-TWPS0 sätta I2C-frekvensen till 400 kHz
 }
-
-/*
-* FUNKTION init_IMU()
-*
-* BESKRIVNING
-*
-* Initierar IMU:n, se detaljer nedan.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-*/
 
 void init_IMU()
 {
@@ -486,34 +259,13 @@ void init_IMU()
 	dmp_enable_feature(DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO | DMP_FEATURE_GYRO_CAL | DMP_FEATURE_TAP); // Välj funktioner som vi vill ha
 	dmp_set_fifo_rate(MPU_HZ);												// Väljer med vilken frekvens som data ska läggas ut i FIFO
 	mpu_set_dmp_state(USE_DMP);												// Slår på DMP
-	
+
 	_delay_ms(200);															// Ge IMU tid att starta
-	
+
 	run_self_test();														// Kalibrera gyro och accelometer
-	
+
 	IMU_data_ready = 0;															// Från start finns ingen data klar
 }
-
-/*
-* FUNKTION init_IMU_interrupt()
-*
-* BESKRIVNING
-*
-* Initierar så att IMU:n ger externt avbrott 0.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* -
-*
-*/
 
 void init_IMU_interrupt()
 {
@@ -523,28 +275,6 @@ void init_IMU_interrupt()
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-* FUNKTION ADC_IR()
-*
-* BESKRIVNING
-*
-* Samplar alla IR-sensorer, sparar undan i en buffert med de fem senaste mätningarna för respektive
-* sensor och medelvärdesbildar.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* IR_ADC innehåller medelvärdet över de fem senaste mätvärdena för varje sensor.
-*
-*/
 
 void ADC_IR()
 {
@@ -556,43 +286,19 @@ void ADC_IR()
 	}
 
 	ADMUX = 0x60;				// Återställ ADC:n till ADC0 som inkanal
-	
+
 	for(int sensor_ID = 0; sensor_ID <=7; ++sensor_ID)
 	{
 		for (int i = 5; i>=2; --i)		// Skifta ut den äldsta avläsningen
 		{
 			IR_reading[sensor_ID][i] = IR_reading[sensor_ID][i-1];
 		}
-		
+
 		IR_reading[sensor_ID][1] = IR_latest_reading[sensor_ID];	// Spara in den senaste.
-		
+
 		IR_ADC[sensor_ID] = (IR_reading[sensor_ID][1] + IR_reading[sensor_ID][2] + IR_reading[sensor_ID][3] + IR_reading[sensor_ID][4] + IR_reading[sensor_ID][5])/5;	// Medelvärdesbilda över de 5 senaste
 	}
 }
-
-/*
-* FUNKTION read_IMU()
-*
-* BESKRIVNING
-*
-* Hämtar data från IMU och räknar ut roll, pitch och yaw utifrån returnerade
-* kvaternioner.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* IMU_Yaw:			Den beräknade Yaw-vinkeln
-* IMU_Pitch:		Den beräknade Pitch-vinkeln
-* IMU_Roll:			Den beräknade Roll-vinkeln
-*
-*/
 
 void read_IMU()
 {
@@ -609,9 +315,9 @@ void read_IMU()
 
 		if (0 == dmp_read_fifo(gyro, accel, quat, &timestamp, &sensors, &more)) // Läser från IMU
 		{
-			
+
 			mpu_reset_fifo();
-			
+
 			//if (!more) // Kolla så att vi får med all data
 			//{
 			IMU_data_ready = 0;
@@ -623,25 +329,25 @@ void read_IMU()
 			quaternion[QUAT_Z] = (float)quat[QUAT_Z];
 
 			NormalizeQuaternion(quaternion);
-			
+
 			float q0 = quaternion[QUAT_W];
 			float q1 = quaternion[QUAT_X];
 			float q2 = quaternion[QUAT_Y];
 			float q3 = quaternion[QUAT_Z];
-			
+
 			/* Räkna ut gravitationsvektorn */
 			gravity[x] = 2*(q1*q3 - q0*q2);
 			gravity[y] = 2*(q0*q1 + q2*q3);
 			gravity[z] = q0*q0 - q1*q1 - q2*q2 + q3*q3;
-			
+
 			IMU_Yaw = (((atan2(2*q1*q2 - 2*q0*q3, 2*q0*q0 + 2*q1*q1 - 1)/3.14)*180)/58)*90;							// Beräkna yaw-vinkel i grader
 			IMU_Pitch = (atan(gravity[x] / sqrt(gravity[y]*gravity[y] + gravity[z]*gravity[z]))/3.14)*180;	// Beräkna pitch-vinkel i grader
 			IMU_Roll = (atan(gravity[y] / sqrt(gravity[x]*gravity[x] + gravity[z]*gravity[z]))/3.14)*180;	// Beräkna roll-vinkel i grader
-			
+
 			/* Säkerställ att vi inte får overflow i datatyperna */
 			IMU_Pitch = restrict_angle(IMU_Pitch);
 			IMU_Roll = restrict_angle(IMU_Roll);
-			
+
 		}
 		else
 		{
@@ -649,28 +355,6 @@ void read_IMU()
 		}
 	}
 }
-
-/*
-* FUNKTION send_ping()
-*
-* BESKRIVNING
-*
-* Skickar ut en trigger-puls på 12 µs. Startar en timer som väntar på svar från
-* ultraljudssensor.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* -
-*
-*/
 
 void send_ping()
 {
@@ -684,27 +368,6 @@ void send_ping()
 	TCCR1B |= 1<<CS12 | 1<<CS10;	// Starta timer
 }
 
-/*
-* FUNKTION ADC_to_distance()
-*
-* BESKRIVNING
-*
-* Omvandlar IR-sensorernas ADC-värden till avstånd genom linjärinterpolation och tabellvärden.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* IR_distance:		IR-sensorernas uppmätta avstånd
-*
-*/
-
 void ADC_to_distance()
 {
 	IR_distance[0] = lookup_distance(IR0_table, IR_ADC[0], 19);
@@ -715,31 +378,6 @@ void ADC_to_distance()
 	IR_distance[5] = lookup_distance(IR5_table, IR_ADC[5], 19);
 	IR_distance[6] = lookup_distance(IR6_table, IR_ADC[6], 19);
 }
-
-/*
-* FUNKTION lookup_distance(ADC_distance_pair* ADC_dist_table, double ADC_value, int table_size)
-*
-* BESKRIVNING
-*
-* Omvandlar IR-sensorernas ADC-värden till avstånd genom linjärinterpolation och tabellvärden.
-*
-* INDATA
-*
-* ADC_dist_table:		IR-sensorns tabell för hur ADC relaterar till avstånd
-* ADC_value:			IR-sensorns ADC-värde
-* table_size:			Antal poster i tabellen
-*
-* UTDATA
-*
-* double:				ADC_value:s motsvarande avstånd
-*
-* PÅVERKAR
-*
-* IMU_Yaw:			Den beräknade Yaw-vinkeln
-* IMU_Pitch			Den beräknade Pitch-vinkeln
-* IMU_Roll			Den beräknade Roll-vinkeln
-*
-*/
 
 double lookup_distance(ADC_distance_pair* ADC_dist_table, double ADC_value, int table_size)
 {
@@ -762,38 +400,17 @@ double lookup_distance(ADC_distance_pair* ADC_dist_table, double ADC_value, int 
 	return -1;
 }
 
-/*
-* FUNKTION time_to_distance()
-*
-* BESKRIVNING
-*
-* Omvandlar ultraljudssensorns tid till avstånd
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* US_distance:		Avståndet till objekt fram för ultraljudssensorn
-*
-*/
-
 void time_to_distance()
 {
 	for (int i = 5; i>=2; --i)		// Skifta ut den äldsta avläsningen
 	{
 		US_reading[i] = US_reading[i-1];
 	}
-	
+
 	US_reading[1] = US_latest_reading;	// Spara in den senaste.
-	
+
 	US_distance = (US_reading[1] + US_reading[2] + US_reading[3] + US_reading[4] + US_reading[5])/5;	// Medelvärdesbilda över de 5 senaste
-	
+
 	US_distance =  US_distance*0.0642857143;		// Gör om till tid i millisekunder
 	US_distance = US_distance - 0.75;			// Subrtrahera offset mellan triggerpuls och ekopuls
 	US_distance = 34.33*US_distance/2;			// Gör om till cm
@@ -802,28 +419,6 @@ void time_to_distance()
 	US_distance = 250;							// Sätt max-avstånd (så att ej får överslag då det görs om till 8 bitar)
 }
 
-/*
-* FUNKTION calculate_Yaw()
-*
-* BESKRIVNING
-*
-* Beräknar Yaw-vinkeln baserat på IR-sensorernas avstånd
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* IR_Yaw_right:		Yaw-vinkeln baserat på de högra IR-sensorernas avstånd
-* IR_Yaw_left:		Yaw-vinkeln baserat på de vänstra IR-sensorernas avstånd
-*
-*/
-
 void calculate_Yaw()
 {
 	double l_delta_right = IR_distance[2] - IR_distance[3];						// Notation enligt Förstudie: Sensorer
@@ -831,32 +426,15 @@ void calculate_Yaw()
 
 	IR_Yaw_right = (atan(l_delta_right/IR_sensor_distance_right)/3.14)*180;		// Yaw-beräkning med de högra sidosensorerna
 	IR_Yaw_left = (atan(l_delta_left/IR_sensor_distance_left)/3.14)*180;		// Yaw-beräkning med de vänstra sidosensorerna
-	
+
 	IR_Yaw_right = restrict_angle(IR_Yaw_right);												// Begränsa vinkeln så att overflow ej fås med int8_t
 	IR_Yaw_left = restrict_angle(IR_Yaw_left);
 }
 
-/*
-* FUNKTION save_to_buffer()
-*
-* BESKRIVNING
-*
-* Omvandlar och sparar undan sensordatan i en buffert, klar att skickas till STYR-enheten
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-*/
-
 void save_to_buffer()
 {
 	int16_t IMU_Yaw_16 = IMU_Yaw;						// Konvertera IMU_Yaw till int16_t
-	
+
 	buffer0_IR0 = IR_distance[0];
 	buffer1_IR1 = IR_distance[1];
 	buffer2_IR2 = IR_distance[2];
@@ -869,68 +447,24 @@ void save_to_buffer()
 
 	buffer8_IR_Yaw_left = IR_Yaw_left;
 	buffer9_IR_Yaw_right = IR_Yaw_right;
-	
+
 	buffer10_IMU_Yaw_Low = (0x00FF & IMU_Yaw_16);			// Skicka låga byten av IMU_Yaw_16
 	buffer11_IMU_Yaw_High = (0xFF00 & IMU_Yaw_16) / 256;	// Skicka höga byten av IMU_Yaw_16
-	
+
 	buffer12_Pitch = IMU_Pitch;
 	buffer13_Roll = IMU_Roll;
 }
-
-/*
-* FUNKTION restrict_angle(float angle)
-*
-* BESKRIVNING
-*
-* Begränsar vinkeln angle så att overflow ej fås då den konverteras till int8_t
-*
-* INDATA
-*
-* angle:		Vinkeln som ska begränsas
-*
-* UTDATA
-*
-* float:		Begränsad vinkel
-*
-* PÅVERKAR
-*
-* -
-*
-*/
 
 float restrict_angle(float angle)
 {
 	if(angle > 127)
 	angle = 127;							// Sätt max-vinkel (så att ej får överslag då det görs om till 8 bitar (signed))
-	
+
 	if(angle < -128)
 	angle = -128;							// Sätt min-vinkel (så att ej får överslag då det görs om till 8 bitar (signed))
-	
+
 	return angle;
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/*
-* FUNKTION NormalizeQuaternion(float *quat)
-*
-* BESKRIVNING
-*
-* Normaliserar kvaternionen quat
-*
-* INDATA
-*
-* quat:		Kvaternionen som ska normaliseras
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* quat:		Den nu normaliserade kvaternionen
-*
-*/
 
 void NormalizeQuaternion(float *quat)
 {
@@ -946,31 +480,10 @@ void NormalizeQuaternion(float *quat)
 	quat[QUAT_Z] /= length;
 }
 
-/*
-* FUNKTION run_self_test()
-*
-* BESKRIVNING
-*
-* Testar och kalibrerar gyrot och accelerometrarna.
-*
-* INDATA
-*
-* -
-*
-* UTDATA
-*
-* -
-*
-* PÅVERKAR
-*
-* Register i IMU:n
-*
-*/
-
 void run_self_test()
 {
 	long gyro_cal[3], accel_cal[3];
-	
+
 	mpu_run_self_test(gyro_cal, accel_cal);
 
 	for(uint8_t i = 0; i<3; i++)
@@ -987,19 +500,3 @@ void run_self_test()
 /*
 * SLUT PÅ FILEN sensor.c
 */
-
-////////////////////////////////////////////////////////
-
-void kalibrering()				// XXXXX Endast för att kunna kalibrera sensorer!
-{
-	if(initial_counter < 10)
-	{
-		++initial_counter;
-	}
-	else
-	{
-		sum = sum + IR_ADC[6];
-		++counter;
-		result = sum/counter;
-	}
-}

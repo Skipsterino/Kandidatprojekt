@@ -1,11 +1,12 @@
 /**
 * @file sensor.h
+* @version 1.0
 * @author Fredrik, Jonas
 * @date 26 apr 2016
 * @brief The code governing the behaviour of the sensor module
 *
-* The code that governs the sensor module. Handles the collection of all the sensor 
-* data. 
+* The code that governs the sensor module. Handles the collection of all the sensor
+* data.
 */
 
 #ifndef SENSOR_H_
@@ -31,15 +32,15 @@ volatile uint8_t SPI_overflow = 0;	/**< Help variable for the timer since last S
 
 const int delay_time = 50;			/**< A delay for testing to simulate activity on the SPI-bus */
 
-const double IR_sensor_distance_right = 16.5;		/**< Distance between the two IR-sensors on the right side [cm] */
-const double IR_sensor_distance_left = 16.5;		/**< Distance between the two IR-sensors on the left side [cm] */
+const double IR_sensor_distance_right = 15.5;		/**< Distance between the two IR-sensors on the right side [cm] */
+const double IR_sensor_distance_left = 15.5;		/**< Distance between the two IR-sensors on the left side [cm] */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 volatile double IR_latest_reading[7];	/**< The most recent readings from all the IR-sensors */
 double IR_reading[7][5];				/**< 2D-array with the 5 latest readings for the 7 IR-sensors */
 double IR_ADC[7];						/**< Average value for the last 5 readings for the 7 IR-sensors */
 double IR_distance[7];					/**< Distance measured by the 7 IR-sensors */
-float IR_Yaw_right, IR_Yaw_left;		/**< Yaw angle calculated from the IR-measurements on each side */			
+float IR_Yaw_right, IR_Yaw_left;		/**< Yaw angle calculated from the IR-measurements on each side */
 
 /**
 * Struct that contains the tables that describe the conversion from sensor readings to distances
@@ -87,7 +88,7 @@ volatile unsigned char IMU_data_ready = 0;							/**< Flag stating if there's be
 
 const signed char _orientation[9] = {1, 0, 0,  0, 1, 0,  0, 0, 1};	/**< Rotation matrix describing the mounting of the IMU */
 
-float quaternion[4];					/**< Quaternions describing the orientation of the IMU */				
+float quaternion[4];					/**< Quaternions describing the orientation of the IMU */
 float gravity[3];						/**< The gravity vectors used to remove the effect of the gravity on the measurements from the IMU */
 float IMU_Yaw, IMU_Pitch, IMU_Roll;		/**< The orientation of the IMU in Euler angles */
 
@@ -102,25 +103,25 @@ double result;					// XXXXX Endast för sensor-kalibrering
 
 ADC_distance_pair IR0_table[] =
 {
-	{48.0, 220},
-	{72.3, 150},
-	{80.0, 140},
-	{88.1, 130},
-	{97.8, 120},
-	{110.2, 110},
-	{123.6, 100},
-	{140.0, 90},
-	{157.4, 80},
-	{183.4, 70},
-	{217.2, 60},
-	{263.2, 50},
-	{294.6, 45},
-	{334.2, 40},
-	{382.9, 35},
-	{437.4, 30},
-	{501.9, 25},
-	{554.3, 20},
-	{572.5, 15}
+	{57.2, 220},
+	{89.2, 150},
+	{96.0, 140},
+	{104.0, 130},
+	{113.6, 120},
+	{123.9, 110},
+	{136.6, 100},
+	{151.0, 90},
+	{168.1, 80},
+	{194.9, 70},
+	{227.7, 60},
+	{273.5, 50},
+	{305.5, 45},
+	{341.7, 40},
+	{392.3, 35},
+	{445.2, 30},
+	{505.4, 25},
+	{566.3, 20},
+	{598.7, 15}
 }; /**< Table describing relation between sensor value to distance for IR sensor 0 */
 ADC_distance_pair IR1_table[] =
 {
@@ -268,7 +269,7 @@ void init_US();
 void init_SPI();
 
 /**
-* @brief Initiates a timer 
+* @brief Initiates a timer
 *
 * Initiates a timer to give us a timestamp.
 */
@@ -291,7 +292,7 @@ void init_IMU();
 /**
 * @brief Runs a self-test on the IMU
 *
-* Runs a self-test on the IMU calibrating the gyros and accelerometers. 
+* Runs a self-test on the IMU calibrating the gyros and accelerometers.
 */
 void run_self_test();
 

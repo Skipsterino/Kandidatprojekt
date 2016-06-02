@@ -1,7 +1,7 @@
 /**
 * @file state_machine.h
-* @author Fredrik, Erik
-* @date 25 apr 2016
+* @author fregu856, erilj291, joneh084
+* @date 17/5/2016 
 * @brief State machine for the robot's autonomous mode
 *
 * Contains the robot's state machine, which handles updating and execution of the robot's
@@ -12,7 +12,7 @@
 #define STATE_MACHINE_H_
 
 #ifndef F_CPU
-#define F_CPU 16000000UL		// 16 MHz
+#define F_CPU 16000000UL		// 16 MHz klockfrekvens
 #endif
 
 #include "SPI.h"
@@ -24,86 +24,81 @@
 * Enum that contains the different possible states that the robot can be in.
 */
 typedef enum {
-	STOP = 31,		// XXX Byt nummer !
 	DEAD_END = 2,
 	CORRIDOR = 3,
 	
-	OUT_OF_CORRIDOR_NO_WALL = 4,
+	OUT_OF_CORRIDOR_RIGHT_WALL = 4,
 	OUT_OF_CORRIDOR_LEFT_WALL = 5,
-	OUT_OF_CORRIDOR_RIGHT_WALL = 6,
+	OUT_OF_CORRIDOR_NO_WALL = 6,
 	
-	INTO_HIGH_OBSTACLE = 7,
-	CRAWLING_UNDER_HIGH_OBSTACLE = 8,
+	LEFT_WALL = 7,
+	RIGHT_WALL = 8,
+	NO_WALL = 9,
 	
-	PREPARE_CLIMBING_UP = 9,
-	CLIMBING_UP = 10,
-	LOW_OBSTACLE = 11,
-	PREPARE_CLIMBING_DOWN = 1,		// XXXX BYT NUMMER!
-	CLIMBING_DOWN = 12,
+	DETERMINE_JUNCTION_RIGHT_WALL = 10,
+	DETERMINE_JUNCTION_LEFT_WALL = 11,
+
+	DETERMINE_JUNCTION_NO_WALL = 12,
+
+	OUT_OF_JUNCTION_RIGHT_WALL = 13,	
+	OUT_OF_JUNCTION_LEFT_WALL = 14,
+	OUT_OF_JUNCTION_NO_WALL = 15,
 	
-	INTO_JUNCTION_A_RIGHT = 13,
-	INTO_JUNCTION_A_LEFT = 14,
+	INTO_CORRIDOR_NO_WALL = 16,
 	
-	TURN_RIGHT = 15,
-	TURN_LEFT = 16,
-	JUNCTION_A_RIGHT = 17,
-	JUNCTION_A_LEFT = 18,
-	JUNCTION_B_RIGHT = 19,
-	JUNCTION_B_LEFT = 20,
-	JUNCTION_C_RIGHT = 21,
-	JUNCTION_C_LEFT = 22,
-	END_OF_COURSE = 23,
+	INTO_HIGH_OBSTACLE = 17,
+	CRAWLING_UNDER_HIGH_OBSTACLE = 18,
 	
-	OUT_OF_TURN_RIGHT = 24,
-	OUT_OF_TURN_LEFT = 25,
-	OUT_OF_JUNCTION_A = 26,
-	OUT_OF_JUNCTION_A_RIGHT = 27,
-	OUT_OF_JUNCTION_A_LEFT = 28,
-	OUT_OF_JUNCTION_C_RIGHT = 29,
-	OUT_OF_JUNCTION_C_LEFT = 30,
-	INTO_JUNCTION_C_LEFT = 32,
-	INTO_JUNCTION_C_RIGHT = 33,
-	INTO_JUNCTION_D_LEFT = 34,
-	INTO_JUNCTION_D_RIGHT = 35,
-	JUNCTION_D_STRAIGHT = 36,
-	JUNCTION_D_RIGHT = 37,
-	JUNCTION_D_LEFT = 38,
-	OUT_OF_JUNCTION_D_LEFT = 39,
-	OUT_OF_JUNCTION_D_RIGHT = 40,
-	OUT_OF_JUNCTION_D = 41,   
+	PREPARE_CLIMBING_UP = 19,
+	CLIMBING_UP = 20,
+	LOW_OBSTACLE = 21,
+	PREPARE_CLIMBING_DOWN = 22,
+	CLIMBING_DOWN = 23,
+	
+	TURN_RIGHT = 24,
+	TURN_LEFT = 25,
+	JUNCTION_A_RIGHT = 26,
+	JUNCTION_A_LEFT = 27,
+	JUNCTION_B_RIGHT = 28,
+	JUNCTION_B_LEFT = 29,
+	JUNCTION_C_RIGHT = 30,
+	JUNCTION_C_LEFT = 31,
+	JUNCTION_D_RIGHT = 32,
+	JUNCTION_D_LEFT = 33,
+	JUNCTION_D_STRAIGHT = 34,
+	JUNCTION_E_RIGHT = 35,
+	JUNCTION_E_LEFT = 36,
+	JUNCTION_F = 37,
+	JUNCTION_G = 38,
+	JUNCTION_H_RIGHT = 39,
+	JUNCTION_H_LEFT = 40,
+	JUNCTION_I = 41,
+	
+	JUNCTION_I_OR_END = 42,
+	END_OF_COURSE = 43,
+
+	DEAD_END_A_RIGHT = 45,
+	DEAD_END_A_LEFT = 46,		
+	DEAD_END_B_RIGHT = 47,	
+	DEAD_END_B_LEFT = 48,		
+	DEAD_END_C = 49,		
+	DEAD_END_D = 50,			
+	CHECK_IF_LOW_OBSTACLE = 51,
+	CHECK_IF_HIGH_OBSTACLE = 52,
+	
+	CENTER_CRAB = 53,
+	CENTER_NORMAL = 54,
+	CENTER_CRAB_UP = 55,
+	CENTER_CRAB_DOWN = 56,
+	LOWER = 57,
 } STATES;
 
-#define HALF_ROTATION_ANGLE 45			/**< Rotation angle for a 90 degree turn. */
-#define FULL_ROTATION_ANGLE 90			/**< Rotation angle for a 180 degree turn. */
-#define CORRIDOR_SIDE_DISTANCE 60		/**< Distance for determining whether corridor or not. */
-#define SIDE_DEAD_END_DISTANCE 150		/**< Distance for determining whether dead end to right or left in junction. */
-#define END_OF_COURSE_DISTANCE 100		/**< Distance that IR_0, 2, 3, 5, 6 should be larger than at the end of the course. */
-#define SHORT_TURN_DISTANCE 38			/**< Distance to wall for rotating in turns and C junctions. */
-//#define LONG_TURN_DISTANCE 113			/**< Distance to wall for rotating in A junctions. */
-#define JUNCTION_C_TURN_DISTANCE 45
-#define FORWARD_DEAD_END_DISTANCE 180	/**< Distance for determining whether dead end straight ahead in junction or not. */
-#define JUNCTION_A_FORWARD_DISTANCE 80	/**< Distance for determining whether A junction or not (junction or turn?). */
-//#define LOW_OBSTACLE_DISTANCE 40		/**< Distance for determining whether low obstacle or not. If IR_1 is less than this, slow down. */
-#define PREPARE_CLIMBING_UP_DISTANCE 30	/**< Distance for preparing climbing onto low obstacle (if IR_1 is less than this). */
-#define PREPARE_CLIMBING_DOWN_DISTANCE 40	/**< Distance for preparing climbing down from low obstacle (if IR_1 is greater than this). */
-#define US_HIGH_OBSTACLE_DISTANCE 30	/**< Distance for determining whether high obstacle or not (ultrasound sensor). */
-#define IR_HIGH_OBSTACLE_DISTANCE 60	/**< Distance for determining whether high obstacle or not (IR sensor). */
-#define NO_WALL_DISTANCE 120				/**< Distance that IR_0 should be larger than near an obstacle (to tell obstacles and walls apart). */
-#define DEAD_END_DISTANCE 40			/**< Distance to wall for turning in a dead end (which we shouldn't have entered). */
+STATES ROBOT_STATE; /**< Represents the robot's current state. */
+float Kp, Kd; /**< Parameters for the PD-controller. */
 
-#define CENTRE_OFFSET 8 /**< Horizontal distance from centre of robot to its legs. */
-#define CORRIDOR_WIDTH 80 /**< Width of the labyrinth's corridors. */
-
-float IMU_Yaw_start; /**< The IMU's start Yaw angle when entering turns and junctions. */
 bool on_top_of_obstacle; /**< true -> the robot has climbed up on top of a low obstacle. */
 bool trust_sensors; /**< false -> for some reason, we don't trust the current sensor data. */
-uint8_t rotation_count; /**< Counter that keeps track of rotation in a turn or junction. */
-uint8_t cycle_count; /**< Counter that keeps track of the number of cycles. Is used in some, but not all, states. */
-
-float Yaw, Yaw_rad, p_part, Kp, Kd, alpha; /**< Angles and parameters for motion control. */
-float IR_0, IR_1, IR_2, IR_3, IR_4, IR_5, IR_6, US, IR_Yaw_left, IR_Yaw_right, IMU_Yaw, Yaw, Pitch, Roll; /**< Sensor values. */
-
-STATES ROBOT_STATE; /**< Represents the robot's current state. */
+bool low; /**< true -> the robot is lowered. */
 
 /**
 * @brief Updates the robot's current state

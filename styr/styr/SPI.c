@@ -1,9 +1,10 @@
 ﻿/*
- * SPI.c
- *
- * Created: 4/8/2016 2:53:09 PM
- *  Author: chrma018
+ *        File: SPI.c
+ *     Version: 1.0
+ * Last edited: 15/4/2016 
+ * Authors: kevkj515
  */ 
+
 
 #include "SPI.h"
 
@@ -11,7 +12,8 @@ volatile uint8_t SPIcounter;
 volatile uint8_t toSen;
 volatile uint8_t toKom;
 volatile uint8_t overflow;
-// timer0 interruppt funktion
+
+// Avbrottsrutin för timer 0
 ISR(TIMER0_OVF_vect)
 {
 	++overflow;
@@ -34,9 +36,9 @@ void SPI_sen_transmit_master()
 
 uint8_t calculateChecksum()
 {
-	int i = 0;
 	uint8_t checkSum = 0;
-	for(i; i < 15; ++i)
+	
+	for(uint8_t i = 0; i < 15; ++i)
 	{
 		checkSum += fromKom[i];
 	}
@@ -124,7 +126,9 @@ void Set_SS_sen_kom(uint8_t toSen, uint8_t toKom)
 }
 void SPI_init_master()
 {
-	memset(fromKom, 0, sizeof(fromKom)); //Nollställer fromKom & fromSen (tar bort ev skräp på minnesplatserna) så koden inte ballar ur innan första avbrottet kommit. Lägg ev in i Init!
+	/*Nollställer fromKom & fromSen (tar bort ev skräp på minnesplatserna) 
+	  så inget konstigt händer innan första avbrottet kommit.*/
+	memset(fromKom, 0, sizeof(fromKom)); 
 	memset(fromSen, 0, sizeof(fromSen));
 	memset(lastValidPacket, 0, sizeof(lastValidPacket));
 	
@@ -137,11 +141,11 @@ void SPI_init_master()
 	//SPI interrupt enable
 	SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0)|(1<<SPIE);
 	
-	// Enable timer0 interruppt
+	// Aktivera avbrott för timer 0
 	TIMSK0 = (1<<TOIE0);
-	// set timer0 counter initial value to 0
+	// Sätt timer 0-räknarens initialvärde till 0
 	TCNT0=0x00;
-	// start timer0 with /1024 prescaler
+	// Starta timer 0 med /1024 "prescaler"
 	TCCR0B = (1<<CS02) | (1<<CS00);
 	
 	SPIcounter = 0;

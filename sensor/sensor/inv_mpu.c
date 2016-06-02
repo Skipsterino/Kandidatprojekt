@@ -1,3 +1,10 @@
+/**
+* File: inv_mpu.c
+* Version: 1.0
+* Last edited: -
+*/
+
+
 #define F_CPU 16000000UL
 
 #include <stdio.h>
@@ -868,17 +875,17 @@ int mpu_lp_accel_mode(unsigned short rate)
     	data = INV_LPA_250HZ;
     else
     	data = INV_LPA_500HZ;
-        
+
     if (i2c_write(st.hw->addr, st.reg->lp_accel_odr, 1, &data))
         return -1;
-    
+
     if (i2c_read(st.hw->addr, st.reg->accel_cfg2, 1, &data))
         return -1;
-        
+
     data = data | BIT_ACCL_FC_B;
     if (i2c_write(st.hw->addr, st.reg->accel_cfg2, 1, &data))
             return -1;
-            
+
     data = BIT_LPA_CYCLE;
     if (i2c_write(st.hw->addr, st.reg->pwr_mgmt_1, 1, &data))
         return -1;
@@ -970,7 +977,7 @@ int mpu_get_temperature(long *data, unsigned long *timestamp)
 /**
  *  @brief      Read biases to the accel bias 6500 registers.
  *  This function reads from the MPU6500 accel offset cancellations registers.
- *  The format are G in +-8G format. The register is initialized with OTP 
+ *  The format are G in +-8G format. The register is initialized with OTP
  *  factory trim values.
  *  @param[in]  accel_bias  returned structure with the accel bias
  *  @return     0 if successful.
@@ -992,7 +999,7 @@ int mpu_read_6500_accel_bias(long *accel_bias) {
 /**
  *  @brief      Read biases to the accel bias 6050 registers.
  *  This function reads from the MPU6050 accel offset cancellations registers.
- *  The format are G in +-8G format. The register is initialized with OTP 
+ *  The format are G in +-8G format. The register is initialized with OTP
  *  factory trim values.
  *  @param[in]  accel_bias  returned structure with the accel bias
  *  @return     0 if successful.
@@ -1038,21 +1045,21 @@ int mpu_set_gyro_bias_reg(long *gyro_bias)
     unsigned char data[6] = {0, 0, 0, 0, 0, 0};
     long gyro_reg_bias[3] = {0, 0, 0};
     int i=0;
-    
+
     if(mpu_read_6500_gyro_bias(gyro_reg_bias))
         return -1;
 
     for(i=0;i<3;i++) {
         gyro_reg_bias[i]-= gyro_bias[i];
     }
-    
+
     data[0] = (gyro_reg_bias[0] >> 8) & 0xff;
     data[1] = (gyro_reg_bias[0]) & 0xff;
     data[2] = (gyro_reg_bias[1] >> 8) & 0xff;
     data[3] = (gyro_reg_bias[1]) & 0xff;
     data[4] = (gyro_reg_bias[2] >> 8) & 0xff;
     data[5] = (gyro_reg_bias[2]) & 0xff;
-    
+
     if (i2c_write(st.hw->addr, 0x13, 2, &data[0]))
         return -1;
     if (i2c_write(st.hw->addr, 0x15, 2, &data[2]))
@@ -2032,7 +2039,7 @@ static int gyro_self_test(long *bias_regular, long *bias_st)
     return result;
 }
 
-#endif 
+#endif
 #ifdef AK89xx_SECONDARY
 static int compass_self_test(void)
 {
@@ -2079,13 +2086,13 @@ static int compass_self_test(void)
         result |= 0x04;
 #elif defined MPU9250
     data = (short)(tmp[1] << 8) | tmp[0];
-    if ((data > 200) || (data < -200))  
+    if ((data > 200) || (data < -200))
         result |= 0x01;
     data = (short)(tmp[3] << 8) | tmp[2];
-    if ((data > 200) || (data < -200))  
+    if ((data > 200) || (data < -200))
         result |= 0x02;
     data = (short)(tmp[5] << 8) | tmp[4];
-    if ((data > -800) || (data < -3200))  
+    if ((data > -800) || (data < -3200))
         result |= 0x04;
 #endif
 AKM_restore:
@@ -3258,7 +3265,7 @@ int mpu_lp_motion_interrupt(unsigned short thresh, unsigned char time,
         data[0] = BITS_WOM_EN;
         if (i2c_write(st.hw->addr, st.reg->accel_intel, 1, data))
             goto lp_int_restore;
-            
+
         /* Bypass DLPF ACCEL_FCHOICE_B=1*/
         data[0] = BIT_ACCL_FC_B | 0x01;
         if (i2c_write(st.hw->addr, st.reg->accel_cfg2, 1, data))
@@ -3268,12 +3275,12 @@ int mpu_lp_motion_interrupt(unsigned short thresh, unsigned char time,
         data[0] = BIT_MOT_INT_EN;
         if (i2c_write(st.hw->addr, st.reg->int_enable, 1, data))
             goto lp_int_restore;
-        
+
         /* Enable cycle mode. */
         data[0] = BIT_LPA_CYCLE;
         if (i2c_write(st.hw->addr, st.reg->pwr_mgmt_1, 1, data))
             goto lp_int_restore;
-            
+
         st.chip_cfg.int_motion_only = 1;
         return 0;
 #endif
