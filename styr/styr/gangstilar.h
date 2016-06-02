@@ -46,6 +46,8 @@ void Adjust_Stance_Climbed(char direction);
 * @param sgn_speed Signum of input speed
 * @param theta Input rotation angle
 * @param sgn_theta Signum of rotation angle
+* @param dx Sideways movement
+* @param sgn_dx Signum of Sideways movement
 * 
 * @return Limited height
 *
@@ -61,6 +63,8 @@ float LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn
 * @param theta Input rotation angle
 * @param sgn_theta Signum of rotation angle
 * @param leg_down Tells if legs are in transition from swing to support phase
+* @param dx Sideways movement
+* @param sgn_dx Signum of Sideways movement
 * 
 * @return Appropriate speed for inner, middle and outer servo
 */
@@ -76,6 +80,8 @@ triple_float Calc_Servo_Speed(float theta, int sgn_theta, int8_t leg_down, float
 * @param corner_pitch Working point offset in y-direction for corner legs
 * @param speed_p1 Servo speed for inner, middle and outer servo in pair 1
 * @param speed_p2 Servo speed for inner, middle and outer servo in pair 2
+* @param dx_p1 Sideways movement pair 1
+* @param dx_p2 Sideways movement pair 2
 * 
 */
 void Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch, triple_float speed_p1, triple_float speed_p2, float dx_p1, float dx_p2); 
@@ -92,6 +98,8 @@ void Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch,
 * @param corner_pitch Working point offset in y-direction for corner legs
 * @param speed_p1 Servo speed for inner, middle and outer servo in pair 1
 * @param speed_p2 Servo speed for inner, middle and outer servo in pair 2
+* @param dx_p1 Sideways movement pair 1
+* @param dx_p2 Sideways movement pair 2
 * 
 */
 void Rotate_And_Send_Legs(triple_float kar_p1, triple_float kar_p2, float corner_pitch, int sgn_speed,float theta, triple_float speed_p1, triple_float speed_p2, float dx_p1, float dx_p2);
@@ -117,6 +125,8 @@ double_float Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta 
 * 
 * @param speed Input speed
 * @param sgn_speed Signum of speed
+* @param dx Sideways movement
+* @param sgn_dx Signum of Sideways movement
 *
 * @return Limited speed
 * 
@@ -129,6 +139,7 @@ float Limit_Speed(float speed, int sgn_speed, float dx, int sgn_dx);
 * Sets height to 7 or 14 if outside [7, 14]
 * 
 * @param height input height
+* @param dx Sideways movement, possitive = right.
 *
 * @return Limited height
 * 
@@ -160,6 +171,7 @@ triple_float Tripod(float x, float stroke, float height,float lift, uint8_t n);
 * @param speed Walking speed, positive = forward
 * @param theta Rotation angle, positive = counterclockwise
 * @param height Robot height
+* @param dx Sideways movement, possitive = right
 *
 */
 //void Walk_Half_Cycle(float speed, float theta, float height);//dummy
@@ -170,7 +182,7 @@ void Walk_Half_Cycle(float speed, float theta, float height, float dx);
 *
 * Walks sideways
 * 
-* @param speed  Walking speed positive = right 
+* @param speed  Walking speed, positive = right 
 * 
 */
 void Walk_Half_Crab_Cycle(int8_t speed);
