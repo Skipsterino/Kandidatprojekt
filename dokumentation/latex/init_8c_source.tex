@@ -1,0 +1,39 @@
+\hypertarget{init_8c_source}{}\section{init.\+c}
+\label{init_8c_source}\index{styr/styr/init.\+c@{styr/styr/init.\+c}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *        File: init.c}
+00003 \textcolor{comment}{ *     Version: 1.0}
+00004 \textcolor{comment}{ * Last edited: 15/4/2016 }
+00005 \textcolor{comment}{ *     Authors: erilj291 }
+00006 \textcolor{comment}{ */} 
+00007 
+00008 
+00009 \textcolor{preprocessor}{#include "\hyperlink{init_8h}{init.h}"}
+00010 
+\hypertarget{init_8c_source.tex_l00011}{}\hyperlink{init_8h_a7ce0a14b6e7779fbb2d9a05333792c41}{00011} \textcolor{keywordtype}{void} \hyperlink{init_8c_a7ce0a14b6e7779fbb2d9a05333792c41}{Init}(\textcolor{keywordtype}{void})
+00012 \{
+00013     DDRD = 1<<DDD2;
+00014     DDRC = 0; \textcolor{comment}{//JTAG, alla väljs till ingångar}
+00015     DDRB = (1<<DDB3) | (1<<DDB4) | (1<<DDB5) | (0<<DDB6) | (1<<DDB7); \textcolor{comment}{//SPI, allt ut förutom PB6}
+00016     
+00017     PORTD |= 1<<PORTD2; \textcolor{comment}{//Välj riktning "till servon" i tri-state}
+00018     
+00019     \hyperlink{init_8c_ad5cbed2a2222bb84e8b5c1caaa50634e}{UART\_Init}();
+00020     \hyperlink{_s_p_i_8c_a49ddfef1b082be9cebd28e4bbebf247d}{SPI\_init\_master}();
+00021 \}
+00022 
+\hypertarget{init_8c_source.tex_l00023}{}\hyperlink{init_8h_ad5cbed2a2222bb84e8b5c1caaa50634e}{00023} \textcolor{keywordtype}{void} \hyperlink{init_8c_ad5cbed2a2222bb84e8b5c1caaa50634e}{UART\_Init}(\textcolor{keywordtype}{void})
+00024 \{
+00025     \textcolor{comment}{//Se till att baud-inställningarna blir rätt}
+00026     UCSR0A &= ~(1<<U2X0);
+00027     \textcolor{comment}{//Sätt baud-prescaler = 0 så att baud-rate blir 1 MBPS}
+00028     UBRR0H = 0;
+00029     UBRR0L = 0;
+00030     \textcolor{comment}{//Ställ in processorn som sändare och mottagare på bussen}
+00031     UCSR0B = (1<<RXEN0)|(1<<TXEN0);
+00032     \textcolor{comment}{//8 data, 1 stopbit}
+00033     UCSR0C = (0<<USBS0)|(3<<UCSZ00);
+00034 \}
+\end{DoxyCode}

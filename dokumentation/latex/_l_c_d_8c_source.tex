@@ -1,0 +1,186 @@
+\hypertarget{_l_c_d_8c_source}{}\section{L\+C\+D.\+c}
+\label{_l_c_d_8c_source}\index{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+C\+D.\+c@{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+C\+D.\+c}}
+
+\begin{DoxyCode}
+00001 
+00007 \textcolor{preprocessor}{#include "\hyperlink{_l_c_d_8h}{LCD.h}"}
+00008 
+00009 \textcolor{comment}{//Definitioner av pinnars position i PORTB-registret}
+\hypertarget{_l_c_d_8c_source.tex_l00010}{}\hyperlink{_l_c_d_8c_af8903d8eea3868940c60af887473b152}{00010} \textcolor{preprocessor}{#define RS 0}
+\hypertarget{_l_c_d_8c_source.tex_l00011}{}\hyperlink{_l_c_d_8c_afc4ded33ac0ca43defcce639e965748a}{00011} \textcolor{preprocessor}{#define RW 1}
+\hypertarget{_l_c_d_8c_source.tex_l00012}{}\hyperlink{_l_c_d_8c_a07484107e6d9fdf38b53edf631d6511d}{00012} \textcolor{preprocessor}{#define E  2}
+00013 
+00014 \textcolor{comment}{//Definitioner av datariktningar}
+\hypertarget{_l_c_d_8c_source.tex_l00015}{}\hyperlink{_l_c_d_8c_abfb497db759edfde127952c40722ddf3}{00015} \textcolor{preprocessor}{#define DATA\_OUT        0xFF}
+\hypertarget{_l_c_d_8c_source.tex_l00016}{}\hyperlink{_l_c_d_8c_abebff40b775e10e37faa4ec7b45d6a89}{00016} \textcolor{preprocessor}{#define DATA\_IN         0x00}
+\hypertarget{_l_c_d_8c_source.tex_l00017}{}\hyperlink{_l_c_d_8c_a05f5ec448343537aca2f08c5eb3eeaab}{00017} \textcolor{preprocessor}{#define COMMAND\_PINS    0x07}
+00018 
+00019 \textcolor{comment}{//Definitioner av adressen för första tecknet på varje rad}
+00020 \textcolor{comment}{//i LCD:ns interna minne }
+\hypertarget{_l_c_d_8c_source.tex_l00021}{}\hyperlink{_l_c_d_8c_acc9e762cf3909d10f4c35e47e7c0f2e8}{00021} \textcolor{preprocessor}{#define DDRAM\_LINE\_1    0x80}
+\hypertarget{_l_c_d_8c_source.tex_l00022}{}\hyperlink{_l_c_d_8c_a99ff4cbdf292fa1d55ed18e57d07a139}{00022} \textcolor{preprocessor}{#define DDRAM\_LINE\_2    0xC0}
+\hypertarget{_l_c_d_8c_source.tex_l00023}{}\hyperlink{_l_c_d_8c_aee61787ba0a481741523399b51b969ce}{00023} \textcolor{preprocessor}{#define DDRAM\_LINE\_3    0x90}
+\hypertarget{_l_c_d_8c_source.tex_l00024}{}\hyperlink{_l_c_d_8c_ac4b6edb4691748f93245ae9eb802ea55}{00024} \textcolor{preprocessor}{#define DDRAM\_LINE\_4    0xD0}
+00025 
+00026 \textcolor{comment}{//Definitioner av några möjliga kommandon }
+\hypertarget{_l_c_d_8c_source.tex_l00027}{}\hyperlink{_l_c_d_8c_a5d12bd35af7836eba7538bf6e71a050d}{00027} \textcolor{preprocessor}{#define COMMAND\_CLEAR                   0b00000001}
+\hypertarget{_l_c_d_8c_source.tex_l00028}{}\hyperlink{_l_c_d_8c_a28466b08b3aba14d24414842c865917d}{00028} \textcolor{preprocessor}{#define COMMAND\_8BIT\_2LINE\_8DOTS        0b00110000}
+\hypertarget{_l_c_d_8c_source.tex_l00029}{}\hyperlink{_l_c_d_8c_a3feb0f4d58db8e05740218b177b0ca45}{00029} \textcolor{preprocessor}{#define COMMAND\_8BIT\_2LINE\_11DOTS       0b00111000}
+\hypertarget{_l_c_d_8c_source.tex_l00030}{}\hyperlink{_l_c_d_8c_a0c43cff50d37bd94bbe8e241e740fcbf}{00030} \textcolor{preprocessor}{#define COMMAND\_DISPLAY\_OFF             0b00001000}
+\hypertarget{_l_c_d_8c_source.tex_l00031}{}\hyperlink{_l_c_d_8c_a6c7500336a6cbd7b4915c6f546d06701}{00031} \textcolor{preprocessor}{#define COMMAND\_CURSOR\_INC\_NO\_SHIFT     0b00000110 }
+\hypertarget{_l_c_d_8c_source.tex_l00032}{}\hyperlink{_l_c_d_8c_a6724b17362a70a197d6e515d15b234f9}{00032} \textcolor{preprocessor}{#define COMMAND\_DISPLAY\_ON\_CURSOR\_MOVE  0b00001100}
+00033 
+\hypertarget{_l_c_d_8c_source.tex_l00034}{}\hyperlink{_l_c_d_8h_abe38d05e225c701bebf5a61201331a85}{00034} \textcolor{keywordtype}{void} \hyperlink{_l_c_d_8c_abe38d05e225c701bebf5a61201331a85}{LCD\_clear}()
+00035 \{
+00036     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_a5d12bd35af7836eba7538bf6e71a050d}{COMMAND\_CLEAR});
+00037 \}
+00038 
+\hypertarget{_l_c_d_8c_source.tex_l00039}{}\hyperlink{_l_c_d_8h_ab7c7379b10d76669edf03099f799b357}{00039} \textcolor{keywordtype}{void} \hyperlink{_l_c_d_8c_ab7c7379b10d76669edf03099f799b357}{LCD\_put\_num\_u}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} num)
+00040 \{
+00041     \textcolor{keywordtype}{char} digits[\hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{LCD\_LINE\_WIDTH}];
+00042     sprintf(digits,\textcolor{stringliteral}{"%d"}, num);
+00043     
+00044     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 0; i < \hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{LCD\_LINE\_WIDTH}; ++i)
+00045     \{
+00046         \textcolor{keywordflow}{if}(digits[i] == \textcolor{charliteral}{'\(\backslash\)0'})
+00047         \{
+00048             \textcolor{keywordflow}{break};
+00049         \}
+00050         \hyperlink{_l_c_d_8c_a7a19aaec7f9deb1589a7efddf3da8d3f}{LCD\_putc}(digits[i]);
+00051     \}
+00052 \}
+00053 
+\hypertarget{_l_c_d_8c_source.tex_l00054}{}\hyperlink{_l_c_d_8h_a7a19aaec7f9deb1589a7efddf3da8d3f}{00054} \textcolor{keywordtype}{void} \hyperlink{_l_c_d_8c_a7a19aaec7f9deb1589a7efddf3da8d3f}{LCD\_putc}(\textcolor{keywordtype}{char} c)
+00055 \{
+00056     \textcolor{comment}{//Vänta tills LCDn är redo}
+00057     \textcolor{keywordflow}{while}(\hyperlink{_l_c_d_8c_a6679ea6f481524d1b6a30c4d99b8aad5}{LCD\_busy}())
+00058     \{
+00059         \_delay\_ms(1);
+00060     \}
+00061     \textcolor{comment}{//Sätt RS till 1 och skicka in data på port A}
+00062     PORTB |= (1<<\hyperlink{_l_c_d_8c_af8903d8eea3868940c60af887473b152}{RS});
+00063     PORTA = c;
+00064     
+00065     \textcolor{comment}{//Signalera att kommandot är redo}
+00066     PORTB |= (1<<\hyperlink{_l_c_d_8c_a07484107e6d9fdf38b53edf631d6511d}{E});
+00067     \_delay\_us(50);
+00068     PORTB &= ~(1<<\hyperlink{_l_c_d_8c_a07484107e6d9fdf38b53edf631d6511d}{E});
+00069 \}
+00070 
+\hypertarget{_l_c_d_8c_source.tex_l00071}{}\hyperlink{_l_c_d_8c_a0da229bb95e0c51e189ce10e20eb91c5}{00071} \textcolor{keywordtype}{void} \hyperlink{_l_c_d_8c_a0da229bb95e0c51e189ce10e20eb91c5}{LCD\_print\_line}(\textcolor{keywordtype}{char} line[\hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{LCD\_LINE\_WIDTH}])
+00072 \{
+00073     \textcolor{keywordtype}{int} i = 0;
+00074     \textcolor{comment}{//Loopa igenom alla tecken}
+00075     \textcolor{keywordflow}{for}(i; i < \hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{LCD\_LINE\_WIDTH}; ++i)
+00076     \{
+00077         \textcolor{comment}{//Om vi hittar radslut, avbryt}
+00078         \textcolor{keywordflow}{if}(line[i] == \textcolor{charliteral}{'\(\backslash\)0'})
+00079         \{
+00080             \textcolor{keywordflow}{break};
+00081         \}
+00082         \hyperlink{_l_c_d_8c_a7a19aaec7f9deb1589a7efddf3da8d3f}{LCD\_putc}(line[i]);
+00083     \}
+00084     \textcolor{comment}{//Fyll i resten med tomma tecken}
+00085     \textcolor{keywordflow}{for}(i; i < \hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{LCD\_LINE\_WIDTH}; ++i)
+00086     \{
+00087         \hyperlink{_l_c_d_8c_a7a19aaec7f9deb1589a7efddf3da8d3f}{LCD\_putc}(\textcolor{charliteral}{' '});
+00088     \}
+00089 \}
+00090 
+\hypertarget{_l_c_d_8c_source.tex_l00091}{}\hyperlink{_l_c_d_8h_afbc155e4e9d279ccd12c2695fe78a0e3}{00091} \textcolor{keywordtype}{void} \hyperlink{_l_c_d_8c_afbc155e4e9d279ccd12c2695fe78a0e3}{LCD\_print\_string}(\textcolor{keywordtype}{char} line1[\hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{LCD\_LINE\_WIDTH}], \textcolor{keywordtype}{char} line2[LCD\_LINE\_WIDTH],
+       \textcolor{keywordtype}{char} line3[LCD\_LINE\_WIDTH], \textcolor{keywordtype}{char} line4[LCD\_LINE\_WIDTH])
+00092 \{   
+00093     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_acc9e762cf3909d10f4c35e47e7c0f2e8}{DDRAM\_LINE\_1});
+00094     
+00095     \hyperlink{_l_c_d_8c_a0da229bb95e0c51e189ce10e20eb91c5}{LCD\_print\_line}(line1);
+00096     
+00097     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_a99ff4cbdf292fa1d55ed18e57d07a139}{DDRAM\_LINE\_2});
+00098     
+00099     \hyperlink{_l_c_d_8c_a0da229bb95e0c51e189ce10e20eb91c5}{LCD\_print\_line}(line2);
+00100     
+00101     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_aee61787ba0a481741523399b51b969ce}{DDRAM\_LINE\_3});
+00102     
+00103     \hyperlink{_l_c_d_8c_a0da229bb95e0c51e189ce10e20eb91c5}{LCD\_print\_line}(line3);
+00104     
+00105     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_ac4b6edb4691748f93245ae9eb802ea55}{DDRAM\_LINE\_4});
+00106     
+00107     \hyperlink{_l_c_d_8c_a0da229bb95e0c51e189ce10e20eb91c5}{LCD\_print\_line}(line4);
+00108 \}
+00109 
+\hypertarget{_l_c_d_8c_source.tex_l00110}{}\hyperlink{_l_c_d_8h_a6679ea6f481524d1b6a30c4d99b8aad5}{00110} \textcolor{keywordtype}{int} \hyperlink{_l_c_d_8c_a6679ea6f481524d1b6a30c4d99b8aad5}{LCD\_busy}()
+00111 \{
+00112     \textcolor{comment}{//Byt riktning på dataregister}
+00113     DDRA = \hyperlink{_l_c_d_8c_abebff40b775e10e37faa4ec7b45d6a89}{DATA\_IN};
+00114     \textcolor{comment}{//Sätt RW till 1 för att läsa data}
+00115     PORTB |= (1<<\hyperlink{_l_c_d_8c_afc4ded33ac0ca43defcce639e965748a}{RW});
+00116     PORTB &= ~(1<<\hyperlink{_l_c_d_8c_af8903d8eea3868940c60af887473b152}{RS});
+00117     PORTB |= (1<<\hyperlink{_l_c_d_8c_a07484107e6d9fdf38b53edf631d6511d}{E});
+00118     
+00119     \_delay\_us(2);
+00120     
+00121     \textcolor{comment}{//Data hämtas från dataportar}
+00122     \textcolor{keywordtype}{char} data = PINA;
+00123     
+00124     PORTB &= ~(1<<\hyperlink{_l_c_d_8c_a07484107e6d9fdf38b53edf631d6511d}{E});
+00125     PORTB &= ~(1<<\hyperlink{_l_c_d_8c_afc4ded33ac0ca43defcce639e965748a}{RW});
+00126     
+00127     \textcolor{comment}{//Återställ riktning}
+00128     DDRA = \hyperlink{_l_c_d_8c_abfb497db759edfde127952c40722ddf3}{DATA\_OUT};
+00129     
+00130     \textcolor{comment}{//Skicka tillbaka BF-flaggan(bit 7)}
+00131     \textcolor{keywordflow}{return} (data & (1<<7));
+00132 \}
+00133 
+\hypertarget{_l_c_d_8c_source.tex_l00134}{}\hyperlink{_l_c_d_8h_aa6d8c104e37eef62ba3a6046d1333ca6}{00134} \textcolor{keywordtype}{void} \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} command)
+00135 \{
+00136     \textcolor{keywordflow}{while}(\hyperlink{_l_c_d_8c_a6679ea6f481524d1b6a30c4d99b8aad5}{LCD\_busy}())
+00137     \{
+00138         \_delay\_ms(1);
+00139     \}
+00140     
+00141     PORTB &= ~(1<<\hyperlink{_l_c_d_8c_af8903d8eea3868940c60af887473b152}{RS});
+00142     PORTA = command;
+00143     PORTB |= (1<<\hyperlink{_l_c_d_8c_a07484107e6d9fdf38b53edf631d6511d}{E});
+00144     
+00145     \textcolor{comment}{//Clear och return home tar 1.53 ms}
+00146     \textcolor{comment}{//Alla andra tar 39 µs}
+00147     \textcolor{comment}{//Vi väntar med lite extra marginal}
+00148     \textcolor{keywordflow}{if}(command == 0x01 || command == 0x02)
+00149     \{
+00150         \_delay\_us(1600);
+00151     \}
+00152     \textcolor{keywordflow}{else}
+00153     \{
+00154         \_delay\_us(50);
+00155     \}
+00156     
+00157     PORTB &= ~(1<<\hyperlink{_l_c_d_8c_a07484107e6d9fdf38b53edf631d6511d}{E});
+00158 \}
+00159 
+\hypertarget{_l_c_d_8c_source.tex_l00160}{}\hyperlink{_l_c_d_8h_a0742e25c23ca1096ceba081b98fd58ba}{00160} \textcolor{keywordtype}{void} \hyperlink{_l_c_d_8c_a0742e25c23ca1096ceba081b98fd58ba}{LCD\_init}()
+00161 \{
+00162     \textcolor{comment}{//Sätt alla a-pinnar till utgångar}
+00163     DDRA = \hyperlink{_l_c_d_8c_abfb497db759edfde127952c40722ddf3}{DATA\_OUT};
+00164     
+00165     \textcolor{comment}{//Sätt E, R/W, RS till utgångar}
+00166     DDRB |= \hyperlink{_l_c_d_8c_a05f5ec448343537aca2f08c5eb3eeaab}{COMMAND\_PINS};
+00167 
+00168     \_delay\_us(40);
+00169     
+00170     \textcolor{comment}{//8 bit dataportar}
+00171     \textcolor{comment}{//2 raders display (faktiskt 4 st)}
+00172     \textcolor{comment}{//11 dot karaktärer}
+00173     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_a3feb0f4d58db8e05740218b177b0ca45}{COMMAND\_8BIT\_2LINE\_11DOTS});
+00174     
+00175     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_a0c43cff50d37bd94bbe8e241e740fcbf}{COMMAND\_DISPLAY\_OFF});
+00176     
+00177     \hyperlink{_l_c_d_8c_abe38d05e225c701bebf5a61201331a85}{LCD\_clear}();
+00178     
+00179     \textcolor{comment}{//Cursor stegas uppåt}
+00180     \textcolor{comment}{//Ingen inskiftning}
+00181     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_a6c7500336a6cbd7b4915c6f546d06701}{COMMAND\_CURSOR\_INC\_NO\_SHIFT});
+00182     
+00183     \textcolor{comment}{//Automatisk förflyttning av cursor vid skrivning}
+00184     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_a6724b17362a70a197d6e515d15b234f9}{COMMAND\_DISPLAY\_ON\_CURSOR\_MOVE});
+00185 \}
+\end{DoxyCode}

@@ -1,0 +1,164 @@
+\hypertarget{inv__mpu__dmp__motion__driver_8h}{}\section{sensor/sensor/inv\+\_\+mpu\+\_\+dmp\+\_\+motion\+\_\+driver.h File Reference}
+\label{inv__mpu__dmp__motion__driver_8h}\index{sensor/sensor/inv\+\_\+mpu\+\_\+dmp\+\_\+motion\+\_\+driver.\+h@{sensor/sensor/inv\+\_\+mpu\+\_\+dmp\+\_\+motion\+\_\+driver.\+h}}
+
+
+Code by Inven\+Sense  Copyright (C) 2011-\/2012 Inven\+Sense Corporation, All Rights Reserved.  
+
+
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga22a5ea75ee18a788b441f66fffe83586}{T\+A\+P\+\_\+X}~(0x01)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga762f9521bf33c9ba7a77595268b108ec}{T\+A\+P\+\_\+Y}~(0x02)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gac2949c36d5f4eeb4769fdcf2d99284fd}{T\+A\+P\+\_\+Z}~(0x04)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gaa2b8e1661eb53aeac3ff4877ff2b79d9}{T\+A\+P\+\_\+\+X\+YZ}~(0x07)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gaa979b4cd872ade6f4904199e83e9f3f4}{T\+A\+P\+\_\+\+X\+\_\+\+UP}~(0x01)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gad3263c4a492cc11a014800d4a6e3311a}{T\+A\+P\+\_\+\+X\+\_\+\+D\+O\+WN}~(0x02)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga70ea99c21d573b870b91909faf677107}{T\+A\+P\+\_\+\+Y\+\_\+\+UP}~(0x03)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga3d35b3c219083d14f9fff4a9c65cf783}{T\+A\+P\+\_\+\+Y\+\_\+\+D\+O\+WN}~(0x04)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gab240d8ebc872ea183523f4b3c3f9e346}{T\+A\+P\+\_\+\+Z\+\_\+\+UP}~(0x05)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga8f0f8c5db2a60932cfde68ca0b9c2032}{T\+A\+P\+\_\+\+Z\+\_\+\+D\+O\+WN}~(0x06)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga5198482b1487f06b71c9393847ae1897}{A\+N\+D\+R\+O\+I\+D\+\_\+\+O\+R\+I\+E\+N\+T\+\_\+\+P\+O\+R\+T\+R\+A\+IT}~(0x00)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga388a7f6ac0d53cf96318b0bafa5c1c0a}{A\+N\+D\+R\+O\+I\+D\+\_\+\+O\+R\+I\+E\+N\+T\+\_\+\+L\+A\+N\+D\+S\+C\+A\+PE}~(0x01)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga63b8f82e9d60a84b6fca8c680d78c866}{A\+N\+D\+R\+O\+I\+D\+\_\+\+O\+R\+I\+E\+N\+T\+\_\+\+R\+E\+V\+E\+R\+S\+E\+\_\+\+P\+O\+R\+T\+R\+A\+IT}~(0x02)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga98dc7e42de72097f62612c758de3ba16}{A\+N\+D\+R\+O\+I\+D\+\_\+\+O\+R\+I\+E\+N\+T\+\_\+\+R\+E\+V\+E\+R\+S\+E\+\_\+\+L\+A\+N\+D\+S\+C\+A\+PE}~(0x03)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gaab5d80253aaee2470c95c6981b731255}{D\+M\+P\+\_\+\+I\+N\+T\+\_\+\+G\+E\+S\+T\+U\+RE}~(0x01)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gaabccda0e9ccd1a2f4287d23fe4b0c776}{D\+M\+P\+\_\+\+I\+N\+T\+\_\+\+C\+O\+N\+T\+I\+N\+U\+O\+US}~(0x02)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga87fac39cf95e2c56afdf507a986fa00b}{D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+T\+AP}~(0x001)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gaf2b250fc928390d562f7bd80300ce419}{D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+A\+N\+D\+R\+O\+I\+D\+\_\+\+O\+R\+I\+E\+NT}~(0x002)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gabf442c0477f8f7704a8094519ddfe38e}{D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+L\+P\+\_\+\+Q\+U\+AT}~(0x004)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gabcf6a5bc9703782d711d0c6ba92ade85}{D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+P\+E\+D\+O\+M\+E\+T\+ER}~(0x008)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gae879a3c9729f9e1be5e6d7c9211c69c0}{D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+6\+X\+\_\+\+L\+P\+\_\+\+Q\+U\+AT}~(0x010)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gaaf0ac890c1f83106c08b722f1e865fdb}{D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+G\+Y\+R\+O\+\_\+\+C\+AL}~(0x020)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga9eeb257febe4a305df7ad4cf31dc2755}{D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+S\+E\+N\+D\+\_\+\+R\+A\+W\+\_\+\+A\+C\+C\+EL}~(0x040)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gaa59d3ed6f0cbc66e99ce637546434b34}{D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+S\+E\+N\+D\+\_\+\+R\+A\+W\+\_\+\+G\+Y\+RO}~(0x080)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga40462c6fd55b04b2f79723dd737ee795}{D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+S\+E\+N\+D\+\_\+\+C\+A\+L\+\_\+\+G\+Y\+RO}~(0x100)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga3d79cffe845a796a27d03432a1f2ade0}{I\+N\+V\+\_\+\+W\+X\+Y\+Z\+\_\+\+Q\+U\+AT}~(0x100)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga66626a842452f444e9af29cb0d2c6150}{dmp\+\_\+load\+\_\+motion\+\_\+driver\+\_\+firmware} (void)
+\begin{DoxyCompactList}\small\item\em Load the D\+MP with this image. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga5399728fd572a7694af20286cc9d4121}{dmp\+\_\+set\+\_\+fifo\+\_\+rate} (unsigned short rate)
+\begin{DoxyCompactList}\small\item\em Set D\+MP output rate. Only used when D\+MP is on. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gaf3f9953bc04af751b1101700daffa951}{dmp\+\_\+get\+\_\+fifo\+\_\+rate} (unsigned short $\ast$rate)
+\begin{DoxyCompactList}\small\item\em Get D\+MP output rate. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga70c485bdfa30515e5b869b081192caa1}{dmp\+\_\+enable\+\_\+feature} (unsigned short mask)
+\begin{DoxyCompactList}\small\item\em Enable D\+MP features. The following \#define\textquotesingle{}s are used in the input mask\+: ~\newline
+ D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+T\+AP ~\newline
+ D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+A\+N\+D\+R\+O\+I\+D\+\_\+\+O\+R\+I\+E\+NT ~\newline
+ D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+L\+P\+\_\+\+Q\+U\+AT ~\newline
+ D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+6\+X\+\_\+\+L\+P\+\_\+\+Q\+U\+AT ~\newline
+ D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+G\+Y\+R\+O\+\_\+\+C\+AL ~\newline
+ D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+S\+E\+N\+D\+\_\+\+R\+A\+W\+\_\+\+A\+C\+C\+EL ~\newline
+ D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+S\+E\+N\+D\+\_\+\+R\+A\+W\+\_\+\+G\+Y\+RO ~\newline
+ N\+O\+TE\+: D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+L\+P\+\_\+\+Q\+U\+AT and D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+6\+X\+\_\+\+L\+P\+\_\+\+Q\+U\+AT are mutually exclusive. ~\newline
+ N\+O\+TE\+: D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+S\+E\+N\+D\+\_\+\+R\+A\+W\+\_\+\+G\+Y\+RO and D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+S\+E\+N\+D\+\_\+\+C\+A\+L\+\_\+\+G\+Y\+RO are also mutually exclusive. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga92b920b72f5146ea14d45ad2d529b64c}{dmp\+\_\+get\+\_\+enabled\+\_\+features} (unsigned short $\ast$mask)
+\begin{DoxyCompactList}\small\item\em Get list of currently enabled D\+MP features. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gaf10c08103d2aec9aa5555a5694bafced}{dmp\+\_\+set\+\_\+interrupt\+\_\+mode} (unsigned char mode)
+\begin{DoxyCompactList}\small\item\em Specify when a D\+MP interrupt should occur. A D\+MP interrupt can be configured to trigger on either of the two conditions below\+: ~\newline
+ a. One F\+I\+FO period has elapsed (set by {\itshape mpu\+\_\+set\+\_\+sample\+\_\+rate}). ~\newline
+ b. A tap event has been detected. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga6cb5ff144ce6e1546f00809de8bb24a4}{dmp\+\_\+set\+\_\+orientation} (unsigned short orient)
+\begin{DoxyCompactList}\small\item\em Push gyro and accel orientation to the D\+MP. The orientation is represented here as the output of {\itshape inv\+\_\+orientation\+\_\+matrix\+\_\+to\+\_\+scalar}. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga4766e37ef95cbf0044c8f9594ed811d1}{dmp\+\_\+set\+\_\+gyro\+\_\+bias} (long $\ast$bias)
+\begin{DoxyCompactList}\small\item\em Push gyro biases to the D\+MP. Because the gyro integration is handled in the D\+MP, any gyro biases calculated by the M\+PL should be pushed down to D\+MP memory to remove 3-\/axis quaternion drift. ~\newline
+ N\+O\+TE\+: If the D\+M\+P-\/based gyro calibration is enabled, the D\+MP will overwrite the biases written to this location once a new one is computed. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gafbd714aee6086836f70aaea847771669}{dmp\+\_\+set\+\_\+accel\+\_\+bias} (long $\ast$bias)
+\begin{DoxyCompactList}\small\item\em Push accel biases to the D\+MP. These biases will be removed from the D\+MP 6-\/axis quaternion. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga8a2df36126e34b78863e3acf1249d814}{dmp\+\_\+register\+\_\+tap\+\_\+cb} (void($\ast$func)(unsigned char, unsigned char))
+\begin{DoxyCompactList}\small\item\em Register a function to be executed on a tap event. The tap direction is represented by one of the following\+: ~\newline
+ T\+A\+P\+\_\+\+X\+\_\+\+UP ~\newline
+ T\+A\+P\+\_\+\+X\+\_\+\+D\+O\+WN ~\newline
+ T\+A\+P\+\_\+\+Y\+\_\+\+UP ~\newline
+ T\+A\+P\+\_\+\+Y\+\_\+\+D\+O\+WN ~\newline
+ T\+A\+P\+\_\+\+Z\+\_\+\+UP ~\newline
+ T\+A\+P\+\_\+\+Z\+\_\+\+D\+O\+WN. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga15da67c0a6c94e0cdaceb8b165e13af9}{dmp\+\_\+set\+\_\+tap\+\_\+thresh} (unsigned char axis, unsigned short thresh)
+\begin{DoxyCompactList}\small\item\em Set tap threshold for a specific axis. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga66bc5c8fc26fcb498df53fc62aa87e4f}{dmp\+\_\+set\+\_\+tap\+\_\+axes} (unsigned char axis)
+\begin{DoxyCompactList}\small\item\em Set which axes will register a tap. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga819f947b2cb107ada7b9a94c41be0dad}{dmp\+\_\+set\+\_\+tap\+\_\+count} (unsigned char min\+\_\+taps)
+\begin{DoxyCompactList}\small\item\em Set minimum number of taps needed for an interrupt. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga97466067f4a23368f4d7e2547fe359d9}{dmp\+\_\+set\+\_\+tap\+\_\+time} (unsigned short time)
+\begin{DoxyCompactList}\small\item\em Set length between valid taps. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gaeca250a90eb816eb2609229849481337}{dmp\+\_\+set\+\_\+tap\+\_\+time\+\_\+multi} (unsigned short time)
+\begin{DoxyCompactList}\small\item\em Set max time between taps to register as a multi-\/tap. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga62efdae1330d5bcaf4c75b069ded0ed0}{dmp\+\_\+set\+\_\+shake\+\_\+reject\+\_\+thresh} (long sf, unsigned short thresh)
+\begin{DoxyCompactList}\small\item\em Set shake rejection threshold. If the D\+MP detects a gyro sample larger than {\itshape thresh}, taps are rejected. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga09d7a6d90e1bd2e907f1866d850c5608}{dmp\+\_\+set\+\_\+shake\+\_\+reject\+\_\+time} (unsigned short time)
+\begin{DoxyCompactList}\small\item\em Set shake rejection time. Sets the length of time that the gyro must be outside of the threshold set by {\itshape gyro\+\_\+set\+\_\+shake\+\_\+reject\+\_\+thresh} before taps are rejected. A mandatory 60 ms is added to this parameter. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga5d44d1a32535000e6902cdc5224d1b54}{dmp\+\_\+set\+\_\+shake\+\_\+reject\+\_\+timeout} (unsigned short time)
+\begin{DoxyCompactList}\small\item\em Set shake rejection timeout. Sets the length of time after a shake rejection that the gyro must stay inside of the threshold before taps can be detected again. A mandatory 60 ms is added to this parameter. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga2e66a02d29ec89466cf339587592943c}{dmp\+\_\+register\+\_\+android\+\_\+orient\+\_\+cb} (void($\ast$func)(unsigned char))
+\begin{DoxyCompactList}\small\item\em Register a function to be executed on a android orientation event. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga4ee4339b79a58558d121ba8206056394}{dmp\+\_\+enable\+\_\+lp\+\_\+quat} (unsigned char enable)
+\begin{DoxyCompactList}\small\item\em Generate 3-\/axis quaternions from the D\+MP. In this driver, the 3-\/axis and 6-\/axis D\+MP quaternion features are mutually exclusive. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gaac712ef33727433f666b3861894873be}{dmp\+\_\+enable\+\_\+6x\+\_\+lp\+\_\+quat} (unsigned char enable)
+\begin{DoxyCompactList}\small\item\em Generate 6-\/axis quaternions from the D\+MP. In this driver, the 3-\/axis and 6-\/axis D\+MP quaternion features are mutually exclusive. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gad8f4d1a93e0f03d950559501c5a7255b}{dmp\+\_\+get\+\_\+pedometer\+\_\+step\+\_\+count} (unsigned long $\ast$count)
+\begin{DoxyCompactList}\small\item\em Get current step count. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga568562c19998f585b1d2ba056cd209db}{dmp\+\_\+set\+\_\+pedometer\+\_\+step\+\_\+count} (unsigned long count)
+\begin{DoxyCompactList}\small\item\em Overwrite current step count. W\+A\+R\+N\+I\+NG\+: This function writes to D\+MP memory and could potentially encounter a race condition if called while the pedometer is enabled. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga62c8e5e99986b0e60ca0dc9a9b9c3fcc}{dmp\+\_\+get\+\_\+pedometer\+\_\+walk\+\_\+time} (unsigned long $\ast$time)
+\begin{DoxyCompactList}\small\item\em Get duration of walking time. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga62f469269047f8cba16a2b7f5349acc0}{dmp\+\_\+set\+\_\+pedometer\+\_\+walk\+\_\+time} (unsigned long time)
+\begin{DoxyCompactList}\small\item\em Overwrite current walk time. W\+A\+R\+N\+I\+NG\+: This function writes to D\+MP memory and could potentially encounter a race condition if called while the pedometer is enabled. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga653ebcec6758f006dd89939e8f3c6ebb}{dmp\+\_\+enable\+\_\+gyro\+\_\+cal} (unsigned char enable)
+\begin{DoxyCompactList}\small\item\em Calibrate the gyro data in the D\+MP. After eight seconds of no motion, the D\+MP will compute gyro biases and subtract them from the quaternion output. If {\itshape dmp\+\_\+enable\+\_\+feature} is called with {\itshape D\+M\+P\+\_\+\+F\+E\+A\+T\+U\+R\+E\+\_\+\+S\+E\+N\+D\+\_\+\+C\+A\+L\+\_\+\+G\+Y\+RO}, the biases will also be subtracted from the gyro output. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga02db5f25359abe84be002c543cdc3803}{dmp\+\_\+read\+\_\+fifo} (short $\ast$gyro, short $\ast$accel, long $\ast$quat, unsigned long $\ast$timestamp, short $\ast$sensors, unsigned char $\ast$more)
+\begin{DoxyCompactList}\small\item\em Get one packet from the F\+I\+FO. If {\itshape sensors} does not contain a particular sensor, disregard the data returned to that pointer. ~\newline
+ {\itshape sensors} can contain a combination of the following flags\+: ~\newline
+ I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL ~\newline
+ I\+N\+V\+\_\+\+W\+X\+Y\+Z\+\_\+\+Q\+U\+AT ~\newline
+ If the F\+I\+FO has no new data, {\itshape sensors} will be zero. ~\newline
+ If the F\+I\+FO is disabled, {\itshape sensors} will be zero and this function will return a non-\/zero error code. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Code by Inven\+Sense  Copyright (C) 2011-\/2012 Inven\+Sense Corporation, All Rights Reserved. 
+
+D\+MP image and interface functions.
+
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyAuthor}{Author}
+Inven\+Sense 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+-\/ Code by Inven\+Sense.
+\end{DoxyDate}
+All functions are preceded by the dmp\+\_\+ prefix to differentiate among M\+PL and general driver function calls. 
+
+Definition in file \hyperlink{inv__mpu__dmp__motion__driver_8h_source}{inv\+\_\+mpu\+\_\+dmp\+\_\+motion\+\_\+driver.\+h}.
+

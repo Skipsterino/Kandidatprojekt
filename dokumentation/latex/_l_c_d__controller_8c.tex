@@ -20,6 +20,22 @@ void \hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{L\+C\+D
 \item[{T\+I\+M\+E\+R0\+\_\+\+O\+V\+F\+\_\+vect}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{_l_c_d__controller_8c_add2d7cdddfb682dcc0391e60cf42c7d6}{}\label{_l_c_d__controller_8c_add2d7cdddfb682dcc0391e60cf42c7d6}
+
+
+Definition at line \hyperlink{_l_c_d__controller_8c_source_l00047}{47} of file \hyperlink{_l_c_d__controller_8c_source}{L\+C\+D\+\_\+controller.\+c}.
+
+
+\begin{DoxyCode}
+00048 \{
+00049     ++\hyperlink{_l_c_d__controller_8h_a5462652fe95683f50bcbd6d5fbbc3ae1}{spiOverflow};   
+00050     \textcolor{keywordflow}{if}(++\hyperlink{_l_c_d__controller_8h_a9d160c265ce9aa4c9aa782cf7c5ecb41}{overflow\_counter} > 150)
+00051     \{
+00052         \hyperlink{_l_c_d__controller_8h_a4f799993f40fea97658f543f15842f4a}{currentLine} = (\hyperlink{_l_c_d__controller_8h_a4f799993f40fea97658f543f15842f4a}{currentLine} + \hyperlink{_l_c_d_8h_a5bb24c05980471cbc9086fef965deacc}{LCD\_NUMBER\_OF\_LINES}) % 4\textcolor{comment}{/*
+      (LCD\_NUMBER\_OF\_LINES*CONTROLLER\_NUMBER\_OF\_PAGES)*/};
+00053         \hyperlink{_l_c_d__controller_8h_a9d160c265ce9aa4c9aa782cf7c5ecb41}{overflow\_counter} = 0;
+00054     \}
+00055 \}
+\end{DoxyCode}
 \index{L\+C\+D\+\_\+controller.\+c@{L\+C\+D\+\_\+controller.\+c}!L\+C\+D\+\_\+controller\+\_\+init@{L\+C\+D\+\_\+controller\+\_\+init}}
 \index{L\+C\+D\+\_\+controller\+\_\+init@{L\+C\+D\+\_\+controller\+\_\+init}!L\+C\+D\+\_\+controller.\+c@{L\+C\+D\+\_\+controller.\+c}}
 \subsubsection[{\texorpdfstring{L\+C\+D\+\_\+controller\+\_\+init()}{LCD_controller_init()}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+controller\+\_\+init (
@@ -31,7 +47,38 @@ void \hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{L\+C\+D
 
 Initiates the L\+CD controller. 
 
-Initiates the L\+CD controller with the specified number of pages. \index{L\+C\+D\+\_\+controller.\+c@{L\+C\+D\+\_\+controller.\+c}!L\+C\+D\+\_\+controller\+\_\+put\+\_\+line@{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line}}
+File\+: \hyperlink{_l_c_d__controller_8c}{L\+C\+D\+\_\+controller.\+c} Version\+: 1.\+0 Last edited\+: 19 Maj 2016 
+
+Definition at line \hyperlink{_l_c_d__controller_8c_source_l00009}{9} of file \hyperlink{_l_c_d__controller_8c_source}{L\+C\+D\+\_\+controller.\+c}.
+
+
+\begin{DoxyCode}
+00010 \{
+00011     \textcolor{comment}{//Clear line buffer}
+00012     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 0; i < \hyperlink{_l_c_d_8h_a5bb24c05980471cbc9086fef965deacc}{LCD\_NUMBER\_OF\_LINES}*
+      \hyperlink{_l_c_d__controller_8h_aa7bbd66352e5612adc00e2b7aa77b1c9}{CONTROLLER\_NUMBER\_OF\_PAGES}; ++i)
+00013     \{
+00014         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j = 0; j < \hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{LCD\_LINE\_WIDTH}; ++j)
+00015         \{
+00016             \hyperlink{_l_c_d__controller_8h_a075b70e7692af8221284f00c90d70fb2}{lines}[i][j] = \textcolor{charliteral}{'\(\backslash\)0'};
+00017         \}
+00018     \}
+00019     
+00020     \hyperlink{_l_c_d__controller_8h_a4f799993f40fea97658f543f15842f4a}{currentLine} = 0;
+00021     \hyperlink{_l_c_d__controller_8h_a9d160c265ce9aa4c9aa782cf7c5ecb41}{overflow\_counter} = 0;
+00022     \hyperlink{_l_c_d__controller_8h_a5462652fe95683f50bcbd6d5fbbc3ae1}{spiOverflow} = 0;
+00023     
+00024     \textcolor{comment}{//Init TIMER0 med prescaler 1024}
+00025     TCCR0B |= (1<<CS02) | (1<<CS00);
+00026     
+00027     \textcolor{comment}{//Nollställ räknaren}
+00028     TCNT0 = 0;
+00029     
+00030     \textcolor{comment}{//Aktivera avbrott vid overflow}
+00031     TIMSK0 |= (1 << TOIE0);
+00032 \}
+\end{DoxyCode}
+\index{L\+C\+D\+\_\+controller.\+c@{L\+C\+D\+\_\+controller.\+c}!L\+C\+D\+\_\+controller\+\_\+put\+\_\+line@{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line}}
 \index{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line@{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line}!L\+C\+D\+\_\+controller.\+c@{L\+C\+D\+\_\+controller.\+c}}
 \subsubsection[{\texorpdfstring{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line(uint8\+\_\+t line, char string[16])}{LCD_controller_put_line(uint8_t line, char string[16])}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+controller\+\_\+put\+\_\+line (
 \begin{DoxyParamCaption}
@@ -39,3 +86,21 @@ Initiates the L\+CD controller with the specified number of pages. \index{L\+C\+
 \item[{char}]{string\mbox{[}16\mbox{]}}
 \end{DoxyParamCaption}
 )}\hypertarget{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{}\label{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}
+
+
+Definition at line \hyperlink{_l_c_d__controller_8c_source_l00034}{34} of file \hyperlink{_l_c_d__controller_8c_source}{L\+C\+D\+\_\+controller.\+c}.
+
+
+\begin{DoxyCode}
+00035 \{
+00036     \textcolor{keywordflow}{if}(line >= \hyperlink{_l_c_d_8h_a5bb24c05980471cbc9086fef965deacc}{LCD\_NUMBER\_OF\_LINES}*\hyperlink{_l_c_d__controller_8h_aa7bbd66352e5612adc00e2b7aa77b1c9}{CONTROLLER\_NUMBER\_OF\_PAGES})
+00037     \{
+00038         \textcolor{comment}{//Error line utanför intervallet}
+00039         \textcolor{keywordflow}{return};
+00040     \}
+00041     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 0; i < \hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{LCD\_LINE\_WIDTH}; ++i)
+00042     \{
+00043         \hyperlink{_l_c_d__controller_8h_a075b70e7692af8221284f00c90d70fb2}{lines}[line][i] = \textcolor{keywordtype}{string}[i];
+00044     \}
+00045 \}
+\end{DoxyCode}

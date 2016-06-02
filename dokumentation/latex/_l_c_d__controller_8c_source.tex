@@ -1,0 +1,56 @@
+\hypertarget{_l_c_d__controller_8c_source}{}\section{L\+C\+D\+\_\+controller.\+c}
+\label{_l_c_d__controller_8c_source}\index{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+C\+D\+\_\+controller.\+c@{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+L\+C\+D\+\_\+controller.\+c}}
+
+\begin{DoxyCode}
+00001 
+00007 \textcolor{preprocessor}{#include "\hyperlink{_l_c_d__controller_8h}{LCD\_controller.h}"}\textcolor{stringliteral}{'}
+00008 \textcolor{stringliteral}{}
+\hypertarget{_l_c_d__controller_8c_source.tex_l00009}{}\hyperlink{_l_c_d__controller_8h_acdf924af672d862f021f6b4ace2bcebd}{00009} \textcolor{stringliteral}{void LCD\_controller\_init()}
+00010 \textcolor{stringliteral}{\{}
+00011 \textcolor{stringliteral}{    //Clear line buffer}
+00012 \textcolor{stringliteral}{    for(int i = 0; i < LCD\_NUMBER\_OF\_LINES*CONTROLLER\_NUMBER\_OF\_PAGES; ++i)}
+00013 \textcolor{stringliteral}{    \{}
+00014 \textcolor{stringliteral}{        for(int j = 0; j < LCD\_LINE\_WIDTH; ++j)}
+00015 \textcolor{stringliteral}{        \{}
+00016 \textcolor{stringliteral}{            lines[i][j] = '}\(\backslash\)0\textcolor{stringliteral}{';}
+00017 \textcolor{stringliteral}{        \}}
+00018 \textcolor{stringliteral}{    \}}
+00019 \textcolor{stringliteral}{    }
+00020 \textcolor{stringliteral}{    currentLine = 0;}
+00021 \textcolor{stringliteral}{    overflow\_counter = 0;}
+00022 \textcolor{stringliteral}{    spiOverflow = 0;}
+00023 \textcolor{stringliteral}{    }
+00024 \textcolor{stringliteral}{    //Init TIMER0 med prescaler 1024}
+00025 \textcolor{stringliteral}{    TCCR0B |= (1<<CS02) | (1<<CS00);}
+00026 \textcolor{stringliteral}{    }
+00027 \textcolor{stringliteral}{    //Nollställ räknaren}
+00028 \textcolor{stringliteral}{    TCNT0 = 0;}
+00029 \textcolor{stringliteral}{    }
+00030 \textcolor{stringliteral}{    //Aktivera avbrott vid overflow}
+00031 \textcolor{stringliteral}{    TIMSK0 |= (1 << TOIE0);}
+00032 \textcolor{stringliteral}{\}}
+00033 \textcolor{stringliteral}{}
+\hypertarget{_l_c_d__controller_8c_source.tex_l00034}{}\hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{00034} \textcolor{stringliteral}{void LCD\_controller\_put\_line(uint8\_t line, char string[16])}
+00035 \textcolor{stringliteral}{\{}
+00036 \textcolor{stringliteral}{    if(line >= LCD\_NUMBER\_OF\_LINES*CONTROLLER\_NUMBER\_OF\_PAGES)}
+00037 \textcolor{stringliteral}{    \{}
+00038 \textcolor{stringliteral}{        //Error line utanför intervallet}
+00039 \textcolor{stringliteral}{        return;}
+00040 \textcolor{stringliteral}{    \}}
+00041 \textcolor{stringliteral}{    for(int i = 0; i < LCD\_LINE\_WIDTH; ++i)}
+00042 \textcolor{stringliteral}{    \{}
+00043 \textcolor{stringliteral}{        lines[line][i] = string[i];}
+00044 \textcolor{stringliteral}{    \}}
+00045 \textcolor{stringliteral}{\}}
+00046 \textcolor{stringliteral}{}
+\hypertarget{_l_c_d__controller_8c_source.tex_l00047}{}\hyperlink{_l_c_d__controller_8c_add2d7cdddfb682dcc0391e60cf42c7d6}{00047} \textcolor{stringliteral}{ISR(TIMER0\_OVF\_vect)}
+00048 \textcolor{stringliteral}{\{}
+00049 \textcolor{stringliteral}{    ++spiOverflow;  }
+00050 \textcolor{stringliteral}{    if(++overflow\_counter > 150)}
+00051 \textcolor{stringliteral}{    \{}
+00052 \textcolor{stringliteral}{        currentLine = (currentLine + LCD\_NUMBER\_OF\_LINES) %
+       4/*(LCD\_NUMBER\_OF\_LINES*CONTROLLER\_NUMBER\_OF\_PAGES)*/;}
+00053 \textcolor{stringliteral}{        overflow\_counter = 0;}
+00054 \textcolor{stringliteral}{    \}}
+00055 \textcolor{stringliteral}{\}}
+\end{DoxyCode}

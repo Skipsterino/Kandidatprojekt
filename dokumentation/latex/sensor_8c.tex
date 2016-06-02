@@ -55,9 +55,7 @@ float \hyperlink{sensor_8c_abf62ec6a8b0cc932582548dbd5032901}{restrict\+\_\+angl
 void \hyperlink{sensor_8c_ad838d8be45b7b7018e394ec9319e3795}{Normalize\+Quaternion} (float $\ast$quat)
 \begin{DoxyCompactList}\small\item\em Normalizes a quaternion. \end{DoxyCompactList}\item 
 void \hyperlink{sensor_8c_abf51091638bfe4a1e4479fa12a95b0a9}{run\+\_\+self\+\_\+test} ()
-\begin{DoxyCompactList}\small\item\em Runs a self-\/test on the I\+MU. \end{DoxyCompactList}\item 
-void \hyperlink{sensor_8c_ac6723e64e3c0cb29dcf2a13409964453}{kalibrering} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Runs a self-\/test on the I\+MU. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Function Documentation}
@@ -72,7 +70,42 @@ void \hyperlink{sensor_8c_ac6723e64e3c0cb29dcf2a13409964453}{kalibrering} ()
 
 Samples data from the IR sensors. 
 
-Samples from all the I\+R-\/sensors, saves them in a buffer with the five latest measurements for each sensor and takes an average. \index{sensor.\+c@{sensor.\+c}!A\+D\+C\+\_\+to\+\_\+distance@{A\+D\+C\+\_\+to\+\_\+distance}}
+Samples from all the I\+R-\/sensors, saves them in a buffer with the five latest measurements for each sensor and takes an average. 
+
+Definition at line \hyperlink{sensor_8c_source_l00279}{279} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00280 \{
+00281     \textcolor{keywordflow}{while}(ADMUX < 0x67)
+00282     \{
+00283         sleep\_enable();
+00284         sleep\_cpu();            \textcolor{comment}{// Processorn går ner i "ADC Noise Reduction"-vila och startar direkt en
+       ADC}
+00285         sleep\_disable();        \textcolor{comment}{// (Vilofunktionen enable:as endast här för att "programmeraren ska ha full
+       kontroll över när processorn sover")}
+00286     \}
+00287 
+00288     ADMUX = 0x60;               \textcolor{comment}{// Återställ ADC:n till ADC0 som inkanal}
+00289 
+00290     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} sensor\_ID = 0; sensor\_ID <=7; ++sensor\_ID)
+00291     \{
+00292         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 5; i>=2; --i)      \textcolor{comment}{// Skifta ut den äldsta avläsningen}
+00293         \{
+00294             \hyperlink{sensor_8h_a760424856faf789a5a9d799bed405668}{IR\_reading}[sensor\_ID][i] = \hyperlink{sensor_8h_a760424856faf789a5a9d799bed405668}{IR\_reading}[sensor\_ID][i-1];
+00295         \}
+00296 
+00297         \hyperlink{sensor_8h_a760424856faf789a5a9d799bed405668}{IR\_reading}[sensor\_ID][1] = \hyperlink{sensor_8h_a59d49b9b5c4c473c2c5cb4fcabb2bb36}{IR\_latest\_reading}[sensor\_ID]; \textcolor{comment}{// Spara in den
+       senaste.}
+00298 
+00299         \hyperlink{sensor_8h_a9b74d5e1cbbe4f3668e310bdb07b34e8}{IR\_ADC}[sensor\_ID] = (\hyperlink{sensor_8h_a760424856faf789a5a9d799bed405668}{IR\_reading}[sensor\_ID][1] + 
+      \hyperlink{sensor_8h_a760424856faf789a5a9d799bed405668}{IR\_reading}[sensor\_ID][2] + \hyperlink{sensor_8h_a760424856faf789a5a9d799bed405668}{IR\_reading}[sensor\_ID][3] + 
+      \hyperlink{sensor_8h_a760424856faf789a5a9d799bed405668}{IR\_reading}[sensor\_ID][4] + \hyperlink{sensor_8h_a760424856faf789a5a9d799bed405668}{IR\_reading}[sensor\_ID][5])/5; \textcolor{comment}{// Medelvärdesbilda över de 5
+       senaste}
+00300     \}
+00301 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!A\+D\+C\+\_\+to\+\_\+distance@{A\+D\+C\+\_\+to\+\_\+distance}}
 \index{A\+D\+C\+\_\+to\+\_\+distance@{A\+D\+C\+\_\+to\+\_\+distance}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{A\+D\+C\+\_\+to\+\_\+distance()}{ADC_to_distance()}}]{\setlength{\rightskip}{0pt plus 5cm}void A\+D\+C\+\_\+to\+\_\+distance (
 \begin{DoxyParamCaption}
@@ -83,7 +116,30 @@ Samples from all the I\+R-\/sensors, saves them in a buffer with the five latest
 
 Converts the readings from the IR sensors to distances. 
 
-Converts the I\+R-\/sensors values from the A/\+D-\/converter trough linear interpolation and the tables. \index{sensor.\+c@{sensor.\+c}!calculate\+\_\+\+Yaw@{calculate\+\_\+\+Yaw}}
+Converts the I\+R-\/sensors values from the A/\+D-\/converter trough linear interpolation and the tables. 
+
+Definition at line \hyperlink{sensor_8c_source_l00371}{371} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00372 \{
+00373     \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[0] = \hyperlink{sensor_8c_a074b774196f608f2234e624682b55967}{lookup\_distance}(\hyperlink{sensor_8h_aea6f77b6de5d03286eddec97260b58d1}{IR0\_table}, 
+      \hyperlink{sensor_8h_a9b74d5e1cbbe4f3668e310bdb07b34e8}{IR\_ADC}[0], 19);
+00374     \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[1] = \hyperlink{sensor_8c_a074b774196f608f2234e624682b55967}{lookup\_distance}(\hyperlink{sensor_8h_a8339fe4dbbee2308a5f1b0a2d813e1d5}{IR1\_table}, 
+      \hyperlink{sensor_8h_a9b74d5e1cbbe4f3668e310bdb07b34e8}{IR\_ADC}[1], 13);
+00375     \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[2] = \hyperlink{sensor_8c_a074b774196f608f2234e624682b55967}{lookup\_distance}(\hyperlink{sensor_8h_a8d3372b9f99cdb0224731c68b95f831e}{IR2\_table}, 
+      \hyperlink{sensor_8h_a9b74d5e1cbbe4f3668e310bdb07b34e8}{IR\_ADC}[2], 19);
+00376     \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[3] = \hyperlink{sensor_8c_a074b774196f608f2234e624682b55967}{lookup\_distance}(\hyperlink{sensor_8h_ae2d11b07f5d070503671bd7db51a040a}{IR3\_table}, 
+      \hyperlink{sensor_8h_a9b74d5e1cbbe4f3668e310bdb07b34e8}{IR\_ADC}[3], 19);
+00377     \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[4] = \hyperlink{sensor_8c_a074b774196f608f2234e624682b55967}{lookup\_distance}(\hyperlink{sensor_8h_af0f2d3338f8aeee7a6dfe23213e562f6}{IR4\_table}, 
+      \hyperlink{sensor_8h_a9b74d5e1cbbe4f3668e310bdb07b34e8}{IR\_ADC}[4], 13);
+00378     \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[5] = \hyperlink{sensor_8c_a074b774196f608f2234e624682b55967}{lookup\_distance}(\hyperlink{sensor_8h_acd33e89ce7fb300b6edfe6cdd6945a36}{IR5\_table}, 
+      \hyperlink{sensor_8h_a9b74d5e1cbbe4f3668e310bdb07b34e8}{IR\_ADC}[5], 19);
+00379     \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[6] = \hyperlink{sensor_8c_a074b774196f608f2234e624682b55967}{lookup\_distance}(\hyperlink{sensor_8h_a919f2d74de392de03219cc9a9a662013}{IR6\_table}, 
+      \hyperlink{sensor_8h_a9b74d5e1cbbe4f3668e310bdb07b34e8}{IR\_ADC}[6], 19);
+00380 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!calculate\+\_\+\+Yaw@{calculate\+\_\+\+Yaw}}
 \index{calculate\+\_\+\+Yaw@{calculate\+\_\+\+Yaw}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{calculate\+\_\+\+Yaw()}{calculate_Yaw()}}]{\setlength{\rightskip}{0pt plus 5cm}void calculate\+\_\+\+Yaw (
 \begin{DoxyParamCaption}
@@ -96,7 +152,28 @@ Calculate Yaw angle from the values from the IR sensors.
 
 Calculates current Yaw angle.
 
-Uses the distances from the IR sensors to calculate a Yaw angle relative to the corridor using trigonometry. \index{sensor.\+c@{sensor.\+c}!init\+\_\+\+A\+DC@{init\+\_\+\+A\+DC}}
+Uses the distances from the IR sensors to calculate a Yaw angle relative to the corridor using trigonometry. 
+
+Definition at line \hyperlink{sensor_8c_source_l00422}{422} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00423 \{
+00424     \textcolor{keywordtype}{double} l\_delta\_right = \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[2] - \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[3];                       \textcolor{comment}{//
+       Notation enligt Förstudie: Sensorer}
+00425     \textcolor{keywordtype}{double} l\_delta\_left = IR\_distance[5] - IR\_distance[6];
+00426 
+00427     \hyperlink{sensor_8h_ab11513fa2fd2a21b39f60ac1e5bbb064}{IR\_Yaw\_right} = (atan(l\_delta\_right/\hyperlink{sensor_8h_ae76d77cd1b87b203973ac8baa4081271}{IR\_sensor\_distance\_right})/3.14)*
+      180;     \textcolor{comment}{// Yaw-beräkning med de högra sidosensorerna}
+00428     \hyperlink{sensor_8h_a6a78596948fb325d4e213e9c371b35e5}{IR\_Yaw\_left} = (atan(l\_delta\_left/\hyperlink{sensor_8h_a85db4bba6dcce96787150b0aa1c9c978}{IR\_sensor\_distance\_left})/3.14)*180;      \textcolor{comment}{
+      // Yaw-beräkning med de vänstra sidosensorerna}
+00429 
+00430     \hyperlink{sensor_8h_ab11513fa2fd2a21b39f60ac1e5bbb064}{IR\_Yaw\_right} = \hyperlink{sensor_8c_abf62ec6a8b0cc932582548dbd5032901}{restrict\_angle}(\hyperlink{sensor_8h_ab11513fa2fd2a21b39f60ac1e5bbb064}{IR\_Yaw\_right});                                              \textcolor{comment}{
+      // Begränsa vinkeln så att overflow ej fås med int8\_t}
+00431     \hyperlink{sensor_8h_a6a78596948fb325d4e213e9c371b35e5}{IR\_Yaw\_left} = \hyperlink{sensor_8c_abf62ec6a8b0cc932582548dbd5032901}{restrict\_angle}(\hyperlink{sensor_8h_a6a78596948fb325d4e213e9c371b35e5}{IR\_Yaw\_left});
+00432 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!init\+\_\+\+A\+DC@{init\+\_\+\+A\+DC}}
 \index{init\+\_\+\+A\+DC@{init\+\_\+\+A\+DC}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{init\+\_\+\+A\+D\+C()}{init_ADC()}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+\_\+\+A\+DC (
 \begin{DoxyParamCaption}
@@ -109,7 +186,25 @@ F\+U\+N\+K\+T\+I\+O\+N\+ER ///.
 
 Initiates the A/\+D-\/converter
 
-Initiates the A/\+D-\/converter and enables noice cancelling mode. \index{sensor.\+c@{sensor.\+c}!init\+\_\+\+I2C@{init\+\_\+\+I2C}}
+Initiates the A/\+D-\/converter and enables noice cancelling mode. 
+
+Definition at line \hyperlink{sensor_8c_source_l00204}{204} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00205 \{
+00206     ADMUX = 0x60;                       \textcolor{comment}{// Skicka in 0110 0000 på ADMUX för att välja ADC0 som inkanal till
+       A/D (bit 4-0),}
+00207     \textcolor{comment}{// sätta ADLAR (bit 5) (=> de 8 mest sig. bitarna av resultatet ges i ADCH) och välja}
+00208     \textcolor{comment}{// "AVCC with external capacitor at AREF pin" som Voltage reference select. (bit 7-6)}
+00209     ADCSRA = 0x8F;                      \textcolor{comment}{// Skicka in 1000 1111 på ADCSRA för att enable:a ADC (bit 7), ADC
+       Complete-avbrott}
+00210     \textcolor{comment}{// (bit 3) samt dela klockfrekvensen med 128 (=> A/D klockas 125 kHz)}
+00211     SMCR |= 0<<SM2 | 0<<SM1 | 1<<SM0;   \textcolor{comment}{// Sleep Mode Select till "ADC Noise Reduction" (Så att
+       "sleep\_cpu()" ger just detta viloläge)}
+00212 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!init\+\_\+\+I2C@{init\+\_\+\+I2C}}
 \index{init\+\_\+\+I2C@{init\+\_\+\+I2C}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{init\+\_\+\+I2\+C()}{init_I2C()}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+\_\+\+I2C (
 \begin{DoxyParamCaption}
@@ -120,7 +215,21 @@ Initiates the A/\+D-\/converter and enables noice cancelling mode. \index{sensor
 
 Initiates the I2\+C-\/bus. 
 
-Initiates the I2\+C-\/bus which enables communication with the I\+MU. \index{sensor.\+c@{sensor.\+c}!init\+\_\+\+I\+MU@{init\+\_\+\+I\+MU}}
+Initiates the I2\+C-\/bus which enables communication with the I\+MU. 
+
+Definition at line \hyperlink{sensor_8c_source_l00242}{242} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00243 \{
+00244     PORTC = (1<<PC0) | (1<<PC1);        \textcolor{comment}{// Gör I2C-portarna till utgångar}
+00245 
+00246     TWSR &= ~((1<<TWPS1) | (1<<TWPS0)); \textcolor{comment}{// Sätt presecalerbitarna till 0 (ger prescalervärde = 1)}
+00247     TWBR = 0x0C;                        \textcolor{comment}{// Skicka in 0x20 på TWBR för att tillsammans med Prescalerbitarna
+       TWPS1-TWPS0 sätta I2C-frekvensen till 400 kHz}
+00248 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!init\+\_\+\+I\+MU@{init\+\_\+\+I\+MU}}
 \index{init\+\_\+\+I\+MU@{init\+\_\+\+I\+MU}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{init\+\_\+\+I\+M\+U()}{init_IMU()}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+\_\+\+I\+MU (
 \begin{DoxyParamCaption}
@@ -131,7 +240,46 @@ Initiates the I2\+C-\/bus which enables communication with the I\+MU. \index{sen
 
 Initiates the I\+MU. 
 
-Initiates the I\+MU by waking it up from sleep mode and programming the D\+MP. \index{sensor.\+c@{sensor.\+c}!init\+\_\+\+I\+M\+U\+\_\+interrupt@{init\+\_\+\+I\+M\+U\+\_\+interrupt}}
+Initiates the I\+MU by waking it up from sleep mode and programming the D\+MP. 
+
+Definition at line \hyperlink{sensor_8c_source_l00250}{250} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00251 \{
+00252     \hyperlink{sensor_8c_ad53a97524cf65efb444e93e9061d9353}{init\_IMU\_interrupt}();                                                 \textcolor{comment}{// TIllåter
+       avbrott från IMU:n}
+00253     \hyperlink{group___d_r_i_v_e_r_s_ga63637cf3771995aeda99d91d5f345f29}{mpu\_init}();                                                             \textcolor{comment}{// Initierar IMU,
+       väcker IMU:n från viloläge}
+00254     \hyperlink{group___d_r_i_v_e_r_s_ga6e77e7cc1cf6be5e8fdf617c5b4586d1}{mpu\_set\_sensors}(\hyperlink{group___d_r_i_v_e_r_s_ga3fdc30f9c0a26c2c4e2bb88921f91629}{INV\_XYZ\_GYRO} | \hyperlink{group___d_r_i_v_e_r_s_gaa03f025a17ed491e70b88274e89c75c5}{INV\_XYZ\_ACCEL});                          \textcolor{comment}{
+      // Sätter vilka sensorer vi ska använda}
+00255     \hyperlink{group___d_r_i_v_e_r_s_gababbdda287e1f19323489f90a0889dd7}{mpu\_configure\_fifo}(\hyperlink{group___d_r_i_v_e_r_s_ga3fdc30f9c0a26c2c4e2bb88921f91629}{INV\_XYZ\_GYRO} | 
+      \hyperlink{group___d_r_i_v_e_r_s_gaa03f025a17ed491e70b88274e89c75c5}{INV\_XYZ\_ACCEL});                        \textcolor{comment}{// Väljer vilka sensordata som skickas till FIFO}
+00256     \hyperlink{group___d_r_i_v_e_r_s_ga0144d666a67a82888b8580002afe8b55}{mpu\_set\_sample\_rate}(\hyperlink{sensor_8h_a7f881c6b2bb1dccd733c018dff655691}{MPU\_HZ});                                           \textcolor{comment}{//
+       Väljer samplingsfrekvens}
+00257     \hyperlink{group___d_r_i_v_e_r_s_ga66626a842452f444e9af29cb0d2c6150}{dmp\_load\_motion\_driver\_firmware}();                                       \textcolor{comment}{
+      // Programmerar DMP (IMU:ns interna processor)}
+00258     \hyperlink{group___d_r_i_v_e_r_s_ga6cb5ff144ce6e1546f00809de8bb24a4}{dmp\_set\_orientation}(inv\_orientation\_matrix\_to\_scalar(
+      \hyperlink{sensor_8h_abc4898c1a34c444db2963e65dccbf97c}{\_orientation})); \textcolor{comment}{// Sätt i vilket läge som IMU:n är monterad.}
+00259     \hyperlink{group___d_r_i_v_e_r_s_ga70c485bdfa30515e5b869b081192caa1}{dmp\_enable\_feature}(\hyperlink{group___d_r_i_v_e_r_s_gae879a3c9729f9e1be5e6d7c9211c69c0}{DMP\_FEATURE\_6X\_LP\_QUAT} | 
+      \hyperlink{group___d_r_i_v_e_r_s_ga9eeb257febe4a305df7ad4cf31dc2755}{DMP\_FEATURE\_SEND\_RAW\_ACCEL} | \hyperlink{group___d_r_i_v_e_r_s_ga40462c6fd55b04b2f79723dd737ee795}{DMP\_FEATURE\_SEND\_CAL\_GYRO} |
+       \hyperlink{group___d_r_i_v_e_r_s_gaaf0ac890c1f83106c08b722f1e865fdb}{DMP\_FEATURE\_GYRO\_CAL} | \hyperlink{group___d_r_i_v_e_r_s_ga87fac39cf95e2c56afdf507a986fa00b}{DMP\_FEATURE\_TAP}); \textcolor{comment}{// Välj funktioner som vi vill
+       ha}
+00260     \hyperlink{group___d_r_i_v_e_r_s_ga5399728fd572a7694af20286cc9d4121}{dmp\_set\_fifo\_rate}(\hyperlink{sensor_8h_a7f881c6b2bb1dccd733c018dff655691}{MPU\_HZ});                                               \textcolor{comment}{//
+       Väljer med vilken frekvens som data ska läggas ut i FIFO}
+00261     \hyperlink{group___d_r_i_v_e_r_s_ga68ed20e6c9663cd7c50469329af8715f}{mpu\_set\_dmp\_state}(\hyperlink{sensor_8h_a8726913025efbadec677580f19a7535d}{USE\_DMP});                                             \textcolor{comment}{// Slår
+       på DMP}
+00262 
+00263     \_delay\_ms(200);                                                         \textcolor{comment}{// Ge IMU tid att starta}
+00264 
+00265     \hyperlink{sensor_8c_abf51091638bfe4a1e4479fa12a95b0a9}{run\_self\_test}();                                                       \textcolor{comment}{// Kalibrera gyro
+       och accelometer}
+00266 
+00267     \hyperlink{sensor_8h_aada9974f9914a0bef6efe028d48ae383}{IMU\_data\_ready} = 0;                                                           \textcolor{comment}{// Från
+       start finns ingen data klar}
+00268 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!init\+\_\+\+I\+M\+U\+\_\+interrupt@{init\+\_\+\+I\+M\+U\+\_\+interrupt}}
 \index{init\+\_\+\+I\+M\+U\+\_\+interrupt@{init\+\_\+\+I\+M\+U\+\_\+interrupt}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{init\+\_\+\+I\+M\+U\+\_\+interrupt()}{init_IMU_interrupt()}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+\_\+\+I\+M\+U\+\_\+interrupt (
 \begin{DoxyParamCaption}
@@ -142,7 +290,19 @@ Initiates the I\+MU by waking it up from sleep mode and programming the D\+MP. \
 
 Initiates the interrupt from the I\+MU. 
 
-Enables a interrupt from the I\+MU. Interrupt comes when data is available. \index{sensor.\+c@{sensor.\+c}!init\+\_\+\+S\+PI@{init\+\_\+\+S\+PI}}
+Enables a interrupt from the I\+MU. Interrupt comes when data is available. 
+
+Definition at line \hyperlink{sensor_8c_source_l00270}{270} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00271 \{
+00272     DDRD &= ~(1<<PORTD2);               \textcolor{comment}{// Sätt PD2(INT0) till ingång}
+00273     EICRA |= 1<<ISC01 | 1<<ISC00;       \textcolor{comment}{// Externt avbrott INT0 på rising edge}
+00274     EIMSK |= (1 << INT0);               \textcolor{comment}{// Tillåter avbrott INT0}
+00275 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!init\+\_\+\+S\+PI@{init\+\_\+\+S\+PI}}
 \index{init\+\_\+\+S\+PI@{init\+\_\+\+S\+PI}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{init\+\_\+\+S\+P\+I()}{init_SPI()}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+\_\+\+S\+PI (
 \begin{DoxyParamCaption}
@@ -153,7 +313,27 @@ Enables a interrupt from the I\+MU. Interrupt comes when data is available. \ind
 
 Initiates the S\+P\+I-\/bus. 
 
-Initiates the S\+P\+I-\/bus and start a timer to keep the bus in sync. \index{sensor.\+c@{sensor.\+c}!init\+\_\+timer@{init\+\_\+timer}}
+Initiates the S\+P\+I-\/bus and start a timer to keep the bus in sync. 
+
+Definition at line \hyperlink{sensor_8c_source_l00223}{223} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00224 \{
+00225     SPCR = 1<<SPIE;                         \textcolor{comment}{// Enable avbrott SPI}
+00226     DDRB = 0x40;                            \textcolor{comment}{// Skicka in 0100 0000 på DDRB för att sätta MISO till utgång,
+       resten ingång. (SPI)}
+00227     SPCR |= (1<<SPE);                       \textcolor{comment}{// Enable:a SPI}
+00228     SPDR = 0xff;                            \textcolor{comment}{// Lägg in något nollskiljt i data registret, så att inte
+       första sändningen missas.}
+00229 
+00230     \textcolor{comment}{//Starta en timer för att hålla bussen i sync}
+00231     TCCR2B |= 1<<CS22 | 1<< CS21| 1<<CS20;  \textcolor{comment}{// Prescaler 1024}
+00232     TCNT2 = 0;                              \textcolor{comment}{// Nollställ timern}
+00233     TIMSK2 |= 1<<TOIE2;                     \textcolor{comment}{// Tillåt overflow-avbrott}
+00234 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!init\+\_\+timer@{init\+\_\+timer}}
 \index{init\+\_\+timer@{init\+\_\+timer}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{init\+\_\+timer()}{init_timer()}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+\_\+timer (
 \begin{DoxyParamCaption}
@@ -164,7 +344,18 @@ Initiates the S\+P\+I-\/bus and start a timer to keep the bus in sync. \index{se
 
 Initiates a timer. 
 
-Initiates a timer to give us a timestamp. \index{sensor.\+c@{sensor.\+c}!init\+\_\+\+US@{init\+\_\+\+US}}
+Initiates a timer to give us a timestamp. 
+
+Definition at line \hyperlink{sensor_8c_source_l00236}{236} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00237 \{
+00238     TCCR0B |= 1<<CS01 | 1<<CS00;        \textcolor{comment}{//Sätt preskalern till 64}
+00239     TIMSK0 |= 1<<TOIE0;                 \textcolor{comment}{//Tillåt overflow-avbrott på timer0 för millis}
+00240 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!init\+\_\+\+US@{init\+\_\+\+US}}
 \index{init\+\_\+\+US@{init\+\_\+\+US}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{init\+\_\+\+U\+S()}{init_US()}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+\_\+\+US (
 \begin{DoxyParamCaption}
@@ -175,13 +366,36 @@ Initiates a timer to give us a timestamp. \index{sensor.\+c@{sensor.\+c}!init\+\
 
 Initiates the ultra sound sensor. 
 
-Initiates the ultra sound sensor and allows interrupts from it. \index{sensor.\+c@{sensor.\+c}!I\+SR@{I\+SR}}
+Initiates the ultra sound sensor and allows interrupts from it. 
+
+Definition at line \hyperlink{sensor_8c_source_l00214}{214} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00215 \{
+00216     DDRD |= 1<<PORTD1;                  \textcolor{comment}{// Sätt PD1 till utgång}
+00217     DDRD &= ~(1<<PORTD6);               \textcolor{comment}{// Sätt PD6(ICP1) till ingång}
+00218     TIMSK1 |= 1<<ICIE1;                 \textcolor{comment}{// Enable:a "Input Capture Interrupt" (För US)}
+00219     TCCR1B &= ~(1<<ICES1);              \textcolor{comment}{// Input Capture triggar på negativ (fallande) flank}
+00220 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!I\+SR@{I\+SR}}
 \index{I\+SR@{I\+SR}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{I\+S\+R(\+I\+N\+T0\+\_\+vect)}{ISR(INT0_vect)}}]{\setlength{\rightskip}{0pt plus 5cm}I\+SR (
 \begin{DoxyParamCaption}
 \item[{I\+N\+T0\+\_\+vect}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{sensor_8c_afea150fcd685610cb9f7672fce361e53}{}\label{sensor_8c_afea150fcd685610cb9f7672fce361e53}
+
+
+Definition at line \hyperlink{sensor_8c_source_l00064}{64} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00065 \{
+00066     \hyperlink{sensor_8h_aada9974f9914a0bef6efe028d48ae383}{IMU\_data\_ready} = 1;
+00067 \}
+\end{DoxyCode}
 \index{sensor.\+c@{sensor.\+c}!I\+SR@{I\+SR}}
 \index{I\+SR@{I\+SR}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{I\+S\+R(\+T\+I\+M\+E\+R1\+\_\+\+C\+A\+P\+T\+\_\+vect)}{ISR(TIMER1_CAPT_vect)}}]{\setlength{\rightskip}{0pt plus 5cm}I\+SR (
@@ -189,6 +403,20 @@ Initiates the ultra sound sensor and allows interrupts from it. \index{sensor.\+
 \item[{T\+I\+M\+E\+R1\+\_\+\+C\+A\+P\+T\+\_\+vect}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{sensor_8c_a5da59e05fa5ade4be7c7656aee78291a}{}\label{sensor_8c_a5da59e05fa5ade4be7c7656aee78291a}
+
+
+Definition at line \hyperlink{sensor_8c_source_l00069}{69} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00070 \{
+00071     TCCR1B &= 0<<CS12 | 0<<CS10;            \textcolor{comment}{// Stanna timer}
+00072 
+00073     \hyperlink{sensor_8h_a6619824120bb407a94821a66f8bb922f}{US\_latest\_reading} = ICR1L;                     \textcolor{comment}{// Läs in timer-värdets låga byte...}
+00074     \hyperlink{sensor_8h_a6619824120bb407a94821a66f8bb922f}{US\_latest\_reading} = \hyperlink{sensor_8h_a6619824120bb407a94821a66f8bb922f}{US\_latest\_reading} + (ICR1H<<8);   \textcolor{comment}{// ...och
+       addera timer-värdets höga byte.}
+00075 \}
+\end{DoxyCode}
 \index{sensor.\+c@{sensor.\+c}!I\+SR@{I\+SR}}
 \index{I\+SR@{I\+SR}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{I\+S\+R(\+A\+D\+C\+\_\+vect)}{ISR(ADC_vect)}}]{\setlength{\rightskip}{0pt plus 5cm}I\+SR (
@@ -196,6 +424,18 @@ Initiates the ultra sound sensor and allows interrupts from it. \index{sensor.\+
 \item[{A\+D\+C\+\_\+vect}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{sensor_8c_a05c2e5b588ced1cd7312f5b0edc5b295}{}\label{sensor_8c_a05c2e5b588ced1cd7312f5b0edc5b295}
+
+
+Definition at line \hyperlink{sensor_8c_source_l00077}{77} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00078 \{
+00079     \hyperlink{sensor_8h_a59d49b9b5c4c473c2c5cb4fcabb2bb36}{IR\_latest\_reading}[ADMUX - 0x60] = ADCH<<2;     \textcolor{comment}{// Läs in ADC:ns 8 högsta (av 10)
+       bitar, skiftade två steg uppåt}
+00080     ++ADMUX;
+00081 \}
+\end{DoxyCode}
 \index{sensor.\+c@{sensor.\+c}!I\+SR@{I\+SR}}
 \index{I\+SR@{I\+SR}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{I\+S\+R(\+T\+I\+M\+E\+R2\+\_\+\+O\+V\+F\+\_\+vect)}{ISR(TIMER2_OVF_vect)}}]{\setlength{\rightskip}{0pt plus 5cm}I\+SR (
@@ -203,6 +443,16 @@ Initiates the ultra sound sensor and allows interrupts from it. \index{sensor.\+
 \item[{T\+I\+M\+E\+R2\+\_\+\+O\+V\+F\+\_\+vect}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{sensor_8c_a7cfcbe42bd266750aeb6e5d71e5ea479}{}\label{sensor_8c_a7cfcbe42bd266750aeb6e5d71e5ea479}
+
+
+Definition at line \hyperlink{sensor_8c_source_l00084}{84} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00085 \{
+00086     ++\hyperlink{sensor_8h_a2c687b5d4d67e6900cd35ec11107a4ee}{SPI\_overflow};
+00087 \}
+\end{DoxyCode}
 \index{sensor.\+c@{sensor.\+c}!I\+SR@{I\+SR}}
 \index{I\+SR@{I\+SR}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{I\+S\+R(\+S\+P\+I\+\_\+\+S\+T\+C\+\_\+vect)}{ISR(SPI_STC_vect)}}]{\setlength{\rightskip}{0pt plus 5cm}I\+SR (
@@ -210,13 +460,124 @@ Initiates the ultra sound sensor and allows interrupts from it. \index{sensor.\+
 \item[{S\+P\+I\+\_\+\+S\+T\+C\+\_\+vect}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{sensor_8c_af9cad97352f5ba9bbd800446131125a6}{}\label{sensor_8c_af9cad97352f5ba9bbd800446131125a6}
-\index{sensor.\+c@{sensor.\+c}!kalibrering@{kalibrering}}
-\index{kalibrering@{kalibrering}!sensor.\+c@{sensor.\+c}}
-\subsubsection[{\texorpdfstring{kalibrering()}{kalibrering()}}]{\setlength{\rightskip}{0pt plus 5cm}void kalibrering (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{sensor_8c_ac6723e64e3c0cb29dcf2a13409964453}{}\label{sensor_8c_ac6723e64e3c0cb29dcf2a13409964453}
+
+
+Definition at line \hyperlink{sensor_8c_source_l00089}{89} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00090 \{
+00091     \textcolor{keywordflow}{if}(\hyperlink{sensor_8h_a2c687b5d4d67e6900cd35ec11107a4ee}{SPI\_overflow} >= 2)       \textcolor{comment}{// Är det länge sedan vi fick ett avbrott ska vi börja om på
+       byte noll (ny sändning)}
+00092     \{
+00093         \hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send} = 1;
+00094     \}
+00095 
+00096     \hyperlink{sensor_8h_a2c687b5d4d67e6900cd35ec11107a4ee}{SPI\_overflow} = 0;
+00097 
+00098     \textcolor{keywordflow}{switch}(\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send})
+00099     \{
+00100         \textcolor{keywordflow}{case} 0:
+00101         \{
+00102             SPDR = \hyperlink{sensor_8h_a25e4d5a596b4f9f7dd79548191d5286a}{buffer0\_IR0};
+00103             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00104             \hyperlink{sensor_8h_a320a1ee237ba550bcdffd131a4198e17}{SPI\_done} = 1;       \textcolor{comment}{//Klart! Nu kan vi göra annat som genererar avbrott}
+00105             \textcolor{keywordflow}{break};
+00106         \}
+00107         \textcolor{keywordflow}{case} 1:
+00108         \{
+00109             SPDR = \hyperlink{sensor_8h_a920bf7cd31f51ba27f4d7154760d6397}{buffer1\_IR1};
+00110             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00111             \textcolor{keywordflow}{break};
+00112         \}
+00113         \textcolor{keywordflow}{case} 2:
+00114         \{
+00115             SPDR = \hyperlink{sensor_8h_a7efd4085c0de1446450a923f6b075dc3}{buffer2\_IR2};
+00116             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00117             \textcolor{keywordflow}{break};
+00118         \}
+00119         \textcolor{keywordflow}{case} 3:
+00120         \{
+00121             SPDR = \hyperlink{sensor_8h_a11674e633f257caae687446e074c13f6}{buffer3\_IR3};
+00122             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00123             \textcolor{keywordflow}{break};
+00124         \}
+00125         \textcolor{keywordflow}{case} 4:
+00126         \{
+00127             SPDR = \hyperlink{sensor_8h_a710096596ef17e15194d9557c5ccceff}{buffer4\_IR4};
+00128             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00129             \textcolor{keywordflow}{break};
+00130         \}
+00131         \textcolor{keywordflow}{case} 5:
+00132         \{
+00133             SPDR = \hyperlink{sensor_8h_a31b93d4352799841d373eb4f74ed0049}{buffer5\_IR5};
+00134             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00135             \textcolor{keywordflow}{break};
+00136         \}
+00137         \textcolor{keywordflow}{case} 6:
+00138         \{
+00139             SPDR = \hyperlink{sensor_8h_a544c2e919dc670aa1624f4f41a9d6fbf}{buffer6\_IR6};
+00140             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00141             \textcolor{keywordflow}{break};
+00142         \}
+00143         \textcolor{keywordflow}{case} 7:
+00144         \{
+00145             SPDR = \hyperlink{sensor_8h_aa308e9c1d2a396bb3f3a046ca9693b2d}{buffer7\_US};
+00146             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00147             \textcolor{keywordflow}{break};
+00148         \}
+00149         \textcolor{keywordflow}{case} 8:
+00150         \{
+00151             SPDR = \hyperlink{sensor_8h_a9b23fe577ec379483a30362cd1a036f1}{buffer8\_IR\_Yaw\_left};
+00152             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00153             \textcolor{keywordflow}{break};
+00154         \}
+00155         \textcolor{keywordflow}{case} 9:
+00156         \{
+00157             SPDR = \hyperlink{sensor_8h_a3526afe7f83bc3aba2c3dfe52423d800}{buffer9\_IR\_Yaw\_right};
+00158             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00159             \textcolor{keywordflow}{break};
+00160         \}
+00161         \textcolor{keywordflow}{case} 10:
+00162         \{
+00163             SPDR = \hyperlink{sensor_8h_ad9db200d7187c0cbc24c997f7cdf1eda}{buffer10\_IMU\_Yaw\_Low};
+00164             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00165             \textcolor{keywordflow}{break};
+00166         \}
+00167         \textcolor{keywordflow}{case} 11:
+00168         \{
+00169             SPDR = \hyperlink{sensor_8h_a6751f6849033b8cb222c62564455ad7b}{buffer11\_IMU\_Yaw\_High};
+00170             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00171             \textcolor{keywordflow}{break};
+00172         \}
+00173         \textcolor{keywordflow}{case} 12:
+00174         \{
+00175             SPDR = \hyperlink{sensor_8h_a23007d6ec6eeeab1723fbd750b6ee8a3}{buffer12\_Pitch};
+00176             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00177             \textcolor{keywordflow}{break};
+00178         \}
+00179         \textcolor{keywordflow}{case} 13:
+00180         \{
+00181             SPDR = \hyperlink{sensor_8h_a95d464c150dfd1cc2c783dc00acd7533}{buffer13\_Roll};
+00182             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00183             \textcolor{keywordflow}{break};
+00184         \}
+00185         \textcolor{keywordflow}{case} 14:
+00186         \{
+00187             SPDR = 0x00;
+00188             ++\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send};
+00189             \textcolor{keywordflow}{break};
+00190         \}
+00191         \textcolor{keywordflow}{case} 15:
+00192         \{
+00193             SPDR = 0x00;
+00194             \hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send} = 0;
+00195 
+00196             \textcolor{keywordflow}{break};
+00197         \}
+00198     \}
+00199 \}
+\end{DoxyCode}
 \index{sensor.\+c@{sensor.\+c}!lookup\+\_\+distance@{lookup\+\_\+distance}}
 \index{lookup\+\_\+distance@{lookup\+\_\+distance}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{lookup\+\_\+distance(\+A\+D\+C\+\_\+distance\+\_\+pair $\ast$\+A\+D\+C\+\_\+dist\+\_\+table, double A\+D\+C\+\_\+value, int table\+\_\+size)}{lookup_distance(ADC_distance_pair *ADC_dist_table, double ADC_value, int table_size)}}]{\setlength{\rightskip}{0pt plus 5cm}double lookup\+\_\+distance (
@@ -230,13 +591,89 @@ Initiates the ultra sound sensor and allows interrupts from it. \index{sensor.\+
 
 Looks up equivalent distance to a A\+DC value in the table. 
 
-Uses the table to convert the values from the A\+DC to distances using the tables and linear interpolation. \index{sensor.\+c@{sensor.\+c}!main@{main}}
+Uses the table to convert the values from the A\+DC to distances using the tables and linear interpolation. 
+
+Definition at line \hyperlink{sensor_8c_source_l00382}{382} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00383 \{
+00384     \textcolor{keywordflow}{if}(ADC\_value <= ADC\_dist\_table[0].ADC\_data)                 \textcolor{comment}{// Ge min-avståndet om ADC-värdet är mindre
+       än minsta tabell-värdet}
+00385     \textcolor{keywordflow}{return} ADC\_dist\_table[0].\hyperlink{struct_a_d_c__distance__pair_a79b8e036dca6911e3295a47d99f21f43}{distance};
+00386 
+00387     \textcolor{keywordflow}{if}(ADC\_value >= ADC\_dist\_table[table\_size-1].ADC\_data)      \textcolor{comment}{// Ge max-avståndet om ADC-värdet är större
+       än största tabell-värdet}
+00388     \textcolor{keywordflow}{return} ADC\_dist\_table[table\_size-1].\hyperlink{struct_a_d_c__distance__pair_a79b8e036dca6911e3295a47d99f21f43}{distance};
+00389 
+00390     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 0; i < table\_size-1; i++)                       \textcolor{comment}{// Linjärinterpolation}
+00391     \{
+00392         \textcolor{keywordflow}{if} (ADC\_dist\_table[i].ADC\_data <= ADC\_value && ADC\_value <= ADC\_dist\_table[i+1].ADC\_data) \textcolor{comment}{//
+       Linjärinterpolera om ADC-värdet ligger mellan två tabell-värden}
+00393         \{
+00394             \textcolor{keywordtype}{double} diff\_ADC = ADC\_value - ADC\_dist\_table[i].\hyperlink{struct_a_d_c__distance__pair_aa001cc67b1ec73e43eb6bd32d24a739b}{ADC\_data};
+00395             \textcolor{keywordtype}{double} step\_length = ADC\_dist\_table[i+1].\hyperlink{struct_a_d_c__distance__pair_aa001cc67b1ec73e43eb6bd32d24a739b}{ADC\_data} - ADC\_dist\_table[i].
+      \hyperlink{struct_a_d_c__distance__pair_aa001cc67b1ec73e43eb6bd32d24a739b}{ADC\_data};
+00396 
+00397             \textcolor{keywordflow}{return} ADC\_dist\_table[i].\hyperlink{struct_a_d_c__distance__pair_a79b8e036dca6911e3295a47d99f21f43}{distance} + (ADC\_dist\_table[i+1].
+      \hyperlink{struct_a_d_c__distance__pair_a79b8e036dca6911e3295a47d99f21f43}{distance} - ADC\_dist\_table[i].\hyperlink{struct_a_d_c__distance__pair_a79b8e036dca6911e3295a47d99f21f43}{distance})*(diff\_ADC/step\_length);
+00398         \}
+00399     \}
+00400     \textcolor{keywordflow}{return} -1;
+00401 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!main@{main}}
 \index{main@{main}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{main(void)}{main(void)}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
 \begin{DoxyParamCaption}
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{sensor_8c_a840291bc02cba5474a4cb46a9b9566fe}{}\label{sensor_8c_a840291bc02cba5474a4cb46a9b9566fe}
+File\+: \hyperlink{sensor_8c}{sensor.\+c} Version\+: 1.\+0 Last edited\+: 19 maj 2016 
+
+Definition at line \hyperlink{sensor_8c_source_l00021}{21} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00022 \{
+00023     \hyperlink{sensor_8c_a342ab07b607f3dc4efa0655ca1acd164}{init\_ADC}();
+00024     \hyperlink{sensor_8c_a16afe9a4d2627f3f7f1bab054d4ad7ad}{init\_US}();
+00025     \hyperlink{sensor_8c_a1065be4c03eff55f82e136ccb95a2854}{init\_SPI}();
+00026     \hyperlink{sensor_8c_a38016ab7b2931bcb950e0c6f3ba3f342}{init\_timer}(); \textcolor{comment}{// Initiera en timer för att hålla koll på förfluten tid.}
+00027     \hyperlink{sensor_8c_a87c8819d26491fb701918e147117710c}{init\_I2C}();
+00028 
+00029     \_delay\_ms(2000);
+00030     \hyperlink{sensor_8c_a1009b8de0745458d734bd73beda5ea25}{init\_IMU}();
+00031 
+00032     sei();                      \textcolor{comment}{// Tillåt avbrott (bit 7 på SREG sätts till 1)}
+00033 
+00034     \textcolor{keywordflow}{while} (1)
+00035     \{
+00036         \textcolor{keywordflow}{if} (\hyperlink{sensor_8h_a320a1ee237ba550bcdffd131a4198e17}{SPI\_done})
+00037         \{
+00038 
+00039             \hyperlink{sensor_8c_a41da5db2af35bde04662acc0c8ed5e22}{ADC\_IR}();                     \textcolor{comment}{// Sampla IR-sensorerna}
+00040             \hyperlink{sensor_8c_ad5232fda58bb026c495517be3c84307a}{read\_IMU}();                     \textcolor{comment}{// Hämta data från IMU}
+00041 
+00042             \hyperlink{sensor_8c_ae0b3db1a7cd93a0205ff39ef05844259}{send\_ping}();                   \textcolor{comment}{// Starta en US-mätning}
+00043             
+00044             \textcolor{comment}{// Konvertera ADC-värde till avstånd (IR-sensorerna)}
+00045             \hyperlink{sensor_8c_ad15899f7d08c246d74789f75dd145035}{ADC\_to\_distance}();
+00046 
+00047             \textcolor{comment}{// Konvertera tid till avstånd (US-sensorn)}
+00048             \hyperlink{sensor_8c_a4400365e5a5de20eeaf4e78531e39e9b}{time\_to\_distance}();
+00049             
+00050             \textcolor{comment}{// Räkna ut Yaw-vinkeln }
+00051             \hyperlink{sensor_8c_a5611f3fef1c7ebe6f76d952adf576e86}{calculate\_Yaw}();   
+00052             
+00053             \textcolor{comment}{// Spara undan i buffert            }
+00054             \hyperlink{sensor_8c_a387deb5b003e6eec445d95d9b30717f4}{save\_to\_buffer}();             
+00055 
+00056             \hyperlink{sensor_8h_a320a1ee237ba550bcdffd131a4198e17}{SPI\_done} = 0;
+00057         \}
+00058     \}
+00059 \}
+\end{DoxyCode}
 \index{sensor.\+c@{sensor.\+c}!Normalize\+Quaternion@{Normalize\+Quaternion}}
 \index{Normalize\+Quaternion@{Normalize\+Quaternion}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{Normalize\+Quaternion(float $\ast$quat)}{NormalizeQuaternion(float *quat)}}]{\setlength{\rightskip}{0pt plus 5cm}void Normalize\+Quaternion (
@@ -248,7 +685,27 @@ Uses the table to convert the values from the A\+DC to distances using the table
 
 Normalizes a quaternion. 
 
-Normalizes a quaternion \index{sensor.\+c@{sensor.\+c}!read\+\_\+\+I\+MU@{read\+\_\+\+I\+MU}}
+Normalizes a quaternion 
+
+Definition at line \hyperlink{sensor_8c_source_l00469}{469} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00470 \{
+00471     \textcolor{keywordtype}{float} length = sqrt(quat[\hyperlink{sensor_8h_a3cff338e3722c1c1a36de82d2a953bd3}{QUAT\_W}] * quat[\hyperlink{sensor_8h_a3cff338e3722c1c1a36de82d2a953bd3}{QUAT\_W}] + quat[\hyperlink{sensor_8h_a470e1c82469f8e4f20d039de634a5360}{QUAT\_X}] * quat[
+      \hyperlink{sensor_8h_a470e1c82469f8e4f20d039de634a5360}{QUAT\_X}] +
+00472     quat[\hyperlink{sensor_8h_ac7215623b05131650c8a16e4326f3734}{QUAT\_Y}] * quat[\hyperlink{sensor_8h_ac7215623b05131650c8a16e4326f3734}{QUAT\_Y}] + quat[\hyperlink{sensor_8h_a4ed90c13353e0d8ceb2f74ea3070fe11}{QUAT\_Z}] * quat[\hyperlink{sensor_8h_a4ed90c13353e0d8ceb2f74ea3070fe11}{QUAT\_Z}]);
+00473 
+00474     \textcolor{keywordflow}{if} (length == 0)
+00475     \textcolor{keywordflow}{return};
+00476 
+00477     quat[\hyperlink{sensor_8h_a3cff338e3722c1c1a36de82d2a953bd3}{QUAT\_W}] /= length;
+00478     quat[\hyperlink{sensor_8h_a470e1c82469f8e4f20d039de634a5360}{QUAT\_X}] /= length;
+00479     quat[\hyperlink{sensor_8h_ac7215623b05131650c8a16e4326f3734}{QUAT\_Y}] /= length;
+00480     quat[\hyperlink{sensor_8h_a4ed90c13353e0d8ceb2f74ea3070fe11}{QUAT\_Z}] /= length;
+00481 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!read\+\_\+\+I\+MU@{read\+\_\+\+I\+MU}}
 \index{read\+\_\+\+I\+MU@{read\+\_\+\+I\+MU}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{read\+\_\+\+I\+M\+U()}{read_IMU()}}]{\setlength{\rightskip}{0pt plus 5cm}void read\+\_\+\+I\+MU (
 \begin{DoxyParamCaption}
@@ -259,7 +716,73 @@ Normalizes a quaternion \index{sensor.\+c@{sensor.\+c}!read\+\_\+\+I\+MU@{read\+
 
 Gathers data from the I\+MU. 
 
-Gathers data from the I\+MU and calculates roll, yaw and pitch angle from returned quaternions. \index{sensor.\+c@{sensor.\+c}!restrict\+\_\+angle@{restrict\+\_\+angle}}
+Gathers data from the I\+MU and calculates roll, yaw and pitch angle from returned quaternions. 
+
+Definition at line \hyperlink{sensor_8c_source_l00303}{303} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00304 \{
+00305     \textcolor{keywordflow}{if} (\hyperlink{sensor_8h_aada9974f9914a0bef6efe028d48ae383}{IMU\_data\_ready})
+00306     \{
+00307         \textcolor{keywordtype}{short} gyro[3];
+00308         \textcolor{keywordtype}{short} accel[3];
+00309         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} timestamp;
+00310         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} more;
+00311 
+00312         \textcolor{keywordtype}{long} quat[4];
+00313 
+00314         \textcolor{keywordtype}{short} sensors;
+00315 
+00316         \textcolor{keywordflow}{if} (0 == \hyperlink{group___d_r_i_v_e_r_s_ga02db5f25359abe84be002c543cdc3803}{dmp\_read\_fifo}(gyro, accel, quat, &timestamp, &sensors, &more)) \textcolor{comment}{// Läser från
+       IMU}
+00317         \{
+00318 
+00319             \hyperlink{group___d_r_i_v_e_r_s_gaf23e9f57c0059be6ec57862f0584de10}{mpu\_reset\_fifo}();
+00320 
+00321             \textcolor{comment}{//if (!more) // Kolla så att vi får med all data}
+00322             \textcolor{comment}{//\{}
+00323             \hyperlink{sensor_8h_aada9974f9914a0bef6efe028d48ae383}{IMU\_data\_ready} = 0;
+00324             \textcolor{comment}{//\}}
+00325 
+00326             \hyperlink{sensor_8h_a0ad4931324e527c53bc98710a6d0dd39}{quaternion}[\hyperlink{sensor_8h_a3cff338e3722c1c1a36de82d2a953bd3}{QUAT\_W}] = (float)quat[\hyperlink{sensor_8h_a3cff338e3722c1c1a36de82d2a953bd3}{QUAT\_W}];
+00327             \hyperlink{sensor_8h_a0ad4931324e527c53bc98710a6d0dd39}{quaternion}[\hyperlink{sensor_8h_a470e1c82469f8e4f20d039de634a5360}{QUAT\_X}] = (float)quat[\hyperlink{sensor_8h_a470e1c82469f8e4f20d039de634a5360}{QUAT\_X}];
+00328             \hyperlink{sensor_8h_a0ad4931324e527c53bc98710a6d0dd39}{quaternion}[\hyperlink{sensor_8h_ac7215623b05131650c8a16e4326f3734}{QUAT\_Y}] = (float)quat[\hyperlink{sensor_8h_ac7215623b05131650c8a16e4326f3734}{QUAT\_Y}];
+00329             \hyperlink{sensor_8h_a0ad4931324e527c53bc98710a6d0dd39}{quaternion}[\hyperlink{sensor_8h_a4ed90c13353e0d8ceb2f74ea3070fe11}{QUAT\_Z}] = (float)quat[\hyperlink{sensor_8h_a4ed90c13353e0d8ceb2f74ea3070fe11}{QUAT\_Z}];
+00330 
+00331             \hyperlink{sensor_8c_ad838d8be45b7b7018e394ec9319e3795}{NormalizeQuaternion}(\hyperlink{sensor_8h_a0ad4931324e527c53bc98710a6d0dd39}{quaternion});
+00332 
+00333             \textcolor{keywordtype}{float} q0 = \hyperlink{sensor_8h_a0ad4931324e527c53bc98710a6d0dd39}{quaternion}[\hyperlink{sensor_8h_a3cff338e3722c1c1a36de82d2a953bd3}{QUAT\_W}];
+00334             \textcolor{keywordtype}{float} q1 = \hyperlink{sensor_8h_a0ad4931324e527c53bc98710a6d0dd39}{quaternion}[\hyperlink{sensor_8h_a470e1c82469f8e4f20d039de634a5360}{QUAT\_X}];
+00335             \textcolor{keywordtype}{float} q2 = \hyperlink{sensor_8h_a0ad4931324e527c53bc98710a6d0dd39}{quaternion}[\hyperlink{sensor_8h_ac7215623b05131650c8a16e4326f3734}{QUAT\_Y}];
+00336             \textcolor{keywordtype}{float} q3 = \hyperlink{sensor_8h_a0ad4931324e527c53bc98710a6d0dd39}{quaternion}[\hyperlink{sensor_8h_a4ed90c13353e0d8ceb2f74ea3070fe11}{QUAT\_Z}];
+00337 
+00338             \textcolor{comment}{/* Räkna ut gravitationsvektorn */}
+00339             \hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{gravity}[\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}] = 2*(q1*q3 - q0*q2);
+00340             \hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{gravity}[\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}] = 2*(q0*q1 + q2*q3);
+00341             \hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{gravity}[\hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}] = q0*q0 - q1*q1 - q2*q2 + q3*q3;
+00342 
+00343             \hyperlink{sensor_8h_a03d9ec4915ff658ec4a465315895106d}{IMU\_Yaw} = (((atan2(2*q1*q2 - 2*q0*q3, 2*q0*q0 + 2*q1*q1 - 1)/3.14)*180)/58)*90;                          \textcolor{comment}{
+      // Beräkna yaw-vinkel i grader}
+00344             \hyperlink{sensor_8h_a3e9f416b6cd3841b45e789df7a7f6d25}{IMU\_Pitch} = (atan(\hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{gravity}[\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}] / sqrt(\hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{gravity}[
+      \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}]*\hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{gravity}[\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}] + \hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{gravity}[\hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}]*\hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{gravity}[\hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}]))/3.14)*180; \textcolor{comment}{// Beräkna pitch-vinkel i
+       grader}
+00345             \hyperlink{sensor_8h_a4e5fce823764d0c2e5a1a088087084b2}{IMU\_Roll} = (atan(\hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{gravity}[\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}] / sqrt(\hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{gravity}[\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}]*
+      \hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{gravity}[\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}] + \hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{gravity}[\hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}]*\hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{gravity}[\hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}]))/3.14)*180; \textcolor{comment}{// Beräkna roll-vinkel i grader}
+00346 
+00347             \textcolor{comment}{/* Säkerställ att vi inte får overflow i datatyperna */}
+00348             \hyperlink{sensor_8h_a3e9f416b6cd3841b45e789df7a7f6d25}{IMU\_Pitch} = \hyperlink{sensor_8c_abf62ec6a8b0cc932582548dbd5032901}{restrict\_angle}(\hyperlink{sensor_8h_a3e9f416b6cd3841b45e789df7a7f6d25}{IMU\_Pitch});
+00349             \hyperlink{sensor_8h_a4e5fce823764d0c2e5a1a088087084b2}{IMU\_Roll} = \hyperlink{sensor_8c_abf62ec6a8b0cc932582548dbd5032901}{restrict\_angle}(\hyperlink{sensor_8h_a4e5fce823764d0c2e5a1a088087084b2}{IMU\_Roll});
+00350 
+00351         \}
+00352         \textcolor{keywordflow}{else}
+00353         \{
+00354             \hyperlink{_i2_c_8c_ad1a5ba420409525ff5ab1be86ac5e526}{error}();
+00355         \}
+00356     \}
+00357 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!restrict\+\_\+angle@{restrict\+\_\+angle}}
 \index{restrict\+\_\+angle@{restrict\+\_\+angle}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{restrict\+\_\+angle(float angle)}{restrict_angle(float angle)}}]{\setlength{\rightskip}{0pt plus 5cm}float restrict\+\_\+angle (
 \begin{DoxyParamCaption}
@@ -270,7 +793,25 @@ Gathers data from the I\+MU and calculates roll, yaw and pitch angle from return
 
 Restricts an angle to range for int\+\_\+8t. 
 
-Restricts an angle to be between -\/128 and 127 deg to avoid overflow when converting to int\+\_\+8t \index{sensor.\+c@{sensor.\+c}!run\+\_\+self\+\_\+test@{run\+\_\+self\+\_\+test}}
+Restricts an angle to be between -\/128 and 127 deg to avoid overflow when converting to int\+\_\+8t 
+
+Definition at line \hyperlink{sensor_8c_source_l00458}{458} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00459 \{
+00460     \textcolor{keywordflow}{if}(\hyperlink{styr_2styr_2main_8c_ab8ef1bf8a70cc07c6d55823c390a7e76}{angle} > 127)
+00461     \hyperlink{styr_2styr_2main_8c_ab8ef1bf8a70cc07c6d55823c390a7e76}{angle} = 127;                           \textcolor{comment}{// Sätt max-vinkel (så att ej får överslag då det görs om
+       till 8 bitar (signed))}
+00462 
+00463     \textcolor{keywordflow}{if}(\hyperlink{styr_2styr_2main_8c_ab8ef1bf8a70cc07c6d55823c390a7e76}{angle} < -128)
+00464     \hyperlink{styr_2styr_2main_8c_ab8ef1bf8a70cc07c6d55823c390a7e76}{angle} = -128;                          \textcolor{comment}{// Sätt min-vinkel (så att ej får överslag då det görs om
+       till 8 bitar (signed))}
+00465 
+00466     \textcolor{keywordflow}{return} \hyperlink{styr_2styr_2main_8c_ab8ef1bf8a70cc07c6d55823c390a7e76}{angle};
+00467 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!run\+\_\+self\+\_\+test@{run\+\_\+self\+\_\+test}}
 \index{run\+\_\+self\+\_\+test@{run\+\_\+self\+\_\+test}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{run\+\_\+self\+\_\+test()}{run_self_test()}}]{\setlength{\rightskip}{0pt plus 5cm}void run\+\_\+self\+\_\+test (
 \begin{DoxyParamCaption}
@@ -281,7 +822,30 @@ Restricts an angle to be between -\/128 and 127 deg to avoid overflow when conve
 
 Runs a self-\/test on the I\+MU. 
 
-Runs a self-\/test on the I\+MU calibrating the gyros and accelerometers. \index{sensor.\+c@{sensor.\+c}!save\+\_\+to\+\_\+buffer@{save\+\_\+to\+\_\+buffer}}
+Runs a self-\/test on the I\+MU calibrating the gyros and accelerometers. 
+
+Definition at line \hyperlink{sensor_8c_source_l00483}{483} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00484 \{
+00485     \textcolor{keywordtype}{long} gyro\_cal[3], accel\_cal[3];
+00486 
+00487     \hyperlink{group___d_r_i_v_e_r_s_ga3773dc98eb1ba15da0091ae75abcf62f}{mpu\_run\_self\_test}(gyro\_cal, accel\_cal);
+00488 
+00489     \textcolor{keywordflow}{for}(uint8\_t i = 0; i<3; i++)
+00490     \{
+00491         gyro\_cal[i] = (long)(gyro\_cal[i] * 32.8f);          \textcolor{comment}{// Konvertera till +-1000dps}
+00492         accel\_cal[i] *= 2048.f;                             \textcolor{comment}{// Konvertera till +-16G}
+00493         accel\_cal[i] = accel\_cal[i] >> 16;
+00494         gyro\_cal[i] = (long)(gyro\_cal[i] >> 16);
+00495     \}
+00496     \hyperlink{group___d_r_i_v_e_r_s_ga01361a0f5c1f048cb0742bd3d0e4d3a5}{mpu\_set\_gyro\_bias\_reg}(gyro\_cal);                       \textcolor{comment}{// Kalibrera gyrons}
+00497     \hyperlink{group___d_r_i_v_e_r_s_gae2eb5073dacc7455101bf6818e35c40a}{mpu\_set\_accel\_bias\_6050\_reg}(accel\_cal);                  \textcolor{comment}{// Kalibrera
+       accelerometrar}
+00498 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!save\+\_\+to\+\_\+buffer@{save\+\_\+to\+\_\+buffer}}
 \index{save\+\_\+to\+\_\+buffer@{save\+\_\+to\+\_\+buffer}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{save\+\_\+to\+\_\+buffer()}{save_to_buffer()}}]{\setlength{\rightskip}{0pt plus 5cm}void save\+\_\+to\+\_\+buffer (
 \begin{DoxyParamCaption}
@@ -292,7 +856,38 @@ Runs a self-\/test on the I\+MU calibrating the gyros and accelerometers. \index
 
 Saves all the data in a buffer. 
 
-Converts and compiles all the data in a buffer, ready to be sent. \index{sensor.\+c@{sensor.\+c}!send\+\_\+ping@{send\+\_\+ping}}
+Converts and compiles all the data in a buffer, ready to be sent. 
+
+Definition at line \hyperlink{sensor_8c_source_l00434}{434} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00435 \{
+00436     int16\_t IMU\_Yaw\_16 = \hyperlink{sensor_8h_a03d9ec4915ff658ec4a465315895106d}{IMU\_Yaw};                        \textcolor{comment}{// Konvertera IMU\_Yaw till int16\_t}
+00437 
+00438     \hyperlink{sensor_8h_a25e4d5a596b4f9f7dd79548191d5286a}{buffer0\_IR0} = \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[0];
+00439     \hyperlink{sensor_8h_a920bf7cd31f51ba27f4d7154760d6397}{buffer1\_IR1} = \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[1];
+00440     \hyperlink{sensor_8h_a7efd4085c0de1446450a923f6b075dc3}{buffer2\_IR2} = \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[2];
+00441     \hyperlink{sensor_8h_a11674e633f257caae687446e074c13f6}{buffer3\_IR3} = \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[3];
+00442     \hyperlink{sensor_8h_a710096596ef17e15194d9557c5ccceff}{buffer4\_IR4} = \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[4];
+00443     \hyperlink{sensor_8h_a31b93d4352799841d373eb4f74ed0049}{buffer5\_IR5} = \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[5];
+00444     \hyperlink{sensor_8h_a544c2e919dc670aa1624f4f41a9d6fbf}{buffer6\_IR6} = \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[6];
+00445 
+00446     \hyperlink{sensor_8h_aa308e9c1d2a396bb3f3a046ca9693b2d}{buffer7\_US} = \hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{US\_distance};
+00447 
+00448     \hyperlink{sensor_8h_a9b23fe577ec379483a30362cd1a036f1}{buffer8\_IR\_Yaw\_left} = \hyperlink{sensor_8h_a6a78596948fb325d4e213e9c371b35e5}{IR\_Yaw\_left};
+00449     \hyperlink{sensor_8h_a3526afe7f83bc3aba2c3dfe52423d800}{buffer9\_IR\_Yaw\_right} = \hyperlink{sensor_8h_ab11513fa2fd2a21b39f60ac1e5bbb064}{IR\_Yaw\_right};
+00450 
+00451     \hyperlink{sensor_8h_ad9db200d7187c0cbc24c997f7cdf1eda}{buffer10\_IMU\_Yaw\_Low} = (0x00FF & IMU\_Yaw\_16);           \textcolor{comment}{// Skicka låga byten av
+       IMU\_Yaw\_16}
+00452     \hyperlink{sensor_8h_a6751f6849033b8cb222c62564455ad7b}{buffer11\_IMU\_Yaw\_High} = (0xFF00 & IMU\_Yaw\_16) / 256;   \textcolor{comment}{// Skicka höga byten av
+       IMU\_Yaw\_16}
+00453 
+00454     \hyperlink{sensor_8h_a23007d6ec6eeeab1723fbd750b6ee8a3}{buffer12\_Pitch} = \hyperlink{sensor_8h_a3e9f416b6cd3841b45e789df7a7f6d25}{IMU\_Pitch};
+00455     \hyperlink{sensor_8h_a95d464c150dfd1cc2c783dc00acd7533}{buffer13\_Roll} = \hyperlink{sensor_8h_a4e5fce823764d0c2e5a1a088087084b2}{IMU\_Roll};
+00456 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!send\+\_\+ping@{send\+\_\+ping}}
 \index{send\+\_\+ping@{send\+\_\+ping}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{send\+\_\+ping()}{send_ping()}}]{\setlength{\rightskip}{0pt plus 5cm}void send\+\_\+ping (
 \begin{DoxyParamCaption}
@@ -303,7 +898,24 @@ Converts and compiles all the data in a buffer, ready to be sent. \index{sensor.
 
 Forces a sound pulse from the US. 
 
-Sends a trigger pulse for 12µs. Starts a timer that waits for a answer from the U\+S-\/sensor. \index{sensor.\+c@{sensor.\+c}!time\+\_\+to\+\_\+distance@{time\+\_\+to\+\_\+distance}}
+Sends a trigger pulse for 12µs. Starts a timer that waits for a answer from the U\+S-\/sensor. 
+
+Definition at line \hyperlink{sensor_8c_source_l00359}{359} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00360 \{
+00361     PORTD&= ~(1<<PORTD1);
+00362     \_delay\_us(2);
+00363     PORTD |= 1<<PORTD1;
+00364     \_delay\_us(12);                  \textcolor{comment}{// Skickar ut trigger-puls på minst 10 mikrosekunder}
+00365     PORTD&= ~(1<<PORTD1);           \textcolor{comment}{// Ping triggas då trigger-pulsen går låg}
+00366 
+00367     TCNT1 = 0;                      \textcolor{comment}{// Nollställ timer}
+00368     TCCR1B |= 1<<CS12 | 1<<CS10;    \textcolor{comment}{// Starta timer}
+00369 \}
+\end{DoxyCode}
+\index{sensor.\+c@{sensor.\+c}!time\+\_\+to\+\_\+distance@{time\+\_\+to\+\_\+distance}}
 \index{time\+\_\+to\+\_\+distance@{time\+\_\+to\+\_\+distance}!sensor.\+c@{sensor.\+c}}
 \subsubsection[{\texorpdfstring{time\+\_\+to\+\_\+distance()}{time_to_distance()}}]{\setlength{\rightskip}{0pt plus 5cm}void time\+\_\+to\+\_\+distance (
 \begin{DoxyParamCaption}
@@ -315,3 +927,30 @@ Sends a trigger pulse for 12µs. Starts a timer that waits for a answer from the
 Converts time for the US to distance. 
 
 Calculates a distance for the US sensor using the time-\/of-\/flight for the sound. 
+
+Definition at line \hyperlink{sensor_8c_source_l00403}{403} of file \hyperlink{sensor_8c_source}{sensor.\+c}.
+
+
+\begin{DoxyCode}
+00404 \{
+00405     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 5; i>=2; --i)      \textcolor{comment}{// Skifta ut den äldsta avläsningen}
+00406     \{
+00407         \hyperlink{sensor_8h_a2f6715b10308bb971461584c206dfde7}{US\_reading}[i] = \hyperlink{sensor_8h_a2f6715b10308bb971461584c206dfde7}{US\_reading}[i-1];
+00408     \}
+00409 
+00410     \hyperlink{sensor_8h_a2f6715b10308bb971461584c206dfde7}{US\_reading}[1] = \hyperlink{sensor_8h_a6619824120bb407a94821a66f8bb922f}{US\_latest\_reading};   \textcolor{comment}{// Spara in den senaste.}
+00411 
+00412     \hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{US\_distance} = (\hyperlink{sensor_8h_a2f6715b10308bb971461584c206dfde7}{US\_reading}[1] + \hyperlink{sensor_8h_a2f6715b10308bb971461584c206dfde7}{US\_reading}[2] + 
+      \hyperlink{sensor_8h_a2f6715b10308bb971461584c206dfde7}{US\_reading}[3] + \hyperlink{sensor_8h_a2f6715b10308bb971461584c206dfde7}{US\_reading}[4] + \hyperlink{sensor_8h_a2f6715b10308bb971461584c206dfde7}{US\_reading}[5])/5; \textcolor{comment}{// Medelvärdesbilda över de
+       5 senaste}
+00413 
+00414     \hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{US\_distance} =  \hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{US\_distance}*0.0642857143;      \textcolor{comment}{// Gör om till tid i millisekunder}
+00415     \hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{US\_distance} = \hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{US\_distance} - 0.75;         \textcolor{comment}{// Subrtrahera offset mellan
+       triggerpuls och ekopuls}
+00416     \hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{US\_distance} = 34.33*\hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{US\_distance}/2;            \textcolor{comment}{// Gör om till cm}
+00417 
+00418     \textcolor{keywordflow}{if}(\hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{US\_distance} > 250)
+00419     \hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{US\_distance} = 250;                           \textcolor{comment}{// Sätt max-avstånd (så att ej får överslag då
+       det görs om till 8 bitar)}
+00420 \}
+\end{DoxyCode}

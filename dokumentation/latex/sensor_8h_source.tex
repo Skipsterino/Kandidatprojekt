@@ -3,257 +3,257 @@
 
 \begin{DoxyCode}
 00001 
-00011 \textcolor{preprocessor}{#ifndef SENSOR\_H\_}
-00012 \textcolor{preprocessor}{#define SENSOR\_H\_}
-00013 
-\hypertarget{sensor_8h_source.tex_l00014}{}\hyperlink{sensor_8h_a43bafb28b29491ec7f871319b5a3b2f8}{00014} \textcolor{preprocessor}{#define F\_CPU 16000000UL    }
-00016 \textcolor{preprocessor}{#include <avr/io.h>}
-00017 \textcolor{preprocessor}{#include <avr/interrupt.h>}
-00018 \textcolor{preprocessor}{#include <avr/sleep.h>}
-00019 \textcolor{preprocessor}{#include <math.h>}
-00020 \textcolor{preprocessor}{#include <util/delay.h>}
-00021 \textcolor{preprocessor}{#include <compat/twi.h>}
-00022 
-\hypertarget{sensor_8h_source.tex_l00023}{}\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{00023} \textcolor{preprocessor}{#define x 0             }
-\hypertarget{sensor_8h_source.tex_l00024}{}\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{00024} \textcolor{preprocessor}{#define y 1             }
-\hypertarget{sensor_8h_source.tex_l00025}{}\hyperlink{sensor_8h_afb573e69f3b198fe9ca91079c4a402a9}{00025} \textcolor{preprocessor}{#define z 2             }
-\hypertarget{sensor_8h_source.tex_l00027}{}\hyperlink{sensor_8h_a320a1ee237ba550bcdffd131a4198e17}{00027} \textcolor{preprocessor}{volatile uint8\_t SPI\_done = 0;      }
-\hypertarget{sensor_8h_source.tex_l00028}{}\hyperlink{sensor_8h_a2c687b5d4d67e6900cd35ec11107a4ee}{00028} \textcolor{preprocessor}{volatile uint8\_t SPI\_overflow = 0;  }
-00030 \textcolor{preprocessor}{}
-\hypertarget{sensor_8h_source.tex_l00032}{}\hyperlink{sensor_8h_abf692cf614d069eb741fe7ee8a5bd31d}{00032} \textcolor{keyword}{const} \textcolor{keywordtype}{int} \hyperlink{sensor_8h_abf692cf614d069eb741fe7ee8a5bd31d}{delay\_time} = 50;            
-\hypertarget{sensor_8h_source.tex_l00034}{}\hyperlink{sensor_8h_ae76d77cd1b87b203973ac8baa4081271}{00034} \textcolor{keyword}{const} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_ae76d77cd1b87b203973ac8baa4081271}{IR\_sensor\_distance\_right} = 16.5;       
-\hypertarget{sensor_8h_source.tex_l00035}{}\hyperlink{sensor_8h_a85db4bba6dcce96787150b0aa1c9c978}{00035} \textcolor{keyword}{const} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a85db4bba6dcce96787150b0aa1c9c978}{IR\_sensor\_distance\_left} = 16.5;     
-00036 
-\hypertarget{sensor_8h_source.tex_l00038}{}\hyperlink{sensor_8h_a59d49b9b5c4c473c2c5cb4fcabb2bb36}{00038} \textcolor{keyword}{volatile} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a59d49b9b5c4c473c2c5cb4fcabb2bb36}{IR\_latest\_reading}[7];  
-\hypertarget{sensor_8h_source.tex_l00039}{}\hyperlink{sensor_8h_a760424856faf789a5a9d799bed405668}{00039} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a760424856faf789a5a9d799bed405668}{IR\_reading}[7][5];              
-\hypertarget{sensor_8h_source.tex_l00040}{}\hyperlink{sensor_8h_a9b74d5e1cbbe4f3668e310bdb07b34e8}{00040} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a9b74d5e1cbbe4f3668e310bdb07b34e8}{IR\_ADC}[7];                     
-\hypertarget{sensor_8h_source.tex_l00041}{}\hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{00041} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[7];                   
-\hypertarget{sensor_8h_source.tex_l00042}{}\hyperlink{sensor_8h_ab11513fa2fd2a21b39f60ac1e5bbb064}{00042} \textcolor{keywordtype}{float} \hyperlink{sensor_8h_ab11513fa2fd2a21b39f60ac1e5bbb064}{IR\_Yaw\_right}, \hyperlink{sensor_8h_a6a78596948fb325d4e213e9c371b35e5}{IR\_Yaw\_left};     
-\hypertarget{sensor_8h_source.tex_l00047}{}\hyperlink{struct_a_d_c__distance__pair}{00047} \textcolor{keyword}{typedef} \textcolor{keyword}{struct}
-00048 \{
-\hypertarget{sensor_8h_source.tex_l00049}{}\hyperlink{struct_a_d_c__distance__pair_aa001cc67b1ec73e43eb6bd32d24a739b}{00049}     \textcolor{keywordtype}{double} \hyperlink{struct_a_d_c__distance__pair_aa001cc67b1ec73e43eb6bd32d24a739b}{ADC\_data};
-\hypertarget{sensor_8h_source.tex_l00050}{}\hyperlink{struct_a_d_c__distance__pair_a79b8e036dca6911e3295a47d99f21f43}{00050}     \textcolor{keywordtype}{double} \hyperlink{struct_a_d_c__distance__pair_a79b8e036dca6911e3295a47d99f21f43}{distance};
-00051 \} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair};
-00052 
-\hypertarget{sensor_8h_source.tex_l00053}{}\hyperlink{sensor_8h_a6619824120bb407a94821a66f8bb922f}{00053} \textcolor{keyword}{volatile} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a6619824120bb407a94821a66f8bb922f}{US\_latest\_reading};             
-\hypertarget{sensor_8h_source.tex_l00054}{}\hyperlink{sensor_8h_a2f6715b10308bb971461584c206dfde7}{00054} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a2f6715b10308bb971461584c206dfde7}{US\_reading}[5];
-\hypertarget{sensor_8h_source.tex_l00055}{}\hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{00055} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{US\_distance};                      
-00057 
-\hypertarget{sensor_8h_source.tex_l00059}{}\hyperlink{sensor_8h_a25e4d5a596b4f9f7dd79548191d5286a}{00059} uint8\_t \hyperlink{sensor_8h_a25e4d5a596b4f9f7dd79548191d5286a}{buffer0\_IR0} = 0xf0;              
-\hypertarget{sensor_8h_source.tex_l00060}{}\hyperlink{sensor_8h_a920bf7cd31f51ba27f4d7154760d6397}{00060} uint8\_t \hyperlink{sensor_8h_a920bf7cd31f51ba27f4d7154760d6397}{buffer1\_IR1} = 0xf1;              
-\hypertarget{sensor_8h_source.tex_l00061}{}\hyperlink{sensor_8h_a7efd4085c0de1446450a923f6b075dc3}{00061} uint8\_t \hyperlink{sensor_8h_a7efd4085c0de1446450a923f6b075dc3}{buffer2\_IR2} = 0xf2;              
-\hypertarget{sensor_8h_source.tex_l00062}{}\hyperlink{sensor_8h_a11674e633f257caae687446e074c13f6}{00062} uint8\_t \hyperlink{sensor_8h_a11674e633f257caae687446e074c13f6}{buffer3\_IR3} = 0xf3;              
-\hypertarget{sensor_8h_source.tex_l00063}{}\hyperlink{sensor_8h_a710096596ef17e15194d9557c5ccceff}{00063} uint8\_t \hyperlink{sensor_8h_a710096596ef17e15194d9557c5ccceff}{buffer4\_IR4} = 0xf4;              
-\hypertarget{sensor_8h_source.tex_l00064}{}\hyperlink{sensor_8h_a31b93d4352799841d373eb4f74ed0049}{00064} uint8\_t \hyperlink{sensor_8h_a31b93d4352799841d373eb4f74ed0049}{buffer5\_IR5} = 0xf5;              
-\hypertarget{sensor_8h_source.tex_l00065}{}\hyperlink{sensor_8h_a544c2e919dc670aa1624f4f41a9d6fbf}{00065} uint8\_t \hyperlink{sensor_8h_a544c2e919dc670aa1624f4f41a9d6fbf}{buffer6\_IR6} = 0xf6;              
-\hypertarget{sensor_8h_source.tex_l00066}{}\hyperlink{sensor_8h_aa308e9c1d2a396bb3f3a046ca9693b2d}{00066} uint8\_t \hyperlink{sensor_8h_aa308e9c1d2a396bb3f3a046ca9693b2d}{buffer7\_US} = 0xf7;                
-\hypertarget{sensor_8h_source.tex_l00067}{}\hyperlink{sensor_8h_a9b23fe577ec379483a30362cd1a036f1}{00067} int8\_t \hyperlink{sensor_8h_a9b23fe577ec379483a30362cd1a036f1}{buffer8\_IR\_Yaw\_left} = 0xf8;       
-\hypertarget{sensor_8h_source.tex_l00068}{}\hyperlink{sensor_8h_a3526afe7f83bc3aba2c3dfe52423d800}{00068} int8\_t \hyperlink{sensor_8h_a3526afe7f83bc3aba2c3dfe52423d800}{buffer9\_IR\_Yaw\_right} = 0xf9;     
-\hypertarget{sensor_8h_source.tex_l00069}{}\hyperlink{sensor_8h_ad9db200d7187c0cbc24c997f7cdf1eda}{00069} int8\_t \hyperlink{sensor_8h_ad9db200d7187c0cbc24c997f7cdf1eda}{buffer10\_IMU\_Yaw\_Low} = 0xfa;     
-\hypertarget{sensor_8h_source.tex_l00070}{}\hyperlink{sensor_8h_a6751f6849033b8cb222c62564455ad7b}{00070} int8\_t \hyperlink{sensor_8h_a6751f6849033b8cb222c62564455ad7b}{buffer11\_IMU\_Yaw\_High} = 0xfb;   
-\hypertarget{sensor_8h_source.tex_l00071}{}\hyperlink{sensor_8h_a23007d6ec6eeeab1723fbd750b6ee8a3}{00071} int8\_t \hyperlink{sensor_8h_a23007d6ec6eeeab1723fbd750b6ee8a3}{buffer12\_Pitch} = 0xfc;         
-\hypertarget{sensor_8h_source.tex_l00072}{}\hyperlink{sensor_8h_a95d464c150dfd1cc2c783dc00acd7533}{00072} int8\_t \hyperlink{sensor_8h_a95d464c150dfd1cc2c783dc00acd7533}{buffer13\_Roll} = 0xfd;           
-\hypertarget{sensor_8h_source.tex_l00074}{}\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{00074} \textcolor{keyword}{volatile} \textcolor{keywordtype}{int} \hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send} = 0;          
-00076 
-\hypertarget{sensor_8h_source.tex_l00078}{}\hyperlink{sensor_8h_a3cff338e3722c1c1a36de82d2a953bd3}{00078} \textcolor{preprocessor}{#define QUAT\_W 0    }
-\hypertarget{sensor_8h_source.tex_l00079}{}\hyperlink{sensor_8h_a470e1c82469f8e4f20d039de634a5360}{00079} \textcolor{preprocessor}{#define QUAT\_X 1    }
-\hypertarget{sensor_8h_source.tex_l00080}{}\hyperlink{sensor_8h_ac7215623b05131650c8a16e4326f3734}{00080} \textcolor{preprocessor}{#define QUAT\_Y 2    }
-\hypertarget{sensor_8h_source.tex_l00081}{}\hyperlink{sensor_8h_a4ed90c13353e0d8ceb2f74ea3070fe11}{00081} \textcolor{preprocessor}{#define QUAT\_Z 3    }
-\hypertarget{sensor_8h_source.tex_l00083}{}\hyperlink{sensor_8h_a7f881c6b2bb1dccd733c018dff655691}{00083} \textcolor{preprocessor}{#define MPU\_HZ 12   }
-\hypertarget{sensor_8h_source.tex_l00084}{}\hyperlink{sensor_8h_a8726913025efbadec677580f19a7535d}{00084} \textcolor{preprocessor}{#define USE\_DMP 1   }
-\hypertarget{sensor_8h_source.tex_l00086}{}\hyperlink{sensor_8h_aada9974f9914a0bef6efe028d48ae383}{00086} \textcolor{preprocessor}{volatile unsigned char IMU\_data\_ready = 0;                          }
-\hypertarget{sensor_8h_source.tex_l00088}{}\hyperlink{sensor_8h_abc4898c1a34c444db2963e65dccbf97c}{00088} \textcolor{preprocessor}{const signed char \_orientation[9] = \{1, 0, 0,  0, 1, 0,  0, 0, 1\};  }
-\hypertarget{sensor_8h_source.tex_l00090}{}\hyperlink{sensor_8h_a0ad4931324e527c53bc98710a6d0dd39}{00090} \textcolor{preprocessor}{float quaternion[4];                    }
-\hypertarget{sensor_8h_source.tex_l00091}{}\hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{00091} \textcolor{preprocessor}{float gravity[3];                       }
-\hypertarget{sensor_8h_source.tex_l00092}{}\hyperlink{sensor_8h_a03d9ec4915ff658ec4a465315895106d}{00092} \textcolor{preprocessor}{float IMU\_Yaw, IMU\_Pitch, IMU\_Roll;     }
-00094 \textcolor{preprocessor}{}
-\hypertarget{sensor_8h_source.tex_l00096}{}\hyperlink{sensor_8h_af33e525daaa8347fcf5fa03c27ac77b5}{00096} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_af33e525daaa8347fcf5fa03c27ac77b5}{counter} = 0;              \textcolor{comment}{// XXXXX Endast för sensor-kalibrering}
-\hypertarget{sensor_8h_source.tex_l00097}{}\hyperlink{sensor_8h_a2943e5895f5488ed44ed4a86e59dcf1b}{00097} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a2943e5895f5488ed44ed4a86e59dcf1b}{sum} = 0;                  \textcolor{comment}{// XXXXX Endast för sensor-kalibrering}
-\hypertarget{sensor_8h_source.tex_l00098}{}\hyperlink{sensor_8h_ae93891ebfd341a8e6528beb03dc590ab}{00098} \textcolor{keywordtype}{int} \hyperlink{sensor_8h_ae93891ebfd341a8e6528beb03dc590ab}{initial\_counter} = 0;     \textcolor{comment}{// XXXXX Endast för sensor-kalibrering}
-\hypertarget{sensor_8h_source.tex_l00099}{}\hyperlink{sensor_8h_a4c9d9cb8bb9d2b707a152051408f40e5}{00099} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a4c9d9cb8bb9d2b707a152051408f40e5}{result};                    \textcolor{comment}{// XXXXX Endast för sensor-kalibrering}
-00100 
-00102 
-\hypertarget{sensor_8h_source.tex_l00103}{}\hyperlink{sensor_8h_aea6f77b6de5d03286eddec97260b58d1}{00103} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_aea6f77b6de5d03286eddec97260b58d1}{IR0\_table}[] =
-00104 \{
-00105     \{48.0, 220\},
-00106     \{72.3, 150\},
-00107     \{80.0, 140\},
-00108     \{88.1, 130\},
-00109     \{97.8, 120\},
-00110     \{110.2, 110\},
-00111     \{123.6, 100\},
-00112     \{140.0, 90\},
-00113     \{157.4, 80\},
-00114     \{183.4, 70\},
-00115     \{217.2, 60\},
-00116     \{263.2, 50\},
-00117     \{294.6, 45\},
-00118     \{334.2, 40\},
-00119     \{382.9, 35\},
-00120     \{437.4, 30\},
-00121     \{501.9, 25\},
-00122     \{554.3, 20\},
-00123     \{572.5, 15\}
-00124 \}; 
-\hypertarget{sensor_8h_source.tex_l00125}{}\hyperlink{sensor_8h_a8339fe4dbbee2308a5f1b0a2d813e1d5}{00125} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_a8339fe4dbbee2308a5f1b0a2d813e1d5}{IR1\_table}[] =
-00126 \{
-00127     \{39.3, 150\},
-00128     \{83.9, 80\},
-00129     \{93.0, 70\},
-00130     \{106.1, 60\},
-00131     \{127.3, 50\},
-00132     \{135.7, 45\},
-00133     \{151.9, 40\},
-00134     \{168.9, 35\},
-00135     \{193.7, 30\},
-00136     \{231.3, 25\},
-00137     \{284.3, 20\},
-00138     \{383.8, 15\},
-00139     \{576.1, 10\}
-00140 \};  
-\hypertarget{sensor_8h_source.tex_l00141}{}\hyperlink{sensor_8h_a8d3372b9f99cdb0224731c68b95f831e}{00141} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_a8d3372b9f99cdb0224731c68b95f831e}{IR2\_table}[] =
-00142 \{
-00143     \{42.4, 240\},
-00144     \{72.2, 150\},
-00145     \{76.2, 140\},
-00146     \{84.5, 130\},
-00147     \{92.9, 120\},
-00148     \{105.3, 110\},
-00149     \{116.9, 100\},
-00150     \{133.3, 90\},
-00151     \{153.0, 80\},
-00152     \{171.6, 70\},
-00153     \{206.4, 60\},
-00154     \{252.9, 50\},
-00155     \{283.4, 45\},
-00156     \{321.3, 40\},
-00157     \{370.6, 35\},
-00158     \{421.9, 30\},
-00159     \{483.5, 25\},
-00160     \{531.0, 20\},
-00161     \{561.3, 15\}
-00162 \};  
-\hypertarget{sensor_8h_source.tex_l00163}{}\hyperlink{sensor_8h_ae2d11b07f5d070503671bd7db51a040a}{00163} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_ae2d11b07f5d070503671bd7db51a040a}{IR3\_table}[] =
-00164 \{
-00165     \{45.3, 240\},
-00166     \{74.4, 150\},
-00167     \{80.6, 140\},
-00168     \{88.8, 130\},
-00169     \{97.1, 120\},
-00170     \{107.3, 110\},
-00171     \{122.2, 100\},
-00172     \{136.8, 90\},
-00173     \{157.1, 80\},
-00174     \{181.5, 70\},
-00175     \{213.9, 60\},
-00176     \{258.3, 50\},
-00177     \{289.8, 45\},
-00178     \{330.5, 40\},
-00179     \{378.8, 35\},
-00180     \{438.6, 30\},
-00181     \{499.4, 25\},
-00182     \{550.7, 20\},
-00183     \{574.7, 15\}
-00184 \};  
-\hypertarget{sensor_8h_source.tex_l00185}{}\hyperlink{sensor_8h_af0f2d3338f8aeee7a6dfe23213e562f6}{00185} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_af0f2d3338f8aeee7a6dfe23213e562f6}{IR4\_table}[] =
-00186 \{
-00187     \{36.6, 150\},
-00188     \{84.5, 80\},
-00189     \{96.8, 70\},
-00190     \{109.4, 60\},
-00191     \{124.6, 50\},
-00192     \{138.2, 45\},
-00193     \{150.6, 40\},
-00194     \{172.9, 35\},
-00195     \{196.2, 30\},
-00196     \{234.3, 25\},
-00197     \{285.7, 20\},
-00198     \{390.1, 15\},
-00199     \{570.8, 10\},
-00200 \};  
-\hypertarget{sensor_8h_source.tex_l00201}{}\hyperlink{sensor_8h_acd33e89ce7fb300b6edfe6cdd6945a36}{00201} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_acd33e89ce7fb300b6edfe6cdd6945a36}{IR5\_table}[] =
-00202 \{
-00203     \{47.7, 240\},
-00204     \{75.7, 150\},
-00205     \{81.2, 140\},
-00206     \{89.5, 130\},
-00207     \{99.5, 120\},
-00208     \{108.2, 110\},
-00209     \{121.0, 100\},
-00210     \{137.6, 90\},
-00211     \{156.5, 80\},
-00212     \{179.1, 70\},
-00213     \{213.3, 60\},
-00214     \{257.7, 50\},
-00215     \{290.3, 45\},
-00216     \{325.9, 40\},
-00217     \{375.9, 35\},
-00218     \{428.7, 30\},
-00219     \{496.8, 25\},
-00220     \{548.2, 20\},
-00221     \{562.6, 15\}
-00222 \};  
-\hypertarget{sensor_8h_source.tex_l00223}{}\hyperlink{sensor_8h_a919f2d74de392de03219cc9a9a662013}{00223} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_a919f2d74de392de03219cc9a9a662013}{IR6\_table}[] =
-00224 \{
-00225     \{43.0, 240\},
-00226     \{69.4, 150\},
-00227     \{75.9, 140\},
-00228     \{82.7, 130\},
-00229     \{92.5, 120\},
-00230     \{101.8, 110\},
-00231     \{114.6, 100\},
-00232     \{132.0, 90\},
-00233     \{148.5, 80\},
-00234     \{170.3, 70\},
-00235     \{205.2, 60\},
-00236     \{252.6, 50\},
-00237     \{284.5, 45\},
-00238     \{325.5, 40\},
-00239     \{373.1, 35\},
-00240     \{430.7, 30\},
-00241     \{490.3, 25\},
-00242     \{544.7, 20\},
-00243     \{576.6, 15\}
-00244 \};  
-00246 
-00254 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a342ab07b607f3dc4efa0655ca1acd164}{init\_ADC}();
-00255 
-00261 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a16afe9a4d2627f3f7f1bab054d4ad7ad}{init\_US}();
-00262 
-00268 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a1065be4c03eff55f82e136ccb95a2854}{init\_SPI}();
-00269 
-00275 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a38016ab7b2931bcb950e0c6f3ba3f342}{init\_timer}();
-00276 
-00282 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a87c8819d26491fb701918e147117710c}{init\_I2C}();
-00283 
-00289 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a1009b8de0745458d734bd73beda5ea25}{init\_IMU}();
-00290 
-00296 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_abf51091638bfe4a1e4479fa12a95b0a9}{run\_self\_test}();
-00297 
-00303 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_ad53a97524cf65efb444e93e9061d9353}{init\_IMU\_interrupt}();
-00304 
-00310 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a41da5db2af35bde04662acc0c8ed5e22}{ADC\_IR}();
-00311 
-00317 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_ad5232fda58bb026c495517be3c84307a}{read\_IMU}();
-00318 
-00324 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_ae0b3db1a7cd93a0205ff39ef05844259}{send\_ping}();
-00325 
-00331 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_ad15899f7d08c246d74789f75dd145035}{ADC\_to\_distance}();
-00332 
-00338 \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a074b774196f608f2234e624682b55967}{lookup\_distance}(\hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair}* ADC\_dist\_table, \textcolor{keywordtype}{double} ADC\_value,
+00012 \textcolor{preprocessor}{#ifndef SENSOR\_H\_}
+00013 \textcolor{preprocessor}{#define SENSOR\_H\_}
+00014 
+\hypertarget{sensor_8h_source.tex_l00015}{}\hyperlink{sensor_8h_a43bafb28b29491ec7f871319b5a3b2f8}{00015} \textcolor{preprocessor}{#define F\_CPU 16000000UL    }
+00017 \textcolor{preprocessor}{#include <avr/io.h>}
+00018 \textcolor{preprocessor}{#include <avr/interrupt.h>}
+00019 \textcolor{preprocessor}{#include <avr/sleep.h>}
+00020 \textcolor{preprocessor}{#include <math.h>}
+00021 \textcolor{preprocessor}{#include <util/delay.h>}
+00022 \textcolor{preprocessor}{#include <compat/twi.h>}
+00023 
+\hypertarget{sensor_8h_source.tex_l00024}{}\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{00024} \textcolor{preprocessor}{#define x 0             }
+\hypertarget{sensor_8h_source.tex_l00025}{}\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{00025} \textcolor{preprocessor}{#define y 1             }
+\hypertarget{sensor_8h_source.tex_l00026}{}\hyperlink{sensor_8h_afb573e69f3b198fe9ca91079c4a402a9}{00026} \textcolor{preprocessor}{#define z 2             }
+\hypertarget{sensor_8h_source.tex_l00028}{}\hyperlink{sensor_8h_a320a1ee237ba550bcdffd131a4198e17}{00028} \textcolor{preprocessor}{volatile uint8\_t SPI\_done = 0;      }
+\hypertarget{sensor_8h_source.tex_l00029}{}\hyperlink{sensor_8h_a2c687b5d4d67e6900cd35ec11107a4ee}{00029} \textcolor{preprocessor}{volatile uint8\_t SPI\_overflow = 0;  }
+00031 \textcolor{preprocessor}{}
+\hypertarget{sensor_8h_source.tex_l00033}{}\hyperlink{sensor_8h_abf692cf614d069eb741fe7ee8a5bd31d}{00033} \textcolor{keyword}{const} \textcolor{keywordtype}{int} \hyperlink{sensor_8h_abf692cf614d069eb741fe7ee8a5bd31d}{delay\_time} = 50;            
+\hypertarget{sensor_8h_source.tex_l00035}{}\hyperlink{sensor_8h_ae76d77cd1b87b203973ac8baa4081271}{00035} \textcolor{keyword}{const} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_ae76d77cd1b87b203973ac8baa4081271}{IR\_sensor\_distance\_right} = 15.5;       
+\hypertarget{sensor_8h_source.tex_l00036}{}\hyperlink{sensor_8h_a85db4bba6dcce96787150b0aa1c9c978}{00036} \textcolor{keyword}{const} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a85db4bba6dcce96787150b0aa1c9c978}{IR\_sensor\_distance\_left} = 15.5;     
+00037 
+\hypertarget{sensor_8h_source.tex_l00039}{}\hyperlink{sensor_8h_a59d49b9b5c4c473c2c5cb4fcabb2bb36}{00039} \textcolor{keyword}{volatile} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a59d49b9b5c4c473c2c5cb4fcabb2bb36}{IR\_latest\_reading}[7];  
+\hypertarget{sensor_8h_source.tex_l00040}{}\hyperlink{sensor_8h_a760424856faf789a5a9d799bed405668}{00040} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a760424856faf789a5a9d799bed405668}{IR\_reading}[7][5];              
+\hypertarget{sensor_8h_source.tex_l00041}{}\hyperlink{sensor_8h_a9b74d5e1cbbe4f3668e310bdb07b34e8}{00041} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a9b74d5e1cbbe4f3668e310bdb07b34e8}{IR\_ADC}[7];                     
+\hypertarget{sensor_8h_source.tex_l00042}{}\hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{00042} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_aaa34b4383904c1a2041b11c8b47bbc15}{IR\_distance}[7];                   
+\hypertarget{sensor_8h_source.tex_l00043}{}\hyperlink{sensor_8h_ab11513fa2fd2a21b39f60ac1e5bbb064}{00043} \textcolor{keywordtype}{float} \hyperlink{sensor_8h_ab11513fa2fd2a21b39f60ac1e5bbb064}{IR\_Yaw\_right}, \hyperlink{sensor_8h_a6a78596948fb325d4e213e9c371b35e5}{IR\_Yaw\_left};     
+\hypertarget{sensor_8h_source.tex_l00048}{}\hyperlink{struct_a_d_c__distance__pair}{00048} \textcolor{keyword}{typedef} \textcolor{keyword}{struct}
+00049 \{
+\hypertarget{sensor_8h_source.tex_l00050}{}\hyperlink{struct_a_d_c__distance__pair_aa001cc67b1ec73e43eb6bd32d24a739b}{00050}     \textcolor{keywordtype}{double} \hyperlink{struct_a_d_c__distance__pair_aa001cc67b1ec73e43eb6bd32d24a739b}{ADC\_data};
+\hypertarget{sensor_8h_source.tex_l00051}{}\hyperlink{struct_a_d_c__distance__pair_a79b8e036dca6911e3295a47d99f21f43}{00051}     \textcolor{keywordtype}{double} \hyperlink{struct_a_d_c__distance__pair_a79b8e036dca6911e3295a47d99f21f43}{distance};
+00052 \} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair};
+00053 
+\hypertarget{sensor_8h_source.tex_l00054}{}\hyperlink{sensor_8h_a6619824120bb407a94821a66f8bb922f}{00054} \textcolor{keyword}{volatile} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a6619824120bb407a94821a66f8bb922f}{US\_latest\_reading};             
+\hypertarget{sensor_8h_source.tex_l00055}{}\hyperlink{sensor_8h_a2f6715b10308bb971461584c206dfde7}{00055} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a2f6715b10308bb971461584c206dfde7}{US\_reading}[5];
+\hypertarget{sensor_8h_source.tex_l00056}{}\hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{00056} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a26236a9447e72566800389cef1bcef58}{US\_distance};                      
+00058 
+\hypertarget{sensor_8h_source.tex_l00060}{}\hyperlink{sensor_8h_a25e4d5a596b4f9f7dd79548191d5286a}{00060} uint8\_t \hyperlink{sensor_8h_a25e4d5a596b4f9f7dd79548191d5286a}{buffer0\_IR0} = 0xf0;              
+\hypertarget{sensor_8h_source.tex_l00061}{}\hyperlink{sensor_8h_a920bf7cd31f51ba27f4d7154760d6397}{00061} uint8\_t \hyperlink{sensor_8h_a920bf7cd31f51ba27f4d7154760d6397}{buffer1\_IR1} = 0xf1;              
+\hypertarget{sensor_8h_source.tex_l00062}{}\hyperlink{sensor_8h_a7efd4085c0de1446450a923f6b075dc3}{00062} uint8\_t \hyperlink{sensor_8h_a7efd4085c0de1446450a923f6b075dc3}{buffer2\_IR2} = 0xf2;              
+\hypertarget{sensor_8h_source.tex_l00063}{}\hyperlink{sensor_8h_a11674e633f257caae687446e074c13f6}{00063} uint8\_t \hyperlink{sensor_8h_a11674e633f257caae687446e074c13f6}{buffer3\_IR3} = 0xf3;              
+\hypertarget{sensor_8h_source.tex_l00064}{}\hyperlink{sensor_8h_a710096596ef17e15194d9557c5ccceff}{00064} uint8\_t \hyperlink{sensor_8h_a710096596ef17e15194d9557c5ccceff}{buffer4\_IR4} = 0xf4;              
+\hypertarget{sensor_8h_source.tex_l00065}{}\hyperlink{sensor_8h_a31b93d4352799841d373eb4f74ed0049}{00065} uint8\_t \hyperlink{sensor_8h_a31b93d4352799841d373eb4f74ed0049}{buffer5\_IR5} = 0xf5;              
+\hypertarget{sensor_8h_source.tex_l00066}{}\hyperlink{sensor_8h_a544c2e919dc670aa1624f4f41a9d6fbf}{00066} uint8\_t \hyperlink{sensor_8h_a544c2e919dc670aa1624f4f41a9d6fbf}{buffer6\_IR6} = 0xf6;              
+\hypertarget{sensor_8h_source.tex_l00067}{}\hyperlink{sensor_8h_aa308e9c1d2a396bb3f3a046ca9693b2d}{00067} uint8\_t \hyperlink{sensor_8h_aa308e9c1d2a396bb3f3a046ca9693b2d}{buffer7\_US} = 0xf7;                
+\hypertarget{sensor_8h_source.tex_l00068}{}\hyperlink{sensor_8h_a9b23fe577ec379483a30362cd1a036f1}{00068} int8\_t \hyperlink{sensor_8h_a9b23fe577ec379483a30362cd1a036f1}{buffer8\_IR\_Yaw\_left} = 0xf8;       
+\hypertarget{sensor_8h_source.tex_l00069}{}\hyperlink{sensor_8h_a3526afe7f83bc3aba2c3dfe52423d800}{00069} int8\_t \hyperlink{sensor_8h_a3526afe7f83bc3aba2c3dfe52423d800}{buffer9\_IR\_Yaw\_right} = 0xf9;     
+\hypertarget{sensor_8h_source.tex_l00070}{}\hyperlink{sensor_8h_ad9db200d7187c0cbc24c997f7cdf1eda}{00070} int8\_t \hyperlink{sensor_8h_ad9db200d7187c0cbc24c997f7cdf1eda}{buffer10\_IMU\_Yaw\_Low} = 0xfa;     
+\hypertarget{sensor_8h_source.tex_l00071}{}\hyperlink{sensor_8h_a6751f6849033b8cb222c62564455ad7b}{00071} int8\_t \hyperlink{sensor_8h_a6751f6849033b8cb222c62564455ad7b}{buffer11\_IMU\_Yaw\_High} = 0xfb;   
+\hypertarget{sensor_8h_source.tex_l00072}{}\hyperlink{sensor_8h_a23007d6ec6eeeab1723fbd750b6ee8a3}{00072} int8\_t \hyperlink{sensor_8h_a23007d6ec6eeeab1723fbd750b6ee8a3}{buffer12\_Pitch} = 0xfc;         
+\hypertarget{sensor_8h_source.tex_l00073}{}\hyperlink{sensor_8h_a95d464c150dfd1cc2c783dc00acd7533}{00073} int8\_t \hyperlink{sensor_8h_a95d464c150dfd1cc2c783dc00acd7533}{buffer13\_Roll} = 0xfd;           
+\hypertarget{sensor_8h_source.tex_l00075}{}\hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{00075} \textcolor{keyword}{volatile} \textcolor{keywordtype}{int} \hyperlink{sensor_8h_addd1a9480a36b7d4c52a1237f5c17286}{byte\_to\_send} = 0;          
+00077 
+\hypertarget{sensor_8h_source.tex_l00079}{}\hyperlink{sensor_8h_a3cff338e3722c1c1a36de82d2a953bd3}{00079} \textcolor{preprocessor}{#define QUAT\_W 0    }
+\hypertarget{sensor_8h_source.tex_l00080}{}\hyperlink{sensor_8h_a470e1c82469f8e4f20d039de634a5360}{00080} \textcolor{preprocessor}{#define QUAT\_X 1    }
+\hypertarget{sensor_8h_source.tex_l00081}{}\hyperlink{sensor_8h_ac7215623b05131650c8a16e4326f3734}{00081} \textcolor{preprocessor}{#define QUAT\_Y 2    }
+\hypertarget{sensor_8h_source.tex_l00082}{}\hyperlink{sensor_8h_a4ed90c13353e0d8ceb2f74ea3070fe11}{00082} \textcolor{preprocessor}{#define QUAT\_Z 3    }
+\hypertarget{sensor_8h_source.tex_l00084}{}\hyperlink{sensor_8h_a7f881c6b2bb1dccd733c018dff655691}{00084} \textcolor{preprocessor}{#define MPU\_HZ 12   }
+\hypertarget{sensor_8h_source.tex_l00085}{}\hyperlink{sensor_8h_a8726913025efbadec677580f19a7535d}{00085} \textcolor{preprocessor}{#define USE\_DMP 1   }
+\hypertarget{sensor_8h_source.tex_l00087}{}\hyperlink{sensor_8h_aada9974f9914a0bef6efe028d48ae383}{00087} \textcolor{preprocessor}{volatile unsigned char IMU\_data\_ready = 0;                          }
+\hypertarget{sensor_8h_source.tex_l00089}{}\hyperlink{sensor_8h_abc4898c1a34c444db2963e65dccbf97c}{00089} \textcolor{preprocessor}{const signed char \_orientation[9] = \{1, 0, 0,  0, 1, 0,  0, 0, 1\};  }
+\hypertarget{sensor_8h_source.tex_l00091}{}\hyperlink{sensor_8h_a0ad4931324e527c53bc98710a6d0dd39}{00091} \textcolor{preprocessor}{float quaternion[4];                    }
+\hypertarget{sensor_8h_source.tex_l00092}{}\hyperlink{sensor_8h_a4d7a2891ce93bb287f942b34a77354e7}{00092} \textcolor{preprocessor}{float gravity[3];                       }
+\hypertarget{sensor_8h_source.tex_l00093}{}\hyperlink{sensor_8h_a03d9ec4915ff658ec4a465315895106d}{00093} \textcolor{preprocessor}{float IMU\_Yaw, IMU\_Pitch, IMU\_Roll;     }
+00095 \textcolor{preprocessor}{}
+\hypertarget{sensor_8h_source.tex_l00097}{}\hyperlink{sensor_8h_af33e525daaa8347fcf5fa03c27ac77b5}{00097} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_af33e525daaa8347fcf5fa03c27ac77b5}{counter} = 0;              \textcolor{comment}{// XXXXX Endast för sensor-kalibrering}
+\hypertarget{sensor_8h_source.tex_l00098}{}\hyperlink{sensor_8h_a2943e5895f5488ed44ed4a86e59dcf1b}{00098} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a2943e5895f5488ed44ed4a86e59dcf1b}{sum} = 0;                  \textcolor{comment}{// XXXXX Endast för sensor-kalibrering}
+\hypertarget{sensor_8h_source.tex_l00099}{}\hyperlink{sensor_8h_ae93891ebfd341a8e6528beb03dc590ab}{00099} \textcolor{keywordtype}{int} \hyperlink{sensor_8h_ae93891ebfd341a8e6528beb03dc590ab}{initial\_counter} = 0;     \textcolor{comment}{// XXXXX Endast för sensor-kalibrering}
+\hypertarget{sensor_8h_source.tex_l00100}{}\hyperlink{sensor_8h_a4c9d9cb8bb9d2b707a152051408f40e5}{00100} \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a4c9d9cb8bb9d2b707a152051408f40e5}{result};                    \textcolor{comment}{// XXXXX Endast för sensor-kalibrering}
+00101 
+00103 
+\hypertarget{sensor_8h_source.tex_l00104}{}\hyperlink{sensor_8h_aea6f77b6de5d03286eddec97260b58d1}{00104} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_aea6f77b6de5d03286eddec97260b58d1}{IR0\_table}[] =
+00105 \{
+00106     \{57.2, 220\},
+00107     \{89.2, 150\},
+00108     \{96.0, 140\},
+00109     \{104.0, 130\},
+00110     \{113.6, 120\},
+00111     \{123.9, 110\},
+00112     \{136.6, 100\},
+00113     \{151.0, 90\},
+00114     \{168.1, 80\},
+00115     \{194.9, 70\},
+00116     \{227.7, 60\},
+00117     \{273.5, 50\},
+00118     \{305.5, 45\},
+00119     \{341.7, 40\},
+00120     \{392.3, 35\},
+00121     \{445.2, 30\},
+00122     \{505.4, 25\},
+00123     \{566.3, 20\},
+00124     \{598.7, 15\}
+00125 \}; 
+\hypertarget{sensor_8h_source.tex_l00126}{}\hyperlink{sensor_8h_a8339fe4dbbee2308a5f1b0a2d813e1d5}{00126} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_a8339fe4dbbee2308a5f1b0a2d813e1d5}{IR1\_table}[] =
+00127 \{
+00128     \{39.3, 150\},
+00129     \{83.9, 80\},
+00130     \{93.0, 70\},
+00131     \{106.1, 60\},
+00132     \{127.3, 50\},
+00133     \{135.7, 45\},
+00134     \{151.9, 40\},
+00135     \{168.9, 35\},
+00136     \{193.7, 30\},
+00137     \{231.3, 25\},
+00138     \{284.3, 20\},
+00139     \{383.8, 15\},
+00140     \{576.1, 10\}
+00141 \};  
+\hypertarget{sensor_8h_source.tex_l00142}{}\hyperlink{sensor_8h_a8d3372b9f99cdb0224731c68b95f831e}{00142} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_a8d3372b9f99cdb0224731c68b95f831e}{IR2\_table}[] =
+00143 \{
+00144     \{42.4, 240\},
+00145     \{72.2, 150\},
+00146     \{76.2, 140\},
+00147     \{84.5, 130\},
+00148     \{92.9, 120\},
+00149     \{105.3, 110\},
+00150     \{116.9, 100\},
+00151     \{133.3, 90\},
+00152     \{153.0, 80\},
+00153     \{171.6, 70\},
+00154     \{206.4, 60\},
+00155     \{252.9, 50\},
+00156     \{283.4, 45\},
+00157     \{321.3, 40\},
+00158     \{370.6, 35\},
+00159     \{421.9, 30\},
+00160     \{483.5, 25\},
+00161     \{531.0, 20\},
+00162     \{561.3, 15\}
+00163 \};  
+\hypertarget{sensor_8h_source.tex_l00164}{}\hyperlink{sensor_8h_ae2d11b07f5d070503671bd7db51a040a}{00164} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_ae2d11b07f5d070503671bd7db51a040a}{IR3\_table}[] =
+00165 \{
+00166     \{45.3, 240\},
+00167     \{74.4, 150\},
+00168     \{80.6, 140\},
+00169     \{88.8, 130\},
+00170     \{97.1, 120\},
+00171     \{107.3, 110\},
+00172     \{122.2, 100\},
+00173     \{136.8, 90\},
+00174     \{157.1, 80\},
+00175     \{181.5, 70\},
+00176     \{213.9, 60\},
+00177     \{258.3, 50\},
+00178     \{289.8, 45\},
+00179     \{330.5, 40\},
+00180     \{378.8, 35\},
+00181     \{438.6, 30\},
+00182     \{499.4, 25\},
+00183     \{550.7, 20\},
+00184     \{574.7, 15\}
+00185 \};  
+\hypertarget{sensor_8h_source.tex_l00186}{}\hyperlink{sensor_8h_af0f2d3338f8aeee7a6dfe23213e562f6}{00186} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_af0f2d3338f8aeee7a6dfe23213e562f6}{IR4\_table}[] =
+00187 \{
+00188     \{36.6, 150\},
+00189     \{84.5, 80\},
+00190     \{96.8, 70\},
+00191     \{109.4, 60\},
+00192     \{124.6, 50\},
+00193     \{138.2, 45\},
+00194     \{150.6, 40\},
+00195     \{172.9, 35\},
+00196     \{196.2, 30\},
+00197     \{234.3, 25\},
+00198     \{285.7, 20\},
+00199     \{390.1, 15\},
+00200     \{570.8, 10\},
+00201 \};  
+\hypertarget{sensor_8h_source.tex_l00202}{}\hyperlink{sensor_8h_acd33e89ce7fb300b6edfe6cdd6945a36}{00202} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_acd33e89ce7fb300b6edfe6cdd6945a36}{IR5\_table}[] =
+00203 \{
+00204     \{47.7, 240\},
+00205     \{75.7, 150\},
+00206     \{81.2, 140\},
+00207     \{89.5, 130\},
+00208     \{99.5, 120\},
+00209     \{108.2, 110\},
+00210     \{121.0, 100\},
+00211     \{137.6, 90\},
+00212     \{156.5, 80\},
+00213     \{179.1, 70\},
+00214     \{213.3, 60\},
+00215     \{257.7, 50\},
+00216     \{290.3, 45\},
+00217     \{325.9, 40\},
+00218     \{375.9, 35\},
+00219     \{428.7, 30\},
+00220     \{496.8, 25\},
+00221     \{548.2, 20\},
+00222     \{562.6, 15\}
+00223 \};  
+\hypertarget{sensor_8h_source.tex_l00224}{}\hyperlink{sensor_8h_a919f2d74de392de03219cc9a9a662013}{00224} \hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair} \hyperlink{sensor_8h_a919f2d74de392de03219cc9a9a662013}{IR6\_table}[] =
+00225 \{
+00226     \{43.0, 240\},
+00227     \{69.4, 150\},
+00228     \{75.9, 140\},
+00229     \{82.7, 130\},
+00230     \{92.5, 120\},
+00231     \{101.8, 110\},
+00232     \{114.6, 100\},
+00233     \{132.0, 90\},
+00234     \{148.5, 80\},
+00235     \{170.3, 70\},
+00236     \{205.2, 60\},
+00237     \{252.6, 50\},
+00238     \{284.5, 45\},
+00239     \{325.5, 40\},
+00240     \{373.1, 35\},
+00241     \{430.7, 30\},
+00242     \{490.3, 25\},
+00243     \{544.7, 20\},
+00244     \{576.6, 15\}
+00245 \};  
+00247 
+00256 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a342ab07b607f3dc4efa0655ca1acd164}{init\_ADC}();
+00257 
+00263 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a16afe9a4d2627f3f7f1bab054d4ad7ad}{init\_US}();
+00264 
+00270 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a1065be4c03eff55f82e136ccb95a2854}{init\_SPI}();
+00271 
+00277 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a38016ab7b2931bcb950e0c6f3ba3f342}{init\_timer}();
+00278 
+00284 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a87c8819d26491fb701918e147117710c}{init\_I2C}();
+00285 
+00291 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a1009b8de0745458d734bd73beda5ea25}{init\_IMU}();
+00292 
+00298 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_abf51091638bfe4a1e4479fa12a95b0a9}{run\_self\_test}();
+00299 
+00305 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_ad53a97524cf65efb444e93e9061d9353}{init\_IMU\_interrupt}();
+00306 
+00312 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a41da5db2af35bde04662acc0c8ed5e22}{ADC\_IR}();
+00313 
+00319 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_ad5232fda58bb026c495517be3c84307a}{read\_IMU}();
+00320 
+00326 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_ae0b3db1a7cd93a0205ff39ef05844259}{send\_ping}();
+00327 
+00333 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_ad15899f7d08c246d74789f75dd145035}{ADC\_to\_distance}();
+00334 
+00340 \textcolor{keywordtype}{double} \hyperlink{sensor_8h_a074b774196f608f2234e624682b55967}{lookup\_distance}(\hyperlink{struct_a_d_c__distance__pair}{ADC\_distance\_pair}* ADC\_dist\_table, \textcolor{keywordtype}{double} ADC\_value,
        \textcolor{keywordtype}{int} table\_size);
-00339 
-00345 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a4400365e5a5de20eeaf4e78531e39e9b}{time\_to\_distance}();
-00346 
-00352 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a5611f3fef1c7ebe6f76d952adf576e86}{calculate\_Yaw}();
-00353 
-00359 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a387deb5b003e6eec445d95d9b30717f4}{save\_to\_buffer}();
-00360 
-00366 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_ad838d8be45b7b7018e394ec9319e3795}{NormalizeQuaternion}(\textcolor{keywordtype}{float} *quat);
-00367 
-00373 \textcolor{keywordtype}{float} \hyperlink{sensor_8h_abf62ec6a8b0cc932582548dbd5032901}{restrict\_angle}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_ab8ef1bf8a70cc07c6d55823c390a7e76}{angle});
-00374 
-00375 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_ac6723e64e3c0cb29dcf2a13409964453}{kalibrering}();      \textcolor{comment}{// XXXXX Endast för att kunna kalibrera sensorer!}
+00341 
+00347 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a4400365e5a5de20eeaf4e78531e39e9b}{time\_to\_distance}();
+00348 
+00354 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a5611f3fef1c7ebe6f76d952adf576e86}{calculate\_Yaw}();
+00355 
+00361 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_a387deb5b003e6eec445d95d9b30717f4}{save\_to\_buffer}();
+00362 
+00368 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_ad838d8be45b7b7018e394ec9319e3795}{NormalizeQuaternion}(\textcolor{keywordtype}{float} *quat);
+00369 
+00375 \textcolor{keywordtype}{float} \hyperlink{sensor_8h_abf62ec6a8b0cc932582548dbd5032901}{restrict\_angle}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_ab8ef1bf8a70cc07c6d55823c390a7e76}{angle});
 00376 
-00377 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* SENSOR\_H\_ */}\textcolor{preprocessor}{}
+00377 \textcolor{keywordtype}{void} \hyperlink{sensor_8h_ac6723e64e3c0cb29dcf2a13409964453}{kalibrering}();      \textcolor{comment}{// XXXXX Endast för att kunna kalibrera sensorer!}
+00378 
+00379 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* SENSOR\_H\_ */}\textcolor{preprocessor}{}
 \end{DoxyCode}

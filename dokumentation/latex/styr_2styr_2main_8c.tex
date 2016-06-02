@@ -53,9 +53,9 @@ float \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height}
 \item 
 float \hyperlink{styr_2styr_2main_8c_a9b9f29186e02953918ca4e891b0de1f7}{delta\+\_\+h}
 \item 
-volatile unsigned char \hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{last\+Packet} \mbox{[}16\mbox{]}
+int8\+\_\+t \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}
 \item 
-unsigned char \hyperlink{styr_2styr_2main_8c_a5d5b037c0044bc93d5ccac04987f63b5}{temp} \mbox{[}18\mbox{]}
+volatile unsigned char \hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{last\+Packet} \mbox{[}16\mbox{]}
 \end{DoxyCompactItemize}
 
 
@@ -63,6 +63,10 @@ unsigned char \hyperlink{styr_2styr_2main_8c_a5d5b037c0044bc93d5ccac04987f63b5}{
 \index{styr/styr/main.\+c@{styr/styr/main.\+c}!F\+\_\+\+C\+PU@{F\+\_\+\+C\+PU}}
 \index{F\+\_\+\+C\+PU@{F\+\_\+\+C\+PU}!styr/styr/main.\+c@{styr/styr/main.\+c}}
 \subsubsection[{\texorpdfstring{F\+\_\+\+C\+PU}{F_CPU}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+\_\+\+C\+PU~16000000\+UL}\hypertarget{styr_2styr_2main_8c_a43bafb28b29491ec7f871319b5a3b2f8}{}\label{styr_2styr_2main_8c_a43bafb28b29491ec7f871319b5a3b2f8}
+
+
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00010}{10} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
 
 
 \subsection{Enumeration Type Documentation}
@@ -82,6 +86,18 @@ R\+A\+CE\hypertarget{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49a32390
 \end{Desc}
 
 
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00027}{27} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
+
+\begin{DoxyCode}
+00027               \{
+00028     \hyperlink{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49aeef9468d1b98bca652a04bf5063fd9d6}{AUTO},
+00029     \hyperlink{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49a506e8dd29460ea318b68d035f679b01b}{MANUAL},
+00030     \hyperlink{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49a32390bcc102a1bb79dbd1bc473633933}{RACE}
+00031 \} \hyperlink{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49}{CONTROL\_MODE};
+\end{DoxyCode}
+
+
 \subsection{Function Documentation}
 \index{styr/styr/main.\+c@{styr/styr/main.\+c}!main@{main}}
 \index{main@{main}!styr/styr/main.\+c@{styr/styr/main.\+c}}
@@ -90,6 +106,156 @@ R\+A\+CE\hypertarget{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49a32390
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{styr_2styr_2main_8c_a840291bc02cba5474a4cb46a9b9566fe}{}\label{styr_2styr_2main_8c_a840291bc02cba5474a4cb46a9b9566fe}
+
+
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00054}{54} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
+
+\begin{DoxyCode}
+00055 \{
+00056     memset(\hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}, 0, \textcolor{keyword}{sizeof}(\hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}));
+00057     
+00058     \textcolor{comment}{//Initiera robotens styrläge}
+00059     \hyperlink{styr_2styr_2main_8c_a33f2231ad0dc535a3976677c8de97a8d}{cm} = \hyperlink{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49a32390bcc102a1bb79dbd1bc473633933}{RACE};
+00060     \textcolor{comment}{//Default-tillstånd hos roboten}
+00061     \hyperlink{state__machine_8h_a5e5321a4a9085b83c8161454bf7a145c}{ROBOT\_STATE} = \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9af4fc00ebf5a552ca632130e794617d58}{CORRIDOR};
+00062     
+00063     \textcolor{comment}{//Defaultvärden}
+00064     \hyperlink{styr_2styr_2main_8c_ab8ef1bf8a70cc07c6d55823c390a7e76}{angle} = 0;
+00065     \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} = 0;
+00066     \hyperlink{styr_2styr_2main_8c_a4baaa49fb8c11bcc3ddaa6672e4e2414}{intensity\_byte} = 120;
+00067     \hyperlink{styr_2styr_2main_8c_aeaeea67afbf7862e4e306b6257cf7f0e}{angle\_byte} = 120;
+00068     \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} = 11;
+00069     \hyperlink{styr_2styr_2main_8c_a9b9f29186e02953918ca4e891b0de1f7}{delta\_h} = 0.4;
+00070     \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} = 0;
+00071     
+00072     \textcolor{comment}{//Defaultvärden för state\_machine}
+00073     \hyperlink{state__machine_8h_a09cfc766a233ad617270562cc4146d07}{Kp} = 0.005;
+00074     \hyperlink{state__machine_8h_a98268d71502ba080d88a9b1f50fdbe80}{Kd} = 0.45;
+00075     \hyperlink{state__machine_8h_a7e6264018cf52dca4260c8f3b50125b4}{on\_top\_of\_obstacle} = \textcolor{keyword}{false};
+00076     \hyperlink{state__machine_8h_ab10ef355c6ebe68985b8ee64030b0926}{trust\_sensors} = \textcolor{keyword}{true};
+00077     \hyperlink{state__machine_8h_a326373dcfd381c9473382a1f538de2a8}{low} = \textcolor{keyword}{false};
+00078     
+00079     \hyperlink{init_8c_a7ce0a14b6e7779fbb2d9a05333792c41}{Init}();
+00080     
+00081     \textcolor{comment}{//Konfigurering}
+00082     \hyperlink{servo___u_a_r_t_8c_a7522eb3c86cfa713aade9cbe082bcbba}{Configure\_Servos\_Delaytime}();
+00083     \hyperlink{servo___u_a_r_t_8c_ae7bfd5ff29686df194ec9f4e310cf2e4}{Configure\_Servos\_LED}();
+00084     \hyperlink{servo___u_a_r_t_8c_a17e89f3d8b4abe3abe352ffba8b684f1}{Configure\_Servos\_No\_Response}();
+00085     \hyperlink{servo___u_a_r_t_8c_ac61953255036321acac8c2e20b76d692}{Configure\_Servos\_Angle\_Limit}(\textcolor{charliteral}{'r'}); \textcolor{comment}{// Måste köras ty begränsningarna tappas
+       ibland trots att de ligger i ROM}
+00086     \hyperlink{servo___u_a_r_t_8c_a2f788735cafd686c547c9340d905c3ad}{Configure\_Servos\_Max\_Torque}();
+00087     
+00088     \textcolor{comment}{//Inledande begränsning av hastigheterna så inget otrevligt sker vid start}
+00089     \hyperlink{servo___u_a_r_t_8c_ace1792c5f066181d607cb075a87f3178}{Send\_Inner\_P1\_Velocity}(0x0010);
+00090     \hyperlink{servo___u_a_r_t_8c_a63e528b1a0c31e9912ebbceee58a5faa}{Send\_Middle\_P1\_Velocity}(0x0010);
+00091     \hyperlink{servo___u_a_r_t_8c_a30fbb081db7418d454bfe8761ca59dd2}{Send\_Outer\_P1\_Velocity}(0x0010);
+00092     \hyperlink{servo___u_a_r_t_8c_a9cb7e763d9a3501fc345a424d67975a7}{Send\_Inner\_P2\_Velocity}(0x0010);
+00093     \hyperlink{servo___u_a_r_t_8c_aae94fcd8998679345fa7d70648bd2a1e}{Send\_Middle\_P2\_Velocity}(0x0010);
+00094     \hyperlink{servo___u_a_r_t_8c_a6c4f4c2915df647ac40c86c17e613e30}{Send\_Outer\_P2\_Velocity}(0x0010);
+00095 
+00096     sei(); \textcolor{comment}{//Aktivera avbrott öht (MSB=1 i SREG). Anropas EFTER all konfigurering är klar.}
+00097 
+00098     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} first\_kom\_byte;
+00099     
+00100     \hyperlink{gangstilar_8c_a8b22e9229a15d20adb676428ad7f6dac}{Walk\_Half\_Cycle}(1, 0.01, \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height},0); \textcolor{comment}{//Ställ in default-höjd}
+00101 
+00102     \textcolor{keywordflow}{while}(1)
+00103     \{
+00104         \textcolor{comment}{//Hämta det senast giltiga paketet}
+00105         cli();
+00106         memcpy(\hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}, \hyperlink{_s_p_i_8h_ab15ab508531e452eb0768f69f7c588da}{lastValidPacket}, \textcolor{keyword}{sizeof}(
+      \hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}));
+00107         sei();
+00108         
+00109         first\_kom\_byte = \hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[0];
+00110         
+00111         \textcolor{keywordflow}{if} (first\_kom\_byte & 0b00001000) \textcolor{comment}{//Växla läge?}
+00112         \{
+00113             \hyperlink{styr_2styr_2main_8c_aef200cbcdfce82fec3d5662a556ca3a1}{update\_mode}();
+00114         \}
+00115         
+00116         \textcolor{keywordflow}{switch}(\hyperlink{styr_2styr_2main_8c_a33f2231ad0dc535a3976677c8de97a8d}{cm})
+00117         \{
+00118             \textcolor{keywordflow}{case} \hyperlink{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49a506e8dd29460ea318b68d035f679b01b}{MANUAL}: \textcolor{comment}{//Manuellt läge}
+00119             \hyperlink{state__machine_8h_a5e5321a4a9085b83c8161454bf7a145c}{ROBOT\_STATE} = \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9af4fc00ebf5a552ca632130e794617d58}{CORRIDOR}; \textcolor{comment}{//Ha CORRIDOR som default-tillstånd}
+00120             \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} = 0; \textcolor{comment}{//Nollställ speed och angle vid manuellt läge}
+00121             \hyperlink{styr_2styr_2main_8c_ab8ef1bf8a70cc07c6d55823c390a7e76}{angle} = 0;
+00122             
+00123             \textcolor{keywordflow}{if} (first\_kom\_byte & 0b00000011) \textcolor{comment}{//Skickas vinkel eller intensitet?}
+00124             \{
+00125                 \hyperlink{styr_2styr_2main_8c_ac755a97dcfd4c99fc14471a280f28788}{update\_speed\_and\_angle}();
+00126             \}
+00127             \textcolor{keywordflow}{if} (first\_kom\_byte & 0b00000100) \textcolor{comment}{//Höj/sänk gångstil?}
+00128             \{
+00129                 \hyperlink{styr_2styr_2main_8c_ae4a2d91f6764f80102bf377fb3686d69}{update\_height}();
+00130             \}
+00131             
+00132             \textcolor{keywordflow}{if} (first\_kom\_byte & 0b00010000) \textcolor{comment}{//Nytt Kp?}
+00133             \{
+00134                 \hyperlink{state__machine_8h_a09cfc766a233ad617270562cc4146d07}{Kp} = ((float)\hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[5])/1000.f; \textcolor{comment}{//Kp skickas som 1000 ggr det önskade
+       värdet, därav divisionen}
+00135             \}
+00136             \textcolor{keywordflow}{if} (first\_kom\_byte & 0b00100000) \textcolor{comment}{//Nytt Kd?}
+00137             \{
+00138                 \hyperlink{state__machine_8h_a98268d71502ba080d88a9b1f50fdbe80}{Kd} = ((float)\hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[6])/100.f; \textcolor{comment}{//Kd skickas som 100 ggr det önskade värdet,
+       därav divisionen}
+00139             \}
+00140             
+00141             \textcolor{keywordflow}{if}((!(first\_kom\_byte & 0b10000000)) && \hyperlink{gangstilar_8h_a53714f6e2fcbc2539af246d0a0446cbe}{dance\_r} > 1)  \textcolor{comment}{// Är kroppen inte i utgångsläge?}
+00142             \{
+00143                 \hyperlink{gangstilar_8c_a52ff26f8e5f26305582c67be8be4417b}{Dance}(0,0); \textcolor{comment}{//För tillbaka kroppen till utgångsläge}
+00144             \}
+00145             \textcolor{keywordflow}{else}
+00146             \{
+00147                 \textcolor{keywordflow}{if} ((first\_kom\_byte & 0b01000000) && \hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[7] == 1)
+00148                 \{
+00149                     \textcolor{comment}{//Walk\_Half\_Crab\_Cycle(-6);}
+00150                     \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} = -6;
+00151                 \}
+00152                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((first\_kom\_byte & 0b01000000) && \hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[7] == 2)
+00153                 \{
+00154                     \textcolor{comment}{//Walk\_Half\_Crab\_Cycle(6);}
+00155                     \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} = 6;
+00156                 \}
+00157                 \textcolor{keywordflow}{else}
+00158                 \{
+00159                     \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} = 0;
+00160                 \}
+00161                 
+00162                 \textcolor{keywordflow}{if}(first\_kom\_byte & 0b10000000) \textcolor{comment}{//else if}
+00163                 \{
+00164                     \hyperlink{gangstilar_8c_a52ff26f8e5f26305582c67be8be4417b}{Dance}(((\textcolor{keywordtype}{float})((\hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[8] & 0b11110000) >> 4)-8), -(((\textcolor{keywordtype}{float})(
+      \hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[8] & 0b00001111))-8));
+00165                 \}
+00166                 \textcolor{keywordflow}{else}
+00167                 \{
+00168                     \hyperlink{gangstilar_8c_a8b22e9229a15d20adb676428ad7f6dac}{Walk\_Half\_Cycle}(\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed},\hyperlink{styr_2styr_2main_8c_ab8ef1bf8a70cc07c6d55823c390a7e76}{angle},\hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height},
+      \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx});
+00169                 \}
+00170             \}
+00171             \textcolor{keywordflow}{break};
+00172             
+00173             \textcolor{keywordflow}{case} \hyperlink{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49aeef9468d1b98bca652a04bf5063fd9d6}{AUTO}: \textcolor{comment}{//Autonomt läge}
+00174             \textcolor{comment}{//height = 11;}
+00175             \hyperlink{state__machine_8c_af7c798149db27b6d271bf5845a489513}{update\_state}();
+00176             \hyperlink{state__machine_8c_a11237cafa6d63fa57107c8ae2f3a1ea3}{run\_state}();
+00177             \textcolor{keywordflow}{break};
+00178             
+00179             \textcolor{keywordflow}{case} \hyperlink{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49a32390bcc102a1bb79dbd1bc473633933}{RACE}:
+00180             \textcolor{keywordflow}{if} ((PIND & (1 << PIND3)) == 0) \textcolor{comment}{//Har knapp tryckts ned?}
+00181             \{
+00182                 \_delay\_ms(1000);
+00183                 \hyperlink{styr_2styr_2main_8c_a33f2231ad0dc535a3976677c8de97a8d}{cm} = \hyperlink{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49aeef9468d1b98bca652a04bf5063fd9d6}{AUTO};
+00184             \}
+00185             \textcolor{keywordflow}{break};
+00186             
+00187             \textcolor{keywordflow}{default}:
+00188             \textcolor{keywordflow}{break};
+00189         \}
+00190     \}
+00191 \}
+\end{DoxyCode}
 \index{styr/styr/main.\+c@{styr/styr/main.\+c}!update\+\_\+height@{update\+\_\+height}}
 \index{update\+\_\+height@{update\+\_\+height}!styr/styr/main.\+c@{styr/styr/main.\+c}}
 \subsubsection[{\texorpdfstring{update\+\_\+height()}{update_height()}}]{\setlength{\rightskip}{0pt plus 5cm}void update\+\_\+height (
@@ -97,6 +263,25 @@ R\+A\+CE\hypertarget{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49a32390
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{styr_2styr_2main_8c_ae4a2d91f6764f80102bf377fb3686d69}{}\label{styr_2styr_2main_8c_ae4a2d91f6764f80102bf377fb3686d69}
+
+
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00238}{238} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
+
+\begin{DoxyCode}
+00239 \{
+00240     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} change\_height = \hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[3];
+00241     
+00242     \textcolor{keywordflow}{if} (change\_height == 1) \textcolor{comment}{//Sänk?}
+00243     \{
+00244         \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} -= \hyperlink{styr_2styr_2main_8c_a9b9f29186e02953918ca4e891b0de1f7}{delta\_h};
+00245     \}
+00246     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (change\_height == 2) \textcolor{comment}{//Höj?}
+00247     \{
+00248         \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} += \hyperlink{styr_2styr_2main_8c_a9b9f29186e02953918ca4e891b0de1f7}{delta\_h};
+00249     \}
+00250 \}
+\end{DoxyCode}
 \index{styr/styr/main.\+c@{styr/styr/main.\+c}!update\+\_\+mode@{update\+\_\+mode}}
 \index{update\+\_\+mode@{update\+\_\+mode}!styr/styr/main.\+c@{styr/styr/main.\+c}}
 \subsubsection[{\texorpdfstring{update\+\_\+mode()}{update_mode()}}]{\setlength{\rightskip}{0pt plus 5cm}void update\+\_\+mode (
@@ -104,6 +289,32 @@ R\+A\+CE\hypertarget{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49a32390
 {}
 \end{DoxyParamCaption}
 )}\hypertarget{styr_2styr_2main_8c_aef200cbcdfce82fec3d5662a556ca3a1}{}\label{styr_2styr_2main_8c_aef200cbcdfce82fec3d5662a556ca3a1}
+
+
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00193}{193} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
+
+\begin{DoxyCode}
+00194 \{
+00195     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} change\_mode = \hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[4];
+00196     
+00197     \textcolor{keywordflow}{if} (change\_mode == 0b00001111) \textcolor{comment}{//Byt till MANUAL?}
+00198     \{
+00199         \hyperlink{styr_2styr_2main_8c_a33f2231ad0dc535a3976677c8de97a8d}{cm} = \hyperlink{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49a506e8dd29460ea318b68d035f679b01b}{MANUAL};
+00200         \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} = 11;
+00201     \}
+00202     
+00203     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (change\_mode == 0b00111100) \textcolor{comment}{//Byt till AUTO?}
+00204     \{
+00205         \hyperlink{styr_2styr_2main_8c_a33f2231ad0dc535a3976677c8de97a8d}{cm} = \hyperlink{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49aeef9468d1b98bca652a04bf5063fd9d6}{AUTO};
+00206         \hyperlink{state__machine_8h_a5e5321a4a9085b83c8161454bf7a145c}{ROBOT\_STATE} = \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9af4fc00ebf5a552ca632130e794617d58}{CORRIDOR};
+00207     \}
+00208     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (change\_mode == 0b11110000) \textcolor{comment}{//Byt till RACE?}
+00209     \{
+00210         \hyperlink{styr_2styr_2main_8c_a33f2231ad0dc535a3976677c8de97a8d}{cm} = \hyperlink{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49a32390bcc102a1bb79dbd1bc473633933}{RACE};
+00211     \}
+00212 \}
+\end{DoxyCode}
 \index{styr/styr/main.\+c@{styr/styr/main.\+c}!update\+\_\+speed\+\_\+and\+\_\+angle@{update\+\_\+speed\+\_\+and\+\_\+angle}}
 \index{update\+\_\+speed\+\_\+and\+\_\+angle@{update\+\_\+speed\+\_\+and\+\_\+angle}!styr/styr/main.\+c@{styr/styr/main.\+c}}
 \subsubsection[{\texorpdfstring{update\+\_\+speed\+\_\+and\+\_\+angle()}{update_speed_and_angle()}}]{\setlength{\rightskip}{0pt plus 5cm}void update\+\_\+speed\+\_\+and\+\_\+angle (
@@ -113,31 +324,98 @@ R\+A\+CE\hypertarget{styr_2styr_2main_8c_aeb6c30b72b6dd0937e2d45de44322a49a32390
 )}\hypertarget{styr_2styr_2main_8c_ac755a97dcfd4c99fc14471a280f28788}{}\label{styr_2styr_2main_8c_ac755a97dcfd4c99fc14471a280f28788}
 
 
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00214}{214} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
+
+\begin{DoxyCode}
+00215 \{
+00216     \hyperlink{styr_2styr_2main_8c_a4baaa49fb8c11bcc3ddaa6672e4e2414}{intensity\_byte} = 120; \textcolor{comment}{//Återställer till default så offset blir rätt}
+00217     \hyperlink{styr_2styr_2main_8c_aeaeea67afbf7862e4e306b6257cf7f0e}{angle\_byte} = 120;
+00218     
+00219     \textcolor{keywordflow}{if}((\hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[1] < 20) || (\hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[1] > 220))\{
+00220         \hyperlink{styr_2styr_2main_8c_aeaeea67afbf7862e4e306b6257cf7f0e}{angle\_byte} = 0;
+00221     \}
+00222     \textcolor{keywordflow}{else}\{
+00223         \hyperlink{styr_2styr_2main_8c_aeaeea67afbf7862e4e306b6257cf7f0e}{angle\_byte} = \hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[1] - 120;
+00224     \}
+00225     
+00226     \textcolor{keywordflow}{if}((\hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[2] < 20) || (\hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[2] > 220))\{
+00227         \hyperlink{styr_2styr_2main_8c_a4baaa49fb8c11bcc3ddaa6672e4e2414}{intensity\_byte} = 0;
+00228     \}
+00229     \textcolor{keywordflow}{else}\{
+00230         \hyperlink{styr_2styr_2main_8c_a4baaa49fb8c11bcc3ddaa6672e4e2414}{intensity\_byte} = \hyperlink{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{lastPacket}[2] - 120;
+00231     \}
+00232     
+00233     \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} = (float)(\hyperlink{styr_2styr_2main_8c_a4baaa49fb8c11bcc3ddaa6672e4e2414}{intensity\_byte})*((float)6)/((float)100); \textcolor{comment}{//100 på kontroll -> 6 i
+       speed}
+00234     int8\_t sgn\_angle = (\hyperlink{styr_2styr_2main_8c_aeaeea67afbf7862e4e306b6257cf7f0e}{angle\_byte} >= 0) - (\hyperlink{styr_2styr_2main_8c_aeaeea67afbf7862e4e306b6257cf7f0e}{angle\_byte} < 0);
+00235     \hyperlink{styr_2styr_2main_8c_ab8ef1bf8a70cc07c6d55823c390a7e76}{angle} = sgn\_angle * 0.57 * \hyperlink{styr_2styr_2main_8c_aeaeea67afbf7862e4e306b6257cf7f0e}{angle\_byte} * \hyperlink{styr_2styr_2main_8c_aeaeea67afbf7862e4e306b6257cf7f0e}{angle\_byte}/10000; \textcolor{comment}{//Kvadratisk
+       skalning av mottaget värde till vinkel}
+00236 \}
+\end{DoxyCode}
+
+
 \subsection{Variable Documentation}
 \index{styr/styr/main.\+c@{styr/styr/main.\+c}!angle@{angle}}
 \index{angle@{angle}!styr/styr/main.\+c@{styr/styr/main.\+c}}
 \subsubsection[{\texorpdfstring{angle}{angle}}]{\setlength{\rightskip}{0pt plus 5cm}float angle}\hypertarget{styr_2styr_2main_8c_ab8ef1bf8a70cc07c6d55823c390a7e76}{}\label{styr_2styr_2main_8c_ab8ef1bf8a70cc07c6d55823c390a7e76}
+
+
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00034}{34} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
 \index{styr/styr/main.\+c@{styr/styr/main.\+c}!angle\+\_\+byte@{angle\+\_\+byte}}
 \index{angle\+\_\+byte@{angle\+\_\+byte}!styr/styr/main.\+c@{styr/styr/main.\+c}}
 \subsubsection[{\texorpdfstring{angle\+\_\+byte}{angle_byte}}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t angle\+\_\+byte}\hypertarget{styr_2styr_2main_8c_aeaeea67afbf7862e4e306b6257cf7f0e}{}\label{styr_2styr_2main_8c_aeaeea67afbf7862e4e306b6257cf7f0e}
+
+
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00037}{37} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
 \index{styr/styr/main.\+c@{styr/styr/main.\+c}!cm@{cm}}
 \index{cm@{cm}!styr/styr/main.\+c@{styr/styr/main.\+c}}
 \subsubsection[{\texorpdfstring{cm}{cm}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+O\+N\+T\+R\+O\+L\+\_\+\+M\+O\+DE} cm}\hypertarget{styr_2styr_2main_8c_a33f2231ad0dc535a3976677c8de97a8d}{}\label{styr_2styr_2main_8c_a33f2231ad0dc535a3976677c8de97a8d}
+
+
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00033}{33} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
 \index{styr/styr/main.\+c@{styr/styr/main.\+c}!delta\+\_\+h@{delta\+\_\+h}}
 \index{delta\+\_\+h@{delta\+\_\+h}!styr/styr/main.\+c@{styr/styr/main.\+c}}
 \subsubsection[{\texorpdfstring{delta\+\_\+h}{delta_h}}]{\setlength{\rightskip}{0pt plus 5cm}float delta\+\_\+h}\hypertarget{styr_2styr_2main_8c_a9b9f29186e02953918ca4e891b0de1f7}{}\label{styr_2styr_2main_8c_a9b9f29186e02953918ca4e891b0de1f7}
+
+
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00039}{39} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
+\index{styr/styr/main.\+c@{styr/styr/main.\+c}!dx@{dx}}
+\index{dx@{dx}!styr/styr/main.\+c@{styr/styr/main.\+c}}
+\subsubsection[{\texorpdfstring{dx}{dx}}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t dx}\hypertarget{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{}\label{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}
+
+
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00040}{40} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
 \index{styr/styr/main.\+c@{styr/styr/main.\+c}!height@{height}}
 \index{height@{height}!styr/styr/main.\+c@{styr/styr/main.\+c}}
 \subsubsection[{\texorpdfstring{height}{height}}]{\setlength{\rightskip}{0pt plus 5cm}float height}\hypertarget{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{}\label{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}
+
+
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00038}{38} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
 \index{styr/styr/main.\+c@{styr/styr/main.\+c}!intensity\+\_\+byte@{intensity\+\_\+byte}}
 \index{intensity\+\_\+byte@{intensity\+\_\+byte}!styr/styr/main.\+c@{styr/styr/main.\+c}}
 \subsubsection[{\texorpdfstring{intensity\+\_\+byte}{intensity_byte}}]{\setlength{\rightskip}{0pt plus 5cm}int8\+\_\+t intensity\+\_\+byte}\hypertarget{styr_2styr_2main_8c_a4baaa49fb8c11bcc3ddaa6672e4e2414}{}\label{styr_2styr_2main_8c_a4baaa49fb8c11bcc3ddaa6672e4e2414}
+
+
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00036}{36} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
 \index{styr/styr/main.\+c@{styr/styr/main.\+c}!last\+Packet@{last\+Packet}}
 \index{last\+Packet@{last\+Packet}!styr/styr/main.\+c@{styr/styr/main.\+c}}
 \subsubsection[{\texorpdfstring{last\+Packet}{lastPacket}}]{\setlength{\rightskip}{0pt plus 5cm}volatile unsigned char last\+Packet\mbox{[}16\mbox{]}}\hypertarget{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}{}\label{styr_2styr_2main_8c_a17b197a501fde4cc8d5475b4adaab464}
+
+
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00042}{42} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+
 \index{styr/styr/main.\+c@{styr/styr/main.\+c}!speed@{speed}}
 \index{speed@{speed}!styr/styr/main.\+c@{styr/styr/main.\+c}}
 \subsubsection[{\texorpdfstring{speed}{speed}}]{\setlength{\rightskip}{0pt plus 5cm}float speed}\hypertarget{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{}\label{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}
-\index{styr/styr/main.\+c@{styr/styr/main.\+c}!temp@{temp}}
-\index{temp@{temp}!styr/styr/main.\+c@{styr/styr/main.\+c}}
-\subsubsection[{\texorpdfstring{temp}{temp}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char temp\mbox{[}18\mbox{]}}\hypertarget{styr_2styr_2main_8c_a5d5b037c0044bc93d5ccac04987f63b5}{}\label{styr_2styr_2main_8c_a5d5b037c0044bc93d5ccac04987f63b5}
+
+
+Definition at line \hyperlink{styr_2styr_2main_8c_source_l00035}{35} of file \hyperlink{styr_2styr_2main_8c_source}{main.\+c}.
+

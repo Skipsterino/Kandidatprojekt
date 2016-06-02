@@ -2,59 +2,62 @@
 \label{gangstilar_8h_source}\index{styr/styr/gangstilar.\+h@{styr/styr/gangstilar.\+h}}
 
 \begin{DoxyCode}
-00001 \textcolor{comment}{/*}
-00002 \textcolor{comment}{ * gangstilar.h}
-00003 \textcolor{comment}{ *}
-00004 \textcolor{comment}{ * Created: 4/8/2016 3:03:52 PM}
-00005 \textcolor{comment}{ *  Author: chrma018}
-00006 \textcolor{comment}{ */} 
-00007 
-00008 
-00009 \textcolor{preprocessor}{#ifndef GANGSTILAR\_H\_}
-00010 \textcolor{preprocessor}{#define GANGSTILAR\_H\_}
-00011 
-00012 \textcolor{preprocessor}{#ifndef F\_CPU}
-\hypertarget{gangstilar_8h_source.tex_l00013}{}\hyperlink{gangstilar_8h_a43bafb28b29491ec7f871319b5a3b2f8}{00013} \textcolor{preprocessor}{#define F\_CPU 16000000UL        // 16 MHz}
-00014 \textcolor{preprocessor}{#endif}
-00015 
-00016 \textcolor{preprocessor}{#include <avr/io.h>}
-00017 \textcolor{preprocessor}{#include <avr/interrupt.h>}
-00018 \textcolor{preprocessor}{#include <util/delay.h>}
-00019 
-00020 \textcolor{preprocessor}{#include "\hyperlink{invers__kinematik_8h}{invers\_kinematik.h}"}
-00021 \textcolor{preprocessor}{#include "\hyperlink{structs_8h}{structs.h}"}
-00022 \textcolor{preprocessor}{#include "\hyperlink{servo___u_a_r_t_8h}{servo\_UART.h}"}
-00023 
-\hypertarget{gangstilar_8h_source.tex_l00024}{}\hyperlink{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{00024} \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{height};
-\hypertarget{gangstilar_8h_source.tex_l00025}{}\hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{00025} \textcolor{keywordtype}{int} \hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{n};
+00001 
+00012 \textcolor{preprocessor}{#ifndef GANGSTILAR\_H\_}
+00013 \textcolor{preprocessor}{#define GANGSTILAR\_H\_}
+00014 
+00015 \textcolor{preprocessor}{#ifndef F\_CPU}
+\hypertarget{gangstilar_8h_source.tex_l00016}{}\hyperlink{gangstilar_8h_a43bafb28b29491ec7f871319b5a3b2f8}{00016} \textcolor{preprocessor}{#define F\_CPU 16000000UL        // 16 MHz}
+00017 \textcolor{preprocessor}{#endif}
+00018 
+00019 \textcolor{preprocessor}{#include <avr/io.h>}
+00020 \textcolor{preprocessor}{#include <avr/interrupt.h>}
+00021 \textcolor{preprocessor}{#include <util/delay.h>}
+00022 
+00023 \textcolor{preprocessor}{#include "\hyperlink{invers__kinematik_8h}{invers\_kinematik.h}"}
+00024 \textcolor{preprocessor}{#include "\hyperlink{structs_8h}{structs.h}"}
+00025 \textcolor{preprocessor}{#include "\hyperlink{servo___u_a_r_t_8h}{servo\_UART.h}"}
 00026 
-00027 
-00028 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_a1cdd1ec49baae5876bf4185c0696ee45}{Adjust\_Stance\_Climbed}(\textcolor{keywordtype}{char} direction);
-00029 \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a7686716eb9ff55e001f00b15a53f83f0}{LP\_Filter\_And\_Limit\_Input}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, \textcolor{keywordtype}{int} sgn\_speed, \textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} 
-      sgn\_theta, \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{height});
-00030 \textcolor{keywordtype}{int} \hyperlink{gangstilar_8h_a7e22034136fbee493cd09711e57eff2d}{max\_speed}(\textcolor{keywordtype}{float} theta,\textcolor{keywordtype}{int} sgn\_theta);
-00031 \hyperlink{structtriple__float}{triple\_float} \hyperlink{gangstilar_8h_a2d87f3a4b99915d806ba0b31e2270028}{Adjust\_Servo\_Speed}(\textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} sgn\_theta, int8\_t leg\_down);
-00032 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_af2fde91636f94ada8898458a8e631a9a}{Adjust\_Height}(\textcolor{keywordtype}{float} l, \textcolor{keywordtype}{float} height\_step, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch});
-00033 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_ad91d62548b0e007cac2f92e12d5ab273}{Send\_Legs\_Kar}(\hyperlink{structtriple__float}{triple\_float} kar\_p1, \hyperlink{structtriple__float}{triple\_float} kar\_p2, \textcolor{keywordtype}{float} 
-      \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, \hyperlink{structtriple__float}{triple\_float} speed\_p1, \hyperlink{structtriple__float}{triple\_float} speed\_p2); 
-00034 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_a5727fa4a438523e18ea5409ca5bf938e}{Rotate\_And\_Send\_Legs}(\hyperlink{structtriple__float}{triple\_float} kar\_p1, 
-      \hyperlink{structtriple__float}{triple\_float} kar\_p2, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, \textcolor{keywordtype}{int} sgn\_speed,\textcolor{keywordtype}{float} theta, 
-      \hyperlink{structtriple__float}{triple\_float} speed\_p1, \hyperlink{structtriple__float}{triple\_float} speed\_p2);
-00035 \hyperlink{structdouble__float}{double\_float} \hyperlink{gangstilar_8h_adda531189948a09fca5b2ba7eb85ed72}{Limit\_Theta}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, \textcolor{keywordtype}{int} sgn\_speed, \textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} sgn\_theta
-       );
-00036 \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a0253c9cd3c65bdec3e155f66c7575f3e}{Limit\_Speed}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, \textcolor{keywordtype}{int} sgn\_speed);
-00037 \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a7a64feb9f04fb68c5c7c44afb5975acf}{Limit\_Height}(\textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{height});
-00038 
+00027 \textcolor{comment}{//Global Dans radie, för att man inte ska få göra för snabba förflyttningar}
+\hypertarget{gangstilar_8h_source.tex_l00028}{}\hyperlink{gangstilar_8h_a53714f6e2fcbc2539af246d0a0446cbe}{00028} \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a53714f6e2fcbc2539af246d0a0446cbe}{dance\_r};
+00029 
+00038 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_a1cdd1ec49baae5876bf4185c0696ee45}{Adjust\_Stance\_Climbed}(\textcolor{keywordtype}{char} direction);
 00039 
-00040 \hyperlink{structtriple__float}{triple\_float} \hyperlink{gangstilar_8h_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{Tripod}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} stroke, \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{height},\textcolor{keywordtype}{float} 
-      \hyperlink{over__hinder_8c_a5e433c2d90f9d7f1ff1868b9e8b91868}{lift}, uint8\_t \hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{n});
-00041 \textcolor{comment}{//triple\_float Tripod2(float x, float stroke, float height, uint8\_t n); }
-00042 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_ae56b8515b1ea2c6035e04e3e2df2b52a}{Walk\_Half\_Cycle}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{height});
-00043 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_a4c2ee7390bb80e121c51116c7fe30bd1}{Walk\_Half\_Crab\_Cycle}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed});
-00044 \textcolor{comment}{//void Walk\_Half\_Crab\_Cycle2(float speed);}
-00045 \textcolor{comment}{//void Walk\_Half\_Safe\_Cycle(float speed, float th, float height) ;}
-00046 
-00047 
-00048 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* GANGSTILAR\_H\_ */}\textcolor{preprocessor}{}
-00049 
+00055 \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a4228f615ac009f6808bc8cbf5fed939a}{LP\_Filter\_And\_Limit\_Input}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, \textcolor{keywordtype}{int} sgn\_speed, \textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} 
+      sgn\_theta, \textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height}, \textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}, \textcolor{keywordtype}{int} sgn\_dx);
+00056 
+00071 \hyperlink{structtriple__float}{triple\_float} \hyperlink{gangstilar_8h_a6bb8056658634de06f155394bd298410}{Calc\_Servo\_Speed}(\textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} sgn\_theta, int8\_t leg\_down, \textcolor{keywordtype}{
+      float} \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}, \textcolor{keywordtype}{int} sgn\_dx);
+00072 
+00087 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_a457024b585cd87287d5e05809a848e94}{Send\_Legs\_Kar}(\hyperlink{structtriple__float}{triple\_float} kar\_p1, \hyperlink{structtriple__float}{triple\_float} kar\_p2, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, \hyperlink{structtriple__float}{triple\_float} speed\_p1, \hyperlink{structtriple__float}{triple\_float} speed\_p2, \textcolor{keywordtype}{float} dx\_p1
+      , \textcolor{keywordtype}{float} dx\_p2); 
+00088 
+00105 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_a0ad2cf3e9047e6311cdac98a8bce6ed6}{Rotate\_And\_Send\_Legs}(\hyperlink{structtriple__float}{triple\_float} kar\_p1, 
+      \hyperlink{structtriple__float}{triple\_float} kar\_p2, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, \textcolor{keywordtype}{int} sgn\_speed,\textcolor{keywordtype}{float} theta, 
+      \hyperlink{structtriple__float}{triple\_float} speed\_p1, \hyperlink{structtriple__float}{triple\_float} speed\_p2, \textcolor{keywordtype}{float} dx\_p1, \textcolor{keywordtype}{float} dx\_p2);
+00106 
+00119 \hyperlink{structdouble__float}{double\_float} \hyperlink{gangstilar_8h_adda531189948a09fca5b2ba7eb85ed72}{Limit\_Theta}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, \textcolor{keywordtype}{int} sgn\_speed, \textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{int} sgn\_theta
+       );
+00120 
+00134 \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a0c08306dd068f49ba9bdb5c063d6ae6d}{Limit\_Speed}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, \textcolor{keywordtype}{int} sgn\_speed, \textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}, \textcolor{keywordtype}{int} sgn\_dx);
+00135 
+00147 \textcolor{keywordtype}{float} \hyperlink{gangstilar_8h_a7a64feb9f04fb68c5c7c44afb5975acf}{Limit\_Height}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height});
+00148 
+00164 \hyperlink{structtriple__float}{triple\_float} \hyperlink{gangstilar_8h_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{Tripod}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} stroke, \textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height},\textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_a5e433c2d90f9d7f1ff1868b9e8b91868}{lift}, uint8\_t n);
+00165 
+00177 \textcolor{comment}{//void Walk\_Half\_Cycle(float speed, float theta, float height);//dummy}
+00178 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_a8b22e9229a15d20adb676428ad7f6dac}{Walk\_Half\_Cycle}(\textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, \textcolor{keywordtype}{float} theta, \textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height}, \textcolor{keywordtype}{float} 
+      \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx});
+00179 
+00188 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_ad538f984b6d02e469da2ce39d51bf4b5}{Walk\_Half\_Crab\_Cycle}(int8\_t \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed});
+00189 
+00199 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_a52ff26f8e5f26305582c67be8be4417b}{Dance}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y});
+00200 
+00210 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_a47315f1535b41ff12e6a00ad36e681d7}{Dance\_Cyl}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th);
+00211 
+00215 \textcolor{keywordtype}{void} \hyperlink{gangstilar_8h_a74e3cb81b1d6c82b020d36f856b0b1f7}{Victory\_Dance}(\textcolor{keywordtype}{void});
+00216 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* GANGSTILAR\_H\_ */}\textcolor{preprocessor}{}
+00217 
 \end{DoxyCode}

@@ -3,38 +3,40 @@
 
 \begin{DoxyCode}
 00001 
-00010 \textcolor{preprocessor}{#ifndef OVER\_HINDER\_H\_}
-00011 \textcolor{preprocessor}{#define OVER\_HINDER\_H\_}
-00012 
-00013 \textcolor{preprocessor}{#include "\hyperlink{servo___u_a_r_t_8h}{servo\_UART.h}"}
-00014 \textcolor{preprocessor}{#include "\hyperlink{gangstilar_8h}{gangstilar.h}"}
-00015 
-00016 \textcolor{preprocessor}{#include <util/delay.h>}
-00017 \textcolor{comment}{//unsigned int load;}
-\hypertarget{over__hinder_8h_source.tex_l00018}{}\hyperlink{over__hinder_8h_a33e442d1e9bcd95b56d24846c1aae3e9}{00018} uint8\_t \hyperlink{over__hinder_8h_a33e442d1e9bcd95b56d24846c1aae3e9}{number\_of\_steps};
-00019 
-00020 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a87539371f190ccc752119c0b325da463}{Probe\_Walk}(\textcolor{keywordtype}{void});
-00021 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_ae91da6f3d3729d04dbd82cb672c8b690}{Probe\_Height\_Up}(\textcolor{keywordtype}{void}); 
-00022 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a50e10d9ae7ed457b8aade307c11efbe4}{Probe\_Height\_Down}(\textcolor{keywordtype}{void}); 
-00023 
-00024 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_ac5e595f6e488678c5e18cb3fd9364fb3}{Walk\_Up}(\textcolor{keywordtype}{void}); 
-00025 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_ae7231a80aafc83676e934f016d681783}{Walk\_Up\_Hard}(\textcolor{keywordtype}{void});
-00026 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a6f7053ec3f149f4974cb94362739f7bc}{Walk\_Top}(\textcolor{keywordtype}{void});
+00011 \textcolor{preprocessor}{#ifndef OVER\_HINDER\_H\_}
+00012 \textcolor{preprocessor}{#define OVER\_HINDER\_H\_}
+00013 
+00014 \textcolor{preprocessor}{#include "\hyperlink{servo___u_a_r_t_8h}{servo\_UART.h}"}
+00015 \textcolor{preprocessor}{#include "\hyperlink{gangstilar_8h}{gangstilar.h}"}
+00016 
+00017 \textcolor{preprocessor}{#include <util/delay.h>}
+00018 
+00026 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a28758391250bb7a02f30ec22195c9922}{update\_step}(\textcolor{keywordtype}{float} new\_step); 
 00027 
-00028 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_aad65c7e9222750ff718f2a9ccaa2a11c}{Walk\_Down}(\textcolor{keywordtype}{void}); 
-00029 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_ace3a300d120d3dfcf42a787a4cea14f9}{Walk\_Down\_Hard}(\textcolor{keywordtype}{void});
-00030 
-00031 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a721328d45f539a2d4caecc7d5726fc88}{To\_Climbing\_Stance}(\textcolor{keywordtype}{void});
-00032 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_aa1749474a1fb3aa13b681498eb340fc7}{To\_Default\_Stance}(\textcolor{keywordtype}{void});
-00033 
-00034 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a8e93e827f047dac258e8334869fb2615}{First\_Leg}(\textcolor{keywordtype}{char} direction);
-00035 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a656636b54d65528c5f66fbe1ae0c793c}{Second\_Leg}(\textcolor{keywordtype}{char} direction);
-00036 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a1fecdcd5c5c27607d812f759f5ba1d97}{First\_Body\_Adjust}(\textcolor{keywordtype}{void});
-00037 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_ae5a0956265d1177bb332cba019226908}{Third\_Leg}(\textcolor{keywordtype}{char} direction);
-00038 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_aa7388d904fc9be082274a66dcb366d34}{Fourth\_Leg}(\textcolor{keywordtype}{char} direction);
-00039 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a362c54ea3c8947bc527effc9eb21e69c}{Second\_Body\_Adjust}(\textcolor{keywordtype}{void});
-00040 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_ad5195902238f5ace14e522b1277f09ad}{Fifth\_Leg}(\textcolor{keywordtype}{char} direction);
-00041 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_ae160f42d7debd07279bb1464bb3b39d1}{Sixth\_Leg}(\textcolor{keywordtype}{char} direction);
-00042 
-00043 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* OVER\_HINDER\_H\_ */}\textcolor{preprocessor}{}
+00033 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_ac5e595f6e488678c5e18cb3fd9364fb3}{Walk\_Up}(\textcolor{keywordtype}{void}); 
+00034 
+00040 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_aad65c7e9222750ff718f2a9ccaa2a11c}{Walk\_Down}(\textcolor{keywordtype}{void}); 
+00041 
+00045 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a721328d45f539a2d4caecc7d5726fc88}{To\_Climbing\_Stance}(\textcolor{keywordtype}{void});
+00046 
+00053 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a8e93e827f047dac258e8334869fb2615}{First\_Leg}(\textcolor{keywordtype}{char} direction);
+00054 
+00061 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a656636b54d65528c5f66fbe1ae0c793c}{Second\_Leg}(\textcolor{keywordtype}{char} direction);
+00062 
+00066 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a1fecdcd5c5c27607d812f759f5ba1d97}{First\_Body\_Adjust}(\textcolor{keywordtype}{void});
+00067 
+00074 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_ae5a0956265d1177bb332cba019226908}{Third\_Leg}(\textcolor{keywordtype}{char} direction);
+00075 
+00082 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_aa7388d904fc9be082274a66dcb366d34}{Fourth\_Leg}(\textcolor{keywordtype}{char} direction);
+00083 
+00087 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_a362c54ea3c8947bc527effc9eb21e69c}{Second\_Body\_Adjust}(\textcolor{keywordtype}{void});
+00088 
+00095 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_ad5195902238f5ace14e522b1277f09ad}{Fifth\_Leg}(\textcolor{keywordtype}{char} direction);
+00096 
+00103 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_ae160f42d7debd07279bb1464bb3b39d1}{Sixth\_Leg}(\textcolor{keywordtype}{char} direction);
+00104 
+00105 
+00109 \textcolor{keywordtype}{void} \hyperlink{over__hinder_8h_aa1749474a1fb3aa13b681498eb340fc7}{To\_Default\_Stance}(\textcolor{keywordtype}{void});
+00110 
+00111 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* OVER\_HINDER\_H\_ */}\textcolor{preprocessor}{}
 \end{DoxyCode}

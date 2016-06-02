@@ -44,11 +44,19 @@ Joakim
 \end{DoxyDate}
 
 
+Definition in file \hyperlink{_l_c_d__controller_8h_source}{L\+C\+D\+\_\+controller.\+h}.
+
+
+
 \subsection{Macro Definition Documentation}
 \index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES@{C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES}}
 \index{C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES@{C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES}!L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}}
 \subsubsection[{\texorpdfstring{C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES}{CONTROLLER_NUMBER_OF_PAGES}}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES~4}\hypertarget{_l_c_d__controller_8h_aa7bbd66352e5612adc00e2b7aa77b1c9}{}\label{_l_c_d__controller_8h_aa7bbd66352e5612adc00e2b7aa77b1c9}
 The number of pages the controller handles. 
+
+Definition at line \hyperlink{_l_c_d__controller_8h_source_l00019}{19} of file \hyperlink{_l_c_d__controller_8h_source}{L\+C\+D\+\_\+controller.\+h}.
+
+
 
 \subsection{Function Documentation}
 \index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!L\+C\+D\+\_\+controller\+\_\+init@{L\+C\+D\+\_\+controller\+\_\+init}}
@@ -62,7 +70,40 @@ The number of pages the controller handles.
 
 Initiates the L\+CD controller. 
 
-Initiates the L\+CD controller with the specified number of pages. \index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!L\+C\+D\+\_\+controller\+\_\+put\+\_\+line@{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line}}
+Initiates the L\+CD controller with the specified number of pages.
+
+File\+: \hyperlink{_l_c_d__controller_8c}{L\+C\+D\+\_\+controller.\+c} Version\+: 1.\+0 Last edited\+: 19 Maj 2016 
+
+Definition at line \hyperlink{_l_c_d__controller_8c_source_l00009}{9} of file \hyperlink{_l_c_d__controller_8c_source}{L\+C\+D\+\_\+controller.\+c}.
+
+
+\begin{DoxyCode}
+00010 \{
+00011     \textcolor{comment}{//Clear line buffer}
+00012     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 0; i < \hyperlink{_l_c_d_8h_a5bb24c05980471cbc9086fef965deacc}{LCD\_NUMBER\_OF\_LINES}*
+      \hyperlink{_l_c_d__controller_8h_aa7bbd66352e5612adc00e2b7aa77b1c9}{CONTROLLER\_NUMBER\_OF\_PAGES}; ++i)
+00013     \{
+00014         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} j = 0; j < \hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{LCD\_LINE\_WIDTH}; ++j)
+00015         \{
+00016             \hyperlink{_l_c_d__controller_8h_a075b70e7692af8221284f00c90d70fb2}{lines}[i][j] = \textcolor{charliteral}{'\(\backslash\)0'};
+00017         \}
+00018     \}
+00019     
+00020     \hyperlink{_l_c_d__controller_8h_a4f799993f40fea97658f543f15842f4a}{currentLine} = 0;
+00021     \hyperlink{_l_c_d__controller_8h_a9d160c265ce9aa4c9aa782cf7c5ecb41}{overflow\_counter} = 0;
+00022     \hyperlink{_l_c_d__controller_8h_a5462652fe95683f50bcbd6d5fbbc3ae1}{spiOverflow} = 0;
+00023     
+00024     \textcolor{comment}{//Init TIMER0 med prescaler 1024}
+00025     TCCR0B |= (1<<CS02) | (1<<CS00);
+00026     
+00027     \textcolor{comment}{//Nollställ räknaren}
+00028     TCNT0 = 0;
+00029     
+00030     \textcolor{comment}{//Aktivera avbrott vid overflow}
+00031     TIMSK0 |= (1 << TOIE0);
+00032 \}
+\end{DoxyCode}
+\index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!L\+C\+D\+\_\+controller\+\_\+put\+\_\+line@{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line}}
 \index{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line@{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line}!L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}}
 \subsubsection[{\texorpdfstring{L\+C\+D\+\_\+controller\+\_\+put\+\_\+line(uint8\+\_\+t line, char string[L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH])}{LCD_controller_put_line(uint8_t line, char string[LCD_LINE_WIDTH])}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+controller\+\_\+put\+\_\+line (
 \begin{DoxyParamCaption}
@@ -87,13 +128,28 @@ Put a string in the L\+CD controller\textquotesingle{}s buffer at a given place.
 \index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!current\+Line@{current\+Line}}
 \index{current\+Line@{current\+Line}!L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}}
 \subsubsection[{\texorpdfstring{current\+Line}{currentLine}}]{\setlength{\rightskip}{0pt plus 5cm}volatile uint8\+\_\+t current\+Line}\hypertarget{_l_c_d__controller_8h_a4f799993f40fea97658f543f15842f4a}{}\label{_l_c_d__controller_8h_a4f799993f40fea97658f543f15842f4a}
-Index of the line on the top of the current page. \index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!lines@{lines}}
+Index of the line on the top of the current page. 
+
+Definition at line \hyperlink{_l_c_d__controller_8h_source_l00022}{22} of file \hyperlink{_l_c_d__controller_8h_source}{L\+C\+D\+\_\+controller.\+h}.
+
+\index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!lines@{lines}}
 \index{lines@{lines}!L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}}
 \subsubsection[{\texorpdfstring{lines}{lines}}]{\setlength{\rightskip}{0pt plus 5cm}volatile char lines\mbox{[}{\bf C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+G\+ES} $\ast${\bf L\+C\+D\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+I\+N\+ES}\mbox{]}\mbox{[}{\bf L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH}\mbox{]}}\hypertarget{_l_c_d__controller_8h_a075b70e7692af8221284f00c90d70fb2}{}\label{_l_c_d__controller_8h_a075b70e7692af8221284f00c90d70fb2}
-The buffer containing the strings to be displayed. \index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!overflow\+\_\+counter@{overflow\+\_\+counter}}
+The buffer containing the strings to be displayed. 
+
+Definition at line \hyperlink{_l_c_d__controller_8h_source_l00021}{21} of file \hyperlink{_l_c_d__controller_8h_source}{L\+C\+D\+\_\+controller.\+h}.
+
+\index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!overflow\+\_\+counter@{overflow\+\_\+counter}}
 \index{overflow\+\_\+counter@{overflow\+\_\+counter}!L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}}
 \subsubsection[{\texorpdfstring{overflow\+\_\+counter}{overflow_counter}}]{\setlength{\rightskip}{0pt plus 5cm}volatile uint8\+\_\+t overflow\+\_\+counter}\hypertarget{_l_c_d__controller_8h_a9d160c265ce9aa4c9aa782cf7c5ecb41}{}\label{_l_c_d__controller_8h_a9d160c265ce9aa4c9aa782cf7c5ecb41}
-Counter keeping track of the current number of times the timer has overflowed. \index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!spi\+Overflow@{spi\+Overflow}}
+Counter keeping track of the current number of times the timer has overflowed. 
+
+Definition at line \hyperlink{_l_c_d__controller_8h_source_l00023}{23} of file \hyperlink{_l_c_d__controller_8h_source}{L\+C\+D\+\_\+controller.\+h}.
+
+\index{L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}!spi\+Overflow@{spi\+Overflow}}
 \index{spi\+Overflow@{spi\+Overflow}!L\+C\+D\+\_\+controller.\+h@{L\+C\+D\+\_\+controller.\+h}}
 \subsubsection[{\texorpdfstring{spi\+Overflow}{spiOverflow}}]{\setlength{\rightskip}{0pt plus 5cm}volatile uint8\+\_\+t spi\+Overflow}\hypertarget{_l_c_d__controller_8h_a5462652fe95683f50bcbd6d5fbbc3ae1}{}\label{_l_c_d__controller_8h_a5462652fe95683f50bcbd6d5fbbc3ae1}
 Counter keeping track of the current number of times the timer has overflowed. 
+
+Definition at line \hyperlink{_l_c_d__controller_8h_source_l00024}{24} of file \hyperlink{_l_c_d__controller_8h_source}{L\+C\+D\+\_\+controller.\+h}.
+

@@ -22,7 +22,24 @@ void \hyperlink{init_8c_ad5cbed2a2222bb84e8b5c1caaa50634e}{U\+A\+R\+T\+\_\+\+Ini
 
 Configuration and initialization. 
 
-Configures ports, initializes U\+A\+RT and initializes S\+PI. \index{init.\+c@{init.\+c}!U\+A\+R\+T\+\_\+\+Init@{U\+A\+R\+T\+\_\+\+Init}}
+Configures ports, initializes U\+A\+RT and initializes S\+PI. 
+
+Definition at line \hyperlink{init_8c_source_l00011}{11} of file \hyperlink{init_8c_source}{init.\+c}.
+
+
+\begin{DoxyCode}
+00012 \{
+00013     DDRD = 1<<DDD2;
+00014     DDRC = 0; \textcolor{comment}{//JTAG, alla väljs till ingångar}
+00015     DDRB = (1<<DDB3) | (1<<DDB4) | (1<<DDB5) | (0<<DDB6) | (1<<DDB7); \textcolor{comment}{//SPI, allt ut förutom PB6}
+00016     
+00017     PORTD |= 1<<PORTD2; \textcolor{comment}{//Välj riktning "till servon" i tri-state}
+00018     
+00019     \hyperlink{init_8c_ad5cbed2a2222bb84e8b5c1caaa50634e}{UART\_Init}();
+00020     \hyperlink{_s_p_i_8c_a49ddfef1b082be9cebd28e4bbebf247d}{SPI\_init\_master}();
+00021 \}
+\end{DoxyCode}
+\index{init.\+c@{init.\+c}!U\+A\+R\+T\+\_\+\+Init@{U\+A\+R\+T\+\_\+\+Init}}
 \index{U\+A\+R\+T\+\_\+\+Init@{U\+A\+R\+T\+\_\+\+Init}!init.\+c@{init.\+c}}
 \subsubsection[{\texorpdfstring{U\+A\+R\+T\+\_\+\+Init(void)}{UART_Init(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void U\+A\+R\+T\+\_\+\+Init (
 \begin{DoxyParamCaption}
@@ -34,3 +51,19 @@ Configures ports, initializes U\+A\+RT and initializes S\+PI. \index{init.\+c@{i
 Initialization of U\+A\+RT. 
 
 This function is used by \hyperlink{init_8h_a7ce0a14b6e7779fbb2d9a05333792c41}{Init()} to initialize U\+A\+RT. 
+
+Definition at line \hyperlink{init_8c_source_l00023}{23} of file \hyperlink{init_8c_source}{init.\+c}.
+
+
+\begin{DoxyCode}
+00024 \{
+00025     \textcolor{comment}{//Se till att baud-inställningarna blir rätt}
+00026     UCSR0A &= ~(1<<U2X0);
+00027     \textcolor{comment}{//Sätt baud-prescaler = 0 så att baud-rate blir 1 MBPS}
+00028     UBRR0H = 0;
+00029     UBRR0L = 0;
+00030     \textcolor{comment}{//Ställ in processorn som sändare och mottagare på bussen}
+00031     UCSR0B = (1<<RXEN0)|(1<<TXEN0);
+00032     \textcolor{comment}{//8 data, 1 stopbit}
+00033     UCSR0C = (0<<USBS0)|(3<<UCSZ00);
+00034 \}\end{DoxyCode}

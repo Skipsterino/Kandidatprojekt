@@ -1,0 +1,162 @@
+\hypertarget{_s_p_i_8c_source}{}\section{S\+P\+I.\+c}
+\label{_s_p_i_8c_source}\index{styr/styr/\+S\+P\+I.\+c@{styr/styr/\+S\+P\+I.\+c}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *        File: SPI.c}
+00003 \textcolor{comment}{ *     Version: 1.0}
+00004 \textcolor{comment}{ * Last edited: 15/4/2016 }
+00005 \textcolor{comment}{ * Authors: kevkj515}
+00006 \textcolor{comment}{ */} 
+00007 
+00008 
+00009 \textcolor{preprocessor}{#include "\hyperlink{_s_p_i_8h}{SPI.h}"}
+00010 
+\hypertarget{_s_p_i_8c_source.tex_l00011}{}\hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{00011} \textcolor{keyword}{volatile} uint8\_t \hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter};
+\hypertarget{_s_p_i_8c_source.tex_l00012}{}\hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{00012} \textcolor{keyword}{volatile} uint8\_t \hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen};
+\hypertarget{_s_p_i_8c_source.tex_l00013}{}\hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{00013} \textcolor{keyword}{volatile} uint8\_t \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom};
+\hypertarget{_s_p_i_8c_source.tex_l00014}{}\hyperlink{_s_p_i_8c_a153ce55af60458b262b041d44bfe9350}{00014} \textcolor{keyword}{volatile} uint8\_t \hyperlink{_s_p_i_8c_a153ce55af60458b262b041d44bfe9350}{overflow};
+00015 
+00016 \textcolor{comment}{// Avbrottsrutin för timer 0}
+\hypertarget{_s_p_i_8c_source.tex_l00017}{}\hyperlink{_s_p_i_8c_add2d7cdddfb682dcc0391e60cf42c7d6}{00017} \hyperlink{_s_p_i_8c_add2d7cdddfb682dcc0391e60cf42c7d6}{ISR}(TIMER0\_OVF\_vect)
+00018 \{
+00019     ++\hyperlink{_s_p_i_8c_a153ce55af60458b262b041d44bfe9350}{overflow};
+00020     
+00021     \textcolor{keywordflow}{if}(\hyperlink{_s_p_i_8c_a153ce55af60458b262b041d44bfe9350}{overflow} >= 5)\{
+00022         \hyperlink{_s_p_i_8c_aef55913736b574735fdfca21de557988}{SPI\_sen\_transmit\_master}();
+00023         \hyperlink{_s_p_i_8c_a153ce55af60458b262b041d44bfe9350}{overflow} = 0;
+00024     \}
+00025 \}
+\hypertarget{_s_p_i_8c_source.tex_l00026}{}\hyperlink{_s_p_i_8h_aef55913736b574735fdfca21de557988}{00026} \textcolor{keywordtype}{void} \hyperlink{_s_p_i_8c_aef55913736b574735fdfca21de557988}{SPI\_sen\_transmit\_master}()
+00027 \{
+00028     \hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter} = 0;
+00029     \textcolor{comment}{//Sätter SS för styr->sen}
+00030     \hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen} = 1;
+00031     \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom} = 0;
+00032     \hyperlink{_s_p_i_8c_a21ae89e79b07cfb95e2674541cf5ee27}{Set\_SS\_sen\_kom}(\hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen}, \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom});
+00033     \textcolor{comment}{// skickar noll till Sen}
+00034     SPDR = 0;
+00035 \}
+00036 
+\hypertarget{_s_p_i_8c_source.tex_l00037}{}\hyperlink{_s_p_i_8c_a60558fccd93e8b9d412ff170cc4b739e}{00037} uint8\_t \hyperlink{_s_p_i_8c_a60558fccd93e8b9d412ff170cc4b739e}{calculateChecksum}()
+00038 \{
+00039     uint8\_t checkSum = 0;
+00040     
+00041     \textcolor{keywordflow}{for}(uint8\_t i = 0; i < 15; ++i)
+00042     \{
+00043         checkSum += \hyperlink{_s_p_i_8h_a4c1a44ecc2e0f0cf45cf9b6c0bc3e645}{fromKom}[i];
+00044     \}
+00045     
+00046     \textcolor{keywordflow}{return} (checkSum == \hyperlink{_s_p_i_8h_a4c1a44ecc2e0f0cf45cf9b6c0bc3e645}{fromKom}[15]);
+00047 \}
+00048 
+\hypertarget{_s_p_i_8c_source.tex_l00049}{}\hyperlink{_s_p_i_8c_af9cad97352f5ba9bbd800446131125a6}{00049} \hyperlink{_s_p_i_8c_add2d7cdddfb682dcc0391e60cf42c7d6}{ISR}(SPI\_STC\_vect)
+00050 \{
+00051     
+00052     \textcolor{keywordflow}{if}(\hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen} == 1)\{
+00053         
+00054         \textcolor{comment}{//Rensa bort nollor på plats 14 från sensor}
+00055         \textcolor{comment}{//så tillståndsdatan inte skrivs över.}
+00056         \textcolor{keywordflow}{if}(\hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter} != 14)
+00057         \{
+00058             \hyperlink{_s_p_i_8h_a2963725e5681e7e146da28127b3e09d3}{fromSen}[\hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter}] = SPDR;
+00059         \}
+00060         \textcolor{keywordflow}{else}
+00061         \{
+00062             \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} dummy = SPDR;
+00063         \}
+00064         
+00065         
+00066         \textcolor{keywordflow}{if}(\hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter} < 15)\{
+00067             ++\hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter};
+00068             \hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen} = 0;
+00069             \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom} = 0;
+00070             \hyperlink{_s_p_i_8c_a21ae89e79b07cfb95e2674541cf5ee27}{Set\_SS\_sen\_kom}(\hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen}, \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom});
+00071             \hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen} = 1;
+00072             \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom} = 0;
+00073             \hyperlink{_s_p_i_8c_a21ae89e79b07cfb95e2674541cf5ee27}{Set\_SS\_sen\_kom}(\hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen}, \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom});
+00074             SPDR = 0;
+00075         \}
+00076         \textcolor{keywordflow}{else}\{
+00077             \hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter} = 0;
+00078             \textcolor{comment}{//sätter SS till styr->kom}
+00079             \hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen} = 0;
+00080             \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom} = 1;
+00081             \hyperlink{_s_p_i_8c_a21ae89e79b07cfb95e2674541cf5ee27}{Set\_SS\_sen\_kom}(\hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen}, \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom});
+00082             \textcolor{comment}{//Startar styr->kom buss}
+00083             SPDR = \hyperlink{_s_p_i_8h_a2963725e5681e7e146da28127b3e09d3}{fromSen}[\hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter}];
+00084         \}
+00085     \}
+00086     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(\hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom} == 1)\{
+00087         \hyperlink{_s_p_i_8h_a4c1a44ecc2e0f0cf45cf9b6c0bc3e645}{fromKom}[\hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter}] = SPDR;
+00088         
+00089         \textcolor{keywordflow}{if}(\hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter} < 15)\{
+00090             \hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen} = 0;
+00091             \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom} = 0;
+00092             \hyperlink{_s_p_i_8c_a21ae89e79b07cfb95e2674541cf5ee27}{Set\_SS\_sen\_kom}(\hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen}, \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom});
+00093             \hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen} = 0;
+00094             \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom} = 1;
+00095             \hyperlink{_s_p_i_8c_a21ae89e79b07cfb95e2674541cf5ee27}{Set\_SS\_sen\_kom}(\hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen}, \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom});
+00096             SPDR = \hyperlink{_s_p_i_8h_a2963725e5681e7e146da28127b3e09d3}{fromSen}[\hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter} + 1];
+00097             ++\hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter};
+00098         \}
+00099         \textcolor{keywordflow}{else}\{
+00100             \hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter} = 0;
+00101             \hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen} = 0;
+00102             \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom} = 0;
+00103             \hyperlink{_s_p_i_8c_a21ae89e79b07cfb95e2674541cf5ee27}{Set\_SS\_sen\_kom}(\hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen}, \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom});
+00104             
+00105             \textcolor{keywordflow}{if}(\hyperlink{_s_p_i_8c_a60558fccd93e8b9d412ff170cc4b739e}{calculateChecksum}())
+00106             \{
+00107                 memcpy(\hyperlink{_s_p_i_8h_ab15ab508531e452eb0768f69f7c588da}{lastValidPacket}, \hyperlink{_s_p_i_8h_a4c1a44ecc2e0f0cf45cf9b6c0bc3e645}{fromKom}, \textcolor{keyword}{sizeof}(
+      \hyperlink{_s_p_i_8h_a4c1a44ecc2e0f0cf45cf9b6c0bc3e645}{fromKom}));
+00108             \}
+00109         \}
+00110     \}
+00111 \}
+\hypertarget{_s_p_i_8c_source.tex_l00112}{}\hyperlink{_s_p_i_8h_a21ae89e79b07cfb95e2674541cf5ee27}{00112} \textcolor{keywordtype}{void} \hyperlink{_s_p_i_8c_a21ae89e79b07cfb95e2674541cf5ee27}{Set\_SS\_sen\_kom}(uint8\_t \hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen}, uint8\_t \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom})
+00113 \{
+00114     \textcolor{keywordflow}{if}(toKom == 1)\{
+00115         PORTB &= ~(1 << \hyperlink{_s_p_i_8h_a58ac62acddf451691b748c71454e0137}{SS\_sen});
+00116         PORTB |= (1 << \hyperlink{_s_p_i_8h_acbbd0eb471ac972ee5d3bb2563a6c72e}{SS\_kom});
+00117     \}
+00118     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(toSen == 1)\{
+00119         PORTB |= (1 << \hyperlink{_s_p_i_8h_a58ac62acddf451691b748c71454e0137}{SS\_sen});
+00120         PORTB &= ~(1 << \hyperlink{_s_p_i_8h_acbbd0eb471ac972ee5d3bb2563a6c72e}{SS\_kom});
+00121     \}
+00122     \textcolor{keywordflow}{else}\{
+00123         PORTB |= (1 << \hyperlink{_s_p_i_8h_a58ac62acddf451691b748c71454e0137}{SS\_sen});
+00124         PORTB |= (1 << \hyperlink{_s_p_i_8h_acbbd0eb471ac972ee5d3bb2563a6c72e}{SS\_kom});
+00125     \}
+00126 \}
+\hypertarget{_s_p_i_8c_source.tex_l00127}{}\hyperlink{_s_p_i_8h_a49ddfef1b082be9cebd28e4bbebf247d}{00127} \textcolor{keywordtype}{void} \hyperlink{_s_p_i_8c_a49ddfef1b082be9cebd28e4bbebf247d}{SPI\_init\_master}()
+00128 \{
+00129     \textcolor{comment}{/*Nollställer fromKom & fromSen (tar bort ev skräp på minnesplatserna) }
+00130 \textcolor{comment}{      så inget konstigt händer innan första avbrottet kommit.*/}
+00131     memset(\hyperlink{_s_p_i_8h_a4c1a44ecc2e0f0cf45cf9b6c0bc3e645}{fromKom}, 0, \textcolor{keyword}{sizeof}(\hyperlink{_s_p_i_8h_a4c1a44ecc2e0f0cf45cf9b6c0bc3e645}{fromKom})); 
+00132     memset(\hyperlink{_s_p_i_8h_a2963725e5681e7e146da28127b3e09d3}{fromSen}, 0, \textcolor{keyword}{sizeof}(\hyperlink{_s_p_i_8h_a2963725e5681e7e146da28127b3e09d3}{fromSen}));
+00133     memset(\hyperlink{_s_p_i_8h_ab15ab508531e452eb0768f69f7c588da}{lastValidPacket}, 0, \textcolor{keyword}{sizeof}(\hyperlink{_s_p_i_8h_ab15ab508531e452eb0768f69f7c588da}{lastValidPacket}));
+00134     
+00135     \textcolor{comment}{//MOSI, SCK , SS0 och SS1 är utgångar}
+00136     DDRB |= 0b10111000; 
+00137     \hyperlink{_s_p_i_8c_a153ce55af60458b262b041d44bfe9350}{overflow} = 0;
+00138     \textcolor{comment}{//SPI Enable}
+00139     \textcolor{comment}{//SPI Master}
+00140     \textcolor{comment}{//SPI clock f/16}
+00141     \textcolor{comment}{//SPI interrupt enable}
+00142     SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0)|(1<<SPIE);
+00143     
+00144     \textcolor{comment}{// Aktivera avbrott för timer 0}
+00145     TIMSK0 = (1<<TOIE0);
+00146     \textcolor{comment}{// Sätt timer 0-räknarens initialvärde till 0}
+00147     TCNT0=0x00;
+00148     \textcolor{comment}{// Starta timer 0 med /1024 "prescaler"}
+00149     TCCR0B = (1<<CS02) | (1<<CS00);
+00150     
+00151     \hyperlink{_s_p_i_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter} = 0;
+00152     uint8\_t \hyperlink{_s_p_i_8c_a877332cdcfad9d61a433fda50f5fb1b5}{toSen} = 0;
+00153     uint8\_t \hyperlink{_s_p_i_8c_ae9f07651aa8c38a27c260082879ab9b2}{toKom} = 0;
+00154     
+00155     \hyperlink{_s_p_i_8c_a21ae89e79b07cfb95e2674541cf5ee27}{Set\_SS\_sen\_kom}(toSen, toKom);
+00156 \}
+\end{DoxyCode}

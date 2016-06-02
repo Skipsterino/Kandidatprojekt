@@ -1,0 +1,199 @@
+\hypertarget{inv__mpu_8h}{}\section{sensor/sensor/inv\+\_\+mpu.h File Reference}
+\label{inv__mpu_8h}\index{sensor/sensor/inv\+\_\+mpu.\+h@{sensor/sensor/inv\+\_\+mpu.\+h}}
+
+
+An I2\+C-\/based driver for Invensense gyroscopes.  
+
+
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$util/delay.\+h$>$}\\*
+{\ttfamily \#include $<$avr/interrupt.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}I2\+C.\+h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structint__param__s}{int\+\_\+param\+\_\+s}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga43bafb28b29491ec7f871319b5a3b2f8}{F\+\_\+\+C\+PU}~16000000\+UL
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga6d132f914f18cb144a0eaf36312045c8}{M\+P\+U6050}
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gac6afabdc09a49a433ee19d8a9486056d}{min}(a,  b)~((a$<$b)?a\+:b)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gabf02bf28541421d59f8be764f2b95407}{I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO}~(0x40)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gacdd8ff833a34dba08ca2aa145eb92b44}{I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO}~(0x20)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga50205b5cc6089b33b2561c854eb8b0fd}{I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO}~(0x10)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga3fdc30f9c0a26c2c4e2bb88921f91629}{I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO}~(\hyperlink{group___d_r_i_v_e_r_s_gabf02bf28541421d59f8be764f2b95407}{I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO} $\vert$ \hyperlink{group___d_r_i_v_e_r_s_gacdd8ff833a34dba08ca2aa145eb92b44}{I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO} $\vert$ \hyperlink{group___d_r_i_v_e_r_s_ga50205b5cc6089b33b2561c854eb8b0fd}{I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO})
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gaa03f025a17ed491e70b88274e89c75c5}{I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL}~(0x08)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga7fc9c1dbdcb2ac8cc2a4128a5799482a}{I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+C\+O\+M\+P\+A\+SS}~(0x01)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga0cddf0dffaf3bf65fd3ed92dda4f3193}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+D\+A\+T\+A\+\_\+\+R\+E\+A\+DY}~(0x0001)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga380dd1ef256931e99302c371ad7752f4}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+D\+MP}~(0x0002)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gaa38d7976e86186bf353cb89ca7561f29}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+P\+L\+L\+\_\+\+R\+E\+A\+DY}~(0x0004)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga5755e84f3a2e7d331f7612dbfea18ecc}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+I2\+C\+\_\+\+M\+ST}~(0x0008)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gaf8e1684698ad837d0318a72b1ef73b13}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+F\+I\+F\+O\+\_\+\+O\+V\+E\+R\+F\+L\+OW}~(0x0010)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gad5eee7ff393f842ca4ae969cc0019030}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+Z\+M\+OT}~(0x0020)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gaa1ab51fb5995e568edd425f8486cb2c8}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+M\+OT}~(0x0040)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga000cfa5230cb895c6bad322856465552}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+F\+R\+E\+E\+\_\+\+F\+A\+LL}~(0x0080)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga2398e82f93220e3cfa1ef31bfb6d76bd}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+D\+M\+P\+\_\+0}~(0x0100)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga5ac2e94db5083456fa531fceee0997f5}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+D\+M\+P\+\_\+1}~(0x0200)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gab7543433b9679174597e00e5d7cb6279}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+D\+M\+P\+\_\+2}~(0x0400)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_gaea5cac4528bb19757de4eb4fa46a374f}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+D\+M\+P\+\_\+3}~(0x0800)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga4345dc987e1b65ef8ddc6160f592e144}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+D\+M\+P\+\_\+4}~(0x1000)
+\item 
+\#define \hyperlink{group___d_r_i_v_e_r_s_ga101643480b83c302a4a3089fe9149e8e}{M\+P\+U\+\_\+\+I\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+D\+M\+P\+\_\+5}~(0x2000)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga63637cf3771995aeda99d91d5f345f29}{mpu\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initialize hardware. Initial configuration\+:~\newline
+Gyro F\+SR\+: +/-\/ 2000\+D\+PS~\newline
+Accel F\+SR +/-\/ 2G~\newline
+D\+L\+PF\+: 42\+Hz~\newline
+F\+I\+FO rate\+: 50\+Hz~\newline
+Clock source\+: Gyro P\+LL~\newline
+F\+I\+FO\+: Disabled.~\newline
+Data ready interrupt\+: Disabled, active low, unlatched. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga9093183fe619360b3b1bfb8aab030592}{mpu\+\_\+init\+\_\+slave} (void)
+\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga36f70f38371b48d81094d3b061233e15}{mpu\+\_\+set\+\_\+bypass} (unsigned char bypass\+\_\+on)
+\begin{DoxyCompactList}\small\item\em Set device to bypass mode. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gabdcf10922a1a20f1b5bbd7576d3189b9}{mpu\+\_\+lp\+\_\+accel\+\_\+mode} (unsigned short rate)
+\begin{DoxyCompactList}\small\item\em Enter low-\/power accel-\/only mode. In low-\/power accel mode, the chip goes to sleep and only wakes up to sample the accelerometer at one of the following frequencies\+: ~\newline
+ M\+P\+U6050\+: 1.\+25\+Hz, 5\+Hz, 20\+Hz, 40\+Hz ~\newline
+ M\+P\+U6500\+: 0.\+24\+Hz, 0.\+49\+Hz, 0.\+98\+Hz, 1.\+95\+Hz, 3.\+91\+Hz, 7.\+81\+Hz, 15.\+63\+Hz, 31.\+25\+Hz, 62.\+5\+Hz, 125\+Hz, 250\+Hz, 500\+Hz ~\newline
+ If the requested rate is not one listed above, the device will be set to the next highest rate. Requesting a rate above the maximum supported frequency will result in an error. ~\newline
+ To select a fractional wake-\/up frequency, round down the value passed to {\itshape rate}. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga7d0b3259346898ccd1ba6ef78bf7df97}{mpu\+\_\+lp\+\_\+motion\+\_\+interrupt} (unsigned short thresh, unsigned char time, unsigned char lpa\+\_\+freq)
+\begin{DoxyCompactList}\small\item\em Enters LP accel motion interrupt mode. The behaviour of this feature is very different between the M\+P\+U6050 and the M\+P\+U6500. Each chip\textquotesingle{}s version of this feature is explained below. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gacc92fb1489ef32a04bcb6b0ebde4d657}{mpu\+\_\+set\+\_\+int\+\_\+level} (unsigned char active\+\_\+low)
+\begin{DoxyCompactList}\small\item\em Set interrupt level. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga653cb855300bff9285ce4b8dca6a503b}{mpu\+\_\+set\+\_\+int\+\_\+latched} (unsigned char enable)
+\begin{DoxyCompactList}\small\item\em Enable latched interrupts. Any M\+PU register will clear the interrupt. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga68ed20e6c9663cd7c50469329af8715f}{mpu\+\_\+set\+\_\+dmp\+\_\+state} (unsigned char enable)
+\begin{DoxyCompactList}\small\item\em Enable/disable D\+MP support. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gafe0f60ed0d7f8fd2dcd55d45b95a2363}{mpu\+\_\+get\+\_\+dmp\+\_\+state} (unsigned char $\ast$enabled)
+\begin{DoxyCompactList}\small\item\em Get D\+MP state. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gaa95c7e216dcb2d888e9796001ca555f8}{mpu\+\_\+get\+\_\+lpf} (unsigned short $\ast$lpf)
+\begin{DoxyCompactList}\small\item\em Get the current D\+L\+PF setting. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga5661a9dee25152166769910767a2a93d}{mpu\+\_\+set\+\_\+lpf} (unsigned short lpf)
+\begin{DoxyCompactList}\small\item\em Set digital low pass filter. The following L\+PF settings are supported\+: 188, 98, 42, 20, 10, 5. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gaf973c32c73ba912ff512aab948fc31ca}{mpu\+\_\+get\+\_\+gyro\+\_\+fsr} (unsigned short $\ast$fsr)
+\begin{DoxyCompactList}\small\item\em Get the gyro full-\/scale range. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gad09e6031c8677adc0b8a39b6deea8e27}{mpu\+\_\+set\+\_\+gyro\+\_\+fsr} (unsigned short fsr)
+\begin{DoxyCompactList}\small\item\em Set the gyro full-\/scale range. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gab6087a15ee23db23b6aec41590329a60}{mpu\+\_\+get\+\_\+accel\+\_\+fsr} (unsigned char $\ast$fsr)
+\begin{DoxyCompactList}\small\item\em Get the accel full-\/scale range. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga2713a96af104cfb2ae8e0ed4c3718119}{mpu\+\_\+set\+\_\+accel\+\_\+fsr} (unsigned char fsr)
+\begin{DoxyCompactList}\small\item\em Set the accel full-\/scale range. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gade8589573d09e0f14b84130428f286df}{mpu\+\_\+get\+\_\+compass\+\_\+fsr} (unsigned short $\ast$fsr)
+\begin{DoxyCompactList}\small\item\em Get the compass full-\/scale range. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga023c0cc94aa8f162dc33b15048a49421}{mpu\+\_\+get\+\_\+gyro\+\_\+sens} (float $\ast$sens)
+\begin{DoxyCompactList}\small\item\em Get gyro sensitivity scale factor. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga620408949052b96e856cad920f856583}{mpu\+\_\+get\+\_\+accel\+\_\+sens} (unsigned short $\ast$sens)
+\begin{DoxyCompactList}\small\item\em Get accel sensitivity scale factor. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga2487dd551b701c1c7ed4d6335f02b2f1}{mpu\+\_\+get\+\_\+sample\+\_\+rate} (unsigned short $\ast$rate)
+\begin{DoxyCompactList}\small\item\em Get sampling rate. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga0144d666a67a82888b8580002afe8b55}{mpu\+\_\+set\+\_\+sample\+\_\+rate} (unsigned short rate)
+\begin{DoxyCompactList}\small\item\em Set sampling rate. Sampling rate must be between 4\+Hz and 1k\+Hz. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gab5a45cd7783f6937788c0decb0b18b16}{mpu\+\_\+get\+\_\+compass\+\_\+sample\+\_\+rate} (unsigned short $\ast$rate)
+\begin{DoxyCompactList}\small\item\em Get compass sampling rate. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga78da3828de0ef9d080c4d03e7bc45e7b}{mpu\+\_\+set\+\_\+compass\+\_\+sample\+\_\+rate} (unsigned short rate)
+\begin{DoxyCompactList}\small\item\em Set compass sampling rate. The compass on the auxiliary I2C bus is read by the M\+PU hardware at a maximum of 100\+Hz. The actual rate can be set to a fraction of the gyro sampling rate. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga093f11eb10b2639a4b9fe344ea348c54}{mpu\+\_\+get\+\_\+fifo\+\_\+config} (unsigned char $\ast$sensors)
+\begin{DoxyCompactList}\small\item\em Get current F\+I\+FO configuration. {\itshape sensors} can contain a combination of the following flags\+: ~\newline
+ I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gababbdda287e1f19323489f90a0889dd7}{mpu\+\_\+configure\+\_\+fifo} (unsigned char sensors)
+\begin{DoxyCompactList}\small\item\em Select which sensors are pushed to F\+I\+FO. {\itshape sensors} can contain a combination of the following flags\+: ~\newline
+ I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gaec8fa7a067988d174516bb735a4a0bc9}{mpu\+\_\+get\+\_\+power\+\_\+state} (unsigned char $\ast$power\+\_\+on)
+\begin{DoxyCompactList}\small\item\em Get current power state. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga6e77e7cc1cf6be5e8fdf617c5b4586d1}{mpu\+\_\+set\+\_\+sensors} (unsigned char sensors)
+\begin{DoxyCompactList}\small\item\em Turn specific sensors on/off. {\itshape sensors} can contain a combination of the following flags\+: ~\newline
+ I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+C\+O\+M\+P\+A\+SS. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga57bfbb356ce449135ce39659455041ae}{mpu\+\_\+read\+\_\+6500\+\_\+accel\+\_\+bias} (long $\ast$accel\+\_\+bias)
+\begin{DoxyCompactList}\small\item\em Read biases to the accel bias 6500 registers. This function reads from the M\+P\+U6500 accel offset cancellations registers. The format are G in +-\/8G format. The register is initialized with O\+TP factory trim values. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga01361a0f5c1f048cb0742bd3d0e4d3a5}{mpu\+\_\+set\+\_\+gyro\+\_\+bias\+\_\+reg} (long $\ast$gyro\+\_\+bias)
+\begin{DoxyCompactList}\small\item\em Push biases to the gyro bias 6500/6050 registers. This function expects biases relative to the current sensor output, and these biases will be added to the factory-\/supplied values. Bias inputs are L\+SB in +-\/1000dps format. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gaa7265afee29b8307ff49a8b1ccd9238a}{mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6500\+\_\+reg} (const long $\ast$accel\+\_\+bias)
+\begin{DoxyCompactList}\small\item\em Push biases to the accel bias 6500 registers. This function expects biases relative to the current sensor output, and these biases will be added to the factory-\/supplied values. Bias inputs are L\+SB in +-\/8G format. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gaed37421e1f140d10ee0eff0efeade27b}{mpu\+\_\+read\+\_\+6050\+\_\+accel\+\_\+bias} (long $\ast$accel\+\_\+bias)
+\begin{DoxyCompactList}\small\item\em Read biases to the accel bias 6050 registers. This function reads from the M\+P\+U6050 accel offset cancellations registers. The format are G in +-\/8G format. The register is initialized with O\+TP factory trim values. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gae2eb5073dacc7455101bf6818e35c40a}{mpu\+\_\+set\+\_\+accel\+\_\+bias\+\_\+6050\+\_\+reg} (const long $\ast$accel\+\_\+bias)
+\begin{DoxyCompactList}\small\item\em Push biases to the accel bias 6050 registers. This function expects biases relative to the current sensor output, and these biases will be added to the factory-\/supplied values. Bias inputs are L\+SB in +-\/8G format. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga5555854590ad11495c0e30401294bae2}{mpu\+\_\+get\+\_\+gyro\+\_\+reg} (short $\ast$data, unsigned long $\ast$timestamp)
+\begin{DoxyCompactList}\small\item\em Read raw gyro data directly from the registers. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gae4ae960e5df78049ece2647772a3d809}{mpu\+\_\+get\+\_\+accel\+\_\+reg} (short $\ast$data, unsigned long $\ast$timestamp)
+\begin{DoxyCompactList}\small\item\em Read raw accel data directly from the registers. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga65e6b0ce980b8c0255d7be9b55c88c08}{mpu\+\_\+get\+\_\+compass\+\_\+reg} (short $\ast$data, unsigned long $\ast$timestamp)
+\begin{DoxyCompactList}\small\item\em Read raw compass data. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gaa449b565a157b4b8ca0f491b7ed46018}{mpu\+\_\+get\+\_\+temperature} (long $\ast$data, unsigned long $\ast$timestamp)
+\begin{DoxyCompactList}\small\item\em Read temperature data directly from the registers. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga0afd02d8c76d3278b488ef7038c26e3e}{mpu\+\_\+get\+\_\+int\+\_\+status} (short $\ast$status)
+\begin{DoxyCompactList}\small\item\em Read the M\+PU interrupt status registers. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga2da20453aafbbba4a0f6fb9fbdd25572}{mpu\+\_\+read\+\_\+fifo} (short $\ast$gyro, short $\ast$accel, unsigned long $\ast$timestamp, unsigned char $\ast$sensors, unsigned char $\ast$more)
+\begin{DoxyCompactList}\small\item\em Get one packet from the F\+I\+FO. If {\itshape sensors} does not contain a particular sensor, disregard the data returned to that pointer. ~\newline
+ {\itshape sensors} can contain a combination of the following flags\+: ~\newline
+ I\+N\+V\+\_\+\+X\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Y\+\_\+\+G\+Y\+RO, I\+N\+V\+\_\+\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+G\+Y\+RO ~\newline
+ I\+N\+V\+\_\+\+X\+Y\+Z\+\_\+\+A\+C\+C\+EL ~\newline
+ If the F\+I\+FO has no new data, {\itshape sensors} will be zero. ~\newline
+ If the F\+I\+FO is disabled, {\itshape sensors} will be zero and this function will return a non-\/zero error code. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga13593044949b460e9f571eb57e9a0788}{mpu\+\_\+read\+\_\+fifo\+\_\+stream} (unsigned short length, unsigned char $\ast$data, unsigned char $\ast$more)
+\begin{DoxyCompactList}\small\item\em Get one unparsed packet from the F\+I\+FO. This function should be used if the packet is to be parsed elsewhere. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gaf23e9f57c0059be6ec57862f0584de10}{mpu\+\_\+reset\+\_\+fifo} (void)
+\begin{DoxyCompactList}\small\item\em Reset F\+I\+FO read/write pointers. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gafea59910bc3dd30ba3356b1c75213a5f}{mpu\+\_\+write\+\_\+mem} (unsigned short mem\+\_\+addr, unsigned short length, unsigned char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Write to the D\+MP memory. This function prevents I2C writes past the bank boundaries. The D\+MP memory is only accessible when the chip is awake. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga3374bececb6743893c9eab27645c1182}{mpu\+\_\+read\+\_\+mem} (unsigned short mem\+\_\+addr, unsigned short length, unsigned char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Read from the D\+MP memory. This function prevents I2C reads past the bank boundaries. The D\+MP memory is only accessible when the chip is awake. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga8fbdfe1a50285d4ab438e29c2efc70f5}{mpu\+\_\+load\+\_\+firmware} (unsigned short length, const unsigned char $\ast$firmware, unsigned short start\+\_\+addr, unsigned short sample\+\_\+rate)
+\begin{DoxyCompactList}\small\item\em Load and verify D\+MP image. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga0e1201ecfd8453f1d89e4299528baaf6}{mpu\+\_\+reg\+\_\+dump} (void)
+\begin{DoxyCompactList}\small\item\em Register dump for testing. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga5c35a3363337014e11769a0ea7c0dfa9}{mpu\+\_\+read\+\_\+reg} (unsigned char \hyperlink{inv__mpu_8c_a5448c351fc95ff052b110eee80e5f75c}{reg}, unsigned char $\ast$data)
+\begin{DoxyCompactList}\small\item\em Read from a single register. N\+O\+TE\+: The memory and F\+I\+FO read/write registers cannot be accessed. \end{DoxyCompactList}\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga3773dc98eb1ba15da0091ae75abcf62f}{mpu\+\_\+run\+\_\+self\+\_\+test} (long $\ast$gyro, long $\ast$accel)
+\item 
+int \hyperlink{group___d_r_i_v_e_r_s_gac22890157bd3f7cc3752c0342f105b72}{mpu\+\_\+run\+\_\+6500\+\_\+self\+\_\+test} (long $\ast$gyro, long $\ast$accel, unsigned char debug)
+\item 
+int \hyperlink{group___d_r_i_v_e_r_s_ga0d528114a4e355a10ffd354a4c89a17f}{mpu\+\_\+register\+\_\+tap\+\_\+cb} (void($\ast$func)(unsigned char, unsigned char))
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An I2\+C-\/based driver for Invensense gyroscopes. 
+
+This driver currently works for the following devices\+: M\+P\+U6050 M\+P\+U6500 M\+P\+U9150 (or M\+P\+U6050 w/ A\+K8975 on the auxiliary bus) M\+P\+U9250 (or M\+P\+U6500 w/ A\+K8963 on the auxiliary bus) 
+
+Definition in file \hyperlink{inv__mpu_8h_source}{inv\+\_\+mpu.\+h}.
+

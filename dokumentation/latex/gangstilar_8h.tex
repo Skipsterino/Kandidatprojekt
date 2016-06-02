@@ -1,5 +1,10 @@
 \hypertarget{gangstilar_8h}{}\section{styr/styr/gangstilar.h File Reference}
 \label{gangstilar_8h}\index{styr/styr/gangstilar.\+h@{styr/styr/gangstilar.\+h}}
+
+
+Functions for walking.  
+
+
 {\ttfamily \#include $<$avr/io.\+h$>$}\\*
 {\ttfamily \#include $<$avr/interrupt.\+h$>$}\\*
 {\ttfamily \#include $<$util/delay.\+h$>$}\\*
@@ -15,38 +20,56 @@
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{gangstilar_8h_a1cdd1ec49baae5876bf4185c0696ee45}{Adjust\+\_\+\+Stance\+\_\+\+Climbed} (char direction)
-\item 
-float \hyperlink{gangstilar_8h_a7686716eb9ff55e001f00b15a53f83f0}{L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input} (float \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, int sgn\+\_\+speed, float theta, int sgn\+\_\+theta, float \hyperlink{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height})
-\item 
-int \hyperlink{gangstilar_8h_a7e22034136fbee493cd09711e57eff2d}{max\+\_\+speed} (float theta, int sgn\+\_\+theta)
-\item 
-\hyperlink{structtriple__float}{triple\+\_\+float} \hyperlink{gangstilar_8h_a2d87f3a4b99915d806ba0b31e2270028}{Adjust\+\_\+\+Servo\+\_\+\+Speed} (float theta, int sgn\+\_\+theta, int8\+\_\+t leg\+\_\+down)
-\item 
-void \hyperlink{gangstilar_8h_af2fde91636f94ada8898458a8e631a9a}{Adjust\+\_\+\+Height} (float l, float height\+\_\+step, float \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\+\_\+pitch})
-\item 
-void \hyperlink{gangstilar_8h_ad91d62548b0e007cac2f92e12d5ab273}{Send\+\_\+\+Legs\+\_\+\+Kar} (\hyperlink{structtriple__float}{triple\+\_\+float} kar\+\_\+p1, \hyperlink{structtriple__float}{triple\+\_\+float} kar\+\_\+p2, float \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\+\_\+pitch}, \hyperlink{structtriple__float}{triple\+\_\+float} speed\+\_\+p1, \hyperlink{structtriple__float}{triple\+\_\+float} speed\+\_\+p2)
-\item 
-void \hyperlink{gangstilar_8h_a5727fa4a438523e18ea5409ca5bf938e}{Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs} (\hyperlink{structtriple__float}{triple\+\_\+float} kar\+\_\+p1, \hyperlink{structtriple__float}{triple\+\_\+float} kar\+\_\+p2, float \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\+\_\+pitch}, int sgn\+\_\+speed, float theta, \hyperlink{structtriple__float}{triple\+\_\+float} speed\+\_\+p1, \hyperlink{structtriple__float}{triple\+\_\+float} speed\+\_\+p2)
-\item 
+\begin{DoxyCompactList}\small\item\em Sets parameters for smooth transition with over\+\_\+hinder. \end{DoxyCompactList}\item 
+float \hyperlink{gangstilar_8h_a4228f615ac009f6808bc8cbf5fed939a}{L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input} (float \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, int sgn\+\_\+speed, float theta, int sgn\+\_\+theta, float \hyperlink{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height}, float \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}, int sgn\+\_\+dx)
+\begin{DoxyCompactList}\small\item\em Limits changes in walking input parameters. \end{DoxyCompactList}\item 
+\hyperlink{structtriple__float}{triple\+\_\+float} \hyperlink{gangstilar_8h_a6bb8056658634de06f155394bd298410}{Calc\+\_\+\+Servo\+\_\+\+Speed} (float theta, int sgn\+\_\+theta, int8\+\_\+t leg\+\_\+down, float \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}, int sgn\+\_\+dx)
+\begin{DoxyCompactList}\small\item\em Calculates appropriate servo speeds. \end{DoxyCompactList}\item 
+void \hyperlink{gangstilar_8h_a457024b585cd87287d5e05809a848e94}{Send\+\_\+\+Legs\+\_\+\+Kar} (\hyperlink{structtriple__float}{triple\+\_\+float} kar\+\_\+p1, \hyperlink{structtriple__float}{triple\+\_\+float} kar\+\_\+p2, float \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\+\_\+pitch}, \hyperlink{structtriple__float}{triple\+\_\+float} speed\+\_\+p1, \hyperlink{structtriple__float}{triple\+\_\+float} speed\+\_\+p2, float dx\+\_\+p1, float dx\+\_\+p2)
+\begin{DoxyCompactList}\small\item\em Sends position and servo speed to legs. \end{DoxyCompactList}\item 
+void \hyperlink{gangstilar_8h_a0ad2cf3e9047e6311cdac98a8bce6ed6}{Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs} (\hyperlink{structtriple__float}{triple\+\_\+float} kar\+\_\+p1, \hyperlink{structtriple__float}{triple\+\_\+float} kar\+\_\+p2, float \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\+\_\+pitch}, int sgn\+\_\+speed, float theta, \hyperlink{structtriple__float}{triple\+\_\+float} speed\+\_\+p1, \hyperlink{structtriple__float}{triple\+\_\+float} speed\+\_\+p2, float dx\+\_\+p1, float dx\+\_\+p2)
+\begin{DoxyCompactList}\small\item\em Sends position with added rotation and servo speed to legs. \end{DoxyCompactList}\item 
 \hyperlink{structdouble__float}{double\+\_\+float} \hyperlink{gangstilar_8h_adda531189948a09fca5b2ba7eb85ed72}{Limit\+\_\+\+Theta} (float \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, int sgn\+\_\+speed, float theta, int sgn\+\_\+theta)
 \item 
-float \hyperlink{gangstilar_8h_a0253c9cd3c65bdec3e155f66c7575f3e}{Limit\+\_\+\+Speed} (float \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, int sgn\+\_\+speed)
+float \hyperlink{gangstilar_8h_a0c08306dd068f49ba9bdb5c063d6ae6d}{Limit\+\_\+\+Speed} (float \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, int sgn\+\_\+speed, float \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}, int sgn\+\_\+dx)
 \item 
 float \hyperlink{gangstilar_8h_a7a64feb9f04fb68c5c7c44afb5975acf}{Limit\+\_\+\+Height} (float \hyperlink{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height})
 \item 
-\hyperlink{structtriple__float}{triple\+\_\+float} \hyperlink{gangstilar_8h_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{Tripod} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float stroke, float \hyperlink{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height}, float \hyperlink{over__hinder_8c_a5e433c2d90f9d7f1ff1868b9e8b91868}{lift}, uint8\+\_\+t \hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{n})
+\hyperlink{structtriple__float}{triple\+\_\+float} \hyperlink{gangstilar_8h_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{Tripod} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float stroke, float \hyperlink{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height}, float \hyperlink{over__hinder_8c_a5e433c2d90f9d7f1ff1868b9e8b91868}{lift}, uint8\+\_\+t n)
 \item 
-void \hyperlink{gangstilar_8h_ae56b8515b1ea2c6035e04e3e2df2b52a}{Walk\+\_\+\+Half\+\_\+\+Cycle} (float \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, float th, float \hyperlink{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height})
+void \hyperlink{gangstilar_8h_a8b22e9229a15d20adb676428ad7f6dac}{Walk\+\_\+\+Half\+\_\+\+Cycle} (float \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, float theta, float \hyperlink{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height}, float \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx})
 \item 
-void \hyperlink{gangstilar_8h_a4c2ee7390bb80e121c51116c7fe30bd1}{Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle} (float \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed})
+void \hyperlink{gangstilar_8h_ad538f984b6d02e469da2ce39d51bf4b5}{Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle} (int8\+\_\+t \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed})
+\item 
+void \hyperlink{gangstilar_8h_a52ff26f8e5f26305582c67be8be4417b}{Dance} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y})
+\item 
+void \hyperlink{gangstilar_8h_a47315f1535b41ff12e6a00ad36e681d7}{Dance\+\_\+\+Cyl} (float r, float th)
+\item 
+void \hyperlink{gangstilar_8h_a74e3cb81b1d6c82b020d36f856b0b1f7}{Victory\+\_\+\+Dance} (void)
 \end{DoxyCompactItemize}
 \subsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-float \hyperlink{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{height}
-\item 
-int \hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{n}
+float \hyperlink{gangstilar_8h_a53714f6e2fcbc2539af246d0a0446cbe}{dance\+\_\+r}
 \end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Functions for walking. 
+
+\begin{DoxyAuthor}{Author}
+jenma421 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+18/5/2016 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+1.\+0 Functions for walking and rotation. 
+\end{DoxyVersion}
+
+
+Definition in file \hyperlink{gangstilar_8h_source}{gangstilar.\+h}.
+
 
 
 \subsection{Macro Definition Documentation}
@@ -55,25 +78,11 @@ int \hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{n}
 \subsubsection[{\texorpdfstring{F\+\_\+\+C\+PU}{F_CPU}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+\_\+\+C\+PU~16000000\+UL}\hypertarget{gangstilar_8h_a43bafb28b29491ec7f871319b5a3b2f8}{}\label{gangstilar_8h_a43bafb28b29491ec7f871319b5a3b2f8}
 
 
+Definition at line \hyperlink{gangstilar_8h_source_l00016}{16} of file \hyperlink{gangstilar_8h_source}{gangstilar.\+h}.
+
+
+
 \subsection{Function Documentation}
-\index{gangstilar.\+h@{gangstilar.\+h}!Adjust\+\_\+\+Height@{Adjust\+\_\+\+Height}}
-\index{Adjust\+\_\+\+Height@{Adjust\+\_\+\+Height}!gangstilar.\+h@{gangstilar.\+h}}
-\subsubsection[{\texorpdfstring{Adjust\+\_\+\+Height(float l, float height\+\_\+step, float corner\+\_\+pitch)}{Adjust_Height(float l, float height_step, float corner_pitch)}}]{\setlength{\rightskip}{0pt plus 5cm}void Adjust\+\_\+\+Height (
-\begin{DoxyParamCaption}
-\item[{float}]{l, }
-\item[{float}]{height\+\_\+step, }
-\item[{float}]{corner\+\_\+pitch}
-\end{DoxyParamCaption}
-)}\hypertarget{gangstilar_8h_af2fde91636f94ada8898458a8e631a9a}{}\label{gangstilar_8h_af2fde91636f94ada8898458a8e631a9a}
-\index{gangstilar.\+h@{gangstilar.\+h}!Adjust\+\_\+\+Servo\+\_\+\+Speed@{Adjust\+\_\+\+Servo\+\_\+\+Speed}}
-\index{Adjust\+\_\+\+Servo\+\_\+\+Speed@{Adjust\+\_\+\+Servo\+\_\+\+Speed}!gangstilar.\+h@{gangstilar.\+h}}
-\subsubsection[{\texorpdfstring{Adjust\+\_\+\+Servo\+\_\+\+Speed(float theta, int sgn\+\_\+theta, int8\+\_\+t leg\+\_\+down)}{Adjust_Servo_Speed(float theta, int sgn_theta, int8_t leg_down)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+float} Adjust\+\_\+\+Servo\+\_\+\+Speed (
-\begin{DoxyParamCaption}
-\item[{float}]{theta, }
-\item[{int}]{sgn\+\_\+theta, }
-\item[{int8\+\_\+t}]{leg\+\_\+down}
-\end{DoxyParamCaption}
-)}\hypertarget{gangstilar_8h_a2d87f3a4b99915d806ba0b31e2270028}{}\label{gangstilar_8h_a2d87f3a4b99915d806ba0b31e2270028}
 \index{gangstilar.\+h@{gangstilar.\+h}!Adjust\+\_\+\+Stance\+\_\+\+Climbed@{Adjust\+\_\+\+Stance\+\_\+\+Climbed}}
 \index{Adjust\+\_\+\+Stance\+\_\+\+Climbed@{Adjust\+\_\+\+Stance\+\_\+\+Climbed}!gangstilar.\+h@{gangstilar.\+h}}
 \subsubsection[{\texorpdfstring{Adjust\+\_\+\+Stance\+\_\+\+Climbed(char direction)}{Adjust_Stance_Climbed(char direction)}}]{\setlength{\rightskip}{0pt plus 5cm}void Adjust\+\_\+\+Stance\+\_\+\+Climbed (
@@ -81,6 +90,219 @@ int \hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{n}
 \item[{char}]{direction}
 \end{DoxyParamCaption}
 )}\hypertarget{gangstilar_8h_a1cdd1ec49baae5876bf4185c0696ee45}{}\label{gangstilar_8h_a1cdd1ec49baae5876bf4185c0696ee45}
+
+
+Sets parameters for smooth transition with over\+\_\+hinder. 
+
+Sets height and walking cycle phase correctly
+
+
+\begin{DoxyParams}{Parameters}
+{\em direction} & Tells if robot just finished climbing up or climbing down \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{gangstilar_8c_source_l00024}{24} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00025 \{
+00026     \textcolor{keywordflow}{if}(direction == \textcolor{charliteral}{'u'})
+00027     \{
+00028         \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height} = 14-6.3;
+00029     \}
+00030     \textcolor{keywordflow}{else} 
+00031     \{
+00032         \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height} = 14;
+00033     \}
+00034     \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1}=\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}/2 + \hyperlink{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}{cycle\_length}/2; 
+00035 \}
+\end{DoxyCode}
+\index{gangstilar.\+h@{gangstilar.\+h}!Calc\+\_\+\+Servo\+\_\+\+Speed@{Calc\+\_\+\+Servo\+\_\+\+Speed}}
+\index{Calc\+\_\+\+Servo\+\_\+\+Speed@{Calc\+\_\+\+Servo\+\_\+\+Speed}!gangstilar.\+h@{gangstilar.\+h}}
+\subsubsection[{\texorpdfstring{Calc\+\_\+\+Servo\+\_\+\+Speed(float theta, int sgn\+\_\+theta, int8\+\_\+t leg\+\_\+down, float dx, int sgn\+\_\+dx)}{Calc_Servo_Speed(float theta, int sgn_theta, int8_t leg_down, float dx, int sgn_dx)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+float} Calc\+\_\+\+Servo\+\_\+\+Speed (
+\begin{DoxyParamCaption}
+\item[{float}]{theta, }
+\item[{int}]{sgn\+\_\+theta, }
+\item[{int8\+\_\+t}]{leg\+\_\+down, }
+\item[{float}]{dx, }
+\item[{int}]{sgn\+\_\+dx}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8h_a6bb8056658634de06f155394bd298410}{}\label{gangstilar_8h_a6bb8056658634de06f155394bd298410}
+
+
+Calculates appropriate servo speeds. 
+
+Calculates appropriate servo speeds given theta
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Input rotation angle \\
+\hline
+{\em sgn\+\_\+theta} & Signum of rotation angle \\
+\hline
+{\em leg\+\_\+down} & Tells if legs are in transition from swing to support phase \\
+\hline
+{\em dx} & Sideways movement \\
+\hline
+{\em sgn\+\_\+dx} & Signum of Sideways movement\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Appropriate speed for inner, middle and outer servo 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{gangstilar_8c_source_l00083}{83} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00084 \{    
+00085     \textcolor{keywordtype}{int} \hyperlink{over__hinder_8c_ae104a742861491ef3fa14b9926deb4ff}{speed\_inner} ;
+00086     \textcolor{keywordtype}{int} \hyperlink{over__hinder_8c_a37e34fcb133065290754a0c320fa04d9}{speed\_middle};
+00087     \textcolor{keywordtype}{int} \hyperlink{over__hinder_8c_a92f49a1710c0649467c996317430aec8}{speed\_outer};
+00088     
+00089     \textcolor{keywordflow}{if}(leg\_down == 1)
+00090         \{
+00091         speed\_inner =  270 + 170 * (sgn\_theta * theta - \hyperlink{gangstilar_8c_aa99d587e22b149bc7ce358fb0827d12e}{theta\_max});
+00092         speed\_middle  = 100 + 10 * \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} * sgn\_dx;
+00093         speed\_outer  =  100 + 20 * \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} * sgn\_dx;
+00094         \}     
+00095         \textcolor{keywordflow}{else} 
+00096         \{                                                                   
+00097         speed\_inner =  270 + 170 * (sgn\_theta * theta - \hyperlink{gangstilar_8c_aa99d587e22b149bc7ce358fb0827d12e}{theta\_max});
+00098         speed\_middle  = 270 + 280 * (sgn\_theta * theta - \hyperlink{gangstilar_8c_aa99d587e22b149bc7ce358fb0827d12e}{theta\_max}) + 40 * 
+      \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} * sgn\_dx;
+00099         speed\_outer  =  270  + 260 * (sgn\_theta * theta - \hyperlink{gangstilar_8c_aa99d587e22b149bc7ce358fb0827d12e}{theta\_max}) + 40 * 
+      \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} * sgn\_dx;
+00100         \}
+00101         
+00102  \textcolor{keywordflow}{return} \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(speed\_inner, speed\_middle, speed\_outer);
+00103 \}   
+\end{DoxyCode}
+\index{gangstilar.\+h@{gangstilar.\+h}!Dance@{Dance}}
+\index{Dance@{Dance}!gangstilar.\+h@{gangstilar.\+h}}
+\subsubsection[{\texorpdfstring{Dance(float x, float y)}{Dance(float x, float y)}}]{\setlength{\rightskip}{0pt plus 5cm}void Dance (
+\begin{DoxyParamCaption}
+\item[{float}]{x, }
+\item[{float}]{y}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8h_a52ff26f8e5f26305582c67be8be4417b}{}\label{gangstilar_8h_a52ff26f8e5f26305582c67be8be4417b}
+Moves the robots body to a position
+
+Moves the robots body to a position in Kartesian coordinates whilst the all legs are on the ground (z is fixed to 11)
+
+
+\begin{DoxyParams}{Parameters}
+{\em y} & The y coordinate in cm \\
+\hline
+{\em x} & The x coordinate in cm \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{gangstilar_8c_source_l00469}{469} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00470 \{
+00471     \textcolor{keywordtype}{float} l = 12;\textcolor{comment}{//fötters förskjuting från kropp i x-led OBS orginal = 13, numera 12}
+00472     \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch} = 4; \textcolor{comment}{//förskjutning av arbetsområde i y-led för hörnben 4}
+00473     \textcolor{keywordtype}{int} speed\_inner\_dance= 180;
+00474     \textcolor{keywordtype}{int} speed\_middle\_dance= 200;
+00475     \textcolor{keywordtype}{int} speed\_outer\_dance  = 200;
+00476     \textcolor{keywordtype}{float} max\_r = 7; 
+00477     \textcolor{keywordtype}{float} max\_step= 0.3; 
+00478     \textcolor{keywordtype}{float} height\_step = 0.5; 
+00479         
+00480     \textcolor{comment}{// höjdjustering}
+00481     \textcolor{keywordtype}{float} \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height}; 
+00482     \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height}>12)
+00483     \{
+00484         height=\hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height}-height\_step; 
+00485     \}
+00486     \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height}<10)
+00487     \{
+00488         height=\hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height}+height\_step; 
+00489     \}
+00490     \textcolor{keywordflow}{else} 
+00491     \{
+00492         height=11;
+00493     \}
+00494     \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height} = \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height}; 
+00495         
+00496     \textcolor{comment}{// lågpass }
+00497     \textcolor{keywordtype}{float} direction\_x = \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}-\hyperlink{gangstilar_8c_a0b45b9e41407b1bebe9114f0610eb27c}{dance\_x}; 
+00498     \textcolor{keywordtype}{float} direction\_y = \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}-\hyperlink{gangstilar_8c_a8596518927328da6f2b1e575890af503}{dance\_y}; 
+00499     \textcolor{keywordtype}{float} diff= sqrt(pow(direction\_x,2) + pow(direction\_y,2));
+00500     \textcolor{keywordflow}{if}(diff>max\_step)
+00501     \{
+00502         dance\_x = dance\_x + direction\_x/diff*max\_step;
+00503         dance\_y = dance\_y + direction\_y/diff*max\_step;
+00504     \}
+00505     \textcolor{keywordflow}{else}
+00506     \{
+00507     dance\_x = dance\_x + direction\_x; 
+00508     dance\_y = dance\_y + direction\_y;
+00509         
+00510     \}
+00511         
+00512     \textcolor{comment}{//Begränsningar i radie;}
+00513     \hyperlink{gangstilar_8h_a53714f6e2fcbc2539af246d0a0446cbe}{dance\_r} = sqrt(pow(dance\_y,2) + pow(dance\_x,2));
+00514     \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8h_a53714f6e2fcbc2539af246d0a0446cbe}{dance\_r}>max\_r)
+00515     \{
+00516         dance\_x= dance\_x/\hyperlink{gangstilar_8h_a53714f6e2fcbc2539af246d0a0446cbe}{dance\_r}*max\_r;
+00517         dance\_y= dance\_y/\hyperlink{gangstilar_8h_a53714f6e2fcbc2539af246d0a0446cbe}{dance\_r}*max\_r;
+00518     \}
+00519         
+00520     \hyperlink{servo___u_a_r_t_8c_a1501df88c7ba1630f81577522ac2bbeb}{Send\_Leg1\_Kar\_And\_Velocity}(l+dance\_x, -dance\_y + corner\_pitch, -height, 
+      speed\_inner\_dance, speed\_middle\_dance, speed\_outer\_dance);
+00521     \hyperlink{servo___u_a_r_t_8c_a7ab1230fdabe0bcf16d18c331c75057e}{Send\_Leg2\_Kar\_And\_Velocity}(l-dance\_x, -dance\_y + corner\_pitch, -height, 
+      speed\_inner\_dance, speed\_middle\_dance, speed\_outer\_dance);
+00522     \hyperlink{servo___u_a_r_t_8c_a15260e1c5159c1047ca8ec867a8fc56c}{Send\_Leg3\_Kar\_And\_Velocity}(l+dance\_x, -dance\_y, -height, speed\_inner\_dance, 
+      speed\_middle\_dance, speed\_outer\_dance);
+00523     \hyperlink{servo___u_a_r_t_8c_ae1cff60ca27b892abf86b8a55b6b4ccd}{Send\_Leg4\_Kar\_And\_Velocity}(l-dance\_x, -dance\_y, -height, speed\_inner\_dance, 
+      speed\_middle\_dance, speed\_outer\_dance);
+00524     \hyperlink{servo___u_a_r_t_8c_a7cd98c6b9c0d2127feb9dfece072b3b0}{Send\_Leg5\_Kar\_And\_Velocity}(l+dance\_x, -dance\_y - corner\_pitch, -height, 
+      speed\_inner\_dance, speed\_middle\_dance, speed\_outer\_dance);
+00525     \hyperlink{servo___u_a_r_t_8c_a8cd710e0714336201bd84b46a1e1877d}{Send\_Leg6\_Kar\_And\_Velocity}(l-dance\_x, -dance\_y - corner\_pitch, -height, 
+      speed\_inner\_dance, speed\_middle\_dance, speed\_outer\_dance);
+00526     \_delay\_ms(15);
+00527     
+00528 \}
+\end{DoxyCode}
+\index{gangstilar.\+h@{gangstilar.\+h}!Dance\+\_\+\+Cyl@{Dance\+\_\+\+Cyl}}
+\index{Dance\+\_\+\+Cyl@{Dance\+\_\+\+Cyl}!gangstilar.\+h@{gangstilar.\+h}}
+\subsubsection[{\texorpdfstring{Dance\+\_\+\+Cyl(float r, float th)}{Dance_Cyl(float r, float th)}}]{\setlength{\rightskip}{0pt plus 5cm}void Dance\+\_\+\+Cyl (
+\begin{DoxyParamCaption}
+\item[{float}]{r, }
+\item[{float}]{th}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8h_a47315f1535b41ff12e6a00ad36e681d7}{}\label{gangstilar_8h_a47315f1535b41ff12e6a00ad36e681d7}
+Moves the robots body to a position
+
+Moves the robots body to a position in cylindrical coordinates whilst the all legs are on the ground (z is fixed to 11)
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The r coordinate in cm \\
+\hline
+{\em th} & The thetha coordinate in radians \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{gangstilar_8c_source_l00530}{530} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00531 \{
+00532     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = r *cos(th);
+00533     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r * sin(th); 
+00534     \hyperlink{gangstilar_8c_a52ff26f8e5f26305582c67be8be4417b}{Dance}(x,y);
+00535 \}
+\end{DoxyCode}
 \index{gangstilar.\+h@{gangstilar.\+h}!Limit\+\_\+\+Height@{Limit\+\_\+\+Height}}
 \index{Limit\+\_\+\+Height@{Limit\+\_\+\+Height}!gangstilar.\+h@{gangstilar.\+h}}
 \subsubsection[{\texorpdfstring{Limit\+\_\+\+Height(float height)}{Limit_Height(float height)}}]{\setlength{\rightskip}{0pt plus 5cm}float Limit\+\_\+\+Height (
@@ -88,14 +310,85 @@ int \hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{n}
 \item[{float}]{height}
 \end{DoxyParamCaption}
 )}\hypertarget{gangstilar_8h_a7a64feb9f04fb68c5c7c44afb5975acf}{}\label{gangstilar_8h_a7a64feb9f04fb68c5c7c44afb5975acf}
+Limits height \mbox{[}7, 14\mbox{]}
+
+Sets height to 7 or 14 if outside \mbox{[}7, 14\mbox{]}
+
+
+\begin{DoxyParams}{Parameters}
+{\em height} & input height \\
+\hline
+{\em dx} & Sideways movement, possitive = right.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Limited height 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{gangstilar_8c_source_l00183}{183} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00184 \{
+00185     \textcolor{keywordflow}{if}(\hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} > 14)
+00186     \{
+00187         \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} = 14;
+00188     \}
+00189     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(\hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} < 7)
+00190     \{
+00191         \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} = 7;
+00192     \}
+00193     \textcolor{keywordflow}{return} \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height};
+00194 \}
+\end{DoxyCode}
 \index{gangstilar.\+h@{gangstilar.\+h}!Limit\+\_\+\+Speed@{Limit\+\_\+\+Speed}}
 \index{Limit\+\_\+\+Speed@{Limit\+\_\+\+Speed}!gangstilar.\+h@{gangstilar.\+h}}
-\subsubsection[{\texorpdfstring{Limit\+\_\+\+Speed(float speed, int sgn\+\_\+speed)}{Limit_Speed(float speed, int sgn_speed)}}]{\setlength{\rightskip}{0pt plus 5cm}float Limit\+\_\+\+Speed (
+\subsubsection[{\texorpdfstring{Limit\+\_\+\+Speed(float speed, int sgn\+\_\+speed, float dx, int sgn\+\_\+dx)}{Limit_Speed(float speed, int sgn_speed, float dx, int sgn_dx)}}]{\setlength{\rightskip}{0pt plus 5cm}float Limit\+\_\+\+Speed (
 \begin{DoxyParamCaption}
 \item[{float}]{speed, }
-\item[{int}]{sgn\+\_\+speed}
+\item[{int}]{sgn\+\_\+speed, }
+\item[{float}]{dx, }
+\item[{int}]{sgn\+\_\+dx}
 \end{DoxyParamCaption}
-)}\hypertarget{gangstilar_8h_a0253c9cd3c65bdec3e155f66c7575f3e}{}\label{gangstilar_8h_a0253c9cd3c65bdec3e155f66c7575f3e}
+)}\hypertarget{gangstilar_8h_a0c08306dd068f49ba9bdb5c063d6ae6d}{}\label{gangstilar_8h_a0c08306dd068f49ba9bdb5c063d6ae6d}
+speed
+
+Limits speed to \mbox{[}-\/6, 6\mbox{]} or \mbox{[}-\/5, 5\mbox{]} if height $>$= 12 or $<$=9
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & Input speed \\
+\hline
+{\em sgn\+\_\+speed} & Signum of speed \\
+\hline
+{\em dx} & Sideways movement \\
+\hline
+{\em sgn\+\_\+dx} & Signum of Sideways movement\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Limited speed 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{gangstilar_8c_source_l00169}{169} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00170 \{
+00171     \textcolor{keywordflow}{if}( ((\hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height} <= 9) || (\hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height} >= 12)) && (
+      \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} * sgn\_speed > 5))
+00172     \{
+00173         \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} = 5 * sgn\_speed;
+00174     \}
+00175     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} * sgn\_speed > ( 6 - \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} * sgn\_dx/4))  
+00176     \{
+00177         \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} = 6 * sgn\_speed - \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} * sgn\_dx/4;
+00178     \}
+00179     \textcolor{keywordflow}{return} \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed};
+00180 \}
+\end{DoxyCode}
 \index{gangstilar.\+h@{gangstilar.\+h}!Limit\+\_\+\+Theta@{Limit\+\_\+\+Theta}}
 \index{Limit\+\_\+\+Theta@{Limit\+\_\+\+Theta}!gangstilar.\+h@{gangstilar.\+h}}
 \subsubsection[{\texorpdfstring{Limit\+\_\+\+Theta(float speed, int sgn\+\_\+speed, float theta, int sgn\+\_\+theta)}{Limit_Theta(float speed, int sgn_speed, float theta, int sgn_theta)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf double\+\_\+float} Limit\+\_\+\+Theta (
@@ -106,28 +399,134 @@ int \hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{n}
 \item[{int}]{sgn\+\_\+theta}
 \end{DoxyParamCaption}
 )}\hypertarget{gangstilar_8h_adda531189948a09fca5b2ba7eb85ed72}{}\label{gangstilar_8h_adda531189948a09fca5b2ba7eb85ed72}
+Limits rotation depending on speed
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & Input speed \\
+\hline
+{\em sgn\+\_\+speed} & Signum of speed \\
+\hline
+{\em theta} & Input rotation \\
+\hline
+{\em sgn\+\_\+theta} & Signum of rotation\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Limited theta and max allowed theta for given speed 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{gangstilar_8c_source_l00197}{197} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00198 \{
+00199     \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} = \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} * sgn\_speed;
+00200     \textcolor{keywordtype}{int} speed\_int = \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed};
+00201     \textcolor{keywordtype}{float} speed\_dec = \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} - speed\_int;
+00202     \textcolor{keywordtype}{float} thlimits[7] = \{0.57,0.45,0.35,0.33,0.23,0.13,0.04\};
+00203     \textcolor{keywordtype}{float} thlin[7] =    \{-0.12,-0.1,-0.02,-0.1,-0.1,-0.09,0\};
+00204     
+00205     \textcolor{comment}{//th\_max beräknas med linjärsering mellan heltal av speed.}
+00206     \textcolor{keywordtype}{float} th\_max = thlimits[speed\_int] + speed\_dec * thlin[speed\_int];
+00207     
+00208     \textcolor{keywordflow}{if}( theta * sgn\_theta > th\_max )
+00209     \{
+00210         theta = sgn\_theta * th\_max;
+00211     \}
+00212     \textcolor{keywordflow}{return} \hyperlink{structs_8c_a85207aa5455eaa4d4cf9c71e9094ae46}{create\_double\_float}(theta, th\_max);
+00213 \}
+\end{DoxyCode}
 \index{gangstilar.\+h@{gangstilar.\+h}!L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input@{L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input}}
 \index{L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input@{L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input}!gangstilar.\+h@{gangstilar.\+h}}
-\subsubsection[{\texorpdfstring{L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input(float speed, int sgn\+\_\+speed, float theta, int sgn\+\_\+theta, float height)}{LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn_theta, float height)}}]{\setlength{\rightskip}{0pt plus 5cm}float L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input (
+\subsubsection[{\texorpdfstring{L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input(float speed, int sgn\+\_\+speed, float theta, int sgn\+\_\+theta, float height, float dx, int sgn\+\_\+dx)}{LP_Filter_And_Limit_Input(float speed, int sgn_speed, float theta, int sgn_theta, float height, float dx, int sgn_dx)}}]{\setlength{\rightskip}{0pt plus 5cm}float L\+P\+\_\+\+Filter\+\_\+\+And\+\_\+\+Limit\+\_\+\+Input (
 \begin{DoxyParamCaption}
 \item[{float}]{speed, }
 \item[{int}]{sgn\+\_\+speed, }
 \item[{float}]{theta, }
 \item[{int}]{sgn\+\_\+theta, }
-\item[{float}]{height}
+\item[{float}]{height, }
+\item[{float}]{dx, }
+\item[{int}]{sgn\+\_\+dx}
 \end{DoxyParamCaption}
-)}\hypertarget{gangstilar_8h_a7686716eb9ff55e001f00b15a53f83f0}{}\label{gangstilar_8h_a7686716eb9ff55e001f00b15a53f83f0}
-\index{gangstilar.\+h@{gangstilar.\+h}!max\+\_\+speed@{max\+\_\+speed}}
-\index{max\+\_\+speed@{max\+\_\+speed}!gangstilar.\+h@{gangstilar.\+h}}
-\subsubsection[{\texorpdfstring{max\+\_\+speed(float theta, int sgn\+\_\+theta)}{max_speed(float theta, int sgn_theta)}}]{\setlength{\rightskip}{0pt plus 5cm}int max\+\_\+speed (
-\begin{DoxyParamCaption}
-\item[{float}]{theta, }
-\item[{int}]{sgn\+\_\+theta}
-\end{DoxyParamCaption}
-)}\hypertarget{gangstilar_8h_a7e22034136fbee493cd09711e57eff2d}{}\label{gangstilar_8h_a7e22034136fbee493cd09711e57eff2d}
+)}\hypertarget{gangstilar_8h_a4228f615ac009f6808bc8cbf5fed939a}{}\label{gangstilar_8h_a4228f615ac009f6808bc8cbf5fed939a}
+
+
+Limits changes in walking input parameters. 
+
+Sets global last\+\_\+speed and last\+\_\+theta to limited values and global theta\+\_\+max to max allowed rotation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & Input speed \\
+\hline
+{\em sgn\+\_\+speed} & Signum of input speed \\
+\hline
+{\em theta} & Input rotation angle \\
+\hline
+{\em sgn\+\_\+theta} & Signum of rotation angle \\
+\hline
+{\em dx} & Sideways movement \\
+\hline
+{\em sgn\+\_\+dx} & Signum of Sideways movement\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Limited height 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{gangstilar_8c_source_l00038}{38} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00039 \{
+00040     \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} = \hyperlink{gangstilar_8c_a0c08306dd068f49ba9bdb5c063d6ae6d}{Limit\_Speed}(\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, sgn\_speed, \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}, sgn\_dx);
+00041     \hyperlink{structdouble__float}{double\_float} thetas = \hyperlink{gangstilar_8c_adda531189948a09fca5b2ba7eb85ed72}{Limit\_Theta}(\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, sgn\_speed, theta, sgn\_theta);
+00042     \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} = \hyperlink{gangstilar_8c_a7a64feb9f04fb68c5c7c44afb5975acf}{Limit\_Height}(\hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height});
+00043     theta = thetas.\hyperlink{structdouble__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a};
+00044     \hyperlink{gangstilar_8c_aa99d587e22b149bc7ce358fb0827d12e}{theta\_max} = thetas.\hyperlink{structdouble__float_a83fc1af92e29717b4513d121b0c72c7d}{b};
+00045     
+00046     \textcolor{keywordtype}{float} speed\_diff = \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} - \hyperlink{gangstilar_8c_a661742ef73698e09fd0cc0352f5456ed}{last\_speed};
+00047     \textcolor{keywordtype}{float} theta\_diff = theta - \hyperlink{gangstilar_8c_a85bd8e6f67b3521a995db392b0079ba9}{last\_theta};
+00048     \textcolor{keywordtype}{float} height\_diff = \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} - \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height};
+00049     
+00050     \textcolor{keywordflow}{if}(speed\_diff > 3)
+00051     \{
+00052         \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} = last\_speed + 3;
+00053     \}
+00054     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(speed\_diff < -3)
+00055     \{
+00056         \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} = last\_speed - 3;
+00057     \}
+00058 
+00059     \textcolor{comment}{/*if(theta\_diff > 0.54)}
+00060 \textcolor{comment}{    \{}
+00061 \textcolor{comment}{        theta = last\_theta + 0.54;}
+00062 \textcolor{comment}{    \}}
+00063 \textcolor{comment}{    else if(theta\_diff < -0.54)}
+00064 \textcolor{comment}{    \{}
+00065 \textcolor{comment}{        theta = last\_theta - 0.54;}
+00066 \textcolor{comment}{    \}*/}
+00067     
+00068     \textcolor{keywordflow}{if}(height\_diff > 2)
+00069     \{
+00070         \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} = last\_height + 2;
+00071     \}
+00072     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(height\_diff < - 4)
+00073     \{
+00074         \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} = last\_height - 4;
+00075     \}
+00076     
+00077     last\_speed = \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed};
+00078     last\_theta = theta;
+00079     \textcolor{keywordflow}{return} \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height};
+00080 \}
+\end{DoxyCode}
 \index{gangstilar.\+h@{gangstilar.\+h}!Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs@{Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs}}
 \index{Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs@{Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs}!gangstilar.\+h@{gangstilar.\+h}}
-\subsubsection[{\texorpdfstring{Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs(triple\+\_\+float kar\+\_\+p1, triple\+\_\+float kar\+\_\+p2, float corner\+\_\+pitch, int sgn\+\_\+speed, float theta, triple\+\_\+float speed\+\_\+p1, triple\+\_\+float speed\+\_\+p2)}{Rotate_And_Send_Legs(triple_float kar_p1, triple_float kar_p2, float corner_pitch, int sgn_speed, float theta, triple_float speed_p1, triple_float speed_p2)}}]{\setlength{\rightskip}{0pt plus 5cm}void Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs (
+\subsubsection[{\texorpdfstring{Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs(triple\+\_\+float kar\+\_\+p1, triple\+\_\+float kar\+\_\+p2, float corner\+\_\+pitch, int sgn\+\_\+speed, float theta, triple\+\_\+float speed\+\_\+p1, triple\+\_\+float speed\+\_\+p2, float dx\+\_\+p1, float dx\+\_\+p2)}{Rotate_And_Send_Legs(triple_float kar_p1, triple_float kar_p2, float corner_pitch, int sgn_speed, float theta, triple_float speed_p1, triple_float speed_p2, float dx_p1, float dx_p2)}}]{\setlength{\rightskip}{0pt plus 5cm}void Rotate\+\_\+\+And\+\_\+\+Send\+\_\+\+Legs (
 \begin{DoxyParamCaption}
 \item[{{\bf triple\+\_\+float}}]{kar\+\_\+p1, }
 \item[{{\bf triple\+\_\+float}}]{kar\+\_\+p2, }
@@ -135,20 +534,169 @@ int \hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{n}
 \item[{int}]{sgn\+\_\+speed, }
 \item[{float}]{theta, }
 \item[{{\bf triple\+\_\+float}}]{speed\+\_\+p1, }
-\item[{{\bf triple\+\_\+float}}]{speed\+\_\+p2}
+\item[{{\bf triple\+\_\+float}}]{speed\+\_\+p2, }
+\item[{float}]{dx\+\_\+p1, }
+\item[{float}]{dx\+\_\+p2}
 \end{DoxyParamCaption}
-)}\hypertarget{gangstilar_8h_a5727fa4a438523e18ea5409ca5bf938e}{}\label{gangstilar_8h_a5727fa4a438523e18ea5409ca5bf938e}
+)}\hypertarget{gangstilar_8h_a0ad2cf3e9047e6311cdac98a8bce6ed6}{}\label{gangstilar_8h_a0ad2cf3e9047e6311cdac98a8bce6ed6}
+
+
+Sends position with added rotation and servo speed to legs. 
+
+Sends legs position in cylindrical coordinates with added rotation and speed for their servos.
+
+
+\begin{DoxyParams}{Parameters}
+{\em kar\+\_\+p1} & Kartesian coordinates for legs in pair 1 \\
+\hline
+{\em kar\+\_\+p2} & Kartesian coordinates for legs in pair 2 \\
+\hline
+{\em sgn} & \+\_\+speed Signum of input speed \\
+\hline
+{\em theta} & Rotation angle \\
+\hline
+{\em corner\+\_\+pitch} & Working point offset in y-\/direction for corner legs \\
+\hline
+{\em speed\+\_\+p1} & Servo speed for inner, middle and outer servo in pair 1 \\
+\hline
+{\em speed\+\_\+p2} & Servo speed for inner, middle and outer servo in pair 2 \\
+\hline
+{\em dx\+\_\+p1} & Sideways movement pair 1 \\
+\hline
+{\em dx\+\_\+p2} & Sideways movement pair 2 \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{gangstilar_8c_source_l00117}{117} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00118 \{           
+00119     \textcolor{comment}{//koord för par 1 omvandlas till cyl}
+00120     \hyperlink{structtriple__float}{triple\_float} cyl4 = \hyperlink{invers__kinematik_8c_aaaaddfbb21d42ca2d7f2ff855a3b1a01}{Kar\_To\_Cyl\_Leg4}(kar\_p1.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} - dx\_p1, kar\_p1.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, kar\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}); 
+00121     \hyperlink{structtriple__float}{triple\_float} cyl1 = \hyperlink{invers__kinematik_8c_ae696af5df234c2f15694317bcf2a4bec}{Kar\_To\_Cyl\_Leg1}(kar\_p1.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} + dx\_p1, kar\_p1.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} + \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, kar\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c});
+00122     \hyperlink{structtriple__float}{triple\_float} cyl5 = \hyperlink{invers__kinematik_8c_abc3e6e1ada8dc2e48c5b0dc980c0dc81}{Kar\_To\_Cyl\_Leg5}(kar\_p1.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} + dx\_p1, kar\_p1.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} - \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, kar\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c});
+00123     
+00124     \textcolor{comment}{//koord för par 2 omvandlas till cyl}
+00125     \hyperlink{structtriple__float}{triple\_float} cyl3 = \hyperlink{invers__kinematik_8c_a60f2e45cc22b107f9c5020ca85c6ab31}{Kar\_To\_Cyl\_Leg3}(kar\_p2.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} + dx\_p2, kar\_p2.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, kar\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}); 
+00126     \hyperlink{structtriple__float}{triple\_float} cyl2 = \hyperlink{invers__kinematik_8c_addfbc7c7fdb83567e74239fb6333d92c}{Kar\_To\_Cyl\_Leg2}(kar\_p2.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} - dx\_p2, kar\_p2.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} + \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, kar\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c});
+00127     \hyperlink{structtriple__float}{triple\_float} cyl6 = \hyperlink{invers__kinematik_8c_aac6d276df2445e288447c993547ecbc4}{Kar\_To\_Cyl\_Leg6}(kar\_p2.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} - dx\_p2, kar\_p2.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} - \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, kar\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c});
+00128     
+00129     \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} <= \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}) 
+00130     \{
+00131         \textcolor{comment}{//Stegvis rotation på p1 stödfas}
+00132         cyl1.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} = cyl1.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} + sgn\_speed * (- theta/2 + \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} * theta/\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l});
+00133         cyl4.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} = cyl4.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} + sgn\_speed * (- theta/2 + \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} * theta/\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l});
+00134         cyl5.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} = cyl5.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} + sgn\_speed * (- theta/2 + \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} * theta/\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l});
+00135     \}
+00136     \textcolor{keywordflow}{else} 
+00137     \{
+00138             \textcolor{comment}{//Stegvis rotation på p1 svingfas}
+00139         cyl1.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} = cyl1.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} + sgn\_speed * ( theta/2 - (\hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} - \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}) * theta/
+      \hyperlink{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}{swing\_l});
+00140         cyl4.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} = cyl4.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} + sgn\_speed * ( theta/2 - (\hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} - \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}) * theta/
+      \hyperlink{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}{swing\_l});
+00141         cyl5.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} = cyl5.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} + sgn\_speed * ( theta/2 - (\hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} - \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}) * theta/
+      \hyperlink{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}{swing\_l});  
+00142     \}
+00143     
+00144     \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} <= \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}) 
+00145     \{
+00146             \textcolor{comment}{//Stegvis rotation på p2 stödfas}
+00147             cyl3.b = cyl3.b + sgn\_speed * (- theta/2 + \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} * theta/\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l});
+00148             cyl2.b = cyl2.b + sgn\_speed * (- theta/2 + \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} * theta/\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l});
+00149             cyl6.b = cyl6.b + sgn\_speed * (- theta/2 + \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} * theta/\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l});
+00150     \}
+00151     \textcolor{keywordflow}{else}
+00152     \{
+00153             \textcolor{comment}{//Stegvis rotation på p2 svingfas}
+00154             cyl3.b = cyl3.b + sgn\_speed * ( theta/2 - (\hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} - \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}) * theta/
+      \hyperlink{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}{swing\_l});
+00155             cyl2.b = cyl2.b + sgn\_speed * ( theta/2 - (\hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} - \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}) * theta/
+      \hyperlink{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}{swing\_l});
+00156             cyl6.b = cyl6.b + sgn\_speed * ( theta/2 - (\hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} - \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}) * theta/
+      \hyperlink{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}{swing\_l});
+00157     \}
+00158 
+00159     \textcolor{comment}{//skicka ut cyl koord}
+00160     \hyperlink{servo___u_a_r_t_8c_a6cddf44c6a11c7907911d03af1e3f127}{Send\_Leg4\_Cyl\_And\_Velocity}(cyl4.a, cyl4.b, cyl4.c, speed\_p1.
+      \hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a}, speed\_p1.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, speed\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c});
+00161     \hyperlink{servo___u_a_r_t_8c_a7783d05fa4457ed256d04d0eac4713cc}{Send\_Leg1\_Cyl\_And\_Velocity}(cyl1.a, cyl1.b, cyl1.c, speed\_p1.
+      \hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a}, speed\_p1.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, speed\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c});
+00162     \hyperlink{servo___u_a_r_t_8c_aacc5d4be18de766587abbb83098916a3}{Send\_Leg5\_Cyl\_And\_Velocity}(cyl5.a, cyl5.b, cyl5.c, speed\_p1.
+      \hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a}, speed\_p1.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, speed\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c});
+00163     \hyperlink{servo___u_a_r_t_8c_a3f98bedbfd8c6462fbc873fd56ad6094}{Send\_Leg3\_Cyl\_And\_Velocity}(cyl3.a, cyl3.b, cyl3.c, speed\_p2.
+      \hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a}, speed\_p2.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, speed\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c});
+00164     \hyperlink{servo___u_a_r_t_8c_a16c2e98e0befea13b10d322b5a13c24a}{Send\_Leg2\_Cyl\_And\_Velocity}(cyl2.a, cyl2.b, cyl2.c, speed\_p2.
+      \hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a}, speed\_p2.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, speed\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c});
+00165     \hyperlink{servo___u_a_r_t_8c_a3f6d26397b69e462327480969aa40d1b}{Send\_Leg6\_Cyl\_And\_Velocity}(cyl6.a, cyl6.b, cyl6.c, speed\_p2.
+      \hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a}, speed\_p2.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, speed\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c});
+00166 \}           
+\end{DoxyCode}
 \index{gangstilar.\+h@{gangstilar.\+h}!Send\+\_\+\+Legs\+\_\+\+Kar@{Send\+\_\+\+Legs\+\_\+\+Kar}}
 \index{Send\+\_\+\+Legs\+\_\+\+Kar@{Send\+\_\+\+Legs\+\_\+\+Kar}!gangstilar.\+h@{gangstilar.\+h}}
-\subsubsection[{\texorpdfstring{Send\+\_\+\+Legs\+\_\+\+Kar(triple\+\_\+float kar\+\_\+p1, triple\+\_\+float kar\+\_\+p2, float corner\+\_\+pitch, triple\+\_\+float speed\+\_\+p1, triple\+\_\+float speed\+\_\+p2)}{Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch, triple_float speed_p1, triple_float speed_p2)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Legs\+\_\+\+Kar (
+\subsubsection[{\texorpdfstring{Send\+\_\+\+Legs\+\_\+\+Kar(triple\+\_\+float kar\+\_\+p1, triple\+\_\+float kar\+\_\+p2, float corner\+\_\+pitch, triple\+\_\+float speed\+\_\+p1, triple\+\_\+float speed\+\_\+p2, float dx\+\_\+p1, float dx\+\_\+p2)}{Send_Legs_Kar(triple_float kar_p1, triple_float kar_p2, float corner_pitch, triple_float speed_p1, triple_float speed_p2, float dx_p1, float dx_p2)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Legs\+\_\+\+Kar (
 \begin{DoxyParamCaption}
 \item[{{\bf triple\+\_\+float}}]{kar\+\_\+p1, }
 \item[{{\bf triple\+\_\+float}}]{kar\+\_\+p2, }
 \item[{float}]{corner\+\_\+pitch, }
 \item[{{\bf triple\+\_\+float}}]{speed\+\_\+p1, }
-\item[{{\bf triple\+\_\+float}}]{speed\+\_\+p2}
+\item[{{\bf triple\+\_\+float}}]{speed\+\_\+p2, }
+\item[{float}]{dx\+\_\+p1, }
+\item[{float}]{dx\+\_\+p2}
 \end{DoxyParamCaption}
-)}\hypertarget{gangstilar_8h_ad91d62548b0e007cac2f92e12d5ab273}{}\label{gangstilar_8h_ad91d62548b0e007cac2f92e12d5ab273}
+)}\hypertarget{gangstilar_8h_a457024b585cd87287d5e05809a848e94}{}\label{gangstilar_8h_a457024b585cd87287d5e05809a848e94}
+
+
+Sends position and servo speed to legs. 
+
+Sends legs position in kartesian and speed for their servos.
+
+
+\begin{DoxyParams}{Parameters}
+{\em kar\+\_\+p1} & Kartesian coordinates for legs in pair 1 \\
+\hline
+{\em kar\+\_\+p2} & Kartesian coordinates for legs in pair 2 \\
+\hline
+{\em corner\+\_\+pitch} & Working point offset in y-\/direction for corner legs \\
+\hline
+{\em speed\+\_\+p1} & Servo speed for inner, middle and outer servo in pair 1 \\
+\hline
+{\em speed\+\_\+p2} & Servo speed for inner, middle and outer servo in pair 2 \\
+\hline
+{\em dx\+\_\+p1} & Sideways movement pair 1 \\
+\hline
+{\em dx\+\_\+p2} & Sideways movement pair 2 \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{gangstilar_8c_source_l00106}{106} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00107 \{
+00108     \hyperlink{servo___u_a_r_t_8c_a7cd98c6b9c0d2127feb9dfece072b3b0}{Send\_Leg5\_Kar\_And\_Velocity}(kar\_p1.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} + dx\_p1, kar\_p1.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} - \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, kar\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}, speed\_p1.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a}, speed\_p1.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, speed\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}); 
+00109     \hyperlink{servo___u_a_r_t_8c_a1501df88c7ba1630f81577522ac2bbeb}{Send\_Leg1\_Kar\_And\_Velocity}(kar\_p1.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} + dx\_p1, kar\_p1.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} + \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, kar\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}, speed\_p1.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a}, speed\_p1.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, speed\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c});   
+00110     \hyperlink{servo___u_a_r_t_8c_a15260e1c5159c1047ca8ec867a8fc56c}{Send\_Leg3\_Kar\_And\_Velocity}(kar\_p2.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} + dx\_p2, kar\_p2.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, kar\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}, speed\_p2.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a}, speed\_p2.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, speed\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}); 
+00111     \hyperlink{servo___u_a_r_t_8c_ae1cff60ca27b892abf86b8a55b6b4ccd}{Send\_Leg4\_Kar\_And\_Velocity}(kar\_p1.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} - dx\_p1, kar\_p1.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, kar\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}, speed\_p1.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a}, speed\_p1.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, speed\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}); 
+00112     \hyperlink{servo___u_a_r_t_8c_a7ab1230fdabe0bcf16d18c331c75057e}{Send\_Leg2\_Kar\_And\_Velocity}(kar\_p2.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} - dx\_p2, kar\_p2.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} + \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, kar\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}, speed\_p2.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a}, speed\_p2.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, speed\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c});
+00113     \hyperlink{servo___u_a_r_t_8c_a8cd710e0714336201bd84b46a1e1877d}{Send\_Leg6\_Kar\_And\_Velocity}(kar\_p2.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} - dx\_p2, kar\_p2.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b} - \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch}, kar\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}, speed\_p2.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a}, speed\_p2.\hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, speed\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c});
+00114 \}
+\end{DoxyCode}
 \index{gangstilar.\+h@{gangstilar.\+h}!Tripod@{Tripod}}
 \index{Tripod@{Tripod}!gangstilar.\+h@{gangstilar.\+h}}
 \subsubsection[{\texorpdfstring{Tripod(float x, float stroke, float height, float lift, uint8\+\_\+t n)}{Tripod(float x, float stroke, float height, float lift, uint8_t n)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+float} Tripod (
@@ -160,28 +708,589 @@ int \hyperlink{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{n}
 \item[{uint8\+\_\+t}]{n}
 \end{DoxyParamCaption}
 )}\hypertarget{gangstilar_8h_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{}\label{gangstilar_8h_ac6bbb42bb1b2d403d560a2a2b15c1cc8}
+Generates leg positions for tripod gait
+
+Generates tripod gait leg positions with overlapping support phases. Global support\+\_\+l sets the length of support phase and global swing\+\_\+l sets the length of swing phase.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Foot distance from body in x-\/direction \\
+\hline
+{\em stroke} & Leg stroke \\
+\hline
+{\em height} & Robot height \\
+\hline
+{\em lift} & Lift height for legs during swing phase \\
+\hline
+{\em n} & Index of walk cycle, the step of walk cycle to be generated.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Leg position in kartesian 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{gangstilar_8c_source_l00216}{216} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00217 \{
+00218     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = 0;
+00219     \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z} = 0;
+00220     
+00221     \textcolor{keywordflow}{if}(n <= \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l} - 1)\textcolor{comment}{//stödfas}
+00222     \{
+00223         y = stroke/2 - stroke * n/\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l};
+00224         z= - \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height};
+00225     \}
+00226     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( n <= \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l})\textcolor{comment}{//börjar lyfta ben med fortsatt benrörelse bakåt  \{
+        y = stroke/2 - stroke * n/support\_l;
+        z = lift - height;
+    \}
+    else if( n <= cycle\_length - 1) // för ben frammmåt mot startpos
+    \{
+        y = -stroke/2 + (n - support\_l) * stroke/swing\_l;
+        z = lift - height;
+    \}
+    
+    return create\_triple\_float(x,y,z);
+\}
+}
+00227     \{
+00228         y = stroke/2 - stroke * n/\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l};
+00229         z = \hyperlink{over__hinder_8c_a5e433c2d90f9d7f1ff1868b9e8b91868}{lift} - \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height};
+00230     \}
+00231     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( n <= \hyperlink{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}{cycle\_length} - 1) \textcolor{comment}{// för ben frammmåt mot startpos}
+00232     \{
+00233         y = -stroke/2 + (n - \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}) * stroke/\hyperlink{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}{swing\_l};
+00234         z = \hyperlink{over__hinder_8c_a5e433c2d90f9d7f1ff1868b9e8b91868}{lift} - \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height};
+00235     \}
+00236     
+00237     \textcolor{keywordflow}{return} \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x},y,z);
+00238 \}
+\end{DoxyCode}
+\index{gangstilar.\+h@{gangstilar.\+h}!Victory\+\_\+\+Dance@{Victory\+\_\+\+Dance}}
+\index{Victory\+\_\+\+Dance@{Victory\+\_\+\+Dance}!gangstilar.\+h@{gangstilar.\+h}}
+\subsubsection[{\texorpdfstring{Victory\+\_\+\+Dance(void)}{Victory_Dance(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void Victory\+\_\+\+Dance (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{gangstilar_8h_a74e3cb81b1d6c82b020d36f856b0b1f7}{}\label{gangstilar_8h_a74e3cb81b1d6c82b020d36f856b0b1f7}
+Makes the robot preform a victory dance 
+
+Definition at line \hyperlink{gangstilar_8c_source_l00537}{537} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00538 \{
+00539     \textcolor{keywordtype}{float} pi = 3.14159265359;
+00540     
+00541     \textcolor{comment}{//fixa rörelsemönster }
+00542     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{float} i = 1; i< 10; ++i)
+00543     \{
+00544         \hyperlink{gangstilar_8c_a47315f1535b41ff12e6a00ad36e681d7}{Dance\_Cyl}(6, 2*pi*0.01);
+00545     \}
+00546     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{float} i = 1; i< 200; ++i)
+00547     \{
+00548         \hyperlink{gangstilar_8c_a47315f1535b41ff12e6a00ad36e681d7}{Dance\_Cyl}(6, 2*pi*0.01*i);
+00549     \}
+00550     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{float} i = 1; i< 20; ++i)
+00551     \{
+00552         \hyperlink{gangstilar_8c_a52ff26f8e5f26305582c67be8be4417b}{Dance}(0,6-6*0.05*i);
+00553     \}
+00554     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{float} i = 1; i< 20; ++i)
+00555     \{
+00556         \hyperlink{gangstilar_8c_a52ff26f8e5f26305582c67be8be4417b}{Dance}(0,-6*0.05*i);
+00557     \}
+00558     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{float} i = 1; i< 20; ++i)
+00559     \{
+00560         \hyperlink{gangstilar_8c_a52ff26f8e5f26305582c67be8be4417b}{Dance}(0,-6+6*0.05*i);
+00561     \}
+00562     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{float} i = 1; i< 20; ++i)
+00563     \{
+00564         \hyperlink{gangstilar_8c_a52ff26f8e5f26305582c67be8be4417b}{Dance}(0, 6*0.05*i);
+00565     \}
+00566     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{float} i = 1; i< 10; ++i)
+00567     \{
+00568         \hyperlink{gangstilar_8c_a47315f1535b41ff12e6a00ad36e681d7}{Dance\_Cyl}(0, 2*pi*0.01);
+00569     \}
+00570 \}
+\end{DoxyCode}
 \index{gangstilar.\+h@{gangstilar.\+h}!Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle@{Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle}}
 \index{Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle@{Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle}!gangstilar.\+h@{gangstilar.\+h}}
-\subsubsection[{\texorpdfstring{Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle(float speed)}{Walk_Half_Crab_Cycle(float speed)}}]{\setlength{\rightskip}{0pt plus 5cm}void Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle (
+\subsubsection[{\texorpdfstring{Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle(int8\+\_\+t speed)}{Walk_Half_Crab_Cycle(int8_t speed)}}]{\setlength{\rightskip}{0pt plus 5cm}void Walk\+\_\+\+Half\+\_\+\+Crab\+\_\+\+Cycle (
 \begin{DoxyParamCaption}
-\item[{float}]{speed}
+\item[{int8\+\_\+t}]{speed}
 \end{DoxyParamCaption}
-)}\hypertarget{gangstilar_8h_a4c2ee7390bb80e121c51116c7fe30bd1}{}\label{gangstilar_8h_a4c2ee7390bb80e121c51116c7fe30bd1}
+)}\hypertarget{gangstilar_8h_ad538f984b6d02e469da2ce39d51bf4b5}{}\label{gangstilar_8h_ad538f984b6d02e469da2ce39d51bf4b5}
+Walks half cycle of tripod crab-\/walk
+
+Walks sideways
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & Walking speed, positive = right \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{gangstilar_8c_source_l00377}{377} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00378 \{
+00379     
+00380     \textcolor{keywordtype}{float} l = 12;\textcolor{comment}{//fötters förskjuting från kropp i x-led }
+00381     \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch} = 4; \textcolor{comment}{//förskjutning av arbetsområde i y-led för hörnben }
+00382     \textcolor{keywordtype}{int} sgn\_speed = (\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} >= 0) - (\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} < 0) ;
+00383     uint8\_t walk\_break = 1;
+00384     \textcolor{keywordtype}{float} stroke =\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed};  \textcolor{comment}{//steglängd }
+00385     \textcolor{keywordflow}{if}(\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} * sgn\_speed <2)
+00386     \{
+00387         \textcolor{keywordflow}{return};
+00388     \}
+00389     \textcolor{keywordflow}{if}(\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}* sgn\_speed > 6)
+00390     \{
+00391         \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} = 6* sgn\_speed;
+00392     \}
+00393 
+00394     \textcolor{keywordflow}{if}(\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} == 0) \textcolor{comment}{// gör inget}
+00395     \{
+00396         \textcolor{keywordflow}{return};
+00397     \}
+00398     \textcolor{comment}{//justerar höjd om den är på oönskad nivå != 11)
+    \{
+        Walk\_Half\_Cycle(0,0,11,0);
+    \}
+    //gångloop, utför en halv gångfas och stannar när stödjande ben är i mitten av arbetsområde
+    while( walk\_break || ( n\_1 != support\_l/2 && n\_2 !=  support\_l/2))
+    \{
+        walk\_break = 0;
+            if(n\_1 < cycle\_length)
+        \{
+            n\_1 += 1; //stegar upp index
+        \}
+        else
+        \{
+            n\_1 = 1; //nollar index
+        \}
+        
+        n\_2= n\_1 + cycle\_length/2; //barnpar 2 förskjuts en halv fas
+        
+        if(n\_2 > cycle\_length) //ser till att det blir cykliskt
+        \{
+            n\_2 -= cycle\_length;
+        \}
+        
+        if(n\_1 <= 4 )
+        \{
+            p1\_down =1;
+        \}
+        else
+        \{
+            p1\_down = 0;
+        \}
+                
+        if((n\_2 <= 4))
+        \{
+            p2\_down =1;
+        \}
+        else
+        \{
+            p2\_down = 0;
+        \}
+        
+        triple\_float kar\_p1;
+        triple\_float kar\_p2;
+        
+        //servospeeds
+        float speed\_p1\_middle = 310- 80 * p1\_down;
+        float speed\_p1\_outer = 310 - 80 * p1\_down;
+        float speed\_p2\_middle = 310 - 80 * p2\_down;
+        float speed\_p2\_outer = 310 - 80 * p2\_down;
+
+        float lift =1.4; 
+    
+            kar\_p1 = Tripod(l, stroke, last\_height, lift, n\_1); //kart koord för par 1
+            kar\_p2 = Tripod(l, stroke, last\_height, lift, n\_2); //kart koord för par 2
+            
+            Send\_Leg5\_Kar\_And\_Velocity( kar\_p1.a - kar\_p1.b, - corner\_pitch, kar\_p1.c, 100,
+       speed\_p1\_middle, speed\_p1\_outer);   
+            Send\_Leg3\_Kar\_And\_Velocity( kar\_p2.a - kar\_p2.b, 0, kar\_p2.c, 100, speed\_p2\_middle,
+       speed\_p2\_outer); 
+            Send\_Leg4\_Kar\_And\_Velocity( kar\_p1.a +  kar\_p1.b, 0, kar\_p1.c, 100, speed\_p1\_middle,
+       speed\_p1\_outer);   
+            Send\_Leg1\_Kar\_And\_Velocity( kar\_p1.a -  kar\_p1.b, corner\_pitch, kar\_p1.c, 100, speed\_p1\_middle,
+       speed\_p1\_outer); 
+            Send\_Leg2\_Kar\_And\_Velocity( kar\_p2.a + kar\_p2.b, corner\_pitch, kar\_p2.c, 100, speed\_p2\_middle,
+       speed\_p2\_outer);
+            Send\_Leg6\_Kar\_And\_Velocity( kar\_p2.a + kar\_p2.b, - corner\_pitch, kar\_p2.c, 100,
+       speed\_p2\_middle, speed\_p2\_outer);
+            
+            if( walk\_break || (n\_1 != support\_l/2 && n\_2 != support\_l/2))
+            \{
+            \_delay\_ms(7); 
+            \}
+        \}
+\}
+}
+00399     \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height} != 11)
+00400     \{
+00401         \hyperlink{gangstilar_8c_a8b22e9229a15d20adb676428ad7f6dac}{Walk\_Half\_Cycle}(0,0,11,0);
+00402     \}
+00403     \textcolor{comment}{//gångloop, utför en halv gångfas och stannar när stödjande ben är i mitten av arbetsområde}
+00404     \textcolor{keywordflow}{while}( walk\_break || ( \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} != \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}/2 && \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} !=  
+      \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}/2))
+00405     \{
+00406         walk\_break = 0;
+00407             \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} < \hyperlink{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}{cycle\_length})
+00408         \{
+00409             \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} += 1; \textcolor{comment}{//stegar upp index}
+00410         \}
+00411         \textcolor{keywordflow}{else}
+00412         \{
+00413             \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} = 1; \textcolor{comment}{//nollar index}
+00414         \}
+00415         
+00416         \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2}= \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} + \hyperlink{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}{cycle\_length}/2; \textcolor{comment}{//barnpar 2 förskjuts en halv fas}
+00417         
+00418         \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} > \hyperlink{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}{cycle\_length}) \textcolor{comment}{//ser till att det blir cykliskt}
+00419         \{
+00420             \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} -= \hyperlink{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}{cycle\_length};
+00421         \}
+00422         
+00423         \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} <= 4 )
+00424         \{
+00425             \hyperlink{gangstilar_8c_a0fb4659f2b5bb60bc4952b0ce04a729a}{p1\_down} =1;
+00426         \}
+00427         \textcolor{keywordflow}{else}
+00428         \{
+00429             \hyperlink{gangstilar_8c_a0fb4659f2b5bb60bc4952b0ce04a729a}{p1\_down} = 0;
+00430         \}
+00431                 
+00432         \textcolor{keywordflow}{if}((\hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} <= 4))
+00433         \{
+00434             \hyperlink{gangstilar_8c_a45aa440e6a2fcc55e6cfccf902041f66}{p2\_down} =1;
+00435         \}
+00436         \textcolor{keywordflow}{else}
+00437         \{
+00438             \hyperlink{gangstilar_8c_a45aa440e6a2fcc55e6cfccf902041f66}{p2\_down} = 0;
+00439         \}
+00440         
+00441         \hyperlink{structtriple__float}{triple\_float} kar\_p1;
+00442         \hyperlink{structtriple__float}{triple\_float} kar\_p2;
+00443         
+00444         \textcolor{comment}{//servospeeds}
+00445         \textcolor{keywordtype}{float} speed\_p1\_middle = 310- 80 * \hyperlink{gangstilar_8c_a0fb4659f2b5bb60bc4952b0ce04a729a}{p1\_down};
+00446         \textcolor{keywordtype}{float} speed\_p1\_outer = 310 - 80 * \hyperlink{gangstilar_8c_a0fb4659f2b5bb60bc4952b0ce04a729a}{p1\_down};
+00447         \textcolor{keywordtype}{float} speed\_p2\_middle = 310 - 80 * \hyperlink{gangstilar_8c_a45aa440e6a2fcc55e6cfccf902041f66}{p2\_down};
+00448         \textcolor{keywordtype}{float} speed\_p2\_outer = 310 - 80 * \hyperlink{gangstilar_8c_a45aa440e6a2fcc55e6cfccf902041f66}{p2\_down};
+00449 
+00450         \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_a5e433c2d90f9d7f1ff1868b9e8b91868}{lift} =1.4; 
+00451     
+00452             kar\_p1 = \hyperlink{gangstilar_8c_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{Tripod}(l, stroke, \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height}, lift, \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1}); \textcolor{comment}{//kart koord för par 1}
+00453             kar\_p2 = \hyperlink{gangstilar_8c_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{Tripod}(l, stroke, \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height}, lift, \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2}); \textcolor{comment}{//kart koord för par 2}
+00454             
+00455             \hyperlink{servo___u_a_r_t_8c_a7cd98c6b9c0d2127feb9dfece072b3b0}{Send\_Leg5\_Kar\_And\_Velocity}( kar\_p1.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} - kar\_p1.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, - corner\_pitch, kar\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}, 100, speed\_p1\_middle, speed\_p1\_outer);   
+00456             \hyperlink{servo___u_a_r_t_8c_a15260e1c5159c1047ca8ec867a8fc56c}{Send\_Leg3\_Kar\_And\_Velocity}( kar\_p2.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} - kar\_p2.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, 0, kar\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}, 100, speed\_p2\_middle, speed\_p2\_outer); 
+00457             \hyperlink{servo___u_a_r_t_8c_ae1cff60ca27b892abf86b8a55b6b4ccd}{Send\_Leg4\_Kar\_And\_Velocity}( kar\_p1.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} +  kar\_p1.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, 0, kar\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}, 100, speed\_p1\_middle, speed\_p1\_outer);    
+00458             \hyperlink{servo___u_a_r_t_8c_a1501df88c7ba1630f81577522ac2bbeb}{Send\_Leg1\_Kar\_And\_Velocity}( kar\_p1.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} -  kar\_p1.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, corner\_pitch, kar\_p1.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}, 100, speed\_p1\_middle, speed\_p1\_outer); 
+00459             \hyperlink{servo___u_a_r_t_8c_a7ab1230fdabe0bcf16d18c331c75057e}{Send\_Leg2\_Kar\_And\_Velocity}( kar\_p2.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} + kar\_p2.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, corner\_pitch, kar\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}, 100, speed\_p2\_middle, speed\_p2\_outer);
+00460             \hyperlink{servo___u_a_r_t_8c_a8cd710e0714336201bd84b46a1e1877d}{Send\_Leg6\_Kar\_And\_Velocity}( kar\_p2.\hyperlink{structtriple__float_a4aec1a5be9d9a4a394a2e49e9744286e}{a} + kar\_p2.
+      \hyperlink{structtriple__float_a83fc1af92e29717b4513d121b0c72c7d}{b}, - corner\_pitch, kar\_p2.\hyperlink{structtriple__float_ae78103ab33f03590e84ff7bc735629d7}{c}, 100, speed\_p2\_middle, speed\_p2\_outer);
+00461             
+00462             \textcolor{keywordflow}{if}( walk\_break || (\hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} != \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}/2 && \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} != 
+      \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}/2))
+00463             \{
+00464             \_delay\_ms(7); 
+00465             \}
+00466         \}
+00467 \}
+\end{DoxyCode}
 \index{gangstilar.\+h@{gangstilar.\+h}!Walk\+\_\+\+Half\+\_\+\+Cycle@{Walk\+\_\+\+Half\+\_\+\+Cycle}}
 \index{Walk\+\_\+\+Half\+\_\+\+Cycle@{Walk\+\_\+\+Half\+\_\+\+Cycle}!gangstilar.\+h@{gangstilar.\+h}}
-\subsubsection[{\texorpdfstring{Walk\+\_\+\+Half\+\_\+\+Cycle(float speed, float th, float height)}{Walk_Half_Cycle(float speed, float th, float height)}}]{\setlength{\rightskip}{0pt plus 5cm}void Walk\+\_\+\+Half\+\_\+\+Cycle (
+\subsubsection[{\texorpdfstring{Walk\+\_\+\+Half\+\_\+\+Cycle(float speed, float theta, float height, float dx)}{Walk_Half_Cycle(float speed, float theta, float height, float dx)}}]{\setlength{\rightskip}{0pt plus 5cm}void Walk\+\_\+\+Half\+\_\+\+Cycle (
 \begin{DoxyParamCaption}
 \item[{float}]{speed, }
-\item[{float}]{th, }
-\item[{float}]{height}
+\item[{float}]{theta, }
+\item[{float}]{height, }
+\item[{float}]{dx}
 \end{DoxyParamCaption}
-)}\hypertarget{gangstilar_8h_ae56b8515b1ea2c6035e04e3e2df2b52a}{}\label{gangstilar_8h_ae56b8515b1ea2c6035e04e3e2df2b52a}
+)}\hypertarget{gangstilar_8h_a8b22e9229a15d20adb676428ad7f6dac}{}\label{gangstilar_8h_a8b22e9229a15d20adb676428ad7f6dac}
+Walks half cycle of tripod wave gait
+
+Can walk forward, backward, turn and rotate
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & Walking speed, positive = forward \\
+\hline
+{\em theta} & Rotation angle, positive = counterclockwise \\
+\hline
+{\em height} & Robot height \\
+\hline
+{\em dx} & Sideways movement, possitive = right \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{gangstilar_8c_source_l00241}{241} of file \hyperlink{gangstilar_8c_source}{gangstilar.\+c}.
+
+
+\begin{DoxyCode}
+00242 \{
+00243 
+00244     \textcolor{keywordtype}{float} l = 12; \textcolor{comment}{//fötters förskjuting från kropp i x-led }
+00245     \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_ae9651b009c7f17475dac0accfd2ddf98}{corner\_pitch} = 4; \textcolor{comment}{//förskjutning av arbetsområde i y-led för hörnben }
+00246     
+00247     \textcolor{keywordtype}{int} sgn\_dx = (\hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} >= 0) - (\hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} < 0);
+00248     \textcolor{keywordtype}{int} sgn\_speed = (\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} >= 0) - (\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} < 0);
+00249     \textcolor{keywordtype}{int} sgn\_theta = (theta >= 0) - (theta < 0);
+00250     uint8\_t walk\_break = 1;
+00251     
+00252     \textcolor{keywordflow}{if}( \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} * sgn\_dx > 6)
+00253     \{
+00254         \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} = 6 * sgn\_dx;
+00255     \}
+00256     
+00257     \textcolor{comment}{//filtrerade o begränsade värden kommer som globala last\_}
+00258     \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} = \hyperlink{gangstilar_8c_a4228f615ac009f6808bc8cbf5fed939a}{LP\_Filter\_And\_Limit\_Input}(\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}, sgn\_speed, theta, 
+      sgn\_theta, \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height}, \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}, sgn\_dx);
+00259     \textcolor{comment}{//sätter parametrar till LP-filtrerade}
+00260     \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} = \hyperlink{gangstilar_8c_a661742ef73698e09fd0cc0352f5456ed}{last\_speed};
+00261     theta = \hyperlink{gangstilar_8c_a85bd8e6f67b3521a995db392b0079ba9}{last\_theta};
+00262     sgn\_speed = (\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} >= 0) - (\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed} < 0) ;
+00263     sgn\_theta = (theta >= 0) - (theta < 0) ;
+00264     \textcolor{keywordtype}{float} height\_step = 2 * (\hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height} - \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height})/\hyperlink{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}{cycle\_length};
+00265     \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_a5e433c2d90f9d7f1ff1868b9e8b91868}{lift} = 1.2 + sgn\_speed * \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}/12;\textcolor{comment}{//benens lyfthöjd justeras efter speed }
+00266     \textcolor{keywordtype}{float} stroke =  1.8 * \hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}; 
+00267     \textcolor{keywordtype}{float} dx\_p1 = 0;
+00268     \textcolor{keywordtype}{float} dx\_p2 = 0;
+00269     \hyperlink{structtriple__float}{triple\_float} kar\_p1;
+00270     \hyperlink{structtriple__float}{triple\_float} kar\_p2;
+00271     \hyperlink{structtriple__float}{triple\_float} speed\_p1;
+00272     \hyperlink{structtriple__float}{triple\_float} speed\_p2;
+00273     
+00274     \textcolor{keywordflow}{if}( (\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}*sgn\_speed < 0.2 ) && (theta * sgn\_theta < 0.01) && (height\_step == 0) &&(
+      \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} * sgn\_dx < 0.5)) \textcolor{comment}{// gör inget}
+00275     \{
+00276         \textcolor{keywordflow}{return};
+00277     \}
+00278     
+00279     \textcolor{keywordflow}{if}( (\hyperlink{styr_2styr_2main_8c_a7f7e4724cf57d59513b39c5ecc81adc8}{speed}*sgn\_speed < 0.2 ) && (theta * sgn\_theta < 0.01)&&(\hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} * sgn\_dx < 0.5) ) \textcolor{comment}{//justera
+       höjd utan att gå
+        stroke = 0;
+        lift = 0;
+        dx = 0;
+    \}
+    
+    //gångloop, utför en halv gångfas och stannar när stödjande ben är i mitten av arbetsområde
+    while( walk\_break || ( n\_1 != support\_l/2 && n\_2 !=  support\_l/2))
+    \{
+        walk\_break = 0;
+            if(n\_1 < cycle\_length)
+        \{
+            n\_1 += 1; //stegar upp index
+        \}
+        else
+        \{
+            n\_1 = 1; //nollar index
+        \}
+        
+        //stegvis höjdjustering
+        last\_height += height\_step;
+        n\_2= n\_1 + cycle\_length/2; //benpar 2 förskjuts en halv fas
+        
+        if(n\_2 > cycle\_length) //ser till att det blir cykliskt
+        \{
+            n\_2 -= cycle\_length;
+        \}
+        
+        if(n\_1 <= 4 )
+        \{
+            p1\_down =1; //berättar om benpar ska sättas ner
+        \}
+        else
+        \{
+            p1\_down = 0;
+        \}
+                
+        if((n\_2 <= 4))
+        \{
+            p2\_down =1;
+        \}
+        else
+        \{
+            p2\_down = 0;
+        \}
+    
+        if(n\_1 <= support\_l)
+        \{
+            dx\_p1 = (n\_1-support\_l/2) * dx/support\_l;
+        \}
+        else
+        \{
+            dx\_p1 = (support\_l + swing\_l/2 - n\_1) * dx/swing\_l;
+        \}
+        
+        if(n\_2 <= support\_l)
+        \{
+            dx\_p2 = (n\_2-support\_l/2) * dx/support\_l;
+        \}
+        else
+        \{
+            dx\_p2 = (support\_l + swing\_l/2 - n\_2) * dx/swing\_l;
+        \}
+    
+        speed\_p1 = Calc\_Servo\_Speed(theta, sgn\_theta, p1\_down, dx, sgn\_dx);
+        speed\_p2 = Calc\_Servo\_Speed(theta, sgn\_theta, p2\_down, dx, sgn\_dx);
+
+        if(theta * sgn\_theta < 0.01) //behöver ej gå via cyl koord vid rak gång.
+        \{
+            kar\_p1 = Tripod(l, stroke, last\_height, lift, n\_1); //kart koord för par 1
+            kar\_p2 = Tripod(l, stroke, last\_height, lift, n\_2); //kart koord för par 2
+            
+            Send\_Legs\_Kar(kar\_p1, kar\_p2, corner\_pitch, speed\_p1, speed\_p2, dx\_p1, dx\_p2);
+            
+            if( walk\_break || (n\_1 != support\_l/2 && n\_2 != support\_l/2))
+            \{
+            \_delay\_ms(7); //för kart skippar på sista loopen, pga tid som mainloop tar 
+            \}
+        \}
+        else //om sväng
+        \{
+            lift = 1.5 + theta * sgn\_theta * 1.2; 
+            kar\_p1 = Tripod(l, stroke, last\_height, lift, n\_1); //kart koord för par 1
+            kar\_p2 = Tripod(l, stroke, last\_height, lift, n\_2); //kart koord för par 2
+            
+            Rotate\_And\_Send\_Legs(kar\_p1, kar\_p2, corner\_pitch, sgn\_speed, theta, speed\_p1, speed\_p2, dx\_p1,
+       dx\_p2);
+            
+            if( walk\_break || ( n\_1 != support\_l/2 && n\_2  !=  support\_l/2))
+            \{
+            \_delay\_ms(5); //Delay för cyl skippar på sista loopen, pga tids som mainloop tar TEST
+            \}
+        \}
+    \}
+    last\_height = height;
+\}
+}
+00280     \{
+00281         stroke = 0;
+00282         lift = 0;
+00283         \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx} = 0;
+00284     \}
+00285     
+00286     \textcolor{comment}{//gångloop, utför en halv gångfas och stannar när stödjande ben är i mitten av arbetsområde}
+00287     \textcolor{keywordflow}{while}( walk\_break || ( \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} != \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}/2 && \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} !=  
+      \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}/2))
+00288     \{
+00289         walk\_break = 0;
+00290             \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} < \hyperlink{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}{cycle\_length})
+00291         \{
+00292             \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} += 1; \textcolor{comment}{//stegar upp index}
+00293         \}
+00294         \textcolor{keywordflow}{else}
+00295         \{
+00296             \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} = 1; \textcolor{comment}{//nollar index}
+00297         \}
+00298         
+00299         \textcolor{comment}{//stegvis höjdjustering}
+00300         \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height} += height\_step;
+00301         \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2}= \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} + \hyperlink{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}{cycle\_length}/2; \textcolor{comment}{//benpar 2 förskjuts en halv fas}
+00302         
+00303         \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} > \hyperlink{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}{cycle\_length}) \textcolor{comment}{//ser till att det blir cykliskt}
+00304         \{
+00305             \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} -= \hyperlink{gangstilar_8c_a55033c7806947634d32adf5ad4b27c72}{cycle\_length};
+00306         \}
+00307         
+00308         \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} <= 4 )
+00309         \{
+00310             \hyperlink{gangstilar_8c_a0fb4659f2b5bb60bc4952b0ce04a729a}{p1\_down} =1; \textcolor{comment}{//berättar om benpar ska sättas ner}
+00311         \}
+00312         \textcolor{keywordflow}{else}
+00313         \{
+00314             \hyperlink{gangstilar_8c_a0fb4659f2b5bb60bc4952b0ce04a729a}{p1\_down} = 0;
+00315         \}
+00316                 
+00317         \textcolor{keywordflow}{if}((\hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} <= 4))
+00318         \{
+00319             \hyperlink{gangstilar_8c_a45aa440e6a2fcc55e6cfccf902041f66}{p2\_down} =1;
+00320         \}
+00321         \textcolor{keywordflow}{else}
+00322         \{
+00323             \hyperlink{gangstilar_8c_a45aa440e6a2fcc55e6cfccf902041f66}{p2\_down} = 0;
+00324         \}
+00325     
+00326         \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} <= \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l})
+00327         \{
+00328             dx\_p1 = (\hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1}-\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}/2) * \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}/\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l};
+00329         \}
+00330         \textcolor{keywordflow}{else}
+00331         \{
+00332             dx\_p1 = (\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l} + \hyperlink{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}{swing\_l}/2 - \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1}) * \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}/
+      \hyperlink{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}{swing\_l};
+00333         \}
+00334         
+00335         \textcolor{keywordflow}{if}(\hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} <= \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l})
+00336         \{
+00337             dx\_p2 = (\hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2}-\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}/2) * \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}/\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l};
+00338         \}
+00339         \textcolor{keywordflow}{else}
+00340         \{
+00341             dx\_p2 = (\hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l} + \hyperlink{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}{swing\_l}/2 - \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2}) * \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}/
+      \hyperlink{gangstilar_8c_a9a74797712c10908dbbc9d01ace4fadd}{swing\_l};
+00342         \}
+00343     
+00344         speed\_p1 = \hyperlink{gangstilar_8c_a6bb8056658634de06f155394bd298410}{Calc\_Servo\_Speed}(theta, sgn\_theta, \hyperlink{gangstilar_8c_a0fb4659f2b5bb60bc4952b0ce04a729a}{p1\_down}, 
+      \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}, sgn\_dx);
+00345         speed\_p2 = \hyperlink{gangstilar_8c_a6bb8056658634de06f155394bd298410}{Calc\_Servo\_Speed}(theta, sgn\_theta, \hyperlink{gangstilar_8c_a45aa440e6a2fcc55e6cfccf902041f66}{p2\_down}, 
+      \hyperlink{styr_2styr_2main_8c_a6b061c378131aa307e80484d3165a27c}{dx}, sgn\_dx);
+00346 
+00347         \textcolor{keywordflow}{if}(theta * sgn\_theta < 0.01) \textcolor{comment}{//behöver ej gå via cyl koord vid rak gång.}
+00348         \{
+00349             kar\_p1 = \hyperlink{gangstilar_8c_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{Tripod}(l, stroke, \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height}, lift, \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1}); \textcolor{comment}{//kart koord för par 1}
+00350             kar\_p2 = \hyperlink{gangstilar_8c_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{Tripod}(l, stroke, \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height}, lift, \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2}); \textcolor{comment}{//kart koord för par 2}
+00351             
+00352             \hyperlink{gangstilar_8c_a457024b585cd87287d5e05809a848e94}{Send\_Legs\_Kar}(kar\_p1, kar\_p2, corner\_pitch, speed\_p1, speed\_p2, dx\_p1, dx\_p2);
+00353             
+00354             \textcolor{keywordflow}{if}( walk\_break || (\hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} != \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}/2 && \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2} != 
+      \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}/2))
+00355             \{
+00356             \_delay\_ms(7); \textcolor{comment}{//för kart skippar på sista loopen, pga tid som mainloop tar }
+00357             \}
+00358         \}
+00359         \textcolor{keywordflow}{else} \textcolor{comment}{//om sväng}
+00360         \{
+00361             lift = 1.5 + theta * sgn\_theta * 1.2; 
+00362             kar\_p1 = \hyperlink{gangstilar_8c_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{Tripod}(l, stroke, \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height}, lift, \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1}); \textcolor{comment}{//kart koord för par 1}
+00363             kar\_p2 = \hyperlink{gangstilar_8c_ac6bbb42bb1b2d403d560a2a2b15c1cc8}{Tripod}(l, stroke, \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height}, lift, \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2}); \textcolor{comment}{//kart koord för par 2}
+00364             
+00365             \hyperlink{gangstilar_8c_a0ad2cf3e9047e6311cdac98a8bce6ed6}{Rotate\_And\_Send\_Legs}(kar\_p1, kar\_p2, corner\_pitch, sgn\_speed, theta, 
+      speed\_p1, speed\_p2, dx\_p1, dx\_p2);
+00366             
+00367             \textcolor{keywordflow}{if}( walk\_break || ( \hyperlink{gangstilar_8c_a910b6f9f09db8ef105682d48271387a0}{n\_1} != \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}/2 && \hyperlink{gangstilar_8c_a6c5756c1471acfef79bf1d39a054d2f5}{n\_2}  !=  
+      \hyperlink{gangstilar_8c_ad3c8cf64391a5b011898f0f8aece4161}{support\_l}/2))
+00368             \{
+00369             \_delay\_ms(5); \textcolor{comment}{//Delay för cyl skippar på sista loopen, pga tids som mainloop tar TEST}
+00370             \}
+00371         \}
+00372     \}
+00373     \hyperlink{gangstilar_8c_abb6e5203c6a2802d8de6f3ac6730feee}{last\_height} = \hyperlink{styr_2styr_2main_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height};
+00374 \}
+\end{DoxyCode}
 
 
 \subsection{Variable Documentation}
-\index{gangstilar.\+h@{gangstilar.\+h}!height@{height}}
-\index{height@{height}!gangstilar.\+h@{gangstilar.\+h}}
-\subsubsection[{\texorpdfstring{height}{height}}]{\setlength{\rightskip}{0pt plus 5cm}float height}\hypertarget{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}{}\label{gangstilar_8h_a48083b65ac9a863566dc3e3fff09a5b4}
-\index{gangstilar.\+h@{gangstilar.\+h}!n@{n}}
-\index{n@{n}!gangstilar.\+h@{gangstilar.\+h}}
-\subsubsection[{\texorpdfstring{n}{n}}]{\setlength{\rightskip}{0pt plus 5cm}int n}\hypertarget{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}{}\label{gangstilar_8h_a76f11d9a0a47b94f72c2d0e77fb32240}
+\index{gangstilar.\+h@{gangstilar.\+h}!dance\+\_\+r@{dance\+\_\+r}}
+\index{dance\+\_\+r@{dance\+\_\+r}!gangstilar.\+h@{gangstilar.\+h}}
+\subsubsection[{\texorpdfstring{dance\+\_\+r}{dance_r}}]{\setlength{\rightskip}{0pt plus 5cm}float dance\+\_\+r}\hypertarget{gangstilar_8h_a53714f6e2fcbc2539af246d0a0446cbe}{}\label{gangstilar_8h_a53714f6e2fcbc2539af246d0a0446cbe}
+
+
+Definition at line \hyperlink{gangstilar_8h_source_l00028}{28} of file \hyperlink{gangstilar_8h_source}{gangstilar.\+h}.
+

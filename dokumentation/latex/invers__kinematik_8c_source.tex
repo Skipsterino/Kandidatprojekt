@@ -1,0 +1,119 @@
+\hypertarget{invers__kinematik_8c_source}{}\section{invers\+\_\+kinematik.\+c}
+\label{invers__kinematik_8c_source}\index{styr/styr/invers\+\_\+kinematik.\+c@{styr/styr/invers\+\_\+kinematik.\+c}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *        File: invers\_kinematik.c}
+00003 \textcolor{comment}{ *     Version: 1.0}
+00004 \textcolor{comment}{ * Last edited: 17/5/2016 }
+00005 \textcolor{comment}{ *      Author: chrma018}
+00006 \textcolor{comment}{ */} 
+00007 
+00008 \textcolor{preprocessor}{#include "\hyperlink{invers__kinematik_8h}{invers\_kinematik.h}"}
+00009 
+00010 \textcolor{comment}{//Skalfaktor för omvandling mellan vinkel och servoposition}
+\hypertarget{invers__kinematik_8c_source.tex_l00011}{}\hyperlink{invers__kinematik_8c_a344b421f17a678e971ea980caf46ecae}{00011} \textcolor{preprocessor}{#define ANG\_TO\_POS\_SCALE 195.37860814f}
+\hypertarget{invers__kinematik_8c_source.tex_l00012}{}\hyperlink{invers__kinematik_8c_a598a3330b3c21701223ee0ca14316eca}{00012} \textcolor{preprocessor}{#define PI 3.14159265359f}
+00013 \textcolor{comment}{//Bensegmentslängder och vanligt använda storheter i cm}
+\hypertarget{invers__kinematik_8c_source.tex_l00014}{}\hyperlink{invers__kinematik_8c_a1ce864b284ac751ffd8a0d98d5ccab55}{00014} \textcolor{preprocessor}{#define L1 5.1f}
+\hypertarget{invers__kinematik_8c_source.tex_l00015}{}\hyperlink{invers__kinematik_8c_ab983f03862f557a786ccc43b26522e16}{00015} \textcolor{preprocessor}{#define L2 6.6f}
+\hypertarget{invers__kinematik_8c_source.tex_l00016}{}\hyperlink{invers__kinematik_8c_a7a496732ef99aadddf8e1215ca9fbca7}{00016} \textcolor{preprocessor}{#define L2\_SQ 43.56f}
+\hypertarget{invers__kinematik_8c_source.tex_l00017}{}\hyperlink{invers__kinematik_8c_a0702a0cfbd3fd4cfd1e5d9e69d792ed7}{00017} \textcolor{preprocessor}{#define L3\_SQ 176.89f //L3 = 13.3}
+\hypertarget{invers__kinematik_8c_source.tex_l00018}{}\hyperlink{invers__kinematik_8c_a36a1e67b0bf459531486e5d273b77f76}{00018} \textcolor{preprocessor}{#define L3\_L2\_2 175.56f}
+00019 
+00020  
+\hypertarget{invers__kinematik_8c_source.tex_l00021}{}\hyperlink{invers__kinematik_8h_a68f82386196ad991ed54fb9796d90f7c}{00021} \hyperlink{structtriple__uint}{triple\_uint} \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00022 \{   
+00023     \textcolor{comment}{//Hjälpvariabler}
+00024     \textcolor{keywordtype}{float} r\_leg = sqrt(pow(x,2)+pow(y,2));
+00025     \textcolor{keywordtype}{float} r\_outer\_leg = r\_leg - \hyperlink{invers__kinematik_8c_a1ce864b284ac751ffd8a0d98d5ccab55}{L1};
+00026     \textcolor{keywordtype}{float} r\_outer\_leg\_sq = pow(r\_outer\_leg,2);
+00027     \textcolor{keywordtype}{float} z\_sq= pow(z,2);
+00028     \textcolor{keywordtype}{float} p\_outer\_sq =  r\_outer\_leg\_sq + z\_sq;
+00029     
+00030     \textcolor{comment}{//Invers kinematik}
+00031     \textcolor{keywordtype}{float} v1 = asin((y)/r\_leg);
+00032     \textcolor{keywordtype}{float} v2 = atan(-z/r\_outer\_leg)-acos((\hyperlink{invers__kinematik_8c_a0702a0cfbd3fd4cfd1e5d9e69d792ed7}{L3\_SQ}-\hyperlink{invers__kinematik_8c_a7a496732ef99aadddf8e1215ca9fbca7}{L2\_SQ}-p\_outer\_sq)/(-2*
+      \hyperlink{invers__kinematik_8c_ab983f03862f557a786ccc43b26522e16}{L2}*sqrt(p\_outer\_sq)));
+00033     \textcolor{keywordtype}{float} v3 = acos((p\_outer\_sq - \hyperlink{invers__kinematik_8c_a0702a0cfbd3fd4cfd1e5d9e69d792ed7}{L3\_SQ} - \hyperlink{invers__kinematik_8c_a7a496732ef99aadddf8e1215ca9fbca7}{L2\_SQ})/\hyperlink{invers__kinematik_8c_a36a1e67b0bf459531486e5d273b77f76}{L3\_L2\_2});
+00034 
+00035     \textcolor{comment}{//Gör om vinklarna till postionförskjutningar och sparar som unsigned int}
+00036     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = (\textcolor{keywordtype}{unsigned} int)(\hyperlink{invers__kinematik_8c_a344b421f17a678e971ea980caf46ecae}{ANG\_TO\_POS\_SCALE}*v1);
+00037     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = (\textcolor{keywordtype}{unsigned} int)(\hyperlink{invers__kinematik_8c_a344b421f17a678e971ea980caf46ecae}{ANG\_TO\_POS\_SCALE}*v2);
+00038     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = (\textcolor{keywordtype}{unsigned} int)(\hyperlink{invers__kinematik_8c_a344b421f17a678e971ea980caf46ecae}{ANG\_TO\_POS\_SCALE}*v3);
+00039     
+00040     \textcolor{comment}{//För att skicka ut 3 st int}
+00041     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{structs_8c_a0bd229363859ac7df4e837cba6ad7ae4}{create\_triple\_uint}(pos1, pos2, pos3);
+00042     \textcolor{keywordflow}{return} pos; 
+00043 \}
+00044 
+00045 
+00046 \textcolor{comment}{//Varje ben har en egen funktion pga olika positionering på skelettet}
+00047 
+\hypertarget{invers__kinematik_8c_source.tex_l00048}{}\hyperlink{invers__kinematik_8h_ae696af5df234c2f15694317bcf2a4bec}{00048} \hyperlink{structtriple__float}{triple\_float} \hyperlink{invers__kinematik_8c_ae696af5df234c2f15694317bcf2a4bec}{Kar\_To\_Cyl\_Leg1}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00049 \{
+00050     \textcolor{keywordtype}{float} r = sqrt(pow(x+6, 2) +pow(y+12, 2)); \textcolor{comment}{// x offset = 6, y offset=12}
+00051     \textcolor{keywordtype}{float} th = atan((x+6)/(y+12));
+00052     
+00053     \textcolor{comment}{//För att skicka ut 3 st floats }
+00054     \hyperlink{structtriple__float}{triple\_float} triple = \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(r,th,z);
+00055     \textcolor{keywordflow}{return} triple;
+00056 \}
+00057 
+\hypertarget{invers__kinematik_8c_source.tex_l00058}{}\hyperlink{invers__kinematik_8h_addfbc7c7fdb83567e74239fb6333d92c}{00058} \hyperlink{structtriple__float}{triple\_float} \hyperlink{invers__kinematik_8c_addfbc7c7fdb83567e74239fb6333d92c}{Kar\_To\_Cyl\_Leg2}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00059 \{
+00060     \textcolor{keywordtype}{float} r = sqrt(pow(x+6, 2) +pow(y+12, 2)); \textcolor{comment}{// x offset = 6, y offset=12}
+00061     \textcolor{keywordtype}{float} th = atan(-(x+6)/(y+12));
+00062     
+00063     \textcolor{comment}{//För att skicka ut 3 st floats }
+00064     \hyperlink{structtriple__float}{triple\_float} triple = \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(r,th,z);
+00065     \textcolor{keywordflow}{return} triple;
+00066 \}
+00067 
+\hypertarget{invers__kinematik_8c_source.tex_l00068}{}\hyperlink{invers__kinematik_8h_a60f2e45cc22b107f9c5020ca85c6ab31}{00068} \hyperlink{structtriple__float}{triple\_float} \hyperlink{invers__kinematik_8c_a60f2e45cc22b107f9c5020ca85c6ab31}{Kar\_To\_Cyl\_Leg3}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00069 \{
+00070     \textcolor{keywordtype}{float} r = sqrt(pow(x + 10, 2) +pow(y, 2)); \textcolor{comment}{// x offset = 10, y offset=0}
+00071     \textcolor{keywordtype}{float} th = \hyperlink{invers__kinematik_8c_a598a3330b3c21701223ee0ca14316eca}{PI}/2 - atan(y/(x + 10));
+00072     
+00073     \textcolor{comment}{//För att skicka ut 3 st floats }
+00074     \hyperlink{structtriple__float}{triple\_float} triple = \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(r,th,z);
+00075     \textcolor{keywordflow}{return} triple;
+00076 \}
+00077 
+\hypertarget{invers__kinematik_8c_source.tex_l00078}{}\hyperlink{invers__kinematik_8h_aaaaddfbb21d42ca2d7f2ff855a3b1a01}{00078} \hyperlink{structtriple__float}{triple\_float} \hyperlink{invers__kinematik_8c_aaaaddfbb21d42ca2d7f2ff855a3b1a01}{Kar\_To\_Cyl\_Leg4}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00079 \{
+00080     \textcolor{keywordtype}{float} r = sqrt(pow(x+10, 2) + pow(y, 2)); \textcolor{comment}{// x offset = 10, y offset=0}
+00081     \textcolor{keywordtype}{float} th= -\hyperlink{invers__kinematik_8c_a598a3330b3c21701223ee0ca14316eca}{PI}/2+atan(y/(x+10));
+00082     
+00083     \textcolor{comment}{//För att skicka ut 3 st floats }
+00084     \hyperlink{structtriple__float}{triple\_float} triple = \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(r,th,z);
+00085     \textcolor{keywordflow}{return} triple;
+00086 \}
+00087 
+\hypertarget{invers__kinematik_8c_source.tex_l00088}{}\hyperlink{invers__kinematik_8h_abc3e6e1ada8dc2e48c5b0dc980c0dc81}{00088} \hyperlink{structtriple__float}{triple\_float} \hyperlink{invers__kinematik_8c_abc3e6e1ada8dc2e48c5b0dc980c0dc81}{Kar\_To\_Cyl\_Leg5}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00089 \{
+00090     \textcolor{keywordtype}{float} r = sqrt(pow(x+6, 2) +pow(12-y, 2)); \textcolor{comment}{// x offset = 6, y offset=12}
+00091     \textcolor{keywordtype}{float} th = \hyperlink{invers__kinematik_8c_a598a3330b3c21701223ee0ca14316eca}{PI} - atan((x+6)/(12-y));
+00092     
+00093     \textcolor{comment}{//För att skicka ut 3 st floats }
+00094     \hyperlink{structtriple__float}{triple\_float} triple = \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(r,th,z);
+00095     \textcolor{keywordflow}{return} triple;
+00096 \}
+00097 
+\hypertarget{invers__kinematik_8c_source.tex_l00098}{}\hyperlink{invers__kinematik_8h_aac6d276df2445e288447c993547ecbc4}{00098} \hyperlink{structtriple__float}{triple\_float} \hyperlink{invers__kinematik_8c_aac6d276df2445e288447c993547ecbc4}{Kar\_To\_Cyl\_Leg6}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00099 \{
+00100     \textcolor{keywordtype}{float} r = sqrt(pow(x+6, 2) +pow(12-y, 2)); \textcolor{comment}{// x offset = 6, y offset=12}
+00101     \textcolor{keywordtype}{float} th = \hyperlink{invers__kinematik_8c_a598a3330b3c21701223ee0ca14316eca}{PI} + atan((x+6)/(12-y));
+00102     
+00103     \textcolor{comment}{//För att skicka ut 3 st floats }
+00104     \hyperlink{structtriple__float}{triple\_float} triple = \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(r,th,z);
+00105     \textcolor{keywordflow}{return} triple;
+00106 \}
+00107 
+\end{DoxyCode}
