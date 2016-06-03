@@ -23,3 +23,19 @@ void \hyperlink{_s_p_i__comm_8h_a9208b9a00dfa335b5dd56360ea5c7813}{S\+P\+I\+\_\+
 Initiates the S\+PI interface. 
 
 Initiates the S\+PI interface as a slave unit on the bus. Communication is handled by using interupts. 
+
+Definition at line \hyperlink{_s_p_i__comm_8c_source_l00013}{13} of file \hyperlink{_s_p_i__comm_8c_source}{S\+P\+I\+\_\+comm.\+c}.
+
+
+\begin{DoxyCode}
+00014 \{
+00015     \textcolor{comment}{//MISO är utgång}
+00016     DDRB |= 0b01000000;
+00017     
+00018     \textcolor{comment}{//SPI Enable}
+00019     \textcolor{comment}{//SPI interrupt enable}
+00020     SPCR = (1<<SPE)| (1<<SPIE);
+00021     
+00022     \hyperlink{_s_p_i__comm_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter} = 0;
+00023 \}
+\end{DoxyCode}

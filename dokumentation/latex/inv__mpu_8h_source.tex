@@ -1,149 +1,155 @@
 \hypertarget{inv__mpu_8h_source}{}\section{inv\+\_\+mpu.\+h}
-\label{inv__mpu_8h_source}\index{sensor/inv\+\_\+mpu.\+h@{sensor/inv\+\_\+mpu.\+h}}
+\label{inv__mpu_8h_source}\index{sensor/sensor/inv\+\_\+mpu.\+h@{sensor/sensor/inv\+\_\+mpu.\+h}}
 
 \begin{DoxyCode}
 00001 \textcolor{comment}{/*}
-00002 \textcolor{comment}{ $License:}
-00003 \textcolor{comment}{    Copyright (C) 2011-2012 InvenSense Corporation, All Rights Reserved.}
-00004 \textcolor{comment}{    See included License.txt for License information.}
-00005 \textcolor{comment}{ $}
-00006 \textcolor{comment}{ */}
-00021 \textcolor{preprocessor}{#define F\_CPU 16000000UL}
-00022 
-00023 \textcolor{preprocessor}{#include <math.h>}
-00024 \textcolor{preprocessor}{#include <stdlib.h>}
-00025 \textcolor{preprocessor}{#include <util/delay.h>}
-00026 \textcolor{preprocessor}{#include <avr/interrupt.h>}
-00027 \textcolor{preprocessor}{#include "I2C.h"}
-00028 \textcolor{preprocessor}{#include "millis.h"}
-00029 
-00030 \textcolor{preprocessor}{#ifndef \_INV\_MPU\_H\_}
-00031 \textcolor{preprocessor}{#define \_INV\_MPU\_H\_}
-00032 
-00033 \textcolor{preprocessor}{#define MPU6050}
-00034 
-00035 \textcolor{preprocessor}{#define min(a,b) ((a<b)?a:b)}
-00036 
-00037 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} get\_ms(\textcolor{keywordtype}{long} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} *timestamp)
-00038 \{
-00039     *timestamp = millis();
-00040 \}
-00041 
-00042 \textcolor{keyword}{inline} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \_\_no\_operation()
-00043 \{
-00044     \_delay\_ms(1);
-00045 \}
-00046 
+00002 \textcolor{comment}{* @file inv\_mpu.h}
+00003 \textcolor{comment}{* @version 1.0}
+00004 \textcolor{comment}{* @author InvenSense}
+00005 \textcolor{comment}{* @date -}
+00006 \textcolor{comment}{* @brief Code by InvenSense}
+00007 \textcolor{comment}{* @license Copyright (C) 2011-2012 InvenSense Corporation, All Rights Reserved.}
+00008 \textcolor{comment}{             See included License.txt for License information.}
+00009 \textcolor{comment}{ *}
+00010 \textcolor{comment}{ * Code by InvenSense.}
+00011 \textcolor{comment}{ */}
+00012  
+\hypertarget{inv__mpu_8h_source.tex_l00027}{}\hyperlink{group___d_r_i_v_e_r_s_ga43bafb28b29491ec7f871319b5a3b2f8}{00027} \textcolor{preprocessor}{#define F\_CPU 16000000UL}
+00028 
+00029 \textcolor{preprocessor}{#include <math.h>}
+00030 \textcolor{preprocessor}{#include <stdlib.h>}
+00031 \textcolor{preprocessor}{#include <util/delay.h>}
+00032 \textcolor{preprocessor}{#include <avr/interrupt.h>}
+00033 \textcolor{preprocessor}{#include "\hyperlink{_i2_c_8h}{I2C.h}"}
+00034 \textcolor{comment}{//#include "millis.h"}
+00035 
+00036 \textcolor{preprocessor}{#ifndef \_INV\_MPU\_H\_}
+00037 \textcolor{preprocessor}{#define \_INV\_MPU\_H\_}
+00038 
+\hypertarget{inv__mpu_8h_source.tex_l00039}{}\hyperlink{group___d_r_i_v_e_r_s_ga6d132f914f18cb144a0eaf36312045c8}{00039} \textcolor{preprocessor}{#define MPU6050}
+00040 
+\hypertarget{inv__mpu_8h_source.tex_l00041}{}\hyperlink{group___d_r_i_v_e_r_s_gac6afabdc09a49a433ee19d8a9486056d}{00041} \textcolor{preprocessor}{#define min(a,b) ((a<b)?a:b)}
+00042 
+00043 \textcolor{comment}{//inline void get\_ms(long unsigned int *timestamp)}
+00044 \textcolor{comment}{//\{}
+00045     \textcolor{comment}{//*timestamp = millis();}
+00046 \textcolor{comment}{//\}}
 00047 
-00048 
-00049 \textcolor{preprocessor}{#define INV\_X\_GYRO      (0x40)}
-00050 \textcolor{preprocessor}{#define INV\_Y\_GYRO      (0x20)}
-00051 \textcolor{preprocessor}{#define INV\_Z\_GYRO      (0x10)}
-00052 \textcolor{preprocessor}{#define INV\_XYZ\_GYRO    (INV\_X\_GYRO | INV\_Y\_GYRO | INV\_Z\_GYRO)}
-00053 \textcolor{preprocessor}{#define INV\_XYZ\_ACCEL   (0x08)}
-00054 \textcolor{preprocessor}{#define INV\_XYZ\_COMPASS (0x01)}
-00055 
-\hypertarget{inv__mpu_8h_source.tex_l00056}{}\hyperlink{structint__param__s}{00056} \textcolor{keyword}{struct }\hyperlink{structint__param__s}{int\_param\_s} \{
-00057 \textcolor{comment}{//#if defined EMPL\_TARGET\_MSP430 || defined MOTION\_DRIVER\_TARGET\_MSP430}
-00058     \textcolor{comment}{//void (*cb)(void);}
-00059     \textcolor{comment}{//unsigned short pin;}
-00060     \textcolor{comment}{//unsigned char lp\_exit;}
-00061     \textcolor{comment}{//unsigned char active\_low;}
-00062 \textcolor{comment}{//#elif defined EMPL\_TARGET\_UC3L0}
-00063     \textcolor{comment}{//unsigned long pin;}
-00064     \textcolor{comment}{//void (*cb)(volatile void*);}
-00065     \textcolor{comment}{//void *arg;    }
-00066 \textcolor{comment}{//#endif}
-00067     void (*cb)(void);
-00068     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} pin;
-00069 \};
-00070 
-00071 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DATA\_READY       (0x0001)}
-00072 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP              (0x0002)}
-00073 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_PLL\_READY        (0x0004)}
-00074 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_I2C\_MST          (0x0008)}
-00075 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_FIFO\_OVERFLOW    (0x0010)}
-00076 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_ZMOT             (0x0020)}
-00077 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_MOT              (0x0040)}
-00078 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_FREE\_FALL        (0x0080)}
-00079 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP\_0            (0x0100)}
-00080 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP\_1            (0x0200)}
-00081 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP\_2            (0x0400)}
-00082 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP\_3            (0x0800)}
-00083 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP\_4            (0x1000)}
-00084 \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP\_5            (0x2000)}
-00085 
-00086 \textcolor{comment}{/* Set up APIs */}
-00087 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga63637cf3771995aeda99d91d5f345f29}{mpu\_init}();\textcolor{comment}{//struct int\_param\_s *int\_param);}
-00088 \textcolor{keywordtype}{int} mpu\_init\_slave(\textcolor{keywordtype}{void});
-00089 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga36f70f38371b48d81094d3b061233e15}{mpu\_set\_bypass}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} bypass\_on);
-00090 
-00091 \textcolor{comment}{/* Configuration APIs */}
-00092 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gabdcf10922a1a20f1b5bbd7576d3189b9}{mpu\_lp\_accel\_mode}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} rate);
-00093 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga7d0b3259346898ccd1ba6ef78bf7df97}{mpu\_lp\_motion\_interrupt}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} thresh, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} time,
-00094     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} lpa\_freq);
-00095 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gacc92fb1489ef32a04bcb6b0ebde4d657}{mpu\_set\_int\_level}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} active\_low);
-00096 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga653cb855300bff9285ce4b8dca6a503b}{mpu\_set\_int\_latched}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} enable);
-00097 
-00098 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga68ed20e6c9663cd7c50469329af8715f}{mpu\_set\_dmp\_state}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} enable);
-00099 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gafe0f60ed0d7f8fd2dcd55d45b95a2363}{mpu\_get\_dmp\_state}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *enabled);
-00100 
-00101 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaa95c7e216dcb2d888e9796001ca555f8}{mpu\_get\_lpf}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *lpf);
-00102 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga5661a9dee25152166769910767a2a93d}{mpu\_set\_lpf}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} lpf);
+00048 \textcolor{keyword}{inline} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \_\_no\_operation()
+00049 \{
+00050     \_delay\_ms(1);
+00051 \}
+00052 
+00053 
+00054 
+\hypertarget{inv__mpu_8h_source.tex_l00055}{}\hyperlink{group___d_r_i_v_e_r_s_gabf02bf28541421d59f8be764f2b95407}{00055} \textcolor{preprocessor}{#define INV\_X\_GYRO      (0x40)}
+\hypertarget{inv__mpu_8h_source.tex_l00056}{}\hyperlink{group___d_r_i_v_e_r_s_gacdd8ff833a34dba08ca2aa145eb92b44}{00056} \textcolor{preprocessor}{#define INV\_Y\_GYRO      (0x20)}
+\hypertarget{inv__mpu_8h_source.tex_l00057}{}\hyperlink{group___d_r_i_v_e_r_s_ga50205b5cc6089b33b2561c854eb8b0fd}{00057} \textcolor{preprocessor}{#define INV\_Z\_GYRO      (0x10)}
+\hypertarget{inv__mpu_8h_source.tex_l00058}{}\hyperlink{group___d_r_i_v_e_r_s_ga3fdc30f9c0a26c2c4e2bb88921f91629}{00058} \textcolor{preprocessor}{#define INV\_XYZ\_GYRO    (INV\_X\_GYRO | INV\_Y\_GYRO | INV\_Z\_GYRO)}
+\hypertarget{inv__mpu_8h_source.tex_l00059}{}\hyperlink{group___d_r_i_v_e_r_s_gaa03f025a17ed491e70b88274e89c75c5}{00059} \textcolor{preprocessor}{#define INV\_XYZ\_ACCEL   (0x08)}
+\hypertarget{inv__mpu_8h_source.tex_l00060}{}\hyperlink{group___d_r_i_v_e_r_s_ga7fc9c1dbdcb2ac8cc2a4128a5799482a}{00060} \textcolor{preprocessor}{#define INV\_XYZ\_COMPASS (0x01)}
+00061 
+\hypertarget{inv__mpu_8h_source.tex_l00062}{}\hyperlink{structint__param__s}{00062} \textcolor{keyword}{struct }\hyperlink{structint__param__s}{int\_param\_s} \{
+00063 \textcolor{comment}{//#if defined EMPL\_TARGET\_MSP430 || defined MOTION\_DRIVER\_TARGET\_MSP430}
+00064     \textcolor{comment}{//void (*cb)(void);}
+00065     \textcolor{comment}{//unsigned short pin;}
+00066     \textcolor{comment}{//unsigned char lp\_exit;}
+00067     \textcolor{comment}{//unsigned char active\_low;}
+00068 \textcolor{comment}{//#elif defined EMPL\_TARGET\_UC3L0}
+00069     \textcolor{comment}{//unsigned long pin;}
+00070     \textcolor{comment}{//void (*cb)(volatile void*);}
+00071     \textcolor{comment}{//void *arg;}
+00072 \textcolor{comment}{//#endif}
+\hypertarget{inv__mpu_8h_source.tex_l00073}{}\hyperlink{group___d_r_i_v_e_r_s_ga574999a803893e57b48324e39a5daa19}{00073}     void (*\hyperlink{group___d_r_i_v_e_r_s_ga574999a803893e57b48324e39a5daa19}{cb})(void);
+\hypertarget{inv__mpu_8h_source.tex_l00074}{}\hyperlink{group___d_r_i_v_e_r_s_ga503508a7ee88d8566cb3c882db1311b2}{00074}     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} \hyperlink{group___d_r_i_v_e_r_s_ga503508a7ee88d8566cb3c882db1311b2}{pin};
+00075 \};
+00076 
+\hypertarget{inv__mpu_8h_source.tex_l00077}{}\hyperlink{group___d_r_i_v_e_r_s_ga0cddf0dffaf3bf65fd3ed92dda4f3193}{00077} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DATA\_READY       (0x0001)}
+\hypertarget{inv__mpu_8h_source.tex_l00078}{}\hyperlink{group___d_r_i_v_e_r_s_ga380dd1ef256931e99302c371ad7752f4}{00078} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP              (0x0002)}
+\hypertarget{inv__mpu_8h_source.tex_l00079}{}\hyperlink{group___d_r_i_v_e_r_s_gaa38d7976e86186bf353cb89ca7561f29}{00079} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_PLL\_READY        (0x0004)}
+\hypertarget{inv__mpu_8h_source.tex_l00080}{}\hyperlink{group___d_r_i_v_e_r_s_ga5755e84f3a2e7d331f7612dbfea18ecc}{00080} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_I2C\_MST          (0x0008)}
+\hypertarget{inv__mpu_8h_source.tex_l00081}{}\hyperlink{group___d_r_i_v_e_r_s_gaf8e1684698ad837d0318a72b1ef73b13}{00081} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_FIFO\_OVERFLOW    (0x0010)}
+\hypertarget{inv__mpu_8h_source.tex_l00082}{}\hyperlink{group___d_r_i_v_e_r_s_gad5eee7ff393f842ca4ae969cc0019030}{00082} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_ZMOT             (0x0020)}
+\hypertarget{inv__mpu_8h_source.tex_l00083}{}\hyperlink{group___d_r_i_v_e_r_s_gaa1ab51fb5995e568edd425f8486cb2c8}{00083} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_MOT              (0x0040)}
+\hypertarget{inv__mpu_8h_source.tex_l00084}{}\hyperlink{group___d_r_i_v_e_r_s_ga000cfa5230cb895c6bad322856465552}{00084} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_FREE\_FALL        (0x0080)}
+\hypertarget{inv__mpu_8h_source.tex_l00085}{}\hyperlink{group___d_r_i_v_e_r_s_ga2398e82f93220e3cfa1ef31bfb6d76bd}{00085} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP\_0            (0x0100)}
+\hypertarget{inv__mpu_8h_source.tex_l00086}{}\hyperlink{group___d_r_i_v_e_r_s_ga5ac2e94db5083456fa531fceee0997f5}{00086} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP\_1            (0x0200)}
+\hypertarget{inv__mpu_8h_source.tex_l00087}{}\hyperlink{group___d_r_i_v_e_r_s_gab7543433b9679174597e00e5d7cb6279}{00087} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP\_2            (0x0400)}
+\hypertarget{inv__mpu_8h_source.tex_l00088}{}\hyperlink{group___d_r_i_v_e_r_s_gaea5cac4528bb19757de4eb4fa46a374f}{00088} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP\_3            (0x0800)}
+\hypertarget{inv__mpu_8h_source.tex_l00089}{}\hyperlink{group___d_r_i_v_e_r_s_ga4345dc987e1b65ef8ddc6160f592e144}{00089} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP\_4            (0x1000)}
+\hypertarget{inv__mpu_8h_source.tex_l00090}{}\hyperlink{group___d_r_i_v_e_r_s_ga101643480b83c302a4a3089fe9149e8e}{00090} \textcolor{preprocessor}{#define MPU\_INT\_STATUS\_DMP\_5            (0x2000)}
+00091 
+00092 \textcolor{comment}{/* Set up APIs */}
+00093 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga63637cf3771995aeda99d91d5f345f29}{mpu\_init}();\textcolor{comment}{//struct int\_param\_s *int\_param);}
+00094 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga9093183fe619360b3b1bfb8aab030592}{mpu\_init\_slave}(\textcolor{keywordtype}{void});
+00095 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga36f70f38371b48d81094d3b061233e15}{mpu\_set\_bypass}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} bypass\_on);
+00096 
+00097 \textcolor{comment}{/* Configuration APIs */}
+00098 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gabdcf10922a1a20f1b5bbd7576d3189b9}{mpu\_lp\_accel\_mode}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} rate);
+00099 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga7d0b3259346898ccd1ba6ef78bf7df97}{mpu\_lp\_motion\_interrupt}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} thresh, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} time,
+00100     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} lpa\_freq);
+00101 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gacc92fb1489ef32a04bcb6b0ebde4d657}{mpu\_set\_int\_level}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} active\_low);
+00102 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga653cb855300bff9285ce4b8dca6a503b}{mpu\_set\_int\_latched}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} enable);
 00103 
-00104 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaf973c32c73ba912ff512aab948fc31ca}{mpu\_get\_gyro\_fsr}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *fsr);
-00105 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gad09e6031c8677adc0b8a39b6deea8e27}{mpu\_set\_gyro\_fsr}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} fsr);
+00104 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga68ed20e6c9663cd7c50469329af8715f}{mpu\_set\_dmp\_state}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} enable);
+00105 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gafe0f60ed0d7f8fd2dcd55d45b95a2363}{mpu\_get\_dmp\_state}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *enabled);
 00106 
-00107 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gab6087a15ee23db23b6aec41590329a60}{mpu\_get\_accel\_fsr}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *fsr);
-00108 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga2713a96af104cfb2ae8e0ed4c3718119}{mpu\_set\_accel\_fsr}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} fsr);
+00107 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaa95c7e216dcb2d888e9796001ca555f8}{mpu\_get\_lpf}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *lpf);
+00108 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga5661a9dee25152166769910767a2a93d}{mpu\_set\_lpf}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} lpf);
 00109 
-00110 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gade8589573d09e0f14b84130428f286df}{mpu\_get\_compass\_fsr}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *fsr);
-00111 
-00112 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga023c0cc94aa8f162dc33b15048a49421}{mpu\_get\_gyro\_sens}(\textcolor{keywordtype}{float} *sens);
-00113 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga620408949052b96e856cad920f856583}{mpu\_get\_accel\_sens}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *sens);
-00114 
-00115 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga2487dd551b701c1c7ed4d6335f02b2f1}{mpu\_get\_sample\_rate}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *rate);
-00116 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga0144d666a67a82888b8580002afe8b55}{mpu\_set\_sample\_rate}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} rate);
-00117 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gab5a45cd7783f6937788c0decb0b18b16}{mpu\_get\_compass\_sample\_rate}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *rate);
-00118 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga78da3828de0ef9d080c4d03e7bc45e7b}{mpu\_set\_compass\_sample\_rate}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} rate);
-00119 
-00120 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga093f11eb10b2639a4b9fe344ea348c54}{mpu\_get\_fifo\_config}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *sensors);
-00121 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gababbdda287e1f19323489f90a0889dd7}{mpu\_configure\_fifo}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} sensors);
-00122 
-00123 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaec8fa7a067988d174516bb735a4a0bc9}{mpu\_get\_power\_state}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *power\_on);
-00124 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga6e77e7cc1cf6be5e8fdf617c5b4586d1}{mpu\_set\_sensors}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} sensors);
+00110 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaf973c32c73ba912ff512aab948fc31ca}{mpu\_get\_gyro\_fsr}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *fsr);
+00111 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gad09e6031c8677adc0b8a39b6deea8e27}{mpu\_set\_gyro\_fsr}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} fsr);
+00112 
+00113 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gab6087a15ee23db23b6aec41590329a60}{mpu\_get\_accel\_fsr}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *fsr);
+00114 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga2713a96af104cfb2ae8e0ed4c3718119}{mpu\_set\_accel\_fsr}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} fsr);
+00115 
+00116 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gade8589573d09e0f14b84130428f286df}{mpu\_get\_compass\_fsr}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *fsr);
+00117 
+00118 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga023c0cc94aa8f162dc33b15048a49421}{mpu\_get\_gyro\_sens}(\textcolor{keywordtype}{float} *sens);
+00119 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga620408949052b96e856cad920f856583}{mpu\_get\_accel\_sens}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *sens);
+00120 
+00121 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga2487dd551b701c1c7ed4d6335f02b2f1}{mpu\_get\_sample\_rate}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *rate);
+00122 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga0144d666a67a82888b8580002afe8b55}{mpu\_set\_sample\_rate}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} rate);
+00123 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gab5a45cd7783f6937788c0decb0b18b16}{mpu\_get\_compass\_sample\_rate}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} *rate);
+00124 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga78da3828de0ef9d080c4d03e7bc45e7b}{mpu\_set\_compass\_sample\_rate}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} rate);
 00125 
-00126 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga57bfbb356ce449135ce39659455041ae}{mpu\_read\_6500\_accel\_bias}(\textcolor{keywordtype}{long} *accel\_bias);
-00127 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga01361a0f5c1f048cb0742bd3d0e4d3a5}{mpu\_set\_gyro\_bias\_reg}(\textcolor{keywordtype}{long} * gyro\_bias);
-00128 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaa7265afee29b8307ff49a8b1ccd9238a}{mpu\_set\_accel\_bias\_6500\_reg}(\textcolor{keyword}{const} \textcolor{keywordtype}{long} *accel\_bias);
-00129 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaed37421e1f140d10ee0eff0efeade27b}{mpu\_read\_6050\_accel\_bias}(\textcolor{keywordtype}{long} *accel\_bias);
-00130 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gae2eb5073dacc7455101bf6818e35c40a}{mpu\_set\_accel\_bias\_6050\_reg}(\textcolor{keyword}{const} \textcolor{keywordtype}{long} *accel\_bias);
+00126 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga093f11eb10b2639a4b9fe344ea348c54}{mpu\_get\_fifo\_config}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *sensors);
+00127 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gababbdda287e1f19323489f90a0889dd7}{mpu\_configure\_fifo}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} sensors);
+00128 
+00129 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaec8fa7a067988d174516bb735a4a0bc9}{mpu\_get\_power\_state}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *power\_on);
+00130 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga6e77e7cc1cf6be5e8fdf617c5b4586d1}{mpu\_set\_sensors}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} sensors);
 00131 
-00132 \textcolor{comment}{/* Data getter/setter APIs */}
-00133 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga5555854590ad11495c0e30401294bae2}{mpu\_get\_gyro\_reg}(\textcolor{keywordtype}{short} *data, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} *timestamp);
-00134 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gae4ae960e5df78049ece2647772a3d809}{mpu\_get\_accel\_reg}(\textcolor{keywordtype}{short} *data, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} *timestamp);
-00135 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga65e6b0ce980b8c0255d7be9b55c88c08}{mpu\_get\_compass\_reg}(\textcolor{keywordtype}{short} *data, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} *timestamp);
-00136 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaa449b565a157b4b8ca0f491b7ed46018}{mpu\_get\_temperature}(\textcolor{keywordtype}{long} *data, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} *timestamp);
+00132 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga57bfbb356ce449135ce39659455041ae}{mpu\_read\_6500\_accel\_bias}(\textcolor{keywordtype}{long} *accel\_bias);
+00133 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga01361a0f5c1f048cb0742bd3d0e4d3a5}{mpu\_set\_gyro\_bias\_reg}(\textcolor{keywordtype}{long} * gyro\_bias);
+00134 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaa7265afee29b8307ff49a8b1ccd9238a}{mpu\_set\_accel\_bias\_6500\_reg}(\textcolor{keyword}{const} \textcolor{keywordtype}{long} *accel\_bias);
+00135 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaed37421e1f140d10ee0eff0efeade27b}{mpu\_read\_6050\_accel\_bias}(\textcolor{keywordtype}{long} *accel\_bias);
+00136 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gae2eb5073dacc7455101bf6818e35c40a}{mpu\_set\_accel\_bias\_6050\_reg}(\textcolor{keyword}{const} \textcolor{keywordtype}{long} *accel\_bias);
 00137 
-00138 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga0afd02d8c76d3278b488ef7038c26e3e}{mpu\_get\_int\_status}(\textcolor{keywordtype}{short} *status);
-00139 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga2da20453aafbbba4a0f6fb9fbdd25572}{mpu\_read\_fifo}(\textcolor{keywordtype}{short} *gyro, \textcolor{keywordtype}{short} *accel, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} *timestamp,
-00140     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *sensors, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *more);
-00141 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga13593044949b460e9f571eb57e9a0788}{mpu\_read\_fifo\_stream}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} length, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *data,
-00142     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *more);
-00143 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaf23e9f57c0059be6ec57862f0584de10}{mpu\_reset\_fifo}(\textcolor{keywordtype}{void});
-00144 
-00145 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gafea59910bc3dd30ba3356b1c75213a5f}{mpu\_write\_mem}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} mem\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} length,
-00146     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *data);
-00147 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga3374bececb6743893c9eab27645c1182}{mpu\_read\_mem}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} mem\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} length,
-00148     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *data);
-00149 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga8fbdfe1a50285d4ab438e29c2efc70f5}{mpu\_load\_firmware}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} length, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *firmware,
-00150     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} start\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} sample\_rate);
-00151 
-00152 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga0e1201ecfd8453f1d89e4299528baaf6}{mpu\_reg\_dump}(\textcolor{keywordtype}{void});
-00153 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga5c35a3363337014e11769a0ea7c0dfa9}{mpu\_read\_reg}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} reg, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *data);
-00154 \textcolor{keywordtype}{int} mpu\_run\_self\_test(\textcolor{keywordtype}{long} *gyro, \textcolor{keywordtype}{long} *accel);
-00155 \textcolor{keywordtype}{int} mpu\_run\_6500\_self\_test(\textcolor{keywordtype}{long} *gyro, \textcolor{keywordtype}{long} *accel, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} debug);
-00156 \textcolor{keywordtype}{int} mpu\_register\_tap\_cb(\textcolor{keywordtype}{void} (*func)(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}));
+00138 \textcolor{comment}{/* Data getter/setter APIs */}
+00139 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga5555854590ad11495c0e30401294bae2}{mpu\_get\_gyro\_reg}(\textcolor{keywordtype}{short} *data, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} *timestamp);
+00140 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gae4ae960e5df78049ece2647772a3d809}{mpu\_get\_accel\_reg}(\textcolor{keywordtype}{short} *data, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} *timestamp);
+00141 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga65e6b0ce980b8c0255d7be9b55c88c08}{mpu\_get\_compass\_reg}(\textcolor{keywordtype}{short} *data, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} *timestamp);
+00142 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaa449b565a157b4b8ca0f491b7ed46018}{mpu\_get\_temperature}(\textcolor{keywordtype}{long} *data, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} *timestamp);
+00143 
+00144 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga0afd02d8c76d3278b488ef7038c26e3e}{mpu\_get\_int\_status}(\textcolor{keywordtype}{short} *status);
+00145 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga2da20453aafbbba4a0f6fb9fbdd25572}{mpu\_read\_fifo}(\textcolor{keywordtype}{short} *gyro, \textcolor{keywordtype}{short} *accel, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} *timestamp,
+00146     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *sensors, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *more);
+00147 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga13593044949b460e9f571eb57e9a0788}{mpu\_read\_fifo\_stream}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} length, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *data,
+00148     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *more);
+00149 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gaf23e9f57c0059be6ec57862f0584de10}{mpu\_reset\_fifo}(\textcolor{keywordtype}{void});
+00150 
+00151 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gafea59910bc3dd30ba3356b1c75213a5f}{mpu\_write\_mem}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} mem\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} length,
+00152     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *data);
+00153 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga3374bececb6743893c9eab27645c1182}{mpu\_read\_mem}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} mem\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} length,
+00154     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *data);
+00155 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga8fbdfe1a50285d4ab438e29c2efc70f5}{mpu\_load\_firmware}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} length, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *firmware,
+00156     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} start\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} sample\_rate);
 00157 
-00158 \textcolor{preprocessor}{#endif  }\textcolor{comment}{/* #ifndef \_INV\_MPU\_H\_ */}\textcolor{preprocessor}{}
+00158 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga0e1201ecfd8453f1d89e4299528baaf6}{mpu\_reg\_dump}(\textcolor{keywordtype}{void});
+00159 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga5c35a3363337014e11769a0ea7c0dfa9}{mpu\_read\_reg}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{inv__mpu_8c_a5448c351fc95ff052b110eee80e5f75c}{reg}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *data);
+00160 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga3773dc98eb1ba15da0091ae75abcf62f}{mpu\_run\_self\_test}(\textcolor{keywordtype}{long} *gyro, \textcolor{keywordtype}{long} *accel);
+00161 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_gac22890157bd3f7cc3752c0342f105b72}{mpu\_run\_6500\_self\_test}(\textcolor{keywordtype}{long} *gyro, \textcolor{keywordtype}{long} *accel, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} debug);
+00162 \textcolor{keywordtype}{int} \hyperlink{group___d_r_i_v_e_r_s_ga0d528114a4e355a10ffd354a4c89a17f}{mpu\_register\_tap\_cb}(\textcolor{keywordtype}{void} (*func)(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}));
+00163 
+00164 \textcolor{preprocessor}{#endif  }\textcolor{comment}{/* #ifndef \_INV\_MPU\_H\_ */}\textcolor{preprocessor}{}
 \end{DoxyCode}

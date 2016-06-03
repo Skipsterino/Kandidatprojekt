@@ -1,0 +1,796 @@
+\hypertarget{servo___u_a_r_t_8c_source}{}\section{servo\+\_\+\+U\+A\+R\+T.\+c}
+\label{servo___u_a_r_t_8c_source}\index{styr/styr/servo\+\_\+\+U\+A\+R\+T.\+c@{styr/styr/servo\+\_\+\+U\+A\+R\+T.\+c}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *        File: servo\_UART.c}
+00003 \textcolor{comment}{ *     Version: 1.0}
+00004 \textcolor{comment}{ * Last edited: 12/5/2016 }
+00005 \textcolor{comment}{ *     Authors: chrma018, erilj291}
+00006 \textcolor{comment}{ */} 
+00007 
+00008 
+00009 \textcolor{preprocessor}{#include "\hyperlink{servo___u_a_r_t_8h}{servo\_UART.h}"}
+00010 \textcolor{preprocessor}{#include "\hyperlink{invers__kinematik_8h}{invers\_kinematik.h}"}
+00011 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00012}{}\hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{00012} \textcolor{preprocessor}{#define FIRST\_SERVO\_OFFSET 0x00}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00013}{}\hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{00013} \textcolor{preprocessor}{#define SECOND\_SERVO\_OFFSET 0x2F}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00014}{}\hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{00014} \textcolor{preprocessor}{#define THIRD\_SERVO\_OFFSET 0x79}
+00015 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00016}{}\hyperlink{servo___u_a_r_t_8h_af34dbb08e8f6cfc1a58d9b7f2b81f455}{00016} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_af34dbb08e8f6cfc1a58d9b7f2b81f455}{UART\_Transmit}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} data )
+00017 \{
+00018     \textcolor{comment}{// Vänta på att bufferten ska bli tom}
+00019     \textcolor{keywordflow}{while} ( !( UCSR0A & (1<<UDRE0)) );
+00020     \textcolor{comment}{// Skicka datan}
+00021     UDR0 = data;
+00022 \}
+00023 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00024}{}\hyperlink{servo___u_a_r_t_8h_ae61a7bb5a727a8605e5865fc36e4e26b}{00024} \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}( \textcolor{keywordtype}{void} )
+00025 \{
+00026     \textcolor{keywordtype}{float} i=0;
+00027     \textcolor{comment}{// Vänta på att data mottas}
+00028     \textcolor{keywordflow}{while} ((!(UCSR0A & (1<<RXC0))))
+00029     \{
+00030         i = i + 1; 
+00031         \textcolor{comment}{// Timer för mottagningen}
+00032         \textcolor{keywordflow}{if}(i>50)
+00033         \{
+00034             \textcolor{keywordflow}{return} 0xBB;
+00035         \}
+00036     \}
+00037     \textcolor{comment}{// Hämta och returnera mottagen data från bufferten}
+00038     \textcolor{keywordflow}{return} UDR0;
+00039 \}
+00040 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00041}{}\hyperlink{servo___u_a_r_t_8h_a45e02356d032e2069888899bf1a987bf}{00041} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{servo___u_a_r_t_8c_ab388e52c7139a00514d89616ec7da33d}{checksum\_calc}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[], uint8\_t num\_of\_par)
+00042 \{
+00043     uint8\_t \hyperlink{sensor_8h_a2943e5895f5488ed44ed4a86e59dcf1b}{sum} = 0;
+00044     \textcolor{keywordflow}{for} (uint8\_t i = 0; i< num\_of\_par+3; i++) \textcolor{comment}{//Ta med parametrarna + ID + instruktion + längd}
+00045     \{
+00046         sum += message[i];
+00047     \}
+00048     uint8\_t checksum = ~sum; \textcolor{comment}{//inverserad summa }
+00049     \textcolor{keywordflow}{return} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char})checksum;
+00050 \}
+00051 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00052}{}\hyperlink{servo___u_a_r_t_8h_a7522eb3c86cfa713aade9cbe082bcbba}{00052} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a7522eb3c86cfa713aade9cbe082bcbba}{Configure\_Servos\_Delaytime}(\textcolor{keywordtype}{void})
+00053 \{
+00054     \textcolor{comment}{//till alla servon}
+00055     \textcolor{keywordflow}{for} (uint8\_t i = 1; i < 19; i++)
+00056     \{
+00057         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} return\_delay\_time[] = \{i, 0x04, 0x03, 0x05, 0x2D\}; \textcolor{comment}{//delaytime = 2D}
+00058         \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(return\_delay\_time, 2);
+00059         
+00060         \_delay\_ms(1);
+00061     \}
+00062 \}
+00063 
+00064 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00065}{}\hyperlink{servo___u_a_r_t_8h_ae7bfd5ff29686df194ec9f4e310cf2e4}{00065} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_ae7bfd5ff29686df194ec9f4e310cf2e4}{Configure\_Servos\_LED}(\textcolor{keywordtype}{void})
+00066 \{
+00067     \textcolor{comment}{//till alla servon}
+00068     \textcolor{keywordflow}{for} (uint8\_t i = 1; i < 19; i++)
+00069     \{
+00070         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} LED\_settings[] = \{i, 0x04, 0x03, 0x11, 0xFF\}; \textcolor{comment}{//LED  är på }
+00071         \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(LED\_settings, 2);
+00072         
+00073         \_delay\_ms(1);
+00074     \}
+00075 \}
+00076 
+00077 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00078}{}\hyperlink{servo___u_a_r_t_8h_ac61953255036321acac8c2e20b76d692}{00078} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_ac61953255036321acac8c2e20b76d692}{Configure\_Servos\_Angle\_Limit}(\textcolor{keywordtype}{char} mode)
+00079 \{
+00080     \textcolor{comment}{//Vilka servon sitter var }
+00081     uint8\_t inner\_middle[] = \{13,14\};
+00082     uint8\_t inner\_lf\_rb[] = \{1,8\};
+00083     uint8\_t inner\_rf\_lb[] = \{2,7\};
+00084     uint8\_t middle[] = \{3,4,9,10,15,16\};
+00085     uint8\_t outer\_left[] = \{6,12,18\};
+00086     uint8\_t outer\_right[] = \{5,11,17\};
+00087     
+00088     \textcolor{comment}{//till alla servon}
+00089     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 6; i++)
+00090     \{
+00091         \textcolor{comment}{// pos 1FF -+ 1023/300pos/vinkl*90grader= 0x00CD,0x0331}
+00092         \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(middle[i], 0x00CD, 0x0331); 
+00093         \_delay\_ms(1);
+00094     \}
+00095     
+00096     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00097     \{
+00098         \textcolor{comment}{// pos 1FF + (1023/300pos/vinkl*(+40grader eller - 90 grader)= 0x00CD (- 0x1F för vi behöver
+       extraspelet),0x0287}
+00099         \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(outer\_left[i], 0x00AE, 0x0287); 
+00100         \_delay\_ms(1);
+00101          \textcolor{comment}{// pos 1FF + (1023/300pos/vinkl*(-40grader eller + 90 grader)= 0x0177,0x0331 (+ 0x1F för vi
+       behöver extraspelet)}
+00102         \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(outer\_right[i], 0x0177, 0x0350);
+00103         \_delay\_ms(1);
+00104     \}
+00105     
+00106     \textcolor{keywordflow}{if} (mode == \textcolor{charliteral}{'c'}) \textcolor{comment}{//"Climbing mode"?}
+00107     \{
+00108         \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 2; i++)
+00109         \{
+00110             \textcolor{comment}{//Inga begränsningar för de inre servona i klättrings läge }
+00111             \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(inner\_lf\_rb[i], 0x0000, 0x03ff);  
+00112             \_delay\_ms(1);
+00113             \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(inner\_middle[i], 0x0000, 0x03ff); 
+00114             \_delay\_ms(1);
+00115             \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(inner\_rf\_lb[i], 0x0000, 0x03ff); 
+00116             \_delay\_ms(1);
+00117         \}
+00118     \}
+00119     
+00120     \textcolor{keywordflow}{else} \textcolor{comment}{//Annars antas mode == 'r', dvs "regular mode".}
+00121     \{
+00122         \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 2; i++)
+00123         \{
+00124             \textcolor{comment}{// pos 1FF + (1023/300pos/vinkl*(-45grader eller + 60 grader)= 0x0166,0x02CB}
+00125             \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(inner\_lf\_rb[i], 0x0166, 0x02CB);  
+00126             \_delay\_ms(1);
+00127             \textcolor{comment}{// pos 1FF + (1023/300pos/vinkl*(-15grader eller + 15 grader)= 0x01BB,0x0243 -> 0x019F, 0x025F
+       (lite marginal)}
+00128             \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(inner\_middle[i], 0x019F, 0x025F); 
+00129             \_delay\_ms(1);
+00130             \textcolor{comment}{// pos 1FF + (1023/300pos/vinkl*(-60grader eller + 45 grader)= 0x0131,0x0298}
+00131             \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(inner\_rf\_lb[i], 0x0131, 0x0298); 
+00132             \_delay\_ms(1);
+00133         \}
+00134     \}
+00135 \}
+00136 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00137}{}\hyperlink{servo___u_a_r_t_8h_a17e89f3d8b4abe3abe352ffba8b684f1}{00137} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a17e89f3d8b4abe3abe352ffba8b684f1}{Configure\_Servos\_No\_Response}(\textcolor{keywordtype}{void})
+00138 \{
+00139     \textcolor{comment}{//Skicka till alla servon}
+00140     \textcolor{keywordflow}{for} (uint8\_t i = 1; i < 19; i++)
+00141     \{
+00142         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} response\_settings[] = \{i, 0x04, 0x03, 0x10, 0x01\}; \textcolor{comment}{//0x01 betyder att servot inte
+       svarar om det inte explicit ombeds att göra det}
+00143         \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(response\_settings, 2);
+00144         
+00145         \_delay\_ms(1);
+00146     \}
+00147 \}
+00148 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00149}{}\hyperlink{servo___u_a_r_t_8h_a2f788735cafd686c547c9340d905c3ad}{00149} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a2f788735cafd686c547c9340d905c3ad}{Configure\_Servos\_Max\_Torque}(\textcolor{keywordtype}{void})
+00150 \{
+00151     \textcolor{comment}{//Skicka till alla servon}
+00152     \textcolor{keywordflow}{for} (uint8\_t i = 1; i < 19; i++)
+00153     \{
+00154         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} response\_settings[] = \{i, 0x05, 0x03, 0x0E, 0x90, 0x02\}; \textcolor{comment}{//Ställer in maximum torque
+       = 0x290 }
+00155         \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(response\_settings, 3);
+00156         
+00157         \_delay\_ms(1);
+00158     \}
+00159 \}
+00160 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00161}{}\hyperlink{servo___u_a_r_t_8h_a1aae94381111766cdccb93eae5b5c382}{00161} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{servo___u_a_r_t_8c_a1aae94381111766cdccb93eae5b5c382}{Get\_Servo\_Load}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID)
+00162 \{   
+00163     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[5];
+00164     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} load\_LSByte;
+00165     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} load\_MSByte;
+00166     \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} start\_byte1= 0;
+00167     \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} start\_byte2= 0; 
+00168     uint8\_t timer = 0; 
+00169     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{over__hinder_8c_a29122f6df4a054b8141015682f877c82}{load};
+00170     
+00171     message[0] = ID;
+00172     message[1] = 0x04; \textcolor{comment}{//Length}
+00173     message[2] = 0x02; \textcolor{comment}{//Läs}
+00174     message[3] = 0x28; \textcolor{comment}{//Läser där Present load finns  }
+00175     message[4] = 0x02; \textcolor{comment}{//Läs två byts}
+00176     
+00177     \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(message, 2);
+00178 
+00179     PORTD &= ~(1<<PORTD2); \textcolor{comment}{//Välj riktning "från servon" i tri-state}
+00180     
+00181     \textcolor{keywordflow}{while}((start\_byte1 != 0xFF) && (start\_byte2 != 0xFF)) \textcolor{comment}{// Vänta på start bytes 0xFF, 0xFF}
+00182     \{
+00183         start\_byte2 = start\_byte1; 
+00184         start\_byte1 = \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}();
+00185         ++timer;
+00186         \textcolor{keywordflow}{if}(timer>10) \textcolor{comment}{//Timer}
+00187         \{
+00188             \textcolor{keywordflow}{break};
+00189         \}
+00190     \}
+00191     \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//Hantera förskjutningen i bufferten}
+00192     \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//ID}
+00193     \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//Längd}
+00194     \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//Error}
+00195     load\_LSByte = \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//LS Byte av load}
+00196     load\_MSByte = \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//MS Byte av load}
+00197     \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//Checksum}
+00198     
+00199     \_delay\_ms(0.05); \textcolor{comment}{//Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras}
+00200     
+00201     PORTD |= 1<<PORTD2; \textcolor{comment}{//Välj riktning "till servon" i tri-state}
+00202     
+00203     load = (((\textcolor{keywordtype}{unsigned} int)load\_MSByte) << 8) | load\_LSByte;
+00204     \textcolor{keywordflow}{return} \hyperlink{over__hinder_8c_a29122f6df4a054b8141015682f877c82}{load};
+00205 \}
+00206 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00207}{}\hyperlink{servo___u_a_r_t_8h_ac325c1636bc0a1c5b6cbe967bca0a6d2}{00207} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel)
+00208 \{
+00209     \textcolor{comment}{//Dela upp hastyigheter i LS respektive MS Byte}
+00210     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} velLS = vel; \textcolor{comment}{//Plockar ut LS Byte av hastigheten för det första servot (översta servot)}
+00211     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} velMS = (vel>>8); \textcolor{comment}{//Som ovan men med MS Byte}
+00212     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[6];
+00213     message[0] = ID;
+00214     message[1] = 0x05;  \textcolor{comment}{//längd }
+00215     message[2] = 0x03;  \textcolor{comment}{//Skriv }
+00216     message[3] = 0x20;  \textcolor{comment}{//Skriv i hastighet }
+00217     message[4] = velLS; \textcolor{comment}{//hastighet LS byte}
+00218     message[5] = velMS; \textcolor{comment}{//hastighet MS byte}
+00219     
+00220     \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(message, 3);
+00221 \}
+00222 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00223}{}\hyperlink{servo___u_a_r_t_8h_aae1b10368951b07e7049392da8e8160b}{00223} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} lower, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} higher
+      )
+00224 \{
+00225     \textcolor{comment}{//Dela upp vinklar i LS respektive MS Byte}
+00226     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} lowerLS = lower; \textcolor{comment}{//Plockar ut LS Byte av vinkel för det första servot (översta servot)}
+00227     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} lowerMS = (lower>>8); \textcolor{comment}{//Som ovan men med MS Byte}
+00228     
+00229     \textcolor{comment}{//Dela upp vinklar i LS respektive MS Byte}
+00230     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} higherLS = higher; \textcolor{comment}{//Plockar ut LS Byte av vinkel för det första servot (översta servot)}
+00231     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} higherMS = (higher>>8); \textcolor{comment}{//Som ovan men med MS Byte}
+00232     
+00233     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} limits[] = \{ID, 0x07, 0x03, 0x06, lowerLS, lowerMS, higherLS, higherMS\};
+00234     \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(limits, 5);
+00235 \}
+00236 
+00237 
+00238 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00239}{}\hyperlink{servo___u_a_r_t_8h_ace1792c5f066181d607cb075a87f3178}{00239} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_ace1792c5f066181d607cb075a87f3178}{Send\_Inner\_P1\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel)
+00240 \{   
+00241     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} inner\_servos[]=\{2,8,13\}; \textcolor{comment}{//Skickar till dessa servon }
+00242         
+00243     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00244     \{
+00245         \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(inner\_servos[i], vel);
+00246     \}
+00247 \}
+00248 
+00249 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00250}{}\hyperlink{servo___u_a_r_t_8h_a9cb7e763d9a3501fc345a424d67975a7}{00250} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a9cb7e763d9a3501fc345a424d67975a7}{Send\_Inner\_P2\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel)
+00251 \{   
+00252     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} inner\_servos[]=\{1,7,14\}; \textcolor{comment}{//Skickar till dessa servon }
+00253         
+00254     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00255     \{
+00256         \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(inner\_servos[i], vel);
+00257     \}
+00258 \}
+00259 
+00260 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00261}{}\hyperlink{servo___u_a_r_t_8h_a63e528b1a0c31e9912ebbceee58a5faa}{00261} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a63e528b1a0c31e9912ebbceee58a5faa}{Send\_Middle\_P1\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel)
+00262 \{   
+00263     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} middle\_servos[]=\{4,10,15\}; \textcolor{comment}{//Skickar till dessa servon }
+00264         
+00265     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00266     \{
+00267         \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(middle\_servos[i], vel);
+00268     \}
+00269 \}
+00270 
+00271 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00272}{}\hyperlink{servo___u_a_r_t_8h_aae94fcd8998679345fa7d70648bd2a1e}{00272} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_aae94fcd8998679345fa7d70648bd2a1e}{Send\_Middle\_P2\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel)
+00273 \{   
+00274     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} middle\_servos[]=\{9,16,3\}; \textcolor{comment}{//Skickar till dessa servon }
+00275         
+00276     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00277     \{
+00278         \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(middle\_servos[i], vel);
+00279     \}
+00280 \}
+00281 
+00282 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00283}{}\hyperlink{servo___u_a_r_t_8h_a30fbb081db7418d454bfe8761ca59dd2}{00283} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a30fbb081db7418d454bfe8761ca59dd2}{Send\_Outer\_P1\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel)
+00284 \{   
+00285     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} outer\_servos[]=\{6,12,17\}; \textcolor{comment}{//Skickar till dessa servon }
+00286         
+00287     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00288     \{
+00289         \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(outer\_servos[i], vel);
+00290     \}
+00291 \}
+00292 
+00293 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00294}{}\hyperlink{servo___u_a_r_t_8h_a6c4f4c2915df647ac40c86c17e613e30}{00294} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a6c4f4c2915df647ac40c86c17e613e30}{Send\_Outer\_P2\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel)
+00295 \{   
+00296     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} outer\_servos[]=\{5,11,18\}; \textcolor{comment}{//Skickar till dessa servon }
+00297         
+00298     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00299     \{
+00300         \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(outer\_servos[i], vel);
+00301     \}
+00302 \}
+00303 
+00304 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00305}{}\hyperlink{servo___u_a_r_t_8h_a2ed3a2903977a774d1b174665d50661c}{00305} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[], uint8\_t num\_of\_par)
+00306 \{
+00307     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} checksum = \hyperlink{servo___u_a_r_t_8c_ab388e52c7139a00514d89616ec7da33d}{checksum\_calc}(message, num\_of\_par); \textcolor{comment}{//Beräknar checksum}
+00308     
+00309     cli(); \textcolor{comment}{//Deaktivera avbrott}
+00310     
+00311     \hyperlink{servo___u_a_r_t_8c_af34dbb08e8f6cfc1a58d9b7f2b81f455}{UART\_Transmit}(0xFF); \textcolor{comment}{//2 st Startbytes}
+00312     \hyperlink{servo___u_a_r_t_8c_af34dbb08e8f6cfc1a58d9b7f2b81f455}{UART\_Transmit}(0xFF);
+00313     
+00314     \textcolor{comment}{// Här skickas meddelandet (exkl checksum)}
+00315     \textcolor{keywordflow}{for}(uint8\_t i=0; i < num\_of\_par+3; i++)
+00316     \{
+00317         \hyperlink{servo___u_a_r_t_8c_af34dbb08e8f6cfc1a58d9b7f2b81f455}{UART\_Transmit}(message[i]);
+00318     \}
+00319     
+00320     \hyperlink{servo___u_a_r_t_8c_af34dbb08e8f6cfc1a58d9b7f2b81f455}{UART\_Transmit}(checksum); \textcolor{comment}{//Checksum}
+00321     
+00322     \textcolor{keywordflow}{while}(!( UCSR0A & (1<<TXC0))); \textcolor{comment}{//Vänta på att UART är redo att skicka ny data}
+00323     \_delay\_ms(0.06); \textcolor{comment}{//Lite extra tidsmarginal så överföringen verkligen hinner bli klar}
+00324     
+00325     sei(); \textcolor{comment}{//Aktivera avbrott igen}
+00326 \}
+00327 
+00328 \textcolor{comment}{//Skickar önskad position till servo. Inargument = (ID, position)}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00329}{}\hyperlink{servo___u_a_r_t_8h_a5ed0e49737d1eaf80665c285396b4337}{00329} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos)
+00330 \{
+00331     \textcolor{comment}{//Dela upp positionen i LS respektive MS Byte}
+00332     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} posLS = pos; 
+00333     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} posMS = (pos>>8);
+00334     
+00335     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[6];
+00336     message[0] = ID;
+00337     message[1] = 0x05; \textcolor{comment}{//Längd }
+00338     message[2] = 0x03; \textcolor{comment}{//Skriv }
+00339     message[3] = 0x1E; \textcolor{comment}{//Skriv vid Position}
+00340     message[4] = posLS;\textcolor{comment}{//Position LS byte }
+00341     message[5] = posMS;\textcolor{comment}{//Position MS byte}
+00342     
+00343     \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(message, 3);
+00344 \}
+00345 
+00346 \textcolor{comment}{//Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till
+       servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00347}{}\hyperlink{servo___u_a_r_t_8h_adde8722cd4b494d02bce7a39b14aed52}{00347} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a34cc25393763bbdb408707a0380d3c1a}{Send\_Leg1\_Kar}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00348 \{
+00349     \textcolor{comment}{//Invers kinematik}
+00350     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00351     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00352     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos11 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x99 + 0x01FF;
+00353     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos12 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00354     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos13 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00355     
+00356     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(8, pos11); \textcolor{comment}{//Servona i ben 1}
+00357     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(10, pos12);
+00358     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(12, pos13);
+00359 \}
+00360 
+00361 \textcolor{comment}{//Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till
+       servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00362}{}\hyperlink{servo___u_a_r_t_8h_a85bfa5d3057fbf4096d5fc8665d717b8}{00362} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a2fea9f2ba08921cf2284b5c6719e1d0d}{Send\_Leg2\_Kar}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00363 \{
+00364     \textcolor{comment}{//Invers kinematik}
+00365     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00366     \textcolor{comment}{//Servo-offsets och ev. invertering  }
+00367     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos21 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} - 0x99 + 0x01FF;
+00368     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos22 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00369     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos23 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00370     
+00371     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(7, pos21); \textcolor{comment}{//Servona i ben 2}
+00372     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(9, pos22);
+00373     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(11, pos23);
+00374 \}
+00375 
+00376 \textcolor{comment}{//Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till
+       servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00377}{}\hyperlink{servo___u_a_r_t_8h_a855b410dfcceb0e5f25d57ee17f86932}{00377} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_add64221786fbd9e35549f1d1a3d00d36}{Send\_Leg3\_Kar}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00378 \{
+00379     \textcolor{comment}{//Invers kinematik}
+00380     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00381     \textcolor{comment}{//Servo-offsets och ev. invertering  }
+00382     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos31 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x01FF;
+00383     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos32 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00384     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos33 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00385     
+00386     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(14, pos31); \textcolor{comment}{//Servona i ben 3}
+00387     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(16, pos32);
+00388     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(18, pos33);
+00389 \}
+00390 
+00391 \textcolor{comment}{//Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till
+       servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00392}{}\hyperlink{servo___u_a_r_t_8h_adc36f085a0d265c937fae59651a06703}{00392} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_ad43774bd43e6986bf89e1fbc3323c3d8}{Send\_Leg4\_Kar}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00393 \{   
+00394     \textcolor{comment}{//Invers kinematik}
+00395     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00396     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00397     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos41 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x01FF;
+00398     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos42 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00399     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos43 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00400     
+00401     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(13, pos41); \textcolor{comment}{//Servona i ben 4}
+00402     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(15, pos42);
+00403     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(17, pos43);
+00404 \}
+00405 
+00406 \textcolor{comment}{//Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till
+       servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00407}{}\hyperlink{servo___u_a_r_t_8h_a0945e0fa1be61238d314e7334bdc9990}{00407} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a3e822cbe9d70f6c7abc338d194eafd62}{Send\_Leg5\_Kar}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00408 \{
+00409     \textcolor{comment}{//Invers kinematik}
+00410     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00411     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00412     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos51 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) - 0x99 + 0x01FF;
+00413     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos52 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00414     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos53 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00415     
+00416     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(2, pos51); \textcolor{comment}{//Servona i ben 5}
+00417     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(4, pos52);
+00418     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(6, pos53);
+00419 \}
+00420 
+00421 \textcolor{comment}{//Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till
+       servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00422}{}\hyperlink{servo___u_a_r_t_8h_a2178defeed6cf9781991514439dd799b}{00422} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_ae0ed262924c7685eac16e334f7aa2ea5}{Send\_Leg6\_Kar}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00423 \{
+00424     \textcolor{comment}{//Invers kinematik}
+00425     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00426     \textcolor{comment}{//Servo-offsets och ev. invertering  }
+00427     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos61 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x99 + 0x01FF;
+00428     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos62 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00429     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos63 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00430     
+00431     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(1, pos61); \textcolor{comment}{//Servona i ben 6}
+00432     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(3, pos62);
+00433     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(5, pos63);
+00434 \}
+00435 
+00436 \textcolor{comment}{//Konverterar de givna cyl. koord. till positioner för benets servon och skickar positionerna till servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00437}{}\hyperlink{servo___u_a_r_t_8h_af1a73e7eb43491c163ad5031a2506a00}{00437} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_adb45828d46a9f3bec5c467e9c43d654c}{Send\_Leg1\_Cyl}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00438 \{
+00439     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00440     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = r*sin(th) - 6;
+00441     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) - 12;
+00442     \textcolor{comment}{//invers kinematik }
+00443     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00444     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00445     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x99 + 0x01FF;
+00446     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00447     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00448     
+00449     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(8,pos1); \textcolor{comment}{//Servona i ben 1}
+00450     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(10, pos2);
+00451     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(12, pos3);
+00452 \}
+00453 
+00454 \textcolor{comment}{//Konverterar de givna cyl. koord. till positioner för benets servon och skickar positionerna till servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00455}{}\hyperlink{servo___u_a_r_t_8h_a5bf2231681a97180dd8f31da17814b9e}{00455} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a0226078e2e46b95edb40af2f042bc750}{Send\_Leg2\_Cyl}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00456 \{
+00457     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00458     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = -r*sin(th) - 6;
+00459     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) - 12; 
+00460     \textcolor{comment}{//invers kinematik }
+00461     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00462     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00463     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} - 0x99 + 0x01FF;
+00464     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00465     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00466     
+00467     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(7, pos1); \textcolor{comment}{//Servona i ben 2}
+00468     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(9, pos2);
+00469     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(11, pos3);
+00470 \}
+00471 
+00472 \textcolor{comment}{//Konverterar de givna cyl. koord. till positioner för benets servon och skickar positionerna till servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00473}{}\hyperlink{servo___u_a_r_t_8h_ae482cf70fc4b70fe8f4201eeffc54f51}{00473} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a5d263402be208052fd7cab65ed4809e0}{Send\_Leg3\_Cyl}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00474 \{
+00475     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00476     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = r*sin(th) - 10; 
+00477     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th);
+00478     \textcolor{comment}{//invers kinematik }
+00479     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00480     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00481     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x01FF;
+00482     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00483     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00484 
+00485     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(14, pos1); \textcolor{comment}{//Servona i ben 3}
+00486     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(16, pos2);
+00487     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(18, pos3);
+00488 \}
+00489 
+00490 \textcolor{comment}{//Konverterar de givna cyl. koord. till positioner för benets servon och skickar positionerna till servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00491}{}\hyperlink{servo___u_a_r_t_8h_ab2b44997220df53e3737bfc35bc8b0aa}{00491} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a7098ee67f990a7b2fd3bfe617f0f8261}{Send\_Leg4\_Cyl}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00492 \{
+00493     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00494     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = -r*sin(th) - 10;
+00495     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th);
+00496     \textcolor{comment}{//invers kinematik }
+00497     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00498     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00499     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x01FF;
+00500     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00501     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00502     
+00503     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(13, pos1); \textcolor{comment}{//Servona i ben 4}
+00504     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(15, pos2);
+00505     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(17, pos3);
+00506 \}
+00507 
+00508 \textcolor{comment}{//Konverterar de givna cyl. koord. till positioner för benets servon och skickar positionerna till servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00509}{}\hyperlink{servo___u_a_r_t_8h_a520acee2912480717b1bbcbb904e23c4}{00509} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_ac3c70e9b75d4661c0d80f9cd2cb1571a}{Send\_Leg5\_Cyl}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00510 \{
+00511     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00512     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = r*sin(th) - 6;
+00513     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) + 12;
+00514     \textcolor{comment}{//invers kinematik }
+00515     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00516     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00517     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) - 0x99 + 0x01FF;
+00518     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00519     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00520     
+00521     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(2, pos1); \textcolor{comment}{//Servona i ben 5}
+00522     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(4, pos2);
+00523     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(6, pos3);
+00524 \}
+00525 
+00526 \textcolor{comment}{//Konverterar de givna cyl. koord. till positioner för benets servon och skickar positionerna till servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00527}{}\hyperlink{servo___u_a_r_t_8h_a9b86b4483c82ad17b1eb4e97c30d3b7d}{00527} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_adaea11f0d396e281dff22b6c6cdc42bd}{Send\_Leg6\_Cyl}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
+00528 \{
+00529     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00530     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = -r*sin(th) - 6;
+00531     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) + 12;
+00532     \textcolor{comment}{//invers kinematik }
+00533     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00534     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00535     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x99 + 0x01FF;
+00536     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00537     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00538     
+00539     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(1, pos1); \textcolor{comment}{//Servona i ben 6}
+00540     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(3, pos2);
+00541     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(5, pos3);
+00542 \}
+00543 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00544}{}\hyperlink{servo___u_a_r_t_8h_aef28545296037ecc0350638a407a680f}{00544} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{int} vel)
+00545 \{
+00546     \textcolor{comment}{//Dela upp hastigheter i LS respektive MS Byte}
+00547     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} velLS = vel; \textcolor{comment}{//Plockar ut LS Byte av hastigheten för det första servot (översta servot)}
+00548     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} velMS = (vel>>8); \textcolor{comment}{//Som ovan men med MS Byte}
+00549     
+00550     \textcolor{comment}{//Dela upp hastigheter i LS respektive MS Byte}
+00551     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} posLS = pos; \textcolor{comment}{//Plockar ut LS Byte av hastigheten för det första servot (översta servot)}
+00552     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} posMS = (pos>>8); \textcolor{comment}{//Som ovan men med MS Byte}
+00553     
+00554     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[8];
+00555     message[0] = ID;
+00556     message[1] = 0x07;  \textcolor{comment}{//Längd }
+00557     message[2] = 0x03;  \textcolor{comment}{//Skriv}
+00558     message[3] = 0x1E;  \textcolor{comment}{//Skriv där postion börjar}
+00559     message[4] = posLS; \textcolor{comment}{//position LS byte }
+00560     message[5] = posMS; \textcolor{comment}{//position MS byte}
+00561     message[6] = velLS; \textcolor{comment}{//hastighet LS byte}
+00562     message[7] = velMS; \textcolor{comment}{//hastighet LS byte}
+00563     \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(message, 5);
+00564 \}
+00565 
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00566}{}\hyperlink{servo___u_a_r_t_8h_a1501df88c7ba1630f81577522ac2bbeb}{00566} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a1501df88c7ba1630f81577522ac2bbeb}{Send\_Leg1\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer)
+00567 \{
+00568     \textcolor{comment}{//invers kinematik }
+00569     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00570     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00571     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x99 + 0x01FF;
+00572     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00573     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00574     
+00575     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(8,pos1,inner); \textcolor{comment}{//Servona i ben 1}
+00576     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(10, pos2,middle);
+00577     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(12, pos3,outer);
+00578 \}
+00579 
+00580 \textcolor{comment}{//Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till
+       servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00581}{}\hyperlink{servo___u_a_r_t_8h_a7ab1230fdabe0bcf16d18c331c75057e}{00581} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a7ab1230fdabe0bcf16d18c331c75057e}{Send\_Leg2\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer)
+00582 \{
+00583     \textcolor{comment}{//invers kinematik }
+00584     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00585     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00586     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} - 0x99 + 0x01FF;
+00587     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00588     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00589     
+00590     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(7, pos1, inner); \textcolor{comment}{//Servona i ben 2}
+00591     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(9, pos2, middle);
+00592     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(11, pos3, outer);
+00593 \}
+00594 
+00595 \textcolor{comment}{//Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till
+       servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00596}{}\hyperlink{servo___u_a_r_t_8h_a15260e1c5159c1047ca8ec867a8fc56c}{00596} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a15260e1c5159c1047ca8ec867a8fc56c}{Send\_Leg3\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer)
+00597 \{
+00598     \textcolor{comment}{//invers kinematik }
+00599     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00600     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00601     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x01FF;
+00602     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00603     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00604 
+00605     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(14, pos1, inner); \textcolor{comment}{//Servona i ben 3}
+00606     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(16, pos2, middle);
+00607     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(18, pos3, outer);
+00608 \}
+00609 
+00610 \textcolor{comment}{//Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till
+       servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00611}{}\hyperlink{servo___u_a_r_t_8h_ae1cff60ca27b892abf86b8a55b6b4ccd}{00611} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_ae1cff60ca27b892abf86b8a55b6b4ccd}{Send\_Leg4\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer)
+00612 \{   
+00613     \textcolor{comment}{//invers kinematik }
+00614     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00615     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00616     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x01FF;
+00617     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00618     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00619     
+00620     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(13, pos1, inner); \textcolor{comment}{//Servona i ben 4}
+00621     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(15, pos2, middle);
+00622     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(17, pos3, outer);
+00623 \}
+00624 
+00625 \textcolor{comment}{//Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till
+       servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00626}{}\hyperlink{servo___u_a_r_t_8h_a7cd98c6b9c0d2127feb9dfece072b3b0}{00626} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a7cd98c6b9c0d2127feb9dfece072b3b0}{Send\_Leg5\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer)
+00627 \{
+00628     \textcolor{comment}{//invers kinematik }
+00629     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00630     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00631     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) - 0x99 + 0x01FF;
+00632     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00633     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00634     
+00635     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(2, pos1, inner); \textcolor{comment}{//Servona i ben 5}
+00636     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(4, pos2, middle);
+00637     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(6, pos3, outer);
+00638 \}
+00639 
+00640 \textcolor{comment}{//Konverterar de givna kart. koord. till positioner för benets servon och skickar positionerna till
+       servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00641}{}\hyperlink{servo___u_a_r_t_8h_a8cd710e0714336201bd84b46a1e1877d}{00641} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a8cd710e0714336201bd84b46a1e1877d}{Send\_Leg6\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer)
+00642 \{
+00643     \textcolor{comment}{//invers kinematik }
+00644     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00645     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00646     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x99 + 0x01FF;
+00647     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00648     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00649     
+00650     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(1, pos1, inner); \textcolor{comment}{//Servona i ben 6}
+00651     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(3, pos2, middle);
+00652     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(5, pos3, outer);
+00653 \}
+00654 
+00655 \textcolor{comment}{//Konverterar de givna cyl. koord. till positioner för benets servon och skickar positionerna till servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00656}{}\hyperlink{servo___u_a_r_t_8h_a7783d05fa4457ed256d04d0eac4713cc}{00656} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a7783d05fa4457ed256d04d0eac4713cc}{Send\_Leg1\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer)
+00657 \{
+00658     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00659     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = r*sin(th) - 6;
+00660     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) - 12;
+00661     \textcolor{comment}{//invers kinematik }
+00662     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00663     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00664     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x99 + 0x01FF;
+00665     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00666     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00667     
+00668     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(8,pos1, inner); \textcolor{comment}{//Servona i ben 1}
+00669     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(10, pos2, middle);
+00670     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(12, pos3, outer);
+00671 \}
+00672 
+00673 \textcolor{comment}{//Konverterar de givna cyl. koord. till positioner för benets servon och skickar positionerna till servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00674}{}\hyperlink{servo___u_a_r_t_8h_a16c2e98e0befea13b10d322b5a13c24a}{00674} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a16c2e98e0befea13b10d322b5a13c24a}{Send\_Leg2\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer)
+00675 \{
+00676     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00677     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = -r*sin(th) - 6;
+00678     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) - 12; 
+00679     \textcolor{comment}{//invers kinematik }
+00680     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00681     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00682     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} - 0x99 + 0x01FF;
+00683     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00684     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00685     
+00686     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(7, pos1, inner); \textcolor{comment}{//Servona i ben 2}
+00687     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(9, pos2, middle);
+00688     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(11, pos3,outer);
+00689 \}
+00690 
+00691 \textcolor{comment}{//Konverterar de givna cyl. koord. till positioner för benets servon och skickar positionerna till servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00692}{}\hyperlink{servo___u_a_r_t_8h_a3f98bedbfd8c6462fbc873fd56ad6094}{00692} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a3f98bedbfd8c6462fbc873fd56ad6094}{Send\_Leg3\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer)
+00693 \{
+00694     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00695     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = r*sin(th) - 10; 
+00696     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th);
+00697     \textcolor{comment}{//invers kinematik }
+00698     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00699     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00700     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x01FF;
+00701     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00702     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF; 
+00703 
+00704     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(14, pos1, inner); \textcolor{comment}{//Servona i ben 3}
+00705     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(16, pos2, middle);
+00706     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(18, pos3, outer);
+00707 \}
+00708 
+00709 \textcolor{comment}{//Konverterar de givna cyl. koord. till positioner för benets servon och skickar positionerna till servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00710}{}\hyperlink{servo___u_a_r_t_8h_a6cddf44c6a11c7907911d03af1e3f127}{00710} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a6cddf44c6a11c7907911d03af1e3f127}{Send\_Leg4\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer)
+00711 \{
+00712     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00713     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = -r*sin(th) - 10;
+00714     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th);
+00715     \textcolor{comment}{//invers kinematik }
+00716     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00717     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00718     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x01FF;
+00719     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00720     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00721     
+00722     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(13, pos1, inner); \textcolor{comment}{//Servona i ben 4}
+00723     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(15, pos2, middle);
+00724     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(17, pos3, outer);
+00725 \}
+00726 
+00727 \textcolor{comment}{//Konverterar de givna cyl. koord. till positioner för benets servon och skickar positionerna till servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00728}{}\hyperlink{servo___u_a_r_t_8h_aacc5d4be18de766587abbb83098916a3}{00728} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_aacc5d4be18de766587abbb83098916a3}{Send\_Leg5\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer)
+00729 \{
+00730     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00731     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = r*sin(th) - 6;
+00732     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) + 12;
+00733     \textcolor{comment}{//invers kinematik }
+00734     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00735     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00736     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) - 0x99 + 0x01FF;
+00737     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00738     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00739     
+00740     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(2, pos1, inner); \textcolor{comment}{//Servona i ben 5}
+00741     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(4, pos2, middle);
+00742     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(6, pos3, outer);
+00743 \}
+00744 
+00745 \textcolor{comment}{//Konverterar de givna cyl. koord. till positioner för benets servon och skickar positionerna till servona.}
+\hypertarget{servo___u_a_r_t_8c_source.tex_l00746}{}\hyperlink{servo___u_a_r_t_8h_a3f6d26397b69e462327480969aa40d1b}{00746} \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8c_a3f6d26397b69e462327480969aa40d1b}{Send\_Leg6\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer)
+00747 \{
+00748     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00749     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = -r*sin(th) - 6;
+00750     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) + 12;
+00751     \textcolor{comment}{//invers kinematik }
+00752     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, z);
+00753     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00754     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x99 + 0x01FF;
+00755     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00756     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00757     
+00758     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(1, pos1, inner); \textcolor{comment}{//Servona i ben 6}
+00759     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(3, pos2, middle);
+00760     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(5, pos3, outer);
+00761 \}
+\end{DoxyCode}

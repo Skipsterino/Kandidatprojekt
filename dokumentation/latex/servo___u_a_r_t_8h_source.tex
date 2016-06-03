@@ -16,12 +16,11 @@
 00022 
 00023 \textcolor{preprocessor}{#include "\hyperlink{structs_8h}{structs.h}"}
 00024 
-00025 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a2f788735cafd686c547c9340d905c3ad}{Configure\_Servos\_Max\_Torque}(\textcolor{keywordtype}{void});
-00026 
-00033 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_af34dbb08e8f6cfc1a58d9b7f2b81f455}{UART\_Transmit}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} data);
-00034 
-00043 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{servo___u_a_r_t_8h_a45145cd104fed6e8dff8dd62ee52ebe7}{UART\_Receive}(\textcolor{keywordtype}{void});
-00044 
+00025 
+00032 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_af34dbb08e8f6cfc1a58d9b7f2b81f455}{UART\_Transmit}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} data);
+00033 
+00042 \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{servo___u_a_r_t_8h_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(\textcolor{keywordtype}{void});
+00043 
 00053 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{servo___u_a_r_t_8h_a45e02356d032e2069888899bf1a987bf}{checksum\_calc}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} param[], uint8\_t num\_of\_par);
 00054 
 00058 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a7522eb3c86cfa713aade9cbe082bcbba}{Configure\_Servos\_Delaytime}(\textcolor{keywordtype}{void});
@@ -32,88 +31,96 @@
 00078 
 00084 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a17e89f3d8b4abe3abe352ffba8b684f1}{Configure\_Servos\_No\_Response}(\textcolor{keywordtype}{void});
 00085 
-00091 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{servo___u_a_r_t_8h_a1aae94381111766cdccb93eae5b5c382}{Get\_Servo\_Load}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID);
+00091 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a2f788735cafd686c547c9340d905c3ad}{Configure\_Servos\_Max\_Torque}(\textcolor{keywordtype}{void});
 00092 
-00098 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{servo___u_a_r_t_8h_a5990b8542094df57d8fda7c5a3f26bed}{Get\_Servo\_Temp}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID);
+00098 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{servo___u_a_r_t_8h_a1aae94381111766cdccb93eae5b5c382}{Get\_Servo\_Load}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID);
 00099 
-00100 
-00101 \textcolor{comment}{//unsigned char[] Receive\_Servo\_Statuspackage(uint8\_t size); FUNKAR EJ TY KAN EJ RETURNERA STRUCT}
-00102 \textcolor{comment}{//void Check\_Servo\_Temp(unsigned char ID)}
-00103 
-00112 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[], uint8\_t num\_of\_par);
-00113 
-00120 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos);
-00121 
-00128 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel);
-00129 
-00139 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} lower, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} higher
+00105 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{servo___u_a_r_t_8h_a5990b8542094df57d8fda7c5a3f26bed}{Get\_Servo\_Temp}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID);
+00106 
+00107 
+00116 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[], uint8\_t num\_of\_par);
+00117 
+00124 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos);
+00125 
+00132 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel);
+00133 
+00143 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} lower, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} higher
       );
-00140 
-00146 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a30fbb081db7418d454bfe8761ca59dd2}{Send\_Outer\_P1\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
-00147 
-00153 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a6c4f4c2915df647ac40c86c17e613e30}{Send\_Outer\_P2\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
-00154 
-00160 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a63e528b1a0c31e9912ebbceee58a5faa}{Send\_Middle\_P1\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
-00161 
-00167 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_aae94fcd8998679345fa7d70648bd2a1e}{Send\_Middle\_P2\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
-00168 
-00174 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ace1792c5f066181d607cb075a87f3178}{Send\_Inner\_P1\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
-00175 
-00181 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a9cb7e763d9a3501fc345a424d67975a7}{Send\_Inner\_P2\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
-00182 
-00190 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_adde8722cd4b494d02bce7a39b14aed52}{Send\_Leg1\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00191 
-00199 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a85bfa5d3057fbf4096d5fc8665d717b8}{Send\_Leg2\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00200 
-00208 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a855b410dfcceb0e5f25d57ee17f86932}{Send\_Leg3\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00209 
-00217 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_adc36f085a0d265c937fae59651a06703}{Send\_Leg4\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00218 
-00226 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a0945e0fa1be61238d314e7334bdc9990}{Send\_Leg5\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00227 
-00235 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a2178defeed6cf9781991514439dd799b}{Send\_Leg6\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00236 
-00244 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_af1a73e7eb43491c163ad5031a2506a00}{Send\_Leg1\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00245 
-00253 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a5bf2231681a97180dd8f31da17814b9e}{Send\_Leg2\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00254 
-00262 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ae482cf70fc4b70fe8f4201eeffc54f51}{Send\_Leg3\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00263 
-00271 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ab2b44997220df53e3737bfc35bc8b0aa}{Send\_Leg4\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00272 
-00280 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a520acee2912480717b1bbcbb904e23c4}{Send\_Leg5\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00281 
-00289 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a9b86b4483c82ad17b1eb4e97c30d3b7d}{Send\_Leg6\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
-00290 
-00298 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos, \textcolor{keywordtype}{
+00144 
+00150 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a30fbb081db7418d454bfe8761ca59dd2}{Send\_Outer\_P1\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
+00151 
+00157 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a6c4f4c2915df647ac40c86c17e613e30}{Send\_Outer\_P2\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
+00158 
+00164 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a63e528b1a0c31e9912ebbceee58a5faa}{Send\_Middle\_P1\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
+00165 
+00171 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_aae94fcd8998679345fa7d70648bd2a1e}{Send\_Middle\_P2\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
+00172 
+00178 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ace1792c5f066181d607cb075a87f3178}{Send\_Inner\_P1\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
+00179 
+00185 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a9cb7e763d9a3501fc345a424d67975a7}{Send\_Inner\_P2\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vel); 
+00186 
+00194 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_adde8722cd4b494d02bce7a39b14aed52}{Send\_Leg1\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00195 
+00203 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a85bfa5d3057fbf4096d5fc8665d717b8}{Send\_Leg2\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00204 
+00212 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a855b410dfcceb0e5f25d57ee17f86932}{Send\_Leg3\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00213 
+00221 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_adc36f085a0d265c937fae59651a06703}{Send\_Leg4\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00222 
+00230 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a0945e0fa1be61238d314e7334bdc9990}{Send\_Leg5\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00231 
+00239 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a2178defeed6cf9781991514439dd799b}{Send\_Leg6\_Kar}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00240 
+00248 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_af1a73e7eb43491c163ad5031a2506a00}{Send\_Leg1\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00249 
+00257 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a5bf2231681a97180dd8f31da17814b9e}{Send\_Leg2\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00258 
+00266 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ae482cf70fc4b70fe8f4201eeffc54f51}{Send\_Leg3\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00267 
+00275 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ab2b44997220df53e3737bfc35bc8b0aa}{Send\_Leg4\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00276 
+00284 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a520acee2912480717b1bbcbb904e23c4}{Send\_Leg5\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00285 
+00293 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a9b86b4483c82ad17b1eb4e97c30d3b7d}{Send\_Leg6\_Cyl}(\textcolor{keywordtype}{float},\textcolor{keywordtype}{float},\textcolor{keywordtype}{float});
+00294 
+00302 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} ID, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos, \textcolor{keywordtype}{
       unsigned} \textcolor{keywordtype}{int} vel);
-00299 
-00300 
-00301 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a1501df88c7ba1630f81577522ac2bbeb}{Send\_Leg1\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+00303 
+00314 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a1501df88c7ba1630f81577522ac2bbeb}{Send\_Leg1\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
       \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer);
-00302 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a7ab1230fdabe0bcf16d18c331c75057e}{Send\_Leg2\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+00315 
+00326 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a7ab1230fdabe0bcf16d18c331c75057e}{Send\_Leg2\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
       \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer);
-00303 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a15260e1c5159c1047ca8ec867a8fc56c}{Send\_Leg3\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+00327 
+00338 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a15260e1c5159c1047ca8ec867a8fc56c}{Send\_Leg3\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
       \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer);
-00304 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ae1cff60ca27b892abf86b8a55b6b4ccd}{Send\_Leg4\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+00339 
+00350 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_ae1cff60ca27b892abf86b8a55b6b4ccd}{Send\_Leg4\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
       \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer);
-00305 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a7cd98c6b9c0d2127feb9dfece072b3b0}{Send\_Leg5\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+00351 
+00362 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a7cd98c6b9c0d2127feb9dfece072b3b0}{Send\_Leg5\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
       \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer);
-00306 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a8cd710e0714336201bd84b46a1e1877d}{Send\_Leg6\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
+00363 
+00374 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a8cd710e0714336201bd84b46a1e1877d}{Send\_Leg6\_Kar\_And\_Velocity}(\textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \textcolor{keywordtype}{float} 
       \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer);
-00307 
-00308 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a7783d05fa4457ed256d04d0eac4713cc}{Send\_Leg1\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
+00375 
+00386 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a7783d05fa4457ed256d04d0eac4713cc}{Send\_Leg1\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
       \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer);
-00309 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a16c2e98e0befea13b10d322b5a13c24a}{Send\_Leg2\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
+00387 
+00398 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a16c2e98e0befea13b10d322b5a13c24a}{Send\_Leg2\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
       \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer);
-00310 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a3f98bedbfd8c6462fbc873fd56ad6094}{Send\_Leg3\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
+00399 
+00410 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a3f98bedbfd8c6462fbc873fd56ad6094}{Send\_Leg3\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
       \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer);
-00311 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a6cddf44c6a11c7907911d03af1e3f127}{Send\_Leg4\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
+00411 
+00422 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a6cddf44c6a11c7907911d03af1e3f127}{Send\_Leg4\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
       \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer);
-00312 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_aacc5d4be18de766587abbb83098916a3}{Send\_Leg5\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
+00423 
+00434 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_aacc5d4be18de766587abbb83098916a3}{Send\_Leg5\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
       \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer);
-00313 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a3f6d26397b69e462327480969aa40d1b}{Send\_Leg6\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
+00435 
+00446 \textcolor{keywordtype}{void} \hyperlink{servo___u_a_r_t_8h_a3f6d26397b69e462327480969aa40d1b}{Send\_Leg6\_Cyl\_And\_Velocity}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} 
       \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} inner, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} middle, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} outer);
-00314 
-00315 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* SERVO\_UART\_H\_ */}\textcolor{preprocessor}{}
+00447 
+00448 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* SERVO\_UART\_H\_ */}\textcolor{preprocessor}{}
 \end{DoxyCode}

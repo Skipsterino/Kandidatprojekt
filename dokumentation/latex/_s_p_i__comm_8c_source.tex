@@ -1,0 +1,50 @@
+\hypertarget{_s_p_i__comm_8c_source}{}\section{S\+P\+I\+\_\+comm.\+c}
+\label{_s_p_i__comm_8c_source}\index{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+S\+P\+I\+\_\+comm.\+c@{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+S\+P\+I\+\_\+comm.\+c}}
+
+\begin{DoxyCode}
+00001 
+00007 \textcolor{preprocessor}{#include "\hyperlink{_s_p_i__comm_8h}{SPI\_comm.h}"}
+00008 \textcolor{preprocessor}{#include "\hyperlink{_u_s_a_r_t_8h}{USART.h}"}
+00009 \textcolor{preprocessor}{#include "\hyperlink{_l_c_d__controller_8h}{LCD\_controller.h}"}
+00010 
+\hypertarget{_s_p_i__comm_8c_source.tex_l00011}{}\hyperlink{_s_p_i__comm_8c_a65d46084e88aa717b668dffbbda1bf3b}{00011} \textcolor{keyword}{volatile} uint8\_t \hyperlink{_s_p_i__comm_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter};
+00012 
+\hypertarget{_s_p_i__comm_8c_source.tex_l00013}{}\hyperlink{_s_p_i__comm_8h_a9208b9a00dfa335b5dd56360ea5c7813}{00013} \textcolor{keywordtype}{void} \hyperlink{_s_p_i__comm_8c_a9208b9a00dfa335b5dd56360ea5c7813}{SPI\_init\_slave}()
+00014 \{
+00015     \textcolor{comment}{//MISO är utgång}
+00016     DDRB |= 0b01000000;
+00017     
+00018     \textcolor{comment}{//SPI Enable}
+00019     \textcolor{comment}{//SPI interrupt enable}
+00020     SPCR = (1<<SPE)| (1<<SPIE);
+00021     
+00022     \hyperlink{_s_p_i__comm_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter} = 0;
+00023 \}
+00024 
+00025 \textcolor{comment}{//SPI Serial transfer complete avbrottsvektor}
+\hypertarget{_s_p_i__comm_8c_source.tex_l00026}{}\hyperlink{_s_p_i__comm_8c_af9cad97352f5ba9bbd800446131125a6}{00026} \hyperlink{_s_p_i__comm_8c_af9cad97352f5ba9bbd800446131125a6}{ISR}(SPI\_STC\_vect)
+00027 \{
+00028     \textcolor{comment}{//Om det har gått ett tag sedan senaste avbrottet nollställer vi räknaren.}
+00029     \textcolor{keywordflow}{if}(\hyperlink{_l_c_d__controller_8h_a5462652fe95683f50bcbd6d5fbbc3ae1}{spiOverflow} >= 2)
+00030     \{
+00031         \hyperlink{_s_p_i__comm_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter} = 0;
+00032     \}
+00033     \hyperlink{_l_c_d__controller_8h_a5462652fe95683f50bcbd6d5fbbc3ae1}{spiOverflow} = 0;
+00034     
+00035     \textcolor{comment}{//Läs in data}
+00036     \hyperlink{_buffers_8h_af10085b37b41fff01ad209e47f7d4e44}{toBluetooth}[\hyperlink{_s_p_i__comm_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter}] = SPDR;
+00037     
+00038     \textcolor{comment}{//Fyll på med ny data}
+00039     \textcolor{keywordflow}{if}(\hyperlink{_s_p_i__comm_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter} < 15)\{
+00040         ++\hyperlink{_s_p_i__comm_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter};
+00041         SPDR = \hyperlink{_buffers_8h_a3b60028d98e73923081cbf257a237731}{toSPI}[\hyperlink{_s_p_i__comm_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter}];
+00042     \}
+00043     \textcolor{keywordflow}{else}\{
+00044         \textcolor{comment}{//Om det var sista byten i överföringen vi fick}
+00045         \hyperlink{_s_p_i__comm_8c_a65d46084e88aa717b668dffbbda1bf3b}{SPIcounter} = 0;
+00046         SPDR = \hyperlink{_buffers_8h_a3b60028d98e73923081cbf257a237731}{toSPI}[0];
+00047         \hyperlink{_u_s_a_r_t_8c_a03b0ffa896b87d880101195bf1377df9}{USART\_Transmit\_Array}(\hyperlink{_buffers_8h_af10085b37b41fff01ad209e47f7d4e44}{toBluetooth}, 16);
+00048         
+00049     \}
+00050 \}
+\end{DoxyCode}

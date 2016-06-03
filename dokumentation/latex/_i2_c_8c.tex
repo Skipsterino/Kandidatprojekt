@@ -27,6 +27,10 @@ int \hyperlink{_i2_c_8c_ad1a5ba420409525ff5ab1be86ac5e526}{error} ()
 \index{I2\+C.\+c@{I2\+C.\+c}!\+\_\+\+I2\+C\+\_\+\+H\+\_\+@{\+\_\+\+I2\+C\+\_\+\+H\+\_\+}}
 \index{\+\_\+\+I2\+C\+\_\+\+H\+\_\+@{\+\_\+\+I2\+C\+\_\+\+H\+\_\+}!I2\+C.\+c@{I2\+C.\+c}}
 \subsubsection[{\texorpdfstring{\+\_\+\+I2\+C\+\_\+\+H\+\_\+}{_I2C_H_}}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+I2\+C\+\_\+\+H\+\_\+}\hypertarget{_i2_c_8c_a9dcbbd7906a2df6cfb055ff82ff38d33}{}\label{_i2_c_8c_a9dcbbd7906a2df6cfb055ff82ff38d33}
+File\+: \hyperlink{_i2_c_8c}{I2\+C.\+c} Version\+: 1.\+0 Last edited\+: 19 maj 2016 
+
+Definition at line \hyperlink{_i2_c_8c_source_l00008}{8} of file \hyperlink{_i2_c_8c_source}{I2\+C.\+c}.
+
 
 
 \subsection{Function Documentation}
@@ -41,7 +45,17 @@ int \hyperlink{_i2_c_8c_ad1a5ba420409525ff5ab1be86ac5e526}{error} ()
 
 An error function for the I2\+C-\/bus. 
 
-An error function called if a problem is encountered during I2\+C-\/communication. \index{I2\+C.\+c@{I2\+C.\+c}!i2c\+\_\+read@{i2c\+\_\+read}}
+An error function called if a problem is encountered during I2\+C-\/communication. 
+
+Definition at line \hyperlink{_i2_c_8c_source_l00244}{244} of file \hyperlink{_i2_c_8c_source}{I2\+C.\+c}.
+
+
+\begin{DoxyCode}
+00245 \{
+00246     \textcolor{keywordflow}{return} -1;
+00247 \}
+\end{DoxyCode}
+\index{I2\+C.\+c@{I2\+C.\+c}!i2c\+\_\+read@{i2c\+\_\+read}}
 \index{i2c\+\_\+read@{i2c\+\_\+read}!I2\+C.\+c@{I2\+C.\+c}}
 \subsubsection[{\texorpdfstring{i2c\+\_\+read(unsigned char slave\+\_\+addr, unsigned char reg\+\_\+addr, unsigned char length, unsigned char $\ast$data)}{i2c_read(unsigned char slave_addr, unsigned char reg_addr, unsigned char length, unsigned char *data)}}]{\setlength{\rightskip}{0pt plus 5cm}int i2c\+\_\+read (
 \begin{DoxyParamCaption}
@@ -69,6 +83,138 @@ I2\+C-\/start
 {\em data} & The data received \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{_i2_c_8c_source_l00116}{116} of file \hyperlink{_i2_c_8c_source}{I2\+C.\+c}.
+
+
+\begin{DoxyCode}
+00118 \{
+00119     int8\_t timer = 0;
+00120 
+00121     \hyperlink{_i2_c_8c_a263c74ce484e3680c05a9118707fadb7}{I2C\_start}();
+00122 
+00123     \textcolor{comment}{// Ladda in IMU:ns adress + indikera att skrivning ska ske}
+00124     TWDR = \hyperlink{_i2_c_8h_a3df22e1e7b66be8b74b33ce077824292}{SLA\_W};                                  
+00125     TWCR = (1<<TWINT) | (1<<TWEN);      \textcolor{comment}{// Skicka}
+00126 
+00127     \textcolor{comment}{// Vänta på att det har skickats}
+00128     \textcolor{keywordflow}{while} (!(TWCR & (1<<TWINT)))
+00129     \{
+00130         \_delay\_ms(1);
+00131         ++timer;
+00132         \textcolor{keywordflow}{if} (timer >= 20)
+00133         \{
+00134             \textcolor{keywordflow}{return} -1;
+00135         \}
+00136     \}                   
+00137     timer = 0;
+00138 
+00139     \textcolor{comment}{// Kolla så att status är rätt }
+00140     \textcolor{comment}{// (att de som vi ville skulle hända faktiskt hände)}
+00141     \textcolor{keywordflow}{if} ((TWSR & 0xF8) !=\hyperlink{_i2_c_8h_a86ef56020aa435f9af57015ee220c3e4}{I2Cstatus\_MT\_SLA\_ACK})       
+00142     \hyperlink{_i2_c_8c_ad1a5ba420409525ff5ab1be86ac5e526}{error}();
+00143 
+00144     \textcolor{comment}{// Ladda in adressen för IMU-registret vi ska läsa ifrån}
+00145     TWDR = reg\_addr;                                
+00146     TWCR = (1<<TWINT) | (1<<TWEN);      \textcolor{comment}{// Skicka}
+00147 
+00148     \textcolor{comment}{// Vänta på att det har skickats}
+00149     \textcolor{keywordflow}{while} (!(TWCR & (1<<TWINT)))
+00150     \{
+00151         \_delay\_ms(1);
+00152         ++timer;
+00153         \textcolor{keywordflow}{if} (timer >= 20)
+00154         \{
+00155             \textcolor{keywordflow}{return} -1;
+00156         \}
+00157     \}                   
+00158     timer = 0;
+00159 
+00160     \textcolor{comment}{// Kolla så att status är rätt}
+00161     \textcolor{keywordflow}{if} ((TWSR & 0xF8) !=\hyperlink{_i2_c_8h_a083e480a49a539cd4740d0e1a15216f3}{I2Cstatus\_MT\_DATA\_ACK})     
+00162     \hyperlink{_i2_c_8c_ad1a5ba420409525ff5ab1be86ac5e526}{error}();
+00163 
+00164     \hyperlink{_i2_c_8c_a263c74ce484e3680c05a9118707fadb7}{I2C\_start}();
+00165 
+00166     \textcolor{comment}{// Ladda in IMU:ns adress + indikera att läsning ska ske}
+00167     TWDR = \hyperlink{_i2_c_8h_ae4af1f304be9d3202a445e7d6c235eaa}{SLA\_R};                                  
+00168     TWCR = (1<<TWINT) | (1<<TWEN);      \textcolor{comment}{// Skicka}
+00169 
+00170     \textcolor{comment}{// Vänta på att det har skickats}
+00171     \textcolor{keywordflow}{while} (!(TWCR & (1<<TWINT)))
+00172     \{
+00173         \_delay\_ms(1);
+00174         ++timer;
+00175         \textcolor{keywordflow}{if} (timer >= 20)
+00176         \{
+00177             \textcolor{keywordflow}{return} -1;
+00178         \}
+00179     \}                   
+00180     timer = 0;
+00181 
+00182     \textcolor{comment}{// Kolla så att status är rätt}
+00183     \textcolor{comment}{// (att de som vi ville skulle hända faktiskt hände)}
+00184     \textcolor{keywordflow}{if} ((TWSR & 0xF8) !=\hyperlink{_i2_c_8h_af046bfee1b2f1837e8a043ead63f8152}{I2Cstatus\_MR\_SLA\_ACK})       
+00185     \hyperlink{_i2_c_8c_ad1a5ba420409525ff5ab1be86ac5e526}{error}();
+00186 
+00187     \textcolor{keywordflow}{for} (uint8\_t for\_counter = 0; for\_counter < length; for\_counter++)
+00188     \{
+00189         \textcolor{keywordflow}{if}(for\_counter == length -1)
+00190         \{
+00191             \textcolor{comment}{// Ta emot data och skicka NACK}
+00192             \textcolor{comment}{// (NACK = mottagningen klar och vi ska ej ta emot mer)}
+00193             TWCR = (1<<TWINT) | (1<<TWEN);                  
+00194 
+00195             \textcolor{keywordflow}{while} (!(TWCR & (1<<TWINT)))
+00196             \{
+00197                 \_delay\_ms(1);
+00198                 ++timer;
+00199                 \textcolor{keywordflow}{if} (timer >= 20)
+00200                 \{
+00201                     \textcolor{keywordflow}{return} -1;
+00202                 \}
+00203             \}                   \textcolor{comment}{// Vänta på att det har skickats}
+00204             timer = 0;
+00205 
+00206             data[for\_counter] = (TWDR);     \textcolor{comment}{// Spara undan den mottagna datan}
+00207 
+00208             \textcolor{comment}{// Kolla så att status är rätt}
+00209             \textcolor{comment}{// (att de som vi ville skulle hända faktiskt hände)}
+00210             \textcolor{keywordflow}{if} ((TWSR & 0xF8) !=\hyperlink{_i2_c_8h_a3678a376b6b796511e60d0eda8a89dbe}{I2Cstatus\_MR\_DATA\_NACK})       
+00211             \hyperlink{_i2_c_8c_ad1a5ba420409525ff5ab1be86ac5e526}{error}();
+00212         \}
+00213         \textcolor{keywordflow}{else}
+00214         \{   
+00215             \textcolor{comment}{// Ta emot data och skicka ACK}
+00216             \textcolor{comment}{// (ACK = mottagningen klar och vi ska fortsätta ta emot data)}
+00217             TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);      
+00218 
+00219             \textcolor{comment}{// Vänta på att det har skickats}
+00220             \textcolor{keywordflow}{while} (!(TWCR & (1<<TWINT)))
+00221             \{
+00222                 \_delay\_ms(1);
+00223                 ++timer;
+00224                 \textcolor{keywordflow}{if} (timer >= 20)
+00225                 \{
+00226                     \textcolor{keywordflow}{return} -1;
+00227                 \}
+00228             \}                   
+00229             timer = 0;
+00230 
+00231             data[for\_counter] = (TWDR);     \textcolor{comment}{// Spara undan den mottagna datan}
+00232 
+00233             \textcolor{comment}{// Kolla så att status är rätt}
+00234             \textcolor{comment}{// (att de som vi ville skulle hända faktiskt hände)}
+00235             \textcolor{keywordflow}{if} ((TWSR & 0xF8) !=\hyperlink{_i2_c_8h_aae56c6775054400d706c68b4701a1659}{I2Cstatus\_MR\_DATA\_ACK})     
+00236             \hyperlink{_i2_c_8c_ad1a5ba420409525ff5ab1be86ac5e526}{error}();
+00237         \}
+00238     \}
+00239 
+00240     \hyperlink{_i2_c_8c_af8dcc1bcb3e1c6c0fcdca4cf599a239b}{I2C\_stop}();     \textcolor{comment}{// Avsluta överföring}
+00241     \textcolor{keywordflow}{return} 0;
+00242 \}
+\end{DoxyCode}
 \index{I2\+C.\+c@{I2\+C.\+c}!I2\+C\+\_\+start@{I2\+C\+\_\+start}}
 \index{I2\+C\+\_\+start@{I2\+C\+\_\+start}!I2\+C.\+c@{I2\+C.\+c}}
 \subsubsection[{\texorpdfstring{I2\+C\+\_\+start()}{I2C_start()}}]{\setlength{\rightskip}{0pt plus 5cm}void I2\+C\+\_\+start (
@@ -80,7 +226,35 @@ I2\+C-\/start
 
 Opens up the I2\+C-\/bus. 
 
-Opens the bus for communication. All transmissions must be started with this command. Leaves the data line high. \index{I2\+C.\+c@{I2\+C.\+c}!I2\+C\+\_\+stop@{I2\+C\+\_\+stop}}
+Opens the bus for communication. All transmissions must be started with this command. Leaves the data line high. 
+
+Definition at line \hyperlink{_i2_c_8c_source_l00015}{15} of file \hyperlink{_i2_c_8c_source}{I2\+C.\+c}.
+
+
+\begin{DoxyCode}
+00016 \{
+00017     int8\_t timer = 0;
+00018 
+00019     TWCR = 0;
+00020     TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN); \textcolor{comment}{// Start}
+00021 
+00022     \textcolor{comment}{// Vänta på att det har skickats}
+00023     \textcolor{keywordflow}{while} (!(TWCR & (1<<TWINT)))
+00024     \{
+00025         \_delay\_ms(1);
+00026         ++timer;
+00027         \textcolor{keywordflow}{if} (timer >= 20)
+00028         \{
+00029             \textcolor{keywordflow}{return} -1;
+00030         \}
+00031     \}                   
+00032     timer = 0;
+00033 
+00034     \textcolor{keywordflow}{if} ((TWSR & 0xF8) != \hyperlink{_i2_c_8h_ae106ed126eff0ffa33378daacfbbcdb7}{I2Cstatus\_START})    \textcolor{comment}{// Kolla så status = Start}
+00035     \hyperlink{_i2_c_8c_ad1a5ba420409525ff5ab1be86ac5e526}{error}();
+00036 \}
+\end{DoxyCode}
+\index{I2\+C.\+c@{I2\+C.\+c}!I2\+C\+\_\+stop@{I2\+C\+\_\+stop}}
 \index{I2\+C\+\_\+stop@{I2\+C\+\_\+stop}!I2\+C.\+c@{I2\+C.\+c}}
 \subsubsection[{\texorpdfstring{I2\+C\+\_\+stop()}{I2C_stop()}}]{\setlength{\rightskip}{0pt plus 5cm}void I2\+C\+\_\+stop (
 \begin{DoxyParamCaption}
@@ -91,7 +265,17 @@ Opens the bus for communication. All transmissions must be started with this com
 
 Shuts down the I2\+C-\/bus. 
 
-Sends the stop command for the bus. Leaves the data line high. \index{I2\+C.\+c@{I2\+C.\+c}!i2c\+\_\+write@{i2c\+\_\+write}}
+Sends the stop command for the bus. Leaves the data line high. 
+
+Definition at line \hyperlink{_i2_c_8c_source_l00038}{38} of file \hyperlink{_i2_c_8c_source}{I2\+C.\+c}.
+
+
+\begin{DoxyCode}
+00039 \{
+00040     TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);     \textcolor{comment}{// STOP}
+00041 \}
+\end{DoxyCode}
+\index{I2\+C.\+c@{I2\+C.\+c}!i2c\+\_\+write@{i2c\+\_\+write}}
 \index{i2c\+\_\+write@{i2c\+\_\+write}!I2\+C.\+c@{I2\+C.\+c}}
 \subsubsection[{\texorpdfstring{i2c\+\_\+write(unsigned char slave\+\_\+addr, unsigned char reg\+\_\+addr, unsigned char length, unsigned char const $\ast$data)}{i2c_write(unsigned char slave_addr, unsigned char reg_addr, unsigned char length, unsigned char const *data)}}]{\setlength{\rightskip}{0pt plus 5cm}int i2c\+\_\+write (
 \begin{DoxyParamCaption}
@@ -119,3 +303,80 @@ I2\+C-\/start
 {\em data} & The data to be sent \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{_i2_c_8c_source_l00043}{43} of file \hyperlink{_i2_c_8c_source}{I2\+C.\+c}.
+
+
+\begin{DoxyCode}
+00045 \{
+00046     \hyperlink{_i2_c_8c_a263c74ce484e3680c05a9118707fadb7}{I2C\_start}();
+00047     int8\_t timer = 0;
+00048 
+00049     \textcolor{comment}{// Ladda in IMU:ns adress + indikera att skrivning ska ske}
+00050     TWDR = \hyperlink{_i2_c_8h_a3df22e1e7b66be8b74b33ce077824292}{SLA\_W};  
+00051     TWCR = (1<<TWINT) | (1<<TWEN);          \textcolor{comment}{// Skicka}
+00052 
+00053     \textcolor{comment}{// Vänta på att det har skickats}
+00054     \textcolor{keywordflow}{while} (!(TWCR & (1<<TWINT)))
+00055     \{
+00056         \_delay\_ms(1);
+00057         ++timer;
+00058         \textcolor{keywordflow}{if} (timer >= 20)
+00059         \{
+00060             \textcolor{keywordflow}{return} -1;
+00061         \}
+00062     \}                   
+00063     timer = 0;
+00064 
+00065     \textcolor{comment}{// Kolla så att status är rätt }
+00066     \textcolor{comment}{// (att de som vi ville skulle hända faktiskt hände)}
+00067     \textcolor{keywordflow}{if} ((TWSR & 0xF8) !=\hyperlink{_i2_c_8h_a86ef56020aa435f9af57015ee220c3e4}{I2Cstatus\_MT\_SLA\_ACK})       
+00068     \hyperlink{_i2_c_8c_ad1a5ba420409525ff5ab1be86ac5e526}{error}();
+00069 
+00070     \textcolor{comment}{// Ladda in adressen för IMU-registret vi ska skriva till}
+00071     TWDR = reg\_addr;
+00072     TWCR = (1<<TWINT) | (1<<TWEN);                  \textcolor{comment}{// Skicka}
+00073 
+00074     \textcolor{comment}{// Vänta på att det har skickats}
+00075     \textcolor{keywordflow}{while} (!(TWCR & (1<<TWINT)))
+00076     \{
+00077         \_delay\_ms(1);
+00078         ++timer;
+00079         \textcolor{keywordflow}{if} (timer >= 20)
+00080         \{
+00081             \textcolor{keywordflow}{return} -1;
+00082         \}
+00083     \}                   
+00084     timer = 0;
+00085 
+00086     \textcolor{comment}{// Kolla så att status är rätt}
+00087     \textcolor{keywordflow}{if} ((TWSR & 0xF8) !=\hyperlink{_i2_c_8h_a083e480a49a539cd4740d0e1a15216f3}{I2Cstatus\_MT\_DATA\_ACK})     
+00088     \hyperlink{_i2_c_8c_ad1a5ba420409525ff5ab1be86ac5e526}{error}();
+00089 
+00090     \textcolor{keywordflow}{for} (uint8\_t for\_counter = 0; for\_counter < length; for\_counter++)
+00091     \{
+00092         TWDR = data[for\_counter];           \textcolor{comment}{// Lägg in den byte som ska skickas}
+00093         TWCR = (1<<TWINT) | (1<<TWEN);      \textcolor{comment}{// Skicka byte:n}
+00094 
+00095         \textcolor{comment}{// Vänta på att det har skickats}
+00096         \textcolor{keywordflow}{while} (!(TWCR & (1<<TWINT)))
+00097         \{
+00098             \_delay\_ms(1);
+00099             ++timer;
+00100             \textcolor{keywordflow}{if} (timer >= 20)
+00101             \{
+00102                 \textcolor{keywordflow}{return} -1;
+00103             \}
+00104         \}                   
+00105         timer = 0;
+00106 
+00107         \textcolor{comment}{// Kolla så att status är rätt}
+00108         \textcolor{keywordflow}{if} ((TWSR & 0xF8) !=\hyperlink{_i2_c_8h_a083e480a49a539cd4740d0e1a15216f3}{I2Cstatus\_MT\_DATA\_ACK}) 
+00109         \hyperlink{_i2_c_8c_ad1a5ba420409525ff5ab1be86ac5e526}{error}();
+00110     \}
+00111 
+00112     \hyperlink{_i2_c_8c_af8dcc1bcb3e1c6c0fcdca4cf599a239b}{I2C\_stop}();         \textcolor{comment}{// Avsluta överföring}
+00113     \textcolor{keywordflow}{return} 0;
+00114 \}
+\end{DoxyCode}

@@ -46,17 +46,33 @@ Joakim
 \end{DoxyDate}
 
 
+Definition in file \hyperlink{_l_c_d_8h_source}{L\+C\+D.\+h}.
+
+
+
 \subsection{Macro Definition Documentation}
 \index{L\+C\+D.\+h@{L\+C\+D.\+h}!F\+\_\+\+C\+PU@{F\+\_\+\+C\+PU}}
 \index{F\+\_\+\+C\+PU@{F\+\_\+\+C\+PU}!L\+C\+D.\+h@{L\+C\+D.\+h}}
 \subsubsection[{\texorpdfstring{F\+\_\+\+C\+PU}{F_CPU}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+\_\+\+C\+PU~14745600\+UL}\hypertarget{_l_c_d_8h_a43bafb28b29491ec7f871319b5a3b2f8}{}\label{_l_c_d_8h_a43bafb28b29491ec7f871319b5a3b2f8}
+
+
+Definition at line \hyperlink{_l_c_d_8h_source_l00014}{14} of file \hyperlink{_l_c_d_8h_source}{L\+C\+D.\+h}.
+
 \index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH@{L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH}}
 \index{L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH@{L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH}!L\+C\+D.\+h@{L\+C\+D.\+h}}
 \subsubsection[{\texorpdfstring{L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH}{LCD_LINE_WIDTH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH~16}\hypertarget{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{}\label{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}
-The number of columns the L\+CD can show. \index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+I\+N\+ES@{L\+C\+D\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+I\+N\+ES}}
+The number of columns the L\+CD can show. 
+
+Definition at line \hyperlink{_l_c_d_8h_source_l00021}{21} of file \hyperlink{_l_c_d_8h_source}{L\+C\+D.\+h}.
+
+\index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+I\+N\+ES@{L\+C\+D\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+I\+N\+ES}}
 \index{L\+C\+D\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+I\+N\+ES@{L\+C\+D\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+I\+N\+ES}!L\+C\+D.\+h@{L\+C\+D.\+h}}
 \subsubsection[{\texorpdfstring{L\+C\+D\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+I\+N\+ES}{LCD_NUMBER_OF_LINES}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+C\+D\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+L\+I\+N\+ES~4}\hypertarget{_l_c_d_8h_a5bb24c05980471cbc9086fef965deacc}{}\label{_l_c_d_8h_a5bb24c05980471cbc9086fef965deacc}
 The number of lines the L\+CD can show. 
+
+Definition at line \hyperlink{_l_c_d_8h_source_l00020}{20} of file \hyperlink{_l_c_d_8h_source}{L\+C\+D.\+h}.
+
+
 
 \subsection{Function Documentation}
 \index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+busy@{L\+C\+D\+\_\+busy}}
@@ -73,6 +89,35 @@ Check if the L\+CD is busy.
 Checks the L\+CD busy flag. \begin{DoxyReturn}{Returns}
 1 if L\+CD is busy, otherwise 0 
 \end{DoxyReturn}
+
+
+Definition at line \hyperlink{_l_c_d_8c_source_l00110}{110} of file \hyperlink{_l_c_d_8c_source}{L\+C\+D.\+c}.
+
+
+\begin{DoxyCode}
+00111 \{
+00112     \textcolor{comment}{//Byt riktning på dataregister}
+00113     DDRA = \hyperlink{_l_c_d_8c_abebff40b775e10e37faa4ec7b45d6a89}{DATA\_IN};
+00114     \textcolor{comment}{//Sätt RW till 1 för att läsa data}
+00115     PORTB |= (1<<\hyperlink{_l_c_d_8c_afc4ded33ac0ca43defcce639e965748a}{RW});
+00116     PORTB &= ~(1<<\hyperlink{_l_c_d_8c_af8903d8eea3868940c60af887473b152}{RS});
+00117     PORTB |= (1<<\hyperlink{_l_c_d_8c_a07484107e6d9fdf38b53edf631d6511d}{E});
+00118     
+00119     \_delay\_us(2);
+00120     
+00121     \textcolor{comment}{//Data hämtas från dataportar}
+00122     \textcolor{keywordtype}{char} data = PINA;
+00123     
+00124     PORTB &= ~(1<<\hyperlink{_l_c_d_8c_a07484107e6d9fdf38b53edf631d6511d}{E});
+00125     PORTB &= ~(1<<\hyperlink{_l_c_d_8c_afc4ded33ac0ca43defcce639e965748a}{RW});
+00126     
+00127     \textcolor{comment}{//Återställ riktning}
+00128     DDRA = \hyperlink{_l_c_d_8c_abfb497db759edfde127952c40722ddf3}{DATA\_OUT};
+00129     
+00130     \textcolor{comment}{//Skicka tillbaka BF-flaggan(bit 7)}
+00131     \textcolor{keywordflow}{return} (data & (1<<7));
+00132 \}
+\end{DoxyCode}
 \index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+clear@{L\+C\+D\+\_\+clear}}
 \index{L\+C\+D\+\_\+clear@{L\+C\+D\+\_\+clear}!L\+C\+D.\+h@{L\+C\+D.\+h}}
 \subsubsection[{\texorpdfstring{L\+C\+D\+\_\+clear()}{LCD_clear()}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+clear (
@@ -84,7 +129,17 @@ Checks the L\+CD busy flag. \begin{DoxyReturn}{Returns}
 
 Clears the screen. 
 
-Clears the screen by using the built-\/in command and set the cursor to the start position. \index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+init@{L\+C\+D\+\_\+init}}
+Clears the screen by using the built-\/in command and set the cursor to the start position. 
+
+Definition at line \hyperlink{_l_c_d_8c_source_l00034}{34} of file \hyperlink{_l_c_d_8c_source}{L\+C\+D.\+c}.
+
+
+\begin{DoxyCode}
+00035 \{
+00036     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_a5d12bd35af7836eba7538bf6e71a050d}{COMMAND\_CLEAR});
+00037 \}
+\end{DoxyCode}
+\index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+init@{L\+C\+D\+\_\+init}}
 \index{L\+C\+D\+\_\+init@{L\+C\+D\+\_\+init}!L\+C\+D.\+h@{L\+C\+D.\+h}}
 \subsubsection[{\texorpdfstring{L\+C\+D\+\_\+init()}{LCD_init()}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+init (
 \begin{DoxyParamCaption}
@@ -95,7 +150,39 @@ Clears the screen by using the built-\/in command and set the cursor to the star
 
 Initiates the L\+CD. 
 
-Setup the processor in 4 line mode, etc \index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+print\+\_\+string@{L\+C\+D\+\_\+print\+\_\+string}}
+Setup the processor in 4 line mode, etc 
+
+Definition at line \hyperlink{_l_c_d_8c_source_l00160}{160} of file \hyperlink{_l_c_d_8c_source}{L\+C\+D.\+c}.
+
+
+\begin{DoxyCode}
+00161 \{
+00162     \textcolor{comment}{//Sätt alla a-pinnar till utgångar}
+00163     DDRA = \hyperlink{_l_c_d_8c_abfb497db759edfde127952c40722ddf3}{DATA\_OUT};
+00164     
+00165     \textcolor{comment}{//Sätt E, R/W, RS till utgångar}
+00166     DDRB |= \hyperlink{_l_c_d_8c_a05f5ec448343537aca2f08c5eb3eeaab}{COMMAND\_PINS};
+00167 
+00168     \_delay\_us(40);
+00169     
+00170     \textcolor{comment}{//8 bit dataportar}
+00171     \textcolor{comment}{//2 raders display (faktiskt 4 st)}
+00172     \textcolor{comment}{//11 dot karaktärer}
+00173     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_a3feb0f4d58db8e05740218b177b0ca45}{COMMAND\_8BIT\_2LINE\_11DOTS});
+00174     
+00175     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_a0c43cff50d37bd94bbe8e241e740fcbf}{COMMAND\_DISPLAY\_OFF});
+00176     
+00177     \hyperlink{_l_c_d_8c_abe38d05e225c701bebf5a61201331a85}{LCD\_clear}();
+00178     
+00179     \textcolor{comment}{//Cursor stegas uppåt}
+00180     \textcolor{comment}{//Ingen inskiftning}
+00181     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_a6c7500336a6cbd7b4915c6f546d06701}{COMMAND\_CURSOR\_INC\_NO\_SHIFT});
+00182     
+00183     \textcolor{comment}{//Automatisk förflyttning av cursor vid skrivning}
+00184     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_a6724b17362a70a197d6e515d15b234f9}{COMMAND\_DISPLAY\_ON\_CURSOR\_MOVE});
+00185 \}
+\end{DoxyCode}
+\index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+print\+\_\+string@{L\+C\+D\+\_\+print\+\_\+string}}
 \index{L\+C\+D\+\_\+print\+\_\+string@{L\+C\+D\+\_\+print\+\_\+string}!L\+C\+D.\+h@{L\+C\+D.\+h}}
 \subsubsection[{\texorpdfstring{L\+C\+D\+\_\+print\+\_\+string(char line1[L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH], char line2[L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH], char line3[L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH], char line4[L\+C\+D\+\_\+\+L\+I\+N\+E\+\_\+\+W\+I\+D\+TH])}{LCD_print_string(char line1[LCD_LINE_WIDTH], char line2[LCD_LINE_WIDTH], char line3[LCD_LINE_WIDTH], char line4[LCD_LINE_WIDTH])}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+print\+\_\+string (
 \begin{DoxyParamCaption}
@@ -120,6 +207,30 @@ Prints four strings to 4 lines of the L\+CD.
 {\em line4} & The string to be printed at line4 \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{_l_c_d_8c_source_l00091}{91} of file \hyperlink{_l_c_d_8c_source}{L\+C\+D.\+c}.
+
+
+\begin{DoxyCode}
+00092 \{   
+00093     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_acc9e762cf3909d10f4c35e47e7c0f2e8}{DDRAM\_LINE\_1});
+00094     
+00095     \hyperlink{_l_c_d_8c_a0da229bb95e0c51e189ce10e20eb91c5}{LCD\_print\_line}(line1);
+00096     
+00097     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_a99ff4cbdf292fa1d55ed18e57d07a139}{DDRAM\_LINE\_2});
+00098     
+00099     \hyperlink{_l_c_d_8c_a0da229bb95e0c51e189ce10e20eb91c5}{LCD\_print\_line}(line2);
+00100     
+00101     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_aee61787ba0a481741523399b51b969ce}{DDRAM\_LINE\_3});
+00102     
+00103     \hyperlink{_l_c_d_8c_a0da229bb95e0c51e189ce10e20eb91c5}{LCD\_print\_line}(line3);
+00104     
+00105     \hyperlink{_l_c_d_8c_aa6d8c104e37eef62ba3a6046d1333ca6}{LCD\_send\_command}(\hyperlink{_l_c_d_8c_ac4b6edb4691748f93245ae9eb802ea55}{DDRAM\_LINE\_4});
+00106     
+00107     \hyperlink{_l_c_d_8c_a0da229bb95e0c51e189ce10e20eb91c5}{LCD\_print\_line}(line4);
+00108 \}
+\end{DoxyCode}
 \index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+put\+\_\+num\+\_\+u@{L\+C\+D\+\_\+put\+\_\+num\+\_\+u}}
 \index{L\+C\+D\+\_\+put\+\_\+num\+\_\+u@{L\+C\+D\+\_\+put\+\_\+num\+\_\+u}!L\+C\+D.\+h@{L\+C\+D.\+h}}
 \subsubsection[{\texorpdfstring{L\+C\+D\+\_\+put\+\_\+num\+\_\+u(unsigned int num)}{LCD_put_num_u(unsigned int num)}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+put\+\_\+num\+\_\+u (
@@ -136,6 +247,26 @@ Prints an unsigned number at the current cursor position
 {\em num} & The number to be printed \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{_l_c_d_8c_source_l00039}{39} of file \hyperlink{_l_c_d_8c_source}{L\+C\+D.\+c}.
+
+
+\begin{DoxyCode}
+00040 \{
+00041     \textcolor{keywordtype}{char} digits[\hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{LCD\_LINE\_WIDTH}];
+00042     sprintf(digits,\textcolor{stringliteral}{"%d"}, num);
+00043     
+00044     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 0; i < \hyperlink{_l_c_d_8h_a5bdd8750b215c775f2227262a1934b54}{LCD\_LINE\_WIDTH}; ++i)
+00045     \{
+00046         \textcolor{keywordflow}{if}(digits[i] == \textcolor{charliteral}{'\(\backslash\)0'})
+00047         \{
+00048             \textcolor{keywordflow}{break};
+00049         \}
+00050         \hyperlink{_l_c_d_8c_a7a19aaec7f9deb1589a7efddf3da8d3f}{LCD\_putc}(digits[i]);
+00051     \}
+00052 \}
+\end{DoxyCode}
 \index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+putc@{L\+C\+D\+\_\+putc}}
 \index{L\+C\+D\+\_\+putc@{L\+C\+D\+\_\+putc}!L\+C\+D.\+h@{L\+C\+D.\+h}}
 \subsubsection[{\texorpdfstring{L\+C\+D\+\_\+putc(char c)}{LCD_putc(char c)}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+putc (
@@ -152,6 +283,28 @@ Prints an ascii character at the current cursor position
 {\em c} & The character to be printed \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{_l_c_d_8c_source_l00054}{54} of file \hyperlink{_l_c_d_8c_source}{L\+C\+D.\+c}.
+
+
+\begin{DoxyCode}
+00055 \{
+00056     \textcolor{comment}{//Vänta tills LCDn är redo}
+00057     \textcolor{keywordflow}{while}(\hyperlink{_l_c_d_8c_a6679ea6f481524d1b6a30c4d99b8aad5}{LCD\_busy}())
+00058     \{
+00059         \_delay\_ms(1);
+00060     \}
+00061     \textcolor{comment}{//Sätt RS till 1 och skicka in data på port A}
+00062     PORTB |= (1<<\hyperlink{_l_c_d_8c_af8903d8eea3868940c60af887473b152}{RS});
+00063     PORTA = c;
+00064     
+00065     \textcolor{comment}{//Signalera att kommandot är redo}
+00066     PORTB |= (1<<\hyperlink{_l_c_d_8c_a07484107e6d9fdf38b53edf631d6511d}{E});
+00067     \_delay\_us(50);
+00068     PORTB &= ~(1<<\hyperlink{_l_c_d_8c_a07484107e6d9fdf38b53edf631d6511d}{E});
+00069 \}
+\end{DoxyCode}
 \index{L\+C\+D.\+h@{L\+C\+D.\+h}!L\+C\+D\+\_\+send\+\_\+command@{L\+C\+D\+\_\+send\+\_\+command}}
 \index{L\+C\+D\+\_\+send\+\_\+command@{L\+C\+D\+\_\+send\+\_\+command}!L\+C\+D.\+h@{L\+C\+D.\+h}}
 \subsubsection[{\texorpdfstring{L\+C\+D\+\_\+send\+\_\+command(unsigned char command)}{LCD_send_command(unsigned char command)}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+send\+\_\+command (
@@ -168,3 +321,34 @@ Sends a command to the L\+CD processing unit
 {\em command} & The command to be sent \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{_l_c_d_8c_source_l00134}{134} of file \hyperlink{_l_c_d_8c_source}{L\+C\+D.\+c}.
+
+
+\begin{DoxyCode}
+00135 \{
+00136     \textcolor{keywordflow}{while}(\hyperlink{_l_c_d_8c_a6679ea6f481524d1b6a30c4d99b8aad5}{LCD\_busy}())
+00137     \{
+00138         \_delay\_ms(1);
+00139     \}
+00140     
+00141     PORTB &= ~(1<<\hyperlink{_l_c_d_8c_af8903d8eea3868940c60af887473b152}{RS});
+00142     PORTA = command;
+00143     PORTB |= (1<<\hyperlink{_l_c_d_8c_a07484107e6d9fdf38b53edf631d6511d}{E});
+00144     
+00145     \textcolor{comment}{//Clear och return home tar 1.53 ms}
+00146     \textcolor{comment}{//Alla andra tar 39 µs}
+00147     \textcolor{comment}{//Vi väntar med lite extra marginal}
+00148     \textcolor{keywordflow}{if}(command == 0x01 || command == 0x02)
+00149     \{
+00150         \_delay\_us(1600);
+00151     \}
+00152     \textcolor{keywordflow}{else}
+00153     \{
+00154         \_delay\_us(50);
+00155     \}
+00156     
+00157     PORTB &= ~(1<<\hyperlink{_l_c_d_8c_a07484107e6d9fdf38b53edf631d6511d}{E});
+00158 \}
+\end{DoxyCode}

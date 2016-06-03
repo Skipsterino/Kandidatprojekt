@@ -5,18 +5,18 @@
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \hyperlink{servo___u_a_r_t_8c_aaadeca93228a0437f067f8dc08a287e5}{first\+\_\+servo\+\_\+offset}~0x00
+\#define \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{F\+I\+R\+S\+T\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET}~0x00
 \item 
-\#define \hyperlink{servo___u_a_r_t_8c_a3d83f9c19f18b1b475628ad1b8ba8fc7}{second\+\_\+servo\+\_\+offset}~0x2F
+\#define \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{S\+E\+C\+O\+N\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET}~0x2F
 \item 
-\#define \hyperlink{servo___u_a_r_t_8c_a78fb3f76bbb832b598fbe8205d6d1d46}{third\+\_\+servo\+\_\+offset}~0x79
+\#define \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{T\+H\+I\+R\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET}~0x79
 \end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{servo___u_a_r_t_8c_af34dbb08e8f6cfc1a58d9b7f2b81f455}{U\+A\+R\+T\+\_\+\+Transmit} (unsigned char data)
-\begin{DoxyCompactList}\small\item\em Transmits one byte on the U\+S\+A\+RT. \end{DoxyCompactList}\item 
-unsigned char \hyperlink{servo___u_a_r_t_8c_a45145cd104fed6e8dff8dd62ee52ebe7}{U\+A\+R\+T\+\_\+\+Receive} (void)
+\begin{DoxyCompactList}\small\item\em Transmits one byte on the U\+A\+RT. \end{DoxyCompactList}\item 
+volatile unsigned char \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{U\+A\+R\+T\+\_\+\+Receive} (void)
 \begin{DoxyCompactList}\small\item\em Receives one byte from the U\+A\+RT. \end{DoxyCompactList}\item 
 unsigned char \hyperlink{servo___u_a_r_t_8c_ab388e52c7139a00514d89616ec7da33d}{checksum\+\_\+calc} (unsigned char message\mbox{[}$\,$\mbox{]}, uint8\+\_\+t num\+\_\+of\+\_\+par)
 \begin{DoxyCompactList}\small\item\em Calculates the checksum. \end{DoxyCompactList}\item 
@@ -29,11 +29,9 @@ void \hyperlink{servo___u_a_r_t_8c_ac61953255036321acac8c2e20b76d692}{Configure\
 void \hyperlink{servo___u_a_r_t_8c_a17e89f3d8b4abe3abe352ffba8b684f1}{Configure\+\_\+\+Servos\+\_\+\+No\+\_\+\+Response} (void)
 \begin{DoxyCompactList}\small\item\em Configures the servo responses. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_a2f788735cafd686c547c9340d905c3ad}{Configure\+\_\+\+Servos\+\_\+\+Max\+\_\+\+Torque} (void)
-\item 
+\begin{DoxyCompactList}\small\item\em Configures maximum torque. \end{DoxyCompactList}\item 
 unsigned int \hyperlink{servo___u_a_r_t_8c_a1aae94381111766cdccb93eae5b5c382}{Get\+\_\+\+Servo\+\_\+\+Load} (unsigned char ID)
 \begin{DoxyCompactList}\small\item\em Gets the current load on a specific servo. \end{DoxyCompactList}\item 
-unsigned char \hyperlink{servo___u_a_r_t_8c_a5990b8542094df57d8fda7c5a3f26bed}{Get\+\_\+\+Servo\+\_\+\+Temp} (unsigned char ID)
-\begin{DoxyCompactList}\small\item\em Gets the current temperature of a specific servo. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\+\_\+\+Servo\+\_\+\+Velocity} (unsigned char ID, unsigned int vel)
 \begin{DoxyCompactList}\small\item\em Sends a velicity to a servo. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\+\_\+\+Servo\+\_\+\+Angle\+\_\+\+Limit} (unsigned char ID, unsigned int lower, unsigned int higher)
@@ -79,86 +77,55 @@ void \hyperlink{servo___u_a_r_t_8c_ac3c70e9b75d4661c0d80f9cd2cb1571a}{Send\+\_\+
 void \hyperlink{servo___u_a_r_t_8c_adaea11f0d396e281dff22b6c6cdc42bd}{Send\+\_\+\+Leg6\+\_\+\+Cyl} (float r, float th, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
 \begin{DoxyCompactList}\small\item\em Sends desired position to leg-\/6 in Cylindrical koodinates. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\+\_\+\+Servo\+\_\+\+Position\+\_\+\+And\+\_\+\+Velocity} (unsigned char ID, unsigned int pos, unsigned int vel)
-\begin{DoxyCompactList}\small\item\em Sends desired position and velicity to a servo. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Sends desired position and velocity to a servo. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_a1501df88c7ba1630f81577522ac2bbeb}{Send\+\_\+\+Leg1\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, unsigned int inner, unsigned int middle, unsigned int outer)
-\item 
+\begin{DoxyCompactList}\small\item\em Sends desired position and velocity to leg-\/1 in Kartesian koodinates. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_a7ab1230fdabe0bcf16d18c331c75057e}{Send\+\_\+\+Leg2\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, unsigned int inner, unsigned int middle, unsigned int outer)
-\item 
+\begin{DoxyCompactList}\small\item\em Sends desired position and velocity to leg-\/2 in Kartesian koodinates. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_a15260e1c5159c1047ca8ec867a8fc56c}{Send\+\_\+\+Leg3\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, unsigned int inner, unsigned int middle, unsigned int outer)
-\item 
+\begin{DoxyCompactList}\small\item\em Sends desired position and velocity to leg-\/3 in Kartesian koodinates. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_ae1cff60ca27b892abf86b8a55b6b4ccd}{Send\+\_\+\+Leg4\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, unsigned int inner, unsigned int middle, unsigned int outer)
-\item 
+\begin{DoxyCompactList}\small\item\em Sends desired position and velocity to leg-\/4 in Kartesian koodinates. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_a7cd98c6b9c0d2127feb9dfece072b3b0}{Send\+\_\+\+Leg5\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, unsigned int inner, unsigned int middle, unsigned int outer)
-\item 
+\begin{DoxyCompactList}\small\item\em Sends desired position and velocity to leg-\/5 in Kartesian koodinates. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_a8cd710e0714336201bd84b46a1e1877d}{Send\+\_\+\+Leg6\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, unsigned int inner, unsigned int middle, unsigned int outer)
-\item 
+\begin{DoxyCompactList}\small\item\em Sends desired position and velocity to leg-\/6 in Kartesian koodinates. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_a7783d05fa4457ed256d04d0eac4713cc}{Send\+\_\+\+Leg1\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity} (float r, float th, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, unsigned int inner, unsigned int middle, unsigned int outer)
-\item 
+\begin{DoxyCompactList}\small\item\em Sends desired position and velocity to leg-\/1 in cylindrical koodinates. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_a16c2e98e0befea13b10d322b5a13c24a}{Send\+\_\+\+Leg2\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity} (float r, float th, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, unsigned int inner, unsigned int middle, unsigned int outer)
-\item 
+\begin{DoxyCompactList}\small\item\em Sends desired position and velocity to leg-\/2 in cylindrical koodinates. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_a3f98bedbfd8c6462fbc873fd56ad6094}{Send\+\_\+\+Leg3\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity} (float r, float th, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, unsigned int inner, unsigned int middle, unsigned int outer)
-\item 
+\begin{DoxyCompactList}\small\item\em Sends desired position and velocity to leg-\/3 in cylindrical koodinates. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_a6cddf44c6a11c7907911d03af1e3f127}{Send\+\_\+\+Leg4\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity} (float r, float th, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, unsigned int inner, unsigned int middle, unsigned int outer)
-\item 
+\begin{DoxyCompactList}\small\item\em Sends desired position and velocity to leg-\/4 in cylindrical koodinates. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_aacc5d4be18de766587abbb83098916a3}{Send\+\_\+\+Leg5\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity} (float r, float th, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, unsigned int inner, unsigned int middle, unsigned int outer)
-\item 
+\begin{DoxyCompactList}\small\item\em Sends desired position and velocity to leg-\/5 in cylindrical koodinates. \end{DoxyCompactList}\item 
 void \hyperlink{servo___u_a_r_t_8c_a3f6d26397b69e462327480969aa40d1b}{Send\+\_\+\+Leg6\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity} (float r, float th, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}, unsigned int inner, unsigned int middle, unsigned int outer)
-\item 
-void \hyperlink{servo___u_a_r_t_8c_a215515704ff241c6b2a789a28512a782}{Rise\+\_\+\+Robot\+\_\+\+Height} (float \hyperlink{over__hinder_8c_a48083b65ac9a863566dc3e3fff09a5b4}{height})
-\end{DoxyCompactItemize}
-\subsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_a025c1a1d07871fee276be6b234ca16bf}{pos11}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_af6f6a278e98a84050b65ae91f96c0a7e}{pos12}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_aaee16ec2749d37aaf876ec02c8d78fe0}{pos13}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_adb7ff2b99689a1db9a48e8dfda3d7d5c}{pos31}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_a61ef10589b45bd276c3f77f208505ee2}{pos32}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_a3e0a1154f88ab2c00d59b553a2ca10e8}{pos33}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_a850c67d6362e0e9a993055c334e19d00}{pos51}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_ae7dfad9c586f293ec436c7114233ebc4}{pos52}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_a60324a7b310234d9159b178c55b78b4e}{pos53}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_ad6f2f92b1be856a162c53636268ad149}{pos21}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_a50579df384e97ba0ea0f66e653bd5971}{pos22}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_a6fb7acd5103fcdc6cf033987ef54be28}{pos23}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_a4a8608804268b531779fa9e7559a8b9d}{pos41}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_ad198242a73a6f710a53c4964d74adfa0}{pos42}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_a2778161503c6b2a0bd924c9f038375d5}{pos43}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_a0aa70a2bd11b45a893058fd05edb5488}{pos61}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_a3e4f17a010c58bdb41458a656ed876fe}{pos62}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_a28254bce164f33dc4cc2616ac40b774f}{pos63}
-\item 
-unsigned int \hyperlink{servo___u_a_r_t_8c_ae89063d734c00e40dc63741f11311e8a}{pos1fg}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Sends desired position and velocity to leg-\/6 in cylindrical koodinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Macro Definition Documentation}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!first\+\_\+servo\+\_\+offset@{first\+\_\+servo\+\_\+offset}}
-\index{first\+\_\+servo\+\_\+offset@{first\+\_\+servo\+\_\+offset}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{first\+\_\+servo\+\_\+offset}{first_servo_offset}}]{\setlength{\rightskip}{0pt plus 5cm}\#define first\+\_\+servo\+\_\+offset~0x00}\hypertarget{servo___u_a_r_t_8c_aaadeca93228a0437f067f8dc08a287e5}{}\label{servo___u_a_r_t_8c_aaadeca93228a0437f067f8dc08a287e5}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!second\+\_\+servo\+\_\+offset@{second\+\_\+servo\+\_\+offset}}
-\index{second\+\_\+servo\+\_\+offset@{second\+\_\+servo\+\_\+offset}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{second\+\_\+servo\+\_\+offset}{second_servo_offset}}]{\setlength{\rightskip}{0pt plus 5cm}\#define second\+\_\+servo\+\_\+offset~0x2F}\hypertarget{servo___u_a_r_t_8c_a3d83f9c19f18b1b475628ad1b8ba8fc7}{}\label{servo___u_a_r_t_8c_a3d83f9c19f18b1b475628ad1b8ba8fc7}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!third\+\_\+servo\+\_\+offset@{third\+\_\+servo\+\_\+offset}}
-\index{third\+\_\+servo\+\_\+offset@{third\+\_\+servo\+\_\+offset}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{third\+\_\+servo\+\_\+offset}{third_servo_offset}}]{\setlength{\rightskip}{0pt plus 5cm}\#define third\+\_\+servo\+\_\+offset~0x79}\hypertarget{servo___u_a_r_t_8c_a78fb3f76bbb832b598fbe8205d6d1d46}{}\label{servo___u_a_r_t_8c_a78fb3f76bbb832b598fbe8205d6d1d46}
+\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!F\+I\+R\+S\+T\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET@{F\+I\+R\+S\+T\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET}}
+\index{F\+I\+R\+S\+T\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET@{F\+I\+R\+S\+T\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
+\subsubsection[{\texorpdfstring{F\+I\+R\+S\+T\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET}{FIRST_SERVO_OFFSET}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+I\+R\+S\+T\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET~0x00}\hypertarget{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{}\label{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00012}{12} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!S\+E\+C\+O\+N\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET@{S\+E\+C\+O\+N\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET}}
+\index{S\+E\+C\+O\+N\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET@{S\+E\+C\+O\+N\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
+\subsubsection[{\texorpdfstring{S\+E\+C\+O\+N\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET}{SECOND_SERVO_OFFSET}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+E\+C\+O\+N\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET~0x2F}\hypertarget{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{}\label{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00013}{13} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!T\+H\+I\+R\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET@{T\+H\+I\+R\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET}}
+\index{T\+H\+I\+R\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET@{T\+H\+I\+R\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
+\subsubsection[{\texorpdfstring{T\+H\+I\+R\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET}{THIRD_SERVO_OFFSET}}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\+H\+I\+R\+D\+\_\+\+S\+E\+R\+V\+O\+\_\+\+O\+F\+F\+S\+ET~0x79}\hypertarget{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{}\label{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00014}{14} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
 
 
 \subsection{Function Documentation}
@@ -176,12 +143,30 @@ Calculates the checksum.
 
 
 \begin{DoxyParams}{Parameters}
-{\em param} & Message written in the servoprotocol without start and stopp bytes\\
+{\em param} & Message written in the servoprotocol without start and stopp bytes \\
+\hline
+{\em num\+\_\+of\+\_\+param} & Number of parameters in the transfer\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 The checksum, which is the final byte in a transmitt. 
 \end{DoxyReturn}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00041}{41} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00042 \{
+00043     uint8\_t \hyperlink{sensor_8h_a2943e5895f5488ed44ed4a86e59dcf1b}{sum} = 0;
+00044     \textcolor{keywordflow}{for} (uint8\_t i = 0; i< num\_of\_par+3; i++) \textcolor{comment}{//Ta med parametrarna + ID + instruktion + längd}
+00045     \{
+00046         sum += message[i];
+00047     \}
+00048     uint8\_t checksum = ~sum; \textcolor{comment}{//inverserad summa }
+00049     \textcolor{keywordflow}{return} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char})checksum;
+00050 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Configure\+\_\+\+Servos\+\_\+\+Angle\+\_\+\+Limit@{Configure\+\_\+\+Servos\+\_\+\+Angle\+\_\+\+Limit}}
 \index{Configure\+\_\+\+Servos\+\_\+\+Angle\+\_\+\+Limit@{Configure\+\_\+\+Servos\+\_\+\+Angle\+\_\+\+Limit}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Configure\+\_\+\+Servos\+\_\+\+Angle\+\_\+\+Limit(char mode)}{Configure_Servos_Angle_Limit(char mode)}}]{\setlength{\rightskip}{0pt plus 5cm}void Configure\+\_\+\+Servos\+\_\+\+Angle\+\_\+\+Limit (
@@ -200,6 +185,73 @@ Configures servo angle limitations in different ways for different values of mod
 {\em mode} & Indicates which angle limits is to be used. Can take on the values \textquotesingle{}r\textquotesingle{} and \textquotesingle{}c\textquotesingle{}. \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00078}{78} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00079 \{
+00080     \textcolor{comment}{//Vilka servon sitter var }
+00081     uint8\_t inner\_middle[] = \{13,14\};
+00082     uint8\_t inner\_lf\_rb[] = \{1,8\};
+00083     uint8\_t inner\_rf\_lb[] = \{2,7\};
+00084     uint8\_t middle[] = \{3,4,9,10,15,16\};
+00085     uint8\_t outer\_left[] = \{6,12,18\};
+00086     uint8\_t outer\_right[] = \{5,11,17\};
+00087     
+00088     \textcolor{comment}{//till alla servon}
+00089     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 6; i++)
+00090     \{
+00091         \textcolor{comment}{// pos 1FF -+ 1023/300pos/vinkl*90grader= 0x00CD,0x0331}
+00092         \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(middle[i], 0x00CD, 0x0331); 
+00093         \_delay\_ms(1);
+00094     \}
+00095     
+00096     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00097     \{
+00098         \textcolor{comment}{// pos 1FF + (1023/300pos/vinkl*(+40grader eller - 90 grader)= 0x00CD (- 0x1F för vi behöver
+       extraspelet),0x0287}
+00099         \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(outer\_left[i], 0x00AE, 0x0287); 
+00100         \_delay\_ms(1);
+00101          \textcolor{comment}{// pos 1FF + (1023/300pos/vinkl*(-40grader eller + 90 grader)= 0x0177,0x0331 (+ 0x1F för vi
+       behöver extraspelet)}
+00102         \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(outer\_right[i], 0x0177, 0x0350);
+00103         \_delay\_ms(1);
+00104     \}
+00105     
+00106     \textcolor{keywordflow}{if} (mode == \textcolor{charliteral}{'c'}) \textcolor{comment}{//"Climbing mode"?}
+00107     \{
+00108         \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 2; i++)
+00109         \{
+00110             \textcolor{comment}{//Inga begränsningar för de inre servona i klättrings läge }
+00111             \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(inner\_lf\_rb[i], 0x0000, 0x03ff);  
+00112             \_delay\_ms(1);
+00113             \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(inner\_middle[i], 0x0000, 0x03ff); 
+00114             \_delay\_ms(1);
+00115             \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(inner\_rf\_lb[i], 0x0000, 0x03ff); 
+00116             \_delay\_ms(1);
+00117         \}
+00118     \}
+00119     
+00120     \textcolor{keywordflow}{else} \textcolor{comment}{//Annars antas mode == 'r', dvs "regular mode".}
+00121     \{
+00122         \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 2; i++)
+00123         \{
+00124             \textcolor{comment}{// pos 1FF + (1023/300pos/vinkl*(-45grader eller + 60 grader)= 0x0166,0x02CB}
+00125             \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(inner\_lf\_rb[i], 0x0166, 0x02CB);  
+00126             \_delay\_ms(1);
+00127             \textcolor{comment}{// pos 1FF + (1023/300pos/vinkl*(-15grader eller + 15 grader)= 0x01BB,0x0243 -> 0x019F, 0x025F
+       (lite marginal)}
+00128             \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(inner\_middle[i], 0x019F, 0x025F); 
+00129             \_delay\_ms(1);
+00130             \textcolor{comment}{// pos 1FF + (1023/300pos/vinkl*(-60grader eller + 45 grader)= 0x0131,0x0298}
+00131             \hyperlink{servo___u_a_r_t_8c_aae1b10368951b07e7049392da8e8160b}{Send\_Servo\_Angle\_Limit}(inner\_rf\_lb[i], 0x0131, 0x0298); 
+00132             \_delay\_ms(1);
+00133         \}
+00134     \}
+00135 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Configure\+\_\+\+Servos\+\_\+\+Delaytime@{Configure\+\_\+\+Servos\+\_\+\+Delaytime}}
 \index{Configure\+\_\+\+Servos\+\_\+\+Delaytime@{Configure\+\_\+\+Servos\+\_\+\+Delaytime}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Configure\+\_\+\+Servos\+\_\+\+Delaytime(void)}{Configure_Servos_Delaytime(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void Configure\+\_\+\+Servos\+\_\+\+Delaytime (
@@ -211,6 +263,23 @@ Configures servo angle limitations in different ways for different values of mod
 
 Configures the servos response delaytime. 
 
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00052}{52} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00053 \{
+00054     \textcolor{comment}{//till alla servon}
+00055     \textcolor{keywordflow}{for} (uint8\_t i = 1; i < 19; i++)
+00056     \{
+00057         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} return\_delay\_time[] = \{i, 0x04, 0x03, 0x05, 0x2D\}; \textcolor{comment}{//delaytime = 2D}
+00058         \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(return\_delay\_time, 2);
+00059         
+00060         \_delay\_ms(1);
+00061     \}
+00062 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Configure\+\_\+\+Servos\+\_\+\+L\+ED@{Configure\+\_\+\+Servos\+\_\+\+L\+ED}}
 \index{Configure\+\_\+\+Servos\+\_\+\+L\+ED@{Configure\+\_\+\+Servos\+\_\+\+L\+ED}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Configure\+\_\+\+Servos\+\_\+\+L\+E\+D(void)}{Configure_Servos_LED(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void Configure\+\_\+\+Servos\+\_\+\+L\+ED (
@@ -222,13 +291,52 @@ Configures the servos response delaytime.
 
 Configures the servos L\+ED messages. 
 
-Configures which inforamtion that is transmitted on the servo L\+E\+D-\/lights \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Configure\+\_\+\+Servos\+\_\+\+Max\+\_\+\+Torque@{Configure\+\_\+\+Servos\+\_\+\+Max\+\_\+\+Torque}}
+Configures which inforamtion that is transmitted on the servo L\+E\+D-\/lights 
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00065}{65} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00066 \{
+00067     \textcolor{comment}{//till alla servon}
+00068     \textcolor{keywordflow}{for} (uint8\_t i = 1; i < 19; i++)
+00069     \{
+00070         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} LED\_settings[] = \{i, 0x04, 0x03, 0x11, 0xFF\}; \textcolor{comment}{//LED  är på }
+00071         \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(LED\_settings, 2);
+00072         
+00073         \_delay\_ms(1);
+00074     \}
+00075 \}
+\end{DoxyCode}
+\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Configure\+\_\+\+Servos\+\_\+\+Max\+\_\+\+Torque@{Configure\+\_\+\+Servos\+\_\+\+Max\+\_\+\+Torque}}
 \index{Configure\+\_\+\+Servos\+\_\+\+Max\+\_\+\+Torque@{Configure\+\_\+\+Servos\+\_\+\+Max\+\_\+\+Torque}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Configure\+\_\+\+Servos\+\_\+\+Max\+\_\+\+Torque(void)}{Configure_Servos_Max_Torque(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void Configure\+\_\+\+Servos\+\_\+\+Max\+\_\+\+Torque (
 \begin{DoxyParamCaption}
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{servo___u_a_r_t_8c_a2f788735cafd686c547c9340d905c3ad}{}\label{servo___u_a_r_t_8c_a2f788735cafd686c547c9340d905c3ad}
+
+
+Configures maximum torque. 
+
+Configures the maximum torque that each servo can support. 
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00149}{149} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00150 \{
+00151     \textcolor{comment}{//Skicka till alla servon}
+00152     \textcolor{keywordflow}{for} (uint8\_t i = 1; i < 19; i++)
+00153     \{
+00154         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} response\_settings[] = \{i, 0x05, 0x03, 0x0E, 0x90, 0x02\}; \textcolor{comment}{//Ställer in maximum torque
+       = 0x290 }
+00155         \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(response\_settings, 3);
+00156         
+00157         \_delay\_ms(1);
+00158     \}
+00159 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Configure\+\_\+\+Servos\+\_\+\+No\+\_\+\+Response@{Configure\+\_\+\+Servos\+\_\+\+No\+\_\+\+Response}}
 \index{Configure\+\_\+\+Servos\+\_\+\+No\+\_\+\+Response@{Configure\+\_\+\+Servos\+\_\+\+No\+\_\+\+Response}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Configure\+\_\+\+Servos\+\_\+\+No\+\_\+\+Response(void)}{Configure_Servos_No_Response(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void Configure\+\_\+\+Servos\+\_\+\+No\+\_\+\+Response (
@@ -240,7 +348,25 @@ Configures which inforamtion that is transmitted on the servo L\+E\+D-\/lights \
 
 Configures the servo responses. 
 
-Configures servos only to respond when explicitly asked to. \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Get\+\_\+\+Servo\+\_\+\+Load@{Get\+\_\+\+Servo\+\_\+\+Load}}
+Configures servos only to respond when explicitly asked to. 
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00137}{137} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00138 \{
+00139     \textcolor{comment}{//Skicka till alla servon}
+00140     \textcolor{keywordflow}{for} (uint8\_t i = 1; i < 19; i++)
+00141     \{
+00142         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} response\_settings[] = \{i, 0x04, 0x03, 0x10, 0x01\}; \textcolor{comment}{//0x01 betyder att servot inte
+       svarar om det inte explicit ombeds att göra det}
+00143         \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(response\_settings, 2);
+00144         
+00145         \_delay\_ms(1);
+00146     \}
+00147 \}
+\end{DoxyCode}
+\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Get\+\_\+\+Servo\+\_\+\+Load@{Get\+\_\+\+Servo\+\_\+\+Load}}
 \index{Get\+\_\+\+Servo\+\_\+\+Load@{Get\+\_\+\+Servo\+\_\+\+Load}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Get\+\_\+\+Servo\+\_\+\+Load(unsigned char I\+D)}{Get_Servo_Load(unsigned char ID)}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Get\+\_\+\+Servo\+\_\+\+Load (
 \begin{DoxyParamCaption}
@@ -254,27 +380,57 @@ Gets the current load on a specific servo.
 \begin{DoxyReturn}{Returns}
 The load as an int. 0x0000 is min 0x03\+FF i max 
 \end{DoxyReturn}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Get\+\_\+\+Servo\+\_\+\+Temp@{Get\+\_\+\+Servo\+\_\+\+Temp}}
-\index{Get\+\_\+\+Servo\+\_\+\+Temp@{Get\+\_\+\+Servo\+\_\+\+Temp}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{Get\+\_\+\+Servo\+\_\+\+Temp(unsigned char I\+D)}{Get_Servo_Temp(unsigned char ID)}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char Get\+\_\+\+Servo\+\_\+\+Temp (
-\begin{DoxyParamCaption}
-\item[{unsigned char}]{ID}
-\end{DoxyParamCaption}
-)}\hypertarget{servo___u_a_r_t_8c_a5990b8542094df57d8fda7c5a3f26bed}{}\label{servo___u_a_r_t_8c_a5990b8542094df57d8fda7c5a3f26bed}
 
 
-Gets the current temperature of a specific servo. 
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00161}{161} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
 
-\begin{DoxyReturn}{Returns}
-The temperature as an unsigned char in celsius 
-\end{DoxyReturn}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Rise\+\_\+\+Robot\+\_\+\+Height@{Rise\+\_\+\+Robot\+\_\+\+Height}}
-\index{Rise\+\_\+\+Robot\+\_\+\+Height@{Rise\+\_\+\+Robot\+\_\+\+Height}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{Rise\+\_\+\+Robot\+\_\+\+Height(float height)}{Rise_Robot_Height(float height)}}]{\setlength{\rightskip}{0pt plus 5cm}void Rise\+\_\+\+Robot\+\_\+\+Height (
-\begin{DoxyParamCaption}
-\item[{float}]{height}
-\end{DoxyParamCaption}
-)}\hypertarget{servo___u_a_r_t_8c_a215515704ff241c6b2a789a28512a782}{}\label{servo___u_a_r_t_8c_a215515704ff241c6b2a789a28512a782}
+
+\begin{DoxyCode}
+00162 \{   
+00163     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[5];
+00164     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} load\_LSByte;
+00165     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} load\_MSByte;
+00166     \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} start\_byte1= 0;
+00167     \textcolor{keyword}{volatile} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} start\_byte2= 0; 
+00168     uint8\_t timer = 0; 
+00169     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \hyperlink{over__hinder_8c_a29122f6df4a054b8141015682f877c82}{load};
+00170     
+00171     message[0] = ID;
+00172     message[1] = 0x04; \textcolor{comment}{//Length}
+00173     message[2] = 0x02; \textcolor{comment}{//Läs}
+00174     message[3] = 0x28; \textcolor{comment}{//Läser där Present load finns  }
+00175     message[4] = 0x02; \textcolor{comment}{//Läs två byts}
+00176     
+00177     \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(message, 2);
+00178 
+00179     PORTD &= ~(1<<PORTD2); \textcolor{comment}{//Välj riktning "från servon" i tri-state}
+00180     
+00181     \textcolor{keywordflow}{while}((start\_byte1 != 0xFF) && (start\_byte2 != 0xFF)) \textcolor{comment}{// Vänta på start bytes 0xFF, 0xFF}
+00182     \{
+00183         start\_byte2 = start\_byte1; 
+00184         start\_byte1 = \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}();
+00185         ++timer;
+00186         \textcolor{keywordflow}{if}(timer>10) \textcolor{comment}{//Timer}
+00187         \{
+00188             \textcolor{keywordflow}{break};
+00189         \}
+00190     \}
+00191     \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//Hantera förskjutningen i bufferten}
+00192     \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//ID}
+00193     \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//Längd}
+00194     \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//Error}
+00195     load\_LSByte = \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//LS Byte av load}
+00196     load\_MSByte = \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//MS Byte av load}
+00197     \hyperlink{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{UART\_Receive}(); \textcolor{comment}{//Checksum}
+00198     
+00199     \_delay\_ms(0.05); \textcolor{comment}{//Lite extra tidsmarginal så bussen hinner bli ledig innan riktning ändras}
+00200     
+00201     PORTD |= 1<<PORTD2; \textcolor{comment}{//Välj riktning "till servon" i tri-state}
+00202     
+00203     load = (((\textcolor{keywordtype}{unsigned} int)load\_MSByte) << 8) | load\_LSByte;
+00204     \textcolor{keywordflow}{return} \hyperlink{over__hinder_8c_a29122f6df4a054b8141015682f877c82}{load};
+00205 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Inner\+\_\+\+P1\+\_\+\+Velocity@{Send\+\_\+\+Inner\+\_\+\+P1\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Inner\+\_\+\+P1\+\_\+\+Velocity@{Send\+\_\+\+Inner\+\_\+\+P1\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Inner\+\_\+\+P1\+\_\+\+Velocity(unsigned int vel)}{Send_Inner_P1_Velocity(unsigned int vel)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Inner\+\_\+\+P1\+\_\+\+Velocity (
@@ -291,6 +447,21 @@ Sends a velicity to Servo 2, 8, 13.
 {\em vel} & The desired velocity of the servos. 0x000 is min 0x03\+FF is max \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00239}{239} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00240 \{   
+00241     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} inner\_servos[]=\{2,8,13\}; \textcolor{comment}{//Skickar till dessa servon }
+00242         
+00243     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00244     \{
+00245         \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(inner\_servos[i], vel);
+00246     \}
+00247 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Inner\+\_\+\+P2\+\_\+\+Velocity@{Send\+\_\+\+Inner\+\_\+\+P2\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Inner\+\_\+\+P2\+\_\+\+Velocity@{Send\+\_\+\+Inner\+\_\+\+P2\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Inner\+\_\+\+P2\+\_\+\+Velocity(unsigned int vel)}{Send_Inner_P2_Velocity(unsigned int vel)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Inner\+\_\+\+P2\+\_\+\+Velocity (
@@ -307,6 +478,21 @@ Sends a velicity to Servo 1, 7, 14.
 {\em vel} & The desired velocity of the servos. 0x000 is min 0x03\+FF is max \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00250}{250} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00251 \{   
+00252     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} inner\_servos[]=\{1,7,14\}; \textcolor{comment}{//Skickar till dessa servon }
+00253         
+00254     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00255     \{
+00256         \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(inner\_servos[i], vel);
+00257     \}
+00258 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg1\+\_\+\+Cyl@{Send\+\_\+\+Leg1\+\_\+\+Cyl}}
 \index{Send\+\_\+\+Leg1\+\_\+\+Cyl@{Send\+\_\+\+Leg1\+\_\+\+Cyl}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg1\+\_\+\+Cyl(float r, float th, float z)}{Send_Leg1_Cyl(float r, float th, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg1\+\_\+\+Cyl (
@@ -329,6 +515,28 @@ Sends desired position to leg-\/1 in Cylindrical koodinates.
 {\em z} & The length in z-\/direction in cm \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00437}{437} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00438 \{
+00439     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00440     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = r*sin(th) - 6;
+00441     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) - 12;
+00442     \textcolor{comment}{//invers kinematik }
+00443     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00444     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00445     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x99 + 0x01FF;
+00446     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00447     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00448     
+00449     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(8,pos1); \textcolor{comment}{//Servona i ben 1}
+00450     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(10, pos2);
+00451     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(12, pos3);
+00452 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg1\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg1\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Leg1\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg1\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg1\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)}{Send_Leg1_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg1\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity (
@@ -341,6 +549,47 @@ Sends desired position to leg-\/1 in Cylindrical koodinates.
 \item[{unsigned int}]{outer}
 \end{DoxyParamCaption}
 )}\hypertarget{servo___u_a_r_t_8c_a7783d05fa4457ed256d04d0eac4713cc}{}\label{servo___u_a_r_t_8c_a7783d05fa4457ed256d04d0eac4713cc}
+
+
+Sends desired position and velocity to leg-\/1 in cylindrical koodinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The length in r-\/direction in cm \\
+\hline
+{\em th} & The angles in th-\/direction in radians \\
+\hline
+{\em z} & The length in z-\/direction in cm \\
+\hline
+{\em inner} & The servo speed of the inner servo \\
+\hline
+{\em middle} & The servo speed of the middle servo \\
+\hline
+{\em outer} & The servo speed of the outer servo \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00656}{656} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00657 \{
+00658     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00659     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = r*sin(th) - 6;
+00660     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) - 12;
+00661     \textcolor{comment}{//invers kinematik }
+00662     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00663     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00664     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x99 + 0x01FF;
+00665     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00666     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00667     
+00668     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(8,pos1, inner); \textcolor{comment}{//Servona i ben 1}
+00669     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(10, pos2, middle);
+00670     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(12, pos3, outer);
+00671 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg1\+\_\+\+Kar@{Send\+\_\+\+Leg1\+\_\+\+Kar}}
 \index{Send\+\_\+\+Leg1\+\_\+\+Kar@{Send\+\_\+\+Leg1\+\_\+\+Kar}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg1\+\_\+\+Kar(float x, float y, float z)}{Send_Leg1_Kar(float x, float y, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg1\+\_\+\+Kar (
@@ -363,6 +612,25 @@ Sends desired position to leg-\/1 in Cartesian koodinates.
 {\em z} & The length in z-\/direction in cm \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00347}{347} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00348 \{
+00349     \textcolor{comment}{//Invers kinematik}
+00350     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00351     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00352     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos11 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x99 + 0x01FF;
+00353     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos12 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00354     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos13 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00355     
+00356     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(8, pos11); \textcolor{comment}{//Servona i ben 1}
+00357     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(10, pos12);
+00358     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(12, pos13);
+00359 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg1\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg1\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Leg1\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg1\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg1\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)}{Send_Leg1_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg1\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity (
@@ -375,6 +643,44 @@ Sends desired position to leg-\/1 in Cartesian koodinates.
 \item[{unsigned int}]{outer}
 \end{DoxyParamCaption}
 )}\hypertarget{servo___u_a_r_t_8c_a1501df88c7ba1630f81577522ac2bbeb}{}\label{servo___u_a_r_t_8c_a1501df88c7ba1630f81577522ac2bbeb}
+
+
+Sends desired position and velocity to leg-\/1 in Kartesian koodinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The length in r-\/direction in cm \\
+\hline
+{\em th} & The angles in th-\/direction in radians \\
+\hline
+{\em z} & The length in z-\/direction in cm \\
+\hline
+{\em inner} & The servo speed of the inner servo \\
+\hline
+{\em middle} & The servo speed of the middle servo \\
+\hline
+{\em outer} & The servo speed of the outer servo \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00566}{566} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00567 \{
+00568     \textcolor{comment}{//invers kinematik }
+00569     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00570     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00571     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x99 + 0x01FF;
+00572     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00573     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00574     
+00575     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(8,pos1,inner); \textcolor{comment}{//Servona i ben 1}
+00576     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(10, pos2,middle);
+00577     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(12, pos3,outer);
+00578 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg2\+\_\+\+Cyl@{Send\+\_\+\+Leg2\+\_\+\+Cyl}}
 \index{Send\+\_\+\+Leg2\+\_\+\+Cyl@{Send\+\_\+\+Leg2\+\_\+\+Cyl}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg2\+\_\+\+Cyl(float r, float th, float z)}{Send_Leg2_Cyl(float r, float th, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg2\+\_\+\+Cyl (
@@ -397,6 +703,28 @@ Sends desired position to leg-\/2 in Cylindrical koodinates.
 {\em z} & The length in z-\/direction in cm \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00455}{455} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00456 \{
+00457     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00458     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = -r*sin(th) - 6;
+00459     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) - 12; 
+00460     \textcolor{comment}{//invers kinematik }
+00461     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00462     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00463     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} - 0x99 + 0x01FF;
+00464     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00465     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00466     
+00467     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(7, pos1); \textcolor{comment}{//Servona i ben 2}
+00468     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(9, pos2);
+00469     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(11, pos3);
+00470 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg2\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg2\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Leg2\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg2\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg2\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)}{Send_Leg2_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg2\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity (
@@ -409,6 +737,47 @@ Sends desired position to leg-\/2 in Cylindrical koodinates.
 \item[{unsigned int}]{outer}
 \end{DoxyParamCaption}
 )}\hypertarget{servo___u_a_r_t_8c_a16c2e98e0befea13b10d322b5a13c24a}{}\label{servo___u_a_r_t_8c_a16c2e98e0befea13b10d322b5a13c24a}
+
+
+Sends desired position and velocity to leg-\/2 in cylindrical koodinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The length in r-\/direction in cm \\
+\hline
+{\em th} & The angles in th-\/direction in radians \\
+\hline
+{\em z} & The length in z-\/direction in cm \\
+\hline
+{\em inner} & The servo speed of the inner servo \\
+\hline
+{\em middle} & The servo speed of the middle servo \\
+\hline
+{\em outer} & The servo speed of the outer servo \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00674}{674} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00675 \{
+00676     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00677     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = -r*sin(th) - 6;
+00678     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) - 12; 
+00679     \textcolor{comment}{//invers kinematik }
+00680     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00681     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00682     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} - 0x99 + 0x01FF;
+00683     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00684     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00685     
+00686     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(7, pos1, inner); \textcolor{comment}{//Servona i ben 2}
+00687     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(9, pos2, middle);
+00688     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(11, pos3,outer);
+00689 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg2\+\_\+\+Kar@{Send\+\_\+\+Leg2\+\_\+\+Kar}}
 \index{Send\+\_\+\+Leg2\+\_\+\+Kar@{Send\+\_\+\+Leg2\+\_\+\+Kar}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg2\+\_\+\+Kar(float x, float y, float z)}{Send_Leg2_Kar(float x, float y, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg2\+\_\+\+Kar (
@@ -431,6 +800,25 @@ Sends desired position to leg-\/2 in Cartesian koodinates.
 {\em z} & The length in z-\/direction in cm \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00362}{362} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00363 \{
+00364     \textcolor{comment}{//Invers kinematik}
+00365     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00366     \textcolor{comment}{//Servo-offsets och ev. invertering  }
+00367     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos21 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} - 0x99 + 0x01FF;
+00368     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos22 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00369     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos23 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00370     
+00371     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(7, pos21); \textcolor{comment}{//Servona i ben 2}
+00372     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(9, pos22);
+00373     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(11, pos23);
+00374 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg2\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg2\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Leg2\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg2\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg2\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)}{Send_Leg2_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg2\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity (
@@ -443,6 +831,44 @@ Sends desired position to leg-\/2 in Cartesian koodinates.
 \item[{unsigned int}]{outer}
 \end{DoxyParamCaption}
 )}\hypertarget{servo___u_a_r_t_8c_a7ab1230fdabe0bcf16d18c331c75057e}{}\label{servo___u_a_r_t_8c_a7ab1230fdabe0bcf16d18c331c75057e}
+
+
+Sends desired position and velocity to leg-\/2 in Kartesian koodinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The length in r-\/direction in cm \\
+\hline
+{\em th} & The angles in th-\/direction in radians \\
+\hline
+{\em z} & The length in z-\/direction in cm \\
+\hline
+{\em inner} & The servo speed of the inner servo \\
+\hline
+{\em middle} & The servo speed of the middle servo \\
+\hline
+{\em outer} & The servo speed of the outer servo \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00581}{581} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00582 \{
+00583     \textcolor{comment}{//invers kinematik }
+00584     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00585     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00586     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} - 0x99 + 0x01FF;
+00587     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00588     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00589     
+00590     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(7, pos1, inner); \textcolor{comment}{//Servona i ben 2}
+00591     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(9, pos2, middle);
+00592     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(11, pos3, outer);
+00593 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg3\+\_\+\+Cyl@{Send\+\_\+\+Leg3\+\_\+\+Cyl}}
 \index{Send\+\_\+\+Leg3\+\_\+\+Cyl@{Send\+\_\+\+Leg3\+\_\+\+Cyl}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg3\+\_\+\+Cyl(float r, float th, float z)}{Send_Leg3_Cyl(float r, float th, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg3\+\_\+\+Cyl (
@@ -465,6 +891,28 @@ Sends desired position to leg-\/3 in Cylindrical koodinates.
 {\em z} & The length in z-\/direction in cm \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00473}{473} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00474 \{
+00475     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00476     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = r*sin(th) - 10; 
+00477     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th);
+00478     \textcolor{comment}{//invers kinematik }
+00479     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00480     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00481     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x01FF;
+00482     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00483     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00484 
+00485     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(14, pos1); \textcolor{comment}{//Servona i ben 3}
+00486     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(16, pos2);
+00487     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(18, pos3);
+00488 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg3\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg3\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Leg3\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg3\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg3\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)}{Send_Leg3_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg3\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity (
@@ -477,6 +925,47 @@ Sends desired position to leg-\/3 in Cylindrical koodinates.
 \item[{unsigned int}]{outer}
 \end{DoxyParamCaption}
 )}\hypertarget{servo___u_a_r_t_8c_a3f98bedbfd8c6462fbc873fd56ad6094}{}\label{servo___u_a_r_t_8c_a3f98bedbfd8c6462fbc873fd56ad6094}
+
+
+Sends desired position and velocity to leg-\/3 in cylindrical koodinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The length in r-\/direction in cm \\
+\hline
+{\em th} & The angles in th-\/direction in radians \\
+\hline
+{\em z} & The length in z-\/direction in cm \\
+\hline
+{\em inner} & The servo speed of the inner servo \\
+\hline
+{\em middle} & The servo speed of the middle servo \\
+\hline
+{\em outer} & The servo speed of the outer servo \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00692}{692} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00693 \{
+00694     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00695     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = r*sin(th) - 10; 
+00696     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th);
+00697     \textcolor{comment}{//invers kinematik }
+00698     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00699     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00700     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x01FF;
+00701     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00702     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF; 
+00703 
+00704     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(14, pos1, inner); \textcolor{comment}{//Servona i ben 3}
+00705     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(16, pos2, middle);
+00706     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(18, pos3, outer);
+00707 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg3\+\_\+\+Kar@{Send\+\_\+\+Leg3\+\_\+\+Kar}}
 \index{Send\+\_\+\+Leg3\+\_\+\+Kar@{Send\+\_\+\+Leg3\+\_\+\+Kar}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg3\+\_\+\+Kar(float x, float y, float z)}{Send_Leg3_Kar(float x, float y, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg3\+\_\+\+Kar (
@@ -499,6 +988,25 @@ Sends desired position to leg-\/3 in Cartesian koodinates.
 {\em z} & The length in z-\/direction in cm \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00377}{377} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00378 \{
+00379     \textcolor{comment}{//Invers kinematik}
+00380     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00381     \textcolor{comment}{//Servo-offsets och ev. invertering  }
+00382     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos31 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x01FF;
+00383     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos32 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00384     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos33 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00385     
+00386     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(14, pos31); \textcolor{comment}{//Servona i ben 3}
+00387     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(16, pos32);
+00388     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(18, pos33);
+00389 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg3\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg3\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Leg3\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg3\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg3\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)}{Send_Leg3_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg3\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity (
@@ -511,6 +1019,44 @@ Sends desired position to leg-\/3 in Cartesian koodinates.
 \item[{unsigned int}]{outer}
 \end{DoxyParamCaption}
 )}\hypertarget{servo___u_a_r_t_8c_a15260e1c5159c1047ca8ec867a8fc56c}{}\label{servo___u_a_r_t_8c_a15260e1c5159c1047ca8ec867a8fc56c}
+
+
+Sends desired position and velocity to leg-\/3 in Kartesian koodinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The length in r-\/direction in cm \\
+\hline
+{\em th} & The angles in th-\/direction in radians \\
+\hline
+{\em z} & The length in z-\/direction in cm \\
+\hline
+{\em inner} & The servo speed of the inner servo \\
+\hline
+{\em middle} & The servo speed of the middle servo \\
+\hline
+{\em outer} & The servo speed of the outer servo \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00596}{596} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00597 \{
+00598     \textcolor{comment}{//invers kinematik }
+00599     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00600     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00601     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) + 0x01FF;
+00602     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00603     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00604 
+00605     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(14, pos1, inner); \textcolor{comment}{//Servona i ben 3}
+00606     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(16, pos2, middle);
+00607     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(18, pos3, outer);
+00608 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg4\+\_\+\+Cyl@{Send\+\_\+\+Leg4\+\_\+\+Cyl}}
 \index{Send\+\_\+\+Leg4\+\_\+\+Cyl@{Send\+\_\+\+Leg4\+\_\+\+Cyl}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg4\+\_\+\+Cyl(float r, float th, float z)}{Send_Leg4_Cyl(float r, float th, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg4\+\_\+\+Cyl (
@@ -533,6 +1079,28 @@ Sends desired position to leg-\/4 in Cylindrical koodinates.
 {\em z} & The length in z-\/direction in cm \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00491}{491} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00492 \{
+00493     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00494     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = -r*sin(th) - 10;
+00495     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th);
+00496     \textcolor{comment}{//invers kinematik }
+00497     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00498     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00499     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x01FF;
+00500     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00501     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00502     
+00503     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(13, pos1); \textcolor{comment}{//Servona i ben 4}
+00504     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(15, pos2);
+00505     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(17, pos3);
+00506 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg4\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg4\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Leg4\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg4\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg4\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)}{Send_Leg4_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg4\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity (
@@ -545,6 +1113,47 @@ Sends desired position to leg-\/4 in Cylindrical koodinates.
 \item[{unsigned int}]{outer}
 \end{DoxyParamCaption}
 )}\hypertarget{servo___u_a_r_t_8c_a6cddf44c6a11c7907911d03af1e3f127}{}\label{servo___u_a_r_t_8c_a6cddf44c6a11c7907911d03af1e3f127}
+
+
+Sends desired position and velocity to leg-\/4 in cylindrical koodinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The length in r-\/direction in cm \\
+\hline
+{\em th} & The angles in th-\/direction in radians \\
+\hline
+{\em z} & The length in z-\/direction in cm \\
+\hline
+{\em inner} & The servo speed of the inner servo \\
+\hline
+{\em middle} & The servo speed of the middle servo \\
+\hline
+{\em outer} & The servo speed of the outer servo \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00710}{710} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00711 \{
+00712     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00713     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = -r*sin(th) - 10;
+00714     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th);
+00715     \textcolor{comment}{//invers kinematik }
+00716     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00717     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00718     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x01FF;
+00719     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00720     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00721     
+00722     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(13, pos1, inner); \textcolor{comment}{//Servona i ben 4}
+00723     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(15, pos2, middle);
+00724     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(17, pos3, outer);
+00725 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg4\+\_\+\+Kar@{Send\+\_\+\+Leg4\+\_\+\+Kar}}
 \index{Send\+\_\+\+Leg4\+\_\+\+Kar@{Send\+\_\+\+Leg4\+\_\+\+Kar}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg4\+\_\+\+Kar(float x, float y, float z)}{Send_Leg4_Kar(float x, float y, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg4\+\_\+\+Kar (
@@ -567,6 +1176,25 @@ Sends desired position to leg-\/4 in Cartesian koodinates.
 {\em z} & The length in z-\/direction in cm \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00392}{392} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00393 \{   
+00394     \textcolor{comment}{//Invers kinematik}
+00395     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00396     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00397     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos41 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x01FF;
+00398     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos42 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00399     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos43 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00400     
+00401     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(13, pos41); \textcolor{comment}{//Servona i ben 4}
+00402     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(15, pos42);
+00403     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(17, pos43);
+00404 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg4\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg4\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Leg4\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg4\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg4\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)}{Send_Leg4_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg4\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity (
@@ -579,6 +1207,44 @@ Sends desired position to leg-\/4 in Cartesian koodinates.
 \item[{unsigned int}]{outer}
 \end{DoxyParamCaption}
 )}\hypertarget{servo___u_a_r_t_8c_ae1cff60ca27b892abf86b8a55b6b4ccd}{}\label{servo___u_a_r_t_8c_ae1cff60ca27b892abf86b8a55b6b4ccd}
+
+
+Sends desired position and velocity to leg-\/4 in Kartesian koodinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The length in r-\/direction in cm \\
+\hline
+{\em th} & The angles in th-\/direction in radians \\
+\hline
+{\em z} & The length in z-\/direction in cm \\
+\hline
+{\em inner} & The servo speed of the inner servo \\
+\hline
+{\em middle} & The servo speed of the middle servo \\
+\hline
+{\em outer} & The servo speed of the outer servo \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00611}{611} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00612 \{   
+00613     \textcolor{comment}{//invers kinematik }
+00614     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00615     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00616     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x01FF;
+00617     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00618     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00619     
+00620     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(13, pos1, inner); \textcolor{comment}{//Servona i ben 4}
+00621     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(15, pos2, middle);
+00622     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(17, pos3, outer);
+00623 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg5\+\_\+\+Cyl@{Send\+\_\+\+Leg5\+\_\+\+Cyl}}
 \index{Send\+\_\+\+Leg5\+\_\+\+Cyl@{Send\+\_\+\+Leg5\+\_\+\+Cyl}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg5\+\_\+\+Cyl(float r, float th, float z)}{Send_Leg5_Cyl(float r, float th, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg5\+\_\+\+Cyl (
@@ -601,6 +1267,28 @@ Sends desired position to leg-\/5 in Cylindrical koodinates.
 {\em z} & The length in z-\/direction in cm \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00509}{509} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00510 \{
+00511     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00512     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = r*sin(th) - 6;
+00513     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) + 12;
+00514     \textcolor{comment}{//invers kinematik }
+00515     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00516     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00517     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) - 0x99 + 0x01FF;
+00518     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00519     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00520     
+00521     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(2, pos1); \textcolor{comment}{//Servona i ben 5}
+00522     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(4, pos2);
+00523     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(6, pos3);
+00524 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg5\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg5\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Leg5\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg5\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg5\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)}{Send_Leg5_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg5\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity (
@@ -613,6 +1301,47 @@ Sends desired position to leg-\/5 in Cylindrical koodinates.
 \item[{unsigned int}]{outer}
 \end{DoxyParamCaption}
 )}\hypertarget{servo___u_a_r_t_8c_aacc5d4be18de766587abbb83098916a3}{}\label{servo___u_a_r_t_8c_aacc5d4be18de766587abbb83098916a3}
+
+
+Sends desired position and velocity to leg-\/5 in cylindrical koodinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The length in r-\/direction in cm \\
+\hline
+{\em th} & The angles in th-\/direction in radians \\
+\hline
+{\em z} & The length in z-\/direction in cm \\
+\hline
+{\em inner} & The servo speed of the inner servo \\
+\hline
+{\em middle} & The servo speed of the middle servo \\
+\hline
+{\em outer} & The servo speed of the outer servo \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00728}{728} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00729 \{
+00730     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00731     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = r*sin(th) - 6;
+00732     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) + 12;
+00733     \textcolor{comment}{//invers kinematik }
+00734     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00735     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00736     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) - 0x99 + 0x01FF;
+00737     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00738     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00739     
+00740     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(2, pos1, inner); \textcolor{comment}{//Servona i ben 5}
+00741     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(4, pos2, middle);
+00742     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(6, pos3, outer);
+00743 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg5\+\_\+\+Kar@{Send\+\_\+\+Leg5\+\_\+\+Kar}}
 \index{Send\+\_\+\+Leg5\+\_\+\+Kar@{Send\+\_\+\+Leg5\+\_\+\+Kar}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg5\+\_\+\+Kar(float x, float y, float z)}{Send_Leg5_Kar(float x, float y, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg5\+\_\+\+Kar (
@@ -635,6 +1364,25 @@ Sends desired position to leg-\/5 in Cartesian koodinates.
 {\em z} & The length in z-\/direction in cm \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00407}{407} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00408 \{
+00409     \textcolor{comment}{//Invers kinematik}
+00410     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00411     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00412     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos51 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) - 0x99 + 0x01FF;
+00413     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos52 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00414     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos53 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00415     
+00416     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(2, pos51); \textcolor{comment}{//Servona i ben 5}
+00417     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(4, pos52);
+00418     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(6, pos53);
+00419 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg5\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg5\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Leg5\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg5\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg5\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)}{Send_Leg5_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg5\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity (
@@ -647,6 +1395,44 @@ Sends desired position to leg-\/5 in Cartesian koodinates.
 \item[{unsigned int}]{outer}
 \end{DoxyParamCaption}
 )}\hypertarget{servo___u_a_r_t_8c_a7cd98c6b9c0d2127feb9dfece072b3b0}{}\label{servo___u_a_r_t_8c_a7cd98c6b9c0d2127feb9dfece072b3b0}
+
+
+Sends desired position and velocity to leg-\/5 in Kartesian koodinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The length in r-\/direction in cm \\
+\hline
+{\em th} & The angles in th-\/direction in radians \\
+\hline
+{\em z} & The length in z-\/direction in cm \\
+\hline
+{\em inner} & The servo speed of the inner servo \\
+\hline
+{\em middle} & The servo speed of the middle servo \\
+\hline
+{\em outer} & The servo speed of the outer servo \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00626}{626} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00627 \{
+00628     \textcolor{comment}{//invers kinematik }
+00629     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00630     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00631     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = -(pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET}) - 0x99 + 0x01FF;
+00632     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = -(pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET}) + 0x01FF;
+00633     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = -(pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET}) + 0x01FF;
+00634     
+00635     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(2, pos1, inner); \textcolor{comment}{//Servona i ben 5}
+00636     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(4, pos2, middle);
+00637     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(6, pos3, outer);
+00638 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg6\+\_\+\+Cyl@{Send\+\_\+\+Leg6\+\_\+\+Cyl}}
 \index{Send\+\_\+\+Leg6\+\_\+\+Cyl@{Send\+\_\+\+Leg6\+\_\+\+Cyl}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg6\+\_\+\+Cyl(float r, float th, float z)}{Send_Leg6_Cyl(float r, float th, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg6\+\_\+\+Cyl (
@@ -669,6 +1455,28 @@ Sends desired position to leg-\/6 in Cylindrical koodinates.
 {\em z} & The length in z-\/direction in cm \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00527}{527} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00528 \{
+00529     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00530     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = -r*sin(th) - 6;
+00531     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) + 12;
+00532     \textcolor{comment}{//invers kinematik }
+00533     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00534     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00535     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x99 + 0x01FF;
+00536     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00537     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00538     
+00539     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(1, pos1); \textcolor{comment}{//Servona i ben 6}
+00540     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(3, pos2);
+00541     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(5, pos3);
+00542 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg6\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg6\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Leg6\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg6\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg6\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)}{Send_Leg6_Cyl_And_Velocity(float r, float th, float z, unsigned int inner, unsigned int middle, unsigned int outer)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg6\+\_\+\+Cyl\+\_\+\+And\+\_\+\+Velocity (
@@ -681,6 +1489,47 @@ Sends desired position to leg-\/6 in Cylindrical koodinates.
 \item[{unsigned int}]{outer}
 \end{DoxyParamCaption}
 )}\hypertarget{servo___u_a_r_t_8c_a3f6d26397b69e462327480969aa40d1b}{}\label{servo___u_a_r_t_8c_a3f6d26397b69e462327480969aa40d1b}
+
+
+Sends desired position and velocity to leg-\/6 in cylindrical koodinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The length in r-\/direction in cm \\
+\hline
+{\em th} & The angles in th-\/direction in radians \\
+\hline
+{\em z} & The length in z-\/direction in cm \\
+\hline
+{\em inner} & The servo speed of the inner servo \\
+\hline
+{\em middle} & The servo speed of the middle servo \\
+\hline
+{\em outer} & The servo speed of the outer servo \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00746}{746} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00747 \{
+00748     \textcolor{comment}{//Ben-offset och koordinatbyte}
+00749     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} = -r*sin(th) - 6;
+00750     \textcolor{keywordtype}{float} \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y} = r*cos(th) + 12;
+00751     \textcolor{comment}{//invers kinematik }
+00752     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(x, y, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00753     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00754     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x99 + 0x01FF;
+00755     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00756     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00757     
+00758     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(1, pos1, inner); \textcolor{comment}{//Servona i ben 6}
+00759     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(3, pos2, middle);
+00760     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(5, pos3, outer);
+00761 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg6\+\_\+\+Kar@{Send\+\_\+\+Leg6\+\_\+\+Kar}}
 \index{Send\+\_\+\+Leg6\+\_\+\+Kar@{Send\+\_\+\+Leg6\+\_\+\+Kar}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg6\+\_\+\+Kar(float x, float y, float z)}{Send_Leg6_Kar(float x, float y, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg6\+\_\+\+Kar (
@@ -703,6 +1552,25 @@ Sends desired position to leg-\/6 in Cartesian koodinates.
 {\em z} & The length in z-\/direction in cm \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00422}{422} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00423 \{
+00424     \textcolor{comment}{//Invers kinematik}
+00425     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00426     \textcolor{comment}{//Servo-offsets och ev. invertering  }
+00427     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos61 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x99 + 0x01FF;
+00428     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos62 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00429     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos63 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00430     
+00431     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(1, pos61); \textcolor{comment}{//Servona i ben 6}
+00432     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(3, pos62);
+00433     \hyperlink{servo___u_a_r_t_8c_a5ed0e49737d1eaf80665c285396b4337}{Send\_Servo\_Position}(5, pos63);
+00434 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Leg6\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg6\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Leg6\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Leg6\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Leg6\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)}{Send_Leg6_Kar_And_Velocity(float x, float y, float z, unsigned int inner, unsigned int middle, unsigned int outer)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Leg6\+\_\+\+Kar\+\_\+\+And\+\_\+\+Velocity (
@@ -715,6 +1583,44 @@ Sends desired position to leg-\/6 in Cartesian koodinates.
 \item[{unsigned int}]{outer}
 \end{DoxyParamCaption}
 )}\hypertarget{servo___u_a_r_t_8c_a8cd710e0714336201bd84b46a1e1877d}{}\label{servo___u_a_r_t_8c_a8cd710e0714336201bd84b46a1e1877d}
+
+
+Sends desired position and velocity to leg-\/6 in Kartesian koodinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The length in r-\/direction in cm \\
+\hline
+{\em th} & The angles in th-\/direction in radians \\
+\hline
+{\em z} & The length in z-\/direction in cm \\
+\hline
+{\em inner} & The servo speed of the inner servo \\
+\hline
+{\em middle} & The servo speed of the middle servo \\
+\hline
+{\em outer} & The servo speed of the outer servo \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00641}{641} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00642 \{
+00643     \textcolor{comment}{//invers kinematik }
+00644     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\_To\_Pos}(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00645     \textcolor{comment}{//Servo-offsets och ev. invertering }
+00646     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = pos.\hyperlink{structtriple__uint_a0ea8a85723620c90be9fd2a693f12a59}{a} - \hyperlink{servo___u_a_r_t_8c_a4c437d01d2f060ec86c16ed5e76efe45}{FIRST\_SERVO\_OFFSET} + 0x99 + 0x01FF;
+00647     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = pos.\hyperlink{structtriple__uint_a790d5baa17ec7aaf7bb49750a16e9c29}{b} - \hyperlink{servo___u_a_r_t_8c_acb02dedbe5ff19694bdb5b2ddf61664a}{SECOND\_SERVO\_OFFSET} + 0x01FF;
+00648     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = pos.\hyperlink{structtriple__uint_a6ce17b018c47d0f1d0e53a458f741ad3}{c} - \hyperlink{servo___u_a_r_t_8c_ac2f065c44b617c91ea7f4237e8ead729}{THIRD\_SERVO\_OFFSET} + 0x01FF;
+00649     
+00650     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(1, pos1, inner); \textcolor{comment}{//Servona i ben 6}
+00651     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(3, pos2, middle);
+00652     \hyperlink{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{Send\_Servo\_Position\_And\_Velocity}(5, pos3, outer);
+00653 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Middle\+\_\+\+P1\+\_\+\+Velocity@{Send\+\_\+\+Middle\+\_\+\+P1\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Middle\+\_\+\+P1\+\_\+\+Velocity@{Send\+\_\+\+Middle\+\_\+\+P1\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Middle\+\_\+\+P1\+\_\+\+Velocity(unsigned int vel)}{Send_Middle_P1_Velocity(unsigned int vel)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Middle\+\_\+\+P1\+\_\+\+Velocity (
@@ -731,6 +1637,21 @@ Sends a velicity to Servo 4, 10, 15.
 {\em vel} & The desired velocity of the servos. 0x000 is min 0x03\+FF is max \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00261}{261} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00262 \{   
+00263     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} middle\_servos[]=\{4,10,15\}; \textcolor{comment}{//Skickar till dessa servon }
+00264         
+00265     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00266     \{
+00267         \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(middle\_servos[i], vel);
+00268     \}
+00269 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Middle\+\_\+\+P2\+\_\+\+Velocity@{Send\+\_\+\+Middle\+\_\+\+P2\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Middle\+\_\+\+P2\+\_\+\+Velocity@{Send\+\_\+\+Middle\+\_\+\+P2\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Middle\+\_\+\+P2\+\_\+\+Velocity(unsigned int vel)}{Send_Middle_P2_Velocity(unsigned int vel)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Middle\+\_\+\+P2\+\_\+\+Velocity (
@@ -747,6 +1668,21 @@ Sends a velicity to Servo 3, 9, 16.
 {\em vel} & The desired velocity of the servos. 0x000 is min 0x03\+FF is max \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00272}{272} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00273 \{   
+00274     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} middle\_servos[]=\{9,16,3\}; \textcolor{comment}{//Skickar till dessa servon }
+00275         
+00276     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00277     \{
+00278         \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(middle\_servos[i], vel);
+00279     \}
+00280 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Outer\+\_\+\+P1\+\_\+\+Velocity@{Send\+\_\+\+Outer\+\_\+\+P1\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Outer\+\_\+\+P1\+\_\+\+Velocity@{Send\+\_\+\+Outer\+\_\+\+P1\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Outer\+\_\+\+P1\+\_\+\+Velocity(unsigned int vel)}{Send_Outer_P1_Velocity(unsigned int vel)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Outer\+\_\+\+P1\+\_\+\+Velocity (
@@ -763,6 +1699,21 @@ Sends a velicity to Servo 6, 12, 17.
 {\em vel} & The desired velocity of the servos. 0x000 is min 0x03\+FF is max \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00283}{283} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00284 \{   
+00285     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} outer\_servos[]=\{6,12,17\}; \textcolor{comment}{//Skickar till dessa servon }
+00286         
+00287     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00288     \{
+00289         \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(outer\_servos[i], vel);
+00290     \}
+00291 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Outer\+\_\+\+P2\+\_\+\+Velocity@{Send\+\_\+\+Outer\+\_\+\+P2\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Outer\+\_\+\+P2\+\_\+\+Velocity@{Send\+\_\+\+Outer\+\_\+\+P2\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Outer\+\_\+\+P2\+\_\+\+Velocity(unsigned int vel)}{Send_Outer_P2_Velocity(unsigned int vel)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Outer\+\_\+\+P2\+\_\+\+Velocity (
@@ -779,6 +1730,21 @@ Sends a velicity to Servo 5, 11, 18.
 {\em vel} & The desired velocity of the servos. 0x000 is min 0x03\+FF is max \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00294}{294} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00295 \{   
+00296     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} outer\_servos[]=\{5,11,18\}; \textcolor{comment}{//Skickar till dessa servon }
+00297         
+00298     \textcolor{keywordflow}{for} (uint8\_t i = 0; i < 3; i++)
+00299     \{
+00300         \hyperlink{servo___u_a_r_t_8c_ac325c1636bc0a1c5b6cbe967bca0a6d2}{Send\_Servo\_Velocity}(outer\_servos[i], vel);
+00301     \}
+00302 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Servo\+\_\+\+Angle\+\_\+\+Limit@{Send\+\_\+\+Servo\+\_\+\+Angle\+\_\+\+Limit}}
 \index{Send\+\_\+\+Servo\+\_\+\+Angle\+\_\+\+Limit@{Send\+\_\+\+Servo\+\_\+\+Angle\+\_\+\+Limit}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Servo\+\_\+\+Angle\+\_\+\+Limit(unsigned char I\+D, unsigned int lower, unsigned int higher)}{Send_Servo_Angle_Limit(unsigned char ID, unsigned int lower, unsigned int higher)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Servo\+\_\+\+Angle\+\_\+\+Limit (
@@ -803,6 +1769,25 @@ If a servo is told to exceed these limits, it will go as close as possible
 {\em higher} & The desired higher angle limit of the servo. 0x000 is min 0x03\+FF is max \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00223}{223} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00224 \{
+00225     \textcolor{comment}{//Dela upp vinklar i LS respektive MS Byte}
+00226     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} lowerLS = lower; \textcolor{comment}{//Plockar ut LS Byte av vinkel för det första servot (översta servot)}
+00227     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} lowerMS = (lower>>8); \textcolor{comment}{//Som ovan men med MS Byte}
+00228     
+00229     \textcolor{comment}{//Dela upp vinklar i LS respektive MS Byte}
+00230     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} higherLS = higher; \textcolor{comment}{//Plockar ut LS Byte av vinkel för det första servot (översta servot)}
+00231     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} higherMS = (higher>>8); \textcolor{comment}{//Som ovan men med MS Byte}
+00232     
+00233     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} limits[] = \{ID, 0x07, 0x03, 0x06, lowerLS, lowerMS, higherLS, higherMS\};
+00234     \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(limits, 5);
+00235 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Servo\+\_\+\+Message@{Send\+\_\+\+Servo\+\_\+\+Message}}
 \index{Send\+\_\+\+Servo\+\_\+\+Message@{Send\+\_\+\+Servo\+\_\+\+Message}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Servo\+\_\+\+Message(unsigned char message[], uint8\+\_\+t num\+\_\+of\+\_\+par)}{Send_Servo_Message(unsigned char message[], uint8_t num_of_par)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Servo\+\_\+\+Message (
@@ -824,6 +1809,34 @@ Order of message\+: ID, Lenght, Instruction, Parameter1, Parameter2 ... ... Para
 {\em num\+\_\+of\+\_\+par} & The number of parameters in the message (O\+BS != the length of message). \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00305}{305} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00306 \{
+00307     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} checksum = \hyperlink{servo___u_a_r_t_8c_ab388e52c7139a00514d89616ec7da33d}{checksum\_calc}(message, num\_of\_par); \textcolor{comment}{//Beräknar checksum}
+00308     
+00309     cli(); \textcolor{comment}{//Deaktivera avbrott}
+00310     
+00311     \hyperlink{servo___u_a_r_t_8c_af34dbb08e8f6cfc1a58d9b7f2b81f455}{UART\_Transmit}(0xFF); \textcolor{comment}{//2 st Startbytes}
+00312     \hyperlink{servo___u_a_r_t_8c_af34dbb08e8f6cfc1a58d9b7f2b81f455}{UART\_Transmit}(0xFF);
+00313     
+00314     \textcolor{comment}{// Här skickas meddelandet (exkl checksum)}
+00315     \textcolor{keywordflow}{for}(uint8\_t i=0; i < num\_of\_par+3; i++)
+00316     \{
+00317         \hyperlink{servo___u_a_r_t_8c_af34dbb08e8f6cfc1a58d9b7f2b81f455}{UART\_Transmit}(message[i]);
+00318     \}
+00319     
+00320     \hyperlink{servo___u_a_r_t_8c_af34dbb08e8f6cfc1a58d9b7f2b81f455}{UART\_Transmit}(checksum); \textcolor{comment}{//Checksum}
+00321     
+00322     \textcolor{keywordflow}{while}(!( UCSR0A & (1<<TXC0))); \textcolor{comment}{//Vänta på att UART är redo att skicka ny data}
+00323     \_delay\_ms(0.06); \textcolor{comment}{//Lite extra tidsmarginal så överföringen verkligen hinner bli klar}
+00324     
+00325     sei(); \textcolor{comment}{//Aktivera avbrott igen}
+00326 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Servo\+\_\+\+Position@{Send\+\_\+\+Servo\+\_\+\+Position}}
 \index{Send\+\_\+\+Servo\+\_\+\+Position@{Send\+\_\+\+Servo\+\_\+\+Position}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Servo\+\_\+\+Position(unsigned char I\+D, unsigned int pos)}{Send_Servo_Position(unsigned char ID, unsigned int pos)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Servo\+\_\+\+Position (
@@ -843,6 +1856,28 @@ Sends a position to a servo.
 {\em pos} & The desired position of the servo. 0x000 is min 0x03\+FF is max \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00329}{329} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00330 \{
+00331     \textcolor{comment}{//Dela upp positionen i LS respektive MS Byte}
+00332     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} posLS = pos; 
+00333     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} posMS = (pos>>8);
+00334     
+00335     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[6];
+00336     message[0] = ID;
+00337     message[1] = 0x05; \textcolor{comment}{//Längd }
+00338     message[2] = 0x03; \textcolor{comment}{//Skriv }
+00339     message[3] = 0x1E; \textcolor{comment}{//Skriv vid Position}
+00340     message[4] = posLS;\textcolor{comment}{//Position LS byte }
+00341     message[5] = posMS;\textcolor{comment}{//Position MS byte}
+00342     
+00343     \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(message, 3);
+00344 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Servo\+\_\+\+Position\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Servo\+\_\+\+Position\+\_\+\+And\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Servo\+\_\+\+Position\+\_\+\+And\+\_\+\+Velocity@{Send\+\_\+\+Servo\+\_\+\+Position\+\_\+\+And\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Servo\+\_\+\+Position\+\_\+\+And\+\_\+\+Velocity(unsigned char I\+D, unsigned int pos, unsigned int vel)}{Send_Servo_Position_And_Velocity(unsigned char ID, unsigned int pos, unsigned int vel)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Servo\+\_\+\+Position\+\_\+\+And\+\_\+\+Velocity (
@@ -854,7 +1889,7 @@ Sends a position to a servo.
 )}\hypertarget{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}{}\label{servo___u_a_r_t_8c_aef28545296037ecc0350638a407a680f}
 
 
-Sends desired position and velicity to a servo. 
+Sends desired position and velocity to a servo. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -865,6 +1900,33 @@ Sends desired position and velicity to a servo.
 {\em vel} & The desired velocity of the servo. 0x000 is min 0x03\+FF is max \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00544}{544} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00545 \{
+00546     \textcolor{comment}{//Dela upp hastigheter i LS respektive MS Byte}
+00547     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} velLS = vel; \textcolor{comment}{//Plockar ut LS Byte av hastigheten för det första servot (översta servot)}
+00548     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} velMS = (vel>>8); \textcolor{comment}{//Som ovan men med MS Byte}
+00549     
+00550     \textcolor{comment}{//Dela upp hastigheter i LS respektive MS Byte}
+00551     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} posLS = pos; \textcolor{comment}{//Plockar ut LS Byte av hastigheten för det första servot (översta servot)}
+00552     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} posMS = (pos>>8); \textcolor{comment}{//Som ovan men med MS Byte}
+00553     
+00554     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[8];
+00555     message[0] = ID;
+00556     message[1] = 0x07;  \textcolor{comment}{//Längd }
+00557     message[2] = 0x03;  \textcolor{comment}{//Skriv}
+00558     message[3] = 0x1E;  \textcolor{comment}{//Skriv där postion börjar}
+00559     message[4] = posLS; \textcolor{comment}{//position LS byte }
+00560     message[5] = posMS; \textcolor{comment}{//position MS byte}
+00561     message[6] = velLS; \textcolor{comment}{//hastighet LS byte}
+00562     message[7] = velMS; \textcolor{comment}{//hastighet LS byte}
+00563     \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(message, 5);
+00564 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!Send\+\_\+\+Servo\+\_\+\+Velocity@{Send\+\_\+\+Servo\+\_\+\+Velocity}}
 \index{Send\+\_\+\+Servo\+\_\+\+Velocity@{Send\+\_\+\+Servo\+\_\+\+Velocity}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{Send\+\_\+\+Servo\+\_\+\+Velocity(unsigned char I\+D, unsigned int vel)}{Send_Servo_Velocity(unsigned char ID, unsigned int vel)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Servo\+\_\+\+Velocity (
@@ -884,13 +1946,34 @@ Sends a velicity to a servo.
 {\em vel} & The desired velocity of the servo. 0x000 is min 0x03\+FF is max \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00207}{207} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00208 \{
+00209     \textcolor{comment}{//Dela upp hastyigheter i LS respektive MS Byte}
+00210     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} velLS = vel; \textcolor{comment}{//Plockar ut LS Byte av hastigheten för det första servot (översta servot)}
+00211     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} velMS = (vel>>8); \textcolor{comment}{//Som ovan men med MS Byte}
+00212     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} message[6];
+00213     message[0] = ID;
+00214     message[1] = 0x05;  \textcolor{comment}{//längd }
+00215     message[2] = 0x03;  \textcolor{comment}{//Skriv }
+00216     message[3] = 0x20;  \textcolor{comment}{//Skriv i hastighet }
+00217     message[4] = velLS; \textcolor{comment}{//hastighet LS byte}
+00218     message[5] = velMS; \textcolor{comment}{//hastighet MS byte}
+00219     
+00220     \hyperlink{servo___u_a_r_t_8c_a2ed3a2903977a774d1b174665d50661c}{Send\_Servo\_Message}(message, 3);
+00221 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!U\+A\+R\+T\+\_\+\+Receive@{U\+A\+R\+T\+\_\+\+Receive}}
 \index{U\+A\+R\+T\+\_\+\+Receive@{U\+A\+R\+T\+\_\+\+Receive}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{U\+A\+R\+T\+\_\+\+Receive(void)}{UART_Receive(void)}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char U\+A\+R\+T\+\_\+\+Receive (
+\subsubsection[{\texorpdfstring{U\+A\+R\+T\+\_\+\+Receive(void)}{UART_Receive(void)}}]{\setlength{\rightskip}{0pt plus 5cm}volatile unsigned char U\+A\+R\+T\+\_\+\+Receive (
 \begin{DoxyParamCaption}
 \item[{void}]{}
 \end{DoxyParamCaption}
-)}\hypertarget{servo___u_a_r_t_8c_a45145cd104fed6e8dff8dd62ee52ebe7}{}\label{servo___u_a_r_t_8c_a45145cd104fed6e8dff8dd62ee52ebe7}
+)}\hypertarget{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}{}\label{servo___u_a_r_t_8c_ae61a7bb5a727a8605e5865fc36e4e26b}
 
 
 Receives one byte from the U\+A\+RT. 
@@ -900,6 +1983,28 @@ Tries to receive one byte on the U\+A\+RT Fail returned after reached time-\/lim
 \begin{DoxyReturn}{Returns}
 The received data, 0x\+BB if fail. 
 \end{DoxyReturn}
+
+
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00024}{24} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00025 \{
+00026     \textcolor{keywordtype}{float} i=0;
+00027     \textcolor{comment}{// Vänta på att data mottas}
+00028     \textcolor{keywordflow}{while} ((!(UCSR0A & (1<<RXC0))))
+00029     \{
+00030         i = i + 1; 
+00031         \textcolor{comment}{// Timer för mottagningen}
+00032         \textcolor{keywordflow}{if}(i>50)
+00033         \{
+00034             \textcolor{keywordflow}{return} 0xBB;
+00035         \}
+00036     \}
+00037     \textcolor{comment}{// Hämta och returnera mottagen data från bufferten}
+00038     \textcolor{keywordflow}{return} UDR0;
+00039 \}
+\end{DoxyCode}
 \index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!U\+A\+R\+T\+\_\+\+Transmit@{U\+A\+R\+T\+\_\+\+Transmit}}
 \index{U\+A\+R\+T\+\_\+\+Transmit@{U\+A\+R\+T\+\_\+\+Transmit}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
 \subsubsection[{\texorpdfstring{U\+A\+R\+T\+\_\+\+Transmit(unsigned char data)}{UART_Transmit(unsigned char data)}}]{\setlength{\rightskip}{0pt plus 5cm}void U\+A\+R\+T\+\_\+\+Transmit (
@@ -909,7 +2014,7 @@ The received data, 0x\+BB if fail.
 )}\hypertarget{servo___u_a_r_t_8c_af34dbb08e8f6cfc1a58d9b7f2b81f455}{}\label{servo___u_a_r_t_8c_af34dbb08e8f6cfc1a58d9b7f2b81f455}
 
 
-Transmits one byte on the U\+S\+A\+RT. 
+Transmits one byte on the U\+A\+RT. 
 
 Sends one byte on the U\+A\+RT 
 \begin{DoxyParams}{Parameters}
@@ -918,61 +2023,14 @@ Sends one byte on the U\+A\+RT
 \end{DoxyParams}
 
 
-\subsection{Variable Documentation}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos11@{pos11}}
-\index{pos11@{pos11}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos11}{pos11}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos11}\hypertarget{servo___u_a_r_t_8c_a025c1a1d07871fee276be6b234ca16bf}{}\label{servo___u_a_r_t_8c_a025c1a1d07871fee276be6b234ca16bf}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos12@{pos12}}
-\index{pos12@{pos12}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos12}{pos12}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos12}\hypertarget{servo___u_a_r_t_8c_af6f6a278e98a84050b65ae91f96c0a7e}{}\label{servo___u_a_r_t_8c_af6f6a278e98a84050b65ae91f96c0a7e}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos13@{pos13}}
-\index{pos13@{pos13}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos13}{pos13}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos13}\hypertarget{servo___u_a_r_t_8c_aaee16ec2749d37aaf876ec02c8d78fe0}{}\label{servo___u_a_r_t_8c_aaee16ec2749d37aaf876ec02c8d78fe0}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos1fg@{pos1fg}}
-\index{pos1fg@{pos1fg}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos1fg}{pos1fg}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos1fg}\hypertarget{servo___u_a_r_t_8c_ae89063d734c00e40dc63741f11311e8a}{}\label{servo___u_a_r_t_8c_ae89063d734c00e40dc63741f11311e8a}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos21@{pos21}}
-\index{pos21@{pos21}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos21}{pos21}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos21}\hypertarget{servo___u_a_r_t_8c_ad6f2f92b1be856a162c53636268ad149}{}\label{servo___u_a_r_t_8c_ad6f2f92b1be856a162c53636268ad149}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos22@{pos22}}
-\index{pos22@{pos22}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos22}{pos22}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos22}\hypertarget{servo___u_a_r_t_8c_a50579df384e97ba0ea0f66e653bd5971}{}\label{servo___u_a_r_t_8c_a50579df384e97ba0ea0f66e653bd5971}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos23@{pos23}}
-\index{pos23@{pos23}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos23}{pos23}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos23}\hypertarget{servo___u_a_r_t_8c_a6fb7acd5103fcdc6cf033987ef54be28}{}\label{servo___u_a_r_t_8c_a6fb7acd5103fcdc6cf033987ef54be28}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos31@{pos31}}
-\index{pos31@{pos31}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos31}{pos31}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos31}\hypertarget{servo___u_a_r_t_8c_adb7ff2b99689a1db9a48e8dfda3d7d5c}{}\label{servo___u_a_r_t_8c_adb7ff2b99689a1db9a48e8dfda3d7d5c}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos32@{pos32}}
-\index{pos32@{pos32}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos32}{pos32}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos32}\hypertarget{servo___u_a_r_t_8c_a61ef10589b45bd276c3f77f208505ee2}{}\label{servo___u_a_r_t_8c_a61ef10589b45bd276c3f77f208505ee2}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos33@{pos33}}
-\index{pos33@{pos33}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos33}{pos33}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos33}\hypertarget{servo___u_a_r_t_8c_a3e0a1154f88ab2c00d59b553a2ca10e8}{}\label{servo___u_a_r_t_8c_a3e0a1154f88ab2c00d59b553a2ca10e8}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos41@{pos41}}
-\index{pos41@{pos41}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos41}{pos41}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos41}\hypertarget{servo___u_a_r_t_8c_a4a8608804268b531779fa9e7559a8b9d}{}\label{servo___u_a_r_t_8c_a4a8608804268b531779fa9e7559a8b9d}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos42@{pos42}}
-\index{pos42@{pos42}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos42}{pos42}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos42}\hypertarget{servo___u_a_r_t_8c_ad198242a73a6f710a53c4964d74adfa0}{}\label{servo___u_a_r_t_8c_ad198242a73a6f710a53c4964d74adfa0}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos43@{pos43}}
-\index{pos43@{pos43}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos43}{pos43}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos43}\hypertarget{servo___u_a_r_t_8c_a2778161503c6b2a0bd924c9f038375d5}{}\label{servo___u_a_r_t_8c_a2778161503c6b2a0bd924c9f038375d5}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos51@{pos51}}
-\index{pos51@{pos51}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos51}{pos51}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos51}\hypertarget{servo___u_a_r_t_8c_a850c67d6362e0e9a993055c334e19d00}{}\label{servo___u_a_r_t_8c_a850c67d6362e0e9a993055c334e19d00}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos52@{pos52}}
-\index{pos52@{pos52}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos52}{pos52}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos52}\hypertarget{servo___u_a_r_t_8c_ae7dfad9c586f293ec436c7114233ebc4}{}\label{servo___u_a_r_t_8c_ae7dfad9c586f293ec436c7114233ebc4}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos53@{pos53}}
-\index{pos53@{pos53}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos53}{pos53}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos53}\hypertarget{servo___u_a_r_t_8c_a60324a7b310234d9159b178c55b78b4e}{}\label{servo___u_a_r_t_8c_a60324a7b310234d9159b178c55b78b4e}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos61@{pos61}}
-\index{pos61@{pos61}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos61}{pos61}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos61}\hypertarget{servo___u_a_r_t_8c_a0aa70a2bd11b45a893058fd05edb5488}{}\label{servo___u_a_r_t_8c_a0aa70a2bd11b45a893058fd05edb5488}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos62@{pos62}}
-\index{pos62@{pos62}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos62}{pos62}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos62}\hypertarget{servo___u_a_r_t_8c_a3e4f17a010c58bdb41458a656ed876fe}{}\label{servo___u_a_r_t_8c_a3e4f17a010c58bdb41458a656ed876fe}
-\index{servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}!pos63@{pos63}}
-\index{pos63@{pos63}!servo\+\_\+\+U\+A\+R\+T.\+c@{servo\+\_\+\+U\+A\+R\+T.\+c}}
-\subsubsection[{\texorpdfstring{pos63}{pos63}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int pos63}\hypertarget{servo___u_a_r_t_8c_a28254bce164f33dc4cc2616ac40b774f}{}\label{servo___u_a_r_t_8c_a28254bce164f33dc4cc2616ac40b774f}
+Definition at line \hyperlink{servo___u_a_r_t_8c_source_l00016}{16} of file \hyperlink{servo___u_a_r_t_8c_source}{servo\+\_\+\+U\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00017 \{
+00018     \textcolor{comment}{// Vänta på att bufferten ska bli tom}
+00019     \textcolor{keywordflow}{while} ( !( UCSR0A & (1<<UDRE0)) );
+00020     \textcolor{comment}{// Skicka datan}
+00021     UDR0 = data;
+00022 \}
+\end{DoxyCode}

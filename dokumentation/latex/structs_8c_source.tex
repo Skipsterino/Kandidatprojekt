@@ -1,0 +1,60 @@
+\hypertarget{structs_8c_source}{}\section{structs.\+c}
+\label{structs_8c_source}\index{styr/styr/structs.\+c@{styr/styr/structs.\+c}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *        File: structs.c}
+00003 \textcolor{comment}{ *     Version: 1.0}
+00004 \textcolor{comment}{ * Last edited: 15/4/2016 }
+00005 \textcolor{comment}{ *     Authors: erilj291, chrma018}
+00006 \textcolor{comment}{ */} 
+00007 
+00008 \textcolor{preprocessor}{#include "\hyperlink{structs_8h}{structs.h}"}
+00009 
+\hypertarget{structs_8c_source.tex_l00010}{}\hyperlink{structs_8h_a32f52471299d0d08c34e0dc70f2296d6}{00010} \hyperlink{structtriple__float}{triple\_float} \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(\textcolor{keywordtype}{float} a, \textcolor{keywordtype}{float} b, \textcolor{keywordtype}{float} c)
+00011 \{
+00012     \hyperlink{structtriple__float}{triple\_float} \textcolor{keyword}{this};
+00013     this.a = a;
+00014     this.b = b;
+00015     this.c = c;
+00016     \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+00017 \}
+00018 
+\hypertarget{structs_8c_source.tex_l00019}{}\hyperlink{structs_8h_a85207aa5455eaa4d4cf9c71e9094ae46}{00019} \hyperlink{structdouble__float}{double\_float} \hyperlink{structs_8c_a85207aa5455eaa4d4cf9c71e9094ae46}{create\_double\_float}(\textcolor{keywordtype}{float} a, \textcolor{keywordtype}{float} b)
+00020 \{
+00021     \hyperlink{structdouble__float}{double\_float} \textcolor{keyword}{this};
+00022     this.a = a;
+00023     this.b = b;
+00024     \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+00025 \}
+00026 
+\hypertarget{structs_8c_source.tex_l00027}{}\hyperlink{structs_8h_a0bd229363859ac7df4e837cba6ad7ae4}{00027} \hyperlink{structtriple__uint}{triple\_uint} \hyperlink{structs_8c_a0bd229363859ac7df4e837cba6ad7ae4}{create\_triple\_uint}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} a, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} b, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} c)
+00028 \{
+00029     \hyperlink{structtriple__uint}{triple\_uint} \textcolor{keyword}{this};
+00030     this.a = a;
+00031     this.b = b;
+00032     this.c = c;
+00033     \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+00034 \}
+00035 
+\hypertarget{structs_8c_source.tex_l00036}{}\hyperlink{structs_8h_a745732bdf1500669605253e94c59c459}{00036} \hyperlink{structsix__uchar}{six\_uchar} \hyperlink{structs_8c_a745732bdf1500669605253e94c59c459}{create\_six\_uchar}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} a, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} b, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} c, \textcolor{keywordtype}{
+      unsigned} \textcolor{keywordtype}{char} d, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} e, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} f)
+00037 \{
+00038     \hyperlink{structsix__uchar}{six\_uchar} \textcolor{keyword}{this};
+00039     this.a = a;
+00040     this.b = b;
+00041     this.c = c;
+00042     this.d = d;
+00043     this.e = e;
+00044     this.f = f;
+00045     \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+00046 \}
+00047 
+\hypertarget{structs_8c_source.tex_l00048}{}\hyperlink{structs_8h_aecdd3a7cbfc61e4e2c33fc9215422d96}{00048} \hyperlink{structdouble__uchar}{double\_uchar} \hyperlink{structs_8c_aecdd3a7cbfc61e4e2c33fc9215422d96}{create\_double\_uchar}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} a, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} b)
+00049 \{
+00050     \hyperlink{structdouble__uchar}{double\_uchar} \textcolor{keyword}{this};
+00051     this.a = a;
+00052     this.b = b;
+00053     \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+00054 \}
+\end{DoxyCode}

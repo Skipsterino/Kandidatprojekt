@@ -1,0 +1,36 @@
+\hypertarget{millis_8c_source}{}\section{millis.\+c}
+\label{millis_8c_source}\index{sensor/sensor/millis.\+c@{sensor/sensor/millis.\+c}}
+
+\begin{DoxyCode}
+00001 
+00007 \textcolor{preprocessor}{#include "\hyperlink{millis_8h}{millis.h}"}
+00008 
+\hypertarget{millis_8c_source.tex_l00009}{}\hyperlink{millis_8h_a6ff7f2532a22366f0013bc41397129fd}{00009} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \hyperlink{millis_8c_a6ff7f2532a22366f0013bc41397129fd}{millis}()
+00010 \{
+00011     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} m;
+00012     ATOMIC\_BLOCK(ATOMIC\_FORCEON)
+00013     \{
+00014         m = \hyperlink{millis_8h_ab34d3974411fdee7da8c6b4f650502e9}{timer0\_millis};
+00015     \}
+00016     \textcolor{keywordflow}{return} m;
+00017 \}
+00018 
+\hypertarget{millis_8c_source.tex_l00019}{}\hyperlink{millis_8c_a246b39a3dbbdc17e03e35f022d8101cd}{00019} \hyperlink{millis_8c_a246b39a3dbbdc17e03e35f022d8101cd}{SIGNAL}(TIMER0\_OVF\_vect)
+00020 \{
+00021     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} m = \hyperlink{millis_8h_ab34d3974411fdee7da8c6b4f650502e9}{timer0\_millis};
+00022     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} f = \hyperlink{millis_8h_ae7c36fe51c2f3d6dbee84a935ea15420}{timer0\_fract};
+00023 
+00024     m += \hyperlink{millis_8h_ab640966289e34d6fe31434f37090e6e6}{MILLIS\_INC};
+00025     f += \hyperlink{millis_8h_a5647e40017bbd34a202f6a672ca116e4}{FRACT\_INC};
+00026     \textcolor{keywordflow}{if} (f >= \hyperlink{millis_8h_a3d5262b0f828700a2ce29198838e0d9e}{FRACT\_MAX})
+00027     \{
+00028         f -= \hyperlink{millis_8h_a3d5262b0f828700a2ce29198838e0d9e}{FRACT\_MAX};
+00029         m += 1;
+00030     \}
+00031 
+00032     \hyperlink{millis_8h_ae7c36fe51c2f3d6dbee84a935ea15420}{timer0\_fract} = f;
+00033     \hyperlink{millis_8h_ab34d3974411fdee7da8c6b4f650502e9}{timer0\_millis} = m;
+00034     \hyperlink{millis_8h_a79a4c8c254cfb57c6ac3393a396c7a4f}{timer0\_overflow\_count}++;
+00035 
+00036 \}
+\end{DoxyCode}

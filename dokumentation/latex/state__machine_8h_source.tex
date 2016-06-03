@@ -7,7 +7,7 @@
 00012 \textcolor{preprocessor}{#define STATE\_MACHINE\_H\_}
 00013 
 00014 \textcolor{preprocessor}{#ifndef F\_CPU}
-\hypertarget{state__machine_8h_source.tex_l00015}{}\hyperlink{state__machine_8h_a43bafb28b29491ec7f871319b5a3b2f8}{00015} \textcolor{preprocessor}{#define F\_CPU 16000000UL        // 16 MHz}
+\hypertarget{state__machine_8h_source.tex_l00015}{}\hyperlink{state__machine_8h_a43bafb28b29491ec7f871319b5a3b2f8}{00015} \textcolor{preprocessor}{#define F\_CPU 16000000UL        // 16 MHz klockfrekvens}
 00016 \textcolor{preprocessor}{#endif}
 00017 
 00018 \textcolor{preprocessor}{#include "\hyperlink{_s_p_i_8h}{SPI.h}"}
@@ -16,82 +16,90 @@
 00021 \textcolor{preprocessor}{#include <stdbool.h>}
 00022 
 \hypertarget{state__machine_8h_source.tex_l00026}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9}{00026} \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{
-\hypertarget{state__machine_8h_source.tex_l00027}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a679ee5320d66c8322e310daeb2ee99b8}{00027}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a679ee5320d66c8322e310daeb2ee99b8}{STOP} = 31,      \textcolor{comment}{// XXX Byt nummer !}
-\hypertarget{state__machine_8h_source.tex_l00028}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ae66a6dc1f3ff114acf2efb4926e7975e}{00028}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ae66a6dc1f3ff114acf2efb4926e7975e}{DEAD\_END} = 2,
-\hypertarget{state__machine_8h_source.tex_l00029}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9af4fc00ebf5a552ca632130e794617d58}{00029}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9af4fc00ebf5a552ca632130e794617d58}{CORRIDOR} = 3,
-00030     
-\hypertarget{state__machine_8h_source.tex_l00031}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a24fb9d9ff0b7ac346a2527509a251125}{00031}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a24fb9d9ff0b7ac346a2527509a251125}{OUT\_OF\_CORRIDOR\_NO\_WALL} = 4,
-\hypertarget{state__machine_8h_source.tex_l00032}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a36e0fb056921e3c44cbbe999c0814fdd}{00032}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a36e0fb056921e3c44cbbe999c0814fdd}{OUT\_OF\_CORRIDOR\_LEFT\_WALL} = 5,
-\hypertarget{state__machine_8h_source.tex_l00033}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9abb071018d1b1e80867c6ba4c5ddc1615}{00033}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9abb071018d1b1e80867c6ba4c5ddc1615}{OUT\_OF\_CORRIDOR\_RIGHT\_WALL} = 6,
-00034     
-\hypertarget{state__machine_8h_source.tex_l00035}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a5720da833432aa3b68ff7e1a6529a7a6}{00035}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a5720da833432aa3b68ff7e1a6529a7a6}{INTO\_HIGH\_OBSTACLE} = 7,
-\hypertarget{state__machine_8h_source.tex_l00036}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ac115d428bec2ff3acfb56f605a12dde5}{00036}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ac115d428bec2ff3acfb56f605a12dde5}{CRAWLING\_UNDER\_HIGH\_OBSTACLE} = 8,
+\hypertarget{state__machine_8h_source.tex_l00027}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ae66a6dc1f3ff114acf2efb4926e7975e}{00027}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ae66a6dc1f3ff114acf2efb4926e7975e}{DEAD\_END} = 2,
+\hypertarget{state__machine_8h_source.tex_l00028}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9af4fc00ebf5a552ca632130e794617d58}{00028}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9af4fc00ebf5a552ca632130e794617d58}{CORRIDOR} = 3,
+00029     
+\hypertarget{state__machine_8h_source.tex_l00030}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9abb071018d1b1e80867c6ba4c5ddc1615}{00030}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9abb071018d1b1e80867c6ba4c5ddc1615}{OUT\_OF\_CORRIDOR\_RIGHT\_WALL} = 4,
+\hypertarget{state__machine_8h_source.tex_l00031}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a36e0fb056921e3c44cbbe999c0814fdd}{00031}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a36e0fb056921e3c44cbbe999c0814fdd}{OUT\_OF\_CORRIDOR\_LEFT\_WALL} = 5,
+\hypertarget{state__machine_8h_source.tex_l00032}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a24fb9d9ff0b7ac346a2527509a251125}{00032}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a24fb9d9ff0b7ac346a2527509a251125}{OUT\_OF\_CORRIDOR\_NO\_WALL} = 6,
+00033     
+\hypertarget{state__machine_8h_source.tex_l00034}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a432a66e9cf59d20911b0409c4366bbfb}{00034}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a432a66e9cf59d20911b0409c4366bbfb}{LEFT\_WALL} = 7,
+\hypertarget{state__machine_8h_source.tex_l00035}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a47412afab845bb5d82848c742c5aa826}{00035}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a47412afab845bb5d82848c742c5aa826}{RIGHT\_WALL} = 8,
+\hypertarget{state__machine_8h_source.tex_l00036}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a01a80f539b16103402889a92ea03b18c}{00036}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a01a80f539b16103402889a92ea03b18c}{NO\_WALL} = 9,
 00037     
-\hypertarget{state__machine_8h_source.tex_l00038}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a16c309eb8317f88a8a0440d04f5020bd}{00038}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a16c309eb8317f88a8a0440d04f5020bd}{PREPARE\_CLIMBING\_UP} = 9,
-\hypertarget{state__machine_8h_source.tex_l00039}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a3555ae926f7e1c144e6f5ff285b8a306}{00039}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a3555ae926f7e1c144e6f5ff285b8a306}{CLIMBING\_UP} = 10,
-\hypertarget{state__machine_8h_source.tex_l00040}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a10649b908487397730b45977dd2ceb20}{00040}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a10649b908487397730b45977dd2ceb20}{LOW\_OBSTACLE} = 11,
-\hypertarget{state__machine_8h_source.tex_l00041}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a2700ce69c7587770afa814fa351d8364}{00041}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a2700ce69c7587770afa814fa351d8364}{PREPARE\_CLIMBING\_DOWN} = 1,     \textcolor{comment}{// XXXX BYT NUMMER!}
-\hypertarget{state__machine_8h_source.tex_l00042}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a2e040f9d636c99eb3b8a25ef44714fcb}{00042}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a2e040f9d636c99eb3b8a25ef44714fcb}{CLIMBING\_DOWN} = 12,
-00043     
-\hypertarget{state__machine_8h_source.tex_l00044}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a146b6b47df32dc00c98e80fd088ac544}{00044}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a146b6b47df32dc00c98e80fd088ac544}{INTO\_JUNCTION\_A\_RIGHT} = 13,
-\hypertarget{state__machine_8h_source.tex_l00045}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a0f6a84655b20690436b90884c6c12929}{00045}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a0f6a84655b20690436b90884c6c12929}{INTO\_JUNCTION\_A\_LEFT} = 14,
+\hypertarget{state__machine_8h_source.tex_l00038}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a70c5928783e4499f7b546a5a33f836c7}{00038}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a70c5928783e4499f7b546a5a33f836c7}{DETERMINE\_JUNCTION\_RIGHT\_WALL} = 10,
+\hypertarget{state__machine_8h_source.tex_l00039}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a2497397fadf5bd52daeb9da4db429e77}{00039}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a2497397fadf5bd52daeb9da4db429e77}{DETERMINE\_JUNCTION\_LEFT\_WALL} = 11,
+00040 
+\hypertarget{state__machine_8h_source.tex_l00041}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a41a2d1d91a58f465cb1bf284f21363b0}{00041}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a41a2d1d91a58f465cb1bf284f21363b0}{DETERMINE\_JUNCTION\_NO\_WALL} = 12,
+00042 
+\hypertarget{state__machine_8h_source.tex_l00043}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a93f2fc88b9d39b6170e5eb6dcbf494d9}{00043}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a93f2fc88b9d39b6170e5eb6dcbf494d9}{OUT\_OF\_JUNCTION\_RIGHT\_WALL} = 13,  
+\hypertarget{state__machine_8h_source.tex_l00044}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a2dca6fa0615540a4540d577b5b82bef4}{00044}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a2dca6fa0615540a4540d577b5b82bef4}{OUT\_OF\_JUNCTION\_LEFT\_WALL} = 14,
+\hypertarget{state__machine_8h_source.tex_l00045}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a72c6eea91f84cfab54daac571b35fc53}{00045}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a72c6eea91f84cfab54daac571b35fc53}{OUT\_OF\_JUNCTION\_NO\_WALL} = 15,
 00046     
-\hypertarget{state__machine_8h_source.tex_l00047}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a5867af0449808578577a55aad42450ed}{00047}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a5867af0449808578577a55aad42450ed}{TURN\_RIGHT} = 15,
-\hypertarget{state__machine_8h_source.tex_l00048}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9aa680fb2367a2e11042d902b7d6320f12}{00048}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9aa680fb2367a2e11042d902b7d6320f12}{TURN\_LEFT} = 16,
-\hypertarget{state__machine_8h_source.tex_l00049}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ad673dc3a905d1f1d7006a598b44c4f49}{00049}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ad673dc3a905d1f1d7006a598b44c4f49}{JUNCTION\_A\_RIGHT} = 17,
-\hypertarget{state__machine_8h_source.tex_l00050}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a739447f1c1a49d43e6fb0203260f97fe}{00050}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a739447f1c1a49d43e6fb0203260f97fe}{JUNCTION\_A\_LEFT} = 18,
-\hypertarget{state__machine_8h_source.tex_l00051}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a26671ad0a5647338693043b705dff1b4}{00051}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a26671ad0a5647338693043b705dff1b4}{JUNCTION\_B\_RIGHT} = 19,
-\hypertarget{state__machine_8h_source.tex_l00052}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9adbc162c33ce4f98bcb8e7f670f324e6d}{00052}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9adbc162c33ce4f98bcb8e7f670f324e6d}{JUNCTION\_B\_LEFT} = 20,
-\hypertarget{state__machine_8h_source.tex_l00053}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9af47d2ce80e1460d0e5e877eac3115eb5}{00053}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9af47d2ce80e1460d0e5e877eac3115eb5}{JUNCTION\_C\_RIGHT} = 21,
-\hypertarget{state__machine_8h_source.tex_l00054}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a4d0c8d9068b5a03bc9149cc8f320ae81}{00054}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a4d0c8d9068b5a03bc9149cc8f320ae81}{JUNCTION\_C\_LEFT} = 22,
-\hypertarget{state__machine_8h_source.tex_l00055}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a0800e881bdbe6153aba3ae4ef194b6dd}{00055}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a0800e881bdbe6153aba3ae4ef194b6dd}{END\_OF\_COURSE} = 23,
-00056     
-\hypertarget{state__machine_8h_source.tex_l00057}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a519a7a811bc5fd9f274308fb31a09fcc}{00057}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a519a7a811bc5fd9f274308fb31a09fcc}{OUT\_OF\_TURN\_RIGHT} = 24,
-\hypertarget{state__machine_8h_source.tex_l00058}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9aa067a626023130425d23479f09f6642f}{00058}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9aa067a626023130425d23479f09f6642f}{OUT\_OF\_TURN\_LEFT} = 25,
-\hypertarget{state__machine_8h_source.tex_l00059}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ae0736738e9d2beffffb2dcce39aecfbf}{00059}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ae0736738e9d2beffffb2dcce39aecfbf}{OUT\_OF\_JUNCTION\_A} = 26,
-\hypertarget{state__machine_8h_source.tex_l00060}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a026efbf245bbe8a3ba6a6f625569f60c}{00060}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a026efbf245bbe8a3ba6a6f625569f60c}{OUT\_OF\_JUNCTION\_A\_RIGHT} = 27,
-\hypertarget{state__machine_8h_source.tex_l00061}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a321b7084c0d17a55bc78f09ad33bf4ae}{00061}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a321b7084c0d17a55bc78f09ad33bf4ae}{OUT\_OF\_JUNCTION\_A\_LEFT} = 28,
-\hypertarget{state__machine_8h_source.tex_l00062}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ad3d859731c8dc9918fe9d7ccccfa8f42}{00062}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ad3d859731c8dc9918fe9d7ccccfa8f42}{OUT\_OF\_JUNCTION\_C\_RIGHT} = 29,
-\hypertarget{state__machine_8h_source.tex_l00063}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a881116d547fa3ff6908e9f19270eff26}{00063}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a881116d547fa3ff6908e9f19270eff26}{OUT\_OF\_JUNCTION\_C\_LEFT} = 30,
-00064 \} \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9}{STATES};
-00065 
-\hypertarget{state__machine_8h_source.tex_l00066}{}\hyperlink{state__machine_8h_a5776a711f0156180fe5efb79c9ffc24f}{00066} \textcolor{preprocessor}{#define HALF\_ROTATION\_ANGLE 45          }
-\hypertarget{state__machine_8h_source.tex_l00067}{}\hyperlink{state__machine_8h_a40718a26b2b107afdc38533db41cc0a3}{00067} \textcolor{preprocessor}{#define FULL\_ROTATION\_ANGLE 90          }
-\hypertarget{state__machine_8h_source.tex_l00068}{}\hyperlink{state__machine_8h_a201d56046ddf552d57b4862e0ec07a10}{00068} \textcolor{preprocessor}{#define CORRIDOR\_SIDE\_DISTANCE 60       }
-\hypertarget{state__machine_8h_source.tex_l00069}{}\hyperlink{state__machine_8h_a31ba7e3e0116f665d5825f669052ed09}{00069} \textcolor{preprocessor}{#define SIDE\_DEAD\_END\_DISTANCE 150      }
-\hypertarget{state__machine_8h_source.tex_l00070}{}\hyperlink{state__machine_8h_a9a1286b84f437e1c90d21ffc833a8b79}{00070} \textcolor{preprocessor}{#define END\_OF\_COURSE\_DISTANCE 80       }
-\hypertarget{state__machine_8h_source.tex_l00071}{}\hyperlink{state__machine_8h_adf843098ef425aa129f5ff16d879f7f2}{00071} \textcolor{preprocessor}{#define SHORT\_TURN\_DISTANCE 40          }
-00072 \textcolor{preprocessor}{//#define LONG\_TURN\_DISTANCE 113            }
-\hypertarget{state__machine_8h_source.tex_l00073}{}\hyperlink{state__machine_8h_a8f7e1b7ccc92504f03ca42fb3e76e7d4}{00073} \textcolor{preprocessor}{#define JUNCTION\_C\_TURN\_DISTANCE 45}
-\hypertarget{state__machine_8h_source.tex_l00074}{}\hyperlink{state__machine_8h_a8118fdbf1a36265000f2d42844e10747}{00074} \textcolor{preprocessor}{#define FORWARD\_DEAD\_END\_DISTANCE 170   }
-\hypertarget{state__machine_8h_source.tex_l00075}{}\hyperlink{state__machine_8h_ada224a95ca04ac21b410ef6e23814eea}{00075} \textcolor{preprocessor}{#define JUNCTION\_A\_FORWARD\_DISTANCE 80  }
-00076 \textcolor{preprocessor}{//#define LOW\_OBSTACLE\_DISTANCE 40      }
-\hypertarget{state__machine_8h_source.tex_l00077}{}\hyperlink{state__machine_8h_a1bdeb86204e23b0e597ffe87d6579167}{00077} \textcolor{preprocessor}{#define PREPARE\_CLIMBING\_UP\_DISTANCE 30 }
-\hypertarget{state__machine_8h_source.tex_l00078}{}\hyperlink{state__machine_8h_af7fbc26bb7b50f3502c893ecdccd8ab4}{00078} \textcolor{preprocessor}{#define PREPARE\_CLIMBING\_DOWN\_DISTANCE 40   }
-\hypertarget{state__machine_8h_source.tex_l00079}{}\hyperlink{state__machine_8h_a647ce7a809da5ed12ea5319ed1c2b73f}{00079} \textcolor{preprocessor}{#define US\_HIGH\_OBSTACLE\_DISTANCE 30    }
-\hypertarget{state__machine_8h_source.tex_l00080}{}\hyperlink{state__machine_8h_a83b61a7a575cb23097805af83236bcf0}{00080} \textcolor{preprocessor}{#define IR\_HIGH\_OBSTACLE\_DISTANCE 30    }
-\hypertarget{state__machine_8h_source.tex_l00081}{}\hyperlink{state__machine_8h_a9d981c215ebe94b6be6a0d49ccd2dce8}{00081} \textcolor{preprocessor}{#define NO\_WALL\_DISTANCE 60             }
-\hypertarget{state__machine_8h_source.tex_l00082}{}\hyperlink{state__machine_8h_aa31835133338361e7bffbaf776c9c7a1}{00082} \textcolor{preprocessor}{#define DEAD\_END\_DISTANCE 40            }
-\hypertarget{state__machine_8h_source.tex_l00084}{}\hyperlink{state__machine_8h_a5490b49530b86e69dba553166cd9d71b}{00084} \textcolor{preprocessor}{#define CENTRE\_OFFSET 8 }
-\hypertarget{state__machine_8h_source.tex_l00085}{}\hyperlink{state__machine_8h_ac8d21b48b36c2d8b9192522087aab758}{00085} \textcolor{preprocessor}{#define CORRIDOR\_WIDTH 80 }
-\hypertarget{state__machine_8h_source.tex_l00087}{}\hyperlink{state__machine_8h_a74134a484bf5067e7afa67b9a5911d24}{00087} \textcolor{preprocessor}{float IMU\_Yaw\_start; }
-\hypertarget{state__machine_8h_source.tex_l00088}{}\hyperlink{state__machine_8h_a7e6264018cf52dca4260c8f3b50125b4}{00088} \textcolor{preprocessor}{bool on\_top\_of\_obstacle; }
-\hypertarget{state__machine_8h_source.tex_l00089}{}\hyperlink{state__machine_8h_ab10ef355c6ebe68985b8ee64030b0926}{00089} \textcolor{preprocessor}{bool trust\_sensors; }
-\hypertarget{state__machine_8h_source.tex_l00090}{}\hyperlink{state__machine_8h_ad03c0546202eb3154602cb8a0993c51f}{00090} \textcolor{preprocessor}{uint8\_t rotation\_count; }
-\hypertarget{state__machine_8h_source.tex_l00091}{}\hyperlink{state__machine_8h_a937f74a65988b9e22241ab3765b82c50}{00091} \textcolor{preprocessor}{uint8\_t cycle\_count; }
-\hypertarget{state__machine_8h_source.tex_l00093}{}\hyperlink{state__machine_8h_a58652d73ca5e1528e36798054ac1ad9e}{00093} \textcolor{preprocessor}{float Yaw, Yaw\_rad, p\_part, Kp, Kd, alpha; }
-\hypertarget{state__machine_8h_source.tex_l00094}{}\hyperlink{state__machine_8h_a6f9b7bcc44d43aac6b387f2aaacc3a18}{00094} \textcolor{preprocessor}{float IR\_0, IR\_1, IR\_2, IR\_3, IR\_4, IR\_5, IR\_6, US, IR\_Yaw\_left, IR\_Yaw\_right, IMU\_Yaw, Yaw, Pitch, Roll; }
-\hypertarget{state__machine_8h_source.tex_l00096}{}\hyperlink{state__machine_8h_a5e5321a4a9085b83c8161454bf7a145c}{00096} \textcolor{preprocessor}{STATES ROBOT\_STATE; }
-00103 \textcolor{preprocessor}{void update\_state();}
-00104 
-00110 \textcolor{keywordtype}{void} \hyperlink{state__machine_8h_a11237cafa6d63fa57107c8ae2f3a1ea3}{run\_state}();
-00111 
-00117 \textcolor{keywordtype}{void} \hyperlink{state__machine_8h_aefb7e87df9971d6e6c5641db5185ca6c}{load\_sensor\_values}();
-00118 
-00125 \textcolor{keywordtype}{void} \hyperlink{state__machine_8h_a5611f3fef1c7ebe6f76d952adf576e86}{calculate\_Yaw}();
-00126 
-00133 \textcolor{keywordtype}{void} \hyperlink{state__machine_8h_a1207bf6b642796032a59633adcb689f2}{calculate\_p\_part}();
-00134 
-00135 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* STATE\_MACHINE\_H\_ */}\textcolor{preprocessor}{}
-00136 
+\hypertarget{state__machine_8h_source.tex_l00047}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a99af48f69c66f114b652c80b043672da}{00047}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a99af48f69c66f114b652c80b043672da}{INTO\_CORRIDOR\_NO\_WALL} = 16,
+00048     
+\hypertarget{state__machine_8h_source.tex_l00049}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a5720da833432aa3b68ff7e1a6529a7a6}{00049}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a5720da833432aa3b68ff7e1a6529a7a6}{INTO\_HIGH\_OBSTACLE} = 17,
+\hypertarget{state__machine_8h_source.tex_l00050}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ac115d428bec2ff3acfb56f605a12dde5}{00050}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ac115d428bec2ff3acfb56f605a12dde5}{CRAWLING\_UNDER\_HIGH\_OBSTACLE} = 18,
+00051     
+\hypertarget{state__machine_8h_source.tex_l00052}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a16c309eb8317f88a8a0440d04f5020bd}{00052}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a16c309eb8317f88a8a0440d04f5020bd}{PREPARE\_CLIMBING\_UP} = 19,
+\hypertarget{state__machine_8h_source.tex_l00053}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a3555ae926f7e1c144e6f5ff285b8a306}{00053}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a3555ae926f7e1c144e6f5ff285b8a306}{CLIMBING\_UP} = 20,
+\hypertarget{state__machine_8h_source.tex_l00054}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a10649b908487397730b45977dd2ceb20}{00054}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a10649b908487397730b45977dd2ceb20}{LOW\_OBSTACLE} = 21,
+\hypertarget{state__machine_8h_source.tex_l00055}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a2700ce69c7587770afa814fa351d8364}{00055}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a2700ce69c7587770afa814fa351d8364}{PREPARE\_CLIMBING\_DOWN} = 22,
+\hypertarget{state__machine_8h_source.tex_l00056}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a2e040f9d636c99eb3b8a25ef44714fcb}{00056}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a2e040f9d636c99eb3b8a25ef44714fcb}{CLIMBING\_DOWN} = 23,
+00057     
+\hypertarget{state__machine_8h_source.tex_l00058}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a5867af0449808578577a55aad42450ed}{00058}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a5867af0449808578577a55aad42450ed}{TURN\_RIGHT} = 24,
+\hypertarget{state__machine_8h_source.tex_l00059}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9aa680fb2367a2e11042d902b7d6320f12}{00059}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9aa680fb2367a2e11042d902b7d6320f12}{TURN\_LEFT} = 25,
+\hypertarget{state__machine_8h_source.tex_l00060}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ad673dc3a905d1f1d7006a598b44c4f49}{00060}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ad673dc3a905d1f1d7006a598b44c4f49}{JUNCTION\_A\_RIGHT} = 26,
+\hypertarget{state__machine_8h_source.tex_l00061}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a739447f1c1a49d43e6fb0203260f97fe}{00061}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a739447f1c1a49d43e6fb0203260f97fe}{JUNCTION\_A\_LEFT} = 27,
+\hypertarget{state__machine_8h_source.tex_l00062}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a26671ad0a5647338693043b705dff1b4}{00062}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a26671ad0a5647338693043b705dff1b4}{JUNCTION\_B\_RIGHT} = 28,
+\hypertarget{state__machine_8h_source.tex_l00063}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9adbc162c33ce4f98bcb8e7f670f324e6d}{00063}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9adbc162c33ce4f98bcb8e7f670f324e6d}{JUNCTION\_B\_LEFT} = 29,
+\hypertarget{state__machine_8h_source.tex_l00064}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9af47d2ce80e1460d0e5e877eac3115eb5}{00064}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9af47d2ce80e1460d0e5e877eac3115eb5}{JUNCTION\_C\_RIGHT} = 30,
+\hypertarget{state__machine_8h_source.tex_l00065}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a4d0c8d9068b5a03bc9149cc8f320ae81}{00065}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a4d0c8d9068b5a03bc9149cc8f320ae81}{JUNCTION\_C\_LEFT} = 31,
+\hypertarget{state__machine_8h_source.tex_l00066}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a4c79249036b5395274dd11cabe0636cd}{00066}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a4c79249036b5395274dd11cabe0636cd}{JUNCTION\_D\_RIGHT} = 32,
+\hypertarget{state__machine_8h_source.tex_l00067}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9aaf21fb2e0dadd1529453341900854a75}{00067}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9aaf21fb2e0dadd1529453341900854a75}{JUNCTION\_D\_LEFT} = 33,
+\hypertarget{state__machine_8h_source.tex_l00068}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9abf4619717439346a4f4691dc09fa41c4}{00068}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9abf4619717439346a4f4691dc09fa41c4}{JUNCTION\_D\_STRAIGHT} = 34,
+\hypertarget{state__machine_8h_source.tex_l00069}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9aab8cf6d8fab3f9f118f0ed33f9515461}{00069}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9aab8cf6d8fab3f9f118f0ed33f9515461}{JUNCTION\_E\_RIGHT} = 35,
+\hypertarget{state__machine_8h_source.tex_l00070}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ae41103d6637decb840a8ecacb51f0fa3}{00070}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ae41103d6637decb840a8ecacb51f0fa3}{JUNCTION\_E\_LEFT} = 36,
+\hypertarget{state__machine_8h_source.tex_l00071}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a8206099b80866444f8162db5eec4f327}{00071}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a8206099b80866444f8162db5eec4f327}{JUNCTION\_F} = 37,
+\hypertarget{state__machine_8h_source.tex_l00072}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9afd4bf9b1cf12bf83f91c864017a34d86}{00072}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9afd4bf9b1cf12bf83f91c864017a34d86}{JUNCTION\_G} = 38,
+\hypertarget{state__machine_8h_source.tex_l00073}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a8449d51346811ecf9636032031fee352}{00073}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a8449d51346811ecf9636032031fee352}{JUNCTION\_H\_RIGHT} = 39,
+\hypertarget{state__machine_8h_source.tex_l00074}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ae0346a57432afc9d40b29ab7bc71ef1b}{00074}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ae0346a57432afc9d40b29ab7bc71ef1b}{JUNCTION\_H\_LEFT} = 40,
+\hypertarget{state__machine_8h_source.tex_l00075}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a30da363d10b403e819d627bfdd601c89}{00075}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a30da363d10b403e819d627bfdd601c89}{JUNCTION\_I} = 41,
+00076     
+\hypertarget{state__machine_8h_source.tex_l00077}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9af30658fd2ec044b021ae680f8637b482}{00077}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9af30658fd2ec044b021ae680f8637b482}{JUNCTION\_I\_OR\_END} = 42,
+\hypertarget{state__machine_8h_source.tex_l00078}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a0800e881bdbe6153aba3ae4ef194b6dd}{00078}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a0800e881bdbe6153aba3ae4ef194b6dd}{END\_OF\_COURSE} = 43,
+00079 
+\hypertarget{state__machine_8h_source.tex_l00080}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a47919c45793139e8dffe4998c0e1749b}{00080}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a47919c45793139e8dffe4998c0e1749b}{DEAD\_END\_A\_RIGHT} = 45,
+\hypertarget{state__machine_8h_source.tex_l00081}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a92ca0c1053b63e149cfdbf61c7163f5a}{00081}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a92ca0c1053b63e149cfdbf61c7163f5a}{DEAD\_END\_A\_LEFT} = 46,        
+\hypertarget{state__machine_8h_source.tex_l00082}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9abae329b9bf61749099dbd2392a48535b}{00082}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9abae329b9bf61749099dbd2392a48535b}{DEAD\_END\_B\_RIGHT} = 47,  
+\hypertarget{state__machine_8h_source.tex_l00083}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ac5bacf79b8c32e3c1b8a8c37912ab6dc}{00083}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ac5bacf79b8c32e3c1b8a8c37912ab6dc}{DEAD\_END\_B\_LEFT} = 48,        
+\hypertarget{state__machine_8h_source.tex_l00084}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9acf08c7e5a032a1d9d7de06fd7f041f4b}{00084}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9acf08c7e5a032a1d9d7de06fd7f041f4b}{DEAD\_END\_C} = 49,      
+\hypertarget{state__machine_8h_source.tex_l00085}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a14a05129e87734a498e4f03c7f0df528}{00085}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a14a05129e87734a498e4f03c7f0df528}{DEAD\_END\_D} = 50,          
+\hypertarget{state__machine_8h_source.tex_l00086}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a8db1ac2c741bbe4f478028e524d2a6df}{00086}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a8db1ac2c741bbe4f478028e524d2a6df}{CHECK\_IF\_LOW\_OBSTACLE} = 51,
+\hypertarget{state__machine_8h_source.tex_l00087}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a557d0d4a66f1051ba446e525db38ea5d}{00087}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a557d0d4a66f1051ba446e525db38ea5d}{CHECK\_IF\_HIGH\_OBSTACLE} = 52,
+00088     
+\hypertarget{state__machine_8h_source.tex_l00089}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a911ac971ed1c7b3ba6ad1c6ebd68d96e}{00089}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a911ac971ed1c7b3ba6ad1c6ebd68d96e}{CENTER\_CRAB} = 53,
+\hypertarget{state__machine_8h_source.tex_l00090}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ac3f7f6b15c8f7011a843b08a84e3eef1}{00090}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9ac3f7f6b15c8f7011a843b08a84e3eef1}{CENTER\_NORMAL} = 54,
+\hypertarget{state__machine_8h_source.tex_l00091}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a485e352985200ac43f71243cc29b16ad}{00091}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a485e352985200ac43f71243cc29b16ad}{CENTER\_CRAB\_UP} = 55,
+\hypertarget{state__machine_8h_source.tex_l00092}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a6407784dfbc531efce4eb1d1186c2271}{00092}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9a6407784dfbc531efce4eb1d1186c2271}{CENTER\_CRAB\_DOWN} = 56,
+\hypertarget{state__machine_8h_source.tex_l00093}{}\hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9aa1017e9b343135a54a98b6f479354d16}{00093}     \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9aa1017e9b343135a54a98b6f479354d16}{LOWER} = 57,
+00094 \} \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9}{STATES};
+00095 
+\hypertarget{state__machine_8h_source.tex_l00096}{}\hyperlink{state__machine_8h_a5e5321a4a9085b83c8161454bf7a145c}{00096} \hyperlink{state__machine_8h_a94b1da2e055fff4d143aa6aa891f79a9}{STATES} \hyperlink{state__machine_8h_a5e5321a4a9085b83c8161454bf7a145c}{ROBOT\_STATE}; 
+\hypertarget{state__machine_8h_source.tex_l00097}{}\hyperlink{state__machine_8h_a09cfc766a233ad617270562cc4146d07}{00097} \textcolor{keywordtype}{float} \hyperlink{state__machine_8h_a09cfc766a233ad617270562cc4146d07}{Kp}, \hyperlink{state__machine_8h_a98268d71502ba080d88a9b1f50fdbe80}{Kd}; 
+\hypertarget{state__machine_8h_source.tex_l00099}{}\hyperlink{state__machine_8h_a7e6264018cf52dca4260c8f3b50125b4}{00099} \textcolor{keywordtype}{bool} \hyperlink{state__machine_8h_a7e6264018cf52dca4260c8f3b50125b4}{on\_top\_of\_obstacle}; 
+\hypertarget{state__machine_8h_source.tex_l00100}{}\hyperlink{state__machine_8h_ab10ef355c6ebe68985b8ee64030b0926}{00100} \textcolor{keywordtype}{bool} \hyperlink{state__machine_8h_ab10ef355c6ebe68985b8ee64030b0926}{trust\_sensors}; 
+\hypertarget{state__machine_8h_source.tex_l00101}{}\hyperlink{state__machine_8h_a326373dcfd381c9473382a1f538de2a8}{00101} \textcolor{keywordtype}{bool} \hyperlink{state__machine_8h_a326373dcfd381c9473382a1f538de2a8}{low}; 
+00108 \textcolor{keywordtype}{void} \hyperlink{state__machine_8h_af7c798149db27b6d271bf5845a489513}{update\_state}();
+00109 
+00115 \textcolor{keywordtype}{void} \hyperlink{state__machine_8h_a11237cafa6d63fa57107c8ae2f3a1ea3}{run\_state}();
+00116 
+00122 \textcolor{keywordtype}{void} \hyperlink{state__machine_8h_aefb7e87df9971d6e6c5641db5185ca6c}{load\_sensor\_values}();
+00123 
+00130 \textcolor{keywordtype}{void} \hyperlink{state__machine_8h_a5611f3fef1c7ebe6f76d952adf576e86}{calculate\_Yaw}();
+00131 
+00138 \textcolor{keywordtype}{void} \hyperlink{state__machine_8h_a1207bf6b642796032a59633adcb689f2}{calculate\_p\_part}();
+00139 
+00140 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* STATE\_MACHINE\_H\_ */}\textcolor{preprocessor}{}
+00141 
 \end{DoxyCode}

@@ -3,37 +3,37 @@
 
 \begin{DoxyCode}
 00001 
-00011 \textcolor{preprocessor}{#ifndef I2C\_H\_}
-00012 \textcolor{preprocessor}{#define I2C\_H\_}
-00013 
-00014 \textcolor{preprocessor}{#include <util/atomic.h>}
-00015 \textcolor{preprocessor}{#include <avr/io.h>}
-00016 \textcolor{preprocessor}{#include <avr/interrupt.h>}
-00017 \textcolor{preprocessor}{#include <util/delay.h>}
-00018 
-\hypertarget{_i2_c_8h_source.tex_l00019}{}\hyperlink{_i2_c_8h_a43bafb28b29491ec7f871319b5a3b2f8}{00019} \textcolor{preprocessor}{#define F\_CPU 16000000UL                }
-\hypertarget{_i2_c_8h_source.tex_l00021}{}\hyperlink{_i2_c_8h_ae106ed126eff0ffa33378daacfbbcdb7}{00021} \textcolor{preprocessor}{#define I2Cstatus\_START 0x08            }
-\hypertarget{_i2_c_8h_source.tex_l00023}{}\hyperlink{_i2_c_8h_a86ef56020aa435f9af57015ee220c3e4}{00023} \textcolor{preprocessor}{#define I2Cstatus\_MT\_SLA\_ACK 0x18       }
-\hypertarget{_i2_c_8h_source.tex_l00024}{}\hyperlink{_i2_c_8h_a28004b2b2ef10d3131ac4c4756da0ba0}{00024} \textcolor{preprocessor}{#define I2Cstatus\_MT\_SLA\_NACK 0x20      }
-\hypertarget{_i2_c_8h_source.tex_l00025}{}\hyperlink{_i2_c_8h_a083e480a49a539cd4740d0e1a15216f3}{00025} \textcolor{preprocessor}{#define I2Cstatus\_MT\_DATA\_ACK 0x28      }
-\hypertarget{_i2_c_8h_source.tex_l00026}{}\hyperlink{_i2_c_8h_a9de9a018a3f258d9e7a9ce44fb9e5cd1}{00026} \textcolor{preprocessor}{#define I2Cstatus\_MT\_DATA\_NACK 0x30     }
-\hypertarget{_i2_c_8h_source.tex_l00028}{}\hyperlink{_i2_c_8h_af046bfee1b2f1837e8a043ead63f8152}{00028} \textcolor{preprocessor}{#define I2Cstatus\_MR\_SLA\_ACK 0x40       }
-\hypertarget{_i2_c_8h_source.tex_l00029}{}\hyperlink{_i2_c_8h_ae17f24111fe34b4aa114e90824b7865a}{00029} \textcolor{preprocessor}{#define I2Cstatus\_MR\_SLA\_NACK 0x48      }
-\hypertarget{_i2_c_8h_source.tex_l00030}{}\hyperlink{_i2_c_8h_aae56c6775054400d706c68b4701a1659}{00030} \textcolor{preprocessor}{#define I2Cstatus\_MR\_DATA\_ACK 0x50      }
-\hypertarget{_i2_c_8h_source.tex_l00031}{}\hyperlink{_i2_c_8h_a3678a376b6b796511e60d0eda8a89dbe}{00031} \textcolor{preprocessor}{#define I2Cstatus\_MR\_DATA\_NACK 0x58     }
-\hypertarget{_i2_c_8h_source.tex_l00033}{}\hyperlink{_i2_c_8h_a3df22e1e7b66be8b74b33ce077824292}{00033} \textcolor{preprocessor}{#define SLA\_W 0xD0                      }
-\hypertarget{_i2_c_8h_source.tex_l00034}{}\hyperlink{_i2_c_8h_ae4af1f304be9d3202a445e7d6c235eaa}{00034} \textcolor{preprocessor}{#define SLA\_R 0xD1                      }
-00042 \textcolor{preprocessor}{void I2C\_start();}
-00043 
-00049 \textcolor{keywordtype}{void} \hyperlink{_i2_c_8h_af8dcc1bcb3e1c6c0fcdca4cf599a239b}{I2C\_stop}();
-00050 
-00056 \textcolor{keywordtype}{int} \hyperlink{_i2_c_8h_ad1a5ba420409525ff5ab1be86ac5e526}{error}();
-00057 
-00068 \textcolor{keywordtype}{int} \hyperlink{_i2_c_8h_ac0f145afe8d662af199043939f4398d6}{i2c\_write}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} slave\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} reg\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} length, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{
+00012 \textcolor{preprocessor}{#ifndef I2C\_H\_}
+00013 \textcolor{preprocessor}{#define I2C\_H\_}
+00014 
+00015 \textcolor{preprocessor}{#include <util/atomic.h>}
+00016 \textcolor{preprocessor}{#include <avr/io.h>}
+00017 \textcolor{preprocessor}{#include <avr/interrupt.h>}
+00018 \textcolor{preprocessor}{#include <util/delay.h>}
+00019 
+\hypertarget{_i2_c_8h_source.tex_l00020}{}\hyperlink{_i2_c_8h_a43bafb28b29491ec7f871319b5a3b2f8}{00020} \textcolor{preprocessor}{#define F\_CPU 16000000UL                }
+\hypertarget{_i2_c_8h_source.tex_l00022}{}\hyperlink{_i2_c_8h_ae106ed126eff0ffa33378daacfbbcdb7}{00022} \textcolor{preprocessor}{#define I2Cstatus\_START 0x08            }
+\hypertarget{_i2_c_8h_source.tex_l00024}{}\hyperlink{_i2_c_8h_a86ef56020aa435f9af57015ee220c3e4}{00024} \textcolor{preprocessor}{#define I2Cstatus\_MT\_SLA\_ACK 0x18       }
+\hypertarget{_i2_c_8h_source.tex_l00025}{}\hyperlink{_i2_c_8h_a28004b2b2ef10d3131ac4c4756da0ba0}{00025} \textcolor{preprocessor}{#define I2Cstatus\_MT\_SLA\_NACK 0x20      }
+\hypertarget{_i2_c_8h_source.tex_l00026}{}\hyperlink{_i2_c_8h_a083e480a49a539cd4740d0e1a15216f3}{00026} \textcolor{preprocessor}{#define I2Cstatus\_MT\_DATA\_ACK 0x28      }
+\hypertarget{_i2_c_8h_source.tex_l00027}{}\hyperlink{_i2_c_8h_a9de9a018a3f258d9e7a9ce44fb9e5cd1}{00027} \textcolor{preprocessor}{#define I2Cstatus\_MT\_DATA\_NACK 0x30     }
+\hypertarget{_i2_c_8h_source.tex_l00029}{}\hyperlink{_i2_c_8h_af046bfee1b2f1837e8a043ead63f8152}{00029} \textcolor{preprocessor}{#define I2Cstatus\_MR\_SLA\_ACK 0x40       }
+\hypertarget{_i2_c_8h_source.tex_l00030}{}\hyperlink{_i2_c_8h_ae17f24111fe34b4aa114e90824b7865a}{00030} \textcolor{preprocessor}{#define I2Cstatus\_MR\_SLA\_NACK 0x48      }
+\hypertarget{_i2_c_8h_source.tex_l00031}{}\hyperlink{_i2_c_8h_aae56c6775054400d706c68b4701a1659}{00031} \textcolor{preprocessor}{#define I2Cstatus\_MR\_DATA\_ACK 0x50      }
+\hypertarget{_i2_c_8h_source.tex_l00032}{}\hyperlink{_i2_c_8h_a3678a376b6b796511e60d0eda8a89dbe}{00032} \textcolor{preprocessor}{#define I2Cstatus\_MR\_DATA\_NACK 0x58     }
+\hypertarget{_i2_c_8h_source.tex_l00034}{}\hyperlink{_i2_c_8h_a3df22e1e7b66be8b74b33ce077824292}{00034} \textcolor{preprocessor}{#define SLA\_W 0xD0                      }
+\hypertarget{_i2_c_8h_source.tex_l00035}{}\hyperlink{_i2_c_8h_ae4af1f304be9d3202a445e7d6c235eaa}{00035} \textcolor{preprocessor}{#define SLA\_R 0xD1                      }
+00043 \textcolor{preprocessor}{void I2C\_start();}
+00044 
+00050 \textcolor{keywordtype}{void} \hyperlink{_i2_c_8h_af8dcc1bcb3e1c6c0fcdca4cf599a239b}{I2C\_stop}();
+00051 
+00057 \textcolor{keywordtype}{int} \hyperlink{_i2_c_8h_ad1a5ba420409525ff5ab1be86ac5e526}{error}();
+00058 
+00069 \textcolor{keywordtype}{int} \hyperlink{_i2_c_8h_ac0f145afe8d662af199043939f4398d6}{i2c\_write}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} slave\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} reg\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} length, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{
       char} \textcolor{keyword}{const} *data);
-00069 
-00080 \textcolor{keywordtype}{int} \hyperlink{_i2_c_8h_ac2d47e7a6c76f93f9b537c31a2986e7b}{i2c\_read}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} slave\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} reg\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} length, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} 
+00070 
+00081 \textcolor{keywordtype}{int} \hyperlink{_i2_c_8h_ac2d47e7a6c76f93f9b537c31a2986e7b}{i2c\_read}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} slave\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} reg\_addr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} length, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} 
       *data);
-00081 
-00082 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* I2C\_H\_ */}\textcolor{preprocessor}{}
+00082 
+00083 \textcolor{preprocessor}{#endif }\textcolor{comment}{/* I2C\_H\_ */}\textcolor{preprocessor}{}
 \end{DoxyCode}

@@ -41,6 +41,10 @@ Joakim
 \end{DoxyDate}
 
 
+Definition in file \hyperlink{_u_s_a_r_t_8h_source}{U\+S\+A\+R\+T.\+h}.
+
+
+
 \subsection{Function Documentation}
 \index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!init\+U\+S\+A\+RT@{init\+U\+S\+A\+RT}}
 \index{init\+U\+S\+A\+RT@{init\+U\+S\+A\+RT}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
@@ -53,7 +57,38 @@ Joakim
 
 Initiates U\+S\+A\+RT. 
 
-Initiates U\+S\+A\+RT to be used on U\+S\+A\+R\+T0 on the A\+Tmega1284P microprocessor. Configures the protocol to follow 115200, 8, N, 1 for use with the Fire\+Fly bluetooth circuit. \index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!U\+S\+A\+R\+T\+\_\+\+Flush@{U\+S\+A\+R\+T\+\_\+\+Flush}}
+Initiates U\+S\+A\+RT to be used on U\+S\+A\+R\+T0 on the A\+Tmega1284P microprocessor. Configures the protocol to follow 115200, 8, N, 1 for use with the Fire\+Fly bluetooth circuit.
+
+File\+: \hyperlink{_u_s_a_r_t_8c}{U\+S\+A\+R\+T.\+c} Version\+: 1.\+0 Last edited\+: 19 Maj 2016 
+
+Definition at line \hyperlink{_u_s_a_r_t_8c_source_l00010}{10} of file \hyperlink{_u_s_a_r_t_8c_source}{U\+S\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00011 \{
+00012     \textcolor{comment}{//Enl. datablad 14.7456MHz och 115200BPS}
+00013     uint16\_t ubrr\_val = 7;
+00014     
+00015     \textcolor{comment}{//Sätt baud rate prescaler}
+00016     UBRR0L = ubrr\_val;
+00017     UBRR0H = (ubrr\_val>>8);
+00018     
+00019     \textcolor{comment}{//Aktivera RxD och TxD samt aktivera avbrott på dessa}
+00020     UCSR0B = 0b11011000;
+00021     
+00022     \textcolor{comment}{//Async}
+00023     \textcolor{comment}{//No parity}
+00024     \textcolor{comment}{//1 stop bit}
+00025     \textcolor{comment}{//8 char size}
+00026     UCSR0C = 0b00000110;
+00027     
+00028     \textcolor{comment}{//Töm bufferten}
+00029     \hyperlink{_u_s_a_r_t_8c_a0f33ec0995bf5f267e847d9e22fb596a}{USART\_Flush}();
+00030     
+00031     \hyperlink{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}{BTcounter} = 0;
+00032 \}
+\end{DoxyCode}
+\index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!U\+S\+A\+R\+T\+\_\+\+Flush@{U\+S\+A\+R\+T\+\_\+\+Flush}}
 \index{U\+S\+A\+R\+T\+\_\+\+Flush@{U\+S\+A\+R\+T\+\_\+\+Flush}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
 \subsubsection[{\texorpdfstring{U\+S\+A\+R\+T\+\_\+\+Flush(void)}{USART_Flush(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void U\+S\+A\+R\+T\+\_\+\+Flush (
 \begin{DoxyParamCaption}
@@ -67,6 +102,17 @@ Flushes the U\+S\+A\+RT buffer.
 Repeatedly reads from the buffer as long as there is data in the buffer. \begin{DoxyWarning}{Warning}
 Erases data. 
 \end{DoxyWarning}
+
+
+Definition at line \hyperlink{_u_s_a_r_t_8c_source_l00064}{64} of file \hyperlink{_u_s_a_r_t_8c_source}{U\+S\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00065 \{
+00066     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} dummy;
+00067     \textcolor{keywordflow}{while}(UCSR0A & (1<<RXC0)) dummy = UDR0;
+00068 \}
+\end{DoxyCode}
 \index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!U\+S\+A\+R\+T\+\_\+\+Recieve@{U\+S\+A\+R\+T\+\_\+\+Recieve}}
 \index{U\+S\+A\+R\+T\+\_\+\+Recieve@{U\+S\+A\+R\+T\+\_\+\+Recieve}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
 \subsubsection[{\texorpdfstring{U\+S\+A\+R\+T\+\_\+\+Recieve()}{USART_Recieve()}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char U\+S\+A\+R\+T\+\_\+\+Recieve (
@@ -81,6 +127,19 @@ Recieves one byte over U\+S\+A\+RT.
 Waits until one byte has been recieved and returns it. \begin{DoxyReturn}{Returns}
 The recieved byte. 
 \end{DoxyReturn}
+
+
+Definition at line \hyperlink{_u_s_a_r_t_8c_source_l00035}{35} of file \hyperlink{_u_s_a_r_t_8c_source}{U\+S\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00036 \{
+00037     \textcolor{keywordflow}{while}(!(UCSR0A & (1<<RXC0)));
+00038     
+00039     \textcolor{keywordflow}{return} UDR0;
+00040     
+00041 \}
+\end{DoxyCode}
 \index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!U\+S\+A\+R\+T\+\_\+\+Transmit@{U\+S\+A\+R\+T\+\_\+\+Transmit}}
 \index{U\+S\+A\+R\+T\+\_\+\+Transmit@{U\+S\+A\+R\+T\+\_\+\+Transmit}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
 \subsubsection[{\texorpdfstring{U\+S\+A\+R\+T\+\_\+\+Transmit(unsigned char data)}{USART_Transmit(unsigned char data)}}]{\setlength{\rightskip}{0pt plus 5cm}void U\+S\+A\+R\+T\+\_\+\+Transmit (
@@ -97,6 +156,19 @@ Waits until the other unit is ready to recieve, and then sends one byte.
 {\em data} & The byte to be sent. \\
 \hline
 \end{DoxyParams}
+
+
+Definition at line \hyperlink{_u_s_a_r_t_8c_source_l00044}{44} of file \hyperlink{_u_s_a_r_t_8c_source}{U\+S\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00045 \{
+00046     \textcolor{keywordflow}{while}(!(UCSR0A & (1<<UDRE0)));
+00047     
+00048     UDR0 = data;
+00049     
+00050 \}
+\end{DoxyCode}
 \index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!U\+S\+A\+R\+T\+\_\+\+Transmit\+\_\+\+Array@{U\+S\+A\+R\+T\+\_\+\+Transmit\+\_\+\+Array}}
 \index{U\+S\+A\+R\+T\+\_\+\+Transmit\+\_\+\+Array@{U\+S\+A\+R\+T\+\_\+\+Transmit\+\_\+\+Array}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
 \subsubsection[{\texorpdfstring{U\+S\+A\+R\+T\+\_\+\+Transmit\+\_\+\+Array(unsigned char array[], uint8\+\_\+t size)}{USART_Transmit_Array(unsigned char array[], uint8_t size)}}]{\setlength{\rightskip}{0pt plus 5cm}void U\+S\+A\+R\+T\+\_\+\+Transmit\+\_\+\+Array (
@@ -121,11 +193,33 @@ Sends an array of a given size over U\+S\+A\+RT. \begin{DoxySeeAlso}{See also}
 \end{DoxyParams}
 
 
+Definition at line \hyperlink{_u_s_a_r_t_8c_source_l00053}{53} of file \hyperlink{_u_s_a_r_t_8c_source}{U\+S\+A\+R\+T.\+c}.
+
+
+\begin{DoxyCode}
+00054 \{
+00055     \hyperlink{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}{BTcounter} = 0;
+00056     \textcolor{keywordtype}{int} i = 0;
+00057     \textcolor{keywordflow}{for}(i; i < size; ++i)
+00058     \{
+00059         \hyperlink{_u_s_a_r_t_8c_ab8c416106cf1aff4ccdb3da4860fc179}{USART\_Transmit}(array[i]);
+00060     \}
+00061 \}
+\end{DoxyCode}
+
+
 \subsection{Variable Documentation}
 \index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!B\+Tcounter@{B\+Tcounter}}
 \index{B\+Tcounter@{B\+Tcounter}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
 \subsubsection[{\texorpdfstring{B\+Tcounter}{BTcounter}}]{\setlength{\rightskip}{0pt plus 5cm}volatile uint8\+\_\+t B\+Tcounter}\hypertarget{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}{}\label{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}
-Counter for keeping track of the current byte sent over bluetooth. \index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!B\+Ttimeout@{B\+Ttimeout}}
+Counter for keeping track of the current byte sent over bluetooth. 
+
+Definition at line \hyperlink{_u_s_a_r_t_8h_source_l00021}{21} of file \hyperlink{_u_s_a_r_t_8h_source}{U\+S\+A\+R\+T.\+h}.
+
+\index{U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}!B\+Ttimeout@{B\+Ttimeout}}
 \index{B\+Ttimeout@{B\+Ttimeout}!U\+S\+A\+R\+T.\+h@{U\+S\+A\+R\+T.\+h}}
 \subsubsection[{\texorpdfstring{B\+Ttimeout}{BTtimeout}}]{\setlength{\rightskip}{0pt plus 5cm}volatile int B\+Ttimeout}\hypertarget{_u_s_a_r_t_8h_ac73ad3c207657516f4f319adaf861a1b}{}\label{_u_s_a_r_t_8h_ac73ad3c207657516f4f319adaf861a1b}
 Timeout for the communication over bluetooth. 
+
+Definition at line \hyperlink{_u_s_a_r_t_8h_source_l00020}{20} of file \hyperlink{_u_s_a_r_t_8h_source}{U\+S\+A\+R\+T.\+h}.
+

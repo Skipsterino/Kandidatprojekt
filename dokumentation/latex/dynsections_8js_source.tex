@@ -1,0 +1,102 @@
+\hypertarget{dynsections_8js_source}{}\section{dynsections.\+js}
+\label{dynsections_8js_source}\index{dokumentation/html/dynsections.\+js@{dokumentation/html/dynsections.\+js}}
+
+\begin{DoxyCode}
+\hypertarget{dynsections_8js_source.tex_l00001}{}\hyperlink{dynsections_8js_a1922c462474df7dfd18741c961d59a25}{00001} \textcolor{keyword}{function} \hyperlink{dynsections_8js_a1922c462474df7dfd18741c961d59a25}{toggleVisibility}(linkObj)
+00002 \{
+00003  var base = $(linkObj).attr(\textcolor{stringliteral}{'id'});
+00004  var summary = $(\textcolor{charliteral}{'#'}+base+\textcolor{stringliteral}{'-summary'});
+00005  var content = $(\textcolor{charliteral}{'#'}+base+\textcolor{stringliteral}{'-content'});
+00006  var trigger = $(\textcolor{charliteral}{'#'}+base+\textcolor{stringliteral}{'-trigger'});
+00007  var src=$(trigger).attr(\textcolor{stringliteral}{'src'});
+00008  \textcolor{keywordflow}{if} (content.is(\textcolor{stringliteral}{':visible'})===\textcolor{keyword}{true}) \{
+00009    content.hide();
+00010    summary.show();
+00011    $(linkObj).addClass(\textcolor{stringliteral}{'closed'}).removeClass(\textcolor{stringliteral}{'opened'});
+00012    $(trigger).attr(\textcolor{stringliteral}{'src'},src.substring(0,src.length-8)+\textcolor{stringliteral}{'closed.png'});
+00013  \} \textcolor{keywordflow}{else} \{
+00014    content.show();
+00015    summary.hide();
+00016    $(linkObj).removeClass(\textcolor{stringliteral}{'closed'}).addClass(\textcolor{stringliteral}{'opened'});
+00017    $(trigger).attr(\textcolor{stringliteral}{'src'},src.substring(0,src.length-10)+\textcolor{stringliteral}{'open.png'});
+00018  \} 
+00019  \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00020 \}
+00021 
+\hypertarget{dynsections_8js_source.tex_l00022}{}\hyperlink{dynsections_8js_a8f7493ad859d4fbf2523917511ee7177}{00022} \textcolor{keyword}{function} \hyperlink{dynsections_8js_a8f7493ad859d4fbf2523917511ee7177}{updateStripes}()
+00023 \{
+00024   $(\textcolor{stringliteral}{'table.directory tr'}).
+00025        removeClass(\textcolor{stringliteral}{'even'}).filter(\textcolor{stringliteral}{':visible:even'}).addClass(\textcolor{stringliteral}{'even'});
+00026 \}
+00027 
+\hypertarget{dynsections_8js_source.tex_l00028}{}\hyperlink{dynsections_8js_a19f577cc1ba571396a85bb1f48bf4df2}{00028} \textcolor{keyword}{function} \hyperlink{dynsections_8js_a19f577cc1ba571396a85bb1f48bf4df2}{toggleLevel}(level)
+00029 \{
+00030   $(\textcolor{stringliteral}{'table.directory tr'}).\hyperlink{jquery_8js_a871ff39db627c54c710a3e9909b8234c}{each}(\textcolor{keyword}{function}() \{
+00031     var l = this.\textcolor{keywordtype}{id}.split(\textcolor{charliteral}{'\_'}).length-1;
+00032     var i = $(\textcolor{stringliteral}{'#img'}+this.\textcolor{keywordtype}{id}.substring(3));
+00033     var a = $(\textcolor{stringliteral}{'#arr'}+this.\textcolor{keywordtype}{id}.substring(3));
+00034     \textcolor{keywordflow}{if} (l<level+1) \{
+00035       i.removeClass(\textcolor{stringliteral}{'iconfopen iconfclosed'}).addClass(\textcolor{stringliteral}{'iconfopen'});
+00036       a.html(\textcolor{stringliteral}{'&#9660;'});
+00037       $(\textcolor{keyword}{this}).show();
+00038     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (l==level+1) \{
+00039       i.removeClass(\textcolor{stringliteral}{'iconfclosed iconfopen'}).addClass(\textcolor{stringliteral}{'iconfclosed'});
+00040       a.html(\textcolor{stringliteral}{'&#9658;'});
+00041       $(\textcolor{keyword}{this}).show();
+00042     \} \textcolor{keywordflow}{else} \{
+00043       $(\textcolor{keyword}{this}).hide();
+00044     \}
+00045   \});
+00046   \hyperlink{dynsections_8js_a8f7493ad859d4fbf2523917511ee7177}{updateStripes}();
+00047 \}
+00048 
+\hypertarget{dynsections_8js_source.tex_l00049}{}\hyperlink{dynsections_8js_af244da4527af2d845dca04f5656376cd}{00049} \textcolor{keyword}{function} \hyperlink{dynsections_8js_af244da4527af2d845dca04f5656376cd}{toggleFolder}(\textcolor{keywordtype}{id})
+00050 \{
+00051   \textcolor{comment}{// the clicked row}
+00052   var currentRow = $(\textcolor{stringliteral}{'#row\_'}+id);
+00053 
+00054   \textcolor{comment}{// all rows after the clicked row}
+00055   var rows = currentRow.nextAll(\textcolor{stringliteral}{"tr"});
+00056 
+00057   var re = \textcolor{keyword}{new} RegExp(\textcolor{stringliteral}{'^row\_'}+\textcolor{keywordtype}{id}+\textcolor{stringliteral}{'\(\backslash\)\(\backslash\)d+\_$'}, \textcolor{stringliteral}{"i"}); \textcolor{comment}{//only one sub}
+00058 
+00059   \textcolor{comment}{// only match elements AFTER this one (can't hide elements before)}
+00060   var childRows = rows.filter(\textcolor{keyword}{function}() \{ \textcolor{keywordflow}{return} this.\textcolor{keywordtype}{id}.match(re); \});
+00061 
+00062   \textcolor{comment}{// first row is visible we are HIDING}
+00063   \textcolor{keywordflow}{if} (childRows.filter(\textcolor{stringliteral}{':first'}).is(\textcolor{stringliteral}{':visible'})===\textcolor{keyword}{true}) \{
+00064     \textcolor{comment}{// replace down arrow by right arrow for current row}
+00065     var currentRowSpans = currentRow.find(\textcolor{stringliteral}{"span"});
+00066     currentRowSpans.filter(\textcolor{stringliteral}{".iconfopen"}).removeClass(\textcolor{stringliteral}{"iconfopen"}).addClass(\textcolor{stringliteral}{"iconfclosed"});
+00067     currentRowSpans.filter(\textcolor{stringliteral}{".arrow"}).html(\textcolor{stringliteral}{'&#9658;'});
+00068     rows.filter(\textcolor{stringliteral}{"[id^=row\_"}+\textcolor{keywordtype}{id}+\textcolor{stringliteral}{"]"}).hide(); \textcolor{comment}{// hide all children}
+00069   \} \textcolor{keywordflow}{else} \{ \textcolor{comment}{// we are SHOWING}
+00070     \textcolor{comment}{// replace right arrow by down arrow for current row}
+00071     var currentRowSpans = currentRow.find(\textcolor{stringliteral}{"span"});
+00072     currentRowSpans.filter(\textcolor{stringliteral}{".iconfclosed"}).removeClass(\textcolor{stringliteral}{"iconfclosed"}).addClass(\textcolor{stringliteral}{"iconfopen"});
+00073     currentRowSpans.filter(\textcolor{stringliteral}{".arrow"}).html(\textcolor{stringliteral}{'&#9660;'});
+00074     \textcolor{comment}{// replace down arrows by right arrows for child rows}
+00075     var childRowsSpans = childRows.find(\textcolor{stringliteral}{"span"});
+00076     childRowsSpans.filter(\textcolor{stringliteral}{".iconfopen"}).removeClass(\textcolor{stringliteral}{"iconfopen"}).addClass(\textcolor{stringliteral}{"iconfclosed"});
+00077     childRowsSpans.filter(\textcolor{stringliteral}{".arrow"}).html(\textcolor{stringliteral}{'&#9658;'});
+00078     childRows.show(); \textcolor{comment}{//show all children}
+00079   \}
+00080   \hyperlink{dynsections_8js_a8f7493ad859d4fbf2523917511ee7177}{updateStripes}();
+00081 \}
+00082 
+00083 
+\hypertarget{dynsections_8js_source.tex_l00084}{}\hyperlink{dynsections_8js_ac057b640b17ff32af11ced151c9305b4}{00084} \textcolor{keyword}{function} \hyperlink{dynsections_8js_ac057b640b17ff32af11ced151c9305b4}{toggleInherit}(\textcolor{keywordtype}{id})
+00085 \{
+00086   var rows = $(\textcolor{stringliteral}{'tr.inherit.'}+id);
+00087   var img = $(\textcolor{stringliteral}{'tr.inherit\_header.'}+\textcolor{keywordtype}{id}+\textcolor{stringliteral}{' img'});
+00088   var src = $(img).attr(\textcolor{stringliteral}{'src'});
+00089   \textcolor{keywordflow}{if} (rows.filter(\textcolor{stringliteral}{':first'}).is(\textcolor{stringliteral}{':visible'})===\textcolor{keyword}{true}) \{
+00090     rows.css(\textcolor{stringliteral}{'display'},\textcolor{stringliteral}{'none'});
+00091     $(img).attr(\textcolor{stringliteral}{'src'},src.substring(0,src.length-8)+\textcolor{stringliteral}{'closed.png'});
+00092   \} \textcolor{keywordflow}{else} \{
+00093     rows.css(\textcolor{stringliteral}{'display'},\textcolor{stringliteral}{'table-row'}); \textcolor{comment}{// using show() causes jump in firefox}
+00094     $(img).attr(\textcolor{stringliteral}{'src'},src.substring(0,src.length-10)+\textcolor{stringliteral}{'open.png'});
+00095   \}
+00096 \}
+00097 
+\end{DoxyCode}

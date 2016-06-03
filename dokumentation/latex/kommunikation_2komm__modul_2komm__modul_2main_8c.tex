@@ -3,7 +3,7 @@
 {\ttfamily \#include $<$avr/io.\+h$>$}\\*
 {\ttfamily \#include $<$avr/interrupt.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}U\+S\+A\+R\+T.\+h\char`\"{}}\\*
-{\ttfamily \#include \char`\"{}S\+P\+I.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+P\+I\+\_\+comm.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}L\+C\+D.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}L\+C\+D\+\_\+controller.\+h\char`\"{}}\\*
 \subsection*{Macros}
@@ -22,6 +22,10 @@ int \hyperlink{kommunikation_2komm__modul_2komm__modul_2main_8c_a840291bc02cba54
 \index{kommunikation/komm\+\_\+modul/komm\+\_\+modul/main.\+c@{kommunikation/komm\+\_\+modul/komm\+\_\+modul/main.\+c}!F\+\_\+\+C\+PU@{F\+\_\+\+C\+PU}}
 \index{F\+\_\+\+C\+PU@{F\+\_\+\+C\+PU}!kommunikation/komm\+\_\+modul/komm\+\_\+modul/main.\+c@{kommunikation/komm\+\_\+modul/komm\+\_\+modul/main.\+c}}
 \subsubsection[{\texorpdfstring{F\+\_\+\+C\+PU}{F_CPU}}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\+\_\+\+C\+PU~14745600\+UL}\hypertarget{kommunikation_2komm__modul_2komm__modul_2main_8c_a43bafb28b29491ec7f871319b5a3b2f8}{}\label{kommunikation_2komm__modul_2komm__modul_2main_8c_a43bafb28b29491ec7f871319b5a3b2f8}
+File\+: main.\+c Version\+: 1.\+0 Last edited\+: 19 Maj 2016 
+
+Definition at line \hyperlink{kommunikation_2komm__modul_2komm__modul_2main_8c_source_l00007}{7} of file \hyperlink{kommunikation_2komm__modul_2komm__modul_2main_8c_source}{main.\+c}.
+
 
 
 \subsection{Function Documentation}
@@ -32,3 +36,112 @@ int \hyperlink{kommunikation_2komm__modul_2komm__modul_2main_8c_a840291bc02cba54
 \item[{void}]{}
 \end{DoxyParamCaption}
 )}\hypertarget{kommunikation_2komm__modul_2komm__modul_2main_8c_a840291bc02cba5474a4cb46a9b9566fe}{}\label{kommunikation_2komm__modul_2komm__modul_2main_8c_a840291bc02cba5474a4cb46a9b9566fe}
+
+
+Definition at line \hyperlink{kommunikation_2komm__modul_2komm__modul_2main_8c_source_l00019}{19} of file \hyperlink{kommunikation_2komm__modul_2komm__modul_2main_8c_source}{main.\+c}.
+
+
+\begin{DoxyCode}
+00020 \{
+00021     cli();
+00022     \textcolor{comment}{//Initiera LCD}
+00023     \hyperlink{_l_c_d_8c_a0742e25c23ca1096ceba081b98fd58ba}{LCD\_init}();
+00024     
+00025     \hyperlink{_l_c_d__controller_8c_acdf924af672d862f021f6b4ace2bcebd}{LCD\_controller\_init}();
+00026     
+00027     \textcolor{comment}{//Initiera buss}
+00028     \hyperlink{_s_p_i__comm_8c_a9208b9a00dfa335b5dd56360ea5c7813}{SPI\_init\_slave}();
+00029     
+00030     \textcolor{comment}{//Initiera BT}
+00031     \hyperlink{_u_s_a_r_t_8c_a4b46e2e6b871d0b0f138e61760b10fa2}{initUSART}();
+00032     
+00033     sei();
+00034     
+00035     \textcolor{comment}{//Sätt in tomma rader}
+00036     \hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{LCD\_controller\_put\_line}(0, \textcolor{stringliteral}{""});
+00037     \hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{LCD\_controller\_put\_line}(1, \textcolor{stringliteral}{""});
+00038     \hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{LCD\_controller\_put\_line}(2, \textcolor{stringliteral}{""});
+00039     \hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{LCD\_controller\_put\_line}(3, \textcolor{stringliteral}{""});
+00040     
+00041     uint8\_t lastStates[5];
+00042     memset(lastStates,0,\textcolor{keyword}{sizeof}(lastStates));
+00043     \textcolor{keywordflow}{while}(1)
+00044     \{
+00045         \textcolor{keywordtype}{char} digits[16];
+00046         \textcolor{comment}{//Skriv ut senaste states}
+00047         
+00048         uint8\_t currState = \hyperlink{_buffers_8h_af10085b37b41fff01ad209e47f7d4e44}{toBluetooth}[14];
+00049         uint8\_t changedState = 0;
+00050         
+00051         \textcolor{keywordflow}{if}(currState != lastStates[0])
+00052         \{
+00053             changedState = 1;
+00054             \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 3; i >= 0; --i)
+00055             \{
+00056                 lastStates[i+1] = lastStates[i];
+00057             \}
+00058             lastStates[0] = currState;
+00059             \textcolor{keywordflow}{if}(lastStates[4] != 0)
+00060             \{
+00061                 sprintf(digits,\textcolor{stringliteral}{"%i,%i,%i,%i,%i"}, lastStates[0], lastStates[1], lastStates[2], lastStates[3]
+      , lastStates[4]);
+00062             \}
+00063             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(lastStates[3] != 0)
+00064             \{
+00065                 sprintf(digits,\textcolor{stringliteral}{"%i,%i,%i,%i"}, lastStates[0], lastStates[1], lastStates[2], lastStates[3]);
+00066             \}
+00067             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(lastStates[2] != 0)
+00068             \{
+00069                 sprintf(digits,\textcolor{stringliteral}{"%i,%i,%i"}, lastStates[0], lastStates[1], lastStates[2]);
+00070             \}
+00071             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(lastStates[1] != 0)
+00072             \{
+00073                 sprintf(digits,\textcolor{stringliteral}{"%i,%i"}, lastStates[0], lastStates[1]);
+00074             \}
+00075             \textcolor{keywordflow}{else}
+00076             \{
+00077                 sprintf(digits,\textcolor{stringliteral}{"%i"}, lastStates[0]);
+00078             \}
+00079             
+00080             \hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{LCD\_controller\_put\_line}(0, digits);
+00081         \}
+00082         
+00083         \textcolor{comment}{//Skriv ut Kp och Kd}
+00084         sprintf(digits, \textcolor{stringliteral}{"Kp:%i, Kd:%i"}, \hyperlink{_buffers_8h_a3b60028d98e73923081cbf257a237731}{toSPI}[5], \hyperlink{_buffers_8h_a3b60028d98e73923081cbf257a237731}{toSPI}[6]);
+00085         \hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{LCD\_controller\_put\_line}(1, digits);
+00086         
+00087         \textcolor{comment}{//Skriv ut styrläge (går att göra snyggare)}
+00088         \textcolor{keywordflow}{if}(\hyperlink{_buffers_8h_a3b60028d98e73923081cbf257a237731}{toSPI}[0] & 0b00001000)
+00089         \{
+00090             
+00091             \textcolor{keywordflow}{if}(\hyperlink{_buffers_8h_a3b60028d98e73923081cbf257a237731}{toSPI}[4] == 0b00001111)
+00092             \{
+00093                 \hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{LCD\_controller\_put\_line}(2,\textcolor{stringliteral}{"MODE=MANUAL"});
+00094             \}
+00095             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(\hyperlink{_buffers_8h_a3b60028d98e73923081cbf257a237731}{toSPI}[4] == 0b00111100)
+00096             \{
+00097                 \hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{LCD\_controller\_put\_line}(2,\textcolor{stringliteral}{"MODE=AUTO"});
+00098             \}
+00099             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(\hyperlink{_buffers_8h_a3b60028d98e73923081cbf257a237731}{toSPI}[4] == 0b11110000)
+00100             \{
+00101                 \hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{LCD\_controller\_put\_line}(2,\textcolor{stringliteral}{"MODE=RACE"});
+00102             \}
+00103             \textcolor{keywordflow}{else}
+00104             \{
+00105                 \hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{LCD\_controller\_put\_line}(2,\textcolor{stringliteral}{"MODE=UNDEF"});
+00106             \}
+00107         \}
+00108         \textcolor{keywordflow}{if}(changedState)
+00109         \{
+00110             \hyperlink{_l_c_d__controller_8c_ac9b4126229db48d14f07d3ea3178b48a}{LCD\_controller\_put\_line}(2,\textcolor{stringliteral}{"MODE=AUTO"});
+00111         \}
+00112         
+00113         \textcolor{comment}{//OBS tar lång tid}
+00114         \hyperlink{_l_c_d_8c_afbc155e4e9d279ccd12c2695fe78a0e3}{LCD\_print\_string}(\hyperlink{_l_c_d__controller_8h_a075b70e7692af8221284f00c90d70fb2}{lines}[\hyperlink{_l_c_d__controller_8h_a4f799993f40fea97658f543f15842f4a}{currentLine}], 
+      \hyperlink{_l_c_d__controller_8h_a075b70e7692af8221284f00c90d70fb2}{lines}[currentLine+1], \hyperlink{_l_c_d__controller_8h_a075b70e7692af8221284f00c90d70fb2}{lines}[currentLine + 2], \hyperlink{_l_c_d__controller_8h_a075b70e7692af8221284f00c90d70fb2}{lines}[currentLine + 3]);
+00115         
+00116         \textcolor{comment}{//Tar nog längre tid}
+00117         \_delay\_ms(100);
+00118     \}
+00119 \}
+\end{DoxyCode}

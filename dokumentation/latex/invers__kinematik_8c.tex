@@ -1,13 +1,28 @@
 \hypertarget{invers__kinematik_8c}{}\section{styr/styr/invers\+\_\+kinematik.c File Reference}
 \label{invers__kinematik_8c}\index{styr/styr/invers\+\_\+kinematik.\+c@{styr/styr/invers\+\_\+kinematik.\+c}}
 {\ttfamily \#include \char`\"{}invers\+\_\+kinematik.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{invers__kinematik_8c_a344b421f17a678e971ea980caf46ecae}{A\+N\+G\+\_\+\+T\+O\+\_\+\+P\+O\+S\+\_\+\+S\+C\+A\+LE}~195.\+37860814f
+\item 
+\#define \hyperlink{invers__kinematik_8c_a598a3330b3c21701223ee0ca14316eca}{PI}~3.\+14159265359f
+\item 
+\#define \hyperlink{invers__kinematik_8c_a1ce864b284ac751ffd8a0d98d5ccab55}{L1}~5.\+1f
+\item 
+\#define \hyperlink{invers__kinematik_8c_ab983f03862f557a786ccc43b26522e16}{L2}~6.\+6f
+\item 
+\#define \hyperlink{invers__kinematik_8c_a7a496732ef99aadddf8e1215ca9fbca7}{L2\+\_\+\+SQ}~43.\+56f
+\item 
+\#define \hyperlink{invers__kinematik_8c_a0702a0cfbd3fd4cfd1e5d9e69d792ed7}{L3\+\_\+\+SQ}~176.\+89f
+\item 
+\#define \hyperlink{invers__kinematik_8c_a36a1e67b0bf459531486e5d273b77f76}{L3\+\_\+\+L2\+\_\+2}~175.\+56f
+\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{structtriple__float}{triple\+\_\+float} \hyperlink{invers__kinematik_8c_ae80254627d743b6d24dbe47cd75adc7e}{Pos\+\_\+\+To\+\_\+\+Kar} (float p1, float p2, float p3)
-\begin{DoxyCompactList}\small\item\em Servo position to Cartesian koodinates. \end{DoxyCompactList}\item 
 \hyperlink{structtriple__uint}{triple\+\_\+uint} \hyperlink{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{Kar\+\_\+\+To\+\_\+\+Pos} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
-\begin{DoxyCompactList}\small\item\em Cartesian koodinates to servo position. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Cartesian coordinates to servo position. \end{DoxyCompactList}\item 
 \hyperlink{structtriple__float}{triple\+\_\+float} \hyperlink{invers__kinematik_8c_ae696af5df234c2f15694317bcf2a4bec}{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg1} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
 \begin{DoxyCompactList}\small\item\em Cartesian koodinates to cylindrical coordinates, for leg1. \end{DoxyCompactList}\item 
 \hyperlink{structtriple__float}{triple\+\_\+float} \hyperlink{invers__kinematik_8c_addfbc7c7fdb83567e74239fb6333d92c}{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg2} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
@@ -20,17 +35,58 @@
 \begin{DoxyCompactList}\small\item\em Cartesian koodinates to cylindrical coordinates, for leg5. \end{DoxyCompactList}\item 
 \hyperlink{structtriple__float}{triple\+\_\+float} \hyperlink{invers__kinematik_8c_aac6d276df2445e288447c993547ecbc4}{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg6} (float \hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}, float \hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, float \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z})
 \begin{DoxyCompactList}\small\item\em Cartesian koodinates to cylindrical coordinates, for leg6. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-float \hyperlink{invers__kinematik_8c_a12d28bd93fcce48970997144ffbf1c81}{v1}
-\item 
-float \hyperlink{invers__kinematik_8c_a0984502bd22b11aedf99072712227d36}{v2}
-\item 
-float \hyperlink{invers__kinematik_8c_a6aac66c9580e284eb2b77bb90c4a53c1}{v3}
-\item 
-float \hyperlink{invers__kinematik_8c_a9cb0638a7b1d7af8ff421d2dc025d3a8}{pi} =3.\+14159265359
-\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!A\+N\+G\+\_\+\+T\+O\+\_\+\+P\+O\+S\+\_\+\+S\+C\+A\+LE@{A\+N\+G\+\_\+\+T\+O\+\_\+\+P\+O\+S\+\_\+\+S\+C\+A\+LE}}
+\index{A\+N\+G\+\_\+\+T\+O\+\_\+\+P\+O\+S\+\_\+\+S\+C\+A\+LE@{A\+N\+G\+\_\+\+T\+O\+\_\+\+P\+O\+S\+\_\+\+S\+C\+A\+LE}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
+\subsubsection[{\texorpdfstring{A\+N\+G\+\_\+\+T\+O\+\_\+\+P\+O\+S\+\_\+\+S\+C\+A\+LE}{ANG_TO_POS_SCALE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define A\+N\+G\+\_\+\+T\+O\+\_\+\+P\+O\+S\+\_\+\+S\+C\+A\+LE~195.\+37860814f}\hypertarget{invers__kinematik_8c_a344b421f17a678e971ea980caf46ecae}{}\label{invers__kinematik_8c_a344b421f17a678e971ea980caf46ecae}
+
+
+Definition at line \hyperlink{invers__kinematik_8c_source_l00011}{11} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
+\index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!L1@{L1}}
+\index{L1@{L1}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
+\subsubsection[{\texorpdfstring{L1}{L1}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L1~5.\+1f}\hypertarget{invers__kinematik_8c_a1ce864b284ac751ffd8a0d98d5ccab55}{}\label{invers__kinematik_8c_a1ce864b284ac751ffd8a0d98d5ccab55}
+
+
+Definition at line \hyperlink{invers__kinematik_8c_source_l00014}{14} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
+\index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!L2@{L2}}
+\index{L2@{L2}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
+\subsubsection[{\texorpdfstring{L2}{L2}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L2~6.\+6f}\hypertarget{invers__kinematik_8c_ab983f03862f557a786ccc43b26522e16}{}\label{invers__kinematik_8c_ab983f03862f557a786ccc43b26522e16}
+
+
+Definition at line \hyperlink{invers__kinematik_8c_source_l00015}{15} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
+\index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!L2\+\_\+\+SQ@{L2\+\_\+\+SQ}}
+\index{L2\+\_\+\+SQ@{L2\+\_\+\+SQ}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
+\subsubsection[{\texorpdfstring{L2\+\_\+\+SQ}{L2_SQ}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L2\+\_\+\+SQ~43.\+56f}\hypertarget{invers__kinematik_8c_a7a496732ef99aadddf8e1215ca9fbca7}{}\label{invers__kinematik_8c_a7a496732ef99aadddf8e1215ca9fbca7}
+
+
+Definition at line \hyperlink{invers__kinematik_8c_source_l00016}{16} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
+\index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!L3\+\_\+\+L2\+\_\+2@{L3\+\_\+\+L2\+\_\+2}}
+\index{L3\+\_\+\+L2\+\_\+2@{L3\+\_\+\+L2\+\_\+2}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
+\subsubsection[{\texorpdfstring{L3\+\_\+\+L2\+\_\+2}{L3_L2_2}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L3\+\_\+\+L2\+\_\+2~175.\+56f}\hypertarget{invers__kinematik_8c_a36a1e67b0bf459531486e5d273b77f76}{}\label{invers__kinematik_8c_a36a1e67b0bf459531486e5d273b77f76}
+
+
+Definition at line \hyperlink{invers__kinematik_8c_source_l00018}{18} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
+\index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!L3\+\_\+\+SQ@{L3\+\_\+\+SQ}}
+\index{L3\+\_\+\+SQ@{L3\+\_\+\+SQ}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
+\subsubsection[{\texorpdfstring{L3\+\_\+\+SQ}{L3_SQ}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L3\+\_\+\+SQ~176.\+89f}\hypertarget{invers__kinematik_8c_a0702a0cfbd3fd4cfd1e5d9e69d792ed7}{}\label{invers__kinematik_8c_a0702a0cfbd3fd4cfd1e5d9e69d792ed7}
+
+
+Definition at line \hyperlink{invers__kinematik_8c_source_l00017}{17} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
+\index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!PI@{PI}}
+\index{PI@{PI}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
+\subsubsection[{\texorpdfstring{PI}{PI}}]{\setlength{\rightskip}{0pt plus 5cm}\#define PI~3.\+14159265359f}\hypertarget{invers__kinematik_8c_a598a3330b3c21701223ee0ca14316eca}{}\label{invers__kinematik_8c_a598a3330b3c21701223ee0ca14316eca}
+
+
+Definition at line \hyperlink{invers__kinematik_8c_source_l00012}{12} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
 
 
 \subsection{Function Documentation}
@@ -61,6 +117,22 @@ Calculates cylindrical coordinates, given Cartesian koodinates.
 \begin{DoxyReturn}{Returns}
 The Cartesian koodinates as \hyperlink{structtriple__float}{triple\+\_\+float}, a struct containing three unsigned floats. 
 \end{DoxyReturn}
+
+
+Definition at line \hyperlink{invers__kinematik_8c_source_l00048}{48} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
+
+\begin{DoxyCode}
+00049 \{
+00050     \textcolor{keywordtype}{float} r = sqrt(pow(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}+6, 2) +pow(\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}+12, 2)); \textcolor{comment}{// x offset = 6, y offset=12}
+00051     \textcolor{keywordtype}{float} th = atan((\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}+6)/(\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}+12));
+00052     
+00053     \textcolor{comment}{//För att skicka ut 3 st floats }
+00054     \hyperlink{structtriple__float}{triple\_float} triple = \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(r,th,
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00055     \textcolor{keywordflow}{return} triple;
+00056 \}
+\end{DoxyCode}
 \index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg2@{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg2}}
 \index{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg2@{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg2}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
 \subsubsection[{\texorpdfstring{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg2(float x, float y, float z)}{Kar_To_Cyl_Leg2(float x, float y, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+float} Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg2 (
@@ -88,6 +160,22 @@ Calculates cylindrical coordinates, given Cartesian koodinates.
 \begin{DoxyReturn}{Returns}
 The servopositions as \hyperlink{structtriple__float}{triple\+\_\+float}, a struct containing three unsigned floats. 
 \end{DoxyReturn}
+
+
+Definition at line \hyperlink{invers__kinematik_8c_source_l00058}{58} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
+
+\begin{DoxyCode}
+00059 \{
+00060     \textcolor{keywordtype}{float} r = sqrt(pow(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}+6, 2) +pow(\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}+12, 2)); \textcolor{comment}{// x offset = 6, y offset=12}
+00061     \textcolor{keywordtype}{float} th = atan(-(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}+6)/(\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}+12));
+00062     
+00063     \textcolor{comment}{//För att skicka ut 3 st floats }
+00064     \hyperlink{structtriple__float}{triple\_float} triple = \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(r,th,
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00065     \textcolor{keywordflow}{return} triple;
+00066 \}
+\end{DoxyCode}
 \index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg3@{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg3}}
 \index{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg3@{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg3}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
 \subsubsection[{\texorpdfstring{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg3(float x, float y, float z)}{Kar_To_Cyl_Leg3(float x, float y, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+float} Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg3 (
@@ -115,6 +203,22 @@ Calculates cylindrical coordinates, given Cartesian koodinates.
 \begin{DoxyReturn}{Returns}
 The servopositions as \hyperlink{structtriple__float}{triple\+\_\+float}, a struct containing three unsigned floats. 
 \end{DoxyReturn}
+
+
+Definition at line \hyperlink{invers__kinematik_8c_source_l00068}{68} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
+
+\begin{DoxyCode}
+00069 \{
+00070     \textcolor{keywordtype}{float} r = sqrt(pow(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} + 10, 2) +pow(\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, 2)); \textcolor{comment}{// x offset = 10, y offset=0}
+00071     \textcolor{keywordtype}{float} th = \hyperlink{invers__kinematik_8c_a598a3330b3c21701223ee0ca14316eca}{PI}/2 - atan(\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}/(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x} + 10));
+00072     
+00073     \textcolor{comment}{//För att skicka ut 3 st floats }
+00074     \hyperlink{structtriple__float}{triple\_float} triple = \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(r,th,
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00075     \textcolor{keywordflow}{return} triple;
+00076 \}
+\end{DoxyCode}
 \index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg4@{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg4}}
 \index{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg4@{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg4}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
 \subsubsection[{\texorpdfstring{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg4(float x, float y, float z)}{Kar_To_Cyl_Leg4(float x, float y, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+float} Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg4 (
@@ -142,6 +246,22 @@ Calculates cylindrical coordinates, given Cartesian koodinates.
 \begin{DoxyReturn}{Returns}
 The servopositions as \hyperlink{structtriple__float}{triple\+\_\+float}, a struct containing three unsigned floats. 
 \end{DoxyReturn}
+
+
+Definition at line \hyperlink{invers__kinematik_8c_source_l00078}{78} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
+
+\begin{DoxyCode}
+00079 \{
+00080     \textcolor{keywordtype}{float} r = sqrt(pow(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}+10, 2) + pow(\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, 2)); \textcolor{comment}{// x offset = 10, y offset=0}
+00081     \textcolor{keywordtype}{float} th= -\hyperlink{invers__kinematik_8c_a598a3330b3c21701223ee0ca14316eca}{PI}/2+atan(\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}/(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}+10));
+00082     
+00083     \textcolor{comment}{//För att skicka ut 3 st floats }
+00084     \hyperlink{structtriple__float}{triple\_float} triple = \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(r,th,
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00085     \textcolor{keywordflow}{return} triple;
+00086 \}
+\end{DoxyCode}
 \index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg5@{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg5}}
 \index{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg5@{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg5}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
 \subsubsection[{\texorpdfstring{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg5(float x, float y, float z)}{Kar_To_Cyl_Leg5(float x, float y, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+float} Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg5 (
@@ -169,6 +289,22 @@ Calculates cylindrical coordinates, given Cartesian koodinates.
 \begin{DoxyReturn}{Returns}
 The servopositions as \hyperlink{structtriple__float}{triple\+\_\+float}, a struct containing three unsigned floats. 
 \end{DoxyReturn}
+
+
+Definition at line \hyperlink{invers__kinematik_8c_source_l00088}{88} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
+
+\begin{DoxyCode}
+00089 \{
+00090     \textcolor{keywordtype}{float} r = sqrt(pow(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}+6, 2) +pow(12-\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, 2)); \textcolor{comment}{// x offset = 6, y offset=12}
+00091     \textcolor{keywordtype}{float} th = \hyperlink{invers__kinematik_8c_a598a3330b3c21701223ee0ca14316eca}{PI} - atan((\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}+6)/(12-\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}));
+00092     
+00093     \textcolor{comment}{//För att skicka ut 3 st floats }
+00094     \hyperlink{structtriple__float}{triple\_float} triple = \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(r,th,
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00095     \textcolor{keywordflow}{return} triple;
+00096 \}
+\end{DoxyCode}
 \index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg6@{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg6}}
 \index{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg6@{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg6}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
 \subsubsection[{\texorpdfstring{Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg6(float x, float y, float z)}{Kar_To_Cyl_Leg6(float x, float y, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+float} Kar\+\_\+\+To\+\_\+\+Cyl\+\_\+\+Leg6 (
@@ -196,6 +332,22 @@ Calculates cylindrical coordinates, given Cartesian koodinates.
 \begin{DoxyReturn}{Returns}
 The servopositions as \hyperlink{structtriple__float}{triple\+\_\+float}, a struct containing three unsigned floats. 
 \end{DoxyReturn}
+
+
+Definition at line \hyperlink{invers__kinematik_8c_source_l00098}{98} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
+
+\begin{DoxyCode}
+00099 \{
+00100     \textcolor{keywordtype}{float} r = sqrt(pow(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}+6, 2) +pow(12-\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}, 2)); \textcolor{comment}{// x offset = 6, y offset=12}
+00101     \textcolor{keywordtype}{float} th = \hyperlink{invers__kinematik_8c_a598a3330b3c21701223ee0ca14316eca}{PI} + atan((\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x}+6)/(12-\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y}));
+00102     
+00103     \textcolor{comment}{//För att skicka ut 3 st floats }
+00104     \hyperlink{structtriple__float}{triple\_float} triple = \hyperlink{structs_8c_a32f52471299d0d08c34e0dc70f2296d6}{create\_triple\_float}(r,th,
+      \hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z});
+00105     \textcolor{keywordflow}{return} triple;
+00106 \}
+\end{DoxyCode}
 \index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!Kar\+\_\+\+To\+\_\+\+Pos@{Kar\+\_\+\+To\+\_\+\+Pos}}
 \index{Kar\+\_\+\+To\+\_\+\+Pos@{Kar\+\_\+\+To\+\_\+\+Pos}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
 \subsubsection[{\texorpdfstring{Kar\+\_\+\+To\+\_\+\+Pos(float x, float y, float z)}{Kar_To_Pos(float x, float y, float z)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+uint} Kar\+\_\+\+To\+\_\+\+Pos (
@@ -207,22 +359,9 @@ The servopositions as \hyperlink{structtriple__float}{triple\+\_\+float}, a stru
 )}\hypertarget{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}{}\label{invers__kinematik_8c_a68f82386196ad991ed54fb9796d90f7c}
 
 
-Cartesian koodinates to servo position. 
+Cartesian coordinates to servo position. 
 
-Calculates servo position without consideration to offset, given koordinates in Cartesian koodinates. \index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!Pos\+\_\+\+To\+\_\+\+Kar@{Pos\+\_\+\+To\+\_\+\+Kar}}
-\index{Pos\+\_\+\+To\+\_\+\+Kar@{Pos\+\_\+\+To\+\_\+\+Kar}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
-\subsubsection[{\texorpdfstring{Pos\+\_\+\+To\+\_\+\+Kar(float p1, float p2, float p3)}{Pos_To_Kar(float p1, float p2, float p3)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf triple\+\_\+float} Pos\+\_\+\+To\+\_\+\+Kar (
-\begin{DoxyParamCaption}
-\item[{float}]{p1, }
-\item[{float}]{p2, }
-\item[{float}]{p3}
-\end{DoxyParamCaption}
-)}\hypertarget{invers__kinematik_8c_ae80254627d743b6d24dbe47cd75adc7e}{}\label{invers__kinematik_8c_ae80254627d743b6d24dbe47cd75adc7e}
-
-
-Servo position to Cartesian koodinates. 
-
-Calculates Cartesian koodinates, given servo position, without consideration to offset.
+Calculates servo position without consideration to offset, given coordinates in Cartesian coordinates.
 
 
 \begin{DoxyParams}{Parameters}
@@ -238,16 +377,31 @@ The servopositions as \hyperlink{structtriple__uint}{triple\+\_\+uint}, a struct
 \end{DoxyReturn}
 
 
-\subsection{Variable Documentation}
-\index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!pi@{pi}}
-\index{pi@{pi}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
-\subsubsection[{\texorpdfstring{pi}{pi}}]{\setlength{\rightskip}{0pt plus 5cm}float pi =3.\+14159265359}\hypertarget{invers__kinematik_8c_a9cb0638a7b1d7af8ff421d2dc025d3a8}{}\label{invers__kinematik_8c_a9cb0638a7b1d7af8ff421d2dc025d3a8}
-\index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!v1@{v1}}
-\index{v1@{v1}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
-\subsubsection[{\texorpdfstring{v1}{v1}}]{\setlength{\rightskip}{0pt plus 5cm}float v1}\hypertarget{invers__kinematik_8c_a12d28bd93fcce48970997144ffbf1c81}{}\label{invers__kinematik_8c_a12d28bd93fcce48970997144ffbf1c81}
-\index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!v2@{v2}}
-\index{v2@{v2}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
-\subsubsection[{\texorpdfstring{v2}{v2}}]{\setlength{\rightskip}{0pt plus 5cm}float v2}\hypertarget{invers__kinematik_8c_a0984502bd22b11aedf99072712227d36}{}\label{invers__kinematik_8c_a0984502bd22b11aedf99072712227d36}
-\index{invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}!v3@{v3}}
-\index{v3@{v3}!invers\+\_\+kinematik.\+c@{invers\+\_\+kinematik.\+c}}
-\subsubsection[{\texorpdfstring{v3}{v3}}]{\setlength{\rightskip}{0pt plus 5cm}float v3}\hypertarget{invers__kinematik_8c_a6aac66c9580e284eb2b77bb90c4a53c1}{}\label{invers__kinematik_8c_a6aac66c9580e284eb2b77bb90c4a53c1}
+Definition at line \hyperlink{invers__kinematik_8c_source_l00021}{21} of file \hyperlink{invers__kinematik_8c_source}{invers\+\_\+kinematik.\+c}.
+
+
+\begin{DoxyCode}
+00022 \{   
+00023     \textcolor{comment}{//Hjälpvariabler}
+00024     \textcolor{keywordtype}{float} r\_leg = sqrt(pow(\hyperlink{sensor_8h_a6c4b361d72eb3767ba424ac9a6ecf52b}{x},2)+pow(\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y},2));
+00025     \textcolor{keywordtype}{float} r\_outer\_leg = r\_leg - \hyperlink{invers__kinematik_8c_a1ce864b284ac751ffd8a0d98d5ccab55}{L1};
+00026     \textcolor{keywordtype}{float} r\_outer\_leg\_sq = pow(r\_outer\_leg,2);
+00027     \textcolor{keywordtype}{float} z\_sq= pow(\hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z},2);
+00028     \textcolor{keywordtype}{float} p\_outer\_sq =  r\_outer\_leg\_sq + z\_sq;
+00029     
+00030     \textcolor{comment}{//Invers kinematik}
+00031     \textcolor{keywordtype}{float} v1 = asin((\hyperlink{sensor_8h_a0ed6a908288e0cd87f79c1b5ab56d07c}{y})/r\_leg);
+00032     \textcolor{keywordtype}{float} v2 = atan(-\hyperlink{over__hinder_8c_af73583b1e980b0aa03f9884812e9fd4d}{z}/r\_outer\_leg)-acos((\hyperlink{invers__kinematik_8c_a0702a0cfbd3fd4cfd1e5d9e69d792ed7}{L3\_SQ}-\hyperlink{invers__kinematik_8c_a7a496732ef99aadddf8e1215ca9fbca7}{L2\_SQ}-p\_outer\_sq)/(-2*
+      \hyperlink{invers__kinematik_8c_ab983f03862f557a786ccc43b26522e16}{L2}*sqrt(p\_outer\_sq)));
+00033     \textcolor{keywordtype}{float} v3 = acos((p\_outer\_sq - \hyperlink{invers__kinematik_8c_a0702a0cfbd3fd4cfd1e5d9e69d792ed7}{L3\_SQ} - \hyperlink{invers__kinematik_8c_a7a496732ef99aadddf8e1215ca9fbca7}{L2\_SQ})/\hyperlink{invers__kinematik_8c_a36a1e67b0bf459531486e5d273b77f76}{L3\_L2\_2});
+00034 
+00035     \textcolor{comment}{//Gör om vinklarna till postionförskjutningar och sparar som unsigned int}
+00036     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos1 = (\textcolor{keywordtype}{unsigned} int)(\hyperlink{invers__kinematik_8c_a344b421f17a678e971ea980caf46ecae}{ANG\_TO\_POS\_SCALE}*v1);
+00037     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos2 = (\textcolor{keywordtype}{unsigned} int)(\hyperlink{invers__kinematik_8c_a344b421f17a678e971ea980caf46ecae}{ANG\_TO\_POS\_SCALE}*v2);
+00038     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pos3 = (\textcolor{keywordtype}{unsigned} int)(\hyperlink{invers__kinematik_8c_a344b421f17a678e971ea980caf46ecae}{ANG\_TO\_POS\_SCALE}*v3);
+00039     
+00040     \textcolor{comment}{//För att skicka ut 3 st int}
+00041     \hyperlink{structtriple__uint}{triple\_uint} pos = \hyperlink{structs_8c_a0bd229363859ac7df4e837cba6ad7ae4}{create\_triple\_uint}(pos1, pos2, pos3);
+00042     \textcolor{keywordflow}{return} pos; 
+00043 \}
+\end{DoxyCode}

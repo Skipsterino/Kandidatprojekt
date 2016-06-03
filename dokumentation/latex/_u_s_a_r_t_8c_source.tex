@@ -1,0 +1,89 @@
+\hypertarget{_u_s_a_r_t_8c_source}{}\section{U\+S\+A\+R\+T.\+c}
+\label{_u_s_a_r_t_8c_source}\index{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+U\+S\+A\+R\+T.\+c@{kommunikation/komm\+\_\+modul/komm\+\_\+modul/\+U\+S\+A\+R\+T.\+c}}
+
+\begin{DoxyCode}
+00001 
+00007 \textcolor{preprocessor}{#include "\hyperlink{_u_s_a_r_t_8h}{USART.h}"}
+00008 
+00009 \textcolor{comment}{//Sätter upp alla nödvändiga register för BT}
+\hypertarget{_u_s_a_r_t_8c_source.tex_l00010}{}\hyperlink{_u_s_a_r_t_8h_a4b46e2e6b871d0b0f138e61760b10fa2}{00010} \textcolor{keywordtype}{void} \hyperlink{_u_s_a_r_t_8c_a4b46e2e6b871d0b0f138e61760b10fa2}{initUSART}()
+00011 \{
+00012     \textcolor{comment}{//Enl. datablad 14.7456MHz och 115200BPS}
+00013     uint16\_t ubrr\_val = 7;
+00014     
+00015     \textcolor{comment}{//Sätt baud rate prescaler}
+00016     UBRR0L = ubrr\_val;
+00017     UBRR0H = (ubrr\_val>>8);
+00018     
+00019     \textcolor{comment}{//Aktivera RxD och TxD samt aktivera avbrott på dessa}
+00020     UCSR0B = 0b11011000;
+00021     
+00022     \textcolor{comment}{//Async}
+00023     \textcolor{comment}{//No parity}
+00024     \textcolor{comment}{//1 stop bit}
+00025     \textcolor{comment}{//8 char size}
+00026     UCSR0C = 0b00000110;
+00027     
+00028     \textcolor{comment}{//Töm bufferten}
+00029     \hyperlink{_u_s_a_r_t_8c_a0f33ec0995bf5f267e847d9e22fb596a}{USART\_Flush}();
+00030     
+00031     \hyperlink{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}{BTcounter} = 0;
+00032 \}
+00033 
+00034 \textcolor{comment}{//Ta emot ett tecken}
+\hypertarget{_u_s_a_r_t_8c_source.tex_l00035}{}\hyperlink{_u_s_a_r_t_8h_aec32185dd8feec99d38acc7f8ab69197}{00035} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} \hyperlink{_u_s_a_r_t_8c_abdcbc8bf037debf49ff1c15614a59c50}{USART\_Recieve}(\textcolor{keywordtype}{void})
+00036 \{
+00037     \textcolor{keywordflow}{while}(!(UCSR0A & (1<<RXC0)));
+00038     
+00039     \textcolor{keywordflow}{return} UDR0;
+00040     
+00041 \}
+00042 
+00043 \textcolor{comment}{//Skicka ett tecken}
+\hypertarget{_u_s_a_r_t_8c_source.tex_l00044}{}\hyperlink{_u_s_a_r_t_8h_ab8c416106cf1aff4ccdb3da4860fc179}{00044} \textcolor{keywordtype}{void} \hyperlink{_u_s_a_r_t_8c_ab8c416106cf1aff4ccdb3da4860fc179}{USART\_Transmit}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} data)
+00045 \{
+00046     \textcolor{keywordflow}{while}(!(UCSR0A & (1<<UDRE0)));
+00047     
+00048     UDR0 = data;
+00049     
+00050 \}
+00051 
+00052 \textcolor{comment}{//Skickar en lista med tecken}
+\hypertarget{_u_s_a_r_t_8c_source.tex_l00053}{}\hyperlink{_u_s_a_r_t_8h_a03b0ffa896b87d880101195bf1377df9}{00053} \textcolor{keywordtype}{void} \hyperlink{_u_s_a_r_t_8c_a03b0ffa896b87d880101195bf1377df9}{USART\_Transmit\_Array}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} array[], uint8\_t size)
+00054 \{
+00055     \hyperlink{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}{BTcounter} = 0;
+00056     \textcolor{keywordtype}{int} i = 0;
+00057     \textcolor{keywordflow}{for}(i; i < size; ++i)
+00058     \{
+00059         \hyperlink{_u_s_a_r_t_8c_ab8c416106cf1aff4ccdb3da4860fc179}{USART\_Transmit}(array[i]);
+00060     \}
+00061 \}
+00062 
+00063 \textcolor{comment}{//töm databufferten}
+\hypertarget{_u_s_a_r_t_8c_source.tex_l00064}{}\hyperlink{_u_s_a_r_t_8h_a0f33ec0995bf5f267e847d9e22fb596a}{00064} \textcolor{keywordtype}{void} \hyperlink{_u_s_a_r_t_8c_a0f33ec0995bf5f267e847d9e22fb596a}{USART\_Flush}(\textcolor{keywordtype}{void})
+00065 \{
+00066     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} dummy;
+00067     \textcolor{keywordflow}{while}(UCSR0A & (1<<RXC0)) dummy = UDR0;
+00068 \}
+00069 
+00070 \textcolor{comment}{//Avbrottsrutin som körs då enheten har skickat data.}
+\hypertarget{_u_s_a_r_t_8c_source.tex_l00071}{}\hyperlink{_u_s_a_r_t_8c_a7cde100ac531d01c1dd3b434480a3601}{00071} \hyperlink{_u_s_a_r_t_8c_a7cde100ac531d01c1dd3b434480a3601}{ISR}(USART0\_TX\_vect)
+00072 \{
+00073     
+00074 \}
+00075 
+00076 \textcolor{comment}{//Avbrottsrutin som körs då det finns inkommande data.}
+\hypertarget{_u_s_a_r_t_8c_source.tex_l00077}{}\hyperlink{_u_s_a_r_t_8c_a084f0a9cf05b1877bd8a71a90dae7ff8}{00077} \hyperlink{_u_s_a_r_t_8c_a7cde100ac531d01c1dd3b434480a3601}{ISR}(USART0\_RX\_vect)
+00078 \{
+00079     \hyperlink{_buffers_8h_a3b60028d98e73923081cbf257a237731}{toSPI}[\hyperlink{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}{BTcounter}] = \hyperlink{_u_s_a_r_t_8c_abdcbc8bf037debf49ff1c15614a59c50}{USART\_Recieve}();
+00080     
+00081     \textcolor{keywordflow}{if}(\hyperlink{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}{BTcounter} < 15)\{
+00082         ++\hyperlink{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}{BTcounter};
+00083     \}
+00084     \textcolor{keywordflow}{else}\{
+00085         \hyperlink{_u_s_a_r_t_8h_ad9497e6b45d71841b52db55c1ef891f6}{BTcounter} = 0;
+00086         SPDR = \hyperlink{_buffers_8h_a3b60028d98e73923081cbf257a237731}{toSPI}[0];
+00087         \hyperlink{_u_s_a_r_t_8h_ac73ad3c207657516f4f319adaf861a1b}{BTtimeout} = 0;
+00088     \}
+00089 \}
+\end{DoxyCode}
