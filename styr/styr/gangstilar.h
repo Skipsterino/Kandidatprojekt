@@ -24,7 +24,7 @@
 #include "structs.h"
 #include "servo_UART.h"
 
-//Global Dans radie, för att man inte ska få göra för snabba förflyttningar
+/**< Dance radius */ 
 float dance_r;
 
 /**
